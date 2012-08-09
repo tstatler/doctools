@@ -51,7 +51,7 @@ def node2obj(node):
 	shortname = re.sub('(.*)\.html', '\\1', node.getAttribute('href'))
 	dirname = shortname
 
-	dir = os.path.join(dest, 'tutorials', dirname)
+	dir = os.path.join(dest, 'guides', dirname)
 	try:
 		os.makedirs(dir)
 	except:
@@ -95,8 +95,8 @@ def node2obj(node):
 
 			# Rewrite any absolute links to http://docs.appcelerator.com 
 			# Only way we can insert a link to the videos in the wiki is to use a full URL
-			elif href.startswith('http://docs.appcelerator.com/titanium/latest/#!/video'):
-				tag['href'] = href.replace('http://docs.appcelerator.com/titanium/latest/', '')
+			elif re.search('http://docs.appcelerator.com/titanium/.*#!.*', href):
+				tag['href'] = re.sub('http://docs.appcelerator.com/titanium/.*#!', '#!', href)
 
 			# In general, any link back to the wiki is a bad link.
 			# There are a very few exceptions, such as the community wiki.

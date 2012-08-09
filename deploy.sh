@@ -32,13 +32,12 @@ then
 fi
 
 python ${TI_DOCS}/docgen.py -f jsduck -o ./build
-python ${JSDUCK}/guides_parser.py --input "./htmlguides/toc.xml" --output "./build/guides"
+python ./guides_parser.py --input "./htmlguides/toc.xml" --output "./build/guides"
 
-compass compile ${JSDUCK}/jsduck/template/resources/sass
-ruby ${JSDUCK}/jsduck/bin/jsduck --config ./jsduck/jsduck.config
-cp -r "${JSDUCK}/htmlguides/images" "dist/images"
-cp -r "${JSDUCK}/htmlguides/attachments" "dist/attachments"
-cp -r "${JSDUCK}/htmlguides/css/common.css" "dist/resources/css/common.css"
-cp ${JSDUCK}/mock_video.png dist/resources/images/mock_video.png
-cp ${JSDUCK}/codestrong_logo_short.png dist/resources/images/codestrong_logo_short.png
-# cp -r "/landing" "dist/landing"
+compass compile ${JSDUCK}/template/resources/sass
+ruby ${JSDUCK}/bin/jsduck --template ${JSDUCK}/template --config ./jsduck.config
+cp -r "./htmlguides/images" "dist/images"
+cp -r "./htmlguides/attachments" "dist/attachments"
+cp -r "./htmlguides/css/common.css" "dist/resources/css/common.css"
+cp ./resources/mock_video.png dist/resources/images/mock_video.png
+cp ./resources/codestrong_logo_short.png dist/resources/images/codestrong_logo_short.png
