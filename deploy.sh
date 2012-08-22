@@ -12,7 +12,6 @@ usage() {
 }
 
 while getopts ":o:" opt; do
-    echo $opt $OPTARG
     case $opt in 
         o)
             if [ $OPTARG == "alloy" ]; then
@@ -36,15 +35,14 @@ while getopts ":o:" opt; do
     esac
 done
 
-echo "Done with opts"
-
 # Skip the options and move on to the positional parameters
 shift $((OPTIND-1))
 
-echo $@
 
 while [ $1 ]; do
-    if [ $1 == "debug" ]; then
+    if [ $1 == "prod" ]; then
+        production_build="production"
+    elif [ $1 == "debug" ]; then
         debug_build="debug"
     fi
     shift
@@ -91,12 +89,12 @@ fi
 
 python ${TI_DOCS}/docgen.py -f jsduck -o ./build
 python ./guides_parser.py --input "./htmlguides/toc.xml" --output "./build/guides"
-if [ "$debug_build" ] ; then
-    compass compile ${JSDUCK}/template/resources/sass
-    TEMPLATE=${JSDUCK}/${DEBUG_TEMPLATE}
-else
+if [ $production_build ] ; then
     (cd ${JSDUCK}; rake compress)
     TEMPLATE=${JSDUCK}/${PROD_TEMPLATE}
+else
+    compass compile ${JSDUCK}/template/resources/sass
+    TEMPLATE=${JSDUCK}/${DEBUG_TEMPLATE}
 fi
 ruby ${JSDUCK}/bin/jsduck --template ${TEMPLATE} --config ./jsduck.config $alloyDirs
 cp -r "./htmlguides/images" "dist/images"
