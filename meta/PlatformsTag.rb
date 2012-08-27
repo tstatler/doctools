@@ -8,12 +8,16 @@ class PlatformTag < JsDuck::MetaTag
   # One can make use of the #format method to easily support
   # Markdown and {@link} tags inside the contents of the tag.
   def to_html(platforms)
-    names = {
+    pretty_names = {
     	'android' => 'Android',
     	'iphone' => 'iPhone',
     	'ipad' => 'iPad',
     	'mobileweb' => 'Mobile Web'
     }
-    "<ul class='platforms'>" + platforms.map{|platform| "<li class='platform-"+platform+"' title='"+names[platform]+"'></li>"}.join("") + "</ul>"
+    "<ul class='platforms'>" + platforms.map{|platform| 
+        name, version = platform.split()
+        "<li class='platform-"+name+"'
+        title='"+pretty_names[name]+"'>"+version+"</li>"
+        }.join("") + "</ul>" 
   end
 end
