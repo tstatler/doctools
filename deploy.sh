@@ -1,5 +1,7 @@
 DEBUG_TEMPLATE=template
 PROD_TEMPLATE=template-min
+VIDEO_LIST="videos.json"
+PROCESSED_VIDEO_LIST="build/videos.json"
 
 progname=$0
 
@@ -8,10 +10,11 @@ usage() {
     echo ""
     echo "  Options:"
     echo "  -o <optional_project> (currently, only alloy is supported)"
+    echo "  -t  Do not generate video thumbnails"
     echo ""
 }
 
-while getopts ":o:" opt; do
+while getopts ":to:" opt; do
     case $opt in 
         o)
             if [ $OPTARG == "alloy" ]; then
@@ -22,12 +25,15 @@ while getopts ":o:" opt; do
                 exit 1
             fi
             ;;
-         \?) 
+        t)  
+            no_thumbnails="no_thumbnails"
+            ;;
+        \?) 
              echo "Invalid option: -$OPTARG">&2
              usage
              exit 1
              ;;
-         :)
+        :)
              echo "Option -$OPTARG requires an argument." >&2
              usage
              exit 1
@@ -89,6 +95,13 @@ fi
 
 python ${TI_DOCS}/docgen.py -f jsduck -o ./build
 python ./guides_parser.py --input "./htmlguides/toc.xml" --output "./build/guides"
+
+if [ $no_thumbnails ]; then
+    cp $VIDEO_LIST $PROCESSED_VIDEO_LIST
+else
+    python ./video_thumbs.py --input $VIDEO_LIST --output $PROCESSED_VIDEO_LIST
+fi
+
 if [ $production_build ] ; then
     (cd ${JSDUCK}; rake compress)
     TEMPLATE=${JSDUCK}/${PROD_TEMPLATE}
