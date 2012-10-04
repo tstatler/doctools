@@ -91,6 +91,11 @@ fi
 
 if [ $include_alloy ]; then
     alloyDirs="${ALLOY}/alloy/builtins ${ALLOY}/alloy/lib"
+    for D in $ALLOY/widgets/*; do
+        if [[ -d $D ]]; then
+            alloyDirs+=" $D/controllers/"
+        fi
+    done
 fi
 
 python ${TI_DOCS}/docgen.py -f jsduck -o ./build
