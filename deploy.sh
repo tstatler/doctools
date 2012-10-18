@@ -2,6 +2,7 @@ DEBUG_TEMPLATE=template
 PROD_TEMPLATE=template-min
 VIDEO_LIST="videos.json"
 PROCESSED_VIDEO_LIST="build/videos.json"
+config="./jsduck.config"
 
 progname=$0
 
@@ -9,13 +10,19 @@ usage() {
     echo "Usage: $progname [options] [debug|prod]"
     echo ""
     echo "  Options:"
+    echo "  -c <config_file> (i.e., jsduck_21.config for 2.1 docs build)."
     echo "  -o <optional_project> (currently, only alloy is supported)"
     echo "  -t  Do not generate video thumbnails"
     echo ""
 }
 
-while getopts ":to:" opt; do
+while getopts ":to:c:" opt; do
     case $opt in 
+        c)
+            if [ "$OPTARG" ]; then
+                config=$OPTARG
+            fi
+            ;;
         o)
             if [ $OPTARG == "alloy" ]; then
                 include_alloy="include_alloy"
@@ -114,7 +121,7 @@ else
     compass compile ${JSDUCK}/template/resources/sass
     TEMPLATE=${JSDUCK}/${DEBUG_TEMPLATE}
 fi
-ruby ${JSDUCK}/bin/jsduck --template ${TEMPLATE} --config ./jsduck.config $alloyDirs
+ruby ${JSDUCK}/bin/jsduck --template ${TEMPLATE} --config $config $alloyDirs
 cp -r "./htmlguides/images" "dist/images"
 cp -r "./htmlguides/attachments" "dist/attachments"
 cp -r "./htmlguides/css/common.css" "dist/resources/css/common.css"
