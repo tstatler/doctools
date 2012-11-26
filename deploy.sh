@@ -12,11 +12,12 @@ usage() {
     echo "  Options:"
     echo "  -c <config_file> (i.e., jsduck_21.config for 2.1 docs build)."
     echo "  -o <optional_project> (currently, only alloy is supported)"
+    echo "  -s  Enable --seo flag to jsduck."
     echo "  -t  Do not generate video thumbnails"
     echo ""
 }
 
-while getopts ":to:c:" opt; do
+while getopts ":tso:c:" opt; do
     case $opt in 
         c)
             if [ "$OPTARG" ]; then
@@ -34,6 +35,9 @@ while getopts ":to:c:" opt; do
             ;;
         t)  
             no_thumbnails="no_thumbnails"
+            ;;
+        s)  
+            seo="--seo"
             ;;
         \?) 
              echo "Invalid option: -$OPTARG">&2
@@ -121,7 +125,7 @@ else
     compass compile ${JSDUCK}/template/resources/sass
     TEMPLATE=${JSDUCK}/${DEBUG_TEMPLATE}
 fi
-ruby ${JSDUCK}/bin/jsduck --template ${TEMPLATE} --config $config $alloyDirs
+ruby ${JSDUCK}/bin/jsduck --template ${TEMPLATE} $seo --config $config $alloyDirs
 cp -r "./htmlguides/images" "dist/images"
 cp -r "./htmlguides/attachments" "dist/attachments"
 cp -r "./htmlguides/css/common.css" "dist/resources/css/common.css"
