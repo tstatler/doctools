@@ -1,5 +1,196 @@
 [
 	{
+		"items": [
+			{
+				"description": "Michael King, Appcelerator's Director of Enterprise Services, discusses the following:<br />\r\n<br />\r\n- Deep dive on the technologies involved in building a \u201cmobile-first\u201d organization<br />\r\n- Next-generation mobility platforms, mobile application, mobile device management, and a host of other technologies, exist to help enterprise mobilize employee apps and everything customer facing.<br />\r\n- How do you choose them, what are the requirements, and in what should you expect them to do.",
+				"title": "Enterprise Summit - Technologies to Enable Mobile First Enterprises",
+				"thumb": "http://b.vimeocdn.com/ts/363/681/363681084_100.jpg",
+				"id": "52697965",
+				"name": "Enterprise Summit - Technologies to Enable Mobile First Enterprises"
+			}, {
+				"description": "Michael King, Appcelerator's Director of Enterprise Services, discusses the following:<br />\r\n<br />\r\n- What is a mobile strategy and how do you implement one?<br />\r\n- Learn from Appcelerator's resident experts, and their experience helping companies like yourselves build a long-term sustainable mobile strategy.<br />\r\n- What is a mobile center of excellence and how do you build one?<br />\r\n- Learn about organizational structures, and better ways that IT and the line of business can work together to chart a mobile future.",
+				"title": "Enterprise Summit - Creating a Mobile Strategy",
+				"thumb": "http://b.vimeocdn.com/ts/363/644/363644049_100.jpg",
+				"id": "52692323",
+				"name": "Enterprise Summit - Creating a Mobile Strategy"
+			}, {
+				"description": "Appcelerator customers discuss how to create great mobile apps for customers and the mobile workforce.<br />\r\n<br />\r\n- David Hosted, Director of Web and Mobile Services, University of Wisconsin/Milwaukee<br />\r\n- Mas Kono, Director of IT, GameStop<br />\r\n- George Mehok, Chief Information Officer, Safeguard Properties<br />\r\n- Gabriel Weiss, Interactive Marketing Technologies, Mitsubishi<br />\r\n- Moderator: Lyla McInerney, VP of Marketing, Appcelerator",
+				"title": "Keynote Panel - Secrets for Developing for the Enterprise",
+				"thumb": "http://b.vimeocdn.com/ts/363/488/363488291_100.jpg",
+				"id": "52669398",
+				"name": "Keynote Panel - Secrets for Developing for the Enterprise"
+			}, {
+				"description": "Jeremia Kimelman, Devangelist for Tout<br />\r\n<br />\r\nSo you built an app \u2013 awesome! That's an achievement itself. But we're willing to guess you aren't just looking to have a mobile app in the store for the sake of seeing your name on iTunes or Google Play. We'll bet you're more interested in developing a mobile business than an app. Join us to learn:<br />\r\n <br />\r\n- What are your mobile monetization options?<br />\r\n- How much, if anything, can you afford to acquire customers?<br />\r\n- How do you optimize your presence in the App Store?<br />\r\n- How do we make sure that your landing page drives conversions?<br />\r\n- What about after the download \u2026 how do you keep a customer engaged?",
+				"title": "Keynote - How to Build a Top Ten App",
+				"thumb": "http://b.vimeocdn.com/ts/363/475/363475308_100.jpg",
+				"id": "52669397",
+				"name": "Keynote - How to Build a Top Ten App"
+			}, {
+				"description": "",
+				"title": "Keynote - Jonathan Rende, Appcelerator's VP of Products",
+				"thumb": "http://b.vimeocdn.com/ts/363/451/363451563_100.jpg",
+				"id": "52667037",
+				"name": "Keynote - Jonathan Rende, Appcelerator's VP of Products"
+			}, {
+				"description": "Dion Almaer, VP Mobile Architecture and Ben Galbraith, VP Mobile Engineering, Walmart<br />\r\n <br />\r\nApple's iPhone SDK has proven the largest disruption to software development since the Web, sparking the creation in a few short years of the largest medium for consumer engagement in the world, eclipsing even movies and television. The Web, once destined to be the industry's dominant app platform, now has an uncertain future in mobile at a time when mobile is disrupting the entire PC industry. Is the Web destined to reclaim its former glory, or will app popularity continue its explosive growth? Join Ben and Dion as they discuss the web vs. app conflict in the context of the present and the post-PC era beyond.",
+				"title": "Keynote - Dion Almaer and Ben Galbraith: Web vs. Apps",
+				"thumb": "http://b.vimeocdn.com/ts/363/418/363418355_100.jpg",
+				"id": "52661030",
+				"name": "Keynote - Dion Almaer and Ben Galbraith: Web vs. Apps"
+			}, {
+				"description": "",
+				"title": "Keynote - Jeff Haynie, Appcelerator's CEO",
+				"thumb": "http://b.vimeocdn.com/ts/363/381/363381942_100.jpg",
+				"id": "52654245",
+				"name": "Keynote - Jeff Haynie, Appcelerator's CEO"
+			}, {
+				"description": "",
+				"title": "Keynote - Nolan Wright, Appcelerator's CTO",
+				"thumb": "http://b.vimeocdn.com/ts/363/274/363274659_100.jpg",
+				"id": "52638428",
+				"name": "Keynote - Nolan Wright, Appcelerator's CTO"
+			}, {
+				"description": "",
+				"title": "CODESTRONG Conference Close",
+				"thumb": "http://b.vimeocdn.com/ts/360/022/360022028_100.jpg",
+				"id": "52190964",
+				"name": "CODESTRONG Conference Close"
+			}, {
+				"description": "David Bankier, Director, YY Digital<br />\r\n <br />\r\nThis session demonstrates how to do \"live\" testing against either the simulator or device - and on iOS or Android - simultaneously. Using a BDD framework also makes this easy.<br />\r\n<br />\r\n1) There is much much more to Titanium then apps, modules and the cloud - its great fun and highly rewarding.<br />\r\n2) Anything that annoys you fix it yourself.<br />\r\n3) There are no limits - it is much easier than you think.",
+				"title": "CODESTRONG Breakout - Hacking Titanium",
+				"thumb": "http://b.vimeocdn.com/ts/360/025/360025144_100.jpg",
+				"id": "52190962",
+				"name": "CODESTRONG Breakout - Hacking Titanium"
+			}, {
+				"description": "Rob Rusher, Principal Consultant, On3 Solutions<br />\r\n <br />\r\nThere is a huge difference between imagining and seeing. There is a bigger difference between developers who plan and those who plan to fail. That difference is a Prototype. Unfortunately, building prototypes takes time and money you don't have. That is, until you attend this session in which we will demonstrate the tools and processes we use at On3. In minutes, we build prototypes that are easily installed on a device for a realistic experience that wins hearts and closes deals. Show, don't imagine. Plan, don't guess. Being a professional doesn't happen by accident.",
+				"title": "Breakout session - Create Real Interactive Prototypes in Minutes",
+				"thumb": "http://b.vimeocdn.com/ts/364/585/364585301_100.jpg",
+				"id": "52826174",
+				"name": "Breakout session - Create Real Interactive Prototypes in Minutes"
+			}, {
+				"description": "Carl Orthlieb/Ingo Muschenetz<br />\r\n <br />\r\nLearn about the new features released in 3.0 including ACS custom cloud services, new mobile platforms, and the latest in on device debugging.",
+				"title": "Breakout session  - What's new in Titanium Studio",
+				"thumb": "http://b.vimeocdn.com/ts/364/584/364584913_100.jpg",
+				"id": "52826173",
+				"name": "Breakout session  - What's new in Titanium Studio"
+			}, {
+				"description": "Wei Kong, Director of Cloud Services<br />\r\n <br />\r\nWant to go to the cloud but don't know how to get there? Learn about the 15 cloud services that will make your app shine.<br />\r\nDebugging your cloud enabled application: common pitfalls and tips for integrating your mobile app with ACS.<br />\r\nCreating custom cloud services: the ultimate in integration, mash ups, and new functionality. Do you know JS? Then you can create your own services quickly and deploy them easily.",
+				"title": "Breakout session - Building Your Own Custom Cloud Services",
+				"thumb": "http://b.vimeocdn.com/ts/364/500/364500925_100.jpg",
+				"id": "52813039",
+				"name": "Breakout session - Building Your Own Custom Cloud Services"
+			}, {
+				"description": "Mike Goff, Director of Product Management, Appcelerator<br />\r\n <br />\r\nAs a mobile developer, you've already adopted the 20+ prebuilt Appcelerator cloud services (ACS) so you can easily build your back end of your mobile app using right from Titanium, or for your native apps with a single line of javascript<br />\r\nThis session will show you everything you need to know to build your own custom cloud based services for ACS, including best -practices and different deployment options<br />\r\nWe'll walk through simple examples of how you can create your own cloud based services to integrate social and video to enhance your online mobile experience",
+				"title": "Breakout session - Using Appcelerator Cloud Services in Your Apps",
+				"thumb": "http://b.vimeocdn.com/ts/364/503/364503528_100.jpg",
+				"id": "52813038",
+				"name": "Breakout session - Using Appcelerator Cloud Services in Your Apps"
+			}, {
+				"description": "Carlos Icaza, Founder, Lanica<br />\r\n <br />\r\nLearn about Platino\u2122 the new game engine by Lanica and learn how to quickly produce game using standard gaming techniques such as SpriteSheets, Parallax Scrolling, Particle Effects and others.<br />\r\n <br />\r\nWe will also cover some of the advance rendering techniques that will be available in Platino such as Shaders, Vertices Arrays, Parallax Mapping, Physics, and more.",
+				"title": "Breakout session - Rapid Game Development on Titanium",
+				"thumb": "http://b.vimeocdn.com/ts/364/456/364456643_100.jpg",
+				"id": "52802376",
+				"name": "Breakout session - Rapid Game Development on Titanium"
+			}, {
+				"description": "Joe Shrirey, Microsoft",
+				"title": "Breakout  session - New Device Platform support for Titanium",
+				"thumb": "http://b.vimeocdn.com/ts/364/242/364242381_100.jpg",
+				"id": "52776791",
+				"name": "Breakout  session - New Device Platform support for Titanium"
+			}, {
+				"description": "Grant Shipley, Manager of Cloud Evangelist, Red Hat<br />\r\n <br />\r\nJoin us for a technical how-to session on how to develop iPhone and Android apps with MongoDB backends for the cloud. Let's skip having to learn three different languages and jumpstart the development process using what you already know. We'll utilize Appcelerator's Titanium IDE to create a native mobile application targeting multiple mobile platforms. Next, we'll deploy our app to the cloud and explore a few tips and tricks for managing the MongoDB backend. Finally we'll pull out our smartphones and bask in the awesomeness of our apps! Nothing complicated, nothing convoluted. Just straight ahead mobile development goodness with MongoDB.",
+				"title": "Breakout session - Developing iPhone and Android Apps using Titanium and Red Hat's OpenShift",
+				"thumb": "http://b.vimeocdn.com/ts/364/474/364474014_100.jpg",
+				"id": "52802373",
+				"name": "Breakout session - Developing iPhone and Android Apps using Titanium and Red Hat's OpenShift"
+			}, {
+				"description": "Michael King, Director of Enterprise Strategy, Appcelerator<br />\r\n <br />\r\nDive deep, on the mobile application lifecycle.<br />\r\nUnderstand all the roles involved in today's mobile application lifecycle. From plan to build to test to manage to analyze\u2026 And beyond<br />\r\nUnderstand how testing can affect every aspect of your application will reprocess and see a demo of some of the latest testing capabilities from our partners<br />\r\nRole-based, lifecycle management is the future of mobile application development, come get a preview of what looks like",
+				"title": "Breakout session - Leveraging Titanium as Part of Your Mobile App Lifecycle",
+				"thumb": "http://b.vimeocdn.com/ts/364/464/364464376_100.jpg",
+				"id": "52802374",
+				"name": "Breakout session - Leveraging Titanium as Part of Your Mobile App Lifecycle"
+			}, {
+				"description": "Kevin Whinnery, Technical Evangelist, Appcelerator<br />\r\n <br />\r\nIn this session, developers will learn practical techniques for test automation in Titanium Mobile applications. We will explore the challenges of rich client testing generally before diving into examples of how to write tests for a Titanium app. Finally, we will explore the next frontier of rich client testing which combines unit-level testing with functional test automation, capturing and testing real user interactions.",
+				"title": "Breakout session - Testing Best Practices: Unit and Functional Automation",
+				"thumb": "http://b.vimeocdn.com/ts/364/446/364446883_100.jpg",
+				"id": "52802375",
+				"name": "Breakout session - Testing Best Practices: Unit and Functional Automation"
+			}, {
+				"description": "Blain Hamon, Senior Software Engineer, Appcelerator<br />\r\n <br />\r\nThis session will delve into the history, structure, and inner workings of Titanium for iPhone in order to provide an understanding of how it does what it does, and how to best make your app responsive, efficient, and fast. Also a demo on debugging on Titanium for iPhone, and some caveats involved.",
+				"title": "Breakout session - iOS Internals and Best Practices",
+				"thumb": "http://b.vimeocdn.com/ts/364/241/364241234_100.jpg",
+				"id": "52776789",
+				"name": "Breakout session - iOS Internals and Best Practices"
+			}, {
+				"description": "Simon Berman, Sr. Director Product Marketing, Appcelerator<br />\r\n <br />\r\nBuilding the back end server side functions to a mobile application can cost 2 - 3 times the time and money that you spent building the client.<br />\r\nThis session will walk through the business benefits of using a cloud based back-end as a service, including scalability, lowers cost, and lower risk to you the developer<br />\r\nWalk through an actual business case to justify using pre-built cloud services with any mobile application for your client",
+				"title": "Breakout - The Role of Cloud Services in Your Next Gen Mobile Apps",
+				"thumb": "http://b.vimeocdn.com/ts/364/211/364211867_100.jpg",
+				"id": "52772953",
+				"name": "Breakout - The Role of Cloud Services in Your Next Gen Mobile Apps"
+			}, {
+				"description": "Pratik Patel, CTO, TripLingo<br />\n <br />\nThis session demonstrates how to do \"live\" testing against either the simulator or device - and on iOS or Android - simultaneously. Using a BDD framework also makes this easy.<br />\n <br />\n1) Running Jasmine tests for Titanium Projects<br />\n2) Running BDD tests for both the simulator and device<br />\n3) UI & non-UI code testing strategies",
+				"title": "Breakout session - Live Multi-Platform Testing",
+				"thumb": "http://b.vimeocdn.com/ts/364/196/364196895_100.jpg",
+				"id": "52771295",
+				"name": "Breakout session - Live Multi-Platform Testing"
+			}, {
+				"description": "Aaron Saunders, CTO, Clearly Innovative<br />\r\n <br />\r\nSee how easy it is to extend the Titanium platform! In this session, you will learn how to set up your environment and run scripts through Titanium Studio. We will then walk through several real-live Titanium modules on iOS and Android.",
+				"title": "Breakout session - How to Develop Your Own Modules",
+				"thumb": "http://b.vimeocdn.com/ts/364/173/364173920_100.jpg",
+				"id": "52765326",
+				"name": "Breakout session - How to Develop Your Own Modules"
+			}, {
+				"description": "Dennis Ashby, Director of Professional Services, Appcelerator<br />\r\n <br />\r\nLearn how to market to, sell to and deliver mobile application projects to enterprise clients<br />\r\nUnderstand what are the right ways to position and deliver UI and Mobile first application designs to biz focused clients<br />\r\nGet involved in your clients mobile application lifecycle, and build and grow a long, lucrative relationship with your enterprise clients",
+				"title": "Breakout session - How to Win Bigger Mobile Deals",
+				"thumb": "http://b.vimeocdn.com/ts/363/958/363958440_100.jpg",
+				"id": "52734104",
+				"name": "Breakout session - How to Win Bigger Mobile Deals"
+			}, {
+				"description": "David Bankier, Director, YY Digital<br />\r\n <br />\r\nThis session demonstrates how to do \"live\" testing against either the simulator or device - and on iOS or Android - simultaneously. Using a BDD framework also makes this easy.<br />\r\n<br />\r\n1) There is much much more to Titanium then apps, modules and the cloud - its great fun and highly rewarding.<br />\r\n2) Anything that annoys you fix it yourself.<br />\r\n3) There are no limits - it is much easier than you think.",
+				"title": "Breakout session - Hacking Titanium",
+				"thumb": "http://b.vimeocdn.com/ts/364/180/364180149_100.jpg",
+				"id": "52765327",
+				"name": "Breakout session - Hacking Titanium"
+			}, {
+				"description": "Josh Roesslein, Software Engineer, Appcelerator<br />\r\n <br />\r\nLearn about new Android specific features in the 3.0 version of the SDK.<br />\r\nNot all platforms are the same! Discover best practices for getting the most out of your Android apps.<br />\r\nLearn tips for developing your application for Android and key issues to be aware of.<br />\r\nDebugging in Android both in simulator and on device.<br />\r\nCrossing the kroll-bridge: how JS interacts with native Android",
+				"title": "Breakout session - Android Internals and Best Practices",
+				"thumb": "http://b.vimeocdn.com/ts/363/967/363967039_100.jpg",
+				"id": "52734105",
+				"name": "Breakout session - Android Internals and Best Practices"
+			}, {
+				"description": "Fred Spencer is the Sr. UI/UX Architect and Design Lead within the Professional Services group at Appcelerator. Located in Worcester, Massachusetts, he teaches in the Continuing Education department at the Rhode Island School of Design.<br />\r\nSession topics include:<br />\r\n <br />\r\nPractical User Experience and Interaction Design<br />\r\nDesign Vision: Bridging the Memory & Comprehension Gap<br />\r\nPlatform Equality<br />\r\nUI/UX Case Study Analysis<br />\r\nDesign Tips and Tricks",
+				"title": "Breakout session - Designing the Ultimate User Experience",
+				"thumb": "http://b.vimeocdn.com/ts/363/968/363968425_100.jpg",
+				"id": "52734106",
+				"name": "Breakout session - Designing the Ultimate User Experience"
+			}, {
+				"description": "Steve Feloney<br />\r\n <br />\r\nThis session will walk through the current process of adding your modules to the marketplace<br />\r\nIt will discuss what you should be considering when building modules and what community exposure you can expect in Appc's Marketplace<br />\r\nLastly, this session will focus on sharing use cases of successful modules that have been developed for the marketplace",
+				"title": "Breakout session  - Making Money on Appcelerator's Marketplace",
+				"thumb": "http://b.vimeocdn.com/ts/364/185/364185247_100.jpg",
+				"id": "52765324",
+				"name": "Breakout session  - Making Money on Appcelerator's Marketplace"
+			}, {
+				"description": "Bryan Hughes, PhD, Appcelerator<br />\n <br />\nNot all platforms are the same! Discover best practices for getting the most out of your Mobile Web apps.<br />\nLearn tips for developing your application for Mobile Web and key issues to be aware of.<br />\nDebugging in Mobile Web in the browser.<br />\nPerformance, performance, performance: getting the most out of your Mobile Web applications.",
+				"title": "Breakout session - Introduction to Mobile Web and Best Practices",
+				"thumb": "http://b.vimeocdn.com/ts/363/930/363930417_100.jpg",
+				"id": "52733415",
+				"name": "Breakout session - Introduction to Mobile Web and Best Practices"
+			}, {
+				"description": "Tony Lukasavage, Sr. Software Engineer, Appcelerator<br />\r\n <br />\r\nModel, View, Controller: understand how a common MVC framework can help you make the best Ti app<br />\r\nHow Alloy reduces the amount of code you have to write<br />\r\nRe-usable widgets: how to leverage code across applications<br />\r\nSecrets of debugging generated code<br />\r\nTips and tricks on Alloy best practices",
+				"title": "Breakout session  - Alloy (MVC) Application Framework Overview",
+				"thumb": "http://b.vimeocdn.com/ts/364/186/364186690_100.jpg",
+				"id": "52765325",
+				"name": "Breakout session  - Alloy (MVC) Application Framework Overview"
+			}, {
+				"description": "Chris Barber, Platform Lead, Appcelerator<br />\r\n <br />\r\nTitanium is getting a new Command Line Interface (CLI) that will make it easier to create and build your Titanium apps using the command line. The new CLI will allow you to integrate Titanium into your own development toolchain. Join Chris and learn about all the commands and features that you'll need to know.",
+				"title": "Breakout session - Exploring the New Titanium Command Line Interface (CLI)",
+				"thumb": "http://b.vimeocdn.com/ts/363/957/363957083_100.jpg",
+				"id": "52734103",
+				"name": "Breakout session - Exploring the New Titanium Command Line Interface (CLI)"
+			}
+		],
+		"title": "CODESTRONG 2012"
+	}, {
 		"title": "Building Native Mobile Apps",
 		"items": [
 			{
@@ -8,78 +199,67 @@
 				"title": "Titanium Overview",
 				"description": "Kick off this video learning experience with a 10,000 foot overview of Titanium, explaining high level features and architecture.",
 				"thumb": "resources/images/mock_video.png"
-			},
-			{
+			}, {
 				"id": "26414617",
 				"name": "You're a Native App Developer Now",
 				"title": "You're a Native App Developer Now",
 				"description": "Working with Titanium Mobile requires a working knowledge of the Android and iOS SDKs and the related tooling. Get a crash course on each in this training module.",
 				"thumb": "resources/images/mock_video.png"
-			},
-			{
+			}, {
 				"id": "28824081",
 				"name": "Titanium Studio",
 				"title": "Titanium Studio",
 				"description": "Take a brief tour of Titanium Studio, the Appcelerator IDE for Titanium development.",
 				"thumb": "resources/images/mock_video.png"
-			},
-			{
+			}, {
 				"id": "26414757",
 				"name": "Cross-Platform JavaScript Applications",
 				"title": "Cross-Platform JavaScript Applications",
 				"description": "Learn the basics of structuring JavaScript code and supporting multiple languages and platforms in your Titanium Mobile application.",
 				"thumb": "resources/images/mock_video.png"
-			},
-			{
+			}, {
 				"id": "26414831",
 				"name": "UI Fundamentals",
 				"title": "UI Fundamentals",
 				"description": "Learn the basics of crafting user interfaces in Titanium Mobile",
 				"thumb": "resources/images/mock_video.png"
-			},
-			{
+			}, {
 				"id": "26414892",
 				"name": "Working with Local Data",
 				"title": "Working with Local Data",
 				"description": "Learn to use a local SQL database and the lightweight properties API in this persistence-focused training module.",
 				"thumb": "resources/images/mock_video.png"
-			},
-			{
+			}, {
 				"id": "26414909",
 				"name": "Working with Remote Data",
 				"title": "Working with Remote Data",
 				"description": "Learn to interact with server-side data in this training module.",
 				"thumb": "resources/images/mock_video.png"
-			},
-			{
+			}, {
 				"id": "26414926",
 				"name": "Media and the Filesystem",
 				"title": "Media and the Filesystem",
 				"description": "Learn how to work with and store rich media assets and other files in this training module.",
 				"thumb": "resources/images/mock_video.png"
-			},
-			{
+			}, {
 				"id": "26415137",
 				"name": "Using Location Services",
 				"title": "Using Location Services",
 				"description": "Integrate geolocation, maps, and more in this locality-focused training module.",
 				"thumb": "resources/images/mock_video.png"
-			},
-			{
+			}, {
 				"id": "26415151",
 				"name": "Integrating Contacts & Social Media",
 				"title": "Integrating Contacts & Social Media",
 				"description": "Master the device address book and integrated Facebook APIs in this training session.",
 				"thumb": "resources/images/mock_video.png"
-			},
-			{
+			}, {
 				"id": "26415168",
 				"name": "Integrating Web Content",
 				"title": "Integrating Web Content",
 				"description": "Master the Titanium WebView in this training module.",
 				"thumb": "resources/images/mock_video.png"
-			},
-			{
+			}, {
 				"id": "26415440",
 				"name": "Deployment & Distribution",
 				"title": "Deployment & Distribution",
@@ -87,8 +267,7 @@
 				"thumb": "resources/images/mock_video.png"
 			}
 		]
-	},
-	{
+	}, {
 		"title": "Forging Titanium",
 		"items": [
 			{
@@ -97,150 +276,135 @@
 				"title": "1: CommonJS Modules",
 				"description": "The CommonJS module specification is an emerging standard for creating secure, reusable modules in JavaScript applications. Learn how to use it in the first installment of Forging Titanium on Appcelerator.TV",
 				"thumb": "resources/images/mock_video.png"
-			},
-			{
+			}, {
 				"id": "27834295",
 				"name": "Episode 2: A Cross-Platform Navigation Controller",
 				"title": "2: A Cross-Platform Navigation Controller",
 				"description": "Developing cross-platform applications in Titanium, one of the challenges facing a developer is maximizing code reuse while still conforming to the UI conventions of the Android or iOS platform. In this week's episode, we explore how we could create a hierarchical Navigation Controller, which would display a series of windows in an easily navigable stack. Be sure to join us next week as well, when further explore how to extend core Titanium UI components to create custom UI controls.",
 				"thumb": "resources/images/mock_video.png"
-			},
-			{
+			}, {
 				"id": "28122504",
 				"name": "Episode 3: Creating Custom Components",
 				"title": "3: Creating Custom Components",
 				"description": "In last week's episode, we created a cross-platform Navigation Controller as a custom component we could use to organize windows in a Titanium application. This week, we will be taking a deeper look at how to extend core Titanium objects and create our own custom UI components.<br>In order to accomplish this, we will be using a technique popularized by JavaScript luminary Douglas Crockford, which is called parasitic inheritance. Parasitic inheritance takes advantage of the malleable nature of JavaScript objects, allowing a developer to create an instance of a given type, modify it with additional properties, and return it as a new type of object.<br>This is a very powerful technique in JavaScript applications generally, but is even more useful and powerful when dealing with JavaScript proxy objects in Titanium. We can use factory functions in the Ti.UI namespace to create base UI components, and then extend those components with new features and functionality we define ourselves.<br>Find out how use this technique to create a custom ratings widget in this week's episode of Forging Titanium.",
 				"thumb": "resources/images/mock_video.png"
-			},
-			{
+			}, {
 				"id": "28428962",
 				"name": "Episode 4: A Utility Application Template",
 				"title": "4: A Utility Application Template",
 				"description": "In Episode 2, we took a look at a framework for displaying a stack of windows in a cross-platform navigation controller. This week, we'll be taking a look at implementing a simple two-stage utility application, while isolating our cross-platform navigation code to a single component.<br> This week we will be building upon our technique of creating custom components, while adding in an important API for creating component-oriented applications: Application-level events. By firing and listening for custom events, we can ensure that components in our system do not need to have knowledge of how other components behave - they just need to know how to indicate to the rest of the application that an important event has happened.<br>Find out how use this technique to create a two-stage utility application in this week's episode of Forging Titanium.",
 				"thumb": "resources/images/mock_video.png"
-			},
-			{
+			}, {
 				"id": "28704163",
 				"name": "Episode 5: Parse - A Simple Back End for Mobile Applications",
 				"title": "5: Parse - A Simple Back End for Mobile Applications",
 				"description": "In this week's episode, we'll be taking a look at Parse, a new service which allows developers to quickly and easily set up persistent back end data services for their application. This is particularly useful for mobile applications that aren't terribly concerned with back end business logic, like games or utility applications.<br>While Parse is still in beta and has a few kinks that need to be worked out, it's definitely a project worth tracking, and is super easy to use in Titanium. Find out how to use a simple Parse client in this week's episode of Forging Titanium.",
 				"thumb": "resources/images/mock_video.png"
-			},
-			{
+			}, {
 				"id": "29059611",
 				"name": "Episode 6: A Single Context Tab Group Template",
 				"title": "6: A Single Context Tab Group Template",
 				"description": "In this week's episode, we'll be taking a look at how to implement a tab-based application in a single JavaScript context in Titanium Mobile. Throughout our reference guides and official training course, we generally advocate the use of a single JavaScript context in your Titanium applications.<br>However, in our most popular demo application, the Titanium Mobile Kitchen Sink, a tab-based application is developed using multiple contexts by associating each window opened with a URL to a JavaScript file. While this approach is technically valid, it presents the developer with difficulties around sharing data between windows, confusion around when code for a window has been executed, possible object reference issues which can lead to memory leaks, and reloading of JavaScript code in every window for shared libraries. For those reasons, unless you have a specific need for a \"clean slate\" in every window, using multiple JavaScript contexts cannot be considered a best practice approach to structuring a Titanium Mobile application.<br>What then would be a reasonable approach to structuring windows in a tabbed application? And how do we work around the loss of Ti.UI.currentTab and friends? Find out the answer in this week's episode of Forging Titanium.",
 				"thumb": "resources/images/mock_video.png"
-			},
-			{
+			}, {
 				"id": "29459123",
 				"name": "Episode 7: Titanium and Twilio for Cloud Communications",
 				"title": "7: Titanium and Twilio for Cloud Communications",
 				"description": "In this week's episode, we'll be taking a look at Twilio, a cloud-based service for adding telephony features to applications through a RESTful web service API. Using Twilio, developers can send and receive phone calls and SMS text messages, enabling the creation of interfaces that pass beyond the reach of smart phones.<br>Learn how to send and receive phone calls and text messages in your mobile applications in this week's episode of Forging Titanium.",
 				"thumb": "resources/images/mock_video.png"
-			},
-			{
+			}, {
 				"id": "29730646",
 				"name": "Episode 8: Mac (App Store) Attack! Part 1",
 				"title": "8: Mac (App Store) Attack! Part 1",
 				"description": "With the new Mac App Store, many Mac OS X developers are taking advantage of the frictionless distribution mechanism of the Mac App Store to distribute and monetize desktop applications. In fact, some top Mac App Store apps have been written and distributed using Titanium! In this multi-part series, we will explore the APIs and techniques necessary to build and distribute an application to the Mac App Store using Titanium Desktop.",
 				"thumb": "resources/images/mock_video.png"
-			},
-			{
+			}, {
 				"id": "30085488",
 				"name": "Episode 9: Android Intent Cookbook",
 				"title": "9: Android Intent Cookbook",
 				"description": "In this episode of Forging Titanium we’ll look at our Android Intent Cookbook app which shows us Kitchen Sink-style how we can use Intents for some of the more common mobile development tasks. In addition we’ll do a full walkthrough showing you how to use Intents to add, pick, edit, and view contacts.",
 				"thumb": "resources/images/mock_video.png"
-			},
-			{
+			}, {
 				"id": "30387041",
 				"name": "Episode 10: Forms",
 				"title": "10: Forms",
 				"description": "In this episode of Forging Titanium we’ll look at how we can use CommonJS patterns to develop a simplified interface for creating cross platform mobile forms. We’ll carefully abstract the underlying functionality of forms and expose only the critical functions and properties necessary to process them via a CommonJS module.",
 				"thumb": "resources/images/mock_video.png"
-			},
-			{
+			}, {
 				"id": "30796377",
 				"name": "Episode 11: Titanium & Underscore.js",
 				"title": "11: Titanium & Underscore.js",
 				"description": "As Titanium developers, we are constantly looking for ways to not only increase our ability as mobile developers, but as Javascript developers as well. Wrapping your head around powerful utility libraries like Underscore.js and using them in your own code is one important step in that direction.<br>In this episode of \"Forging Titanium\" will be taking a look at how we can use Underscore.js to quickly handle one of the most common tasks in any app: data normalization. We'll see how our code can be made more concise and expressive through the use of Underscore's many useful functions. In the end we'll have a simple, cross platform, table-driven app whose code is easy to read and maintain.",
 				"thumb": "resources/images/mock_video.png"
-			},
-			{
+			}, {
 				"id": "31228723",
 				"name": "Episode 12: Titanium & Date.js",
 				"title": "12: Titanium & Date.js",
 				"description": "To keep the ball rolling on integrating existing Javascript libraries with Titanium, this week's episode shows off the Date.js library in a cross platform mobile app. We'll include this powerful date and time processing library, in a modular manner, to enhance the native Javascript Date object. Ideally, you'll let Date.js do all the grunt work of parsing disparately formatted dates while you spend your valuable time adding much more interesting features to your Titanium apps.",
 				"thumb": "resources/images/mock_video.png"
-			},
-			{
+			}, {
 				"id": "31511185",
 				"name": "Episode 13: Android Notifications",
 				"title": "13: Android Notifications",
 				"description": "In this week’s episode of Forging Titanium we step into the world of Android Status Bar Notifications. With these native notifications, you can more readily keep your users engaged with the current state of your app and its content. When you consider the fact that most mobile app’s sessions can be measured in seconds, that constant engagement becomes a critical component to the ongoing success of your apps. And the best part about it? It’s built right into Titanium’s core Javascript API.",
 				"thumb": "resources/images/mock_video.png"
-			},
-			{
+			}, {
 				"id": "31868247",
 				"name": "Episode 14: Twisti Part 1 - Android Module",
 				"title": "14: Twisti Part 1 - Android Module",
 				"description": "This week's episode of Forging Titanium will be part 1 in a 3 part series. In this series we will be creating a fun little experiment called \"Twisti\". In this app we'll be taking on a whole host of advanced Titanium features, as well as leveraging both platform specific and web-based development capabilities. We'll touch on native Android module development, 3D rendering and animation in WebViews, and realtime communication via sockets.<br>Today, though, we'll specifically be covering how to create a native Android module for use in our Titanium apps. This module in particular will be a souped up version of the core `Titanium.Accelerometer` module. We will not only return accelerometer data, but also data regarding the magnetic field of the device so we can determine its physical orientation.<br>If that doesn't sound exciting enough for you, then perhaps you'll want to stick around for the sneak peek at Part 2 at the end. There we'll show you a demo of how this data can be used to render a 3D animated version of your phone right in a Titanium WebView!",
 				"thumb": "resources/images/mock_video.png"
-			},
-			{
+			}, {
 				"id": "32102962",
 				"name": "Episode 15: Twisti Part 2 - 3D with Three.js",
 				"title": "15: Twisti Part 2 - 3D with Three.js",
 				"description": "In Part 1 of the Twisti app series we created a native Android module that listened for sensor data. This sensor data was then transformed into 3 values, azimuth, pitch, and roll, which represented the physical orientation of the mobile device.<br>In Part 2 we'll take that transformed data and use it to represent a mobile device as an animated 3D model. This 3D model will be rendered in a element via a Titanium WebView with the help of the open source Javascript 3D engine, Three.js. With this, Twisti is quickly becoming a powerful mix of native functionality and cross platform compatibility.",
 				"thumb": "resources/images/mock_video.png"
-			},
-			{
+			}, {
 				"id": "32976053",
 				"name": "Episode 16: Twisti Part 3 - Sockets",
 				"title": "16: Twisti Part 3 - Sockets",
 				"description": "In Part 1 of the Twisti app series we created a native Android module that listened for sensor data. This sensor data was then transformed into 3 values, azimuth, pitch, and roll, which represented the physical orientation of the mobile device. In Part 2 we took that transformed data and used it to represent a mobile device as an animated 3D model with Three.js in a Titanium WebView.<br>In this third and final episode in the series, we'll create a client/server relationship with Titanium Sockets. We'll create an android device that will act as a sensor proxy, serving its physical orientation to connected clients. Those clients will represent the remote sensor as a 3D model, just as in Part 2.",
 				"thumb": "resources/images/mock_video.png"
-			},
-			{
+			}, {
 				"id": "33249107",
 				"name": "Episode 17: Android, Meet V8",
 				"title": "17: Android, Meet V8",
 				"description": "This week on \"Forging Titanium\" we'll be taking a closer look at the recently announced 1.8.0.1 continuous integration build of the Titanium Mobile SDK. The reason this build is such a hot subject is that it is the first to allow Titanium developers to have access to the V8 Javascript engine as an Android runtime. In short, V8 will potentially bring tremendous performance improvements to your Android apps without any intervention on your part.<br>It's a very exciting time for Titanium Android developers. Don't miss this screencast if you want to join in on the fun!",
 				"thumb": "resources/images/mock_video.png"
-			},
-			{
+			}, {
 				"id": "33685267",
 				"name": "Episode 19: Titanium Studio 1.0.7",
 				"title": "19: Titanium Studio 1.0.7",
 				"description": "This week on \"Forging Titanium\" we're going to take a look at the new features offered in the latest 1.0.7 release of Titanium Studio. Your favorite tool for Titanium development just got a lot more powerful. Here's some highlights from the over 400 new features and fixes:<br>* Dashboard configuration wizard to help download, install, and configure your native iOS and Android SDKs<br>* Supports configuration of both Rhino and V8 as your Android runtime<br>* Debugging is now available for the V8 runtime<br>* Native iOS and Android modules can now be created right in Titanium Studio with the new module creation wizard<br>* Titanium API code snippets are loaded up and ready to be used with just a few key strokes<br>* You can now create your own app templates and samples using Rubles<br>Rather than read this list, why not just check out the screencast and see them all in action? It's a must-view for Titanium developers looking to leverage every bit of power Titanium Studio provides.",
 				"thumb": "resources/images/mock_video.png"
-			},
-			{
+			}, {
 				"id": "33806540",
 				"name": "Episode 20: Titanium Mobile 1.8",
 				"title": "20: Titanium Mobile 1.8",
 				"description": "The Titanium Mobile 1.8 SDK is here and it comes with a whole bag of goodies! Here's just a short list of some of the highlights:<br>* Dual runtime support for both Rhino and the newly integrated V8 engine for Android<br>* The Mobile Web Beta SDK is now integrated into Titanium Mobile<br>* 2 new gestures: `longpress` and `pinch`<br>* Android VideoPlayers can now be embedded<br>* Full XML DOM Level 2 support on both Android and iOS<br>* Support for the iOS 5.0.1 \"do-not-back-up\" file attribute<br>And there's a whole lot more. Be sure to watch this screencast to see a number of these new features and parity alignments in action!",
 				"thumb": "resources/images/mock_video.png"
-			},
-			{
+			}, {
 				"id": "36444322",
 				"name": "Episode 21: Box Module for Cloud Storage",
 				"title": "21: Box Module for Cloud Storage",
 				"description": "Blog post: developer.appcelerator.com/blog/?p=18288<br>This episode of Forging Titanium will give you an overview of what Box is and how you can integrate into your own apps using the Box Titanium module. We'll walk through getting your Box account set up, getting API keys, and then integrating Box's SDK into your own app via the Titanium module. In a few short minutes you will have free, integrated cloud storage services in your Titanium apps!",
 				"thumb": "resources/images/mock_video.png"
-			},
-			{
+			}, {
 				"id": "36846582",
 				"name": "Episode 22: Path-like Menu",
 				"title": "22: Path-like Menu",
 				"description": "Blog post: developer.appcelerator.com/blog/?p=18406<br>Today we're going to do something a little different with Forging Titanium. We're going to take a popular app from the wild and see how we can implement some of its features in Titanium. Today's target: the animated menu from the Path mobile app.<br>In this episode we'll cover topics like:<br>* Advanced animation techniques<br>* Rotating and scaling UI components<br>* Native iOS module development<br>* Cross-platform considerations<br>* Titanium extensibility<br>With these techniques, we'll not only show you that Titanium can execute and perform as well as its native counterpart, but also do so from a single code base.",
 				"thumb": "resources/images/mock_video.png"
+			}, {
+				"id": "38525908",
+				"name": "Episode 22: TiShadow",
+				"title": "22: TiShadow",
+				"description": "Blog post: developer.appcelerator.com/blog/?p=18639<br>We're really excited about this episode of Forging Titanium because it's the first done by a member of the community. David Bankier is the creator of TiShadow, a client-server application built with the intention of rapidly deploying and testing Titanium apps on multiple devices. It's inspiration comes from Adobe's new labs product, not suprisingly named Shadow.<br><br>Increasing my development iteration speed is always a primary focus for me. A tool like TiShadow could be tremendous in that respect. Without further ado, I'll let David show you exactly how TiShadow could change the way you develop with Titanium.",
+				"thumb": "resources/images/mock_video.png"
 			}
 		]
-	},
-	{
+	}, {
 		"title": "CODESTRONG 2011",
 		"items": [
 			{
@@ -249,274 +413,235 @@
 				"title": "Sponsor: Vungle",
 				"description": "Your mobile app deserves more exposure. Blast through the charts with a HD video showcasing your mobile app.",
 				"thumb": "resources/images/codestrong_logo_short.png"
-			},
-			{
+			}, {
 				"id": "29338053",
 				"name": "Sponsor: Millennial Media",
 				"title": "Sponsor: Millennial Media",
 				"description": "Millennial Media is the leading independent mobile advertising and data platform.",
 				"thumb": "resources/images/codestrong_logo_short.png"
-			},
-			{
+			}, {
 				"id": "29341403",
 				"name": "Sponsor: Mopapp",
 				"title": "Sponsor: Mopapp",
 				"description": "Mopapp tracks & analyzes your mobile apps' sales, generating easy-to-understand reports. Know more about your market and customers.",
 				"thumb": "resources/images/codestrong_logo_short.png"
-			},
-			{
+			}, {
 				"id": "29345861",
 				"name": "Sponsor: X.commerce",
 				"title": "Sponsor: X.commerce",
 				"description": "By combining the end-to-end capabilities of eBay, PayPal, Magento and other commerce leaders in a single platform, X.commerce is radically transforming the retail landscape.",
 				"thumb": "resources/images/codestrong_logo_short.png"
-			},
-			{
+			}, {
 				"id": "29341480",
 				"name": "Sponsor: YuMe",
 				"title": "Sponsor: YuMe",
 				"description": "ACE for Advertisers is the first end-to-end, buy-side video campaign management system architected to serve the needs of media agencies, advertisers, and agency trading desks.",
 				"thumb": "resources/images/codestrong_logo_short.png"
-			},
-			{
+			}, {
 				"id": "29343885",
 				"name": "Sponsor: AppCentral",
 				"title": "Sponsor: AppCentral",
 				"description": "We’re AppCentral™, the Mobile Application Management people. Our self-service Enterprise Mobile App Storefront makes it easy to distribute, secure and manage mobile apps without getting tangled up in your users’ personal stuff.",
 				"thumb": "resources/images/codestrong_logo_short.png"
-			},
-			{
+			}, {
 				"id": "29342140",
 				"name": "Sponsor: Twilio",
 				"title": "Sponsor: Twilio",
 				"description": "Twilio provides infrastructure APIs for businesses to build scalable, reliable voice and text messaging apps.",
 				"thumb": "resources/images/codestrong_logo_short.png"
-			},
-			{
+			}, {
 				"id": "29292203",
 				"name": "Interview: Srikanth Nandiraju",
 				"title": "Interview: Srikanth Nandiraju",
 				"description": "",
 				"thumb": "resources/images/codestrong_logo_short.png"
-			},
-			{
+			}, {
 				"id": "29292163",
 				"name": "Interview: Marco Cota",
 				"title": "Interview: Marco Cota",
 				"description": "",
 				"thumb": "resources/images/codestrong_logo_short.png"
-			},
-			{
+			}, {
 				"id": "29288893",
 				"name": "Interview: Chris Toswill",
 				"title": "Interview: Chris Toswill",
 				"description": "",
 				"thumb": "resources/images/codestrong_logo_short.png"
-			},
-			{
+			}, {
 				"id": "29288220",
 				"name": "Interview: Raphael Intrieri",
 				"title": "Interview: Raphael Intrieri",
 				"description": "",
 				"thumb": "resources/images/codestrong_logo_short.png"
-			},
-			{
+			}, {
 				"id": "29287350",
 				"name": "Interview: Ketan Majmudar",
 				"title": "Interview: Ketan Majmudar",
 				"description": "",
 				"thumb": "resources/images/codestrong_logo_short.png"
-			},
-			{
+			}, {
 				"id": "29285871",
 				"name": "Interview: James Childs",
 				"title": "Interview: James Childs",
 				"description": "",
 				"thumb": "resources/images/codestrong_logo_short.png"
-			},
-			{
+			}, {
 				"id": "29294922",
 				"name": "Sponsor: Barnes & Noble",
 				"title": "Sponsor: Barnes & Noble",
 				"description": "Barnes & Noble interview at Codestrong Conference including a special announcement.",
 				"thumb": "resources/images/codestrong_logo_short.png"
-			},
-			{
+			}, {
 				"id": "29284520",
 				"name": "CODESTRONG Kick Off",
 				"title": "CODESTRONG Kick Off",
 				"description": "CEO Jeff Haynie takes the stage for the first time for CODESTRONG 2011.",
 				"thumb": "resources/images/codestrong_logo_short.png"
-			},
-			{
+			}, {
 				"id": "29278171",
 				"name": "CODESTRONG 2011 Pre-Party",
 				"title": "CODESTRONG 2011 Pre-Party",
 				"description": "The day before CODESTRONG we had a pre-party to welcome everyone, and were able to get some peoples thoughts on the event.",
 				"thumb": "resources/images/codestrong_logo_short.png"
-			},
-			{
+			}, {
 				"id": "29683949",
 				"name": "Nolan Wright: Appcelerator's World-Class Ecosystem",
 				"title": "Nolan Wright: Appcelerator's World-Class Ecosystem",
 				"description": "With more than 1.5 million developers worldwide, Appcelerator's ecosystem is a key part of its developers' success. Nolan Wright, Appcelerator's CTO, will discuss how ISVs like PayPal and Box.net are adding great fuel to the Titanium development fire with new capabilities and resources for mobile developers.<br>Nolan Wright, Co-founder and CTO, leads engineering and product management at Appcelerator.",
 				"thumb": "resources/images/codestrong_logo_short.png"
-			},
-			{
+			}, {
 				"id": "29674177",
 				"name": "Scott Schwarzhoff: Building Wildly Successful Apps on Titanium",
 				"title": "Scott Schwarzhoff: Building Wildly Successful Apps on Titanium",
 				"description": "Companies are building amazing companies on top of their Titanium-powered apps. Hotel Tonight was the #1 Travel App, GetGlue was the #2 Social Networking App, Hotel Tonight passed 500k downloads within a five months of launch, and Gamestop has super-charged their PowerUp loyalty program using their mobile app.<br>How have these companies achieved such great successes? How have they used mobile as a competitive edge? How did Titanium help get them there?<br>Scott Schwarzhoff, Appcelerator's VP of Marketing will ask these questions and more during this exciting panel with some of Appcelerator's most successful customers.",
 				"thumb": "resources/images/codestrong_logo_short.png"
-			},
-			{
+			}, {
 				"id": "29675540",
 				"name": "Jeff Haynie: Building World Class Mobile Experiences on Titanium",
 				"title": "Jeff Haynie: Building World Class Mobile Experiences on Titanium",
 				"description": "Developers have built more than 25,000 mobile apps on Titanium and have unleashed them onto the world. Some of these apps have been built by the world's best brands like NBC, Kelloggs, and Medtronic. Hear from these companies how they created amazing user experiences for their customers, how mobile has impacted their business, and why Titanium was the best choice to power their apps.<br>Jeff Haynie, Appcelerator's CEO, will discuss how these great brands have built world-class apps on Titanium. Jeff Haynie is Co-founder and CEO of Appcelerator. Jeff is a long-time serial entrepreneur, technologist and blogger.",
 				"thumb": "resources/images/codestrong_logo_short.png"
-			},
-			{
+			}, {
 				"id": "30148453",
 				"name": "Scott Mason: Enhancing the User Interface Using Titanium Modules",
 				"title": "Scott Mason: Enhancing the User Interface Using Titanium Modules",
 				"description": "The Shiny Objects module discussed in this session will allow the developer to easily add visually appealing buttons to their projects without the use of special graphics files. Make a button that really shines with a call as simple as Ti.UI.createButton!<br>See how easy it was to create this module and benefit from the lessons learned during its development.<br>Why All the Fuss?<br>The stock button provided by Apple is plain and boring. It lacks the depth, color and presence of the standard Apple buttons. The standard buttons are mostly available for use in the navigation bar and cannot be put together in a view to add multiple buttons.<br>This session will be of most interest to intermediate and advanced developers looking to create or extend Titanium functionality, but is also quite useful for the beginning developer to learn how to easily add a cool looking button to their projects. Objective-C and Java will be discussed but are not necessary to use this module.<br>Module Benefits<br>- Shine and Gloss Using Gradient Layers<br>- Consistent Look and Feel for iPhone and Android Apps<br>- Ability to Change the Button Background color with a Property<br>- Adjustable Border Radius<br>- Automatic Highlighting",
 				"thumb": "resources/images/codestrong_logo_short.png"
-			},
-			{
+			}, {
 				"id": "30145620",
 				"name": "Srikanth Nandiraju: Monetize Your Mobile Apps Using Titanium Commerce Mobile",
 				"title": "Srikanth Nandiraju: Monetize Your Mobile Apps Using Titanium Commerce Mobile",
 				"description": "The mobile commerce is on the rise and various research reports from analysts shows that mobile commerce will hit the $6 billion in 2011 and will grow up to $31 billion by 2016. PayPal today processes about $10 million in mobile TPV (total payment volume) a day and is estimated to process up to $3 billion in mobile TPV for the year 2011. In this session, we will go over how you can use PayPal In-App payments in your mobile application to process payments for a variety of use cases and how to use can use the mobile payments capability provided by the commerce module for Titanium to build your iOS and Android apps.<br>In this session, you will learn about<br>1. PayPal Mobile Payments Library<br>2. PayPal Mobile Express Checkout<br>3. Implementation walk through<br>4. Next steps (going live, tech support)",
 				"thumb": "resources/images/codestrong_logo_short.png"
-			},
-			{
+			}, {
 				"id": "30384570",
 				"name": "Jeremy Glassenberg: Using Titanium to Connect to Enterprise SaaS",
 				"title": "Jeremy Glassenberg: Using Titanium to Connect to Enterprise SaaS",
 				"description": "rom the launch of the iPhone and subsequent opening of the iOS to developers, to Android OS and now tablets, we’ve seen the surge in mobile software development. Not only has the industry grown exponentially, but it has expanded into new demographics – and in particular, the latest innovations are enabling developers to create business-grade solutions on mobile devices.<br>The entrance of enterprise customers into the mobile industry comes as no surprise. In recent years, SaaS solutions have gone beyond consumer services as well, expanding on the precedent set by Salesforce.com. And all the while the API craze continued from 2009 onward. creating an excellent point of synergy.<br>For mobile developers interested in building business-grade applications, here you’ll learn tips and tricks for working with Enterprise SaaS APIs. We’ll highlight the business opportunities for mobile development in the space, and the technical opportunities in adding SaaS solutions to your applications.",
 				"thumb": "resources/images/codestrong_logo_short.png"
-			},
-			{
+			}, {
 				"id": "30386340",
 				"name": "Rob Chohan: Titanium+Plus Modules and Javascript Bridges: Controlling Hardware with a Web Language",
 				"title": "Rob Chohan: Titanium+Plus Modules and Javascript Bridges: Controlling Hardware with a Web Language",
 				"description": "Javascript is a fantastic language and the lingua franca of the Web. But can you use Javascript to control hardware? Titanium already does a great job of supporting hardware over iOS & Android, such as the accelerometer and the camera. But what about other hardware? Can you use Titanium to turn on Wifi or Bluetooth radios? How about other sensors like the Barometer on the Motorola XOOM?<br>It turns out that the flexibility of the Titanium+Plus allows all of this and more.<br>This talk discusses the ups and down of developing Titanium+Plus modules specifically for hardware like Wifi and Bluetooth. We will also discuss some aspects of doing localization for Titanium+Plus in Android.",
 				"thumb": "resources/images/codestrong_logo_short.png"
-			},
-			{
+			}, {
 				"id": "30391729",
 				"name": "Ben Bahrenburg: Augmented Reality Using Titanium",
 				"title": "Ben Bahrenburg: Augmented Reality Using Titanium",
 				"description": "Augmented Reality (AR) is the next step in presenting location data. See how Titanium Mobile enables you to create cross platform AR Apps using common APIs such as Groupon, Yelp, Twitter, and others.<br>Learn how to use GeoNames, Google and other third party services to extend Titanium's Geolocation functionality. Example source will be provided on how you can chain different location services to handle different accuracy and availability requirements.<br>Compare different AR presentation patterns and how they are implemented cross platform. Learn how to used the camera overlay and other UI elements to effectively present geolocation data.<br>The Titanium Platform provides a rich framework to build AR Applications upon. Using the TiAR sample application we will discuss a series of patterns and approaches on how to build AR into your Apps. The TiAR sample application will be available upon github before the conference begins.",
 				"thumb": "resources/images/codestrong_logo_short.png"
-			},
-			{
+			}, {
 				"id": "30391192",
 				"name": "Jacob Waller: Webifying Titanium Development",
 				"title": "Jacob Waller: Webifying Titanium Development",
 				"description": "What if we could bring the good parts of web development to Titanium? I'm talking about the realtimeness of web development - changing files and being able to see results on the fly, both visually and regarding application logic. Compare it to Firebug's live CSS editing abilities and Chrome's live code changes. I'm also talking about bringing the beauty of web frameworks to Titanium - Stylus, SASS and Less for styling, CoffeeScript and its cousins to enhance development, Jasmine for testing, Backbone for MVC and jQuery and friends to simplify element creation, communication and handling. What if we could use all these techniques on top of Titanium to create native apps even faster and with better structure?<br>The solution is Kranium - the result of merging Titanium with web development techniques, creating a cyborg which is greater than just the sum of its parts. It will significantly speed up development and styling, and is useful both for prototyping and production apps. It will be release under the MIT license during the conference. The session is meant as an introduction of Kranium for all Titanium developers, but will be especially thrilling for those with a web development background.",
 				"thumb": "resources/images/codestrong_logo_short.png"
-			},
-			{
+			}, {
 				"id": "30387872",
 				"name": "Richard Salter: Using the Titanium OpenGL Module",
 				"title": "Richard Salter: Using the Titanium OpenGL Module",
 				"description": "The Titanium OpenGL Module (Ti.OpenGL) opens the door to sophisticated graphics development for the Titanium programmer by exposing the entire OpenGL ES 1 and ES 2 graphics API to the Ti Javascript environment. The Ti.OpenGL view extends Ti.UI.View with a graphics rendering canvas that is easily managed within the Titanium view hierarchy. In addition, the module provides a databuffer object to hold large datasets and mitigate any inefficiency that arises from modeling datasets in Javascript.<br>This talk demonstrates the pragmatics of building sophisticated graphics displays using Ti.OpenGL in both ES 1 and ES 2. It will reveal several reusable design abstractions that take advantage of features of the Javascript environment. Among the topics to be covered are:<br>- OpenGL basic setup and animation<br>- Use of databuffers for attribute and index arrays<br>- Connecting databuffers and vertex buffer objects (vbo’s)<br>- Using external resources (textures, shaders, etc.)",
 				"thumb": "resources/images/codestrong_logo_short.png"
-			},
-			{
+			}, {
 				"id": "30143695",
 				"name": "Xavier Lacot: Abstracting Databases Access in Titanium Mobile",
 				"title": "Xavier Lacot: Abstracting Databases Access in Titanium Mobile",
 				"description": "Mobile applications often need to manipulate data in databases: news, contents, user preferences, etc. Titanium Mobile proposes a complete API, allowing to create databases and manipulate their content, but this module remains low level, as it does not offer the abstraction provided by ORMs (Object Relational Mappers).<br>This session introduces, through concrete examples, the advantages provided by the use of database abstraction tools.<br>It will list the available javascript ORMs on the market, depicting their differences, and will focus on joli.js, the lightweight still complete ORM published by the speaker. The attendees will learn how to take the best out of this ORM, will be taught about its useful querying model, and will learn how to extend it.<br>As a conclusion, a simple web services consumer extension of joli.js will be presented, which allows to consume web services and put their responses in a database through the very same API as joli.js.",
 				"thumb": "resources/images/codestrong_logo_short.png"
-			},
-			{
+			}, {
 				"id": "30108868",
 				"name": "Pratik Patel: Titanium as Platform: Feature-Rich, Database-Driven Mobile Apps",
 				"title": "Pratik Patel: Titanium as Platform: Feature-Rich, Database-Driven Mobile Apps",
 				"description": "You've developed your Titanium application, published to the app store, and started thinking about doing more. In this session, you'll learn some of the architectural and code related tips for using Titanium as a platform for building a suite of similar products for your venture.<br>Perhaps you want to make that extra feature available as an in-app upgrade, or provide HD sound as an option to your users. Whether it's for the enterprise or for the consumer, we'll look at tips n' tricks for extending and evolving your app.<br>In this session, we'll cover databases, switching user-content based on data, doing upgrades over the air, building an \"app suite platform\" using Titanium, managing upgrades, migrating data between versions and more. Strap yourself in for a fast-paced session!",
 				"thumb": "resources/images/codestrong_logo_short.png"
-			},
-			{
+			}, {
 				"id": "30107022",
 				"name": "Ted Patrick: Developing Apps for the Barnes & Noble NOOK",
 				"title": "Ted Patrick: Developing Apps for the Barnes & Noble NOOK",
 				"description": "Millions of apps have been downloaded by NOOK Color customers in the weeks following the launch of NOOK Apps and they’re asking for more.<br>Join us for a session on how to build applications for NOOK Apps. We will deep dive into leveraging Titanium Studio to develop applications for NOOK Color and cover the entire development process from app creation to the app submission process. Learn how to quickly monetize your applications in a storefront where the top-selling apps grossed more than $100,000 in the first 30 days.",
 				"thumb": "resources/images/codestrong_logo_short.png"
-			},
-			{
+			}, {
 				"id": "30106230",
 				"name": "Vince Baskerville: Designing an Awesome Mobile User Experience",
 				"title": "Vince Baskerville: Designing an Awesome Mobile User Experience",
 				"description": "This presentation will give an overview of some of the many accepted methods of creating a great User Experience on mobile devices. While developing an application for a mobile device, we recognize many of the ‘physical’ differences, ie. a smaller visual real estate, size of text and buttons, etc but we should be cognizant of creating a great experience too.<br>Designing for mobile devices brings some unique situations and challenges, it requires a strategic approach for the User Experience (UX) and User Interface (UI) composition.<br>This presentation will talk about current trends, challenges, tips to take advantage of while working with Titanium.<br>What to Expect:<br>- Using .jss<br>- Use-cases for animations<br>- Tips on keeps things simple<br>- User Interface & User Experience tips<br>- Buttons!!<br>- Lessons Learned<br>Vince Baskerville is VP of Production at TripLingo.",
 				"thumb": "resources/images/codestrong_logo_short.png"
-			},
-			{
+			}, {
 				"id": "30085639",
 				"name": "Ketan Majmudar: From Kitchen Sink to App: Real World Case Studies",
 				"title": "Ketan Majmudar: From Kitchen Sink to App: Real World Case Studies",
 				"description": "Ketan Majmudar shows how and why he chose Titanium over other web based technologies for delivering apps that are out into the \"real world\", with two case studies (an app being deployed to a district of the Surrey Police Force within the UK & the SCI-FI-LONDON Film Festival).<br>This talk is aimed at beginners, intermediate developers and decision makers to gauge the benefits and take away tips for use in planning and building your first Titanium apps.<br>You will learn:<br>App Structure<br>Cross Platform Considerations<br>Testing Solutions<br>Twitter & oAuth<br>Quick-fixes for AppStore<br>Getting Help & Resources<br>Ketan steps you through his experiences from coding his first app, to using the Kitchen Sink, to a more structured second app. You will find useful tips and libraries that will help enable your app to talk to twitter cross platform and how I got feedback during the development.",
 				"thumb": "resources/images/codestrong_logo_short.png"
-			},
-			{
+			}, {
 				"id": "30195860",
 				"name": "Wynn Netherland: Accelerating Titanium Development with CoffeeScript, Compass, and Sass",
 				"title": "Wynn Netherland: Accelerating Titanium Development with CoffeeScript, Compass, and Sass",
 				"description": "JavaScript and Titanium's JavaScript Stylesheets would be the quickest way to develop native mobile applications if it weren't for CoffeeScript and Sass. This talk will show you how to speed up your dev cycles and use CoffeeScript and Sass not only to write code faster, but better organize your JavaScript and JSS.",
 				"thumb": "resources/images/codestrong_logo_short.png"
-			},
-			{
+			}, {
 				"id": "30038852",
 				"name": "Fred Spencer: Designing a Great UI",
 				"title": "Fred Spencer: Designing a Great UI",
 				"description": "The cornerstone of UX, user interface design presents unique, user-centric challenges, exposing exciting opportunities to produce cohesive and engaging interactive experiences. Covering mobile-specific UI principles, practical implementation and rule breaking, Fred Spencer will share with you how the Titanium platform can make it easy to meaningfully improve user experience and exceed user expectations.<br>Located in the greater Boston area, Fred Spencer is an Appcelerator senior application architect and digital media instructor at the Rhode Island School of Design, Continuing Education.",
 				"thumb": "resources/images/codestrong_logo_short.png"
-			},
-			{
+			}, {
 				"id": "30035164",
 				"name": "Kevin Whinnery: Write Better JavaScript",
 				"title": "Kevin Whinnery: Write Better JavaScript",
 				"description": "One of the main reasons Titanium Mobile has been so successful is that the technology has significantly lowered the barrier to entry for native mobile development. A major force behind this is JavaScript, Titanium's primary programming language. The JavaScript programming language is small enough where the basics can be learned in a matter of hours, which has enabled developers from many different backgrounds to become productive using Titanium. But there's much more to JavaScript than just control structures and a handful of primitive data types - JavaScript is a beautiful functional programming language with great features you might not be using.<br>Most developers working on the web today have had some exposure to JavaScript, but there's a difference between using jQuery for DOM manipulation on a web page and writing an entire application in JavaScript. This talk, intended for beginner or intermediate JavaScript developers, will focus on the essential language features you will need to write professional JavaScript applications, including but not limited to:<br>Object Oriented Programming in JavaScript<br>The Good Parts and Bad Parts of JavaScript<br>Useful JavaScript Patterns, Tricks, and Style Guidelines<br>The JavaScript runtime in Titanium Mobile<br>Further Reading and ways to stay up to date on JavaScript",
 				"thumb": "resources/images/codestrong_logo_short.png"
-			},
-			{
+			}, {
 				"id": "29993359",
 				"name": "Jeff English: Demystifying Module Development - How to Extend Titanium",
 				"title": "Jeff English: Demystifying Module Development - How to Extend Titanium",
 				"description": "The ability to extend your application with custom functionality, whether an external library or your own custom library, opens up numerous possibilities for what you can create. Titanium enables this with what are called 'modules'. Modules provide a bridge between your Javascript application code and your native library code. Getting started writing your own modules can seem confusing, but once your understand the architecture of a module and how it integrates with the Titanium platform you will be able to add your own functionality in short order.<br>In this session you will learn:<br>How to create your module project<br>How to call methods and pass parameters to your module from your Javascript code<br>How to make callbacks into your Javascript code from your module<br>This session is for anyone interested in understanding module development and how to get started.<br>Jeff English is the Modules Development Manager at Appcelerator. Jeff and his team designed and developed many of the Appcelerator modules found in the Marketplace.",
 				"thumb": "resources/images/codestrong_logo_short.png"
-			},
-			{
+			}, {
 				"id": "29994058",
 				"name": "Ingo Muschenetz: Titanium Studio Deep Dive",
 				"title": "Ingo Muschenetz: Titanium Studio Deep Dive",
 				"description": "Have questions about how to script or integrate a desired feature? Titanium Studio offers a wealth of opportunities for modifying and extending behavior through both Eclipse plugins and Rubles, Studio's own scripting interface.<br>Ingo Muschenetz, Director of Tools Engineering, will lead a deep dive into the scripting interface of Titanium Studio to show how you can customize and extend Studio to better fit your preferences and workflow. We'll cover themes, scopes, commands, snippets, project templates and content assist showing possible approaches and solutions to easily modifying existing functionality, providing your own, and sharing with others.<br>This session is for developers of all skill levels, with discussion and explanation of several use cases.<br>Ingo Muschenetz is Appcelerator's Director, Tools Engineering, Appcelerator. He leads the development efforts for the Titanium Studio and Aptana Studio products .",
 				"thumb": "resources/images/codestrong_logo_short.png"
-			},
-			{
+			}, {
 				"id": "29754525",
 				"name": "Kevin Whinnery: Best Practices for Cross-Platform Mobile Development",
 				"title": "Kevin Whinnery: Best Practices for Cross-Platform Mobile Development",
 				"description": "Kevin Whinnery, Appcelerator Evangelist, shares best practices for creating mobile apps for cross-device deployment. Titanium Mobile is not a \"write once, run everywhere\" technology solution. Because Titanium provides the platform-specific APIs necessary to create best of breed native applications, the way in which you approach user interface development on one platform might differ significantly for another platform. It is, however, very possible to \"write once, adapt everywhere\" - to provide rich native experiences while achieving maximum code reuse.<br>In this presentation, we will cover real world techniques for maximizing code reuse while leveraging platform-specific APIs in Titanium applications. Come with questions, and leave with multiple projects and code examples showing techniques Titanium developers use today to deliver sophisticated and performant cross-platform applications.",
 				"thumb": "resources/images/codestrong_logo_short.png"
-			},
-			{
+			}, {
 				"id": "29804284",
 				"name": "Rick Blalock: Your Apps are Leaking - Controlling Memory Leaks",
 				"title": "Rick Blalock: Your Apps are Leaking - Controlling Memory Leaks",
 				"description": "Developing large-scale Titanium apps can be tricky. Although Titanium manages memory on the native level for developers, care and attention on memory management and profiling techniques must be used in order to ensure their javascript is optimial. Attendees will learn how to detect memory leak / retention issues caused by client-side code. They will learn how to utilize tools and techniques such as Instruments / DDMS, proper architectural patterns, and more to produce performant apps.<br>Appcelerator's Rick Blalock leads this session for developers who have a a strong grasp of Titanium but want to learn how to profile and improve the apps they build.",
 				"thumb": "resources/images/codestrong_logo_short.png"
-			},
-			{
+			}, {
 				"id": "29807421",
 				"name": "Fred Spencer & Blain Hamon: Advanced Titanium for iOS",
 				"title": "Fred Spencer & Blain Hamon: Advanced Titanium for iOS",
 				"description": "In this presentation, we discuss taking advantage of native iOS features on Titanium both through code and configuration, as well as how to use Apple's toolchain for iOS development to be more productive and produce better products.<br>Some topics that we'll cover include:<br>Using Apple's toolchain:<br>- Debugging app internals<br>- Custom-configuring plists<br>- Titanium 'export' and switching to xcode<br>APIs & Titanium:<br>- iOS-specific tiapp.xml settings<br>- App lifecycle on iOS<br>- View lifecycles & layout<br>- Memory management 'gotchas'",
 				"thumb": "resources/images/codestrong_logo_short.png"
-			},
-			{
+			}, {
 				"id": "29754302",
 				"name": "Don Thorp & Marshall Culpepper: Advanced Titanium Development for Android",
 				"title": "Don Thorp & Marshall Culpepper: Advanced Titanium Development for Android",
