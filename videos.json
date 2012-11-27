@@ -2,7 +2,7 @@
 	{
 		"items": [
 			{
-				"description": "Michael King, Appcelerator's Director of Enterprise Services, discusses the following:<br />\r\n<br />\r\n- Deep dive on the technologies involved in building a \u201cmobile-first\u201d organization<br />\r\n- Next-generation mobility platforms, mobile application, mobile device management, and a host of other technologies, exist to help enterprise mobilize employee apps and everything customer facing.<br />\r\n- How do you choose them, what are the requirements, and in what should you expect them to do.",
+				"description": "Michael King, Appcelerator's Director of Enterprise Services, discusses the following:<br />\r\n<br />\r\n- Deep dive on the technologies involved in building a \u201cmobile-first\u201d organization<br />\r\n- Next-generation mobility platforms, mobile application, mobile device management, and a host of other technologies exist to help enterprises mobilize employee apps and everything customer facing.<br />\r\n- How do you choose them, what are the requirements, and in what should you expect them to do.",
 				"title": "Enterprise Summit - Technologies to Enable Mobile First Enterprises",
 				"thumb": "http://b.vimeocdn.com/ts/363/681/363681084_100.jpg",
 				"id": "52697965",
@@ -57,10 +57,10 @@
 				"name": "CODESTRONG Conference Close"
 			}, {
 				"description": "David Bankier, Director, YY Digital<br />\r\n <br />\r\nThis session demonstrates how to do \"live\" testing against either the simulator or device - and on iOS or Android - simultaneously. Using a BDD framework also makes this easy.<br />\r\n<br />\r\n1) There is much much more to Titanium then apps, modules and the cloud - its great fun and highly rewarding.<br />\r\n2) Anything that annoys you fix it yourself.<br />\r\n3) There are no limits - it is much easier than you think.",
-				"title": "CODESTRONG Breakout - Hacking Titanium",
+				"title": "Breakout - Hacking Titanium",
 				"thumb": "http://b.vimeocdn.com/ts/360/025/360025144_100.jpg",
 				"id": "52190962",
-				"name": "CODESTRONG Breakout - Hacking Titanium"
+				"name": "Breakout - Hacking Titanium"
 			}, {
 				"description": "Rob Rusher, Principal Consultant, On3 Solutions<br />\r\n <br />\r\nThere is a huge difference between imagining and seeing. There is a bigger difference between developers who plan and those who plan to fail. That difference is a Prototype. Unfortunately, building prototypes takes time and money you don't have. That is, until you attend this session in which we will demonstrate the tools and processes we use at On3. In minutes, we build prototypes that are easily installed on a device for a realistic experience that wins hearts and closes deals. Show, don't imagine. Plan, don't guess. Being a professional doesn't happen by accident.",
 				"title": "Breakout session - Create Real Interactive Prototypes in Minutes",
