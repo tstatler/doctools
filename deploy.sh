@@ -101,7 +101,7 @@ if [ ! "$ALLOY" ]; then
 fi
 
 if [ $include_alloy ]; then
-    alloyDirs="${ALLOY}/alloy/builtins ${ALLOY}/alloy/lib"
+    alloyDirs="${ALLOY}/alloy/builtins ${ALLOY}/alloy/lib ${ALLOY}/docs/apidoc"
     for D in $ALLOY/widgets/*; do
         if [[ -d $D ]]; then
             alloyDirs+=" $D/controllers/"
