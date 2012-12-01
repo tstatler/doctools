@@ -3,7 +3,7 @@
 # Copyright (c) 2012 Appcelerator, Inc. All Rights Reserved.
 # Licensed under the Apache Public License (version 2)
 
-import os, shutil, json, sys, re, xml.dom.minidom, pprint, optparse
+import os, shutil, json, sys, re, xml.dom.minidom, pprint, optparse, urllib
 from BeautifulSoup import BeautifulSoup
 
 parser = optparse.OptionParser()
@@ -93,10 +93,16 @@ def node2obj(node):
 					print "Unprocessed " + href
 					pass
 
-			# Rewrite any absolute links to http://docs.appcelerator.com 
-			# Only way we can insert a link to the videos in the wiki is to use a full URL
-			elif re.search('http://docs.appcelerator.com/titanium/.*#!.*', href):
-				tag['href'] = re.sub('http://docs.appcelerator.com/titanium/.*#!', '#!', href)
+			# Rewrite any absolute links to http://docs.appcelerator.com/titanium into local 
+			# links to avoid page reloads.  At present, we ignore any version in the URL and 
+			# assume that any links  are indented to link to the current version of the doc.
+			#           
+			# The wiki export is now urlencoding the fragment, so we need to decode it first.
+			elif re.search('http://docs.appcelerator.com/titanium/.*#.*', href):
+				fragment = re.sub('http://docs.appcelerator.com/titanium/.*#', '', href)
+				fragment = urllib.unquote(fragment)
+				if fragment.startswith('!'):
+					tag['href'] = '#' + fragment
 
 			# In general, any link back to the wiki is a bad link.
 			# There are a very few exceptions, such as the community wiki.
