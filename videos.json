@@ -56,7 +56,7 @@
 				"id": "52190964",
 				"name": "CODESTRONG Conference Close"
 			}, {
-				"description": "David Bankier, Director, YY Digital<br />\r\n <br />\r\nThis session demonstrates how to do \"live\" testing against either the simulator or device - and on iOS or Android - simultaneously. Using a BDD framework also makes this easy.<br />\r\n<br />\r\n1) There is much much more to Titanium then apps, modules and the cloud - its great fun and highly rewarding.<br />\r\n2) Anything that annoys you fix it yourself.<br />\r\n3) There are no limits - it is much easier than you think.",
+				"description": "David Bankier, Director, YY Digital<br />\r\n <br />\r\nThis session demonstrates how to do \"live\" testing against either the simulator or device - and on iOS or Android - simultaneously. Using a BDD framework also makes this easy.<br />\r\n<br />\r\n1) There is much much more to Titanium than apps, modules and the cloud - its great fun and highly rewarding.<br />\r\n2) Anything that annoys you fix it yourself.<br />\r\n3) There are no limits - it is much easier than you think.",
 				"title": "Breakout - Hacking Titanium",
 				"thumb": "http://b.vimeocdn.com/ts/360/025/360025144_100.jpg",
 				"id": "52190962",
@@ -80,13 +80,13 @@
 				"id": "52813039",
 				"name": "Breakout session - Building Your Own Custom Cloud Services"
 			}, {
-				"description": "Mike Goff, Director of Product Management, Appcelerator<br />\r\n <br />\r\nAs a mobile developer, you've already adopted the 20+ prebuilt Appcelerator cloud services (ACS) so you can easily build your back end of your mobile app using right from Titanium, or for your native apps with a single line of javascript<br />\r\nThis session will show you everything you need to know to build your own custom cloud based services for ACS, including best -practices and different deployment options<br />\r\nWe'll walk through simple examples of how you can create your own cloud based services to integrate social and video to enhance your online mobile experience",
+				"description": "Mike Goff, Director of Product Management, Appcelerator<br />\r\n <br />\r\nAs a mobile developer, you've already adopted the 20+ prebuilt Appcelerator cloud services (ACS) so you can easily build the back end of your mobile app using Titanium, or for your native apps with a single line of javascript<br />\r\nThis session will show you everything you need to know to build your own custom cloud based services for ACS, including best -practices and different deployment options<br />\r\nWe'll walk through simple examples of how you can create your own cloud based services to integrate social and video to enhance your online mobile experience",
 				"title": "Breakout session - Using Appcelerator Cloud Services in Your Apps",
 				"thumb": "http://b.vimeocdn.com/ts/364/503/364503528_100.jpg",
 				"id": "52813038",
 				"name": "Breakout session - Using Appcelerator Cloud Services in Your Apps"
 			}, {
-				"description": "Carlos Icaza, Founder, Lanica<br />\r\n <br />\r\nLearn about Platino\u2122 the new game engine by Lanica and learn how to quickly produce game using standard gaming techniques such as SpriteSheets, Parallax Scrolling, Particle Effects and others.<br />\r\n <br />\r\nWe will also cover some of the advance rendering techniques that will be available in Platino such as Shaders, Vertices Arrays, Parallax Mapping, Physics, and more.",
+				"description": "Carlos Icaza, Founder, Lanica<br />\r\n <br />\r\nLearn about Platino\u2122 the new game engine by Lanica and learn how to quickly produce games using standard gaming techniques such as SpriteSheets, Parallax Scrolling, Particle Effects and others.<br />\r\n <br />\r\nWe will also cover some of the advance rendering techniques that will be available in Platino such as Shaders, Vertices Arrays, Parallax Mapping, Physics, and more.",
 				"title": "Breakout session - Rapid Game Development on Titanium",
 				"thumb": "http://b.vimeocdn.com/ts/364/456/364456643_100.jpg",
 				"id": "52802376",
@@ -104,7 +104,7 @@
 				"id": "52802373",
 				"name": "Breakout session - Developing iPhone and Android Apps using Titanium and Red Hat's OpenShift"
 			}, {
-				"description": "Michael King, Director of Enterprise Strategy, Appcelerator<br />\r\n <br />\r\nDive deep, on the mobile application lifecycle.<br />\r\nUnderstand all the roles involved in today's mobile application lifecycle. From plan to build to test to manage to analyze\u2026 And beyond<br />\r\nUnderstand how testing can affect every aspect of your application will reprocess and see a demo of some of the latest testing capabilities from our partners<br />\r\nRole-based, lifecycle management is the future of mobile application development, come get a preview of what looks like",
+				"description": "Michael King, Director of Enterprise Strategy, Appcelerator<br />\r\n <br />\r\nDive deep, on the mobile application lifecycle.<br />\r\nUnderstand all the roles involved in today's mobile application lifecycle. From plan to build to test to manage to analyze\u2026 And beyond<br />\r\nUnderstand how testing can affect every aspect of your application will reprocess and see a demo of some of the latest testing capabilities from our partners<br />\r\nRole-based, lifecycle management is the future of mobile application development, come get a preview of what it looks like",
 				"title": "Breakout session - Leveraging Titanium as Part of Your Mobile App Lifecycle",
 				"thumb": "http://b.vimeocdn.com/ts/364/464/364464376_100.jpg",
 				"id": "52802374",
