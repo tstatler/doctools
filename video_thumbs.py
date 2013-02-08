@@ -19,18 +19,19 @@ try:
 	video_list_file = open(options.input_file, 'r')
 except:
 	print ('Failed to open input file: %s' % options.input_file)
-	exit()
+	exit(1)
 
 try: 
 	result_file = open(options.output_file, 'w')
 except:
 	print ('Failed to open output file: %s' % options.output_file)
+	exit(1)
 
 try:
 	video_list_json = video_list_file.read()
 except:
 	print ('Failed to read source file')
-	exit()
+	exit(1)
 finally:
 	video_list_file.close()
 	
@@ -61,6 +62,7 @@ for ii in range(len(video_list)):
 		except pycurl.error as e:
 			if (options.verbose):
 				print (e[1])
+			exit(1)
 		finally:
 			request.close()
 
@@ -68,5 +70,6 @@ try:
 	result_file.write(json.dumps(video_list, indent=2))
 except:
 	print ('Failed to write results to %s' % options.output_file)
+	exit(1)
 finally:
 	result_file.close()

@@ -116,6 +116,11 @@ if [ $no_thumbnails ]; then
     cp $VIDEO_LIST $PROCESSED_VIDEO_LIST
 else
     python ./video_thumbs.py --input $VIDEO_LIST --output $PROCESSED_VIDEO_LIST
+    if [ $? -ne 0 ]; then
+        echo "Failed to retrieve video thumbnails. "
+        echo "Try again or run with -t to use generic thumbnails."
+        exit
+    fi
 fi
 
 if [ $production_build ] ; then
