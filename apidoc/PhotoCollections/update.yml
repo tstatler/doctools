@@ -1,0 +1,229 @@
+name: PhotoCollections
+methods:
+  - name: update
+    summary: Update a Photo Collection
+    description: |
+        Updates a photo collection.
+
+        An existing collection's cover photo can be added or updated by specifying a
+        new `cover_photo_id`. The cover photo can be removed by sending an empty
+        string as the value for `cover_photo_id`.  
+        Application Admin can update any Photo Collection.
+        
+    url: collections/update.json
+    http-method: PUT
+    login-required: true
+
+    parameters: 
+
+      - name: collection_id
+        description: ID of the collection to update.
+        type: String
+
+      - name: name
+        description: |
+            New name of the collection. The name must be unique across other top-level
+            collections. If this is a sub-collection, the name must be unique across other
+            sub-collections of the same parent.
+        type: String
+
+      - name: parent_collection_id
+        description: |
+            Parent collection ID. Specify when creating a subcollection.
+        type: String
+
+      - name: cover_photo_id
+        description: |
+            ID of the photo to use as a cover photo. The photo does not need to be
+            in the collection.
+        type: String
+
+      - name: custom_fields
+        description: User defined fields. See [Custom Data Fields](#!/guide/customfields).
+        type: [ String, Hash ]
+
+      - name: acl_name
+        description: |
+            Name of an {@link ACL} to associate with this collection.
+
+            An ACL can be specified using `acl_name` or `acl_id`. The two parameters are
+            mutually exclusive.
+        type: String
+
+      - name: acl_id
+        description: |
+            ID of an {@link ACL} to associate with this collection.
+
+            An ACL can be specified using `acl_name` or `acl_id`. The two parameters are
+            mutually exclusive.
+        type: String
+
+      - name: user_id
+        description: |
+            User ID to create the collection on behalf of.
+
+            The current login user must be an application admin to create a collection on
+            behalf of another user.
+        type: String
+
+    response-parameters:
+      - name: collections
+        description: Single-element array containing the updated collection.
+        type: Array<PhotoCollections>
+
+    examples:
+      - platform: rest
+        example: |
+            Example cURL request:
+            
+                $ curl -b cookies.txt -c cookies.txt -X PUT -F "cover_photo_id=4deece22d0afbe3ab4000002" -F "collection_id=4deb4496d0afbec69e000008" "https://api.cloud.appcelerator.com/v1/collections/update.json?key=<YOUR APP APP KEY>"
+                
+            Example JSON response:
+            
+                {
+                  "meta": {
+                    "code": 200,
+                    "method_name": "updateCollection",
+                    "status": "ok"
+                  },
+                  "response": {
+                    "collections": [
+                      {
+                        "name": "Sky Diving",
+                        "cover_photo": {
+                          "created_at": "2011-06-08T01:19:30+0000",
+                          "size": 6178569,
+                          "urls": {
+                            "medium_640": "http://storage.appcelerator.com/ZnkQfIWk1yUZq3m82QE9ZXrbq5jxqLEz/photos/4deece22d0afbe3ab4000002/IMG_0078_medium_640.jpg",
+                            "medium_500": "http://storage.appcelerator.com/ZnkQfIWk1yUZq3m82QE9ZXrbq5jxqLEz/photos/4deece22d0afbe3ab4000002/IMG_0078_medium_500.jpg",
+                            "small_240": "http://storage.appcelerator.com/ZnkQfIWk1yUZq3m82QE9ZXrbq5jxqLEz/photos/4deece22d0afbe3ab4000002/IMG_0078_small_240.jpg",
+                            "square_75": "http://storage.appcelerator.com/ZnkQfIWk1yUZq3m82QE9ZXrbq5jxqLEz/photos/4deece22d0afbe3ab4000002/IMG_0078_square_75.jpg",
+                            "large_1024": "http://storage.appcelerator.com/ZnkQfIWk1yUZq3m82QE9ZXrbq5jxqLEz/photos/4deece22d0afbe3ab4000002/IMG_0078_large_1024.jpg",
+                            "original": "http://storage.appcelerator.com/ZnkQfIWk1yUZq3m82QE9ZXrbq5jxqLEz/photos/4deece22d0afbe3ab4000002/IMG_0078_original.jpg",
+                            "thumb_100": "http://storage.appcelerator.com/ZnkQfIWk1yUZq3m82QE9ZXrbq5jxqLEz/photos/4deece22d0afbe3ab4000002/IMG_0078_thumb_100.jpg"
+                          },
+                          "content_type": "image/jpeg",
+                          "updated_at": "2011-06-08T01:20:08+0000",
+                          "tags": [
+                            "foo",
+                            "bar"
+                          ],
+                          "processed": true,
+                          "id": "4deece22d0afbe3ab4000002",
+                          "exif": {
+                            "create_date": "2010-06-03T02:36:42+0000"
+                          },
+                          "filename": "IMG_0078.jpg",
+                          "md5": "8c189ce29ecab9daf9d14fbe679c339d"
+                        },
+                        "created_at": "2011-06-05T08:55:50+0000",
+                        "updated_at": "2011-06-08T18:10:36+0000",
+                        "id": "4deb4496d0afbec69e000008",
+                        "user": {
+                          "created_at": "2011-05-26T20:48:07+0000",
+                          "updated_at": "2011-06-04T01:54:39+0000",
+                          "id": "4ddebc87d0afbe5a54000001",
+                          "last_name": "Goff",
+                          "email": "mike@appcelerator.com",
+                          "first_name": "Mike"
+                        },
+                        "counts": {
+                          "photos": 0,
+                          "total_photos": 1,
+                          "subcollections": 2
+                        }
+                      }
+                    ]
+                  }
+                }
+                
+      - platform: ios
+        example: |
+            Example iOS call:
+            
+                NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:(CCCollection *)collection.objectId, @"collection_id", @"new album", @"name", nil];
+                CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"collections/update.json" paramDict:paramDict];
+                [request startAsynchronous];
+                [request release];
+                
+            SDK Callback:
+            
+                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
+                {
+                	NSArray *collections = [response getObjectsOfType:[CCCollection class]];
+                }
+                
+      - platform: android
+        example: |
+            Example Android call:
+            
+                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+                
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("collection_id", "4deb4496d0afbec69e000008");
+                data.put("cover_photo_id", "4deece22d0afbe3ab4000002");
+                CCResponse response = sdk.sendRequest("collections/update.json", CCRequestMethod.PUT, data);
+                
+            SDK Callback:
+            
+                JSONObject responseJSON = response.getResponseData();
+                CCMeta meta = response.getMeta();
+                if("ok".equals(meta.getStatus()) 
+                    && meta.getCode() == 200 
+                    && "updateCollection".equals(meta.getMethod())) {
+                  JSONArray collections = responseJSON.getJSONArray("collections");
+                  ...
+                }
+                
+      - platform: javascript
+        example: |
+            Example Javascript call:
+            
+                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+                var data = {
+                  collection_id: '4deb4496d0afbec69e000008',
+                  cover_photo_id: '4deece22d0afbe3ab4000002'
+                };
+                sdk.sendRequest('collections/update.json', 'PUT', data, callback);
+                
+            SDK Callback:
+            
+                function callback(data) {
+                  if(data) {
+                    if(data.meta) {
+                      var meta = data.meta;
+                      if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'updateCollection') {
+                        var collections = data.response.collections;
+                      	...
+                      }
+                    }
+                  }
+                }
+                
+      - platform: actionscript
+        example: |
+            Example Actionscript call:
+            
+                var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+                
+                var data:Object = new Object();
+                data.collection_id = "4deb4496d0afbec69e000008";
+                data.cover_photo_id="4deece22d0afbe3ab4000002";
+                sdk.sendRequest("collections/update.json", URLRequestMethod.PUT, data, false, callback);
+                
+            SDK Callback:
+            
+                function callback(data:Object):void {
+                  if(data) {
+                    if(data.hasOwnProperty("meta")) {
+                      var meta:Object = data.meta;
+                      if(meta.status == "ok" && meta.code == 200 && meta.method_name == "updateCollection") {
+                      	var collections:Array = data.response.collections;
+                      	...
+                      }
+                    }
+                  }
+                }
+                

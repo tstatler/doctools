@@ -1,0 +1,150 @@
+name: ACL
+methods:
+  - name: check
+    summary: Check a user's permission in an ACL.
+
+    description: |
+        Check an ACL object with the given `id` or `name` and user's id to get
+        specified user's permission in this ACL object. In the response, "read
+        permission": "yes" means the user has read permission, otherwise or not;
+        "write permission": "yes" means the user has write permission, otherwise or
+        not.
+        
+    url: acls/check.json
+    login-required: true
+
+    parameters:
+      - name: name 
+        description: |
+            Name of the ACL object.
+
+            Either `name` or `id` must be specified.
+        type: String
+
+      - name: id
+        description: |
+            ID of the ACL oject.
+      
+            Either `name` or `id` must be specified.
+        type: String
+
+      - name: user_id
+        description: User ID of the user to check.
+        type: String
+
+    response-parameters:
+      - name: permission
+        description: |
+            A hash with two properties: 
+            
+            *   `read_permission`. Indicates whether the user can read objects associated with this ACL.
+            *   `write_permission`.Indicates whether the user can update objects associated with this ACL.
+
+            Both properties are Booleans.
+        type: Hash
+
+    examples:
+      - platform: rest
+        example: |
+            Example cURL request:
+            
+                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/acls/check.json?key=<YOUR APP APP KEY>&name;=access_photo_album&user;_id=4fcdd3c547b7b71c0b000004"
+                
+            Example JSON response:
+            
+                {
+                  "meta": {
+                    "code": 200,
+                    "status": "ok",
+                    "method_name": "checkAcl"
+                  },
+                  "response": {
+                    "permission": {
+                      "read_permission": true,
+                      "write_permission": false
+                    }
+                  }
+                }
+                
+      - platform: ios
+        example: |
+            Example iOS call:
+            
+                NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
+                [paramDict setObject:@"access_photo_album" forKey:@"name"];
+                [paramDict setObject:@"4fcdd3c547b7b71c0b000004" forKey:@"user_id"];
+                CCRequest *request = [[CCRequest alloc] initWithDelegate:self  httpMethod:@"DELETE" baseUrl:@"acls/check.json" paramDict:paramDict];
+                [request startAsynchronous];
+                [request release];
+                
+            SDK Callback:
+            
+                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
+                {
+                	if ([response.meta.method isEqualToString:@"checkAcl"]) {
+                	}
+                }
+                
+      - platform: android
+        example: |
+            Example Android call:
+            
+                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+                
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("name", "access_photo_album");
+                data.put("user_id", "4fcdd3c547b7b71c0b000004");
+                CCResponse response = sdk.sendRequest("acls/check.json", CCRequestMethod.GET, data);
+                
+            SDK Callback:
+            
+                JSONObject responseJSON = response.getResponseData();
+                CCMeta meta = response.getMeta();
+                if("ok".equals(meta.getStatus()) 
+                    && meta.getCode() == 200 
+                    && "checkAcl".equals(meta.getMethod())) {
+                
+                }
+                
+      - platform: javascript
+        example: |
+            Example Javascript call:
+            
+                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+                var data = {
+                  name: 'access_photo_album',
+                  user_id: '4fcdd3c547b7b71c0b000004',
+                };
+                sdk.sendRequest('acls/check.json', 'GET', data, callback);
+                
+            SDK Callback:
+            
+                function callback(data) {
+                  if(data) {
+                    if(data.meta) {
+                      var meta = data.meta;
+                      if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'checkAcl') {
+                
+                      }
+                    }
+                  }
+                }
+                
+            ![](https://static.appcelerator.com/images/nav/appcelerator-footer-logo.png)
+            
+              * [Twitter](https://twitter.com/appcelerator)
+              * [Facebook](http://www.facebook.com/appcelerator)
+              * [Pinterest](http://pinterest.com/appcelerator/)
+              * [RSS](http://developer.appcelerator.com/blog/feed)
+              * [Email](mailto:info@appcelerator.com)
+            
+            (C) 2008-2013 Appcelerator Inc. All rights reserved. Appcelerator is a
+            registered trademark.
+            
+            [Legal information](http://www.appcelerator.com/legal)
+            
+            [Privacy Policy](http://www.appcelerator.com/legal/privacy-policy)
+            
+            [Help & Support](http://www.appcelerator.com/help)
+            

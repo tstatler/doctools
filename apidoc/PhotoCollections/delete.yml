@@ -1,0 +1,124 @@
+name: PhotoCollections
+methods:
+  - name: delete
+    summary: Delete a Photo Collection
+
+    description: |
+        Delete an empty collection. An error will be returned if a collection contains
+        any photos or subcollections.  
+
+        An application admin can delete any photo collection.
+        
+    url: collections/delete.json
+    http-method: DELETE
+    login-required: true
+
+    parameters:
+      - name: collection_id
+        description: ID of the collection to delete.
+        type: String
+        required: true
+
+    examples:
+      - platform: rest
+        example: |
+            Example cURL request:
+            
+                $ curl -b cookies.txt -c cookies.txt -X DELETE "https://api.cloud.appcelerator.com/v1/collections/delete.json?key=<YOUR APP APP KEY>&collection;_id=4e013938d0afbe3896000009"
+                
+            Example JSON response:
+            
+                {
+                  "meta": {
+                    "code": 200,
+                    "method_name": "deleteCollection",
+                    "status": "ok"
+                  }
+                }
+                
+      - platform: ios
+        example: |
+            Example iOS call:
+            
+                NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:(CCCollection *)collection.objectId, @"collection_id", nil];
+                CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"DELETE" baseUrl:@"collections/delete.json" paramDict:paramDict];
+                [request startAsynchronous];
+                [request release];
+                
+            SDK Callback:
+            
+                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
+                {
+                	if ([response.meta.method isEqualToString:@"deleteCollection"]) {
+                		NSLog(@"Collection deleted!");
+                	}
+                }
+                
+      - platform: android
+        example: |
+            Example Android call:
+            
+                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+                
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("collection_id", "4e013938d0afbe3896000009");
+                CCResponse response = sdk.sendRequest("collections/delete.json", CCRequestMethod.DELETE, data);
+                
+            SDK Callback:
+            
+                JSONObject responseJSON = response.getResponseData();
+                CCMeta meta = response.getMeta();
+                if("ok".equals(meta.getStatus()) 
+                    && meta.getCode() == 200 
+                    && "deleteCollection".equals(meta.getMethod())) {
+                  System.out.println("Collection deleted!");
+                }
+                
+      - platform: javascript
+        example: |
+            Example Javascript call:
+            
+                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+                var data = {
+                  collection_id: '4e013938d0afbe3896000009'
+                };
+                sdk.sendRequest('collections/delete.json', 'DELETE', data, callback);
+                
+            SDK Callback:
+            
+                function callback(data) {
+                  if(data) {
+                    if(data.meta) {
+                      var meta = data.meta;
+                      if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'deleteCollection') {
+                        alert("Collection deleted!");
+                      }
+                    }
+                  }
+                }
+                
+      - platform: actionscript
+        example: |
+            Example Actionscript call:
+            
+                var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+                
+                var data:Object = new Object();
+                data.collection_id = "4e013938d0afbe3896000009";
+                sdk.sendRequest("collections/delete.json", URLRequestMethod.DELETE, data, false, callback);
+                
+            SDK Callback:
+            
+                function callback(data:Object):void {
+                  if(data) {
+                    if(data.hasOwnProperty("meta")) {
+                      var meta:Object = data.meta;
+                      if(meta.status == "ok" && meta.code == 200 && meta.method_name == "deleteCollection") {
+                      	Alert.show("Collection deleted!");
+                      }
+                    }
+                  }
+                }
+                

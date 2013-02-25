@@ -1,0 +1,265 @@
+
+## Relational Field
+
+  * Relational Field Introduction
+  * Create a Relational Field
+  * Show a Relational Field
+  * Query a Relational Field
+  * Remove a Relational Field
+
+### Relational Field Introduction
+
+Relational Fields provide a simple way for users to define relations between
+any ACS objects.
+
+### Create a Relational Field
+
+To add or update a relation, you must provide an ACS object ID and an ACS
+object type. These values together identify a unique ACS object. The relation
+is specified using one of these formats:
+
+    
+    
+    [_ACS_TYPENAME_]_fieldname_id_ 
+    [_ACS_TYPENAME_]_fieldname_ids_ 
+    [_CUSTOM_TYPENAME_]_fieldname_id_ 
+    [_CUSTOM_TYPENAME_]_fieldname_ids_
+    
+
+Where _TYPENAME_ indicates ACS type or ACS custom object type of the object
+pointed to. For example, ACS_User represents an ACS User object, ACS_Photo
+represents an ACS Photo object, and CUSTOM_car represents an ACS custom object
+of class `car`.
+
+To create the relation, create a custom field using one of the relational
+field name formats shown above. For example, in the following custom fields,
+we add two relations :
+
+    
+    
+    Custom_fields = {
+        "[ACS_User]owner_id":"4d6e77386f70950c89000001",
+        "[CUSTOM_car]mycar_id":"4d51d4186f70952d4c000006"
+    }
+    
+
+For example, when creating a custom `car` object, we can specify an owner and
+picture for the car:
+
+    
+    
+    $ curl -b c.txt -c c.txt -F "key=sesObkV0qTaPSEwcHc6DGcR21EWN9HT0" -F "id=506e4c775554f7470b00001d" -F "fields={"[ACS_User]owner_id":"506e4c735554f7470b000003", "[ACS_Photo]picture_id":"506e4c755554f7470b00000a"}" "https://api.cloud.appcelerator.com/v1/objects/car/create.json?key="
+    {
+      "meta": {
+        "code": 200,
+        "status": "ok",
+        "method_name": "updateCustomObject"
+      },
+      "response": {
+        "car": [
+          {
+            "[ACS_Photo]picture_id": [
+              {
+                "id": "506e4c755554f7470b00000a",
+                "filename": "photo.jpg",
+                "size": 584344,
+                "md5": "589b8ad43ed20bf8e622d719642bc939",
+                "created_at": "2012-10-05T02:56:53+0000",
+                "updated_at": "2012-10-05T02:56:53+0000",
+                "processed": false,
+                "user": {
+                  "id": "506e4c735554f7470b000005",
+                  "first_name": "Frank",
+                  "last_name": "Jobs",
+                  "created_at": "2012-10-05T02:56:51+0000",
+                  "updated_at": "2012-10-05T02:56:55+0000",
+                  "external_accounts": [
+    
+                  ],
+                  "confirmed_at": "2012-10-05T02:56:51+0000",
+                  "email": "frank@guy.com",
+                  "admin": "false"
+                },
+                "content_type": "image/jpeg",
+                "likes_count": 1
+              }
+            ],
+            "color": "blue",
+            "model": "nissan",
+            "mileage": 1000,
+            "purchased_date": "2011-11-01 17:08:36 -0700",
+            "[ACS_User]owner_id": [
+              {
+                "id": "506e4c735554f7470b000003",
+                "first_name": "Alice",
+                "last_name": "Gal",
+                "created_at": "2012-10-05T02:56:51+0000",
+                "updated_at": "2012-10-05T02:56:51+0000",
+                "external_accounts": [
+    
+                ],
+                "confirmed_at": "2012-10-05T02:56:51+0000",
+                "username": "alice",
+                "email": "alice@gal.com",
+                "admin": "false"
+              }
+            ],
+            "id": "506e4c775554f7470b00001d",
+            "created_at": "2012-10-05T02:56:55+0000",
+            "updated_at": "2012-10-05T02:56:56+0000",
+            "user": {
+              "id": "506e4c735554f7470b000005",
+              "first_name": "Frank",
+              "last_name": "Jobs",
+              "created_at": "2012-10-05T02:56:51+0000",
+              "updated_at": "2012-10-05T02:56:55+0000",
+              "external_accounts": [
+    
+              ],
+              "confirmed_at": "2012-10-05T02:56:51+0000",
+              "email": "frank@guy.com",
+              "admin": "false"
+            }
+          }
+        ]
+      }
+    }
+    
+    
+
+### Show a Relational Field
+
+When show an ACS object, if the ACS object has a relation to another ACS
+object, ACS will expand the ACS object. For example, if a Custom object car
+has two relations: an owner and a picture, when show the car, we will expand
+the user and photo object. Example JSON response:  
+
+    
+    
+    {
+      "meta": {
+        "code": 200,
+        "status": "ok",
+        "method_name": "createObject"
+      },
+      "response": {
+        "car": [
+          {
+            "color": "blue",
+            "make": "nissan",
+            "purchased_at": "2011-11-03T00:07:37+0000",
+            "year": 2005,
+            "used": false,
+            "coordinates": [
+              [
+                -122.1,
+                37.1
+              ]
+            ],
+     
+            “[ACS_User]owner_id” : {
+     
+            "id":"4d6e77386f70950c89000001",
+     
+            "first_name":"John",
+     
+            "last_name":"Smith",
+     
+            "role": "teacher",
+     
+            "created_at":"2011-03-02T16:58:32+0000",
+     
+            "updated_at":"2011-03-02T16:58:32+0000",
+     
+            "facebook_authorized":false,
+     
+            "email":"john.smith@company.com",
+     
+            "photo": {
+     
+              "id":"4d882896d0afbe0a3600000d",
+     
+              "filename":"photo.jpg",
+     
+              "size":584344,
+     
+              "md5":"589b8ad43ed20bf8e622d719642bc939",
+     
+              "created_at":"2011-03-22T04:41:58+0000",
+     
+              "updated_at":"2011-03-22T04:42:07+0000",
+     
+              "processed":false
+     
+            },
+            "custom_fields": {
+     
+              "age":28,
+     
+              "favorite_color":"blue"
+     
+            }
+            }
+     
+            “[ACS_Photo]picture_id”:{
+            "id":"4d51d4186f70952d4c000006",
+     
+            "filename":"photo.jpg",
+     
+            "size":584344,
+     
+            "md5":"589b8ad43ed20bf8e622d719642bc939",
+     
+            "created_at":"2011-02-08T23:39:04+0000",
+     
+            "updated_at":"2011-02-08T23:39:04+0000",
+     
+            "processed":false
+                   }
+     
+            "id": "4ec42de1d9ca72c50700000d",
+            "created_at": "2011-11-16T21:40:49+0000",
+            "updated_at": "2011-11-16T21:40:49+0000"
+          }
+        ]
+      }
+    }
+    
+
+  
+  
+
+### Query a Relational Field
+
+A relation point to an ACS object, so if we want to query a relation, the
+first step, we need to get the ACS object pointed by the relation. If we want
+to query cars whose owner is “John Smith”, firstly, we need to find the User
+object whose full name is “John Smith”:
+
+    
+    
+    $ curl -c cookies.txt -b cookies.txt -X GET --data-urlencode 'where={"first_name":"John","last_name":”Smith”}' --data-urlencode 'order=created_at' "https://api.cloud.appcelerator.com/v1/users/query.json?key={YOUR APP APP KEY}"
+    
+
+If we the user exist, then we get the user’s id and stored it . Secondly, we
+query Custom object and try to find the car, which has a relation named
+“[ACS_User]owner_id” and the “[ACS_User]owner_id” point to the user object:
+
+    
+    
+    $ curl -c cookies.txt -b cookies.txt -X GET --data-urlencode 'where=
+     
+    {"[ACS_User]owner_id":"the user’s object id"}
+    ' --data-urlencode 'order=-purchased_at' "https://api.cloud.appcelerator.com/v1/objects/car/query.json?key={YOUR APP APP KEY}"
+    
+
+### Remove a Relational Field
+
+set a relation field to null can remove the relation from an ACS object. For
+example, remove picture from a Custom object:
+
+    
+    
+    $ curl -b cookies.txt -c cookies.txt -X PUT --data-urlencode 'fields={“[ACS_Photo]picture_id”:null}' "https://api.cloud.appcelerator.com/v1/objects/car/update.json?key={YOUR APP APP KEY}"
+    
+

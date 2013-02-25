@@ -1,0 +1,185 @@
+name: PhotoCollections
+methods:
+  - name: show
+    summary: Show a Photo Collection
+
+    description: |
+        Shows information about a collection including the cover photo, owner, parent
+        collection, and counts of its contents. See {@link PhotoCollections#subcollections Show
+        Subcollections} and {@link PhotoCollections#photos Show Photos} to view the contents 
+        of a collection.
+        
+    url: collections/show.json
+
+    parameters:
+
+      - name: collection_id
+        description: ID of the collection to retrieve photos from. 
+        type: String
+        required: true
+
+      - name: response_json_depth
+        description: |
+            Nested object depth level counts in the response JSON.  
+
+            In order to reduce server API calls from an applicaton, the response JSON may
+            include not just the objects that are being queried/searched, but also 
+            some important data related to the returned objects such as the object's owner or
+            referenced objects.  
+
+            Default is 3, valid range is 1 to 8.
+        type: Number
+
+    response-parameters:
+      - name: collections
+        description: Single-element array containing the photo collection object.
+        type: Array<PhotoCollections>
+
+    examples:
+      - platform: rest
+        example: |
+            Example cURL request:
+            
+                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/collections/show.json?key=<YOUR APP APP KEY>&collection;_id=4e012ce0d0afbe362a00000a"
+                
+            Example JSON response:
+            
+                {
+                  "meta": {
+                    "code": 200,
+                    "method_name": "showCollection",
+                    "status": "ok"
+                  },
+                  "response": {
+                    "collections": [
+                      {
+                        "name": "Subcollection 1",
+                        "parent_collection": {
+                          "name": "Skydiving",
+                          "created_at": "2011-06-21T23:44:32+0000",
+                          "updated_at": "2011-06-21T23:44:32+0000",
+                          "id": "4e012ce0d0afbe362a000009",
+                          "user": {
+                            "created_at": "2011-06-21T23:44:10+0000",
+                            "updated_at": "2011-06-21T23:44:31+0000",
+                            "username": "bob",
+                            "id": "4e012ccad0afbe362a000002",
+                            "last_name": "Dude",
+                            "email": "bob@dude.com",
+                            "first_name": "Bob"
+                          },
+                          "counts": {
+                            "photos": 0,
+                            "total_photos": 0,
+                            "subcollections": 1
+                          }
+                        },
+                        "created_at": "2011-06-21T23:44:32+0000",
+                        "updated_at": "2011-06-21T23:44:32+0000",
+                        "id": "4e012ce0d0afbe362a00000a",
+                        "user": {
+                          "created_at": "2011-06-21T23:44:10+0000",
+                          "updated_at": "2011-06-21T23:44:31+0000",
+                          "username": "bob",
+                          "id": "4e012ccad0afbe362a000002",
+                          "last_name": "Dude",
+                          "email": "bob@dude.com",
+                          "first_name": "Bob"
+                        },
+                        "counts": {
+                          "photos": 0,
+                          "total_photos": 0,
+                          "subcollections": 0
+                        }
+                      }
+                    ]
+                  }
+                }
+                
+      - platform: ios
+        example: |
+            Example iOS call:
+            
+                NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:(CCCollection *)collection.objectId, @"collection_id", nil];
+                CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"collections/show.json" paramDict:paramDict];
+                [request startAsynchronous];
+                [request release];
+                
+            SDK Callback:
+            
+                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
+                {
+                	NSArray *collections = [response getObjectsOfType:[CCCollection class]];
+                }
+                
+      - platform: android
+        example: |
+            Example Android call:
+            
+                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+                
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("collection_id", "4e012ce0d0afbe362a00000a");
+                CCResponse response = sdk.sendRequest("collections/show.json", CCRequestMethod.GET, data);
+                
+            SDK Callback:
+            
+                JSONObject responseJSON = response.getResponseData();
+                CCMeta meta = response.getMeta();
+                if("ok".equals(meta.getStatus()) 
+                    && meta.getCode() == 200 
+                    && "showCollection".equals(meta.getMethod())) {
+                  JSONArray collections = responseJSON.getJSONArray("collections");
+                  ...
+                }
+                
+      - platform: javascript
+        example: |
+            Example Javascript call:
+            
+                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+                var data = {
+                  collection_id: '4e012ce0d0afbe362a00000a'
+                };
+                sdk.sendRequest('collections/show.json', 'GET', data, callback);
+                
+            SDK Callback:
+            
+                function callback(data) {
+                  if(data) {
+                    if(data.meta) {
+                      var meta = data.meta;
+                      if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'showCollection') {
+                        var collections = data.response.collections;
+                      	...
+                      }
+                    }
+                  }
+                }
+                
+      - platform: actionscript
+        example: |
+            Example Actionscript call:
+            
+                var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+                
+                var data:Object = new Object();
+                data.collection_id = "4e012ce0d0afbe362a00000a";
+                sdk.sendRequest("collections/show.json", URLRequestMethod.GET, data, false, callback);
+                
+            SDK Callback:
+            
+                function callback(data:Object):void {
+                  if(data) {
+                    if(data.hasOwnProperty("meta")) {
+                      var meta:Object = data.meta;
+                      if(meta.status == "ok" && meta.code == 200 && meta.method_name == "showCollection") {
+                      	var collections:Array = data.response.collections;
+                      	...
+                      }
+                    }
+                  }
+                }
+                

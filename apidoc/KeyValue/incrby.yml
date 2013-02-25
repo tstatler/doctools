@@ -1,0 +1,175 @@
+name: KeyValue
+methods:
+  - name: incrby
+    summary: Increment a Key-Value
+
+    description: |
+        Increment the `value` by the given integer value. Not allowed on key-value pairs with binary
+        data.
+        
+        If the current value in the key-value is not convertable to an integer, the new
+        value replaces the existing value.
+    url: keyvalues/incrby.json
+    http-method: PUT
+    login-required: true
+
+    parameters:
+      
+      - name: name
+        description: Name (or key) for the key-value pair. 
+        type: String
+        required: true
+
+      - name: value
+        description: |
+            Integer value to add to the current value. If a floating point number is
+            specified, any fractional portion is dropped.
+
+            If this value cannot be converted to an integer, the existing value is not
+            changed.
+        type: [ String, Number ]
+        required: true
+
+      - name: access_private
+        description: |
+            Determines whether to update this key-value in the publically readable store
+            or in the user's private store.
+
+            Default is false (publically readable). 
+
+      - name: user_id
+        description: |
+            Update the key-value pair on behalf of the identified user.
+
+            Login user must be an admin to update a key-value on behalf of another user.
+
+    reponse-parameters:
+      - name: keyvalues
+        description: |
+            A single-element array containing the updated KeyValue object.
+        type: Array<KeyValue>
+
+    examples:
+      - platform: rest
+        example: |
+            Example cURL request:
+            
+                $ curl -b cookies.txt -c cookies.txt -X PUT -F "name=score" -F "value=1" https://api.cloud.appcelerator.com/v1/keyvalues/incrby.json?key=<YOUR APP APP KEY>
+                
+            Example JSON response:
+            
+                {
+                  "meta": {
+                    "status":"ok",
+                    "code":200,
+                    "method_name":"incrKeyValue"
+                  },
+                  "response": {
+                    "keyvalues": [
+                      {
+                        "id":"4d897a505c032bae9c434696",
+                        "name":"score",
+                        "value":"2",
+                        "created_at":"2011-03-23T08:19:50+0000",
+                        "updated_at":"2011-03-23T08:19:50+0000"
+                      }
+                    ]
+                  }
+                }
+                
+      - platform: ios
+        example: |
+            Example iOS call:
+            
+                NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
+                [paramDict setObject:@"score" forKey:@"name"];
+                [paramDict setObject:@"1" forKey:@"value"];
+                CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"PUT" baseUrl:@"keyvalues/incrby.json" paramDict:paramDict];
+                [request startAsynchronous];
+                [request release];
+                
+            SDK Callback:
+            
+                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
+                {
+                	NSArray *keyvalues = [response getObjectsOfType:[CCKeyValuePair class]];
+                	for (CCKeyValuePair *kv in keyvalues)
+                	{
+                		...
+                	}
+                }
+                
+      - platform: android
+        example: |
+            Example Android call:
+            
+                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+                
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("name", "score");
+                data.put("value", "1");
+                CCResponse response = sdk.sendRequest("keyvalues/incrb.json", CCRequestMethod.PUT, data);
+                
+            SDK Callback:
+            
+                JSONObject responseJSON = response.getResponseData();
+                CCMeta meta = response.getMeta();
+                if("ok".equals(meta.getStatus()) 
+                    && meta.getCode() == 200 
+                    && "incrKeyValue".equals(meta.getMethod())) {
+                  JSONArray keyvalues = responseJSON.getJSONArray("keyvalues");
+                  ...
+                }
+                
+      - platform: javascript
+        example: |
+            Example Javascript call:
+            
+                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+                var data = {
+                  name: 'score',
+                  value: '1'
+                };
+                sdk.sendRequest('keyvalues/incrb.json', 'PUT', data, callback);
+                
+            SDK Callback:
+            
+                function callback(data) {
+                  if(data) {
+                    if(data.meta) {
+                      var meta = data.meta;
+                      if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'incrKeyValue') {
+                        var keyvalues = data.response.keyvalues;
+                      	...
+                      }
+                    }
+                  }
+                }
+                
+      - platform: actionscript
+        example: |
+            Example Actionscript call:
+            
+                var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+                
+                var data:Object = new Object();
+                data.name = "score";
+                data.value = "1";
+                sdk.sendRequest("keyvalues/incrb.json", URLRequestMethod.PUT, data, false, callback);
+                
+            SDK Callback:
+            
+                function callback(data:Object):void {
+                  if(data) {
+                    if(data.hasOwnProperty("meta")) {
+                      var meta:Object = data.meta;
+                      if(meta.status == "ok" && meta.code == 200 && meta.method_name == "incrKeyValue") {
+                      	var keyvalues:Array = data.response.keyvalues;
+                      	...
+                      }
+                    }
+                  }
+                }
+                

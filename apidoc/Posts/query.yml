@@ -1,0 +1,208 @@
+name: Posts
+methods:
+  - name: query
+    summary: Custom Query Posts
+    description: |
+        Performs custom query of posts with sorting and pagination. Currently you can
+        not query or sort data stored inside array or hash in custom fields.
+
+
+        In addition to custom fields, the following pre-defined fields in posts 
+        that can be queried and sorted:
+        
+        *   `user_id` : `String`. Post owner's user ID.
+        *   `title` : `String`. Post title.
+        *   `event_id` : `String`. ID of the event posts belong to.
+        *   `tags_array` : `String`. Post tags.
+        *   `ratings_average` : `Number`. Post's average rating. See {@Reviews}.
+        *   `ratings_count` : `Number`. Post's total number of ratings. See {@Reviews}.
+        *   `reviews_count` : `Number`. Post's total number of reviews. See {@Reviews}.
+        *   `created_at` : `Date`. Timestamp when the post was created.
+        *   `updated_at` : `Date`. Timestamp when the post was last updated.
+    url: posts/query.json
+
+    parameters:
+
+      - name: page  
+        description: Request page number, default is 1.
+        type: Number
+      
+      - name: per_page
+        description: Number of results per page, default is 10.
+        type: Number
+
+      - name: limit
+        description: |
+            Instead of using `page` and `per_page` for pagination, you can use `limit` and
+            `skip` to do your own pagination. `limit` is the maximum number of records to
+            fetch. `limit` cannot be greater than 1000.
+        type: Number
+
+      - name: skip
+        description: |
+            Number of records to skip. Must be used together with `limit`.
+        type: Number
+
+      - name: where
+        description: |
+            Constraint values for fields. `where` should be encoded JSON.
+            
+            If `where` is not specified, `query` returns all objects. Please refer to 
+            [using where query](#!/guide/search_query) for more information.
+        type: String
+
+      - name: order
+        description: |
+            Sort results by one or more fields. Please refer to 
+            [using order in query](#!/guide/search_query) for more information
+        type: String
+
+      - name: response_json_depth
+        description: |
+            Nested object depth level counts in the response JSON.  
+
+            In order to reduce server API calls from an applicaton, the response JSON may
+            include not just the objects that are being queried/searched, but also 
+            some important data related to the returned objects, such as owners and
+            referenced objects.  
+
+            Default is 3, valid range is 1 to 8.
+        type: Number
+
+    response-parameters:
+      - name: posts
+        description: List of posts matching the query parameters.
+        type: Array<Posts>
+
+    examples:
+      - platform: rest
+        example: |
+            Example cURL request:
+            
+                Example: If your app assigns a geo location to each post, query posts with average rating greater than 7 near latitude 37.12, longitude -122.23 within 5 miles
+                $ curl -c cookies.txt -b cookies.txt -X GET --data-urlencode  'where={"ratings_average":{"$gt":7.0},"coordinates":{"$nearSphere":[-122.23,37.12], "$maxDistance" : 0.00126}}' "https://api.cloud.appcelerator.com/v1/posts/query.json?key=<YOUR APP APP KEY>"
+                
+            Example JSON response:
+            
+                {
+                  "meta": {
+                    "status": "ok",
+                    "code": 200,
+                    "method_name": "queryPosts",
+                    "page": 1,
+                    "per_page": 10,
+                    "total_pages": 1,
+                    "total_results": 1
+                  },
+                  "response": {
+                    "posts": [
+                      {
+                        "id": "4e33a252d9ca724676000003",
+                        "title": "Post title",
+                        "created_at": "2011-07-30T06:18:58+0000",
+                        "updated_at": "2011-07-30T06:18:58+0000",
+                        "content": "Post Body",
+                        "reviews_count": 10,
+                        "ratings_average": 7.5,
+                		"ratings_count" : 10,
+                        "ratings_summary": {
+                			"10": 5,
+                			"5" : 5
+                        },
+                        "user": {
+                          "id": "4e33a251d9ca724676000002",
+                          "first_name": "Bob",
+                          "last_name": "Dude",
+                          "created_at": "2011-07-30T06:18:57+0000",
+                          "updated_at": "2011-07-30T06:18:58+0000",
+                          "username": "bob",
+                          "email": "bob@dude.com"
+                        },
+                        "photo": {
+                          "id": "4e33a252d9ca724676000004",
+                          "filename": "photo.jpg",
+                          "size": 584344,
+                          "md5": "589b8ad43ed20bf8e622d719642bc939",
+                          "created_at": "2011-07-30T06:18:58+0000",
+                          "updated_at": "2011-07-30T06:18:58+0000",
+                          "processed": true
+                        },
+                    "custom_fields": {
+                      "coordinates": [-122.23, 37.12] }
+                    }
+                      }
+                    ]
+                  }
+                }
+                
+            Refer to [Custom Fields on IOS](docs/search_query#ios) for more details.
+            
+      - platform: ios
+        example: |
+            Example iOS call:
+            
+                CCWhere *where = [[[CCWhere alloc] init] autorelease];
+                [where fieldName:@"coordinates" nearLat:37.12 nearLng:-122.23 maxDistanceMi:5.0];
+                [where fieldName:@"ratings_average" greaterThan:[NSNumber numberWithDouble:7.0]];
+                NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:where, @"where", nil]
+                request = [[[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"posts/query.json" paramDict:paramDict] autorelease];
+                [request startAsynchronous];
+                
+            SDK Callback:
+            
+                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
+                {
+                	if ([response.meta.methodName isEqualToString:@"queryPosts"]) {
+                		NSArray *posts = [response getObjectsOfType:[CCPost class]];
+                		for (CCPost *post in posts) {
+                			...
+                		}
+                	}
+                }
+                
+      - platform: android
+        example: |
+            Example Android call:
+            
+                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+                
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("where", "{'ratings_average': {'$gt': 7.0}, 'coordinates': {'$nearSphere': [-122.23,37.12], '$maxDistance': 0.00126}}");
+                CCResponse response = sdk.sendRequest("posts/query.json", CCRequestMethod.GET, data);
+                
+            SDK Callback:
+            
+                JSONObject responseJSON = response.getResponseData();
+                CCMeta meta = response.getMeta();
+                if("ok".equals(meta.getStatus()) 
+                    && meta.getCode() == 200 
+                    && "queryPosts".equals(meta.getMethod())) {
+                  JSONArray posts = responseJSON.getJSONArray("posts");
+                  ...
+                }
+                
+      - platform: javascript
+        example: |
+            Example Javascript call:
+            
+                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+                var data = {
+                  where: '{"ratings_average":{"$gt":7.0},"coordinates":{"$nearSphere":[-122.23,37.12], "$maxDistance" : 0.00126}}'
+                };
+                sdk.sendRequest('posts/query.json', 'GET', data, callback);
+                
+            SDK Callback:
+            
+                function callback(data) {
+                  if(data) {
+                    if(data.meta) {
+                      var meta = data.meta;
+                      if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'queryPosts') {
+                        var posts = data.response.posts;
+                      	...
+                      }
+                    }
+                  }
+                }
+                

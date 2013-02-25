@@ -1,0 +1,113 @@
+name: User
+methods:
+  - name: delete
+    summary: Delete User
+    description:  |
+        User must already be logged in to his account in order to delete it. If the
+        user has a profile photo it will also be deleted.
+    url: users/delete
+    http-method: DELETE
+    login-required: true
+
+    parameters:
+      - name: keep_photo
+        description: |
+            If the user has a primary photo that was created by using `photo=` option in
+            [create](User.create) or [update](User.update), the photo object will be deleted as well. Use
+            `keep_photo=true` to tell Appcelerator Cloud Services to not delete this photo.
+
+    examples:
+      - platform: rest
+        example: |
+            Example cURL request:
+                
+                $ curl -b cookies.txt -c cookies.txt -X DELETE https://api.cloud.appcelerator.com/v1/users/delete.json?key=<YOUR APP APP KEY>
+            
+            Example JSON response:
+                
+                {
+                 "meta": {
+                   "status":"ok",
+                   "code":200,
+                   "method_name":"deleteUser"
+                 }
+                }
+            
+      - platform: ios
+        example: |
+            Example iOS call:
+                
+                CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"DELETE" baseUrl:@"users/delete.json" httpMethod:@"DELETE" paramDict:nil];
+                [request startAsynchronous];
+                [request release];
+            
+            SDK Callback:
+                
+                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
+                {
+                	if ([response.meta.method isEqualToString:@"deleteUser"]) {
+                		NSLog(@"user deleted!");
+                	}
+                }
+            
+      - platform: android
+        example: |
+            Example Android call:
+                
+                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+                
+                CCResponse response = sdk.sendRequest("users/delete.json", CCRequestMethod.DELETE, null);
+                
+            SDK Callback:
+                
+                JSONObject responseJSON = response.getResponseData();
+                CCMeta meta = response.getMeta();
+                if("ok".equals(meta.getStatus()) 
+                    && meta.getCode() == 200 
+                    && "deleteUser".equals(meta.getMethod())) {
+                  System.out.println(user deleted!);
+                }
+                
+      - platform: javascript
+        example: |
+            Example JavaScript call:
+                
+                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+                sdk.sendRequest('users/delete.json', 'DELETE', null, callback);
+                
+            SDK Callback:
+                
+                function callback(data) {
+                  if(data) {
+                    if(data.meta) {
+                      var meta = data.meta;
+                      if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'deleteUser') {
+                        alert('user deleted!');
+                      }
+                    }
+                  }
+                }
+                
+      - platform: actionscript
+        example: |
+            Example Actionscript call:
+                
+                var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+                
+                sdk.sendRequest("users/delete.json", URLRequestMethod.DELETE, null, false, callback);
+            
+            SDK Callback:
+                
+                function callback(data:Object):void {
+                  if(data) {
+                    if(data.hasOwnProperty("meta")) {
+                      var meta:Object = data.meta;
+                      if(meta.status == "ok" && meta.code == 200 && meta.method_name == "deleteUser") {
+                        Alert.show("user deleted!");
+                      }
+                    }
+                  }
+                }
+                

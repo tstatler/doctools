@@ -1,0 +1,247 @@
+name: CustomObject
+methods:
+  - name: query
+    summary: Query Custom Objects
+    description: |
+        Query custom object by specified fields with sorting and paginating. Right
+        now, you cannot query or sort data stored inside array or hash in custom
+        fields.
+        
+    url: objects/<classname>/query.json
+
+    parameters:
+      - name: page  
+        description: Request page number, default is 1.
+        type: Number
+      
+      - name: per_page
+        description: Number of results per page, default is 10.
+        type: Number
+
+      - name: limit
+        description: |
+            Instead of using `page` and `per_page` for pagination, you can use `limit` and
+            `skip` to do your own pagination. `limit` is the maximum number of records to
+            fetch. `limit` cannot be greater than 1000.
+        type: Number
+
+      - name: skip
+        description: |
+            Number of records to skip. Must be used together with `limit`.
+        type: Number
+
+      - name: where
+        description: |
+            Constraint values for fields. `where` should be encoded JSON.
+
+
+            In addition to developer created fields, custom objects include
+            four predefined fields that can be queried as well:
+            
+            *   `user_id: String`.  Object owner's user ID.
+            
+            *   `tags_array: String`. List of tags.
+            
+            *   `created_at: Date`. Timestamp when the object was created.
+
+            *   `updated_at: Date`. Timestamp when the object was updated.
+            
+            If `where` is not specified, `query` returns all objects. Please refer to 
+            [using where query](#!/docs/search_query#where) for more information.
+        type: String
+
+      - name: order
+        description: |
+            Sort results by one or more fields, specified as a comma-separated list of 
+            field names. Refer to 
+            [using order in query](#!/guide/search_query#order) for more information.
+
+            Fields with data type Array or Hash cannot be sorted. Custom objects include 
+            two predefined sortable fields:
+            
+                `created_at: Date` - Timestamp when the object was created.
+                `updated_at: Date` - Timestamp when the object was last updated.
+                
+            For example, if you want to query cars and sort them by `make` and
+            `created_at`:
+            
+                "order": "make,created_at"
+                
+            To reverse the sorting order, simply add `-` in front of a field. For example,
+            to sort results by `make` in ascending order then by `created_at` in descending
+            order:
+            
+                "order": "make,-created_at"
+
+        type: String
+
+      - name: response_json_depth
+        description: |
+            Nested object depth level counts in response json.  
+            In order to reduce server API calls from an applicaton, the response json may
+            include not just the objects that are being queried/searched, but also with
+            some important data related to the returning objects such as object's owner or
+            referencing objects.  
+
+            Default is 3, valid range is 1 to 8.
+        type: Number
+
+    response-parameters:
+      - name: classname
+        description: |
+            The _classname_ property stores a list of custom objects matching the
+            query parameters. The _classname_ matches the classname used in the URL.
+        type: Array<Hash>
+
+    examples:
+      - platform: rest
+        example: |
+            Example cURL request:
+            
+                $ curl -c cookies.txt -b cookies.txt -X GET --data-urlencode 'where={"color":"blue","coordinates":{"$nearSphere":[-122.1,37.1], "$maxDistance" : 0.00126}}' --data-urlencode 'order=-purchased_at' "https://api.cloud.appcelerator.com/v1/objects/car/query.json?key=<YOUR APP APP KEY>"
+                
+            Example JSON response:
+            
+                {
+                  "meta": {
+                    "code": 200,
+                    "status": "ok",
+                    "method_name": "queryCustomObjects",
+                    "page": 1,
+                    "total_pages": 1,
+                    "total_results": 2
+                  },
+                  "response": {
+                    "car": [
+                      {
+                        "color": "blue",
+                        "make": "toyota",
+                        "purchased_at": "2011-11-19T00:07:37+0000",
+                        "year": 2011,
+                        "new": false,
+                        "coordinates": [
+                          [
+                            -122.3,
+                            37.2
+                          ]
+                        ],
+                        "id": "4ec563d4d9ca72d25d000012",
+                        "created_at": "2011-11-17T19:43:16+0000",
+                        "updated_at": "2011-11-17T19:43:16+0000"
+                      },
+                      {
+                        "color": "blue",
+                        "purchased_at": "2011-11-03T00:07:37+0000",
+                        "coordinates": [
+                          [
+                            -122.1,
+                            37.1
+                          ]
+                        ],
+                        "id": "4ec42db6d9ca72c50700000b",
+                        "created_at": "2011-11-16T21:40:06+0000",
+                        "updated_at": "2011-11-16T21:40:06+0000"
+                      }
+                    ]
+                  }
+                }
+                
+            Appcelerator Cloud Services iOS SDK provided a CCWhere class to build where
+            clause in query easily. First you need to instantiate a CCWhere object:
+            
+                CCWhere *where = [[[CCWhere alloc] init] autorelease];
+                
+            Then you can add your query constrains by calling one of the following
+            methods:
+            
+                -(void)fieldName:(NSString *)fieldName lessThan:(NSObject *)value;
+                -(void)fieldName:(NSString *)fieldName greaterThan:(NSObject *)value;
+                -(void)fieldName:(NSString *)fieldName equalTo:(NSObject *)value;
+                -(void)fieldName:(NSString *)fieldName notEqualTo:(NSObject *)value;
+                -(void)fieldName:(NSString *)fieldName lessThanEqualTo:(NSObject *)value;
+                -(void)fieldName:(NSString *)fieldName greaterThanEqualTo:(NSObject *)value;
+                -(void)fieldName:(NSString *)fieldName containedIn:(NSArray *)values;
+                -(void)fieldName:(NSString *)fieldName notContainedIn:(NSArray *)values;
+                -(void)fieldName:(NSString *)fieldName regex:(NSString *)value;
+                -(void)fieldName:(NSString *)fieldName nearLat:(double)latitude nearLng:(double)longitude;
+                -(void)fieldName:(NSString *)fieldName nearLat:(double)latitude nearLng:(double)longitude maxDistanceKm:(double)distanceKm;
+                -(void)fieldName:(NSString *)fieldName nearLat:(double)latitude nearLng:(double)longitude maxDistanceMi:(double)distanceMi;
+                
+            The first parameter is the name of the field you want to query on. Then set
+            the where object along with other query parameters in the paramDict for
+            CCRequest.
+            
+                paramDict = [NSDictionary dictionaryWithObjectsAndKeys:where, @"where", @"mileage,-purchased_at", @"order", nil];
+                
+      - platform: ios
+        example: |
+            Example iOS call:
+            
+                CCWhere *where = [[[CCWhere alloc] init] autorelease];
+                [where fieldName:@"make" equalTo:@"nissan"];
+                [where fieldName:@"mileage" greaterThanEqualTo:[NSNumber numberWithInt:1000]];
+                [where fieldName:@"purchased_at" lessThan:[NSDate date]];
+                [where fieldName:@"coordinates" nearLat:37.1 nearLng:-122.1 maxDistanceMi:5.0];
+                
+                paramDict = [NSDictionary dictionaryWithObjectsAndKeys:where, @"where", @"mileage,-purchased_at", @"order", nil];
+                request = [[[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"objects/car/query.json" paramDict:paramDict] autorelease];
+                [request startAsynchronous];
+                
+            SDK Callback:
+            
+                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
+                {
+                	if ([response.meta.methodName isEqualToString:@"queryCustomObjects"]) {
+                		NSArray *cars = [response.response objectForKey:@"car"];
+                		...
+                	}
+                }
+                
+      - platform: android
+        example: |
+            Example Android call:
+            
+                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+                
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("where", "{'color': 'blue', 'coordinates': {'$nearSphere': [-122.1,37.1], '$maxDistance': 0.00126}}");
+                data.put("order", "-purchased_at");
+                CCResponse response = sdk.sendRequest("objects/car/query.json", CCRequestMethod.GET, data);
+                
+            SDK Callback:
+            
+                JSONObject responseJSON = response.getResponseData();
+                CCMeta meta = response.getMeta();
+                if("ok".equals(meta.getStatus()) 
+                    && meta.getCode() == 200 
+                    && "queryCustomObjects".equals(meta.getMethod())) {
+                  JSONArray cars = responseJSON.getJSONArray("car");
+                  ...
+                }
+                
+      - platform: javascript
+        example: |
+            Example Javascript call:
+            
+                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+                var data = {
+                  where: '{"color":"blue","coordinates":{"$nearSphere":[-122.1,37.1], "$maxDistance" : 0.00126}}',
+                  order: 'purchased_at'
+                };
+                sdk.sendRequest('objects/car/query.json', 'GET', data, callback);
+                
+            SDK Callback:
+            
+                function callback(data) {
+                  if(data) {
+                    if(data.meta) {
+                      var meta = data.meta;
+                      if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'queryCustomObjects') {
+                        var cars = data.response.car;
+                      	...
+                      }
+                    }
+                  }
+                }
+                

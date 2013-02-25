@@ -1,0 +1,202 @@
+name: ACL
+methods:
+  - name: update
+    summary: Update an ACL
+    description: |
+        Updates an ACL object to change its access control list. For example, remove
+        some users from reader list or writer list of an ACL object, or add some users
+        to reader list or writer list of an ACL object. Or update ACL of an object,
+        and enable the object be public to write or not, read or not.  
+          
+        Application Admin can update any ACL object.
+        
+    url: acls/update.json
+    http-method: PUT
+    login-required: true
+
+    parameters:
+      - name: name 
+        description: |
+            Name of the ACL object.
+
+            Either `name` or `id` must be specified.
+        type: String
+
+      - name: id
+        description: |
+            ID of the ACL oject.
+      
+            Either `name` or `id` must be specified.
+        type: String
+
+      - name: reader_ids
+        description: |
+            Comma separated list of IDs identifying users who can read objects
+            controlled by this ACL.
+
+            To remove all users from the `readers` list, simply set `reader_ids=""`. 
+            This removes all users except for the owner from the list.
+        type: String
+        required: true
+
+      - name: writer_ids
+        description: |
+            Comma separated list of IDs identifying users who can update an object.
+            controlled by this ACL.
+
+            To remove all users from the `writers` list, simply set `writer_ids=""`. 
+            This removes all users except for the owner from the list.
+        type: String
+        required: true
+
+    parameters:
+      - name: name 
+        description: |
+            Name of the ACL object.
+
+            Either `name` or `id` must be specified.
+        type: String
+
+      - name: id
+        description: |
+            ID of the ACL oject.
+      
+            Either `name` or `id` must be specified.
+        type: String
+
+      - name: reader_ids
+        description: |
+            Comma separated list of IDs identifying users who can read objects
+            controlled by this ACL.
+        type: String
+
+      - name: writer_ids
+        description: |
+            Comma separated list of IDs identifying users who can update an object.
+            controlled by this ACL.
+        type: String
+
+      - name: public_read
+        description: |
+            Determines whether objects controlled by this ACS are publically readable. 
+
+            Default is false.
+        type: Boolean
+
+      - name: public_write
+        description: |
+            Determines whether objects controlled by this ACS are publically writable. 
+
+            Default is false.
+        type: Boolean
+
+    response-parameters:
+      - name: acls
+        description: A single-element array containing the updated ACS object.
+        type: Array<ACL>
+
+    examples:
+      - platform: rest
+        example: |
+            Example cURL request:
+            
+                $ curl -b c.txt -c c.txt -X PUT -F "name=access_photo_album" -F "public_read=true" -F "public_write=true" https://api.cloud.appcelerator.com/v1/acls/update.json?key=<YOUR APP APP KEY>
+                
+            Example JSON response:
+            
+                {
+                  "meta": {
+                    "code": 200,
+                    "status": "ok",
+                    "method_name": "updateAcl"
+                  },
+                  "response": {
+                    "acls": [
+                      {
+                        "id": "4fcdd3c647b7b71c0b00000c",
+                        "name": "access_photo_album",
+                        "user_id": "4fcdd3c647b7b71c0b000007",
+                        "created_at": "2012-06-05T09:39:18+0000",
+                        "updated_at": "2012-06-05T09:39:20+0000",
+                        "public_read": true,
+                        "public_write": true
+                      }
+                    ]
+                  }
+                }
+                
+      - platform: ios
+        example: |
+            Example iOS call:
+            
+                NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
+                [paramDict setObject:@"access_photo_album" forKey:@"name"];
+                [paramDict setObject:@"true" forKey:@"public_read"];
+                [paramDict setObject:@"true" forKey:@"public_write"];
+                CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"PUT" baseUrl:@"acls/update.json" paramDict:paramDict];
+                [request startAsynchronous];
+                [request release];
+                
+            SDK Callback:
+            
+                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
+                {
+                	if ([response.meta.method isEqualToString:@"updateAcl"]) {
+                		NSArray *acls = [response getObjectsOfType:[CCACL class]];
+                		for (CCACL *acl in acls)
+                		{
+                			...
+                		}
+                	}
+                }
+                
+      - platform: android
+        example: |
+            Example Android call:
+            
+                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+                
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("name", "access_photo_album");
+                data.put("public_read", true);
+                data.put("public_write", true);
+                CCResponse response = sdk.sendRequest("acls/update.json", CCRequestMethod.PUT, data);
+                
+            SDK Callback:
+            
+                JSONObject responseJSON = response.getResponseData();
+                CCMeta meta = response.getMeta();
+                if("ok".equals(meta.getStatus()) 
+                    && meta.getCode() == 200 
+                    && "updateAcl".equals(meta.getMethod())) {
+                  JSONArray acls = responseJSON.getJSONArray("acls");
+                  ...
+                }
+                
+      - platform: javascript
+        example: |
+            Example Javascript call:
+            
+                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+                var data = {
+                  name: 'access_photo_album',
+                  public_read: 'true',
+                  public_write: 'true'
+                };
+                sdk.sendRequest('acls/update.json', 'PUT', data, callback);
+                
+            SDK Callback:
+            
+                function callback(data) {
+                  if(data) {
+                    if(data.meta) {
+                      var meta = data.meta;
+                      if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'updateACL') {
+                        var acls = data.response.acls;
+                      	...
+                      }
+                    }
+                  }
+                }
+                

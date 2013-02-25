@@ -1,0 +1,48 @@
+name: Reviewable
+description: |
+    The set of fields that are added to objects that can be {@link Review reviewed}.
+
+private: true
+fields:
+  - name: reviews
+    description: |
+        List of reviews for this object.
+
+        Only present if the object has been reviewed.
+    type: Array<Review>
+
+  - name: reviews_count
+    description: |
+        Total number of reviews for this object.
+        
+        Only present if the object has been reviewed.
+    type: Number
+
+  - name: ratings_count
+    description: |
+        Total number of reviews for this object that include a rating.
+        
+        Only present if the object has been reviewed.
+    type: Number
+
+  - name: ratings_average
+    description: Average rating for this object.
+        
+        Only present if the object has been reviewed.
+    type: Number
+
+  - name: ratings_summary
+    description: |
+        Breakdown of the number of reviews that specified a given rating value. For
+        example, if your ratings range from 1-5, the ratings summary might look like this:
+
+            ratings_summary: {
+                "1" : 1,
+                "2" : 0,
+                "3" : 5,
+                "4" : 50,
+                "5" : 12
+            }
+        
+        Only present if the object has been reviewed.
+    type: Hash

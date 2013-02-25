@@ -1,0 +1,67 @@
+# Getting Started: Using the iOS SDK
+
+  * Download the SDK
+  * Add ACS to your XCode Project
+  * Initialization & Authorization
+  * Facebook Integration
+  * Push Notification
+  * ACS Model Classes
+  * Making API Calls
+  * Handling Server Response
+  * Photo Uploads
+  * Photo Downloads
+  * Troubleshooting & Common Errors
+  * Enable and Disable runtime log
+
+## Download the SDK
+
+Grab the ACS iOS SDK from <https://github.com/cocoafish
+/cocoafish-ios-sdk>. See the [DemoApp](https://github.com/cocoafish/cocoafish-
+ios-sdk/tree/master/samples/DemoApp) and [APIs](https://github.com/cocoafish
+/cocoafish-ios-sdk/tree/master/samples/APIs) sample projects for examples of
+how to store and retrieve data with the SDK.
+
+## Adding ACS to your XCode Project
+
+1\. Create a ACS app from the [Apps page](/apps/new).  Then in
+XCode, create an iOS project and add the following folders from `cocoafish-
+ios-sdk/src/` to your project:
+
+    
+    
+    ACS
+    ASIHTTPRequest
+    FBConnect
+    
+
+![](/images/ios1.png)  
+  
+You can choose to use your own copy of ASIHTTPRequest (v1.8 or above) and
+FBConnect from facebook-ios-sdk (updated on or after Jan 31, 2011).The only
+change we made to the ASIHTTPRequest in our copy is in `ASIHttpRequest.m`:
+
+    
+    
+    - (void)readResponseHeaders
+    {
+      ...
+      if ([self responseStatusCode] == 401) {
+        // Commented out by ACS	
+        // [self setAuthenticationNeeded:ASIHTTPAuthenticationNeeded];
+      } else if ([self responseStatusCode] == 407) {
+        [self setAuthenticationNeeded:ASIProxyAuthenticationNeeded];
+      }
+      ...
+    }
+    
+
+The ACS API server returns HTTP response code `401` in a number
+of different error situations. However, ASIHttpRequest interprets all `401`
+responses as "Authentication Needed." This can be confusing if you want to
+show users the exact error that has occurred. For instance: Invalid user
+email/password, invalid oauth token. We commented out the above line to let
+the server error message to pass through.  
+  
+If you are using your own version of ASIHttpRequest, you can choose to do the
+same to let server authentication error message pass through.  
+	

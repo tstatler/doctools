@@ -1,0 +1,254 @@
+name: Chat
+methods:
+  - name: chatgroup
+    summary: List Chat Groups
+    description: |
+        If user A sends chat message to user B and C, user A, B and C automatically
+        form a chat group. Use this api to get a list of chat groups the current user
+        belongs to. User must be logged in.
+        
+    url: chats/get_chat_groups.json
+    login-required: true
+
+    parameters: 
+
+      - name: page  
+        description: Request page number, default is 1.
+        type: Number
+      
+      - name: per_page
+        description: Number of results per page, default is 10.
+        type: Number
+
+      - name: where
+        description: |
+            Constraint values for fields. `where` should be encoded JSON.
+            
+            If `where` is not specified, `query` returns all objects. Please refer to 
+            [using where query](#!/guide/search_query#where) for more information.
+        type: String
+
+      - name: order
+        description: |
+            Sort results by one or more fields. Please refer to 
+            [using order in query](#!/guide/search_query#order) for more information
+        type: String
+
+      - name: response_json_depth
+        description: |
+            Nested object depth level counts in response json.  
+            In order to reduce server API calls from an applicaton, the response json may
+            include not just the objects that are being queried/searched, but also with
+            some important data related to the returning objects such as object's owner or
+            referencing objects.  
+
+            Default is 3, valid range is 1 to 8.
+        type: Number
+
+    response-paramters:
+      - name: chat_groups
+        description: |
+            List of chat groups. Each chat group entry has the following fields:
+
+            *   `id`. ID of the chat group.
+
+            *   `created_at`. Timestamp when the first message in the chat group was sent.
+
+            *   `updated_at`.  Timestamp of the most recent message in the chat group.
+
+            *   `participate_users`. List if {@link User} objects for the users in the
+                 chat group.
+        type: Array<Hash>
+
+    examples:
+      - platform: rest
+        example: |
+            Example cURL request:
+            
+                Get a list of chat groups the current user belongs to, sorted by groups with most recent activity first.
+                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/chats/get_chat_groups.json?order=-updated_at&key;=<YOUR APP APP KEY>"
+                
+            Example JSON response:
+            
+                {
+                  "meta": {
+                    "code": 200,
+                    "status": "ok",
+                    "method_name": "getChatGroups",
+                    "page": 1,
+                    "per_page": 10,
+                    "total_pages": 1,
+                    "total_results": 3
+                  },
+                  "response": {
+                    "chat_groups": [
+                      {
+                        "id": "4ee04f4dd9ca72680d000009",
+                        "created_at": "2011-12-08T05:46:53+0000",
+                        "updated_at": "2011-12-08T05:46:53+0000",
+                        "participate_users": [
+                          {
+                            "id": "4ee04f4cd9ca72680d000002",
+                            "first_name": "Bob",
+                            "last_name": "Dude",
+                            "created_at": "2011-12-08T05:46:52+0000",
+                            "updated_at": "2011-12-08T05:46:52+0000",
+                            "external_accounts": [
+                
+                            ],
+                            "username": "bob",
+                            "email": "bob@dude.com"
+                          },
+                          {
+                            "id": "4ee04f4cd9ca72680d000003",
+                            "first_name": "Alice",
+                            "last_name": "Gal",
+                            "created_at": "2011-12-08T05:46:52+0000",
+                            "updated_at": "2011-12-08T05:46:52+0000",
+                            "external_accounts": [
+                
+                            ],
+                            "username": "alice",
+                            "email": "alice@gal.com"
+                          }
+                        ]
+                      },
+                      {
+                        "id": "4ee04f4dd9ca72680d000017",
+                        "created_at": "2011-12-08T05:46:53+0000",
+                        "updated_at": "2011-12-08T05:46:53+0000",
+                        "participate_users": [
+                          {
+                            "id": "4ee04f4cd9ca72680d000002",
+                            "first_name": "Bob",
+                            "last_name": "Dude",
+                            "created_at": "2011-12-08T05:46:52+0000",
+                            "updated_at": "2011-12-08T05:46:52+0000",
+                            "external_accounts": [
+                
+                            ],
+                            "username": "bob",
+                            "email": "bob@dude.com"
+                          },
+                          {
+                            "id": "4ee04f4cd9ca72680d000003",
+                            "first_name": "Alice",
+                            "last_name": "Gal",
+                            "created_at": "2011-12-08T05:46:52+0000",
+                            "updated_at": "2011-12-08T05:46:52+0000",
+                            "external_accounts": [
+                
+                            ],
+                            "username": "alice",
+                            "email": "alice@gal.com"
+                          },
+                          {
+                            "id": "4ee04f4cd9ca72680d000004",
+                            "first_name": "Joe",
+                            "last_name": "Guy",
+                            "created_at": "2011-12-08T05:46:52+0000",
+                            "updated_at": "2011-12-08T05:46:52+0000",
+                            "external_accounts": [
+                
+                            ],
+                            "username": "joe",
+                            "email": "joe@guy.com"
+                          }
+                        ]
+                      },
+                      {
+                        "id": "4ee04f4dd9ca72680d000012",
+                        "created_at": "2011-12-08T05:46:53+0000",
+                        "updated_at": "2011-12-08T05:46:53+0000",
+                        "participate_users": [
+                          {
+                            "id": "4ee04f4cd9ca72680d000002",
+                            "first_name": "Bob",
+                            "last_name": "Dude",
+                            "created_at": "2011-12-08T05:46:52+0000",
+                            "updated_at": "2011-12-08T05:46:52+0000",
+                            "external_accounts": [
+                
+                            ],
+                            "username": "bob",
+                            "email": "bob@dude.com"
+                          },
+                          {
+                            "id": "4ee04f4cd9ca72680d000004",
+                            "first_name": "Joe",
+                            "last_name": "Guy",
+                            "created_at": "2011-12-08T05:46:52+0000",
+                            "updated_at": "2011-12-08T05:46:52+0000",
+                            "external_accounts": [
+                
+                            ],
+                            "username": "joe",
+                            "email": "joe@guy.com"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+                
+      - platform: ios
+        example: |
+            Example iOS call:
+            
+                NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:3];
+                [paramDict setObject:"-updated_at" forKey:@"order"]; // optional
+                CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"chats/get_chat_groups.json"  paramDict:paramDict];
+                [request startAsynchronous];
+                [request release];
+                
+            SDK Callback:
+            
+                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
+                {
+                	if ([response.meta.methodName isEqualToString:@"getChatGroups"]) {
+                		NSArray *chat_groups = [response getObjectsOfType:[CCChatGroup class]];
+                		...
+                	}
+                }
+                
+      - platform: android
+        example: |
+            Example Android call:
+            
+                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+                
+                CCResponse response = sdk.sendRequest("chats/get_chat_groups.json", CCRequestMethod.GET, null);
+                
+            SDK Callback:
+            
+                JSONObject responseJSON = response.getResponseData();
+                CCMeta meta = response.getMeta();
+                if("ok".equals(meta.getStatus()) 
+                    && meta.getCode() == 200 
+                    && "getChatGroups".equals(meta.getMethod())) {
+                  JSONArray chatGroups = responseJSON.getJSONArray("chat_groups");
+                  ...
+                }
+                
+      - platform: javascript
+        example: |
+            Example Javascript call:
+            
+                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+                sdk.sendRequest('chats/get_chat_groups.json', 'GET', null, callback);
+                
+            SDK Callback:
+            
+                function callback(data) {
+                  if(data) {
+                    if(data.meta) {
+                      var meta = data.meta;
+                      if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'getChatGroups') {
+                        var chatGroups = data.response.chat_groups;
+                      	...
+                      }
+                    }
+                  }
+                }
+                

@@ -1,0 +1,14 @@
+    parameters:
+      - name: name 
+        description: |
+            Name of the ACL object.
+
+            Either `name` or `id` must be specified.
+        type: String
+
+      - name: id
+        description: |
+            ID of the ACL oject.
+      
+            Either `name` or `id` must be specified.
+        type: String

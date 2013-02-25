@@ -1,0 +1,40 @@
+name: Checkin
+description: |
+    Checkin Tangram provides API to create and manage checkins to a place or an
+    event.
+fields: 
+  - name: id
+    description: Generated unique ID for this checkin.
+    type: String
+
+  - name: user
+    description: Checkin owner.
+    type: User
+
+  - name: message
+    description: Checkin message.
+    type: String
+
+  - name: place
+    description: The place object associated with the checkin.
+    type: Place
+
+  - name: event
+    description: The event object associated with the checkin.
+    type: Event
+
+  - name: photo
+    description: The primary photo for the checkin.
+    type: Photo
+
+  - name: tags
+    description: Comma-separated list of tags associated with this checkin.
+    type: String
+
+  - name: created_at
+    description: Message creation date.
+    type: Date
+
+  - name: updated_at
+    description: Message update date.
+    type: Date

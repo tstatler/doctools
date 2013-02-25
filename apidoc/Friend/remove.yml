@@ -1,0 +1,122 @@
+name: Friend
+methods:
+  - name: remove
+    summary: Remove Friends
+    description: |
+        Removes a one or more friends from the user's friends list.
+    url: friends/remove.json
+    http-method: DELETE
+    login-required: true
+
+    parameters:
+      - name: user_ids 
+        description: |
+            Comma-separated list consisting of IDs of one or more users to add as
+            friends to the current user. A user cannot add himself or herself as a friend.
+        required: true
+
+    examples:
+      - platform: rest
+        example: |
+            Example cURL request:
+            
+                $ curl -b cookies.txt -c cookies.txt -X DELETE -F "user_ids=4e02e027d0afbe41ef000003" "https://api.cloud.appcelerator.com/v1/friends/remove.json?key=<YOUR APP APP KEY>"
+                
+            Example JSON response:
+            
+                {
+                  "meta": {
+                    "code": 200,
+                    "method_name": "removeFriends",
+                    "status": "ok"
+                  }
+                }
+                
+      - platform: ios
+        example: |
+            Example iOS call:
+            
+                NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
+                NSArray *user_ids = [NSArray arrayWithObjects:@"124", @"345", nil];
+                [paramDict setObject:user_ids forKey:@"user_ids"];
+                CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"DELETE" baseUrl:@"friends/remove.json" paramDict:paramDict];
+                [request startAsynchronous];
+                [request release];
+                
+            SDK Callback:
+            
+                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
+                {
+                	if ([response.meta.method isEqualToString:@"removeFriends"]) {
+                		NSLog(@"friends removed!");
+                	}
+                }
+                
+      - platform: android
+        example: |
+            Example Android call:
+            
+                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+                
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("user_ids", "4d6e77386f70950c89000001,5f6e77386f70950c890efew01");
+                CCResponse response = sdk.sendRequest("friends/remove.json", CCRequestMethod.DELETE, data);
+                
+            SDK Callback:
+            
+                JSONObject responseJSON = response.getResponseData();
+                CCMeta meta = response.getMeta();
+                if("ok".equals(meta.getStatus()) 
+                    && meta.getCode() == 200 
+                    && "removeFriends".equals(meta.getMethod())) {
+                  System.out.println("friends removed!");
+                }
+                
+      - platform: javascript
+        example: |
+            Example Javascript call:
+            
+                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+                var data = {
+                  user_ids: '4d6e77386f70950c89000001,5f6e77386f70950c890efew01'
+                };
+                sdk.sendRequest('friends/remove.json', 'DELETE', data, callback);
+                
+            SDK Callback:
+            
+                function callback(data) {
+                  if(data) {
+                    if(data.meta) {
+                      var meta = data.meta;
+                      if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'removeFriends') {
+                        alert('friends removed!');
+                      }
+                    }
+                  }
+                }
+                
+      - platform: actionscript
+        example: |
+            Example Actionscript call:
+            
+                var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+                
+                var data:Object = new Object();
+                data.user_ids = "4d6e77386f70950c89000001,5f6e77386f70950c890efew01";
+                sdk.sendRequest("friends/remove.json", URLRequestMethod.DELETE, data, false, callback);
+                
+            SDK Callback:
+            
+                function callback(data:Object):void {
+                  if(data) {
+                    if(data.hasOwnProperty("meta")) {
+                      var meta:Object = data.meta;
+                      if(meta.status == "ok" && meta.code == 200 && meta.method_name == "removeFriends") {
+                        Alert.show("friends removed!");
+                      }
+                    }
+                  }
+                }
+                

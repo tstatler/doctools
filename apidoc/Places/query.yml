@@ -1,0 +1,191 @@
+name: Places
+methods:
+  - name: query
+    summary: Custom Query Places
+
+    description: |
+        Performs custom query of places with sorting and paginating. Currently you can
+        not query or sort data stored inside array or hash in custom fields.
+        
+        The following fields can be used for querying and sorting places:
+
+        *   `address` : String.  Place address.
+        *   `city` : String.  Place city.
+        *   `state` : String. Place state.
+        *   `country` : String.  Country.
+        *   `user_id` : String. ID of the user who created this place.
+        *   `google_cid` : Google Customer ID (CID) associated with this place.
+        *   `tags_array` : String. Search tags.
+        *   `lnglat` : `[longitude, latitude]`. Search this places' default coordinates.
+             (Other coordinates can be stored as custom fields, and queried separately.)
+        *   `ratings_average:  Number`.  Place's average rating (see {@link Reviews}).
+        *   `ratings_count: Number`. Place's total number of ratings (see {@link Reviews}).
+        *   `reviews_count: Number`. Place's total number of reviews (see {@link Reviews}).
+        *   `created_at: Date`. Timestamp when the photo was created.
+        *   `updated_at: Date`. Timestamp when the photo was updated.
+
+    url: places/query.json
+
+    parameters:
+
+      - name: page  
+        description: Request page number, default is 1.
+        type: Number
+      
+      - name: per_page
+        description: Number of results per page, default is 10.
+        type: Number
+
+      - name: limit
+        description: |
+            Instead of using `page` and `per_page` for pagination, you can use `limit` and
+            `skip` to do your own pagination. `limit` is the maximum number of records to
+            fetch. `limit` cannot be greater than 1000.
+        type: Number
+
+      - name: skip
+        description: |
+            Number of records to skip. Must be used together with `limit`.
+        type: Number
+
+      - name: where
+        description: |
+            Constraint values for fields. `where` should be encoded JSON.
+            
+            If `where` is not specified, `query` returns all objects. Please refer to 
+            [using where query](#!/guide/search_query) for more information.
+        type: String
+
+      - name: order
+        description: |
+            Sort results by one or more fields. Please refer to 
+            [using order in query](#!/guide/search_query) for more information
+        type: String
+
+      - name: response_json_depth
+        description: |
+            Nested object depth level counts in the response JSON.  
+
+            In order to reduce server API calls from an applicaton, the response JSON may
+            include not just the objects that are being queried/searched, but also 
+            some important data related to the returned objects, such as owners and
+            referenced objects.  
+
+            Default is 3, valid range is 1 to 8.
+        type: Number
+
+    response-parameters:
+      - name: places
+        description: List of places matching the query criteria.
+        type: Array<Places>
+
+    examples:
+      - platform: rest
+        example: |
+            Example cURL request:
+            
+                Example: Query places with name "Appcelerator Cloud Services" near latitude 37.12, longitude -122.23 within 5 miles
+                $ curl -c cookies.txt -b cookies.txt -X GET --data-urlencode  'where={"name":"Appcelerator Cloud Services","lnglat":{"$nearSphere":[-122.23,37.12], "$maxDistance" : 0.00126}}' "https://api.cloud.appcelerator.com/v1/places/query.json?key=<YOUR APP APP KEY>"
+                
+            Example JSON response:
+            
+                {
+                  "meta": {
+                    "status":"ok",
+                    "code":200,
+                    "method_name":"queryPlaces",
+                    "page":1,
+                    "per_page":10,
+                    "total_pages":1,
+                    "total_results":1
+                  },
+                  "response": {
+                    "places": [
+                      {
+                        "id":"4d2e399b6f70951b6f000013",
+                        "name":"Maya Restaurant",
+                        "created_at":"2011-01-12T23:30:35+0000",
+                        "updated_at":"2011-01-12T23:30:35+0000",
+                        "address":"303 2nd Street",
+                        "city":"San Francisco",
+                        "state":"CA",
+                        "country":"United States",
+                        "phone":"(415) 543-2928",
+                        "lat":37.12,
+                        "lng":-122.23		
+                      }
+                    ]
+                  }
+                }
+                
+            Refer to [Custom Fields on IOS](docs/search_query#ios) for more details.
+            
+      - platform: ios
+        example: |
+            Example iOS call:
+            
+                CCWhere *where = [[[CCWhere alloc] init] autorelease];
+                [where fieldName:@"lnglat" nearLat:37.12 nearLng:-122.23x maxDistanceMi:5.0];
+                [where fieldName:@"name" equalTo:@"Appcelerator Cloud Services"];
+                NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:where, @"where", nil]
+                request = [[[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"places/query.json" paramDict:paramDict] autorelease];
+                [request startAsynchronous];
+                
+            SDK Callback:
+            
+                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
+                {
+                	if ([response.meta.methodName isEqualToString:@"queryPlaces"]) {
+                		NSArray *photos = [response getObjectsOfType:[CCPlace class]];
+                		for (CCPlace *place in places) {
+                			...
+                		}
+                	}
+                }
+                
+      - platform: android
+        example: |
+            Example Android call:
+            
+                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+                
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("where", "{'name': 'Appcelerator Cloud Services','lnglat': {'$nearSphere': [-122.23,37.12], '$maxDistance': 0.00126}}");
+                CCResponse response = sdk.sendRequest("places/query.json", CCRequestMethod.GET, data);
+                
+            SDK Callback:
+            
+                JSONObject responseJSON = response.getResponseData();
+                CCMeta meta = response.getMeta();
+                if("ok".equals(meta.getStatus()) 
+                    && meta.getCode() == 200 
+                    && "queryPlaces".equals(meta.getMethod())) {
+                  JSONArray places = responseJSON.getJSONArray("places");
+                  ...
+                }
+                
+      - platform: javascript
+        example: |
+            Example Javascript call:
+            
+                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+                var data = {
+                  where: '{"name":"Appcelerator Cloud Services","lnglat":{"$nearSphere":[-122.23,37.12], "$maxDistance" : 0.00126}}'
+                };
+                sdk.sendRequest('places/query.json', 'GET', data, callback);
+                
+            SDK Callback:
+            
+                function callback(data) {
+                  if(data) {
+                    if(data.meta) {
+                      var meta = data.meta;
+                      if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'queryPlaces') {
+                        var places = data.response.places;
+                      	...
+                      }
+                    }
+                  }
+                }
+                

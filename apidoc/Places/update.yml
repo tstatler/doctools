@@ -1,0 +1,238 @@
+name: Places
+methods:
+  - name: update
+    summary:  Update a Place
+    description: |
+        Any of the parameters used to {@link Place#create Create a Place} can
+        be used to updated it as well. Only the user that created the place can update
+        it.  
+          
+        An application admin can update any Place object.
+    url: places/update.json
+    http-method: PUT
+    login-required: true
+
+    parameters:
+      - name: place_id
+        description: ID of the place to delete.
+        type: String
+        required: true
+
+      - name: name
+        description: Place name.
+        type: String
+        required: true
+
+      - name: address
+        description: Address.
+        type: String
+    
+      - name: city
+        description: City.
+        type: String
+    
+      - name: state 
+        description: State.
+        type: String
+    
+      - name: postal_code   
+        description: Postal or ZIP code. 
+        type: String 
+      
+      - name: country   
+        description: Country.
+        type: String
+    
+      - name: latitude  
+        description: Latitude. 
+        type: Number 
+    
+      - name: longitude
+        description: Longitude. 
+        type: Number 
+    
+      - name: website
+        description: Website URL.
+        type: String
+    
+      - name: twitter   
+        description: Twitter ID.
+        type: String
+    
+      - name: phone_number  
+        description: Phone number.
+        type: String
+       `
+      - name: photo 
+        description: |
+            New photo to attach as the primary photo for this place.
+    
+            When you use the `photo` parameter to attach a new photo, you can use the 
+            [custom resize and sync options](#!/guide/photosizes).
+        type: Photo
+      
+      - name: photo_id
+        description: |
+            ID of an existing photo to attach as the primary photo for this place.
+        type: String
+
+      - name: tags
+        description:  |
+            Comma separated list of tags for this place.
+        type: String
+
+      - name: custom_fields
+        description: User defined fields. See [Custom Data Fields](#!/guide/customfields).
+        type: [ String, Hash ]
+
+      - name: acl_name
+        description: |
+            Name of an {@link ACL} to associate with this place object.
+
+            An ACL can be specified using `acl_name` or `acl_id`. The two parameters are
+            mutually exclusive.
+        type: String
+
+      - name: acl_id
+        description: |
+            ID of an {@link ACL} to associate with this place object.
+
+            An ACL can be specified using `acl_name` or `acl_id`. The two parameters are
+            mutually exclusive.
+        type: String
+
+
+    response-parameters:
+      - name: places
+        description: Single-element array containing the updated object.
+        type: Array<Places>
+
+    examples:
+      - platform: rest
+        example: |
+            Example cURL request:
+            
+                $ curl -b cookies.txt -c cookies.txt -X PUT -F "address=210 Market Street" -F "place_id=4d8910aed0afbe0e4e000006" https://api.cloud.appcelerator.com/v1/places/update.json?key=<YOUR APP APP KEY>
+                
+            Example JSON response:
+            
+                {
+                  "meta": {
+                    "status":"ok",
+                    "code":200,
+                    "method_name":"updatePlace"
+                  },
+                  "response": {
+                    "places": [
+                      {
+                          "id":"4d8910aed0afbe0e4e000006",
+                          "name":"Appcelerator Cloud Services",
+                          "created_at":"2011-03-22T21:12:14+0000",
+                          "updated_at":"2011-03-24T18:12:01+0000",
+                          "address":"201 Market St.",
+                          "city":"San Francisco",
+                          "state":"California",
+                          "country":"United States",
+                          "website":"appcelerator.com",
+                          "twitter":"acs",
+                          "latitude":37.782227,
+                          "longitude":-122.393159	
+                      }
+                    ]
+                  }	
+                }
+                
+      - platform: ios
+        example: |
+            Example iOS call:
+            
+                NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:(CCPlace *)place.objectId, @"place_id", @"Appcelerator Cloud Services", @"name", nil];
+                CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"PUT" baseUrl:@"places/update.json" paramDict:paramDict];
+                [request addPhotoUIImage:(UIImage *)newPlaceImage paramDict:nil];
+                [request startAsynchronous];
+                [request release];
+                
+            SDK Callback:
+            
+                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
+                {
+                	NSArray *places = [response getObjectsOfType:[CCPlace class]];
+                }
+                
+      - platform: android
+        example: |
+            Example Android call:
+            
+                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+                
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("place_id", "4d8910aed0afbe0e4e000006");
+                data.put("name", "Cocofish Inc");
+                data.put("city", "Beijing");
+                CCResponse response = sdk.sendRequest("places/update.json", CCRequestMethod.PUT, data);
+                
+            SDK Callback:
+            
+                JSONObject responseJSON = response.getResponseData();
+                CCMeta meta = response.getMeta();
+                if("ok".equals(meta.getStatus()) 
+                    && meta.getCode() == 200 
+                    && "updatePlace".equals(meta.getMethod())) {
+                  JSONArray places = responseJSON.getJSONArray("places");
+                  ...
+                }
+                
+      - platform: javascript
+        example: |
+            Example Javascript call:
+            
+                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+                var data = {
+                  place_id: '4d8910aed0afbe0e4e000006';
+                  name: 'Cocofish Inc', 
+                  city: 'Beijing'
+                };
+                sdk.sendRequest('places/update.json', 'PUT', data, callback);
+                
+            SDK Callback:
+            
+                function callback(data) {
+                  if(data) {
+                    if(data.meta) {
+                      var meta = data.meta;
+                      if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'updatePlace') {
+                        var places = data.response.places;
+                      	...
+                      }
+                    }
+                  }
+                }
+                
+      - platform: actionscript
+        example: |
+            Example Actionscript call:
+            
+                var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+                
+                var data:Object = new Object();
+                data.place_id = "4d8910aed0afbe0e4e000006";
+                data.name = "Cocofish Inc";
+                data.city = "Beijing";
+                sdk.sendRequest("places/update.json", URLRequestMethod.PUT, data, false, callback);
+                
+            SDK Callback:
+            
+                function callback(data:Object):void {
+                  if(data) {
+                    if(data.hasOwnProperty("meta")) {
+                      var meta:Object = data.meta;
+                      if(meta.status == "ok" && meta.code == 200 && meta.method_name == "updatePlace") {
+                      	var places:Array = data.response.places;
+                      	...
+                      }
+                    }
+                  }
+                }
+                

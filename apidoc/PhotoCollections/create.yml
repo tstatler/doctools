@@ -1,0 +1,201 @@
+name: PhotoCollections
+methods:
+  - name: create
+    summary: Create a Photo Collection
+
+    description: |
+        Collections contain one or more photos and/or sub-collections. These can be
+        used as photo albums for a user. To create a subcollection, 
+        specify a `parent_collection_id` when creating a collection. If the collection has been
+        created or updated with a `cover_photo_id`, photo details will be returned
+        with collection information. If a `cover_photo_id` has not been assigned, the
+        first photo found in the collection or its sub-collections will be returned as
+        the cover photo.
+        
+    url: collections/create.json
+    http-method: POST
+    login-required: true
+
+    parameters: 
+      - name: name
+        description: |
+            Name of the collection. The name must be unique across other top-level
+            collections. If this is a sub-collection, the name must be unique across other
+            sub-collections of the same parent.
+        type: String
+
+      - name: parent_collection_id
+        description: |
+            Parent collection ID. Specify when creating a subcollection.
+        type: String
+
+      - name: cover_photo_id
+        description: |
+            ID of the photo to use as a cover photo. The photo does not need to be
+            in the collection.
+        type: String
+
+      - name: custom_fields
+        description: User defined fields. See [Custom Data Fields](#!/guide/customfields).
+        type: [ String, Hash ]
+
+      - name: acl_name
+        description: |
+            Name of an {@link ACL} to associate with this collection.
+
+            An ACL can be specified using `acl_name` or `acl_id`. The two parameters are
+            mutually exclusive.
+        type: String
+
+      - name: acl_id
+        description: |
+            ID of an {@link ACL} to associate with this collection.
+
+            An ACL can be specified using `acl_name` or `acl_id`. The two parameters are
+            mutually exclusive.
+        type: String
+
+      - name: user_id
+        description: |
+            User ID to create the collection on behalf of.
+
+            The current login user must be an application admin to create a collection on
+            behalf of another user.
+        type: String
+
+    response-parameters:
+      - name: collections
+        description: Single-element array containing the newly-created photo collection.
+        type: Array<PhotoCollections>
+
+    examples:
+      - platform: rest
+        example: |
+            Example cURL request:
+            
+                $ curl -b cookies.txt -c cookies.txt -F "name=Office Fun" "https://api.cloud.appcelerator.com/v1/collections/create.json?key=<YOUR APP APP KEY>"
+                
+            Example JSON response:
+            
+                {
+                  "meta": {
+                    "code": 200,
+                    "method_name": "createCollection",
+                    "status": "ok"
+                  },
+                  "response": {
+                    "collections": [
+                      {
+                        "name": "Office Fun",
+                        "created_at": "2011-06-08T18:32:30+0000",
+                        "updated_at": "2011-06-08T18:32:30+0000",
+                        "id": "4defc03ed0afbe0400000001",
+                        "user": {
+                          "created_at": "2011-05-26T20:48:07+0000",
+                          "updated_at": "2011-06-04T01:54:39+0000",
+                          "id": "4ddebc87d0afbe5a54000001",
+                          "last_name": "Goff",
+                          "email": "mike@appcelerator.com",
+                          "first_name": "Mike"
+                        },
+                        "counts": {
+                          "photos": 0,
+                          "total_photos": 0,
+                          "sub_collections": 0
+                        }
+                      }
+                    ]
+                  }
+                }
+                
+      - platform: ios
+        example: |
+            Example iOS call:
+            
+                NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
+                [paramDict setObject:@"My Photo Album" forKey:@"name"];
+                CCRequest *request = [[[CCRequest alloc] initWithDelegate:self httpMethod:@"POST" baseUrl:@"collections/create.json" paramDict:paramDict] autorelease];
+                [request startAsynchronous];
+                
+            SDK Callback:
+            
+                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
+                {
+                	NSArray *collections = [response getObjectsOfType:[CCCollection class]];
+                	for (CCCollection *collection in collections)
+                	{
+                		...
+                	}
+                }
+                
+      - platform: android
+        example: |
+            Example Android call:
+            
+                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+                
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("name", "Office Fun");
+                CCResponse response = sdk.sendRequest("collections/create.json", CCRequestMethod.POST, data);
+                
+            SDK Callback:
+            
+                JSONObject responseJSON = response.getResponseData();
+                CCMeta meta = response.getMeta();
+                if("ok".equals(meta.getStatus()) 
+                    && meta.getCode() == 200 
+                    && "createCollection".equals(meta.getMethod())) {
+                  JSONArray collections = responseJSON.getJSONArray("collections");
+                  ...
+                }
+                
+      - platform: javascript
+        example: |
+            Example Javascript call:
+            
+                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+                var data = {
+                  name: 'Office Fun'
+                };
+                sdk.sendRequest('collections/create.json', 'POST', data, callback);
+                
+            SDK Callback:
+            
+                function callback(data) {
+                  if(data) {
+                    if(data.meta) {
+                      var meta = data.meta;
+                      if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'createCollection') {
+                        var collections = data.response.collections;
+                      	...
+                      }
+                    }
+                  }
+                }
+                
+      - platform: actionscript
+        example: |
+            Example Actionscript call:
+            
+                var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+                
+                var data:Object = new Object();
+                data.name = "Office Fun";
+                sdk.sendRequest("collections/create.json", URLRequestMethod.POST, data, false, callback);
+                
+            SDK Callback:
+            
+                function callback(data:Object):void {
+                  if(data) {
+                    if(data.hasOwnProperty("meta")) {
+                      var meta:Object = data.meta;
+                      if(meta.status == "ok" && meta.code == 200 && meta.method_name == "createCollection") {
+                      	var collections:Array = data.response.collections;
+                      	...
+                      }
+                    }
+                  }
+                }
+                

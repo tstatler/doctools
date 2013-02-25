@@ -1,0 +1,30 @@
+name: KeyValue
+description: |
+    KeyValue objects allow you to store and retrieve string or binary data up to 2M.
+
+    By default, a key-value pair is publically readable, but can only be updated or
+    deleted by its owner or an application admin.
+
+    Each registered user also has a private key-value store. Objects in the private store
+    can only be accessed by the owner or an application admin.
+
+fields:
+  - name: id
+    description: Generated ID for this key-value pair.
+    type: String
+
+  - name: name
+    description: Name (or key) for this key-value pair.
+    type: String
+
+  - name: type  
+    description: |
+        Value type: "string" or "binary".
+
+        If type is omitted, defaults to "string".
+    type: String
+
+  - name: value 
+    description: |
+        String or binary data.
+    type: [ String, BinaryData ]

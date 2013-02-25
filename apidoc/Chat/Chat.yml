@@ -1,0 +1,37 @@
+name: Chat
+description: |
+
+    The Chat object provides an API to send chat messages from one user to another user
+    or a group of users. If you have configured push notification in your app, you
+    can send optional push notifications to the recipients' devices as well.
+    ![Btn-chats](/images/appcelerator/btns/btn-chats.png?1359678317)
+
+fields:
+  - name: id
+    description: Generated unique ID for this chat message.
+    type: String
+      
+  - name: message
+    description: Chat message. 
+    type: String
+
+  - name: photo 
+    description: |
+        New photo to attach to the chat message.
+    type: Photo
+
+  - name: chatgroup
+    description: The chat group that the chat belongs to. 
+    type: Hash
+  
+  - name: custom_fields
+    description: User defined fields. See [Custom Data Fields](#!/guide/customfields).
+    type: [ String, Hash ]
+
+  - name: created_at
+    description: Creation date for this user object.
+    type: Date
+
+  - name: updated_at
+    description: Last update time for this user object.
+    type: Date

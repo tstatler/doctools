@@ -1,0 +1,75 @@
+  [
+      {
+          "name": "acs_guides",
+          "title": "ACS Guides",
+          "items": [
+              {
+                  "name": "quickstart",
+                  "url": "guides/acs_quickstart",
+                  "title": "Getting Started with ACS",
+                  "description": "This introduction to Appcelerator Cloud Services explains how you can get started."
+              },
+              {
+                  "name": "authentication",
+                  "url": "guides/acs_authentication",
+                  "title": "Authentication",
+                  "description": "Authenticating your application with ACS."
+              },
+              {
+                  "name": "sdks",
+                  "title": "SDKs",
+                  "items": [
+                      {
+                          "name": "ios",
+                          "url": "guides/acs/sdks/ios",
+                          "title": "Getting Started with the iOS SDK",
+                          "description": "Using ACS in native iOS apps with the ACS iOS SDK."
+                      },
+
+                      {
+                          "name": "android",
+                          "url": "guides/acs/sdks/android",
+                          "title": "Getting Started with the Android SDK",
+                          "description": "Using ACS in native Android apps with the ACS Android SDK."
+                      }
+                  ]
+              },
+              {
+                  "name": "customfields",
+                  "url": "guides/acs/customfields",
+                  "title": "Custom Fields and Custom Objects",
+                  "description": "Using custom fields and custom objects."
+              },
+              {
+                  "name": "relationalfields",
+                  "url": "guides/acs/relationalfields",
+                  "title": "Relational Fields (Beta)",
+                  "description": "Linking objects with relational fields."
+              },
+              {
+                  "name": "search_query",
+                  "url": "guides/acs/search_query",
+                  "title": "Search and Query Operations",
+                  "description": "Searching for ACS objects."
+              },
+              {
+                  "name": "photosizes",
+                  "url": "guides/acs/photosizes",
+                  "title": "Photo Uploads and Photo Resizing",
+                  "description": "How to upload and resize photos."
+              },
+              {
+                  "name": "geo",
+                  "url": "guides/acs/geo",
+                  "title": "Geographic Coordinates",
+                  "description": "How ACS handles geographic coordinates."
+              },
+              {
+                  "name": "acs_releasenotes",
+                  "url": "guides/acs/releasenotes",
+                  "title": "Release Notes",
+                  "description": "Changes in the latest releases."
+              }
+          ]
+      }
+  ]

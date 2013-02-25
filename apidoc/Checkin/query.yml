@@ -1,0 +1,202 @@
+name: Checkin
+methods:
+  - name: query
+    summary: Custom Query Checkins
+
+    description: |
+        Perform custom query of checkins with sorting and paginating. Currently you
+        can not query or sort data stored inside array or hash in custom fields.
+        
+    url: checkins/query.json
+    parameters:
+
+      - name: page  
+        description: Request page number, default is 1.
+        type: Number
+      
+      - name: per_page
+        description: Number of results per page, default is 10.
+        type: Number
+
+      - name: limit
+        description: |
+            Instead of using `page` and `per_page` for pagination, you can use `limit` and
+            `skip` to do your own pagination. `limit` is the maximum number of records to
+            fetch. `limit` cannot be greater than 1000.
+        type: Number
+
+      - name: skip
+        description: |
+            Number of records to skip. Must be used together with `limit`.
+        type: Number
+
+      - name: where
+        description: |
+            Constraint values for fields. `where` should be encoded JSON.
+            
+            If `where` is not specified, `query` returns all objects. See
+            [using where query](#!/guide/search_query#where) for more information.
+        type: String
+
+      - name: order
+        description: |
+            Sort results by one or more fields. See
+            [using order in query](#!/guide/search_query#order) for more information
+        type: String
+
+      - name: response_json_depth
+        description: |
+            Nested object depth level counts in response json.  
+            In order to reduce server API calls from an applicaton, the response json may
+            include not just the objects that are being queried/searched, but also with
+            some important data related to the returning objects such as object's owner or
+            referencing objects.  
+
+            Default is 3, valid range is 1 to 8.
+        type: Number
+
+    examples:
+      - platform: rest
+        example: |
+            Example cURL request:
+            
+                Example: If your app assigns a location to each checkin, you can search checkins by location:
+                
+                $ curl -c cookies.txt -b cookies.txt -X GET --data-urlencode 'where={"coordinates":{"$nearSphere":[-122.23,37.12], "$maxDistance" : 0.00126}}' "https://api.cloud.appcelerator.com/v1/checkins/query.json?key=<YOUR APP APP KEY>"
+                
+            Example JSON response:
+            
+                {
+                  "meta": {
+                    "status":"ok",
+                    "code":200,
+                    "method_name":"queryCheckins",
+                    "page":1,
+                    "per_page":10,
+                    "total_pages":1,
+                    "total_results":1
+                  },
+                  "response": {
+                    "checkins": [
+                      {
+                        "id":"4d713b4f6f70951043000001",
+                        "message":"Try the grilled steak burrito",
+                        "created_at":"2011-03-04T19:19:43+0000",
+                        "updated_at":"2011-03-04T19:19:43+0000",
+                        "custom_fields": {
+                          "coordinates": [-122.23, 37.12] }
+                        },
+                        "place": {
+                          "id":"4d6f13e96f70953608000012",
+                          "name":"Maya Restaurant",
+                          "created_at":"2011-03-03T04:07:05+0000",
+                          "updated_at":"2011-03-03T04:07:05+0000",
+                          "address":"303 2nd Street",
+                          "city":"San Francisco",
+                          "state":"CA",
+                          "country":"United States",
+                          "phone":"(415) 543-2928",
+                          "lat":37.784732,
+                          "lng":-122.395441
+                        },
+                        "user": {
+                          "id":"4d6e77386f70950c89000001",
+                          "first_name":"Michael",
+                          "last_name":"Goff",
+                          "created_at":"2011-03-02T16:58:32+0000",
+                          "updated_at":"2011-03-02T17:51:42+0000"
+                        },
+                        "photo": {
+                          "id":"4d713b4f6f70951043000002",
+                          "filename":"photo.jpg",
+                          "size":584344,
+                          "md5":"589b8ad43ed20bf8e622d719642bc939",
+                          "created_at":"2011-03-04T19:19:43+0000",
+                          "updated_at":"2011-03-04T19:19:47+0000",
+                          "processed":true,
+                          "content_type":"image/jpeg",
+                          "urls": {
+                            "square_75":"http://storage.appcelerator.com/osxW8CUVzwuIlxjJZC1HS8hJdc3mV9ON/photos/4d713b4f6f70951043000002/photo_square_75.jpg",
+                            "thumb_100":"http://storage.appcelerator.com/osxW8CUVzwuIlxjJZC1HS8hJdc3mV9ON/photos/4d713b4f6f70951043000002/photo_thumb_100.jpg",
+                            "small_240":"http://storage.appcelerator.com/osxW8CUVzwuIlxjJZC1HS8hJdc3mV9ON/photos/4d713b4f6f70951043000002/photo_small_240.jpg",
+                            "medium_500":"http://storage.appcelerator.com/osxW8CUVzwuIlxjJZC1HS8hJdc3mV9ON/photos/4d713b4f6f70951043000002/photo_medium_500.jpg",
+                            "medium_640":"http://storage.appcelerator.com/osxW8CUVzwuIlxjJZC1HS8hJdc3mV9ON/photos/4d713b4f6f70951043000002/photo_medium_640.jpg",
+                            "large_1024":"http://storage.appcelerator.com/osxW8CUVzwuIlxjJZC1HS8hJdc3mV9ON/photos/4d713b4f6f70951043000002/photo_large_1024.jpg",
+                            "original":"http://storage.appcelerator.com/osxW8CUVzwuIlxjJZC1HS8hJdc3mV9ON/photos/4d713b4f6f70951043000002/photo_original.jpg"
+                          }
+                        }
+                      }
+                    ]
+                  }	
+                }
+                
+            Refer to [Custom Fields on IOS](docs/search_query#ios) for more details.
+            
+      - platform: ios
+        example: |
+            Example iOS call:
+            
+                CCWhere *where = [[[CCWhere alloc] init] autorelease];
+                [where fieldName:@"coordinates" nearLat:37.12 nearLng:-122.23 maxDistanceMi:5.0];
+                NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:where, @"where", nil]
+                request = [[[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"checkins/query.json" paramDict:paramDict] autorelease];
+                [request startAsynchronous];
+                
+            SDK Callback:
+            
+                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
+                {
+                	if ([response.meta.methodName isEqualToString:@"queryCheckins"]) {
+                		NSArray *checkins = [response getObjectsOfType:[CCCheckin class]];
+                		for (CCCheckin *checkin in checkins) {
+                			...
+                		}
+                	}
+                }
+                
+      - platform: android
+        example: |
+            Example Android call:
+            
+                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+                
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("where", "{'coordinates':{'$nearSphere':[-122.23,37.12], '$maxDistance' : 0.00126}}");
+                CCResponse response = sdk.sendRequest("checkins/query.json", CCRequestMethod.GET, data);
+                
+            SDK Callback:
+            
+                JSONObject responseJSON = response.getResponseData();
+                CCMeta meta = response.getMeta();
+                if("ok".equals(meta.getStatus()) 
+                    && meta.getCode() == 200 
+                    && "queryCheckins".equals(meta.getMethod())) {
+                  JSONArray checkins = responseJSON.getJSONArray("checkins");
+                  ...
+                }
+                
+      - platform: javascript
+        example: |
+            Example Javascript call:
+            
+                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+                var data = {
+                  where: '{"coordinates":{"$nearSphere":[-122.23,37.12], "$maxDistance" : 0.00126}}'
+                };
+                sdk.sendRequest('checkins/query.json', 'GET', data, callback);
+                
+            SDK Callback:
+            
+                function callback(data) {
+                  if(data) {
+                    if(data.meta) {
+                      var meta = data.meta;
+                      if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'queryCheckins') {
+                        var checkins = data.response.checkins;
+                      	...
+                      }
+                    }
+                  }
+                }
+                

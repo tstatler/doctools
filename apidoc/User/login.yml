@@ -1,0 +1,165 @@
+name: User
+methods:
+  - name: login
+    summary: Login User
+    description: |
+        Log a user in using their ACS credentials.
+
+        To log a user in using an external account, see [External Account Login](User.external_account_login).
+
+        To log a user out, see [User.logout](User.logout).
+    url: users/login.json
+    http-method: post
+
+    parameters:
+      - name: login
+        description: Email address or username of the user to login.
+        type: String
+
+      - name: password
+        description: User's password.  
+        type: String
+
+    examples: 
+      - platform: rest
+        example: |
+            Example cURL request:
+                
+                $ curl -b cookies.txt -c cookies.txt -F "login=mgoff@appcelerator.com" -F "password=food" https://api.cloud.appcelerator.com/v1/users/login.json?key=<YOUR APP APP KEY>
+            
+            Example JSON response:
+                
+                {
+                  "meta": {
+                    "status":"ok",
+                    "code":200,
+                    "method_name":"loginUser",
+                    "session_id": "abcDe0fGHijklenmU6xrdR9t0Z-0"
+                  },
+                  "response": {
+                    "users": [
+                      {
+                        "id":"4d6e77386f70950c89000001",
+                        "first_name":"Michael",
+                        "last_name":"Goff",
+                        "created_at":"2011-03-02T16:58:32+0000",
+                        "updated_at":"2011-03-02T17:18:44+0000",
+                        "external_accounts": [
+                
+                        ],
+                        "confirmed_at": "2012-03-05T20:56:14+0000",
+                        "username": "mgoff",
+                        "role": "",
+                        "email": "mgoff@appcelerator.com",
+                        "admin": "true",
+                        "stats": {
+                          "photos": {
+                            "total_count": 0
+                          },
+                          "storage": {
+                            "used": 0
+                          }
+                        },
+                        "reviews_count": 1,
+                        "ratings_count": 1,
+                        "ratings_average": 122.0,
+                        "ratings_summary": {
+                          "122": 1
+                        }
+                      }
+                    ]
+                  }	
+                }
+                
+      - platform: ios
+        example: |
+            Example iOS call:
+                
+                NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
+                [paramDict setObject:@"foo@foo.com" forKey:@"login"];   
+                [paramDict setObject:@"pass" forKey:@"password"];
+                CCRequest *request = [[[CCRequest alloc] initWithDelegate:self httpMethod:@"POST" baseUrl:@"users/login.json" paramDict:paramDict] autorelease];
+                [request startASynchronous];
+                
+            SDK Callback:
+                
+                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
+                {
+                	NSArray *users = [response getObjectsOfType:[CCUser class]];
+                	if ([users count] == 1) {
+                		NSLog(@"user %@ successfully logged in", user);
+                	}
+                }
+                
+      - platform: android
+        example: |
+            Example Android call:
+                
+                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+                
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("login", "test@appcelerator.com");
+                data.put("password", "test_password");
+                CCResponse response = sdk.sendRequest("users/login.json", CCRequestMethod.POST, data);
+                
+            SDK Callback:
+                
+                JSONObject responseJSON = response.getResponseData();
+                CCMeta meta = response.getMeta();
+                if("ok".equals(meta.getStatus()) 
+                    && meta.getCode() == 200 
+                    && "loginUser".equals(meta.getMethod())) {
+                  System.out.println("Login user successful!");
+                }
+            
+      - platform: javascript
+        example: |
+            Example JavaScript call:
+                
+                // login parameter can either be a username or email address.
+                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+                var data = {
+                  login: 'test@appcelerator.com', 
+                  password: 'test_password'
+                };
+                sdk.sendRequest('users/login.json', 'POST', data, callback);
+                
+            SDK Callback:
+                
+                function callback(data) {
+                  if(data) {
+                    if(data.meta) {
+                      var meta = data.meta;
+                      if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'loginUser') {
+                        alert('Login user successful!');
+                      }
+                    }
+                  }
+                }
+            
+      - platform: actionscript
+        example: |
+            Example Actionscript call:
+                
+                var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+                //the user's parameters
+                var data:Object = new Object();
+                data.login = "test@appcelerator.com";
+                data.password = "test_password";
+                sdk.sendRequest("users/login.json", URLRequestMethod.POST, data, false, callback);
+                
+            SDK Callback:
+            
+                function callback(data:Object):void {
+                  if(data) {
+                    if(data.hasOwnProperty("meta")) {
+                      var meta:Object = data.meta;
+                      if(meta.status == "ok" && meta.code == 200 && meta.method_name == "loginUser") {
+                        Alert.show("Login user successful!");
+                      }
+                    }
+                  }
+                }
+    

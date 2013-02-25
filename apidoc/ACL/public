@@ -1,0 +1,12 @@
+      - name: public_read
+        description: |
+            Determines whether objects controlled by this ACS are publically readable. 
+
+            Default is false.
+        type: Boolean
+
+      - name: public_write
+        description: |
+            Determines whether objects controlled by this ACS are publically writable. 
+
+            Default is false.
