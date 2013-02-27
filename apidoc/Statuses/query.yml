@@ -1,0 +1,184 @@
+name: Statuses
+methods:
+  - name: query
+    summary: Custom Query Status
+    description: |
+        Performs a custom query of statuses with sorting and pagination. Currently you
+        can not query or sort data stored inside array or hash in custom fields.
+
+
+        In addition to custom fields, the following pre-defined fields can be used to
+        query and sort statuses:
+        
+        *   `user_id` : `String`.  Status owner's user ID.
+        *   `event_id` : `String`.  ID for the {@link Event} associated with this status.
+        *   `place_id` : `String`.  ID for the {@link Places Place} associated with this status.
+        *   `created_at` : `Date`.  Timestamp when the status was created.
+        *   `updated_at` : `Date`.  Timestamp when the status was last updated.
+        
+    url: statuses/query.json
+
+    parameters:
+
+      - name: page  
+        description: Request page number, default is 1.
+        type: Number
+      
+      - name: per_page
+        description: Number of results per page, default is 10.
+        type: Number
+
+      - name: limit
+        description: |
+            Instead of using `page` and `per_page` for pagination, you can use `limit` and
+            `skip` to do your own pagination. `limit` is the maximum number of records to
+            fetch. `limit` cannot be greater than 1000.
+        type: Number
+
+      - name: skip
+        description: |
+            Number of records to skip. Must be used together with `limit`.
+        type: Number
+
+      - name: where
+        description: |
+            Constraint values for fields. `where` should be encoded JSON.
+            
+            If `where` is not specified, `query` returns all objects. Please refer to 
+            [using where query](#!/guide/search_query) for more information.
+        type: String
+
+      - name: order
+        description: |
+            Sort results by one or more fields. Please refer to 
+            [using order in query](#!/guide/search_query) for more information
+        type: String
+
+      - name: response_json_depth
+        description: |
+            Nested object depth level counts in the response JSON.  
+
+            In order to reduce server API calls from an applicaton, the response JSON may
+            include not just the objects that are being queried/searched, but also 
+            some important data related to the returned objects, such as owners and
+            referenced objects.  
+
+            Default is 3, valid range is 1 to 8.
+        type: Number
+
+    response-parameters:
+      - name: statuses
+        description: List of statuses matching the query criteria.
+        type: Array<Statuses>
+
+    examples:
+      - platform: rest
+        example: |
+            Example cURL request:
+            
+                Example: Query statuses created earlier than "2011-03-02T19:05:33+0000"
+                $ curl -c cookies.txt -b cookies.txt -X GET --data-urlencode  'where={"rating":{"$gt":7.0},"created_at":{"$lt":"2011-03-02T19:05:33+0000"}}' "https://api.cloud.appcelerator.com/v1/statuses/query.json?key=<YOUR APP APP KEY>"
+                
+            Example JSON response:
+            
+                {
+                  "meta": {
+                    "status": "ok",
+                    "code": 200,
+                    "method_name": "queryStatuses",
+                    "page": 1,
+                    "per_page": 10,
+                    "total_pages": 1,
+                    "total_results": 1
+                  },
+                  "response": {
+                    "statuses": [
+                      {
+                        "id":"4d6e86ed6f70950c89000004",
+                        "message":"Having fun at the beach",
+                        "created_at":"2011-03-02T18:05:33+0000",
+                        "updated_at":"2011-03-02T18:05:33+0000",
+                        "photo": {
+                	        "id":"4dcf261cd0afbe1833000002",
+                	        "filename":"photo.jpg",
+                	        "size":584344,
+                	        "md5":"589b8ad43ed20bf8e622d719642bc939",
+                	        "created_at":"2011-05-15T01:02:20+0000",
+                	        "updated_at":"2011-05-15T01:02:20+0000",
+                	        "processed":false
+                        }
+                      }
+                    ]
+                  }
+                }
+                
+            Refer to [Custom Fields on IOS](docs/search_query#ios) for more details.
+            
+      - platform: ios
+        example: |
+            Example iOS call:
+            
+                CCWhere *where = [[[CCWhere alloc] init] autorelease];
+                [where fieldName:@"created_at" lessThan:[NSDate date]];
+                NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:where, @"where", nil]
+                request = [[[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"statuses/query.json" paramDict:paramDict] autorelease];
+                [request startAsynchronous];
+                
+            SDK Callback:
+            
+                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
+                {
+                	if ([response.meta.methodName isEqualToString:@"queryStatuses"]) {
+                		NSArray *statuses = [response getObjectsOfType:[CCStatus class]];
+                		for (CCStatus *status in statuses) {
+                			...
+                		}
+                	}
+                }
+                
+      - platform: android
+        example: |
+            Example Android call:
+            
+                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+                
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("where", "{'rating': {'$gt': 7.0}, 'created_at': {'$lt': '2011-03-02T19:05:33+0000'}");
+                CCResponse response = sdk.sendRequest("statuses/query.json", CCRequestMethod.GET, data);
+                
+            SDK Callback:
+            
+                JSONObject responseJSON = response.getResponseData();
+                CCMeta meta = response.getMeta();
+                if("ok".equals(meta.getStatus()) 
+                    && meta.getCode() == 200 
+                    && "queryStatuses".equals(meta.getMethod())) {
+                  JSONArray statuses = responseJSON.getJSONArray("statuses");
+                  ...
+                }
+                
+      - platform: javascript
+        example: |
+            Example Javascript call:
+            
+                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+                var data = {
+                  where: '{"rating":{"$gt":7.0},"created_at":{"$lt":"2011-03-02T19:05:33+0000"}'
+                };
+                sdk.sendRequest('statuses/query.json', 'GET', data, callback);
+                
+            SDK Callback:
+            
+                function callback(data) {
+                  if(data) {
+                    if(data.meta) {
+                      var meta = data.meta;
+                      if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'queryStatuses') {
+                        var statuses = data.response.statuses;
+                      	...
+                      }
+                    }
+                  }
+                }
+                

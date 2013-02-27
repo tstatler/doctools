@@ -48,4 +48,4 @@ fields:
 
   - name: user
     description: User who created this post.
-   type: String
+    type: String

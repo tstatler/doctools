@@ -4,15 +4,15 @@ description: |
     
     Currently, likes can only be added to the following object types:
     
-    *   {@link Post}
-    *   {@link Photo}
-    *   {@link User}
-    *   {@link Event}
-    *   {@link Checkin}
-    *   {@link Place}
-    *   {@link CustomObject}
-    *   {@link Status}
-    *   {@link Review}
+    *   {@link Posts}
+    *   {@link Photos}
+    *   {@link Users}
+    *   {@link Events}
+    *   {@link Checkins}
+    *   {@link Places}
+    *   {@link CustomObjects}
+    *   {@link Statuses}
+    *   {@link Reviews}
       
     If an object has one or more likes associated to it, it will return a total
     like count with the object:  

@@ -1,13 +1,13 @@
-name: User
+name: Users
 methods:
   - name: login
     summary: Login User
     description: |
         Log a user in using their ACS credentials.
 
-        To log a user in using an external account, see [External Account Login](User.external_account_login).
+        To log a user in using an external account, see [External Account Login](SocialIntegration#loginexternal).
 
-        To log a user out, see [User.logout](User.logout).
+        To log a user out, see [logout](Users#logout).
     url: users/login.json
     http-method: post
 

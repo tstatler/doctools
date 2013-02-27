@@ -25,12 +25,12 @@ methods:
       
       - name: friend_requests
         description: |
-            A list of friend requests, where each friend request is a Hash with
+            A list of friend requests, where each friend request is an object with
             the following members:
 
             *   `id: String`. User ID for user making the request.
 
-            *   `user: User`. User object for the user making the request.
+            *   `user: Users`. User object for the user making the request.
 
             *   `created_at: Date`. Timestamp when the file was created. 
 

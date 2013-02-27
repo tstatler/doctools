@@ -1,81 +1,126 @@
-name: Like
+name: Reviews
 methods:
   - name: create
-    summary: Create Like
+    summary: Create Review/Comment/Rating/Like
+
     description: |
-        Add a like to an object. Currently, likes can only be associated with one of
-        the following object types, and a user can only like an object once:  
+        Adds a review with an optional integer rating. You can also use this API to add
+        comments or likes. 
+        
+        Once an object has one or more reviews (comments) attached to it, it will
+        return a total review count, rating_count, average rating and a breakdown of
+        each rating value:
+        
+            "reviews_count": 2,
+            "ratings_count": 2,
+            "ratings_average": 150.0,
+            "ratings_summary": {
+              "100": 1,
+              "200": 1
+            },
 
-        *   {@link Posts}
-        *   {@link Photos}
-        *   {@link Users}
-        *   {@link Events}
-        *   {@link Checkins}
-        *   {@link Places}
-        *   {@link CustomObjects}
-        *   {@link Statuses}
-        *   {@link Reviews}
+        To create a review, you must specify a target object using one of the `id` parameters. Only one `id` parameter may be specified.
         
-        Once an object above has one or more likes attached to it, it will return a
-        total like count with the object:
-        
-            "likes_count": 2
+        A review must include either `content` or `rating`. It can also include both.
             
-        Specify one and only one of the ID parameters to identify  the target object.
-
-    url: likes/create.json
+    url: reviews/create.json
     http-method: POST
     login-required: true
 
     parameters:
 
       - name: post_id
-        description: Post object to like.
+        description: Post object to review.
         type: String
 
       - name: photo_id
-        description: Photo object to like.
+        description: Photo object to review.
         type: String
 
       - name: user_id
-        description: User object to like.
+        description: User object to review.
         type: String
 
       - name: event_id
-        description: Event object to like.
+        description: Event object to review.
         type: String
 
       - name: place_id
-        description: Place object to like.
+        description: Place object to review.
         type: String
 
       - name: checkin_id
-        description: Checkin object to like.
-        type: String
-
-      - name: status_id
-        description: Status object to like.
+        description: Checkin object to review.
         type: String
 
       - name: review_id
-        description: Review object to like.
+        description: Review object to review.
         type: String
 
       - name: custom_object_id
-        description: Custom object to like.
+        description: Custom object to review.
+        type: String
+
+      - name: content
+        description: |
+            Review or comment text.  
+        type: String
+
+      - name: rating
+        description: Rating to be associated with review. You can use 1 to represent like.
+        type: String
+
+      - name: allow_duplicate
+        description: |
+            By default, the same user can only submit one review/comment per object. 
+            Set this flag to `true` to allow the user to add multiple  reviews or comments to 
+            the same object. 
+        type: Boolean
+
+      - name: tags
+        description:  |
+            Comma separated list of tags for this review.
+        type: String
+
+      - name: custom_fields
+        description: User defined fields. See [Custom Data Fields](#!/guide/customfields).
+        type: [ String, Hash ]
+
+      - name: acl_name
+        description: |
+            Name of an {@link ACL} to associate with this object.
+
+            An ACL can be specified using `acl_name` or `acl_id`. The two parameters are
+            mutually exclusive.
+        type: String
+
+      - name: acl_id
+        description: |
+            ID of an {@link ACL} to associate with this object.
+
+            An ACL can be specified using `acl_name` or `acl_id`. The two parameters are
+            mutually exclusive.
+        type: String
+
+      - name: user_id
+        description: |
+            User ID to create the review on behalf of.
+
+            The current login user must be an application admin to create an object on
+            behalf of another user.
         type: String
 
     response-parameters:
-      - name: likes
-        description: A single-element array, containing the "like" object.
-        type: Array<Like>
-
+      - name: reviews
+        description: Single-element array containing the newly-created review.
+        type: Array<Reviews>
+    
     examples:
       - platform: rest
         example: |
             Example cURL request:
             
-                $ curl -b cookies.txt -c cookies.txt -F "post_id=4e33a817d9ca724745000003" https://api.cloud.appcelerator.com/v1/likes/create.json?key=<YOUR APP APP KEY>
+                $ curl -b cookies.txt -c cookies.txt -F "post_id=4e33a817d9ca724745000003" -F "rating=1" -F "content=Good"  https://api.cloud.appcelerator.com/v1/reviews/create.json?key=<YOUR APP APP KEY>
                 
             Example JSON response:
             
@@ -83,12 +128,14 @@ methods:
                   "meta": {
                     "status": "ok",
                     "code": 200,
-                    "method_name": "createLike"
+                    "method_name": "createReview"
                   },
                   "response": {
-                    "likes": [
+                    "reviews": [
                       {
                         "id": "4e33a817d9ca724745000006",
+                        "rating": 1,
+                        "content": "Good",
                         "created_at": "2011-07-30T06:43:35+0000",
                         "updated_at": "2011-07-30T06:43:35+0000",
                         "user": {
@@ -136,7 +183,9 @@ methods:
                 
                 Map<String, Object> data = new HashMap<String, Object>();
                 data.put("post_id", "4e33a817d9ca724745000003");
-                CCResponse response = sdk.sendRequest("likes/create.json", CCRequestMethod.POST, data);
+                data.put("rating", "1");
+                data.put("content", "Good");
+                CCResponse response = sdk.sendRequest("reviews/create.json", CCRequestMethod.POST, data);
                 
             SDK Callback:
             
@@ -144,8 +193,8 @@ methods:
                 CCMeta meta = response.getMeta();
                 if("ok".equals(meta.getStatus()) 
                     && meta.getCode() == 200 
-                    && "createLike".equals(meta.getMethod())) {
-                  JSONArray likes = responseJSON.getJSONArray("likes");
+                    && "createReview".equals(meta.getMethod())) {
+                  JSONArray reviews = responseJSON.getJSONArray("reviews");
                   ...
                 }
                 
@@ -155,9 +204,11 @@ methods:
             
                 var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
                 var data = {
-                  post_id: '4e33a817d9ca724745000003'
+                  post_id: '4e33a817d9ca724745000003',
+                  rating: '1',
+                  content: 'Good'
                 };
-                sdk.sendRequest('likes/create.json', 'POST', data, callback);
+                sdk.sendRequest('reviews/create.json', 'POST', data, callback);
                 
             SDK Callback:
             
@@ -165,8 +216,8 @@ methods:
                   if(data) {
                     if(data.meta) {
                       var meta = data.meta;
-                      if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'createLike') {
-                        var likes = data.response.likes;
+                      if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'createReview') {
+                        var reviews = data.response.reviews;
                       	...
                       }
                     }
@@ -182,7 +233,9 @@ methods:
                 
                 var data:Object = new Object();
                 data.post_id = "4e33a817d9ca724745000003";
-                sdk.sendRequest("likes/create.json", URLRequestMethod.POST, data, false, callback);
+                data.rating = "1";
+                data.content = "Good";
+                sdk.sendRequest("reviews/create.json", URLRequestMethod.POST, data, false, callback);
                 
             SDK Callback:
             
@@ -190,8 +243,8 @@ methods:
                   if(data) {
                     if(data.hasOwnProperty("meta")) {
                       var meta:Object = data.meta;
-                      if(meta.status == "ok" && meta.code == 200 && meta.method_name == "createLike") {
-                      	var likes:Array = data.response.likes;
+                      if(meta.status == "ok" && meta.code == 200 && meta.method_name == "createReview") {
+                      	var reviews:Array = data.response.reviews;
                       	...
                       }
                     }

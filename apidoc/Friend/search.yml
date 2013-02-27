@@ -62,7 +62,7 @@ methods:
     response-parameters:
       - name: users
         description: List of users matching the search criteria. 
-        type: Array<User>
+        type: Array<Users>
 
     examples:
       - platform: rest

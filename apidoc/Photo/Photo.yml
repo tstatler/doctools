@@ -75,5 +75,5 @@ fields:
   - name: user
     description: |
         User object for the photo's owner.
-    type: User
+    type: Users
 

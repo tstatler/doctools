@@ -35,11 +35,11 @@ fields:
 
   - name: to
     description: Message recipients.
-    type: Array<User>
+    type: Array<Users>
 
   - name: from
     description: Message sender.
-    type: User
+    type: Users
 
 methods: 
   - name: create
@@ -55,8 +55,8 @@ methods:
 
     parameters: 
       - name: to_ids
-        description: One or more IDs of users to send the message to.
-        type: User
+        description: Comma-separated list of one or more IDs of users to send the message to.
+        type: String
         required: true
 
       - name: body

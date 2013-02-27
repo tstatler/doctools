@@ -1,9 +1,9 @@
-name: User
+name: Users
 methods: 
   - name: query
     summary: Custom Query of Users
     description: |
-        Custom query of User objects with sorting and paginating. You can query on sort 
+        Custom query of Users objects with sorting and paginating. You can query on sort 
         based on the data in any of the standard User fields. You can also query and
         sort data based on the values of any custom fields, if the values are simple JSON
         values.
@@ -63,7 +63,7 @@ methods:
     response-parameters:
       - name: users
         description: List of users matching the query parameters.
-        type: Array<User>
+        type: Array<Users>
 
     examples:
       - platform: rest

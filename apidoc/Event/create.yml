@@ -68,7 +68,7 @@ methods:
     
       - name: user
         description: Event owner.
-        type: User
+        type: Users
     
       - name: place_id
         description: ID for the {@link Place} where the event takes place.

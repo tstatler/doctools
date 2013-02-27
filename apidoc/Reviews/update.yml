@@ -1,0 +1,233 @@
+name: Reviews
+methods:
+  - name: update
+    summary: Update a Review/Comment/Rating/Like
+
+    description: |
+        Updates the review with the given `id`. 
+        
+        Ordinary users can update reviews they own or have update access to. 
+          
+        An application admin can update any Review object.
+        
+    url: reviews/update.json
+    http-method: PUT
+    login-required: true
+
+    parameters: 
+
+      - name: post_id
+        description: Post object associated with this review.
+        type: String
+
+      - name: photo_id
+        description: Photo object associated with this review.
+        type: String
+
+      - name: user_id
+        description: User object associated with this review.
+        type: String
+
+      - name: event_id
+        description: Event object associated with this review.
+        type: String
+
+      - name: place_id
+        description: Place object associated with this review.
+        type: String
+
+      - name: checkin_id
+        description: Checkin object associated with this review.
+        type: String
+
+      - name: review_object_id
+        description: Review object associated with this review.
+        type: String
+
+      - name: custom_object_id
+        description: Custom object associated with this review.
+        type: String
+
+      - name: review_id
+        description: Review object to update.
+        type: String
+        required: true
+
+      - name: content
+        description: Review or comment text.  
+        type: String
+
+      - name: rating
+        description: Rating to be associated with review. You can use 1 to represent like.
+        type: String
+
+      - name: allow_duplicate
+        description: |
+            By default, the same user can only submit one review/comment per object. 
+            Set this flag to `true` to allow the user to add multiple  reviews or comments to 
+            the same object. 
+        type: Boolean
+
+      - name: tags
+        description:  |
+            Comma separated list of tags for this review.
+        type: String
+
+      - name: custom_fields
+        description: User defined fields. See [Custom Data Fields](#!/guide/customfields).
+        type: [ String, Hash ]
+
+      - name: acl_name
+        description: |
+            Name of an {@link ACL} to associate with this object.
+
+            An ACL can be specified using `acl_name` or `acl_id`. The two parameters are
+            mutually exclusive.
+        type: String
+
+      - name: acl_id
+        description: |
+            ID of an {@link ACL} to associate with this object.
+
+            An ACL can be specified using `acl_name` or `acl_id`. The two parameters are
+            mutually exclusive.
+        type: String
+
+    response-parameters:
+      - name: reviews
+        description: Single-element array containing the updated review.
+        type: Array<Reviews>
+
+    examples:
+      - platform: rest
+        example: |
+            Example cURL request:
+            
+                $ curl -b cookies.txt -c cookies.txt -X PUT -F "post_id=4e33a9f5d9ca724769000003" -F "review_id=4e33a9f5d9ca724769000006" -F "rating=100" -F "content=Very very good" https://api.cloud.appcelerator.com/v1/reviews/update.json?key=<YOUR APP APP KEY>
+                
+            Example JSON response:
+            
+                {
+                  "meta": {
+                    "status": "ok",
+                    "code": 200,
+                    "method_name": "updateReview"
+                  },
+                  "response": {
+                    "reviews": [
+                      {
+                        "id": "4e33a9f5d9ca724769000006",
+                        "rating": 1,
+                        "content": "Very very good",
+                        "created_at": "2011-07-30T06:51:33+0000",
+                        "updated_at": "2011-07-30T06:51:33+0000",
+                        "user": {
+                          "id": "4e33a9f4d9ca724769000002",
+                          "first_name": "Bob",
+                          "last_name": "Dude",
+                          "created_at": "2011-07-30T06:51:32+0000",
+                          "updated_at": "2011-07-30T06:51:33+0000",
+                          "username": "bob",
+                          "email": "bob@dude.com"
+                        }
+                      }
+                    ]
+                  }
+                }
+                
+      - platform: ios
+        example: |
+            Example iOS call:
+            
+                NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:(CCPost *)post.objectId, @"post_id", (CCReview *)review.objectId, @"review_id", @"100", @"rating", nil];
+                CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"reviews/update.json" paramDict:paramDict];
+                [request startAsynchronous];
+                [request release];
+                
+            SDK Callback:
+            
+                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
+                {
+                	NSArray *reviews = [response getObjectsOfType:[CCReview class]];
+                }
+                
+      - platform: android
+        example: |
+            Example Android call:
+            
+                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+                
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("post_id", "4e33a817d9ca724745000003");
+                data.put("review_id", "4e33a9f5d9ca724769000006");
+                data.put("rating", "1");
+                data.put("content", "Good");
+                CCResponse response = sdk.sendRequest("reviews/update.json", CCRequestMethod.PUT, data);
+                
+            SDK Callback:
+            
+                JSONObject responseJSON = response.getResponseData();
+                CCMeta meta = response.getMeta();
+                if("ok".equals(meta.getStatus()) 
+                    && meta.getCode() == 200 
+                    && "updateReview".equals(meta.getMethod())) {
+                  JSONArray reviews = responseJSON.getJSONArray("reviews");
+                  ...
+                }
+                
+      - platform: javascript
+        example: |
+            Example Javascript call:
+            
+                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+                var data = {
+                  post_id: '4e33a817d9ca724745000003',
+                  review_id: '4e33a9f5d9ca724769000006',
+                  rating: '1',
+                  content: 'Good'
+                };
+                sdk.sendRequest('reviews/update.json', 'PUT', data, callback);
+                
+            SDK Callback:
+            
+                function callback(data) {
+                  if(data) {
+                    if(data.meta) {
+                      var meta = data.meta;
+                      if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'updateReview') {
+                        var reviews = data.response.reviews;
+                      	...
+                      }
+                    }
+                  }
+                }
+                
+      - platform: actionscript
+        example: |
+            Example Actionscript call:
+            
+                var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+                
+                var data:Object = new Object();
+                data.post_id = "4e33a817d9ca724745000003";
+                data.review_id = "4e33a9f5d9ca724769000006";
+                data.rating = "100";
+                data.content = "Very very good";
+                sdk.sendRequest("reviews/update.json", URLRequestMethod.PUT, data, false, callback);
+                
+            SDK Callback:
+            
+                function callback(data:Object):void {
+                  if(data) {
+                    if(data.hasOwnProperty("meta")) {
+                      var meta:Object = data.meta;
+                      if(meta.status == "ok" && meta.code == 200 && meta.method_name == "updateReview") {
+                      	var reviews:Array = data.response.reviews;
+                      	...
+                      }
+                    }
+                  }
+                }
+                

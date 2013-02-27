@@ -1,0 +1,10 @@
+name: PushNotifications
+description: |
+    The Push Notifications API lets you send push notification to your users who are on iOS and
+    Andriod Devices. You can also send a system push notification to all users from the Admin
+    Console.
+
+    Please refer to the Push Notifications sections of the [Android SDK guide](#!/guide/android)
+    or the [iOS SDK guide](#!/guide/ios) to set up your app for push notifications to
+    Android or iOS.
+

@@ -2,7 +2,7 @@ name: User
 methods:
   - name: update
     description: |
-        Any of the same parameters as [Create User](#!/api/User.create) can be
+        Any of the same parameters as {@link Users#create create} can be
         used to update the current user. If `password` is updated then
         `password_confirmation` must be sent as well.
     
@@ -65,6 +65,11 @@ methods:
             User-defined data. See [Custom Data Fields](/docs/customfields).
         type: String
 
+	response-parameters:
+	  - name: users
+	    description: Single-element array containing the updated user object.
+	    type: Array<Users>
+	    
     examples:
       - platform: rest
         example: |

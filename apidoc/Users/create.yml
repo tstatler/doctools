@@ -1,4 +1,4 @@
-name: User
+name: Users
 methods:
   - name: create
     summary: Creates a user.
@@ -108,7 +108,7 @@ methods:
     response-parameters:
       - name: users
         description: Single-element array containing user record for the new user.
-        type: Array<User>
+        type: Array<Users>
 
     examples:
       - platform: rest

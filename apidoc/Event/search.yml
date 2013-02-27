@@ -29,7 +29,7 @@ methods:
         type: String
 
       - name: user_id
-        description: Restrict search results to events owned by the identified {@link User}.
+        description: Restrict search results to events owned by the identified {@link Users}.
         type: String
 
       - name: latitude

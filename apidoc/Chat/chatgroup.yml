@@ -56,7 +56,7 @@ methods:
 
             *   `updated_at`.  Timestamp of the most recent message in the chat group.
 
-            *   `participate_users`. List if {@link User} objects for the users in the
+            *   `participate_users`. List of {@link Users} objects for the users in the
                  chat group.
         type: Array<Hash>
 

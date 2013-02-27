@@ -68,4 +68,4 @@ fields:
 
   - name: user
     description: Owner of this place object.
-    type: User
+    type: Users

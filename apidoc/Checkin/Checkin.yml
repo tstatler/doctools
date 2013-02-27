@@ -9,7 +9,7 @@ fields:
 
   - name: user
     description: Checkin owner.
-    type: User
+    type: Users
 
   - name: message
     description: Checkin message.
@@ -30,6 +30,10 @@ fields:
   - name: tags
     description: Comma-separated list of tags associated with this checkin.
     type: String
+
+  - name: custom_fields
+    description: User defined fields. See [Custom Data Fields](#!/guide/customfields).
+    type: [ String, Hash ]
 
   - name: created_at
     description: Message creation date.

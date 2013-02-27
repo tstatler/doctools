@@ -1,10 +1,10 @@
-name: User
+name: Users
 methods:
   - name: show
     summary: Show User Profile
     description: |
         Shows public user information. For private information about the currently
-        logged in user, see [Show Logged In User Info](/docs/api/v1/users/showme).
+        logged in user, see {@link Users#showme Show Logged In User Info}.
     url: users/show.json
     login-required: false
 
@@ -35,7 +35,7 @@ methods:
     response-parameters:
       - name: users
         description: List of user profiles.
-        type: Array<User>
+        type: Array<Users>
 
     examples:
       - platform: rest

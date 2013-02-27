@@ -49,7 +49,7 @@ fields:
     
   - name: user
     description: Event owner.
-    type: User
+    type: Users
 
   - name: place
     description: Event location.

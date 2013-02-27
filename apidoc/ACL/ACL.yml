@@ -94,7 +94,7 @@ fields:
 
   - name: user
     description: Owner of the ACL.
-    type: User
+    type: Users
 
   - name: created_at
     description: ACL creation date.

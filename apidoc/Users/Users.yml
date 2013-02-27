@@ -1,4 +1,4 @@
-name: User
+name: Users
 base-url: https://api.cloud.appcelerator.com/v1/users/
 description: |
     Represents a user account. 

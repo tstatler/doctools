@@ -62,7 +62,7 @@ methods:
       - name: phone_number  
         description: Phone number.
         type: String
-       `
+
       - name: photo 
         description: |
             New photo to attach as the primary photo for this place.

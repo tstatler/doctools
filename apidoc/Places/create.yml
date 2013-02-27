@@ -59,11 +59,11 @@ methods:
       - name: phone_number  
         description: Phone number.
         type: String
-       `
+
       - name: photo 
         description: |
             New photo to attach as the primary photo for this place.
-    
+
             When you use the `photo` parameter to attach a new photo, you can use the 
             [custom resize and sync options](#!/guide/photosizes).
         type: Photo

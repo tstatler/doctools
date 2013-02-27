@@ -1,0 +1,146 @@
+name: Statuses
+methods:
+  - name: show
+    summary: Show a status
+    description: |
+        Returns the identified status message.
+    url: statuses/show.json
+    parameters:
+      - name: status_id
+        description: ID of the status to show.
+        type: String
+        required: true
+
+      - name: response_json_depth
+        description: |
+            Nested object depth level counts in response JSON.  
+
+            In order to reduce server API calls from an applicaton, the response JSON may
+            include not just the objects that are being queried/searched, but also 
+            some important data related to the returned objects such as object's owner or
+            referenced objects.  
+
+            Default is 3, valid range is 1 to 8.
+        type: Number
+
+    response-parameters:
+      - name: statuses
+        description: Single-element array containing the identified status.
+        type: Array<Statuses>
+
+    examples:
+      - platform: rest
+        example: |
+            Example cURL request:
+            
+                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/statuses/show.json?key=<YOUR APP APP KEY>&status;_id=4d6e88886f70950c89000005"
+                
+            Example JSON response:
+            
+                {
+                  "meta": {
+                    "status":"ok",
+                    "code":200,
+                    "method_name":"showStatus"
+                  },
+                  "response": {
+                    "statuses": [
+                      {
+                        "id":"4d6e88886f70950c89000005",
+                        "message":"At the beach!",
+                        "created_at":"2011-03-02T18:12:24+0000",
+                        "updated_at":"2011-03-02T18:12:24+0000"
+                      }
+                    ]
+                  }	
+                }
+                
+      - platform: ios
+        example: |
+            Example iOS call:
+            
+                // show a status
+                NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
+                [paramDict setObject:@"4d6e88886f70950c89000005" forKey:@"status_id"]; 
+                CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"statuses/show.json" paramDict:paramDict];
+                [request startAsynchronous];
+                [request release];
+                
+            SDK Callback:
+            
+                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
+                {
+                	NSArray *statuses = [response getObjectsOfType:[CCStatus class]];
+                }
+                
+      - platform: android
+        example: |
+            Example Android call:
+            
+                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+                
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("status_id", "4d6e88886f70950c89000005");
+                CCResponse response = sdk.sendRequest("statuses/show.json", CCRequestMethod.GET, data);
+                
+            SDK Callback:
+            
+                JSONObject responseJSON = response.getResponseData();
+                CCMeta meta = response.getMeta();
+                if("ok".equals(meta.getStatus()) 
+                    && meta.getCode() == 200 
+                    && "showStatus".equals(meta.getMethod())) {
+                  JSONArray statuses = responseJSON.getJSONArray("statuses");
+                  ...
+                }
+                
+      - platform: javascript
+        example: |
+            Example Javascript call:
+            
+                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+                var data = {
+                  status_id: '4d6e88886f70950c89000005'
+                };
+                sdk.sendRequest('statuses/search.json', 'GET', data, callback);
+                
+            SDK Callback:
+            
+                function callback(data) {
+                  if(data) {
+                    if(data.meta) {
+                      var meta = data.meta;
+                      if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'showStatus') {
+                        var statuses = data.response.statuses;
+                      	...
+                      }
+                    }
+                  }
+                }
+                
+      - platform: actionscript
+        example: |
+            Example Actionscript call:
+            
+                var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+                
+                var data:Object = new Object();
+                data.status_id = "4d6e88886f70950c89000005";
+                sdk.sendRequest("statuses/show.json", URLRequestMethod.GET, data, false, callback);
+                
+            SDK Callback:
+            
+                function callback(data:Object):void {
+                  if(data) {
+                    if(data.hasOwnProperty("meta")) {
+                      var meta:Object = data.meta;
+                      if(meta.status == "ok" && meta.code == 200 && meta.method_name == "showStatus") {
+                      	var statuses:Array = data.response.statuses;
+                      	...
+                      }
+                    }
+                  }
+                }
+                

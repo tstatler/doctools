@@ -1,0 +1,162 @@
+name: PushNotifications
+methods:
+  - name: query
+    summary: Query
+    description: |
+        Custom query of push notification subscriptions with paginating.
+    url: push_notfication/query.json
+
+    parameters:
+
+      - name: user_id
+        description: User ID of the user who has subscribed devices for push notification.
+        type: String
+        required: true
+
+      - name: channel
+        description: Name of the push notification channel.
+        type: String
+
+      - name: device_token
+        description: Apple or Android Device Token.
+        type: String
+
+      - name: type
+        description: |
+            Device type: "ios" or "android".
+        type: String
+
+      - name: page  
+        description: Request page number, default is 1.
+        type: Number
+      
+      - name: per_page
+        description: Number of results per page, default is 10.
+        type: Number
+
+    response-parameters:
+      - name: subscriptions
+        description: |
+            Array of subscription objects, where each subscription object has the
+            following properties:
+
+            *   `id` : `String`. Generated ID associated with the subscription.
+            *   `channel` : `Array of Strings`. List of subscribed channels.
+            *   `device_token` : `String`. iOS or Android device token associated with
+                this subscription.
+            *   `type` : `String`. Device type. Either "ios" or "android".
+
+        type: Array<Dictionary>
+
+    examples:
+      - platform: rest
+        example: |
+            Example cURL request:
+            
+                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/push_notification/query.json?key=<YOUR APP APP KEY>&user;_id=4f5905b5d2951316a9000020"
+                
+            Example JSON response:
+            
+                {
+                  "meta": {
+                    "status": "ok",
+                    "code": 200,
+                    "method_name": "querySubscriptions",
+                    "page": 1,
+                    "per_page": 10,
+                    "total_pages": 1,
+                    "total_results": 2
+                  },
+                  "response": {
+                    "subscriptions": [
+                      {
+                        "id": "4f6171dcd29513027200000c",
+                        "channel": ["friend_request", "alert"],
+                        "device_token": "f7702d77b34ed94869f664e7a297ccc173bec93a2b815css6asd28461a0358dd",
+                        "type": "ios"
+                      },
+                      {
+                        "id": "4f6171e7d29513027200000e",
+                        "channel": ["friend_request", "vip"],
+                        "device_token": "f7702d77b34ed94869k66oe",
+                        "type": "android"
+                      }
+                    ]
+                  }
+                }
+                
+      - platform: android
+        example: |
+            Example Android call:
+            
+                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+                
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("user_id", "4f5905b5d2951316a9000020");
+                CCResponse response = sdk.sendRequest("push_notification/query.json", CCRequestMethod.GET, data);
+                
+            SDK Callback:
+            
+                JSONObject responseJSON = response.getResponseData();
+                CCMeta meta = response.getMeta();
+                if("ok".equals(meta.getStatus()) 
+                    && meta.getCode() == 200 
+                    && "querySubscriptions".equals(meta.getMethod())) {
+                  JSONArray subscriptions = responseJSON.getJSONArray("subscriptions");
+                  ...
+                }
+                
+      - platform: javascript
+        example: |
+            Example Javascript call:
+            
+                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+                var data = {
+                  user_id: '4f5905b5d2951316a9000020'
+                };
+                sdk.sendRequest('push_notification/query.json', 'GET', data, callback);
+                
+            SDK Callback:
+            
+                function callback(data) {
+                  if(data) {
+                    if(data.meta) {
+                      var meta = data.meta;
+                      if(meta.status == 'ok' 
+                          && meta.code == 200 
+                          && meta.method_name == 'querySubscriptions') {
+                      	var subscriptions = data.response.subscriptions;
+                      	...
+                      }
+                    }
+                  }
+                }
+                
+      - platform: actionscript
+        example: |
+            Example Actionscript call:
+            
+                var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+                
+                var data:Object = new Object();
+                data.user_id = "4f5905b5d2951316a9000020";
+                sdk.sendRequest("push_notification/query.json", URLRequestMethod.GET, data, callback);
+                
+            SDK Callback:
+            
+                function callback(data:Object):void {
+                  if(data) {
+                    if(data.hasOwnProperty("meta")) {
+                      var meta:Object = data.meta;
+                      if(meta.status == "ok" 
+                          && meta.code == 200 
+                          && meta.method_name == "querySubscriptions") {
+                      	var subscriptions:Array = data.response.subscriptions;
+                      	...
+                      }
+                    }
+                  }
+                }
+                

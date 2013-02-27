@@ -1,0 +1,47 @@
+name: Statuses
+description: |
+    Create Twitter-like status messages.
+fields:
+  - name: id
+    description: Generated unique ID for this status.
+    type: String
+
+  - name: user
+    description: Status owner.
+    type: Users
+
+  - name: message
+    description: Status message.
+    type: String
+
+  - name: place
+    description: The place object associated with this status.
+    type: Place
+
+  - name: event
+    description: The event object associated with this status.
+    type: Event
+
+  - name: photo
+    description: The primary photo for this status.
+    type: Photo
+
+  - name: tags
+    description: Comma-separated list of tags associated with this status.
+    type: String
+
+  - name: created_at
+    description: Message creation date.
+    type: Date
+
+  - name: updated_at
+    description: Message update date.
+    type: Date
+
+  - name: acls
+    description: |
+        Single-element array containing the {@link ACL} associated with this status object, if any.
+    type: String
+
+
+
