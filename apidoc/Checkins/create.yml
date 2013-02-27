@@ -1,4 +1,4 @@
-name: Checkin
+name: Checkins
 methods:
   - name: create
     summary: Checkin to a Place or Event

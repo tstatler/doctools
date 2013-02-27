@@ -1,6 +1,6 @@
-name: Checkin
+name: Checkins
 description: |
-    Checkin Tangram provides API to create and manage checkins to a place or an
+    The Checkins API provides methods to create and manage checkins to a place or an
     event.
 fields: 
   - name: id

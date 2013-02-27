@@ -1,4 +1,4 @@
-name: ACL
+name: ACLs
 methods:
   - name: create
     summary: Create an access control list
@@ -51,7 +51,7 @@ methods:
     response-parameters:
       - name: acls
         description: Array containing the created ACL.
-        type: Array<ACL>
+        type: Array<ACLs>
 
 
     examples:

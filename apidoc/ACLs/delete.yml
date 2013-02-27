@@ -1,50 +1,38 @@
-name: ACL
+name: ACLs
 methods:
-  - name: add
-    summary: Add user(s) to an ACL.
+  - name: delete
+    summary: Delete an ACL
 
     description: |
-        Add one or more user(s) to an existing ACL object, identified by its `id` or `name`.
+        Delete an ACL object with the given `id` or `name`.  
+          
+        The Application Admin can delete any ACL object.
         
-    url: acls/add.json
-    http-method: POST
+    url: acls/delete.json
+    http-method: DELETE
     login-required: true
 
     parameters:
       - name: name 
         description: |
-            Name of the ACL object.
+            Name of the ACL object to delete.
 
             Either `name` or `id` must be specified.
         type: String
 
       - name: id
         description: |
-            ID of the ACL oject.
+            ID of the ACL oject to delete.
       
             Either `name` or `id` must be specified.
         type: String
-
-      - name: reader_ids
-        description: |
-            Comma separated list of IDs identifying users who can read objects
-            controlled by this ACL.
-        type: String
-        required: true
-
-      - name: writer_ids
-        description: |
-            Comma separated list of IDs identifying users who can update an object.
-            controlled by this ACL.
-        type: String
-        required: true
 
     examples:
       - platform: rest
         example: |
             Example cURL request:
             
-                $ curl -b cookies.txt -c cookies.txt -F "name=access_photo_album" -F "reader_ids[]=4fcdab1f47b7b71933000008" -F "writer_ids[]=4fcdab1f47b7b71933000009" https://api.cloud.appcelerator.com/v1/acls/add.json?key=<YOUR APP APP KEY>
+                $ curl -b cookies.txt -c cookies.txt -X DELETE -F "name=access_photo_album" "https://api.cloud.appcelerator.com/v1/acls/delete.json?key=<YOUR APP APP KEY>"
                 
             Example JSON response:
             
@@ -52,7 +40,7 @@ methods:
                   "meta": {
                     "status": "ok",
                     "code": 200,
-                    "method_name": "addAcl"
+                    "method_name": "deleteAcl"
                   }
                 }
                 
@@ -60,11 +48,8 @@ methods:
         example: |
             Example iOS call:
             
-                NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
-                [paramDict setObject:@"access my album" forKey:@"name"];
-                [paramDict setObject:[NSArray arrayWithObjects:[@"4fcdab1f47b7b71933000008", nil] forKey:@"reader_ids"];
-                [paramDict setObject:[NSArray arrayWithObjects:[@"4fcdab1f47b7b71933000009", nil] forKey:@"writer_ids"];
-                CCRequest *request = [[CCRequest alloc] initWithDelegate:self  httpMethod:@"POST" baseUrl:@"acls/add.json" paramDict:paramDict];
+                NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:(CCACL *)acl.objectId, @"acl_id", nil];
+                CCRequest *request = [[CCRequest alloc] initWithDelegate:self  httpMethod:@"DELETE" baseUrl:@"acls/delete.json" paramDict:paramDict];
                 [request startAsynchronous];
                 [request release];
                 
@@ -72,8 +57,8 @@ methods:
             
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
-                	if ([response.meta.method isEqualToString:@"addAcl"]) {
-                		
+                	if ([response.meta.method isEqualToString:@"deleteAcl"]) {
+                		NSLog(@"acl is deleted!");
                 	}
                 }
                 
@@ -86,9 +71,7 @@ methods:
                 
                 Map<String, Object> data = new HashMap<String, Object>();
                 data.put("name", "access_photo_album");
-                data.put("reader_ids", "4fcdab1f47b7b71933000008");
-                data.put("writer_ids", "4fcdab1f47b7b71933000009");
-                CCResponse response = sdk.sendRequest("acls/add.json", CCRequestMethod.POST, data);
+                CCResponse response = sdk.sendRequest("acls/delete.json", CCRequestMethod.DELETE, data);
                 
             SDK Callback:
             
@@ -96,8 +79,8 @@ methods:
                 CCMeta meta = response.getMeta();
                 if("ok".equals(meta.getStatus()) 
                     && meta.getCode() == 200 
-                    && "addAcl".equals(meta.getMethod())) {
-                
+                    && "deleteAcl".equals(meta.getMethod())) {
+                  System.out.println("acl is deleted!");
                 }
                 
       - platform: javascript
@@ -106,11 +89,9 @@ methods:
             
                 var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
                 var data = {
-                  name: 'access_photo_album',
-                  reader_ids: '4fcdab1f47b7b71933000008',
-                  writer_ids: '4fcdab1f47b7b71933000009'
+                  name: 'access_photo_album'
                 };
-                sdk.sendRequest('acls/add.json', 'POST', data, callback);
+                sdk.sendRequest('acls/delete.json', 'DELETE', data, callback);
                 
             SDK Callback:
             
@@ -118,8 +99,8 @@ methods:
                   if(data) {
                     if(data.meta) {
                       var meta = data.meta;
-                      if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'addAcl') {
-                
+                      if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'deleteAcl') {
+                        alert("acl is deleted!");
                       }
                     }
                   }

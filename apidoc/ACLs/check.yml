@@ -1,4 +1,4 @@
-name: ACL
+name: ACLs
 methods:
   - name: check
     summary: Check a user's permission in an ACL.

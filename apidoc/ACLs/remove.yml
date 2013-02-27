@@ -1,4 +1,4 @@
-name: ACL
+name: ACLs
 methods:
   - name: remove
     summary: Remove user(s) from an ACL

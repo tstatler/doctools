@@ -1,4 +1,4 @@
-name: ACL
+name: ACLs
 methods:
   - name: update
     summary: Update an ACL
@@ -93,7 +93,7 @@ methods:
     response-parameters:
       - name: acls
         description: A single-element array containing the updated ACS object.
-        type: Array<ACL>
+        type: Array<ACLs>
 
     examples:
       - platform: rest

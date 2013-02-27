@@ -1,4 +1,4 @@
-name: Checkin
+name: Checkins
 methods:
   - name: delete
     summary: Delete a Checkin
@@ -18,7 +18,7 @@ methods:
       - name: keep_photo
         description: |
             If the checkin has a primary photo that was created by using the `photo`
-            parameter to {@link Checkin#create create}, the photo object will be deleted as well. 
+            parameter to {@link Checkins#create create}, the photo object will be deleted as well. 
             Use `keep_photo=true` to tell Appcelerator Cloud Services to not delete this photo.
         type: Boolean
 
