@@ -3,6 +3,7 @@ PROD_TEMPLATE=template-min
 VIDEO_LIST="videos.json"
 PROCESSED_VIDEO_LIST="build/videos.json"
 config="./jsduck.config"
+guidesdir="./htmlguides"
 
 progname=$0
 
@@ -17,7 +18,7 @@ usage() {
     echo ""
 }
 
-while getopts ":tso:c:" opt; do
+while getopts ":tso:c:g:" opt; do
     case $opt in 
         c)
             if [ "$OPTARG" ]; then
@@ -27,10 +28,17 @@ while getopts ":tso:c:" opt; do
         o)
             if [ $OPTARG == "alloy" ]; then
                 include_alloy="include_alloy"
+            elif [ $OPTARG = "modules" ]; then 
+                include_modules="include_modules" 
             else
                 echo "Unknown optional project, $OPTARG">&2
                 usage
                 exit 1
+            fi
+            ;;
+        g)
+            if [ "$OPTARG" ]; then
+                guidesdir=$OPTARG
             fi
             ;;
         t)  
@@ -59,6 +67,8 @@ shift $((OPTIND-1))
 while [ $1 ]; do
     if [ $1 == "prod" ]; then
         production_build="production"
+        seo="--seo"
+        no_thumbnails=""
     elif [ $1 == "debug" ]; then
         debug_build="debug"
     fi
@@ -109,8 +119,20 @@ if [ $include_alloy ]; then
     done
 fi
 
-python ${TI_DOCS}/docgen.py -f jsduck -o ./build
-python ./guides_parser.py --input "./htmlguides/toc.xml" --output "./build/guides"
+if [ $include_modules ]; then
+    if [ ! "$TI_MODULES" ]; then
+        if [ "$TI_ROOT" ]; then
+            TI_MODULES=${TI_ROOT}/titanium_modules
+        else
+            echo "No titanium_modules dir \$TI_MODULES and \$TI_ROOT not defined. Exiting."
+            exit
+        fi
+    fi
+    module_dirs="$TI_MODULES/map"
+fi
+
+python ${TI_DOCS}/docgen.py -f jsduck -o ./build $module_dirs
+python ./guides_parser.py --input "${guidesdir}/toc.xml" --output "./build/guides"
 
 if [ $no_thumbnails ]; then
     cp $VIDEO_LIST $PROCESSED_VIDEO_LIST
