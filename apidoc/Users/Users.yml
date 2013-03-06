@@ -51,7 +51,7 @@ fields:
 
   - name: photo 
     description: Primary photo for this user. 
-    type: Photo
+    type: Photos
       
   - name: custom_fields
     description: User defined fields. See [Custom Data Fields](#!/guide/customfields).

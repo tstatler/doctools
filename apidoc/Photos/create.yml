@@ -1,0 +1,229 @@
+name: Photos
+methods:
+  - name: create
+    summary: Create (Upload) a Photo
+
+    description: |
+        Create a photo using the given `photo` binary attachment. A `collection_name`
+        or `collection_id` is optional. The response includes a `processed` flag which
+        indicates if the photo has been resized and stored reliably in the
+        Appcelerator Cloud Services storage engine. This will initially be `false`.
+        The `md5` field gives the md5 sum of the file which can be used to verify file
+        integrity.
+        
+    url: photos/create.json
+    http-method: POST
+    login-required: true
+
+    parameters: 
+
+      - name: photo
+        description: |
+            The attached binary file.
+        type: FileUpload
+        required: true
+
+      - name: title
+        description: Photo title.
+        type: String
+
+      - name: collection_name
+        description: Name of the {@link PhotoCollections} to add this photo to.
+        type: String
+
+      - name: collection_id
+        description: ID of the {@link PhotoCollections} to add this photo to.
+        type: String
+
+      - name: tags
+        description:  |
+            Comma separated list of tags to associate with this photo.
+        type: String
+
+      - name: custom_fields
+        description: User-defined fields to add to this photo. See [Custom Data Fields](#!/guide/customfields).
+        type: Hash
+
+      - name: acl_name
+        description: |
+            Name of an {@link ACLs} to associate with this photo object.
+
+            An ACL can be specified using `acl_name` or `acl_id`. The two parameters are
+            mutually exclusive.
+        type: String
+
+      - name: acl_id
+        description: |
+            ID of an {@link ACLs} to associate with this photo object.
+
+            An ACL can be specified using `acl_name` or `acl_id`. The two parameters are
+            mutually exclusive.
+        type: String
+
+      - name: user_id
+        description: |
+            User ID to create the photo on behalf of.
+
+            The current login user must be an application admin to create a photo on
+            behalf of another user.
+        type: String
+
+      - name: photo_sizes
+        description: |
+            User-defined photo sizes. See [Photo Uploading &
+            Sizes](#!/guide/photosizes#custom).  Sizes be specified as a JSON object, or using a separate parameter for each
+            size. To specify a photo size called "preview" using JSON:
+
+                photo_size : { "preview" : "120x120#" } 
+
+            To pass each size as a separate parameter, do *not* use the literal parameter name `photo_sizes`, 
+            but add a parameter named `photo_sizes[`_sizeName_`]` for each custom photo
+            size. The previous example in this format looks like this:
+
+                "photo_size[preview]" : "120x120#"
+        type: [ String, Hash ]
+
+
+      - name: photo_sync_sizes[]
+        description: |
+            Synchronous photo sizes to upload. See [Photo Uploading & Sizes](#!/guide/photosizes#sync).
+
+            The literal name for this parameter is `photo_sync_sizes[]`. This parameter can be specified 
+            multiple times, once for each photo size that must be created before the request returns. 
+            
+            For example:
+
+                "photo_sync_sizes[]=preview"
+
+    response-parameters:
+      - name: photos
+        description: |
+            Single-element array containing the newly-created photo object.
+        type: Array<Photos>
+
+    examples:
+      - platform: rest
+        example: |
+            Example cURL request:
+            
+                $ curl -b cookies.txt -c cookies.txt  -F "file=@photo.jpg" https://api.cloud.appcelerator.com/v1/photos/create.json?key=<YOUR APP APP KEY>
+                
+            Example JSON response:
+            
+                {
+                  "meta": {
+                    "status":"ok",
+                    "code":200,
+                    "method_name":"createPhoto"
+                  },
+                  "response": {
+                    "photos": [
+                      {
+                        "id":"4d51d4186f70952d4c000006",
+                        "filename":"photo.jpg",
+                        "size":584344,
+                        "md5":"589b8ad43ed20bf8e622d719642bc939",
+                        "created_at":"2011-02-08T23:39:04+0000",
+                        "updated_at":"2011-02-08T23:39:04+0000",
+                        "processed":false
+                      }
+                    ]
+                  }	
+                }	
+                
+            Please refer to [Photo Downloads](../../../ios#photodownloads) to see how
+            retrieve the actual image from a CCPhoto object.
+            
+      - platform: ios
+        example: |
+            Example iOS call:
+            
+                NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
+                [paramDict setObject:@"profile_photos" forKey:@"collection_name"]; // optional
+                CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"POST" baseUrl:@"photos/create.json" paramDict:paramDict];
+                [request addPhotoUIImage:image paramDict:nil];
+                [request startAsynchronous];
+                [request release];
+                
+            SDK Callback:
+            
+                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
+                {
+                	NSArray *photos = [response getObjectsOfType:[CCPhoto class]];
+                	for (CCPhoto *photo in photos)
+                	{
+                		...
+                	}
+                }
+                
+      - platform: android
+        example: |
+            Example Android call:
+            
+                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+                
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("photo", new File("/photos/profile.gif"));
+                CCResponse response = sdk.sendRequest("photos/create.json", CCRequestMethod.POST, data);
+                
+            SDK Callback:
+            
+                JSONObject responseJSON = response.getResponseData();
+                CCMeta meta = response.getMeta();
+                if("ok".equals(meta.getStatus()) 
+                    && meta.getCode() == 200 
+                    && "createPhoto".equals(meta.getMethod())) {
+                  JSONArray photos = responseJSON.getJSONArray("photos");
+                  ...
+                }
+                
+      - platform: javascript
+        example: |
+            Example Javascript call:
+            
+                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+                var data = {
+                  photo: 'photoInput'  //the ID of file input control
+                };
+                sdk.sendRequest('photos/create.json', 'POST', data, callback);
+                
+            SDK Callback:
+            
+                function callback(data) {
+                  if(data) {
+                    if(data.meta) {
+                      var meta = data.meta;
+                      if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'createPhoto') {
+                        var photos = data.response.photos;
+                      	...
+                      }
+                    }
+                  }
+                }
+                
+      - platform: actionscript
+        example: |
+            Example Actionscript call:
+            
+                var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+                
+                var data:Object = new Object();
+                data.photo = photo;	//instance of FileReference
+                sdk.sendRequest("photos/create.json", URLRequestMethod.POST, data, false, callback);
+                
+            SDK Callback:
+            
+                function callback(data:Object):void {
+                  if(data) {
+                    if(data.hasOwnProperty("meta")) {
+                      var meta:Object = data.meta;
+                      if(meta.status == "ok" && meta.code == 200 && meta.method_name == "createPhoto") {
+                      	var photos:Array = data.response.photos;
+                      	...
+                      }
+                    }
+                  }
+                }
+                

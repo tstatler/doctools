@@ -4,9 +4,9 @@ methods:
     summary: Delete an ACL
 
     description: |
-        Delete an ACL object with the given `id` or `name`.  
+        Deletes an ACL object with the given `id` or `name`.  
           
-        The Application Admin can delete any ACL object.
+        An application admin can delete any ACL object.
         
     url: acls/delete.json
     http-method: DELETE

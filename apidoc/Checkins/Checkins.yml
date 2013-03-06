@@ -17,15 +17,15 @@ fields:
 
   - name: place
     description: The place object associated with the checkin.
-    type: Place
+    type: Places
 
   - name: event
     description: The event object associated with the checkin.
-    type: Event
+    type: Events
 
   - name: photo
     description: The primary photo for the checkin.
-    type: Photo
+    type: Photos
 
   - name: tags
     description: Comma-separated list of tags associated with this checkin.

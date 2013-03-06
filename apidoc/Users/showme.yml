@@ -1,4 +1,4 @@
-name: User
+name: Users
 methods:
   - name: showme
     summary: Show Current User Profile

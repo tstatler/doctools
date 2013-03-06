@@ -25,7 +25,7 @@ methods:
     response-params:
       - name: checkins
         description: Single element array containing the identified checkin.
-        type: Array<Checkin>
+        type: Array<Checkins>
 
     examples:
       - platform: rest

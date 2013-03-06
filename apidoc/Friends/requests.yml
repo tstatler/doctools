@@ -1,0 +1,161 @@
+name: Friends
+methods:
+  - name: requests
+    summary: Show Friend Requests
+    description: |
+        View pending friend requests.
+    url: friends/requests.json
+    login-required: true
+
+    parameters:
+
+      - name: response_json_depth
+        description: |
+            Nested object depth level counts in response JSON.  
+
+            In order to reduce server API calls from an applicaton, the response JSON may
+            include not just the objects that are being referred to, but also 
+            some important data related to the returned objects such as object's owner or
+            referenced objects.  
+
+            Default is 3, valid range is 1 to 8.
+        type: Number
+
+    response-parameters: 
+      
+      - name: friend_requests
+        description: |
+            A list of friend requests, where each friend request is an object with
+            the following members:
+
+            *   `id: String`. User ID for user making the request.
+
+            *   `user: Users`. User object for the user making the request.
+
+            *   `created_at: Date`. Timestamp when the file was created. 
+
+            *   `updated_at: Date`. Timestamp when the file was last updated.
+        type: Array<Hash>
+
+    examples:
+      - platform: rest
+        example: |
+            Example cURL request:
+            
+                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/friends/requests.json?key=<YOUR APP APP KEY>"
+                
+            Example JSON response:
+            
+                {
+                  "meta": {
+                    "code": 200,
+                    "method_name": "friendRequests",
+                    "status": "ok"
+                  },
+                  "response": {
+                    "friend_requests": [
+                      {
+                        "created_at": "2011-06-23T06:41:47+0000",
+                        "updated_at": "2011-06-23T06:41:47+0000",
+                        "id": "4e02e02bd0afbe41ef000005",
+                        "user": {
+                          "created_at": "2011-06-23T06:41:39+0000",
+                          "updated_at": "2011-06-23T06:41:44+0000",
+                          "username": "bob",
+                          "id": "4e02e022d0afbe41ef000002",
+                          "last_name": "Dude",
+                          "email": "bob@dude.com",
+                          "first_name": "Bob"
+                        }
+                      }
+                    ]
+                  }
+                }
+                
+      - platform: ios
+        example: |
+            Example iOS call:
+            
+                CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"friends/requests.json" paramDict:nil];
+                [request startAsynchronous];
+                [request release];
+                
+            SDK Callback:
+            
+                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
+                {
+                	NSArray *friendRequests = [response getObjectsOfType:[CCFriendRequest class]];
+                	for (CCFriendRequest *request in friendRequests)
+                	{
+                		...
+                	}
+                }
+                
+      - platform: android
+        example: |
+            Example Android call:
+            
+                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+                
+                CCResponse response = sdk.sendRequest("friends/requests.json", CCRequestMethod.GET, null);
+                
+            SDK Callback:
+            
+                JSONObject responseJSON = response.getResponseData();
+                CCMeta meta = response.getMeta();
+                if("ok".equals(meta.getStatus()) 
+                    && meta.getCode() == 200 
+                    && "friendRequests".equals(meta.getMethod())) {
+                  JSONArray requests = responseJSON.getJSONArray("friend_requests");
+                  ...
+                }
+                
+      - platform: javascript
+        example: |
+            Example Javascript call:
+            
+                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+                sdk.sendRequest('friends/requests.json', 'GET', null, callback);
+                
+            SDK Callback:
+            
+                function callback(data) {
+                  if(data) {
+                    if(data.meta) {
+                      var meta = data.meta;
+                      if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'friendRequests') {
+                        var requests = data.response.friend_requests;
+                        for (var i=0;i<requests.length;i++) {
+                          alert("User:" + requests[i].user);
+                        }
+                      }
+                    }
+                  }
+                }
+                
+      - platform: actionscript
+        example: |
+            Example Actionscript call:
+            
+                var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+                
+                sdk.sendRequest("friends/requests.json", URLRequestMethod.GET, null, false, callback);
+                
+            SDK Callback:
+            
+                function callback(data:Object):void {
+                  if(data) {
+                    if(data.hasOwnProperty("meta")) {
+                      var meta:Object = data.meta;
+                      if(meta.status == "ok" && meta.code == 200 && meta.method_name == "friendRequests") {
+                        var requests:Array = data.response.friend_requests;
+                        for (var i:int=0;i<requests.length;i++) {
+                          trace("User:" + requests[i].user);
+                        }
+                      }
+                    }
+                  }
+                }
+                

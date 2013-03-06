@@ -1,5 +1,0 @@
-name: Email
-description: |
-    Emails Tangram lets you send custom emails to your users. You need to configure SMTP
-    server in the App setting first.
-

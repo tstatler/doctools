@@ -30,7 +30,7 @@ methods:
         type: String
     
       - name: event_id
-        description: ID of the {@link Event} this post belongs to.
+        description: ID of the {@link Events} this post belongs to.
         type: String
 
       - name: photo 
@@ -39,7 +39,7 @@ methods:
     
             When you use the `photo` parameter to attach a new photo, you can use the 
             [custom resize and sync options](#!/guide/photosizes).
-        type: Photo
+        type: Photos
       
       - name: photo_id
         description: |
@@ -57,7 +57,7 @@ methods:
 
       - name: acl_name
         description: |
-            Name of an {@link ACL} to associate with this object.
+            Name of an {@link ACLs} to associate with this object.
 
             An ACL can be specified using `acl_name` or `acl_id`. The two parameters are
             mutually exclusive.
@@ -67,7 +67,7 @@ methods:
 
       - name: acl_id
         description: |
-            ID of an {@link ACL} to associate with this object.
+            ID of an {@link ACLs} to associate with this object.
 
             An ACL can be specified using `acl_name` or `acl_id`. The two parameters are
             mutually exclusive.

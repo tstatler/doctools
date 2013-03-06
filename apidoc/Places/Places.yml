@@ -52,7 +52,7 @@ fields:
 
   - name: photo 
     description: Primary photo for this place.
-    type: Photo
+    type: Photos
   
   - name: tags
     description:  List of tags for this object.
@@ -64,7 +64,7 @@ fields:
 
   - name: acls
     description: Single-element array containing the ACL associated with this object, if any.
-    type: ACL
+    type: Array<ACLs>
 
   - name: user
     description: Owner of this place object.

@@ -46,7 +46,7 @@ methods:
                 this subscription.
             *   `type` : `String`. Device type. Either "ios" or "android".
 
-        type: Array<Dictionary>
+        type: Array<Hash>
 
     examples:
       - platform: rest

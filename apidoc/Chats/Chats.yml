@@ -1,0 +1,41 @@
+name: Chats
+description: |
+
+    The Chat object provides an API to send chat messages from one user to another user
+    or a group of users. If you have configured push notification in your app, you
+    can send optional push notifications to the recipients' devices as well.
+
+    Chat groups are formed implicitly when users send chat messages. For example, if 
+    user A sends a message to users B and C, an chat group is formed with users A, B, and
+    C. If user C subsequently sends a message to user B, a second chat group is formed with users B
+    and C as members.
+    
+fields:
+  - name: id
+    description: Generated unique ID for this chat message.
+    type: String
+      
+  - name: message
+    description: Chat message. 
+    type: String
+
+  - name: photo 
+    description: |
+        New photo to attach to the chat message.
+    type: Photos
+
+  - name: chatgroup
+    description: The chat group that the chat belongs to. 
+    type: Hash
+  
+  - name: custom_fields
+    description: User defined fields. See [Custom Data Fields](#!/guide/customfields).
+    type: [ String, Hash ]
+
+  - name: created_at
+    description: Creation date for this user object.
+    type: Date
+
+  - name: updated_at
+    description: Last update time for this user object.
+    type: Date

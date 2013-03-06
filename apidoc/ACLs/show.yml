@@ -3,7 +3,7 @@ methods:
   - name: show
     summary: Show an ACL
     description: |
-        Show an ACL object with the given `id` or `name`.
+        Shows the ACL object with the given `id` or `name`.
     url: acls/show.json
 
     parameters:

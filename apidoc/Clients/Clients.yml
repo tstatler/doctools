@@ -1,0 +1,4 @@
+name: Clients
+description: |
+    Clients Tangram lets you lookup a user location based on IP address if the
+    user's device fails to provide location information.

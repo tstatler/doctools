@@ -3,11 +3,11 @@ methods:
   - name: update
     summary:  Update a Place
     description: |
-        Any of the parameters used to {@link Place#create Create a Place} can
-        be used to updated it as well. Only the user that created the place can update
+        Any of the parameters used to {@link Places#create Create a Place} can
+        be used to update it as well. Only the user that created the place can update
         it.  
           
-        An application admin can update any Place object.
+        An application admin can update any place object.
     url: places/update.json
     http-method: PUT
     login-required: true
@@ -69,7 +69,7 @@ methods:
     
             When you use the `photo` parameter to attach a new photo, you can use the 
             [custom resize and sync options](#!/guide/photosizes).
-        type: Photo
+        type: Photos
       
       - name: photo_id
         description: |
@@ -87,7 +87,7 @@ methods:
 
       - name: acl_name
         description: |
-            Name of an {@link ACL} to associate with this place object.
+            Name of an {@link ACLs} to associate with this place object.
 
             An ACL can be specified using `acl_name` or `acl_id`. The two parameters are
             mutually exclusive.
@@ -95,7 +95,7 @@ methods:
 
       - name: acl_id
         description: |
-            ID of an {@link ACL} to associate with this place object.
+            ID of an {@link ACLs} to associate with this place object.
 
             An ACL can be specified using `acl_name` or `acl_id`. The two parameters are
             mutually exclusive.

@@ -4,6 +4,8 @@ methods:
     summary: Checkin to a Place or Event
 
     description: |
+        Creates a checkin to a place or an event.
+
         A checkin message is optional. The optional photo parameter contains the
         binary data stream representing the photo included with the checkin. If a
         photo is included, the response includes a "processed" flag which indicates if
@@ -17,14 +19,14 @@ methods:
     parameters:
       - name: place_id 
         description: |
-            ID of the {@link Place} to check in to.
+            ID of the {@link Places} to check in to.
 
             Either `place_id` or `event_id` must be specified.
         type: String
 
       - name: event_id
         description: |
-            ID of the {@link Event} to check in to.
+            ID of the {@link Events} to check in to.
 
             Either `place_id` or `event_id` must be specified.
         type: String
@@ -39,7 +41,7 @@ methods:
     
             When you use the `photo` parameter to attach a new photo, you can use the 
             [custom resize and sync options](#!/guide/photosizes).
-        type: Photo
+        type: Photos
       
       - name: photo_id
         description: |
@@ -57,7 +59,7 @@ methods:
 
       - name: acl_name
         description: |
-            Name of an {@link ACL} to associate with this checkin object.
+            Name of an {@link ACLs} to associate with this checkin object.
 
             An ACL can be specified using `acl_name` or `acl_id`. The two parameters are
             mutually exclusive.
@@ -65,7 +67,7 @@ methods:
 
       - name: acl_id
         description: |
-            ID of an {@link ACL} to associate with this checkin object.
+            ID of an {@link ACLs} to associate with this checkin object.
 
             An ACL can be specified using `acl_name` or `acl_id`. The two parameters are
             mutually exclusive.
@@ -78,6 +80,11 @@ methods:
             The current login user must be an application admin to create a checkin on
             behalf of another user.
         type: String
+
+    response-params:
+      - name: checkins
+        description: Single element array containing the newly-created checkin.
+        type: Array<Checkins>
 
     examples:
       - platform: rest

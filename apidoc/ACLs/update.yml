@@ -3,12 +3,11 @@ methods:
   - name: update
     summary: Update an ACL
     description: |
-        Updates an ACL object to change its access control list. For example, remove
-        some users from reader list or writer list of an ACL object, or add some users
-        to reader list or writer list of an ACL object. Or update ACL of an object,
-        and enable the object be public to write or not, read or not.  
+        Updates an ACL object to change its access control list. When updating an ACL,
+        you can change the members of the `readers` list and the `writers` list, or change the value 
+        of the `public_read` and `public_write` flags. 
           
-        Application Admin can update any ACL object.
+        An application admin can update any ACL object.
         
     url: acls/update.json
     http-method: PUT
@@ -48,33 +47,6 @@ methods:
             This removes all users except for the owner from the list.
         type: String
         required: true
-
-    parameters:
-      - name: name 
-        description: |
-            Name of the ACL object.
-
-            Either `name` or `id` must be specified.
-        type: String
-
-      - name: id
-        description: |
-            ID of the ACL oject.
-      
-            Either `name` or `id` must be specified.
-        type: String
-
-      - name: reader_ids
-        description: |
-            Comma separated list of IDs identifying users who can read objects
-            controlled by this ACL.
-        type: String
-
-      - name: writer_ids
-        description: |
-            Comma separated list of IDs identifying users who can update an object.
-            controlled by this ACL.
-        type: String
 
       - name: public_read
         description: |

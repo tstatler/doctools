@@ -45,7 +45,7 @@ methods:
     
             To remove primary photo, simply set "photo=" or "photo_id=". If the original
             photo was created by using `photo` parameter, the photo will be deleted.
-        type: Photo
+        type: Photos
       
       - name: photo_id
         description: |
@@ -65,11 +65,11 @@ methods:
             User-defined data. See [Custom Data Fields](/docs/customfields).
         type: String
 
-	response-parameters:
-	  - name: users
-	    description: Single-element array containing the updated user object.
-	    type: Array<Users>
-	    
+    response-parameters:
+      - name: users
+        description: Single-element array containing the updated user object.
+        type: Array<Users>
+
     examples:
       - platform: rest
         example: |

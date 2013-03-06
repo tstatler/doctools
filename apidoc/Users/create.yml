@@ -2,6 +2,7 @@ name: Users
 methods:
   - name: create
     summary: Creates a user.
+    url: users/create.json
     http-method: post 
     login-required: false
     description: |
@@ -52,7 +53,7 @@ methods:
     
             When you use the `photo` parameter to attach a new photo, you can use the 
             [custom resize and sync options](#!/guide/photosizes).
-        type: Photo
+        type: Photos
       
       - name: photo_id
         description: |

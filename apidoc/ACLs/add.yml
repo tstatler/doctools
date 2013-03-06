@@ -4,7 +4,7 @@ methods:
     summary: Add user(s) to an ACL.
 
     description: |
-        Add one or more user(s) to an existing ACL object, identified by its `id` or `name`.
+        Adds one or more user(s) to an existing ACL object, identified by its `id` or `name`.
         
     url: acls/add.json
     http-method: POST

@@ -4,7 +4,9 @@ methods:
     summary: Delete a Checkin
 
     description: |
-        An Application Admin can delete any Checkin object.
+        Deletes a checkin.
+
+        An application admin can delete any Checkin object.
         
     url: checkins/delete.json
     http-method: DELETE

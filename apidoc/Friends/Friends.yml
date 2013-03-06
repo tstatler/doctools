@@ -1,0 +1,9 @@
+name: Friends
+description: |
+    Provides APIs for managing friendships between the current user and another user.
+    
+    By default friendships are two-way (like Facebook), so after a friend request 
+    is made and approved both users will show up in each others' friend lists. 
+    This default can be changed to one-way following (like
+    Twitter) in the App Settings for each of your apps. 
+

@@ -16,15 +16,15 @@ fields:
 
   - name: place
     description: The place object associated with this status.
-    type: Place
+    type: Places
 
   - name: event
     description: The event object associated with this status.
-    type: Event
+    type: Events
 
   - name: photo
     description: The primary photo for this status.
-    type: Photo
+    type: Photos
 
   - name: tags
     description: Comma-separated list of tags associated with this status.
@@ -40,8 +40,8 @@ fields:
 
   - name: acls
     description: |
-        Single-element array containing the {@link ACL} associated with this status object, if any.
-    type: String
+        Single-element array containing the {@link ACLs} associated with this status object, if any.
+    type: Array<ACLs>
 
 
 

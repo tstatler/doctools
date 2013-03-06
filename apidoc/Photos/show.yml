@@ -1,0 +1,162 @@
+name: Photos
+methods:
+  - name: show
+    summary: Show Photo Info
+
+    description: |
+        Returns the information for the identified photo.
+    url: photos/show.json
+    parameters:
+      - name: photo_id
+        description: ID of the photo to show.
+        type: String
+        required: true
+
+      - name: response_json_depth
+        description: |
+            Nested object depth level counts in response JSON.  
+
+            In order to reduce server API calls from an applicaton, the response JSON may
+            include not just the objects that are being queried/searched, but also 
+            some important data related to the returned objects such as object's owner or
+            referenced objects.  
+
+            Default is 3, valid range is 1 to 8.
+        type: Number
+
+    response-parameters:
+      - name: photos
+        description: Single-element array containing the identified photo.
+        type: Array<Photos>
+
+    examples:
+      - platform: rest
+        example: |
+            Example cURL request:
+            
+                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/photos/show.json?key=<YOUR APP APP KEY>&photo;_id=4d8971236f7095514800000a"
+                
+            Example JSON response:
+            
+                {
+                  "meta": {
+                    "status":"ok",
+                    "code":200,
+                    "method_name":"showPhoto"
+                  },
+                  "response": {
+                    "photos": [
+                      {
+                        "id":"4d51d4186f70952d4c000006",
+                        "filename":"photo.jpg",
+                        "size":584344,
+                        "collection_name":"default",
+                        "md5":"589b8ad43ed20bf8e622d719642bc939",
+                        "created_at":"2011-02-08T23:39:04+0000",
+                        "updated_at":"2011-02-08T23:39:08+0000",
+                        "processed":true,
+                        "content_type":"image/jpeg",
+                        "urls": {
+                          "square":"http://storage.appcelerator.com/c3e1d292cb79ba7b9783d6cd45344719/photos/4d51d4186f70952d4c000006/photo_square.jpg",
+                          "thumb":"http://storage.appcelerator.com/c3e1d292cb79ba7b9783d6cd45344719/photos/4d51d4186f70952d4c000006/photo_thumb.jpg",
+                          "small":"http://storage.appcelerator.com/c3e1d292cb79ba7b9783d6cd45344719/photos/4d51d4186f70952d4c000006/photo_small.jpg",
+                          "medium_500":"http://storage.appcelerator.com/c3e1d292cb79ba7b9783d6cd45344719/photos/4d51d4186f70952d4c000006/photo_medium_500.jpg",
+                          "medium_640":"http://storage.appcelerator.com/c3e1d292cb79ba7b9783d6cd45344719/photos/4d51d4186f70952d4c000006/photo_medium_640.jpg",
+                          "large":"http://storage.appcelerator.com/c3e1d292cb79ba7b9783d6cd45344719/photos/4d51d4186f70952d4c000006/photo_large.jpg",
+                          "original":"http://storage.appcelerator.com/c3e1d292cb79ba7b9783d6cd45344719/photos/4d51d4186f70952d4c000006/photo_original.jpg"
+                        }
+                      }
+                    ]
+                  }	
+                }
+                
+            Please refer to [Photo Downloads](../../../ios#photodownloads) to see how
+            retrieve the actual image from a CCPhoto object.
+            
+      - platform: ios
+        example: |
+            Example iOS call:
+            
+                NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:(CCPhoto *)photo.objectId, @"photo_id", nil];
+                CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"photos/show.json" paramDict:paramDict];
+                [request startAsynchronous];
+                [request release];
+                
+            SDK Callback:
+            
+                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
+                {
+                	NSArray *photos = [response getObjectsOfType:[CCPhoto class]];
+                }
+                
+      - platform: android
+        example: |
+            Example Android call:
+            
+                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+                
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("photo_id", "4d8971236f7095514800000a");
+                CCResponse response = sdk.sendRequest("photos/show.json", CCRequestMethod.GET, data);
+                
+            SDK Callback:
+            
+                JSONObject responseJSON = response.getResponseData();
+                CCMeta meta = response.getMeta();
+                if("ok".equals(meta.getStatus()) 
+                    && meta.getCode() == 200 
+                    && "showPhoto".equals(meta.getMethod())) {
+                  JSONArray photos = responseJSON.getJSONArray("photos");
+                  ...
+                }
+                
+      - platform: javascript
+        example: |
+            Example Javascript call:
+            
+                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+                var data = {
+                  photo_id: '4d8971236f7095514800000a'
+                };
+                sdk.sendRequest('photos/show.json', 'GET', data, callback);
+                
+            SDK Callback:
+            
+                function callback(data) {
+                  if(data) {
+                    if(data.meta) {
+                      var meta = data.meta;
+                      if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'showPhoto') {
+                        var photos = data.response.photos;
+                      	...
+                      }
+                    }
+                  }
+                }
+                
+      - platform: actionscript
+        example: |
+            Example Actionscript call:
+            
+                var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+                
+                var data:Object = new Object();
+                data.photo_id = "4d8971236f7095514800000a";
+                sdk.sendRequest("photos/show.json", URLRequestMethod.GET, data, false, callback);
+                
+            SDK Callback:
+            
+                function callback(data:Object):void {
+                  if(data) {
+                    if(data.hasOwnProperty("meta")) {
+                      var meta:Object = data.meta;
+                      if(meta.status == "ok" && meta.code == 200 && meta.method_name == "showPhoto") {
+                      	var photos:Array = data.response.photos;
+                      	...
+                      }
+                    }
+                  }
+                }
+                

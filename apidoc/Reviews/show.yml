@@ -3,7 +3,7 @@ methods:
   - name: show
     summary: Show a review
     description: |
-        Show the reviews with the given `id`.
+        Shows the review with the given `id`.
         
     url: reviews/show.json
     parameters: 

@@ -41,7 +41,7 @@ methods:
 
       - name: acl_name
         description: |
-            Name of an {@link ACL} to associate with this collection.
+            Name of an {@link ACLs} to associate with this collection.
 
             An ACL can be specified using `acl_name` or `acl_id`. The two parameters are
             mutually exclusive.
@@ -49,7 +49,7 @@ methods:
 
       - name: acl_id
         description: |
-            ID of an {@link ACL} to associate with this collection.
+            ID of an {@link ACLs} to associate with this collection.
 
             An ACL can be specified using `acl_name` or `acl_id`. The two parameters are
             mutually exclusive.

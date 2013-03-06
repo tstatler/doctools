@@ -13,7 +13,7 @@ fields:
   
   - name: cover_photo
     description: Photo to use as a cover photo for the collection.
-    type: Photo
+    type: Photos
 
   - name: created_at
     description: Creation date for this user object.

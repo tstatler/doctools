@@ -1,0 +1,222 @@
+name: SocialIntegrations
+methods:
+  - name: loginexternal
+    summary: Login with external account
+    description: |
+        Users can login using an external account such as Facebook, Twitter,
+        Linkedin, etc without creating an account with Appcelerator Cloud Services
+        ahead of time. The external account login creates a Appcelerator Cloud
+        Services account if it hasn't been created, otherwise, it will login using the
+        user who has the matching external account info.
+    url: users/external_account_login.json
+    http-method: POST
+
+    parameters: 
+      - name: id
+        description: |
+            External account's user ID. Optional for Facebook; if ID is missing and `type`
+            is `facebook`, Appcelerator Cloud Services uses the Facebook token to obtain
+            the user ID.
+        type: String
+        required: True
+
+      - name: type
+        description: |
+            Type of the external account, for example, "facebook", "linkedin", or
+            "twitter".
+        type: String
+        required: True
+
+      - name: token
+        description: |
+            Token provided by the external account. Currently only Facebook tokens are
+            validated  by the Appcelerator Cloud Services server.
+        required: True
+
+    response-parameters: 
+      - name: users
+        description: |
+            Single-element array containing the updated user record.
+        type: Array<Users>
+
+    examples:
+      - platform: rest
+        example: |
+            Example cURL request:
+            
+                $ curl -b cookies.txt -c cookies.txt -F "id=109216395704353" -F type="facebook" -F "token=lqcs6jedOtdrYfu3CaIVR0GWlCnV1l3JbY1i-gFxNNc.eyJpdiI6Ims2STNfRmMxbXFJamoxWFlUWjFrTkEifQ.RW77c5r7ggvTobyL0INb6qscnpoyrrFrrJ6K_IldoJBxcxLkwus8SsLFAJmwy05nLa71zBEqdkm2wJMIn31iUW2mxd37eQX9JRNrtSWcgRpuRDuzjhB7f0u3J4WJYASRnJkq-8l0hr9jiLIDajkJRg" https://api.cloud.appcelerator.com/v1/users/external_account_login.json?key=<YOUR APP APP KEY>
+                
+            Example JSON response:
+            
+                {
+                  "meta": {
+                    "status":"ok",
+                    "code":200,
+                    "method_name":"externalAccountLogin"
+                  },
+                  "response": {
+                    "users": [
+                      {
+                        "id": "4e9afa18356f4e647900002e",
+                        "first_name": "John",
+                        "last_name": "Smith",
+                        "created_at": "2011-10-16T15:36:56+0000",
+                        "updated_at": "2011-10-16T15:54:57+0000",
+                        "external_accounts": [
+                          {
+                            "external_id": "641643673",
+                            "external_type": "facebook",
+                            "token": "lqcs6jedOtdrYfu3CaIVR0GWlCnV1l3JbY1i"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+                
+            Appcelerator Cloud Services ios SDK comes with Facebook SDK and provides an
+            easy way to do facebook login. Follow the [facebook-ios-
+            sdk](https://github.com/facebook/facebook-ios-sdk) sample app instructions to
+            edit your app-info.plist to add a URL type for your Facebook app id. Then add
+            the following method to your AppDelegate.m:
+            
+                // pre 4.2
+                - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
+                {
+                	return [[[Cocoafish defaultCocoafish] getFacebook] handleOpenURL:url];
+                }
+                
+                // 4.2+
+                - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url  sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+                	return [[[Cocoafish defaultCocoafish] getFacebook] handleOpenURL:url];
+                }
+                
+            Modify the Appcelerator Cloud Services initialization call in your app
+            delegate to pass in the Facebook app id:
+            
+                [Cocoafish initializeWithOauthConsumerKey:oauthConsumerKey consumerSecret:oauthConsumerSecret customAppIds:[NSDictionary dictionaryWithObject:facebookAppId forKey:@"Facebook"]];
+                
+            or:
+            
+                [Cocoafish initializeWithAppKey:cocoafishAppKey customAppIds:
+                [NSDictionary dictionaryWithObject:facebookAppId forKey:@"Facebook"]];
+                
+            To perform a login using facebook connect, make sure user is not logged in to
+            Appcelerator Cloud Services, then call the following:
+            
+                [[Cocoafish defaultCocoafish] facebookAuth:[NSArray arrayWithObjects:@"publish_stream", @"email", @"offline_access", nil] delegate:self];
+                
+            If a user is already logged in to your app, it will link the user account with
+            the Facebook account that was just authorized. If no user is logged in to your
+            app, it will perform a login to Appcelerator Cloud Services using the facebook
+            account information.
+            
+            Optionaly, if you would like to receive callbacks when Facebook link or login
+            actions are taken, add `<CCFBSessionDelegate>` to you controller's delegate
+            list. Then implement the following methods:
+            
+                -(void)fbDidLogin;
+                -(void)fbDidNotLogin:(BOOL)cancelled error:(NSError *)error;
+                
+            For other types of external accounts, you will have to use their SDKs to get
+            the uid and token first, then make the link call with the Appcelerator Cloud
+            Services.
+            
+      - platform: ios
+        example: |
+            Example iOS call:
+            
+                NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
+                [paramDict setObject:@"1234567" forKey:@"id"];
+                [paramDict setObject:@"twitter" forKey:@"type"];
+                [paramDict setObject:@"token" forKey:@"lqcs6jedOtdrYfu3CaIVR0GWlCnV1l3JbY1i"];
+                
+                CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"POST" baseUrl:@"users/external_account_login.json" paramDict:paramDict];
+                [request startAsynchronous];
+                [request release];
+                
+            SDK Callback:
+            
+                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
+                {
+                	if (response.meta.status == 200 && response.meta.method == "externalAccountLogin") {
+                		// success
+                	}
+                }
+                
+      - platform: android
+        example: |
+            Example Android call:
+            
+                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+                
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("id", "109216395704353");
+                data.put("type", "facebook");
+                data.put("token", "lqcs6jedOtdrYfu3CaIVR0GWlCnV1l3JbY1i-gFxNNc.eyJpdiI6Ims2STNfRmMxbXFJamoxWFlUWjFrTkEifQ.RW77c5r7ggvTobyL0INb6qscnpoyrrFrrJ6K_IldoJBxcxLkwus8SsLFAJmwy05nLa71zBEqdkm2wJMIn31iUW2mxd37eQX9JRNrtSWcgRpuRDuzjhB7f0u3J4WJYASRnJkq-8l0hr9jiLIDajkJRg");
+                CCResponse response = sdk.sendRequest("users/external_account_login.json", CCRequestMethod.POST, data);
+                
+            SDK Callback:
+            
+                JSONObject responseJSON = response.getResponseData();
+                CCMeta meta = response.getMeta();
+                if("ok".equals(meta.getStatus()) 
+                    && meta.getCode() == 200 
+                    && "externalAccountLogin".equals(meta.getMethod())) {
+                  JSONArray users = responseJSON.getJSONArray("users");
+                  ...
+                }
+                
+      - platform: javascript
+        example: |
+            Example Javascript call:
+            
+                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+                var data = {
+                  id: '109216395704353',
+                  type: 'facebook',
+                  token: 'lqcs6jedOtdrYfu3CaIVR0GWlCnV1l3JbY1i-gFxNNc.eyJpdiI6Ims2STNfRmMxbXFJamoxWFlUWjFrTkEifQ.RW77c5r7ggvTobyL0INb6qscnpoyrrFrrJ6K_IldoJBxcxLkwus8SsLFAJmwy05nLa71zBEqdkm2wJMIn31iUW2mxd37eQX9JRNrtSWcgRpuRDuzjhB7f0u3J4WJYASRnJkq-8l0hr9jiLIDajkJRg'
+                };
+                sdk.sendRequest('users/external_account_login.json', 'POST', data, callback);
+                
+            SDK Callback:
+            
+                function callback(data) {
+                  if(data) {
+                    if(data.meta) {
+                      var meta = data.meta;
+                      if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'externalAccountLogin') {
+                        var user = data.response.users[0];
+                       	...
+                      }
+                    }
+                  }
+                }
+                
+      - platform: actionscript
+        example: |
+            Example Actionscript call:
+            
+                var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+                var data:Object = new Object();
+                data.id = "109216395704353";
+                data.type = "facebook";
+                data.token = "lqcs6jedOtdrYfu3CaIVR0GWlCnV1l3JbY1i-gFxNNc.eyJpdiI6Ims2STNfRmMxbXFJamoxWFlUWjFrTkEifQ.RW77c5r7ggvTobyL0INb6qscnpoyrrFrrJ6K_IldoJBxcxLkwus8SsLFAJmwy05nLa71zBEqdkm2wJMIn31iUW2mxd37eQX9JRNrtSWcgRpuRDuzjhB7f0u3J4WJYASRnJkq-8l0hr9jiLIDajkJRg";
+                sdk.sendRequest("users/external_account_login.json", URLRequestMethod.POST, data, false, callback);
+                
+            SDK Callback:
+            
+                function callback(data:Object):void {
+                  if(data) {
+                    if(data.hasOwnProperty("meta")) {
+                      var meta:Object = data.meta;
+                      if(meta.status == "ok" && meta.code == 200 && meta.method_name == "externalAccountLogin") {
+                       	var user:Object = data.response.users[0];
+                       	...
+                      }
+                    }
+                  }
+                }
+                

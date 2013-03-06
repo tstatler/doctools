@@ -1,3 +1,0 @@
-      - name: tags
-        description: Comma-separated list of tags associated with this event.
-        type: String

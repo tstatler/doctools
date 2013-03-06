@@ -32,7 +32,7 @@ fields:
   - name: photo 
     description: |
         Primary photo for this post.
-    type: Photo
+    type: Photos
       
   - name: tags
     description: List of tags for this object.
@@ -44,7 +44,7 @@ fields:
 
   - name: acls
     description: Single-element array containing the object's ACL, if any. 
-    type: ACL
+    type: Array<ACLs>
 
   - name: user
     description: User who created this post.

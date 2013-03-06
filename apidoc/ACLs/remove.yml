@@ -3,7 +3,7 @@ methods:
   - name: remove
     summary: Remove user(s) from an ACL
     description: |
-        Remove one or more user(s) from an ACL object with the given `id` or `name`.
+        Removes one or more user(s) from an ACL object with the given `id` or `name`.
 
         You can remove users from the `readers` list, which grants read permission, the 
         `writers` list, which grants update/delete permission, or both. 

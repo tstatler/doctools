@@ -11,7 +11,7 @@ methods:
         query and sort statuses:
         
         *   `user_id` : `String`.  Status owner's user ID.
-        *   `event_id` : `String`.  ID for the {@link Event} associated with this status.
+        *   `event_id` : `String`.  ID for the {@link Events} associated with this status.
         *   `place_id` : `String`.  ID for the {@link Places Place} associated with this status.
         *   `created_at` : `Date`.  Timestamp when the status was created.
         *   `updated_at` : `Date`.  Timestamp when the status was last updated.

@@ -1,14 +1,18 @@
 name: ACLs
 methods:
   - name: check
-    summary: Check a user's permission in an ACL.
+    summary: Checks a user's permission in an ACL.
 
     description: |
-        Check an ACL object with the given `id` or `name` and user's id to get
-        specified user's permission in this ACL object. In the response, "read
-        permission": "yes" means the user has read permission, otherwise or not;
-        "write permission": "yes" means the user has write permission, otherwise or
-        not.
+        Checks the permissions a specified user is granted by a specified ACL. 
+        In the response, "read_permission": "yes" means the user has read permission; if
+        this property is omitted or the value is not "yes", the user does not have read
+        permission.
+
+        Similarly, "write_permission": "yes" means the user has write permission. If the 
+        property is omitted or the value is not "yes", the user does not have write
+        permission.
+
         
     url: acls/check.json
     login-required: true
@@ -35,10 +39,10 @@ methods:
     response-parameters:
       - name: permission
         description: |
-            A hash with two properties: 
+            An object with two properties: 
             
             *   `read_permission`. Indicates whether the user can read objects associated with this ACL.
-            *   `write_permission`.Indicates whether the user can update objects associated with this ACL.
+            *   `write_permission`. Indicates whether the user can update objects associated with this ACL.
 
             Both properties are Booleans.
         type: Hash
@@ -131,20 +135,3 @@ methods:
                   }
                 }
                 
-            ![](https://static.appcelerator.com/images/nav/appcelerator-footer-logo.png)
-            
-              * [Twitter](https://twitter.com/appcelerator)
-              * [Facebook](http://www.facebook.com/appcelerator)
-              * [Pinterest](http://pinterest.com/appcelerator/)
-              * [RSS](http://developer.appcelerator.com/blog/feed)
-              * [Email](mailto:info@appcelerator.com)
-            
-            (C) 2008-2013 Appcelerator Inc. All rights reserved. Appcelerator is a
-            registered trademark.
-            
-            [Legal information](http://www.appcelerator.com/legal)
-            
-            [Privacy Policy](http://www.appcelerator.com/legal/privacy-policy)
-            
-            [Help & Support](http://www.appcelerator.com/help)
-            

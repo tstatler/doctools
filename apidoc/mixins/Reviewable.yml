@@ -1,6 +1,6 @@
 name: Reviewable
 description: |
-    The set of fields that are added to objects that can be {@link Review reviewed}.
+    The set of fields that are added to objects that can be {@link Reviews reviewed}.
 
 private: true
 fields:
@@ -9,7 +9,7 @@ fields:
         List of reviews for this object.
 
         Only present if the object has been reviewed.
-    type: Array<Review>
+    type: Array<Reviews>
 
   - name: reviews_count
     description: |

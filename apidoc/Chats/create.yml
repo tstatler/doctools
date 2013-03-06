@@ -1,0 +1,287 @@
+name: Chats
+methods:
+  - name: create
+    summary: Create a Chat Message
+
+    description: |
+        Sends a chat message to another user or a group of users.
+        
+        Sending a message creates a new chat group if there is no existing chat group
+        containing the current user and the designated recipients.
+
+        To generate a push notification, include the `channel` and 
+        `payload` parameters.
+    url: chats/create.json
+    http-method: POST
+    login-required: true
+
+    parameters: 
+      - name: to_ids
+        description: |
+            Comma separated user IDs of the recipient(s). The current user ID and `to_ids`
+            together determine which chat group a message belongs to. The chat group is
+            created if necessary.
+
+            You must specify either a `to_ids` list or the `chat_group_id` for an existing
+            chat group.
+        type: String
+
+      - name: chat_group_id
+        description: |
+            Identifies an existing chat group by ID. If you already know the id
+            of a {@link Chats#property-chatgroup chat group}, you can use it to specify
+            which chat group this message should go to.
+
+            You must specify either a `to_ids` list or the `chat_group_id` for an existing
+            chat group.
+
+      - name: message
+        description: Message to send.
+        type: String
+
+      - name: photo 
+        description: |
+            New photo to attach to the chat message.
+    
+            When you use the `photo` parameter to attach a new photo, you can use the 
+            [custom resize and sync options](#!/guide/photosizes).
+        type: Photos
+      
+      - name: photo_id
+        description: |
+            ID of an existing photo to attach to the chat message.
+        type: String
+
+      - name: custom_fields
+        description: User defined fields. See [Custom Data Fields](#!/guide/customfields).
+        type: [ String, Hash ]
+
+      - name: channel 
+        description: |
+            Channel for a push notification. 
+
+            To send a push notification to the recipients after a new chat
+            message is created, you can pass in the `channel` and `payload` parameters.
+            For more information, see {@link PushNotifications#notify}.
+        type: String
+
+      - name: payload
+        description: |
+            Message payload for push notification. 
+
+
+            The message defined in `payload` will be delivered to all the recipients as long 
+            as they have {@link PushNotifications#subscribe subscribed} to the specified channel.
+
+            For example, if all of your app's users are subscribed to channel "Chat", then
+            you can pass channel -- "Chat", and payload:
+
+                {
+                    "from": "sender user_id",
+                    "message": "Hello everyone!",
+                    "sound": "default",
+                     "alert" : "From Joe: Hello everyone!"
+                }
+
+      - name: user_id
+        description: |
+            Send on behalf of the identified user. 
+
+            Current user must be an application admin to send a message on behalf of
+            another user.
+        type: String
+
+      - name: response_json_depth
+        description: |
+            By default, the chat group with participate users' info will be included in
+            the JSON output. If you have already cached all the user objects participating
+            in the chat group and wish to receive smaller json response, you can set
+            response_json_depth = 2 to remove participate user's info from chat group in
+            the JSON response.
+
+            Default is 3.
+
+    response-parameters:
+      - name: chats
+        description: Single-element array containing the new chat message.
+        type: Array<Chats>
+
+    examples:
+      - platform: rest
+        example: |
+            Example cURL request:
+            
+                $ curl -b cookies.txt -c cookies.txt -F "message=What's up?" -F "photo=@photo.jpg" -F "to_ids=4ee05d69d9ca726b85000003,4ee05d69d9ca726b85000004" "http://api.cloud.appcelerator.com/v1/chats/create.json?key=<YOUR APP APP KEY>"
+                
+            Example JSON response:
+            
+                {
+                  "meta": {
+                    "code": 200,
+                    "status": "ok",
+                    "method_name": "createChatMessage"
+                  },
+                  "response": {
+                    "chats": [
+                      {
+                        "id": "4ee05d6ad9ca726b85000018",
+                        "created_at": "2011-12-08T06:47:06+0000",
+                        "updated_at": "2011-12-08T06:47:06+0000",
+                        "message": "What's up?",
+                        "from": {
+                          "id": "4ee05d69d9ca726b85000002",
+                          "first_name": "Bob",
+                          "last_name": "Dude",
+                          "created_at": "2011-12-08T06:47:05+0000",
+                          "updated_at": "2011-12-08T06:47:06+0000",
+                          "external_accounts": [
+                
+                          ],
+                          "username": "bob",
+                          "email": "bob@dude.com"
+                        },
+                        "chat_group": {
+                          "id": "4ee05d6ad9ca726b85000017",
+                          "created_at": "2011-12-08T06:47:06+0000",
+                          "updated_at": "2011-12-08T06:47:06+0000",
+                          "participate_users": [
+                            {
+                              "id": "4ee05d69d9ca726b85000002",
+                              "first_name": "Bob",
+                              "last_name": "Dude",
+                              "created_at": "2011-12-08T06:47:05+0000",
+                              "updated_at": "2011-12-08T06:47:06+0000",
+                              "external_accounts": [
+                
+                              ],
+                              "username": "bob",
+                              "email": "bob@dude.com"
+                            },
+                            {
+                              "id": "4ee05d69d9ca726b85000003",
+                              "first_name": "Alice",
+                              "last_name": "Gal",
+                              "created_at": "2011-12-08T06:47:05+0000",
+                              "updated_at": "2011-12-08T06:47:05+0000",
+                              "external_accounts": [
+                
+                              ],
+                              "username": "alice",
+                              "email": "alice@gal.com"
+                            },
+                            {
+                              "id": "4ee05d69d9ca726b85000004",
+                              "first_name": "Joe",
+                              "last_name": "Guy",
+                              "created_at": "2011-12-08T06:47:05+0000",
+                              "updated_at": "2011-12-08T06:47:05+0000",
+                              "external_accounts": [
+                
+                              ],
+                              "username": "joe",
+                              "email": "joe@guy.com"
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                }
+                
+      - platform: ios
+        example: |
+            Example iOS call:
+            
+                NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:3];
+                [paramDict setObject:[NSArray arrayWithObjects:@"4edef6f7d9ca7247b8000004", @"4edf0c20d9ca724a82000003", nil] forKey:@"to_ids"]; // the other users' user ids
+                [paramDict setObject:@"Dinner tonight!" forKey:@"message"];
+                CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"POST" baseUrl:@"chats/create.json" paramDict:paramDict];
+                [request addPhotoUIImage:image paramDict:nil];
+                [request startAsynchronous];
+                [request release];
+                
+            SDK Callback:
+            
+                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
+                {
+                	NSArray *chatGroups = [response getObjectsOfType:[CCChatGroup class]];
+                	...
+                }
+                
+      - platform: android
+        example: |
+            Example Android call:
+            
+                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+                
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("to_ids", "4edef6f7d9ca7247b8000004,4edf0c20d9ca724a82000003");
+                data.put("message", "Hello!");
+                CCResponse response = sdk.sendRequest("chats/create.json", CCRequestMethod.POST, data);
+                
+            SDK Callback:
+            
+                JSONObject responseJSON = response.getResponseData();
+                CCMeta meta = response.getMeta();
+                if("ok".equals(meta.getStatus()) 
+                    && meta.getCode() == 200 
+                    && "createChatMessage".equals(meta.getMethod())) {
+                  JSONArray chats = responseJSON.getJSONArray("chats");
+                  ...
+                  System.out.println("message sent!");
+                }
+                
+      - platform: javascript
+        example: |
+            Example Javascript call:
+            
+                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+                var data = {
+                  to_ids: '4ee05d69d9ca726b85000003,4ee05d69d9ca726b85000004', 
+                  message: 'Hello!'
+                };
+                sdk.sendRequest('chats/create.json', 'POST', data, callback);
+                
+            SDK Callback:
+            
+                function callback(data) {
+                  if(data) {
+                    if(data.meta) {
+                      var meta = data.meta;
+                      if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'createChatMessage') {
+                        var chats = data.response.chats;
+                      	...
+                        alert("message sent!");
+                      }
+                    }
+                  }
+                }
+                
+      - platform: actionscript
+        example: |
+            Example Actionscript call:
+            
+                var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+                
+                var data:Object = new Object();
+                data.to_ids = "4edef6f7d9ca7247b8000004,4edf0c20d9ca724a82000003";
+                data.message = "Hello!";
+                sdk.sendRequest("chats/create.json", URLRequestMethod.POST, data, false, callback);
+                
+            SDK Callback:
+            
+                function callback(data:Object):void {
+                  if(data) {
+                    if(data.hasOwnProperty("meta")) {
+                      var meta:Object = data.meta;
+                      if(meta.status == "ok" && meta.code == 200 && meta.method_name == "createChatMessage") {
+                      	var chats:Array = data.response.chats;
+                      	...
+                        Alert.show("message sent!");
+                      }
+                    }
+                  }
+                }
+                
