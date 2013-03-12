@@ -1,0 +1,2 @@
+<%- partial('samples') %> chatroom
+

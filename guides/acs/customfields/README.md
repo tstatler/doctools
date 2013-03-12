@@ -3,7 +3,7 @@
 ##  Custom Objects and Custom Fields
 
 Appcelerator Cloud Services provides many types of commonly used predefined
-objects such as {@link User} and {@link Photo}. However, there is likely to be
+objects such as {@link Users} and {@link Photos}. However, there is likely to be
 extra data types you would like to use or extra data fields you would like to
 store together with predefined objects. That's where our Custom Objects and
 Custom Data Fields can be used.
@@ -11,7 +11,7 @@ Custom Data Fields can be used.
 ##  Create Custom Objects
 
 If you would like to create custom objects with custom object type, please
-refer to {@link CustomObject} to get a list of API calls that can be used to create and access
+refer to {@link CustomObjects} to get a list of API calls that can be used to create and access
 custom objects.
 
 ##  Add Custom Fields to Predefined Objects
@@ -81,7 +81,7 @@ types or an incorrect naming convention will be silently ignored.
 
 ##  Supported Data Types
 
-<table class="doc_content_table">
+<table class="doc-table">
 	<tr><th>Type</th><th>Example</th>
 	<tr>
 		<td>String&nbsp;&nbsp;&nbsp;&nbsp;</td>
@@ -99,7 +99,7 @@ types or an incorrect naming convention will be silently ignored.
 
 You could also store more complex data types such as Array and Hash. Hash and Array can be embedded into each other. Currently, data stored inside an Array or Hash is not queryable.
     
-<table class="doc_content_table">
+<table class="doc-table">
 <tr><th>Type</th><th>Example</th>
 <tr>
 	<td>Hash&nbsp;&nbsp;</td>
@@ -175,7 +175,7 @@ extra data fields during `create` and `update` actions:
 In iOS, you can simply create a NSDictionary to represent a predefined
 object's custom fields. Here is the mapping of data types in iOS:
 
-<table class="doc_content_table">
+<table class="doc-table">
 		<tr><th>Type</th><th>Example</th><th>iOS Class</th>
 		<tr>
 			<td>String&nbsp;&nbsp;&nbsp;&nbsp;</td>

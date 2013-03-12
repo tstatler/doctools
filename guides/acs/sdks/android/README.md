@@ -319,7 +319,7 @@ public class ArrivalActivity extends Activity {
 
 <p>2. Send push notification with json payload which contains reserved keywords for certern displaying behavior on the device. The reserved keywords are defined as following:</p>
 
-<table class="doc_content_table">
+<table class="doc-table">
 	<tr>
 		<th>Key</th>
 		<th nowrap>Value type</th>
