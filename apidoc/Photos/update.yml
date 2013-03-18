@@ -1,4 +1,4 @@
-name: Messages
+name: Photos
 methods:
   - name: update
     summary: Update a Photo

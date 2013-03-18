@@ -183,7 +183,7 @@ the user and photo object are included in the response. Example JSON response:
 
 A relation points to an ACS object, so to query a relation, you must first
 get the ACS object pointed by the relation. For example, if you want to
-query cars whose owner is “John Smith”, you first need to find the {@link User}
+query cars whose owner is “John Smith”, you first need to find the {@link Users}
 object whose full name is “John Smith”:
 
     $ curl -c cookies.txt -b cookies.txt -X GET --data-urlencode 'where={"first_name":"John","last_name":”Smith”}' --data-urlencode 'order=created_at' "https://api.cloud.appcelerator.com/v1/users/query.json?key={YOUR APP APP KEY}"

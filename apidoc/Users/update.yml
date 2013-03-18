@@ -1,4 +1,4 @@
-name: User
+name: Users
 methods:
   - name: update
     description: |
