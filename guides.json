@@ -19,6 +19,12 @@
                   "name": "sdks",
                   "title": "SDKs",
                   "items": [
+                      { 
+                          "name": "titanium",
+                          "url": "guides/acs/sdks/titanium",
+                          "title": "Titanium SDK",
+                          "description": "Using ACS in a Titanium application."
+                      },
                       {
                           "name": "ios",
                           "url": "guides/acs/sdks/ios",
@@ -29,7 +35,7 @@
                       {
                           "name": "android",
                           "url": "guides/acs/sdks/android",
-                          "title": "Android",
+                          "title": "Android SDK",
                           "description": "Using ACS in native Android apps with the ACS Android SDK."
                       }
                   ]

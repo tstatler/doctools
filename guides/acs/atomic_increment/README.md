@@ -148,7 +148,7 @@ The following ACS methods support the `$inc` operator:
   * {@link Collections#update}
   * {@link Events#update}
   * {@link Files#update}
-  * {@link Custom Objects#update}
+  * {@link CustomObjects#update}
   * {@link Photos#update}
   * {@link Places#update}
   * {@link Posts#update}

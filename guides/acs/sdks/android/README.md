@@ -167,7 +167,7 @@ for (int i=0;i&lt;users.length();i++) {
 <p>1. Open <a target="_blank" href="https://cloud.appcelerator.com/apps">https://cloud.appcelerator.com/apps</a> and select a proper app from "My Apps" list;</p>
 <p>2. Click on "App Settings", in the "Android Push Configuration" section, fill in your android app's package name for the "Application Package" item; then save the change.</p>
 
-<a href="/images/android_push.png"><IMG SRC="/images/android_push.png" width="680" class="prettyprint"></a><br/>
+{@img android_push.png}
 	
 <h3>Setup Android Project</h3>
 
