@@ -61,6 +61,30 @@ methods:
         type: Array<Checkins>
 
     examples:
+      - platform: titanium
+        example: |
+            This example requests information about checkins and checks the response.
+            
+                Cloud.Checkins.query({
+                    page: 1,
+                    per_page: 20,
+                    order: '-updated_at'
+                }, function (e) {
+                    if (e.success) {
+                        for (var i = 0; i < e.checkins.length; i++) {
+                            var checkin = e.checkins[i];
+                            alert('Success:\n' +
+                               'id: ' + checkin.id + '\n' +
+                               'place: ' + checkin.place.name + '\n' +
+                               'updated_at: ' + checkin.updated_at + '\n' +
+                               'user: ' + checkin.user.first_name + ' ' + checkin.user.last_name);
+                         }
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
+      
       - platform: rest
         example: |
             Example cURL request:

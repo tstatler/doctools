@@ -63,6 +63,26 @@ methods:
         type: Array<Hash>
 
     examples:
+      - platform: titanium
+        example: |
+            This example requests a lists of chat groups that the current user belongs to and checks 
+            the response.
+            
+                Cloud.Chats.getChatGroups(function (e) {
+                    if (e.success) {
+                        for (var i = 0; i < e.chats.length; i++) {
+                            var group = e.chat_groups[i];
+                            alert('Success:\n' +
+                                'id: ' + group.id + '\n' +
+                                'created_at: ' + group.created_at + '\n' +
+                                'number of users: ' + group.participate_users.length);
+                        }
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
+
       - platform: rest
         example: |
             Example cURL request:

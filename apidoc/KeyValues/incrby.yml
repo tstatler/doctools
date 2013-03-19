@@ -50,6 +50,26 @@ methods:
         type: Array<KeyValues>
 
     examples:
+      - platform: titanium
+        example: |
+            This example increments a key-value and checks the response.
+    
+                Cloud.KeyValues.increment({
+                    name: 'score',
+                    value: 1
+                }, function (e) {
+                     if (e.success) {
+                         var keyvalue = e.keyvalues[0];
+                         alert('Success:\n' +
+                             'name: ' + keyvalue.name + '\n' +
+                             'value: ' + keyvalue.value);
+                     } else {
+                         alert('Error:\n' +
+                             ((e.error && e.message) || JSON.stringify(e)));
+                     }
+    
+                });
+    
       - platform: rest
         example: |
             Example cURL request:

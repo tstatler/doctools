@@ -16,6 +16,21 @@ methods:
         required: true
 
     examples:
+      - platform: titanium
+        example: |
+            This example removes friends and checks the response.
+    
+                Cloud.Friends.remove({
+                    user_ids: checked.join(",")
+                }, function (e) {
+                    if (e.success) {
+                        alert('Friend(s) removed');
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
+    
       - platform: rest
         example: |
             Example cURL request:

@@ -1,7 +1,0 @@
-  - name: created_at
-    description: Message creation date.
-    type: Date
-
-  - name: updated_at
-    description: Message update date.
-    type: Date

@@ -28,6 +28,25 @@ methods:
         type: Array<Checkins>
 
     examples:
+      - platform: titanium
+        example: |
+            This example requests information about a checkin and checks the response.
+            
+                Cloud.Checkins.show({
+                    checkin_id: myCheckinId
+                }, function (e) {
+                    if (e.success) {
+                        var checkin = e.checkins[0];
+                        alert('Success:\n' +
+                            'id: ' + checkin.id + '\n' +
+                            'place: ' + checkin.place.name + '\n' +
+                            'updated_at: ' + checkin.updated_at);
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
+      
       - platform: rest
         example: |
             Example cURL request:

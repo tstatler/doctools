@@ -119,6 +119,30 @@ methods:
         type: Array<Events>
         
     examples:
+      - platform: titanium
+        example: |
+            This example updates a event and checks the response.
+            
+                Cloud.Events.update({
+                    event_id: savedEventId,
+                    name: 'Annual Celebration',
+                    start_time: starttime,
+                    duration: 3600,
+                    recurring: 'monthly',
+                    recurring_count: 5
+                }, function (e) {
+                    if (e.success) {
+                        var event = e.events[0];
+                        alert('Success:\n' +
+                            'id: ' + event.id + '\n' +
+                            'name: ' + event.name + '\n' +
+                            'updated_at: ' + event.updated_at);
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
+      
       - platform: rest
         example: |
             Example cURL request:

@@ -28,6 +28,21 @@ methods:
         type: Array<ACLs>
 
     examples:
+      - platform: titanium
+        example: |
+            This example requests an ACL object and checks the response.
+    
+                Cloud.ACLs.show({
+                    name: 'testACL'
+                }, function (e) {
+                    if (e.success) {
+                        alert('Shown!');
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
+
       - platform: rest
         example: |
             Example cURL request:

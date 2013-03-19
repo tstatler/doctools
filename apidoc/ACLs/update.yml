@@ -68,6 +68,25 @@ methods:
         type: Array<ACLs>
 
     examples:
+      - platform: titanium
+        example: |
+            This example updates an ACL object and checks the response.
+    
+                Cloud.ACLs.update({
+                    name: 'testACL',
+                    reader_ids: '',
+                    writer_ids: '',
+                    public_read: true,
+                    public_write: true
+                }, function (e) {
+                    if (e.success) {
+                        alert('Updated!');
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
+
       - platform: rest
         example: |
             Example cURL request:

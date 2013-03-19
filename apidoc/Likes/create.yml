@@ -71,6 +71,10 @@ methods:
         type: Array<Likes>
 
     examples:
+      - platform: titanium
+        example: |
+            This API is not yet supported in the `ti.cloud` module.
+
       - platform: rest
         example: |
             Example cURL request:

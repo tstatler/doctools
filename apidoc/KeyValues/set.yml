@@ -49,6 +49,22 @@ methods:
             behalf of another user.
 
     examples:
+      - platform: titanium
+        example: |
+            This example sets a key-value and checks the response.
+    
+                Cloud.KeyValues.set({
+                    name: 'welcome_message',
+                    value: 'Welcome to Appcelerator Cloud Services'
+                }, function (e) {
+                    if (e.success) {
+                        alert('Success');
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
+    
       - platform: rest
         example: |
             Example cURL request:

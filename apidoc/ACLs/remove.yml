@@ -39,6 +39,23 @@ methods:
         required: true
 
     examples:
+      - platform: titanium
+        example: |
+            This example removes a user from an ACL object and checks the response.
+    
+                Cloud.ACLs.removeUser({
+                    name: 'testACL',
+                    reader_ids: readers.ids.join(','),
+                    writer_ids: writers.ids.join(',')
+                }, function (e) {
+                    if (e.success) {
+                        alert('Removed!');
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
+
       - platform: rest
         example: |
             Example cURL request:

@@ -40,6 +40,24 @@ methods:
         required: true
 
     examples:
+      - platform: titanium
+        title: Add user to an ACL
+        example: |
+            This example adds a user to an ACL object and checks the response.
+    
+                Cloud.ACLs.addUser({
+                    name: 'testACL',
+                    reader_ids: readers.ids.join(','),
+                    writer_ids: writers.ids.join(',')
+                }, function (e) {
+                    if (e.success) {
+                        alert('Added!');
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
+
       - platform: rest
         example: |
             Example cURL request:

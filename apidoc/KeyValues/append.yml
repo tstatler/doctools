@@ -42,6 +42,26 @@ methods:
         type: Array<KeyValues>
 
     examples:
+      - platform: titanium
+        example: |
+            This example appends a value to a key-value and checks the response.
+    
+                Cloud.KeyValues.append({
+                    name: 'welcome_message',
+                    value: ', take a look around'
+                }, function (e) {
+                     if (e.success) {
+                         var keyvalue = e.keyvalues[0];
+                         alert('Success:\n' +
+                             'name: ' + keyvalue.name + '\n' +
+                             'value: ' + keyvalue.value);
+                     } else {
+                         alert('Error:\n' +
+                             ((e.error && e.message) || JSON.stringify(e)));
+                     }
+    
+                });
+    
       - platform: rest
         example: |
             Example cURL request:

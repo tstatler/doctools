@@ -76,6 +76,30 @@ methods:
         type: Array<Events>
 
     examples:
+      - platform: titanium
+        example: |
+            This example retrieves a list of event occurrences and checks the response.
+    
+                Cloud.Events.searchOccurrences({
+                    place_id: savedPlaceId,
+                    start_time: startTime
+                }, function (e) {
+                    if (e.success) {
+                        alert('Success:\n' +
+                            'Count: ' + e.event_occurrences.length);
+                        for (var i = 0; i < e.event_occurrences.length; i++) {
+                            var event = e.event_occurrences[i].event;
+                            alert('id: ' + event.id + '\n' +
+                                  'name: ' + event.name + '\n' +
+                                  'start time: ' + event.start_time + '\n' +
+                                  'updated_at: ' + place.updated_at);
+                        }
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
+    
       - platform: rest
         example: |
             Example cURL request:

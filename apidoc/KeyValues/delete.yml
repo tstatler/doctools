@@ -29,6 +29,22 @@ methods:
             Login user must be an admin to delete a key-value on behalf of another user.
 
     examples:
+      - platform: titanium
+        example: |
+            This example deletes a key-value and checks the response.
+    
+                Cloud.KeyValues.remove({
+                    name: 'welcome_message'
+                }, function (e) {
+                     if (e.success) {
+                         alert('Success');
+                     } else {
+                         alert('Error:\n' +
+                             ((e.error && e.message) || JSON.stringify(e)));
+                     }
+    
+                });
+    
       - platform: rest
         example: |
             Example cURL request:

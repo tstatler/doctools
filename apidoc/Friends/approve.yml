@@ -18,6 +18,21 @@ methods:
         required: true
 
     examples:
+      - platform: titanium
+        example: |
+            This example approves pending friend requests and checks the response.
+    
+                Cloud.Friends.approve({
+                    user_ids: checked.join(",")
+                }, function (e) {
+                    if (e.success) {
+                        alert('Friend(s) approved');
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
+    
       - platform: rest
         example: |
             Example cURL request:

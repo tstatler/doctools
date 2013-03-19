@@ -48,6 +48,24 @@ methods:
         type: Hash
 
     examples:
+      - platform: titanium
+        title: Check user permissions
+        example: |
+            This example checks a user's permissions in an ACL and checks the response.
+    
+                Cloud.ACLs.checkUser({
+                    name: 'testACL',
+                    user_id: userID
+                }, function (e) {
+                    if (e.success) {
+                        alert('Read Permission: ' + e.permission['read permission'] +
+                              '\nWrite Permission: ' + e.permission['write permission']);
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
+
       - platform: rest
         example: |
             Example cURL request:

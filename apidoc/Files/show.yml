@@ -33,6 +33,25 @@ methods:
         type: Array<Files>
 
     examples:
+      - platform: titanium
+        example: |
+            This example retrieves information about a file and checks the response.
+            
+                Cloud.Files.show({
+                    file_id: savedFileId
+                }, function (e) {
+                    if (e.success) {
+                        var file = e.files[0];
+                        alert('Success:\n' +
+                            'id: ' + file.id + '\n' +
+                            'name: ' + file.name + '\n' +
+                            'updated_at: ' + file.updated_at);
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
+      
       - platform: rest
         example: |
             Example cURL request:

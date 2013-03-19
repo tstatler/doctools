@@ -72,6 +72,31 @@ methods:
         type: Array<Events>
 
     examples:
+      - platform: titanium
+        example: |
+            This example searches for events near a specified location. 
+            
+                Cloud.Events.search({
+                    latitude: lat,
+                    longitude: lon
+                }, function (e) {
+                    if (e.success) {
+                        alert('Success:\n' +
+                            'Count: ' + e.events.length);
+                        for (var i = 0; i < e.events.length; i++) {
+                            var event = e.events[i];
+                            alert('id: ' + event.id + '\n' +
+                                  'name: ' + event.name + '\n' +
+                                  'longitude: ' + event.longitude + '\n' +
+                                  'latitude: ' + event.latitude + '\n' +
+                                  'updated_at: ' + event.updated_at);
+                        }
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
+    
       - platform: rest
         example: |
             Example cURL request:

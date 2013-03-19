@@ -27,6 +27,21 @@ methods:
         type: Boolean
 
     examples:
+      - platform: titanium
+        example: |
+            This example deletes a event and checks the response.
+            
+                Cloud.Events.remove({
+                    event_id: savedEventId
+                }, function (e) {
+                    if (e.success) {
+                        alert('Removed');
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
+    
       - platform: rest
         example: |
             Example cURL request:

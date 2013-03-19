@@ -36,11 +36,30 @@ methods:
         type: Array<Events>
 
     examples:
+      - platform: titanium
+        example: |
+            This example retrieves information about a event and checks the response.
+            
+                Cloud.Events.show({
+                    event_id: savedEventId
+                }, function (e) {
+                    if (e.success) {
+                        var event = e.events[0];
+                        alert('Success:\n' +
+                            'id: ' + event.id + '\n' +
+                            'name: ' + event.name + '\n' +
+                            'updated_at: ' + event.updated_at);
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
+    
       - platform: rest
         example: |
             Example cURL request:
             
-                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/events/show.json?key=<YOUR APP APP KEY>&event;_id=4d870f8bd0afbe1074000017"
+                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/events/show.json?key=<YOUR APP APP KEY>&event_id=4d870f8bd0afbe1074000017"
                 
             Example JSON response:
             
