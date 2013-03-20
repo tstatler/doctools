@@ -72,6 +72,29 @@ methods:
         type: Array<Statuses>
 
     examples:
+      - platform: titanium
+        example: |
+            This example requests information about statuses and checks the response.
+            
+                Cloud.Statuses.query({
+                    page: 1,
+                    per_page: 20,
+                    order: '-updated_at'
+                }, function (e) {
+                    if (e.success) {
+                        for (var i = 0; i < e.statuses.length; i++) {
+                            var status = e.statuses[i];
+                            alert('Success:\n' +
+                               'id: ' + status.id + '\n' +
+                               'message: ' + status.message + '\n' +
+                               'updated_at: ' + status.updated_at);
+                         }
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
+    
       - platform: rest
         example: |
             Example cURL request:

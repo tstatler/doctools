@@ -40,6 +40,26 @@ methods:
         type: Array<Users>
 
     examples:
+      - platform: titanium
+        example: |
+            This example logs a user in using an external account and checks the response.
+            
+                Cloud.SocialIntegrations.externalAccountLogin({
+                    type: 'facebook',
+                    token: Ti.Facebook.accessToken
+                }, function (e) {
+                    if (e.success) {
+                        var user = e.users[0];
+                        alert('Success:\n' +
+                            'id: ' + user.id + '\n' +
+                            'first name: ' + user.first_name + '\n' +
+                            'last name: ' + user.last_name);
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
+    
       - platform: rest
         example: |
             Example cURL request:

@@ -17,6 +17,19 @@ methods:
             `keep_photo=true` to tell Appcelerator Cloud Services to not delete this photo.
 
     examples:
+      - platform: titanium
+        example: |
+            This example deletes the current user and checks the response.
+            
+                Cloud.Users.remove(function (e) {
+                    if (e.success) {
+                        alert('Success: Removed');
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
+      
       - platform: rest
         example: |
             Example cURL request:

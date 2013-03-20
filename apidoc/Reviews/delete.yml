@@ -58,6 +58,22 @@ methods:
         required: true
 
     examples:
+      - platform: titanium
+        example: |
+            This example deletes a review and checks the response.
+            
+                Cloud.Reviews.remove({
+                    post_id: savedPostId,
+                    review_id: savedReviewId
+                }, function (e) {
+                    if (e.success) {
+                        alert('Success');
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
+    
       - platform: rest
         example: |
             Example cURL request:

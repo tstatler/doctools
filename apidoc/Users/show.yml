@@ -38,6 +38,25 @@ methods:
         type: Array<Users>
 
     examples:
+      - platform: titanium
+        example: |
+            This example requests information about a user and checks the response.
+            
+                Cloud.Users.show({
+                    user_id: savedUserInfo.id
+                }, function (e) {
+                    if (e.success) {
+                        var user = e.users[0];
+                        alert('Success:\n' +
+                            'id: ' + user.id + '\n' +
+                            'first name: ' + user.first_name + '\n' +
+                            'last name: ' + user.last_name);
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
+      
       - platform: rest
         example: |
             Example cURL request:

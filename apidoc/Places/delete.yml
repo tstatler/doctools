@@ -30,6 +30,21 @@ methods:
         type: Boolean
 
     examples:
+      - platform: titanium
+        example: |
+            This example deletes a place and checks the response.
+            
+                Cloud.Places.remove({
+                    place_id: savedPlaceId
+                }, function (e) {
+                    if (e.success) {
+                        alert('Success');
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
+    
       - platform: rest
         example: |
             Example cURL request:

@@ -75,6 +75,34 @@ methods:
         type: Array<Posts>
 
     examples:
+      - platform: titanium
+        example: |
+            This example requests a list of posts and checks the response.
+            
+                Cloud.Posts.query({
+                    page: 1,
+                    per_page: 20,
+                    where: {
+                        reviews_count: { '$gt': 1.0 }
+                    }
+                }, function (e) {
+                    if (e.success) {
+                        alert('Success:\n' +
+                            'Count: ' + e.posts.length);
+                        for (var i = 0; i < e.posts.length; i++) {
+                            var post = e.posts[i];
+                            alert('id: ' + post.id + '\n' +
+                                'id: ' + post.id + '\n' +
+                                'title: ' + post.title + '\n' +
+                                'content: ' + post.content + '\n' +
+                                'updated_at: ' + post.updated_at);
+                        }
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
+      
       - platform: rest
         example: |
             Example cURL request:
