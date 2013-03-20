@@ -20,6 +20,21 @@ methods:
         required: true
 
     examples:
+      - platform: titanium
+        example: |
+            This example deletes a photo collection and checks the response.
+            
+                Cloud.PhotoCollections.remove({
+                    collection_id: savedPhotoCollectionId
+                }, function (e) {
+                    if (e.success) {
+                        alert('Success');
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
+    
       - platform: rest
         example: |
             Example cURL request:

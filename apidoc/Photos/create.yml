@@ -102,6 +102,26 @@ methods:
         type: Array<Photos>
 
     examples:
+      - platform: titanium
+        example: |
+            This example creates a new photo and checks the response.
+    
+                Cloud.Photos.create({
+                    photo: Titanium.Filesystem.getFile('photo.jpg')
+                }, function (e) {
+                    if (e.success) {
+                        var photo = e.photos[0];
+                        alert('Success:\n' +
+                            'id: ' + photo.id + '\n' +
+                            'filename: ' + photo.filename + '\n' +
+                            'size: ' + photo.size,
+                            'updated_at: ' + photo.updated_at);
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
+    
       - platform: rest
         example: |
             Example cURL request:

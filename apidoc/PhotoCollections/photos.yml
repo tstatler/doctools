@@ -41,6 +41,36 @@ methods:
         type: Array<PhotoCollections>
 
     examples:
+      - platform: titanium
+        example: |
+            This example requests a list of photos in a photo collections and checks the response.
+            
+                Cloud.PhotoCollections.showPhotos({
+                    page: 1,
+                    per_page: 20,
+                    collection_id: savedCollectionId
+                }, function (e) {
+                    if (e.success) {
+                        if (!e.photos) {
+                            alert('Success: No photos');
+                        } else {
+                            alert('Success:\n' +
+                                'Count: ' + e.collections.length);
+                            for (var i = 0; i < e.collections.length; i++) {
+                                var collection = e.collections[i];
+                                alert('Success:\n' +
+                                    'id: ' + collection.id + '\n' +
+                                    'name: ' + collection.name + '\n' +
+                                    'count: ' + collection.counts.total_photos + '\n'
+                                    'updated_at: ' + collection.updated_at);
+                            }
+                        }
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
+      
       - platform: rest
         example: |
             Example cURL request:

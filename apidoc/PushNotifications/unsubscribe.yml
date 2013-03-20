@@ -32,6 +32,22 @@ methods:
             Only application admins can unsubscribe another user from push notifications.
 
     examples:
+      - platform: titanium
+        example: |
+            This example unsubscribes from a push notification channel and checks the response.
+            
+                Cloud.PushNotifications.unsubscribe({
+                    channel: 'friend_request',
+                    device_token: myPushDeviceToken
+                }, function (e) {
+                    if (e.success) {
+                        alert('Success');
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
+      
       - platform: rest
         example: |
             Example cURL request:

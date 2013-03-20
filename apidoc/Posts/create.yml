@@ -77,6 +77,28 @@ methods:
         type: Array<Posts>
 
     examples:
+      - platform: titanium
+        example: |
+            This example creates a new post and checks the response.
+            
+                Cloud.Posts.create({
+                    content: 'Man Walks On Moon',
+                    title: 'News of the day',
+                    photo: Titanium.Filesystem.getFile('photo.jpg')
+                }, function (e) {
+                    if (e.success) {
+                        var post = e.posts[0];
+                        alert('Success:\n' +
+                            'id: ' + post.id + '\n' +
+                            'title: ' + post.title + '\n' +
+                            'content: ' + post.content + '\n' +
+                            'updated_at: ' + post.updated_at);
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
+      
       - platform: rest
         example: |
             Example cURL request:

@@ -71,6 +71,31 @@ methods:
         type: Array<Users>
 
     examples:
+      - platform: titanium
+        example: |
+            This example updates information about the currently logged in user and checks the response.
+            
+                Cloud.Users.update({
+                    email: 'joeuser@mycompany.com',
+                    first_name: 'joe',
+                    last_name: 'user',
+                    custom_fields: {
+                        favorite_color: 'blue',
+                        age: 25
+                    }
+                }, function (e) {
+                    if (e.success) {
+                        var user = e.users[0];
+                        alert('Success:\n' +
+                            'id: ' + user.id + '\n' +
+                            'first name: ' + user.first_name + '\n' +
+                            'last name: ' + user.last_name);
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
+      
       - platform: rest
         example: |
             Example cURL request:
