@@ -93,6 +93,73 @@ app. There are several methods for authenticating with ACS:
 3-Legged OAuth, in which the username and password are not stored by the
 application, is the preferred method in most cases. 
 
+For 2-legged OAuth or API key authentication, use the `Users.create` and `Users.login`
+methods:
+
+    Cloud.Users.login({ 
+        login: "test@example.com",
+        password: "passwd"
+    }, function(e) {
+        if (e.success) {
+            Ti.API.info("Logged in user, id = " + users[0].id + ", session ID = " + Cloud.sessionId);
+        } else {
+            Ti.API.info("Login failed.");
+        }
+    });
+
+For 3-legged OAuth, use the `Users.secureCreate` and `Users.secureLogin` methods:
+
+    Cloud.Users.secureLogin({
+        title : "Log in to NiftyApp",
+    }, function(e) {
+        if (!e.success) {
+            Ti.API.info("Error: + ((e.error && e.message) || JSON.stringify(e)));
+        } else {
+            Ti.API.info('Success. accessToken = ' + Cloud.accessToken);
+        }
+    });
+
+These methods differ from the `login` and `create` methods in several important ways:
+
+*   The user's login and password information is passed into the method. Instead, 
+    the method displays a modal dialog, prompting the user to log in. The user's password
+    is not available to the application.
+
+*   The only thing that can be specified in the parameter dictionary is the title of the 
+    modal dialog, as shown in the sample above.
+
+*   The user's information is not returned in the response object. If you need information 
+    about the logged-in user, call the {@link Users#showme} method.
+
+*   After a successful login, the OAuth access token is available in `Cloud.accessToken`. 
+    If desired, you can persist this value in a secure method and restore it when the application
+    restarts. For example:
+
+        // Method for storing token is application-specific
+        var token = getMyStoredAccessToken();
+        if (token) {
+            // restore access token
+            Cloud.accessToken = token;
+            // make more Cloud API calls.
+            doMyCloudStuff();
+        } else {
+            // need to log in.
+            Cloud.Users.secureLogin({
+                title : "Log in to NiftyApp",
+            }, function(e) {
+                if (e.success) {
+                    setMyStoredAccessToken(Cloud.accessToken, Cloud.expiresIn);
+                    doMyCloudStuff();
+                } else {
+                    // handle error 
+                }
+            });
+        }
+
+    The `Cloud.expiresIn` property specifies the validity period of the token, in seconds.
+    If you record the time when the `secureLogin` or `secureCreate` call returns, you can use this information.
+    to determine whether the access token is still valid.
+
 See the [Titanium.Cloud
 Module Reference](http://docs.appcelerator.com/titanium/latest/#!/api/Titanium.Cloud) for 
 details on using each of the mechanisms in Titanium. 
@@ -104,8 +171,34 @@ your ACS application.
 
 ## Using the ACS APIs
 
-This is the magic, of course. This is where you add cloud services to your app
-using our APIs. With over 25 APIs available for you to use, we obviously can't
+The `ti.cloud` module APIs follow the same basic pattern. For each ACS method supported by
+the API, the module supplies a JavaScript method that takes two arguments: a _parameters_
+dictionary, which holds the parameters passed to the method, and a callback to be invoked
+when the method completes.
+
+The response callback receives a single object, which is a slightly modified version of
+the REST response object. The REST response contains two objects:
+
+*   `meta : Object`. Response metadata, such as success or failure, error messages, pagination
+    information.
+*   `response : Object`. Response data specific to the call. For example, if you search for places,
+    the response object contains an array of places.
+
+The module's response object includes any properties from `response` at the top level of the 
+object. For example, if the REST response includes `response.places`, this is included as
+`places`.
+
+The module's response object also includes the following fields:
+
+*   `meta : Object`. Metadata from the REST response.
+*   `success : Boolean`. True if the request succeeded (that is, `meta.status == "ok"`).
+*   `error : Boolean`. True if the request failed (`meta.status != "ok"`).
+*   `message : String`. Error message, if available.
+*   `code : Number`. Error code, if available.
+
+## Examples
+
+With over 25 APIs available for you to use, we obviously can't
 cover them all here. But let's take a look at a couple of examples.
 
 Create a user
@@ -132,21 +225,21 @@ Create a user using 3-legged OAuth
         title: 'Sign Up Here'
     }, function (e) {
         if (e.success) {
-            alert('Success:\\n' +
-                'accessToken: ' + e.accessToken + '\\n' +
-                'expiresIn: ' + e.expiresIn);
+            alert('Success:\n' +
+                'accessToken: ' + e.access_token + '\n' +
+                'expiresIn: ' + e.expires_in);
         } else {
-            alert('Error:\\n' +
+            alert('Error:\n' +
                 ((e.error && e.message) || JSON.stringify(e)));
         }
     });
 
-Post a photo
 
+Post a photo to a photo collection. To post a photo to a collection, you need to create the collection first using 
+{@link PhotoCollections#create}.
     
-    
-    // assumes you've obtained a photo from the camera or gallery, with blob data stored in an object named photo
-    // collectionID is an ID generated by ACS for a grouping of photos, you could retrieve via code or hard-code it
+    // assumes you've obtained a photo from the camera or gallery, with blob data stored in an object named photo,
+    // and that collectionID contains the ID of an existing photo collection.
     Cloud.Photos.create({
         photo: photo,
         collection_id: collectionID,
@@ -161,19 +254,23 @@ Post a photo
         }
     });
 
-Linking a Facebook login with your app
+Linking a Facebook login with your app. You must already be logged in using the 
+Titanium [Facebook module](http://docs.appcelerator.com//titanium/latest/#!/api/Modules.Facebook) before
+calling the `externalAccountLogin` method.
 
-    
-    
+Prior to Titanium 3.1, use [Titanium.Facebook](http://docs.appcelerator.com//titanium/latest/#!/api/Titanium.Facebook) instead.
+
     // Not shown is the code to implement the Facebook module in your app
-    
+    // Use Titanium.Facebook prior to 3.1. 
+    var Facebook = require('facebook');   
+
     // call the ACS Facebook SocialIntegrations API to link logged in states
     function updateLoginStatus() {
-        if (Ti.Facebook.loggedIn) {
+        if (Facebook.loggedIn) {
             label.text = 'Logging in to ACS as well, please wait...';
             Cloud.SocialIntegrations.externalAccountLogin({
                 type: 'facebook',
-                token: Ti.Facebook.accessToken
+                token: Facebook.accessToken
             }, function (e) {
                 if (e.success) {
                     var user = e.users[0];
@@ -190,17 +287,15 @@ Linking a Facebook login with your app
     }
     
     // when the user logs into or out of Facebook, link their login state with ACS
-    Ti.Facebook.addEventListener('login', updateLoginStatus);
-    Ti.Facebook.addEventListener('logout', updateLoginStatus);
+    Facebook.addEventListener('login', updateLoginStatus);
+    Facebook.addEventListener('logout', updateLoginStatus);
     
     // add the Facebook login button
-    win.add(Ti.Facebook.createLoginButton({
+    win.add(Facebook.createLoginButton({
         top: 10
     }));
 
-Of course, there are many more examples we could show. Instead, head on over
-to the [ACS API documentation](#!/api) to view the samples included there plus the full
-explanation of ACS APIs.
+For more examples, see the [ACS API documentation](#!/api).
 
 The Titanium.Cloud module also includes a sample application demonstrating
 each of the ACS request types. You can find this in the modules folder under
