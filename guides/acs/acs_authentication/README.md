@@ -60,7 +60,7 @@ access token to make API calls on behalf of the user.</p>
 <p>To enable 3-Legged OAuth for your app please go to <a href="/apps">Apps page</a> and click on the name of the app, then go to Settings page. You should see the
 following section there. Select Authorization Server for User Authentication Scheme and specify the valid time for access tokens (defaults to 1 hour).</p>
 
-<img src='/images/app_setting_as.png' width="680px"/>
+{@img app_setting_as.png}
 
 <p>With 3-Legged OAuth, user log-in and sign-up will be done on Authorization Server. According to OAuth 2.0 implicit authorization flow only OAuth key
 is needed. However, as iOS and Android applications are safer than javascript applications OAuth secret can still be provided for them.</p>
