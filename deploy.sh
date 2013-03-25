@@ -4,6 +4,7 @@ VIDEO_LIST="videos.json"
 PROCESSED_VIDEO_LIST="build/videos.json"
 config="./jsduck.config"
 guidesdir="./htmlguides"
+outdir="./dist/titanium/3.0"
 
 progname=$0
 
@@ -12,7 +13,8 @@ usage() {
     echo ""
     echo "  Options:"
     echo "  -c <config_file> (i.e., jsduck_21.config for 2.1 docs build)."
-    echo "  -o <optional_project> (currently, only alloy is supported)"
+    echo "  -o <optional_project> (currently 'alloy' and 'modules' are supported)"
+    echo "  -d <output_dir> (defaults to dist/titanium/3.0)."
     echo "  -s  Enable --seo flag to jsduck."
     echo "  -t  Do not generate video thumbnails"
     echo ""
@@ -23,6 +25,11 @@ while getopts ":tso:c:g:" opt; do
         c)
             if [ "$OPTARG" ]; then
                 config=$OPTARG
+            fi
+            ;;
+        d)
+            if [ "$OPTARG" ]; then
+                outdir=$OPTARG
             fi
             ;;
         o)
@@ -128,7 +135,7 @@ if [ $include_modules ]; then
             exit
         fi
     fi
-    module_dirs="$TI_MODULES/map"
+    module_dirs="$TI_MODULES/map $TI_MODULES/facebook"
 fi
 
 python ${TI_DOCS}/docgen.py -f jsduck -o ./build $module_dirs
@@ -152,9 +159,9 @@ else
     compass compile ${JSDUCK}/template/resources/sass
     TEMPLATE=${JSDUCK}/${DEBUG_TEMPLATE}
 fi
-ruby ${JSDUCK}/bin/jsduck --template ${TEMPLATE} $seo --config $config $alloyDirs
-cp -r "./htmlguides/images" "dist/images"
-cp -r "./htmlguides/attachments" "dist/attachments"
-cp -r "./htmlguides/css/common.css" "dist/resources/css/common.css"
-cp ./resources/mock_video.png dist/resources/images/mock_video.png
-cp ./resources/codestrong_logo_short.png dist/resources/images/codestrong_logo_short.png
+ruby ${JSDUCK}/bin/jsduck --template ${TEMPLATE} $seo --output $outdir --config $config $alloyDirs
+cp -r "./htmlguides/images" "$outdir/images"
+cp -r "./htmlguides/attachments" "$outdir/attachments"
+cp -r "./htmlguides/css/common.css" "$outdir/resources/css/common.css"
+cp ./resources/mock_video.png $outdir/resources/images/mock_video.png
+cp ./resources/codestrong_logo_short.png $outdir/resources/images/codestrong_logo_short.png
