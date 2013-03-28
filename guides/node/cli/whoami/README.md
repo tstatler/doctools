@@ -15,7 +15,6 @@ Show current login user.
     
     $ acs whoami
     
-    Executing: whoami
     sam@nodeacs.com
     
 

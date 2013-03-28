@@ -176,6 +176,12 @@
                         "description": "List Application's Logs"
                     },
                     {
+                        "name": "node_cli_usage",
+                        "title": "usage -- Check server system resource usage",
+                        "url": "guides/node/cli/usage",
+                        "description": "Check server system resource usage"
+                    },
+                    {
                         "name": "node_cli_logout",
                         "title": "logout -- Logout from Node.ACS",
                         "url": "guides/node/cli/logout",

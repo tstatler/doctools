@@ -15,7 +15,6 @@ Logout from Node.ACS.
     
     $ acs logout
     
-    Executing: logout
     You have been logged out sam@nodeacs.com
     
 

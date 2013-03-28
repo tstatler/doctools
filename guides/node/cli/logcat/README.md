@@ -45,6 +45,10 @@ information.
             <td>ID of the server to retrieve logs from. An application may be deployed to multiple servers in the cloud.</td>
         </tr>
         <tr>
+            <td nowrap>--show_serverid</td>
+            <td>Show server ID in logs</td>
+        </tr>
+        <tr>
             <td>--interval <i>interval</i></td>
             <td>Interval for retrieving application logs, in seconds.  Default: 5s.</td>
         </tr>
@@ -62,7 +66,6 @@ information.
     
     $ acs logcat MyProject
     
-    Executing: logcat
     [51069065b9d95bfc89b99222] 02/05/2013 12:24:009.126 [DEBUG] [11779] ------------ Run MVC App ------------
     [51069065b9d95bfc89b99222] info: socket.io started
     [51069065b9d95bfc89b99222] 02/05/2013 12:24:009.438 [INFO] [11779] App started
