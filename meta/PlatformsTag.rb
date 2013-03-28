@@ -4,15 +4,17 @@ class PlatformTag < JsDuck::MetaTag
 	def initialize
 		@name = "platform"
 	end
-  # This will be called with an array of all @license tags on one class.
+  # This will be called with an array of all @platform tags on one class.
   # One can make use of the #format method to easily support
   # Markdown and {@link} tags inside the contents of the tag.
   def to_html(platforms)
     pretty_names = {
     	'android' => 'Android',
+        'blackberry' => 'BlackBerry',
     	'iphone' => 'iPhone',
     	'ipad' => 'iPad',
-    	'mobileweb' => 'Mobile Web'
+    	'mobileweb' => 'Mobile Web',
+        'tizen' => 'Tizen'
     }
     "<ul class='platforms'>" + platforms.map{|platform| 
         name, version = platform.split()
