@@ -81,7 +81,6 @@ methods:
             message on behalf of another user.
 
     response-parameters:
-      # note that we currently don't document the response objects, except by example
       - name: messages
         type: Array<Messages>
         description: A copy of the message as sent.
@@ -160,6 +159,54 @@ methods:
                     ]
                   }     
                 }
+
+      - platform: ios
+        example: |
+            Example iOS call:
+            
+                NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
+                NSDictionary *to_ids = [NSArray arrayWithObjects:user1.objectId, user2.objectId, nil];
+                [paramDict setObject:to_ids forKey:@"to_ids"];
+                [paramDict setObject:@"hi" forKey:@"subject"]; // optional
+                [paramDict setObject:@"This is a test message." forKey:@"body"];
+                CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"POST" baseUrl:@"messages/create.json" paramDict:paramDict];
+                [request startAsynchronous];
+                [request release];
+            
+            SDK Callback:
+                
+                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
+                {
+                	NSArray *messages = [response getObjectsOfType:[CCMessage class]];
+                	for (CCMessage *message in messages)
+                	{
+                		...
+                	}
+                }
+            
+      - platform: android
+        example: |
+            Example Android call:
+                
+                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+                
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("to_ids", "4d71445b6f70951043000006,4d7184f06f70951043000012");
+                data.put("body", "new message!");
+                CCResponse response = sdk.sendRequest("messages/create.json", CCRequestMethod.POST, data);
+            
+            SDK Callback:
+                
+                JSONObject responseJSON = response.getResponseData();
+                CCMeta meta = response.getMeta();
+                if("ok".equals(meta.getStatus()) 
+                    && meta.getCode() == 200 
+                    && "createMessage".equals(meta.getMethod())) {
+                  JSONArray messages = responseJSON.getJSONArray("messages");
+                  ...
+                }
+    
 
   - name: delete
     description: |
@@ -1290,7 +1337,29 @@ methods:
             recent threads.
         type: Array<Messages>
 
-    example: 
+    examples: 
+      - platform: titanium
+        example: |
+            This example requests a list of message threads and checks the response.
+    
+                Cloud.Messages.showThreads(function (e) {
+                    if (e.success) {
+                        alert('Success:\n' +
+                            'Count: ' + e.messages.length);
+                        for (var i = 0; i < e.messages.length; i++) {
+                            var message = e.messages[i];
+                            alert('Success:\n' +
+                                'id: ' + message.id + '\n' +
+                                'thread id: ' + message.thread_id + '\n' +
+                                'subject: ' + message.subject + '\n' +
+                                'body: ' + message.body + '\n' +
+                                'updated_at: ' + message.updated_at);
+                        }
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
       - platform: rest
         example: |
             Example cURL request:
