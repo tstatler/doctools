@@ -41,12 +41,16 @@ log messages will be returned at a time.
             <td>ID of the server to retrieve logs from. An application may be deployed to multiple servers in the cloud.</td>
         </tr>
         <tr>
+            <td nowrap>--show_serverid</td>
+            <td>Show server ID in logs</td>
+        </tr>
+        <tr>
             <td nowrap>--start_date <i>start_date</i></td>
-            <td>Starting date for retreiving logs.</td>
+            <td>Starting date for retrieving logs.</td>
         </tr>
         <tr>
             <td>--end_date <i>end_date</i></td>
-            <td>Ending date for retreiving logs.</td>
+            <td>Ending date for retrieving logs.</td>
         </tr>
         <tr>
             <td nowrap>--page_number <i>page_number</i>/td>
@@ -75,7 +79,6 @@ will be returned.
     
     $ acs loglist MyProject
     
-    Executing: loglist
     Retrieves the latest log files from the server
     [Records] 7	[Pages] 1	[Current Page] 1
     [51069065b9d95bfc89b99222] 02/05/2013 12:24:009.126 [DEBUG] [11779] ------------ Run MVC App ------------

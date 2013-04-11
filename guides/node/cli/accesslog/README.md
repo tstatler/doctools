@@ -37,12 +37,20 @@ of 100 log messages will be returned at a time.
             <th>Description</th>
         </tr>
         <tr>
+            <td nowrap>--server_id &lt;serverid&gt;</td>
+            <td>Id of the server which the logs from. An app may be deployed to multiple servers in cloud.</td>
+        </tr>
+        <tr>
+            <td nowrap>--show_serverid</td>
+            <td>Show server ID in logs</td>
+        </tr>
+        <tr>
             <td nowrap>--start_date <i>start_date</i></td>
-            <td>Starting date for retreiving logs.</td>
+            <td>Starting date for retrieving logs.</td>
         </tr>
         <tr>
             <td>--end_date <i>end_date</i></td>
-            <td>Ending date for retreiving logs.</td>
+            <td>Ending date for retrieving logs.</td>
         </tr>
         <tr>
             <td nowrap>--page_number <i>page_number</i>/td>
@@ -68,14 +76,9 @@ will be returned.
     
     $ acs accesslog MyProject
     
-    Executing: accesslog
     Retrieves the latest log files from the server
-    [Records] 6	[Pages] 1	[Current Page] 1
-    [Thu Nov 15 2012 23:06:24 GMT+0800 (CST)]	124.126.170.159	/favicon.ico
-    [Thu Nov 15 2012 23:06:24 GMT+0800 (CST)]	124.126.170.159	/css/style.css
-    [Thu Nov 15 2012 23:06:23 GMT+0800 (CST)]	124.126.170.159	/
-    [Thu Nov 15 2012 22:58:59 GMT+0800 (CST)]	124.126.170.159	/favicon.ico
-    [Thu Nov 15 2012 22:58:58 GMT+0800 (CST)]	124.126.170.159	/css/style.css
-    [Thu Nov 15 2012 22:58:58 GMT+0800 (CST)]	124.126.170.159	/
-    
+    [Records] 3	[Pages] 1	[Current Page] 1
+    [02/25/2013 08:56:08.457]	74.125.178.85	/favicon.ico
+    [02/25/2013 08:56:07.616]	74.125.178.81	/css/style.css
+    [02/25/2013 08:56:06.847]	74.125.178.87	/
 

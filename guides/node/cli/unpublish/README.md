@@ -50,7 +50,6 @@ published again by using [publish](#!/guide/node_cli_publish) command.
 
     $ acs unpublish
     
-    Executing: unpublish
     App 'MyProject' is now marked for unpublication.
     
 

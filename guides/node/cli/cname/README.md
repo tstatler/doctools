@@ -66,7 +66,6 @@ overwrites the previous setting.
 
     $ acs cname --set my.nodeacs.com
     
-    Executing: cname
     Set CNAME succeed. App will be available at: my.nodeacs.com
     
 
