@@ -2,6 +2,7 @@
       {
           "name": "acs_guides",
           "title": "ACS Guides",
+          "url": "guides/acs/quickstart",
           "items": [
               {
                   "name": "acs_quickstart",
@@ -11,13 +12,14 @@
               },
               {
                   "name": "acs_authentication",
-                  "url": "guides/acs/authentication",
+                  "url": "guides/acs/acs_authentication",
                   "title": "Authentication",
                   "description": "Authenticating your application with ACS."
               },
               {
                   "name": "sdks",
                   "title": "SDKs",
+                  "url": "guides/acs/sdks/overview",
                   "items": [
                       { 
                           "name": "titanium",
@@ -85,7 +87,7 @@
               {
                   "name": "acs_releasenotes",
                   "url": "guides/acs/releasenotes",
-                  "title": "Release Notes",
+                  "title": "ACS Release Notes",
                   "description": "Changes in the latest releases."
               }
           ]
@@ -93,7 +95,7 @@
       {
          "name": "node",
          "title": "Node.ACS Guides",
-         "url": "guides/node/index",
+         "url": "guides/node/quickstart",
          "items": [
             {
             "name": "node_quickstart",
@@ -174,6 +176,12 @@
                         "description": "List Application's Logs"
                     },
                     {
+                        "name": "node_cli_usage",
+                        "title": "usage -- Check server system resource usage",
+                        "url": "guides/node/cli/usage",
+                        "description": "Check server system resource usage"
+                    },
+                    {
                         "name": "node_cli_logout",
                         "title": "logout -- Logout from Node.ACS",
                         "url": "guides/node/cli/logout",
@@ -224,7 +232,14 @@
                         "description": "Accessing a MongoDB Database from Node.ACS"
                     }
                ]
-            }
+            },
+              {
+                  "name": "node_releasenotes",
+                  "url": "guides/node/releasenotes",
+                  "title": "Node.ACS Release Notes",
+                  "description": "Changes in the latest releases."
+              }
+
          ]
       }
   ]

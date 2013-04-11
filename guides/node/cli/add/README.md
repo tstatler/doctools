@@ -69,7 +69,6 @@ application's directory with '-d' option.
     
     $ acs add myservice
     
-    Executing: add
     New service added to /home/user/MyProject/controllers/services.js
     Route added to /home/user/MyProject/config.json
     

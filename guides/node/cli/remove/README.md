@@ -56,7 +56,6 @@ The local application directory is not deleted by default. Use the
 
     $ acs remove MyProject
     
-    Executing: remove
     Remove app: ttt
     MyProject has been successfully deleted.
     

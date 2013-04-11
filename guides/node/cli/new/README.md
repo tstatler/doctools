@@ -60,7 +60,6 @@ option.
     
     $ acs new MyProject
     
-    Executing: new
     [DEBUG] Creating project at: /home/user/MyProject
     New project created at /home/user/MyProject
     

@@ -40,11 +40,16 @@ application's directory with the **-d** option.
     
     $ acs publish
     
-    Executing: publish
-    [DEBUG] ready to publish
-    [DEBUG] publishing...
+    Preparing application for publish... done
+    Packing application... done
+    Publishing to cloud...
+    [##########################################################################] 100%
+    Prepare to load node modules
+    Start loading node modules...
+    node_modules loading starts...
+    node_modules installation starts...
+    node_modules loading completed...
+    Node modules are loaded. Cleaning up...
+    Done loading node modules!
     App MyProject published.
-    App will be available at http://50a48e12aa4554c56a10029d.cloudapp.appcelerator.com
-    
-    
-
+    App will be available at http://bb023745a993f41e38cb35ac7dfdca9947d64873.cloudapp.appcelerator.com

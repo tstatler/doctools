@@ -37,7 +37,6 @@ Node.ACS.
     
     $ acs login
     
-    Executing: login
     username: sam@nodeacs.com
     password: ********
     Welcome back, Sam! You are now logged in.
