@@ -20,7 +20,7 @@ usage() {
     echo ""
 }
 
-while getopts ":tso:c:g:" opt; do
+while getopts ":tso:c:d:g:" opt; do
     case $opt in 
         c)
             if [ "$OPTARG" ]; then
@@ -135,7 +135,15 @@ if [ $include_modules ]; then
             exit
         fi
     fi
-    module_dirs="$TI_MODULES/map $TI_MODULES/facebook"
+    if [ ! "$APPC_MODULES" ]; then
+        if [ "$TI_ROOT" ]; then
+            APPC_MODULES=${TI_ROOT}/appc_modules
+        else
+            echo "No titanium_modules dir \$TI_MODULES and \$TI_ROOT not defined. Exiting."
+            exit
+        fi
+    fi
+    module_dirs="$TI_MODULES/map $TI_MODULES/facebook/mobile/apidoc $APPC_MODULES/ti.nfc/apidoc"
 fi
 
 python ${TI_DOCS}/docgen.py -f jsduck -o ./build $module_dirs
@@ -160,8 +168,8 @@ else
     TEMPLATE=${JSDUCK}/${DEBUG_TEMPLATE}
 fi
 ruby ${JSDUCK}/bin/jsduck --template ${TEMPLATE} $seo --output $outdir --config $config $alloyDirs
-cp -r "./htmlguides/images" "$outdir/images"
-cp -r "./htmlguides/attachments" "$outdir/attachments"
-cp -r "./htmlguides/css/common.css" "$outdir/resources/css/common.css"
+cp -r $guidesdir/images "$outdir/images"
+cp -r $guidesdir/attachments "$outdir/attachments"
+cp -r $guidesdir/css/common.css "$outdir/resources/css/common.css"
 cp ./resources/mock_video.png $outdir/resources/images/mock_video.png
 cp ./resources/codestrong_logo_short.png $outdir/resources/images/codestrong_logo_short.png
