@@ -104,6 +104,12 @@ def node2obj(node):
 				if fragment.startswith('!'):
 					tag['href'] = '#' + fragment
 
+			elif re.search('http://docs.appcelerator.com/cloud/latest/.*#.*', href):
+				fragment = re.sub('http://docs.appcelerator.com/cloud/latest/.*#', '', href)
+				fragment = urllib.unquote(fragment)
+				if fragment.startswith('!'):
+					tag['href'] = '/cloud/latest/#' + fragment
+
 			# In general, any link back to the wiki is a bad link.
 			# There are a very few exceptions, such as the community wiki.
 			elif href.startswith('https://wiki.appcelerator.org'):

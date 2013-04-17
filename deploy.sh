@@ -16,7 +16,6 @@ usage() {
     echo "  -o <optional_project> (currently 'alloy' and 'modules' are supported)"
     echo "  -d <output_dir> (defaults to dist/titanium/3.0)."
     echo "  -s  Enable --seo flag to jsduck."
-    echo "  -t  Do not generate video thumbnails"
     echo ""
 }
 
@@ -47,9 +46,6 @@ while getopts ":tso:c:d:g:" opt; do
             if [ "$OPTARG" ]; then
                 guidesdir=$OPTARG
             fi
-            ;;
-        t)  
-            no_thumbnails="no_thumbnails"
             ;;
         s)  
             seo="--seo"
@@ -87,7 +83,7 @@ if [ ! "$TI_DOCS" ]; then
         TI_DOCS=${TI_ROOT}/titanium_mobile/apidoc
     else
         echo "No doc root \$TI_DOCS and \$TI_ROOT not defined. Exiting."
-        exit
+        exit 1
     fi
 fi
 if [ ! "$JSDUCK" ]; then
@@ -95,7 +91,7 @@ if [ ! "$JSDUCK" ]; then
         JSDUCK=${TI_ROOT}/jsduck
     else
         echo "No JSDuck dir \$JSDUCK and \$TI_ROOT not defined. Exiting."
-        exit
+        exit 1
     fi
 fi
 
@@ -104,7 +100,7 @@ if [ ! "$DOCTOOLS" ]; then
         DOCTOOLS=${TI_ROOT}/doctools
     else
         echo "No doctools dir \$DOCTOOLS and \$TI_ROOT not defined. Exiting."
-        exit
+        exit 1
     fi
 fi
 
@@ -113,7 +109,7 @@ if [ ! "$ALLOY" ]; then
         ALLOY=${TI_ROOT}/alloy
     else
         echo "No alloy dir \$ALLOY and \$TI_ROOT not defined. Exiting."
-        exit
+        exit 1
     fi
 fi
 
@@ -132,7 +128,7 @@ if [ $include_modules ]; then
             TI_MODULES=${TI_ROOT}/titanium_modules
         else
             echo "No titanium_modules dir \$TI_MODULES and \$TI_ROOT not defined. Exiting."
-            exit
+            exit 1
         fi
     fi
     if [ ! "$APPC_MODULES" ]; then
@@ -140,7 +136,7 @@ if [ $include_modules ]; then
             APPC_MODULES=${TI_ROOT}/appc_modules
         else
             echo "No titanium_modules dir \$TI_MODULES and \$TI_ROOT not defined. Exiting."
-            exit
+            exit 1
         fi
     fi
     module_dirs="$TI_MODULES/map $TI_MODULES/facebook/mobile/apidoc $APPC_MODULES/ti.nfc/apidoc"
@@ -149,16 +145,10 @@ fi
 python ${TI_DOCS}/docgen.py -f jsduck -o ./build $module_dirs
 python ./guides_parser.py --input "${guidesdir}/toc.xml" --output "./build/guides"
 
-if [ $no_thumbnails ]; then
-    cp $VIDEO_LIST $PROCESSED_VIDEO_LIST
-else
-    python ./video_thumbs.py --input $VIDEO_LIST --output $PROCESSED_VIDEO_LIST
-    if [ $? -ne 0 ]; then
-        echo "Failed to retrieve video thumbnails. "
-        echo "Try again or run with -t to use generic thumbnails."
-        exit
-    fi
-fi
+# Assume video list is pre-processed, with real thumbnails 
+cp $VIDEO_LIST $PROCESSED_VIDEO_LIST
+# After updating video list, add thumbnails manually using the video_thumbs command: 
+#    python ./video_thumbs.py --input $VIDEO_LIST --output $PROCESSED_VIDEO_LIST
 
 if [ $production_build ] ; then
     (cd ${JSDUCK}; rake compress)
@@ -167,6 +157,7 @@ else
     compass compile ${JSDUCK}/template/resources/sass
     TEMPLATE=${JSDUCK}/${DEBUG_TEMPLATE}
 fi
+
 ruby ${JSDUCK}/bin/jsduck --template ${TEMPLATE} $seo --output $outdir --config $config $alloyDirs
 cp -r $guidesdir/images "$outdir/images"
 cp -r $guidesdir/attachments "$outdir/attachments"
