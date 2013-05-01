@@ -1,0 +1,234 @@
+---
+name: Modules.Performance
+summary: Add-on module that provides support for Crittercism-powered services.
+description: |
+    The Appcelerator Performance Management module provides hooks to the Crittercism-powered services for
+    real-time crash reporting and app monitoring to capture errors and provide valuable diagnostic
+    information of your mobile application.    
+
+    ### Getting Started
+
+    The Appcelerator Performance Management module is included as part of Appcelerator Studio.
+
+    When creating a new application in Appcelerator Studio, make sure the **Enable Appcelerator
+    Services** checkbox is enabled.
+
+    For a previously created project, open your tiapp.xml file, then click the **Enable Services**
+    button under the *Appcelerator Service* section.
+
+    The code to load and initialize the Crittercism module is automatically injected by Studio when
+    the Performance service is enabled. You should see these lines of code at the top of your `app.js` file:
+
+        var crittercism = require("com.crittercism.ti");
+        crittercism.init();
+
+    Make all subsequent Performance module API calls using the `crittercism` object.
+
+    ### Viewing Performance Reports
+
+    The data collected by the Performance module is displayed on Appcelerator 360.
+
+    Log in to the Appcelerator 360 website, select your app from the **Apps** drop-down menu from
+    the top navigation bar, then click on **Performance** to view the diagnostic information.
+
+    You can also open your `tiapp.xml` (in the GUI view) and click the **Details** link next to the
+    *Performance* item under the *Appcelerator Service* section, which takes you directly to the
+    information.
+
+    ### Capturing Android Logcat Data
+
+    To include Android system log data with your crash reports, you must do the following:
+
+    For Google API Level 15 and earlier, add the following line to the Android manifest section of
+    your `tiapp.xml` file:
+
+        <uses-permission android:name="android.permission.READ_LOGS"/>
+
+    For Google API Level 16 and later, when initializing the module, set config.shouldCollectLogcat
+    to `true` when calling the `init` method.
+
+since: "3.1.0"
+platforms: [android, ipad, iphone]
+extends: Titanium.Module
+
+methods:
+  - name: init
+    summary: Initializes the module.
+    description: |
+        On the Android platform, you can optionally pass in initialization parameters.
+    parameters:
+      - name: appid
+        summary: | 
+            Crittercism App ID found in the `tiapp.xml` file or the Appcelerator Performance dashboard.
+
+            By default, if this parameter is not specified, the module uses the value stored
+            as the `com-crittercism-id` key in the `tiapp.xml` file to initialize the module.
+
+            To get your Crittercism App ID either:
+
+              * Open your `tiapp.xml` file (in the Overview view) and click the **Show ID** link next to
+                the Performance service or look for the `com-crittercism-id` key in the raw view.
+              * Go to the Appcelerator Performance dashboard, select your application and click **Settings**
+                in the left pane.  In the right pane, select the **Basics** tab and locate Crittercism App ID.
+
+        type: String
+        optional: true
+
+      - name: config
+        summary: Android-specific initialization parameters.
+        type: InitCrittercismParams
+        optional: true
+    returns:
+      - type: void
+
+  - name: leaveBreadcrumb
+    summary: |
+        Leaves a breadcrumb trail in your code to get a playback of events leading up to a crash.
+    description: |
+        These breadcrumbs are collected and passed to the Crittercism service.
+        The most recent 100 breadcrumbs are displayed before the crash occurred.
+
+        For more information, see [Getting Started with Breadcrumbs](http://support.crittercism.com/customer/portal/articles/675671-getting-started-with-breadcrumbs).
+    parameters:
+      - name: breadcrumb
+        type: String
+        summary: Up to 140 characters to identify the event or application state.
+
+  - name: setUsername
+    summary: Sets a username to differentiate user metadata for crash reports.
+    description: |
+        Updates only if there has been a change to the username from previous settings.
+
+        For more information, see [Getting Started with Metadata](http://support.crittercism.com/customer/portal/articles/675611-getting-started-with-user-metadata).
+    parameters:
+      - name: username
+        type: String
+        summary: Up to 32 characters to set to identify a user.
+
+  - name: setEmail
+    summary: Sets an e-mail address to differentiate user metdata for crash reports.
+    description: |
+        Updates only if there has been a change to the e-mail address from previous settings.
+
+        For more information, see [Getting Started with Metadata](http://support.crittercism.com/customer/portal/articles/675611-getting-started-with-user-metadata).
+    parameters:
+      - name: email
+        type: String
+        summary: Up to 100 characters to set an e-mail address.
+
+  - name: setMetadata
+    summary: Used to set a single pair of arbitrary user metadata.
+    description: | 
+        The data is stored in a dictionary and displayed on the developer portal
+        when viewing a user profile.
+
+        For more information, see [Getting Started with Metadata](http://support.crittercism.com/customer/portal/articles/675611-getting-started-with-user-metadata).
+    parameters:
+      - name: key
+        type: String
+        summary: Metadata key.
+
+      - name: value
+        type: [String, Number]
+        summary: Metadata value. Can be either an integer or string.
+
+  - name: logHandledException
+    summary: Used to track handled errors.
+    description: |
+        Crittercism limits the logging of handled errors to one per minute. Up to five
+        errors are buffered and are subsequently sent after the one minute limit.
+
+        For more information, see [Getting Started with Handled Exceptions](http://support.crittercism.com/customer/portal/articles/685301-getting-started-with-handled-exceptions).
+    parameters:
+      - name: error
+        type: Error
+        summary: Error to log.
+
+  - name: setOptOutStatus
+    summary: |
+        Sets the users opt-out status from sending **any and all** information to the Crittercism service.
+    parameters:
+      - name: optOutStatus
+        type: Boolean
+        summary: If set to `true`, data is not sent to Crittercism.
+        default: false
+
+  - name: getOptOutStatus
+    summary: Returns `true` if the user opt out to send information to Crittercism else returns `false`.
+    returns:
+      - type: Boolean
+
+  - name: didCrashOnLastAppLoad
+    summary: Returns `true` if the application crashed on the previous session else returns `false`. 
+    returns:
+      - type: Boolean
+
+  - name: getNotificationTitle
+    summary: |
+        Returns a string consisting of the notification title. If not available, returns an empty string.
+    platforms: [android]
+    returns: 
+        - type: String
+
+  - name: getUserUUID
+    summary: Returns a string consisting of the UUID generated by Crittercism for user identification.
+    returns:
+      - type: String
+
+examples:
+  - title: Simple Example
+    example: |
+        Demonstrates how to use the various Performance module APIs.
+
+            // Uses a breadcrumb to track progress through the app
+            crittercism.leaveBreadcrumb("App // someMethod // finishedProcess");
+
+            // Sets the username
+            crittercism.setUsername("TomCritter");
+
+            // Sets the e-mail address
+            crittercism.setEmail("tcritter@crittercism.com");
+
+            // Sets the user state to be tracked by Crittercism when an error occurs
+            crittercism.setMetadata("gameLevel", "5");
+            crittercism.setMetadata("playerID", "9491824");
+
+            // Captures an error
+            try {
+                var err = new Error("My Awesome Caught Error!");
+                throw err
+            } catch (err) {
+                crittercism.logHandledException(err);
+            }
+
+---
+name: InitCrittercismParams
+summary: Arguments to be passed upon intialization of the Crittercism module.
+platforms: [android]
+since: '3.1.0'
+properties:
+  - name: notificationTitle
+    type: String
+    summary: |
+        This parameter determines the title shown on notification alerts sent from Crittercism.
+    default: 'Developer Reply'
+
+  - name: shouldCollectLogcat
+    type: Boolean
+    summary: |
+        If `true`, enables collecting logcat data on Android devices running Google API Level 16
+        (Jelly Bean) and higher.
+
+        For Google API Level 15 and earlier, to collect the logcat data, add the following item in the
+        Android manifest section of your `tiapp.xml` file:
+
+            <uses-permission android:name="android.permission.READ_LOGS"/>
+
+    default: false
+
+---
+name: Error
+summary: |
+    This is a standard JavaScript Error object.  Refer to the
+    [ECMAScript Language Specification Section 15.11](http://www.ecma-international.org/ecma-262/5.1/#sec-15.11)
+    for more information.
