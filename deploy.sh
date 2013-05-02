@@ -5,6 +5,7 @@ PROCESSED_VIDEO_LIST="build/videos.json"
 config="./jsduck.config"
 guidesdir="./htmlguides"
 outdir="./dist/titanium/3.0"
+title="Titanium 3.X - Appcelerator Docs"
 
 progname=$0
 
@@ -14,13 +15,21 @@ usage() {
     echo "  Options:"
     echo "  -c <config_file> (i.e., jsduck_21.config for 2.1 docs build)."
     echo "  -o <optional_project> (currently 'alloy' and 'modules' are supported)"
+    echo "  -g <guides_dir> (defaults to htmlguides)."
+    echo "  -a <addon_guides_dir> Specified add-on guides."
     echo "  -d <output_dir> (defaults to dist/titanium/3.0)."
     echo "  -s  Enable --seo flag to jsduck."
+    echo "  -t <title> Specify title for doc site."
     echo ""
 }
 
-while getopts ":tso:c:d:g:" opt; do
+while getopts ":so:a:c:d:g:t:" opt; do
     case $opt in 
+        a)
+            if [ "$OPTARG" ]; then
+                addon_guidesdir=$OPTARG
+            fi
+            ;;
         c)
             if [ "$OPTARG" ]; then
                 config=$OPTARG
@@ -50,6 +59,11 @@ while getopts ":tso:c:d:g:" opt; do
         s)  
             seo="--seo"
             ;;
+        t) 
+            if [ "$OPTARG" ]; then
+                title="$OPTARG"
+            fi
+            ;;
         \?) 
              echo "Invalid option: -$OPTARG">&2
              usage
@@ -67,12 +81,12 @@ done
 shift $((OPTIND-1))
 
 
-while [ $1 ]; do
-    if [ $1 == "prod" ]; then
+while [ "$1" ]; do
+    if [ "$1" == "prod" ]; then
         production_build="production"
         seo="--seo"
         no_thumbnails=""
-    elif [ $1 == "debug" ]; then
+    elif [ "$1" == "debug" ]; then
         debug_build="debug"
     fi
     shift
@@ -143,6 +157,11 @@ if [ $include_modules ]; then
 fi
 
 python ${TI_DOCS}/docgen.py -f jsduck -o ./build $module_dirs
+
+if [ $addon_guidesdir ]; then
+    python ./guides_merger.py --input "${guidesdir}/toc.xml" --addon "${addon_guidesdir}/toc.xml"  --output "./build/merged_guides"
+    guidesdir="./build/merged_guides"
+fi
 python ./guides_parser.py --input "${guidesdir}/toc.xml" --output "./build/guides"
 
 # Assume video list is pre-processed, with real thumbnails 
@@ -158,7 +177,7 @@ else
     TEMPLATE=${JSDUCK}/${DEBUG_TEMPLATE}
 fi
 
-ruby ${JSDUCK}/bin/jsduck --template ${TEMPLATE} $seo --output $outdir --config $config $alloyDirs
+ruby ${JSDUCK}/bin/jsduck --template ${TEMPLATE} $seo --output $outdir --title "$title" --config $config $alloyDirs 
 cp -r $guidesdir/images "$outdir/images"
 cp -r $guidesdir/attachments "$outdir/attachments"
 cp -r $guidesdir/css/common.css "$outdir/resources/css/common.css"
