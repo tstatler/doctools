@@ -1,39 +1,25 @@
 ---
 name: Modules.Performance
-summary: Add-on module that provides support for Crittercism-powered services.
+summary: Add-on module that provides support for real-time crash reporting and performance monitoring services.
 description: |
     The Appcelerator Performance Management module provides hooks to the Crittercism-powered services for
     real-time crash reporting and app monitoring to capture errors and provide valuable diagnostic
     information of your mobile application.    
 
-    ### Getting Started
-
-    The Appcelerator Performance Management module is included as part of Appcelerator Studio.
-
-    When creating a new application in Appcelerator Studio, make sure the **Enable Appcelerator
-    Services** checkbox is enabled.
-
-    For a previously created project, open your tiapp.xml file, then click the **Enable Services**
-    button under the *Appcelerator Service* section.
-
-    The code to load and initialize the Crittercism module is automatically injected by Studio when
-    the Performance service is enabled. You should see these lines of code at the top of your `app.js` file:
-
-        var crittercism = require("com.crittercism.ti");
-        crittercism.init();
-
-    Make all subsequent Performance module API calls using the `crittercism` object.
+    For information on getting started and usage examples, refer to
+    [Performance guide](http://docs.appcelerator.com/platform/latest/#!/guide/Performance)
 
     ### Viewing Performance Reports
 
-    The data collected by the Performance module is displayed on Appcelerator 360.
+    The data collected by the Performance module is displayed on the Appcelerator Dashboard.
 
-    Log in to the Appcelerator 360 website, select your app from the **Apps** drop-down menu from
+    Log in to [https://dashboard.appcelerator.com], select your app from the **Apps** list in
     the top navigation bar, then click on **Performance** to view the diagnostic information.
 
-    You can also open your `tiapp.xml` (in the GUI view) and click the **Details** link next to the
-    *Performance* item under the *Appcelerator Service* section, which takes you directly to the
-    information.
+    To jump directly to an application's Performance information from Studio:
+
+      1. Open the `tiapp.xml` file and select the **Overview** tab.
+      2. Under **Appcelerator Services**, locate **Performance** and click the **Details** link.
 
     ### Capturing Android Logcat Data
 
@@ -88,7 +74,8 @@ methods:
         These breadcrumbs are collected and passed to the Crittercism service.
         The most recent 100 breadcrumbs are displayed before the crash occurred.
 
-        For more information, see [Getting Started with Breadcrumbs](http://support.crittercism.com/customer/portal/articles/675671-getting-started-with-breadcrumbs).
+        For more information, see
+        [Crittcism Compendium: Getting Started with Breadcrumbs](http://support.crittercism.com/customer/portal/articles/675671-getting-started-with-breadcrumbs).
     parameters:
       - name: breadcrumb
         type: String
@@ -99,7 +86,8 @@ methods:
     description: |
         Updates only if there has been a change to the username from previous settings.
 
-        For more information, see [Getting Started with Metadata](http://support.crittercism.com/customer/portal/articles/675611-getting-started-with-user-metadata).
+        For more information, see
+        [Crittcism Compendium: Getting Started with Metadata](http://support.crittercism.com/customer/portal/articles/675611-getting-started-with-user-metadata).
     parameters:
       - name: username
         type: String
@@ -110,7 +98,8 @@ methods:
     description: |
         Updates only if there has been a change to the e-mail address from previous settings.
 
-        For more information, see [Getting Started with Metadata](http://support.crittercism.com/customer/portal/articles/675611-getting-started-with-user-metadata).
+        For more information, see
+        [Crittcism Compendium: Getting Started with Metadata](http://support.crittercism.com/customer/portal/articles/675611-getting-started-with-user-metadata).
     parameters:
       - name: email
         type: String
@@ -122,7 +111,8 @@ methods:
         The data is stored in a dictionary and displayed on the developer portal
         when viewing a user profile.
 
-        For more information, see [Getting Started with Metadata](http://support.crittercism.com/customer/portal/articles/675611-getting-started-with-user-metadata).
+        For more information, see
+        [Crittcism Compendium: Getting Started with Metadata](http://support.crittercism.com/customer/portal/articles/675611-getting-started-with-user-metadata).
     parameters:
       - name: key
         type: String
@@ -138,7 +128,8 @@ methods:
         Crittercism limits the logging of handled errors to one per minute. Up to five
         errors are buffered and are subsequently sent after the one minute limit.
 
-        For more information, see [Getting Started with Handled Exceptions](http://support.crittercism.com/customer/portal/articles/685301-getting-started-with-handled-exceptions).
+        For more information, see
+        [Crittcism Compendium: Getting Started with Handled Exceptions](http://support.crittercism.com/customer/portal/articles/685301-getting-started-with-handled-exceptions).
     parameters:
       - name: error
         type: Error
