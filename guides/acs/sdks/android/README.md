@@ -9,10 +9,10 @@ Grab the ACS Android SDK from <a href="https://github.com/cocoafish/cocoafish-an
 
 <p>Create an ACS app from the <a href="/apps" target="_blank">Apps page</a>.&nbsp;&nbsp;Then in eclipse(assuming you are using eclipse as developing IDE), create an Android project and add the <a href="https://github.com/cocoafish/cocoafish-android-sdk/blob/master/cocoafish/bin/cocoafish-1.0.jar" target="_blank">cocoafish-1.0.jar</a> from <code>cocoafish-android-sdk/cocoafish/bin/</code> to the lib folder of your project, then set it as a referenced in the build path.</p>
 <p>The SDK also depends on HttpClient and OAuth libraries, so you need to also download the followling jars and set them all into the project build classpath:</p>
-<a href="https://github.com/cocoafish/cocoafish-android-sdk/blob/master/examples/Demo/lib/apache-mime4j-0.6.jar" target="_blank">apache-mime4j-0.6.jar</a><br/>
-<a href="https://github.com/cocoafish/cocoafish-android-sdk/blob/master/examples/Demo/lib/httpmime-4.0.1.jar" target="_blank">httpmime-4.0.1.jar</a><br/>
-<a href="https://github.com/cocoafish/cocoafish-android-sdk/blob/master/examples/Demo/lib/signpost-core-1.2.1.1.jar" target="_blank">signpost-core-1.2.1.1.jar</a><br/>
-<a href="https://github.com/cocoafish/cocoafish-android-sdk/blob/master/examples/Demo/lib/signpost-commonshttp4-1.2.1.1.jar" target="_blank">signpost-commonshttp4-1.2.1.1.jar</a><br/>
+<a href="https://github.com/cocoafish/cocoafish-android-sdk/blob/master/examples/Demo/libs/apache-mime4j-0.6.jar" target="_blank">apache-mime4j-0.6.jar</a><br/>
+<a href="https://github.com/cocoafish/cocoafish-android-sdk/blob/master/examples/Demo/libs/httpmime-4.0.1.jar" target="_blank">httpmime-4.0.1.jar</a><br/>
+<a href="https://github.com/cocoafish/cocoafish-android-sdk/blob/master/examples/Demo/libs/signpost-core-1.2.1.1.jar" target="_blank">signpost-core-1.2.1.1.jar</a><br/>
+<a href="https://github.com/cocoafish/cocoafish-android-sdk/blob/master/examples/Demo/libs/signpost-commonshttp4-1.2.1.1.jar" target="_blank">signpost-commonshttp4-1.2.1.1.jar</a><br/>
 
 <h2>Initialization & Authorization</h2>
 
@@ -205,7 +205,7 @@ public static void getDeviceTokenAsnyc(final Context androidContext, final Strin
 
 <p>The difference between these two methods is the <code>getDeviceToken</code> sends request and get device token synchronously, where the <code>getDeviceTokenAsnyc</code> does it asynchronously.</p>
 
-<p>Once you get the device token, you may proceed to subscribe the device by using <a href="/docs/api/v1/push_notifications/subscribe" target="_blank">subscribe api</a> of Appcelerator Cloud Services, and also to start push notification service to get the android device ready to receive push notifications.</p>
+<p>Once you get the device token, you may proceed to subscribe the device by using the {@link PushNotifications#subscribe} API. This starts the push notification service and gets the android device ready to receive push notifications.</p>
 
 <p>Note: once device token is successfully acquired, it will be stored on the device's local storage, and next time when getting device token, it will return from reading local storage instead of communicating with server. So it is safe to request device token multiple times if necessary.</p>
 

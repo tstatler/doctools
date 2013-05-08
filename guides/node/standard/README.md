@@ -55,7 +55,7 @@ cloud, the migration process is simple:
 
 1.  Login to Node.ACS by running the following command:
    
-        $ acs login
+        acs login
      
     When prompted, enter your account credentials.
 
@@ -72,7 +72,7 @@ cloud, the migration process is simple:
 
 3.  Publish the application by running the following command:
 
-        command `$ acs publish`  
+        acs publish
 
     If prompted to create a new Node.ACS app before continuing, answer "yes".
 

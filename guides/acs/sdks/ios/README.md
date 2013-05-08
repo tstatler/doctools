@@ -454,7 +454,7 @@ in the paramDict:
     [params setObject:[NSNumber numberWithDouble:0.5] forKey:@"jpeg_compression"]; // (0 < jpeg compression <= 1), 1 is the highest quality.
     
 
-You can also choose to [upload a photo synchronously](/docs/photosizes#sync)
+You can also choose to [upload a photo synchronously](#!/guide/photosizes#sync)
 and provide the synchronous parameters in the paramDict.
 
 ## Photo Downloads
@@ -508,7 +508,7 @@ If you created photo using default sizes, the photo sizes are:
       @"original"
     
 
-If you created photo using [custom sizes](/docs/photosizes#custom), the photo
+If you created photo using [custom sizes](#!/guide/photosizes#custom), the photo
 sizes are the name of your custom sizes.
 
 ## Troubleshooting & Common Errors

@@ -3,6 +3,8 @@
 ACS admin access allows application admin users to execute some batch
 operations.
 
+<!-- 
+
 ## Admin Batch Delete
 
 Admin Batch Delete allow admin users to delete multiple ACS objects in one
@@ -37,6 +39,8 @@ delete operations:
   * {@link Posts}
   * {@link Statuses}
   * {@link Users}
+
+-->
 
 ## Admin Drop Custom Collection
 

@@ -11,6 +11,12 @@
                   "description": "This introduction to Appcelerator Cloud Services explains how you can get started."
               },
               {
+                  "name": "rest",
+                  "url": "guides/acs/rest",
+                  "title": "Using the REST API",
+                  "description": "Basics of the ACS REST API."
+              },
+              {
                   "name": "acs_authentication",
                   "url": "guides/acs/acs_authentication",
                   "title": "Authentication",

@@ -3,19 +3,19 @@
 
 Appcelerator Node.ACS enables you to develop and publish Node.js applications
 to the cloud. Node.ACS includes a simple command-line-interface and an MVC
-framework that makes it easy for both novice and experienced node.js
+framework that makes it easy for both novice and experienced Node.js
 developers to create apps and services. With Node.ACS, you can:
 
   * Build custom services to extend the existing Appcelerator Cloud Services (ACS)
-  * Host your existing node.js app/service on the Appcelerator Cloud
+  * Host your existing Node.js application or service in the Appcelerator Cloud
   * Create Node.ACS apps directly from Titanium Studio
-  * Develop a Node.ACS service for your Titanium apps using the same development language (Javascript)
+  * Develop a Node.ACS service for your Titanium apps using the same development language (JavaScript)
 
 This quickstart will guide you through the process of creating a simple Chat
 Room Node.ACS app using the built-in [MVC framework](#!/guide/mvc). It is a
 simple tutorial to help you get started with Node.ACS.
 
-If you just want to deploy an existing node.js app, see [Standard Node Applications](#!/guide/standard).
+If you just want to deploy an existing Node.js app, see [Standard Node Applications](#!/guide/standard).
 
 **Note:** Node.ACS is currently in Developer Preview state, so users may experience some instability.
 
@@ -23,75 +23,90 @@ If you just want to deploy an existing node.js app, see [Standard Node Applicati
 
 ## Getting Ready
 
-1.  Node.js & npm
+To use Node.ACS, you'll need to install Node.js and the Node.ACS command-line interface,
+**acs**. If you are using Studio, it should guide you through the process of installing
+these components.
 
-2.  Node.ACS CLI Install
+If you are not using Studio, or want to install the components manually, follow these
+steps to install Node and **acs**:
 
-    *   Download and install [Node.js](http://nodejs.org) (min. version 0.8.13). To check
-        if you have Node installed, run the following command: 
-            
-            node -v
+1.  Download and install Node and npm.  To check if you have Node installed, run the following command: 
 
-        This should return the current Node version, if Node is installed.
+        node -v
 
-    *   Install npm: As of version 0.6.3, npm is installed automatically. If you still need npm go to [npm](https://github.com/isaacs/npm/).
+    This should return the current Node version, if Node is installed. The Node.ACS CLI requires
+    Node version 0.8.13 or later.
 
-        The Node.ACS CLI is the command-line utility for creating and administering
-        Node.ACS based applications and services. To install it using **npm** run the
-        following command:  
-    
-            $ sudo npm install -g acs
+    If you need to install Node, follow the instructions on the [Node.js web site](http://nodejs.org).
 
+    As of Node version 0.6.3, npm is installed automatically. Should you need to install
+    it, get it from the [npm github repo](https://github.com/isaacs/npm/).
+
+2.  Use **npm** to install the **acs** command:
+
+        sudo npm install -g acs
+
+    The Node.ACS CLI is the command-line utility for creating and administering
+    Node.ACS based applications and services. 
+        
 Done. It's that easy!
 
-## First Node.ACS App   Build and publish an app in a minute
+## Create Your First Node.ACS App   
 
 **1\. Login with appcelerator credentials**  
-Run command `$ acs login` and follow the prompt to login to Node.ACS with your
-appcelerator account. If you do not have an Appcelerator account, create one
-[here](https://my.appcelerator.com/auth/signup).
 
+To work with Node.ACS applications, you must authenticate youself with the ACS cloud. Run
+the following command:
 
+    acs login
+
+Follow the prompts to login to Node.ACS with your
+Appcelerator account. If you do not have an Appcelerator account, you can 
+[sign up for a free account](https://my.appcelerator.com/auth/signup).
 
 **2\. Create a new application**  
-Run command `$ acs new MyFirstApp` to create a new app using the Node.ACS MVC
-framework by default.
 
+To create an application: 
 
+    acs new MyFirstApp
+    
+This creates a new application in the MyFirstApp folder. By default, the new application
+is configured to use the Node.ACS MVC framework.
 
-**3\. Publish application to cloud**  
-Change working directory to the "MyFirstApp" directory(the app's root
-directory), and run command `$ acs publish` to publish the app to the cloud.
+**3\. Publish your application to the cloud**  
 
+Change working directory to the `MyFirstApp` directory (the app's root
+directory), and run the **acs publish** command to publish the app to the cloud:
 
+    cd MyFirstApp
+    acs publish
 
 Congratulations! Now you've successfully published your first Node.ACS app to
 the cloud!  
+
 Open a web browser and enter the URL you get from step #3, you'll get a big
 welcome from Node.ACS!
 
-  
 
-## The Chat Room App   Let's build something real
+## The Chat Room App 
 
 Let's add more features to the app to make it a public chat room. The app will
-be built with [Node.ACS MVC framework](/guides/mvc) and will use built-in
-websocket for establishing a connection between client(web browser) and
-server, so that each post message will be "pushed" to all connecting clients.
-You can just copy and paste the code snippets below in the corresponding
+be built using the [Node.ACS MVC framework](#!/guide/mvc) and use the built-in
+websocket server for establishing a connection between the client (web browser) and
+server, so that each post message can be "pushed" to all connected clients.
+
+You can just copy and paste the code snippets below into the corresponding
 project files.
 
 **Enough talking, let's start coding!**
 
 ### Controller
 
-The controller code is invoked whenever a certain http request comes in. All
-controller files should be placed in "controllers" directory in the app's
+The controller code is invoked whenever a corresponding HTTP request comes in. All
+controller files should be placed in `controllers` directory in the app's
 project.
-
   
 **/controllers/application.js**
-    
     
     // render 'chatroom.ejs'
     function chatroom(req, res) {
@@ -99,14 +114,14 @@ project.
     }
     
 
-This controller will be configured(in `config.json`) to respond to the http
+This controller will be configured (in `config.json`) to respond to an HTTP
 GET request with URL "/", and will return the chatroom web page.
 
 ### Websocket event handler
 
-Websocket event handler is the function which will be invoked whenever a
-certain websocket event is emitted by client. All websocket event handler
-files should be placed in "websockets" directory in the app's project.
+The websocket event handler is invoked whenever matching websocket events are received
+from a client.  All websocket event handler files should be placed in the `websockets`
+directory inside the application directory.
 
   
 **/websockets/chatroom.js**
@@ -117,21 +132,18 @@ files should be placed in "websockets" directory in the app's project.
       socket.broadcast.emit('message', data);
     }
     
-
-This event handler will be configured(in `config.json`) to respond to a
-certain event to broadcast received chat message from a client to all other
+This event handler will be configured (in `config.json`) to respond to a
+certain event to broadcast a received chat message from a client to all other
 chat clients.
 
 ### config.json
 
-`config.json` contains all configurations of route mappings, filters and
-websocket event handlers.  
-It is the key configuration file of the application for binding requests to
-handlers(functions).
+`config.json` contains configuration sections for route mappings, filters and
+websocket event handlers. This configuration file binds requests to
+handlers (functions).
 
   
 **/config.json**
-    
     
     {
       "routes":
@@ -145,15 +157,15 @@ handlers(functions).
     }
     
 
-This `config.json` defines the URL "/" for GET method routes to function
-`chatroom` in `application.js` file; it also defines the function
-`receiveMessage` in `chatroom.js` to listen on "newChatMsg" event that emitted
-by clients.
+In this case, `config.json` defines a route for the GET method on path "/", and binds
+this route to the function `chatroom` in `application.js`; it also defines the function
+`receiveMessage` in `chatroom.js` to be invoked whenever a "newChatMsg" event is received
+from a client.
 
 ### Views
 
 Views are where your user interface (UI) is defined. All views files reside in
-"views" directory in the app project. Node.ACS uses EJS as view engine by
+"views" directory in the application's project directory. Node.ACS uses EJS as view engine by
 default.
 
 **/views/chatroom.ejs**
@@ -206,9 +218,10 @@ default.
 
 ### Static Files
 
-A Node.ACS application uses the "public" directory as the static file's root,
-you can put all your static files(such as stylesheets, image assets and
-scripts) in that directory with any dir depth/structure you'd like.
+A Node.ACS application uses the `public` directory as the root for static files.
+You can place static files such as stylesheets, image assets and
+client-side scripts in that directory. You can create any directory structure you need to
+under the `public` directory.
 
   
 **/public/style.css**
@@ -274,23 +287,30 @@ scripts) in that directory with any dir depth/structure you'd like.
 
 **You're done! Now let's run it and publish to the cloud!**
 
-Change the working directory to the app's directory, run command `$ acs run`
-to start the server locally.  
+Change to the the working directory to the app's directory and use the **acs run** command
+to start the server locally.:
+
+    acs run
+
 Open a web browser and visit http://localhost:8080 to start chatting. Open a
-different browser window and type a random message and hit “send”. You will
-see the message showing up in the first window!
+different browser window and type a random message and click **send**. You will
+see the message show up in the first window!
 
 Now let's publish the app to Node.ACS cloud!  
   
 First, replace the 'http://localhost:8080' in file `/views/chatroom.ejs` on
-line 8 with your app's URL that returned by 'acs publish' command
-previously(e.g. http://xxxx.cloudapp.appcelerator.com). This will set the chat
+line 8 with your app's URL as returned by 'acs publish' command
+(for example, <code>http://<i>&ltApp_ID&gt;</i>.cloudapp.appcelerator.com</code>). This will set the chat
 client connection to the server running in the cloud instead of your local
 machine.  
-Second, since you have already published this app before (step #3), this time
-you have to use the `\--force` option to overwrite the previous deployment.  
-Run the command `$ acs publish --force`, open web browser and visit the app in
-the cloud with the URL the command returns.  
+
+Second, since you have already published this app before (step #3), 
+you have to use the `--force` option to overwrite the previous deployment:
+
+    acs publish --force
+
+Once again, the **acs publish** command returns the URL for your application.
+Open a web browser and enter the application's URL to visit the app in the cloud.
 
 **That's it! You made it! Enjoy!**
 

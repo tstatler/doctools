@@ -8,6 +8,10 @@ methods:
         To log a user in using an external account, see {@link SocialIntegrations#loginexternal External Account Login}.
 
         To log a user out, see {@link Users#logout logout}.
+
+        User login sessions expire after they have been unused for a period of time.
+        By default, the expiration period is six months. You can configure the user session 
+        expiration period in the application management console.
     url: users/login.json
     http-method: post
 

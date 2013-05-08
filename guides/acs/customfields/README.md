@@ -157,18 +157,18 @@ first_name. it will only query against the predefined `first_name` field.
 The following Appcelerator Cloud Services objects allow you to add one or more
 extra data fields during `create` and `update` actions:
 
-  * Chats: [create](/docs/api/v1/chats/create)
-  * Checkins: [create](/docs/api/v1/checkins/create)
-  * Collections: [create](/docs/api/v1/collections/create) and [update](/docs/api/v1/collections/update)
-  * Events: [create](/docs/api/v1/events/create) and [update](/docs/api/v1/events/update)
-  * Files: [create](/docs/api/v1/files/create) and [update](/docs/api/v1/files/update)
-  * Messages: [create](/docs/api/v1/messages/create)
-  * Photos: [create](/docs/api/v1/photos/create) and [update](/docs/api/v1/photos/update)
-  * Places: [create](/docs/api/v1/places/create) and [update](/docs/api/v1/places/update)
-  * Posts: [create](/docs/api/v1/posts/create) and [update](/docs/api/v1/posts/update)
-  * Reviews: [create](/docs/api/v1/reviews/create) and [update](/docs/api/v1/reviews/update)
-  * Statuses: [create](/docs/api/v1/statuses/create)
-  * Users: [create](/docs/api/v1/users/create) and [update](/docs/api/v1/users/update)
+  * {@link Chats#create Chats.create}
+  * {@link Checkins#create}
+  * {@link PhotoCollections#create} and {@link PhotoCollections#update update}
+  * {@link Events#create} and {@link Events#update update}
+  * {@link Files#create} and {@link Files#update update}
+  * {@link Messages#create}
+  * {@link Photos#create} and {@link Photos#update update}
+  * {@link Places#create} and {@link Places#update update} 
+  * {@link Posts#create} and {@link Posts#update}
+  * {@link Reviews#create} and {@link Reviews#update update}
+  * {@link Statuses#create}
+  * {@link Users#create} and {@link Users#update update}
 
 ##  iOS
 

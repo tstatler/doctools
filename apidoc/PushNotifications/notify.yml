@@ -24,7 +24,7 @@ methods:
             If this parameter is specified (regardless of the parameter's value), 
             push notifications are sent to any of the user's {@link Friends} who are 
             subscribed to the identified channel. 
-        type: *
+        type: Any
       
       - name: to_ids
         description: |
@@ -59,6 +59,7 @@ methods:
             Note: For Android app, there are 3 more predefined keywords you can use,
             please refer to Push Notifications in the [Android SDK guide](#!/guide/android) for more
             details.
+        type: [String, Object]
 
     examples:
       - platform: titanium

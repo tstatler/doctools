@@ -18,7 +18,7 @@ prefixed, if you wish to perform your own custom search, please use query API.
 ## Query
 
 Query provides an interface to apply DB query constrains on predefined fields
-as well as [custom fields](/docs/customfields). When no parameters are
+as well as [custom fields](#!/guide/customfields). When no parameters are
 provided, query will simply return all objects with default pagination. The
 following is a list of parameters supported.
 

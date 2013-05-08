@@ -3,33 +3,32 @@
 ## Step 1. Register Your App with Appcelerator Cloud Services
 
 Using the Appcelerator Cloud Services API to store and retrieve data for your
-app is easy. First, create a cloud app on the [Apps
-page](https://my.appcelerator.com/apps). If you would like to use Appcelerator
-Cloud Services in your existing Titanium app, you can simply select 'Enable
-Cloud Services'. Otherwise, select "Create a New Cloud App" to specify the app
+app is easy. 
+
+First, create a cloud app on the [My Apps page](https://my.appcelerator.com/apps). 
+Click **Create a New Cloud App** and specify the app
 name and description. A unique OAuth Consumer Key,OAuth Secret, and App Key
-will be automatically generated and assigned to the app. After creating an
-app, you can click on 'Manage Cloud App' to goto the Cloud App Management
-page.
+will be automatically generated and assigned to the app. 
 
-## Step 2. Titanium Integration
+If you are using Studio, you can add ACS to an existing Titanium app by
+opening the `tiapp.xml` file and selecting **Enable Cloud Services**. This creates a 
+new Cloud application and adds its URL and app key to the Titanium project.
 
-Titanium 2.0 and above provide full integration with Appcelerator Cloud
-Services, please refer to [Titanium Appcelerator Cloud Services integration](h
-ttp://docs.appcelerator.com/titanium/latest/#!/guide/Integrating_with_Appceler
-ator_Cloud_Services) for more information.
+After creating an app either way, you can click on **Manage Cloud App** on
+the My Apps page to manage your existing application.
 
-## Step 3. Use Titanium, Appcelerator Cloud Services API or SDK in Your Own
-App
+## Step 2. Use the Appcelerator Cloud Services API in Your App
 
 Appcelerator Cloud Services provides methods for creating, managing, and
 accessing different types of data in your app, such as
-[Users](/docs/api/v1/users/info), [Places](/docs/api/v1/places/info), and
-[Photos](/docs/api/v1/photos/info) over HTTP or HTTPS. Checkout the [Titanium]
-(http://docs.appcelerator.com/titanium/2.0/index.html#!/guide/Integrating_with
-_Appcelerator_Cloud_Services), [REST API](/docs/rest), [iOS SDK](/docs/ios),
-[Javascript SDK](/docs/javascript), [Android SDK](/docs/android) and
-[ActionScript 3 SDK](/docs/actionscript3) documentation to help you get
+{@link Users}, {@link Places}, and {@link Photos} over HTTP or HTTPS. 
+
+You can integrate ACS into your application using the REST API, the Titanium SDK, 
+or the ACS native iOS and Android SDKs.
+
+Check out the [REST API](#!/guide/rest), 
+[Titanium SDK](#!/guide/titanium), [iOS SDK](#!/guide/ios),
+and [Android SDK](#!/guide/android) documentation to help you get
 started.  
   
 The [iOS SDK]( https://github.com/cocoafish/cocoafish-ios-sdk) comes with a
@@ -37,16 +36,16 @@ sample app. Open `samples/DemoApp/Demo.xcodeproj` in XCode, fill in your App
 key DemoDelegate.m, then build and run the demo app. This gives you a basic
 checkin app showing the place you added in the previous step.
 
-## Step 4. Authentication
+## Step 3. Authentication
 
 Your app must prove that it is allowed to talk to Appcelerator Cloud Services.
 This keeps your data secure by preventing anyone from making requests to
 Appcelerator Cloud Services that impersonate your app. the App Key must be
 used in all API calls made from your app to Appcelerator Cloud Services. See
-[Authentication](/docs/authentication) for more details about adding and using
+[Authentication](#!/guide/acs_authentication) for more details about adding and using
 authentication in your app.
 
-## Step 5. Manage Your App
+## Step 4. Manage Your App
 
 Data can be added to your app through Titanium, REST API, SDKs, or from the
 Appcelerator Cloud Services App Management Web Console. As the administrator
