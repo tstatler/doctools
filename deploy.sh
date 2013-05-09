@@ -128,12 +128,8 @@ if [ ! "$ALLOY" ]; then
 fi
 
 if [ $include_alloy ]; then
-    alloyDirs="${ALLOY}/alloy/builtins ${ALLOY}/alloy/lib ${ALLOY}/docs/apidoc"
-    for D in $ALLOY/widgets/*; do
-        if [[ -d $D ]]; then
-            alloyDirs+=" $D/controllers/"
-        fi
-    done
+    alloyDirs="${ALLOY}/alloy/builtins ${ALLOY}/alloy/lib ${ALLOY}/docs/apidoc "
+    alloyDirs+=$(find $ALLOY/widgets -type d -name controllers)
 fi
 
 if [ $include_modules ]; then
@@ -153,7 +149,7 @@ if [ $include_modules ]; then
             exit 1
         fi
     fi
-    module_dirs="$TI_MODULES/map/mobile/apidoc $TI_MODULES/facebook/mobile/apidoc $APPC_MODULES/ti.nfc/apidoc"
+    module_dirs=$(find $TI_MODULES -type d -name apidoc;find $APPC_MODULES -type d -name apidoc)
 fi
 
 python ${TI_DOCS}/docgen.py -f jsduck -o ./build $module_dirs
