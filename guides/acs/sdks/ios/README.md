@@ -38,7 +38,7 @@ change we made to the ASIHTTPRequest in our copy is in `ASIHttpRequest.m`:
     
 The ACS API server returns HTTP response code `401` in a number
 of different error situations. However, ASIHttpRequest interprets all `401`
-responses as "Authentication Needed." This can be confusing if you want to
+responses as Authentication Needed. This can be confusing if you want to
 show users the exact error that has occurred. For instance: Invalid user
 email/password, invalid oauth token. We commented out the above line to let
 the server error message to pass through.  
@@ -56,14 +56,18 @@ same to let server authentication error message pass through.
     YAJL.framework
     AssetsLibrary.framework
     
-There are two copies of YAJL.framework under `cocoafish-ios-sdk/src/`,one copy
-is under cocoafish-ios-sdk/src/YAJL.framework, another is under cocoafish-ios-
-sdk/src/ARMv7s-YAJL-framework. We suggest that you add cocoafish-ios-sdk/src
-/ARMv7s-YAJL-framework to your project, which is the newest version YAJL
-framework for ARMv7s. If you get any errors when using ARMv7s-YAJL-framework,
-please switch to the older version YAJL framework which is located in
-cocoafish-ios-sdk/src/YAJL.framework, or you can find it at
-<https://github.com/gabriel/yajl-objc>.  
+There are two copies of `YAJL.framework` under `cocoafish-ios-sdk/src/`:
+
+    cocoafish-ios-sdk/src/YAJL.framework
+    cocoafish-ios-sdk/src/ARMv7s-YAJL-framework
+    
+We suggest that you add `ARMv7s-YAJL-framework` to your project, which is the newest 
+version of the YAJL framework, for ARMv7s. If you get any errors when using
+`ARMv7s-YAJL-framework`, please switch to the older version YAJL framework 
+(`cocoafish-ios-sdk/src/YAJL.framework`). The older version of the YAJL framework
+is also availabe from the following github repo:
+
+*   <https://github.com/gabriel/yajl-objc>. 
   
 {@img ios2.png}  
   
@@ -118,44 +122,43 @@ project.
 The Cocoafish iOS SDK currently uses the Facebook SDK version 3.1, which only
 provides a framework. To use this framework, you must add it to your Xcode
 project:  
-a. In Xcode with your project open, and your target selected go to the "Build
-Phases" tab and expand the "Link Binary With Libraries" item.  
-b. Click the "+" button which located at the bottom of the "Link Binary With
-Libraries" section.  
-c. In the "Choose frameworks and libraries to add:" click the "Add Other..."
-button.  
-d. Select the folder: cocoafish-ios-sdk/src/FacebookSDK.framework
+a. In Xcode with your project open, and your target selected go to the **Build
+Phases** tab and expand the **Link Binary With Libraries** item.  
+b. Click the **Add** button (+) located at the bottom of the **Link Binary With
+Libraries** section.  
+c. In the **Choose frameworks and libraries to add:** click **Add Other**.
+d. Select the folder: `cocoafish-ios-sdk/src/FacebookSDK.framework`.
 
-4\. Add additional iOS frameworks Some additional frameworks must be linked in
+4\. Add additional iOS frameworks. Some additional frameworks must be linked in
 your Xcode project.  
-a. In Xcode with your project open, and your target selected go to the "Build
-Phases" tab and expand the "Link Binary With Libraries" item.  
-b. Click the "+" button which located at the bottom of the "Link Binary With
-Libraries" section.  
-c. Select Accounts.framework, AdSupport.framework, and Social.framework and
-click the "Add" button.
+a. In Xcode with your project open, and your target selected go to the **Build
+Phases** tab and expand the **Link Binary With Libraries** item.  
+b. Click the **Add** button (+) located at the bottom of the **Link Binary With
+Libraries** section.  
+c. Select `Accounts.framework`, `AdSupport.framework`, and `Social.framework` and
+click the **Add** button.
 
-5\. Add SQLite dynamic linked library to your Xcode project  
-a. In Xcode with your project open, and your project selected go to the "Build
-Settings" tab and expand the "Linking" item  
-b. Add the flag "-lsqlite3.0" to "Other Linker Flags" item.
+5\. Add the SQLite dynamic linked library to your Xcode project.
+a. In Xcode with your project open, and your project selected go to the **Build
+Settings** tab and expand the **Linking** item  
+b. Add the flag `-lsqlite3.0` to the **Other Linker Flags** item.
 
-6\. Add two Facebook bundles to your project  
-Drag the two files to your project navigator pane to add them to your project:  
-a. cocoafish-ios-
-sdk/src/FacebookSDK.framework/Resources/FacebookSDKResources.bundle  
-b. cocoafish-ios-
-sdk/src/FacebookSDK.framework/Resources/FBUserSettingsViewResources.bundle
+6\. Add two Facebook bundles to your project .
+Drag the following two files to your project navigator pane to add them to your project:  
+
+    cocoafish-ios-sdk/src/FacebookSDK.framework/Resources/FacebookSDKResources.bundle  
+    cocoafish-ios-sdk/src/FacebookSDK.framework/Resources/FBUserSettingsViewResources.bundle
 
 7\. Add the Facebook SDK Header files to your project  
-Drag the folder to your project navigator pane to add it to your project:  
-cocoafish-ios-sdk/src/FBConnect
+Drag the following folder to your project navigator pane to add it to your project:  
 
-8\. Add the facebook id to your app's plist under `URL types`.
+    cocoafish-ios-sdk/src/FBConnect
+
+8\. Add the facebook ID to your app's `Info.plist` file under `URL types`.
 
 {@img facebook_ios_setting.png}
 
-9\. Add the following code to your AppDelegate.m
+9\. Add the following code to your `AppDelegate.m` file:
     
     // pre 4.2
     - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
@@ -173,7 +176,7 @@ cocoafish-ios-sdk/src/FBConnect
 
 ### Provisioning your Device for specialized Development
 
-Apple push notification does not work on simulators. Please follow [Apple's in
+Apple push notifications do **not** work on simulators. Please follow [Apple's in
 structions](https://developer.apple.com/library/ios/#documentation/NetworkingI
 nternet/Conceptual/RemoteNotificationsPG/CommunicatingWIthAPS/CommunicatingWIt
 hAPS.html) to configure your device if you haven't done it.
@@ -182,36 +185,36 @@ hAPS.html) to configure your device if you haven't done it.
 
 Logging into the [iOS Provisioning
 Portal](https://developer.apple.com/ios/manage/overview/index.action). Go to
-the "App IDs" section, create a new App or select an existing app, and click
-"Configure". Make sure to log in to Apple's developer site as Team Agent to
+the **App IDs** section, create a new App or select an existing app, and click
+**Configure**. Make sure to log in to Apple's developer site as Team Agent to
 access team provisioning profiles.  
   
 {@img ios_push.png}  
   
-Check the "Enable for Apple Push Notification service" checkbox. Next, click
-"Configure" to walk through the Apple Certificate Assistant wizard. Finally,
+Check the **Enable for Apple Push Notification service** checkbox. Next, click
+**Configure** to walk through the Apple Certificate Assistant wizard. Finally,
 click the download button to get the file.  
 {@img ios_push2.png}  
   
 Create a development certificate for development purpose. You will need to
 create a production certificate before you release your app to the app store.
 Double click on the downloaded app_developer_identity.cer to install it in
-your login keychain. Once it's installed, you can see it in the "My
-Certificates" category.  
+your login keychain. Once it's installed, you can see it in the **My
+Certificates** category.  
   
 {@img ios_push3.png}  
   
-If your certificate doesn't show up in the "My Certificates" Category. Try to
-drag the app_developer_identity.cer file to keychain under "Certificates"
+If your certificate doesn't show up in the **My Certificates** Category. Try to
+drag the app_developer_identity.cer file to keychain under **Certificates**
 Category. You will not be able to export the certificate until it shows up in
-the "My Certificates" Category.  
-Next, select "My Certificate" Category and select the newly installed push
-certificate. Once selected, go to the "File" menu and select "Export Items..."
+the **My Certificates** Category.  
+Next, select the **My Certificate** Category and select the newly installed push
+certificate. Once selected, go to the **File** menu and select **Export Items**.
 to save it as a .p12 file.  
   
 {@img ios_push4.png}  
   
-Now you can go to the "App Settings" in your ACS App console and
+Now you can go to the **App Settings** in your ACS App console and
 upload your .p12 file. Wait till the upload is finished and ACS
 verifies that upload is successful and the certificate file is valid. You may
 want to submit your certificate file password along with the certificate file
@@ -230,8 +233,8 @@ and install ad-hoc release on your device.
 
 You'll need to regenerate your provisioning profile if you just enabled push
 notifications for your app. In [the iOS Provisioning
-Portal](https://developer.apple.com/ios/manage/overview/index.action), head
-over to "Provisioning" and find the profile you've been using. To ensure that
+Portal](https://developer.apple.com/ios/manage/overview/index.action), click
+**Provisioning** and find the profile you've been using. To ensure that
 the profile gets regenerated, edit a field and set it back to its original
 value if necessary. Once that's done, download the new profile and install it
 in Xcode as usual.
@@ -267,8 +270,8 @@ in method didFinishLaunchingWithOptions:
     }
     
 
-Also add the following code to yourAppDelegate.m to receive device token and
-pass to ACS
+Also add the following code to `yourAppDelegate.m` to receive a device token to
+pass to ACS:
 
     
     
@@ -285,25 +288,25 @@ pass to ACS
     }
     
 
-Then refer to [Push Notification Docs](api/v1/push_notifications/subscribe) to
+Then refer to the {@link PushNotifications} API reference to
 see how to subscribe and send push notifications. You can also log on to your
 ACS App Console to send push notifications to all your
 subscribed clients.
 
 ## ACS Model Classes
 
-The sdk defines a list of object model classes that correspond to the server
-objects under ACS/Models. They are all subclasses of `CCObject`
+The SDK defines a list of object model classes that correspond to the server
+objects under `ACS/Models`. They are all subclasses of `CCObject`
 or `CCObjectWithPhoto`.
 
 ## Making API Calls
 
 The ACS iOS SDK provides the `CCRequest` class with delegate
-callbacks to make synchronized or asynchronized REST calls to the ACS
-server easier. CCRequest is a subclass of
+callbacks to make synchronous or asynchronous REST calls to the ACS
+server easier. `CCRequest` is a subclass of
 [ASIHttpRequest](https://allseeing-i.com/ASIHTTPRequest/).
 
-To instantiate a CCRequest:
+To instantiate a `CCRequest` object:
 
     
     
@@ -320,12 +323,10 @@ To instantiate a CCRequest:
 ### `delegate`
 
 If you want to perform an asynchronous call, pass in the delegate object that
-implements `CCRequestDelegate`methods, they are:
-
+implements the `CCRequestDelegate` methods `didSucceed` and `didFailWithError`:
     
     
     -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response;
-    
     
     
     -(void)ccrequest:(CCRequest *)request didFailWithError:(NSError *)error;
@@ -386,7 +387,7 @@ Register a new user:
 
 It is recommended to run all the REST calls asynchronously for better user
 experience. If you want to be able to identify the request in the callback,
-you can add custom userInfo to the CCRequest object for your own record.
+you can add custom `userInfo` to the `CCRequest` object for your own record.
 
     
     
@@ -394,22 +395,17 @@ you can add custom userInfo to the CCRequest object for your own record.
     [request setUserInfo:userInfo];
     
 
-## Handling Server Response
+## Handling Server Responses
 
-CCResponse defined in ACS/Network/CCResponse.h contains the
+The `CCResponse` object defined in `ACS/Network/CCResponse.h` contains the
 response sent back from the ACS server. It has the following
 objects:
 
+*   `response.meta` contains the response metadata.
+*   `response.response` is an `NSDictionary` representation of the raw JSON response.
     
-    
-    response.meta contains all the meta related info. 
-    response.response is a NSDictionary representation of the raw json response.
-    
-
-### Extract data from CCResponse
-
-If the REST call is expected to return an array of Users, you can:
-
+For example, if the REST call is expected to return an array of {@link Users}, your
+handler code might look like this:
     
     
     -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
@@ -421,12 +417,12 @@ If the REST call is expected to return an array of Users, you can:
     }
     
 
-`getObjectsOfType` is used to extract a list of objects from the response.
-Refer to ACS/Models for a list of supported class names.
+The `getObjectsOfType` method is used to extract a list of objects from the response.
+Refer to `ACS/Models` for a list of supported class names.
 
 ## Photo Uploads
 
-To upload a photo, after you have instantiated a CCRequest object, you can use
+To upload a photo, after you have instantiated a `CCRequest` object, you can use
 one of the following two methods:
 
     
@@ -440,7 +436,7 @@ one of the following two methods:
     [request addPhotoUIImage:(UIImage *)image paramDict:(NSDictionary *)paramDict];
     
 
-If you have more than one photos to send, you can call any of the above
+If you have more than one photo to send, you can call any of the above
 methods with a new image. Currently only photo update allows multiple photos
 upload.
 
@@ -454,8 +450,8 @@ in the paramDict:
     [params setObject:[NSNumber numberWithDouble:0.5] forKey:@"jpeg_compression"]; // (0 < jpeg compression <= 1), 1 is the highest quality.
     
 
-You can also choose to [upload a photo synchronously](#!/guide/photosizes#sync)
-and provide the synchronous parameters in the paramDict.
+You can also choose to upload a photo synchronously. See [Photo Uploads and Resizing](#!/guide/photosizes)
+for more information.
 
 ## Photo Downloads
 
@@ -508,8 +504,8 @@ If you created photo using default sizes, the photo sizes are:
       @"original"
     
 
-If you created photo using [custom sizes](#!/guide/photosizes#custom), the photo
-sizes are the name of your custom sizes.
+If you created photo using custom sizes, the photo sizes are the name of your custom sizes. 
+For details on custom sizes, see [Photo Uploads and Resizing](#!/guide/photosizes).
 
 ## Troubleshooting & Common Errors
 
@@ -518,22 +514,22 @@ If you hit the following runtime error:
     
     -[NSConcreteMutableData yajl_JSON]: unrecognized selector sent to instance 0x4d87400
     
-Solution: Make sure you have included yajl framework and click on your
-project's target, select Other Linker Flags and add:
+Solution: Make sure you have included the YAJL framework. Click on your
+project's target, select **Other Linker Flags** and add:
     
     -ObjC -all_load
     
 
-In xcode 4, make sure to add the above flags to all the fields under Other
-Linker Flags:
+In Xcode 4, make sure to add the above flags to all the fields under **Other
+Linker Flags**:
 
 {@img linkers_ios.png}  
   
 
-## Enable and Disable runtime log
+## Enable and Disable Runtime Logging
 
-You can enable/disable runtime log by set loggingEnabled variable in
-Cocoafish.m :
+To enable or disable runtime logging, set the `loggingEnabled` variable in
+`Cocoafish.m`:
     
     -(void)initCommon:(NSDictionary *)customAppIds
     {

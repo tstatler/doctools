@@ -46,7 +46,7 @@ expiration period in the application management console.
 
 ## Testing with cURL and wget
 
-[cURL](https://curl.haxx.se) and [wget](https://www.gnu.org/software/wget) are
+[cURL](http://curl.haxx.se) and [wget](https://www.gnu.org/software/wget) are
 both excellent tools for quickly testing ACS API calls from
 the command line. Using these commands can help you determine what calls to make
 and show you the JSON output that your app receives. cURL is included with
@@ -116,7 +116,7 @@ The `create` (POST) and `update` (PUT) methods for many objects such as
 `Users`, `Checkins`, and `Photos` take an optional `photo` or `file` parameter
 to send a photo. The binary data must be sent in a form with Content-Type
 `multipart/form-data`, and the content type of the `photo` or `file` must be
-`image/jpeg``, `image/png`, or `image/gif`.  
+`image/jpeg`, `image/png`, or `image/gif`.  
   
 When using cURL, uploading a photo can be done easily by using `@` in front of
 the filename, such as `@photo.jpg`, to specify that the file should be
@@ -126,7 +126,7 @@ attached.
     
 ## Object IDs
   
-All returned data objects contain unique ids which are 24-digit hexadecimal
+All returned data objects contain unique IDs which are 24-digit hexadecimal
 strings. These IDs may be use to efficiently return data for a single object:
     
     GET https://api.cloud.appcelerator.com/v1/places/show/**4d6f13e96f70953608000012**.json?key=<API_KEY>
@@ -159,7 +159,7 @@ strings. These IDs may be use to efficiently return data for a single object:
 ## Response Paging
 
 API calls which return arrays of objects take optional `page` and `per_page`
-arguments to specify the number of objects to return. By default, 10 objects
+arguments to specify the number of objects to return. By default, ten objects
 are returned on each page, and the request may specify up to 20 results per
 page. Page numbers start at 1; if unspecified, the page defaults to page 1.
 

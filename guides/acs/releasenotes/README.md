@@ -56,7 +56,7 @@ Added new admin operation:
 For details, see [Admin Access](#!/guide/admin_access).
 
 Added support for atomic increment operator, $inc. For details see [Atomic
-Operations](#!/guide/atomic_operation).
+Increment Operation](#!/guide/atomic_increment).
 
 Fixed ACS website issues:
 

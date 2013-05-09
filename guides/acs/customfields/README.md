@@ -114,14 +114,14 @@ You could also store more complex data types such as Array and Hash. Hash and Ar
     
     
 
-##  Geo coordinates
+##  Geographic Coordinates in Custom Fields
 
-To enable geographical search, there is a predefined custom field --
-`coordinates` for optionally storing geographic coordinates. Coordinates can
+To enable geographical search, there is a predefined custom field,
+`coordinates`, for optionally storing geographic coordinates. The `coordinates` field can
 store a single location with format [longitude, latitude] or multiple
 locations [[longitude1,latitude1], [longitude2, latitude2]...]. So for the
-above example, if we want to store a location information about the user, we
-will have:
+above example, to store location information about the user, we
+might have:
 
     
     
@@ -140,11 +140,11 @@ to null.
     }
     
 
-##  Query of Custom Fields
+##  Querying Custom Fields
 
-Data stored in Custom fields other than Array and Hash can be queried together
-with predefined fields. Please refer to [Query
-Overview](#!/guide/search_query#query) for more information. If you define a
+Data stored in custom fields other than Array and Hash can be queried together
+with predefined fields. Please refer to [Query](#!/guide/search_query-section-2) 
+for more information. If you define a
 custom field name that is the same as one of predefined fields, you will be
 able to store and retrieve it but you won't be able to query on it since the
 query action would be performed on the predefined field instead. For example,
@@ -165,7 +165,7 @@ extra data fields during `create` and `update` actions:
   * {@link Messages#create}
   * {@link Photos#create} and {@link Photos#update update}
   * {@link Places#create} and {@link Places#update update} 
-  * {@link Posts#create} and {@link Posts#update}
+  * {@link Posts#create} and {@link Posts#update update}
   * {@link Reviews#create} and {@link Reviews#update update}
   * {@link Statuses#create}
   * {@link Users#create} and {@link Users#update update}

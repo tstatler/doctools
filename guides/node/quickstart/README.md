@@ -2,7 +2,7 @@
 # Node.ACS Quickstart
 
 Appcelerator Node.ACS enables you to develop and publish Node.js applications
-to the cloud. Node.ACS includes a simple command-line-interface and an MVC
+to the cloud. Node.ACS includes a simple command-line interface and an MVC
 framework that makes it easy for both novice and experienced Node.js
 developers to create apps and services. With Node.ACS, you can:
 
@@ -12,10 +12,10 @@ developers to create apps and services. With Node.ACS, you can:
   * Develop a Node.ACS service for your Titanium apps using the same development language (JavaScript)
 
 This quickstart will guide you through the process of creating a simple Chat
-Room Node.ACS app using the built-in [MVC framework](#!/guide/mvc). It is a
+Room Node.ACS app using the built-in [MVC framework](#!/guide/node_mvc). It is a
 simple tutorial to help you get started with Node.ACS.
 
-If you just want to deploy an existing Node.js app, see [Standard Node Applications](#!/guide/standard).
+If you just want to deploy an existing Node.js app, see [Standard Node Applications](#!/guide/node_standard).
 
 **Note:** Node.ACS is currently in Developer Preview state, so users may experience some instability.
 
