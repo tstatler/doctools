@@ -79,7 +79,7 @@ To enable 3-Legged OAuth (community users):
 To enable 3-Legged OAuth (enterprise users):
 
 1.  Open the [Appcelerator Dashboard](https://dashboard.appcelerator.com).
-2.  Select and application from the application list and click the **Cloud** tab.
+2.  Select the application from the application list and click the **Cloud** tab.
 3.  Click **Settings & Configuration**.
 4.  Select **Authorization Server** for **User Authentication Scheme** and specify the expiration time for access tokens (defaults to 1 hour).
 5.  Click **Save Changes**.

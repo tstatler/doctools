@@ -9,7 +9,7 @@ This update includes a bug fix for the Node.ACS server. When an application rece
 unhandled exception, the process is terminated and restarted. This prevents the
 application from hanging.
 
-## 15 Apr 2013 -- 15 Apr 2013
+## 15 Apr 2013 -- Node.ACS GA
 
 <p>The Node.ACS service is now a General Availability (GA) product. The new version of the Node.ACS CLI
 is 1.0.0. For the GA release, we've created a new, production environment for
