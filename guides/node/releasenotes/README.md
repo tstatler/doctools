@@ -9,14 +9,14 @@ This update includes a bug fix for the Node.ACS server. When an application rece
 unhandled exception, the process is terminated and restarted. This prevents the
 application from hanging.
 
-## Node ACS GA -- 15 Apr 2013
+## 15 Apr 2013 -- 15 Apr 2013
 
 <p>The Node.ACS service is now a General Availability (GA) product. The new version of the Node.ACS CLI
 is 1.0.0. For the GA release, we've created a new, production environment for
 publishing your Node.ACS applications. </p>
 
 <p>If you have existing Node.ACS applications created during the developer preview,
-you must must republish your existing applications to take advantage of the new
+you must republish your existing applications to take advantage of the new
 environment. See the instructions in the next section.</p>
 
 <h4>Migrating Applications to the Production Environment</h4>
@@ -30,7 +30,7 @@ environment. See the instructions in the next section.</p>
     <pre>sudo npm install –g acs</pre>
     </li>
     <li> If you are using Node.ACS through Titanium Studio, you will be prompted
-    to install updated <b>acs</b> package the next time you launch Studio.
+    to install an updated <b>acs</b> package the next time you launch Studio.
     </li>
     </ul>
     <p>Note that you cannot use older versions of the <b>acs</b> npm package to create or publish new
@@ -80,7 +80,7 @@ $ acs usage MyProject
 [02/26/2013 21:34:20.459]  memory: { free: 181.91M total: 256M }  loadavg: [ 40.23% ]
 [02/26/2013 21:33:50.453]  memory: { free: 183.66M total: 256M }  loadavg: [ 40.19% ]
 </pre>
-<p>See the <a href="/cli/usage"><b>acs usage</b> reference page</a> for a list of options.</p>
+<p>See the <a href="#!/guide/node_cli"><b>acs usage</b> reference page</a> for a list of options.</p>
 </li>
 
 <li><p>The ACS CLI is now compatible with Node.js 0.10.</p></li>

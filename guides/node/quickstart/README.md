@@ -53,9 +53,9 @@ Done. It's that easy!
 
 ## Create Your First Node.ACS App   
 
-**1\. Login with appcelerator credentials**  
+**1\. Login with Appcelerator credentials**  
 
-To work with Node.ACS applications, you must authenticate youself with the ACS cloud. Run
+To work with Node.ACS applications, you must authenticate yourself with the ACS cloud. Run
 the following command:
 
     acs login
@@ -84,7 +84,7 @@ directory), and run the **acs publish** command to publish the app to the cloud:
 Congratulations! Now you've successfully published your first Node.ACS app to
 the cloud!  
 
-Open a web browser and enter the URL you get from step #3, you'll get a big
+Open a web browser and enter the URL you get from step #3. You'll get a big
 welcome from Node.ACS!
 
 
@@ -93,7 +93,7 @@ welcome from Node.ACS!
 Let's add more features to the app to make it a public chat room. The app will
 be built using the [Node.ACS MVC framework](#!/guide/mvc) and use the built-in
 websocket server for establishing a connection between the client (web browser) and
-server, so that each post message can be "pushed" to all connected clients.
+server, so that each post message can be pushed to all connected clients.
 
 You can just copy and paste the code snippets below into the corresponding
 project files.
@@ -159,13 +159,13 @@ handlers (functions).
 
 In this case, `config.json` defines a route for the GET method on path "/", and binds
 this route to the function `chatroom` in `application.js`; it also defines the function
-`receiveMessage` in `chatroom.js` to be invoked whenever a "newChatMsg" event is received
+`receiveMessage` in `chatroom.js` to be invoked whenever a `newChatMsg` event is received
 from a client.
 
 ### Views
 
 Views are where your user interface (UI) is defined. All views files reside in
-"views" directory in the application's project directory. Node.ACS uses EJS as view engine by
+`views` directory in the application's project directory. Node.ACS uses EJS as view engine by
 default.
 
 **/views/chatroom.ejs**
@@ -288,7 +288,7 @@ under the `public` directory.
 **You're done! Now let's run it and publish to the cloud!**
 
 Change to the the working directory to the app's directory and use the **acs run** command
-to start the server locally.:
+to start the server locally:
 
     acs run
 
