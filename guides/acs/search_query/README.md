@@ -5,7 +5,7 @@ predefined objects. The difference is that search is predefined full text
 search using Appcelerator Cloud Services search engine, query is for advanced
 custom DB style search.
 
-## Search
+## Search Overview
 
 Each Appcelerator Cloud Services predefined object provides a search API. It
 takes a parameter q for keywords. It will perform a case insensitive full text
@@ -15,7 +15,7 @@ fields. For example, if you want to search places with "Seafood", it will
 match all places with keyword "seafood" in place's name or tags. Search API is
 prefixed, if you wish to perform your own custom search, please use query API.
 
-## Query
+## Query Overview
 
 Query provides an interface to apply DB query constrains on predefined fields
 as well as [custom fields](#!/guide/customfields). When no parameters are
@@ -127,7 +127,9 @@ For non-exact matches, `where` supports these options:
      </tr>
     <tr>
         <td><code>$regex</code></td>
-        <td>Regex match on a string, Currently, only prefix match is supported. For examples '^a', '^a.*', and '^a.*$'. This can be used to perform prefix wildcard search</td>
+        <td>Regex match on a string, Currently, only prefix matches are supported: the
+        regular expression must begin with an anchor (^) followed by a letter or digit. For
+        example, '^a', '^a.*', and '^a.*$' are allowed, but not '^.*a*'.</td>
     </tr>
 </table>
 
