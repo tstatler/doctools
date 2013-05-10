@@ -91,7 +91,7 @@ welcome from Node.ACS!
 ## The Chat Room App 
 
 Let's add more features to the app to make it a public chat room. The app will
-be built using the [Node.ACS MVC framework](#!/guide/mvc) and use the built-in
+be built using the [Node.ACS MVC framework](#!/guide/node_mvc) and use the built-in
 websocket server for establishing a connection between the client (web browser) and
 server, so that each post message can be pushed to all connected clients.
 
