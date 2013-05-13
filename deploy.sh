@@ -149,7 +149,8 @@ if [ $include_modules ]; then
             exit 1
         fi
     fi
-    module_dirs=$(find $TI_MODULES -type d -name apidoc;find $APPC_MODULES -type d -name apidoc)
+    module_dirs="$TI_MODULES/map/mobile/apidoc $TI_MODULES/facebook/mobile/apidoc
+                 $APPC_MODULES/ti.nfc/apidoc $APPC_MODULES/ti.newsstand/apidoc"
 fi
 
 python ${TI_DOCS}/docgen.py -f jsduck -o ./build $module_dirs
