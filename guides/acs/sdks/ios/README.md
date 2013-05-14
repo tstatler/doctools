@@ -312,7 +312,7 @@ The ACS iOS SDK provides the `CCRequest` class with delegate
 callbacks to make synchronous or asynchronous REST calls to the ACS
 server easier. `CCRequest` is a subclass of the `ASIHttpRequest` class.
 (For more information on `ASIHTTPRequest`, see the 
-[`ASIHTTPRequest` web site](http://allseeing-i.com/ASIHTTPRequest/).
+[`ASIHTTPRequest` web site](http://allseeing-i.com/ASIHTTPRequest/).)
 
 To instantiate a `CCRequest` object:
     
