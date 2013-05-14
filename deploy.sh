@@ -139,7 +139,15 @@ if [ $include_modules ]; then
             exit 1
         fi
     fi
-    module_dirs="$TI_MODULES/map/mobile/apidoc $TI_MODULES/facebook/mobile/apidoc $APPC_MODULES/ti.nfc/apidoc"
+    if [ ! "$TIZEN_MODULE" ]; then
+        if [ "$TI_ROOT" ]; then
+            TIZEN_MODULE=${TI_ROOT}/titanium_mobile_tizen/modules/tizen/apidoc
+        else
+            echo "No titanium_mobile_tizen dir \$TIZEN_MODULE and \$TI_ROOT not defined. Exiting."
+            exit 1
+        fi
+    fi
+    module_dirs="$TI_MODULES/map/mobile/apidoc $TI_MODULES/facebook/mobile/apidoc $APPC_MODULES/ti.nfc/apidoc $APPC_MODULES/newsstand $TIZEN_MODULE"
 fi
 
 python ${TI_DOCS}/docgen.py -f jsduck -o ./build $module_dirs
