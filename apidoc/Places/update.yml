@@ -51,25 +51,6 @@ methods:
         description: Longitude. 
         type: Number 
     
-      - name: need_geo_lookup
-        description: |
-            Set to `true` to perform geocoding lookup, which will assign latitude and longitude based on an address.
-
-            If you want to search for a place by geographic coordinates, you must either 
-            provide `latitude` and `longitude` explicitly, or provide an address and set 
-            `need_geo_lookup` to true. Note that there is no guarantee that the geocoding 
-            lookup will succeed. 
-
-            If you need more control over geocoding, your application should perform 
-            geocoding queried directly, using 
-            [`Titanium.Geolocation.forwardGeocoder`](http://docs.appcelerator.com/titanium/latest/#!/api/Titanium.Geolocation-method-forwardGeocoder)
-            or a web service such as the Google Geocoding API. For example, if you pass
-            an ambiguous address to a geocoding API, it may return multiple results.
-            By geocoding directly, your application can detect this and prompt the user to 
-            choose the intended address.
-        default: false
-        type: Boolean
-
       - name: website
         description: Website URL.
         type: String

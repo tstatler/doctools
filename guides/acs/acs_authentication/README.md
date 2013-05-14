@@ -24,7 +24,11 @@ Authorization: OAuth oauth_consumer_key="0685bd9184jfhq22",
         oauth_version="1.0"
 </pre>
 
-This authentication method is the safer over http since the secret used to generate the signature is known only by the app and the ACS server. It is never sent over the network. The OAuth consumer key and secret for an app can be found by going to the <a href="/apps">Apps page</a> and clicking on the name of the app.
+This authentication method is the safer over HTTP that the API key method, since the secret used to generate the
+signature is known only by the app and the ACS server. It is never sent over the network.
+The OAuth consumer key and secret for an app can be found by going to the 
+[My Apps page](https://my.appcelerator.com/apps) (for community users) or the 
+[Appcelerator Dashboard](https://dashboard.appcelerator.com) (for enterprise users).
 
 The following is an example of making a 2-Legged OAuth request using Ruby:
 
@@ -57,10 +61,28 @@ Almost any OAuth library that supports 3-Legged OAuth (used by Facebook, Twitter
 Using implicit authorization flow a mobile app receives the access token as the result of the authorization request. The mobile app can then use the
 access token to make API calls on behalf of the user.</p>
 
-<p>To enable 3-Legged OAuth for your app please go to <a href="/apps">Apps page</a> and click on the name of the app, then go to Settings page. You should see the
-following section there. Select Authorization Server for User Authentication Scheme and specify the valid time for access tokens (defaults to 1 hour).</p>
+The steps for enabling 3-Legged OAuth are slightly different depending on whether you are
+using the community portal, _my.appcelerator.com_, or the enterprise dashboard,
+_dashboard.appcelerator.com_.
 
-{@img app_setting_as.png}
+To enable 3-Legged OAuth (community users):
+
+1.  Open the <a href="https://my.appcelerator.com/apps">My Apps page</a> 
+2.  Find the application in the application list and click **Manage ACS**. 
+3.  Select the **Settings** tab.
+
+    {@img app_setting_as.png}
+
+4.  Select **Authorization Server** for **User Authentication Scheme** and specify the expiration time for access tokens (defaults to 1 hour).
+5.  Click **Save App Secure Identity Server Changes**.
+
+To enable 3-Legged OAuth (enterprise users):
+
+1.  Open the [Appcelerator Dashboard](https://dashboard.appcelerator.com).
+2.  Select the application from the application list and click the **Cloud** tab.
+3.  Click **Settings & Configuration**.
+4.  Select **Authorization Server** for **User Authentication Scheme** and specify the expiration time for access tokens (defaults to 1 hour).
+5.  Click **Save Changes**.
 
 <p>With 3-Legged OAuth, user log-in and sign-up will be done on Authorization Server. According to OAuth 2.0 implicit authorization flow only OAuth key
 is needed. However, as iOS and Android applications are safer than javascript applications OAuth secret can still be provided for them.</p>
@@ -83,11 +105,16 @@ http://secure-identity.cloud.appcelerator.com/users/sign_up?client_id=VGJSVgFHs7
 http://api.cloud.appcelerator.com/v1/users/logout.json?oauth_consumer_key=VGJSVgFHs7FaOcgcvMWMAGe6bwNpHBfq&access_token=eMdbgRgmsUwUnljJSrlkCOuZnKNVCdsRp9EVFCzp
 </pre>
 
-<p>Android and Javascript SDKs now support this new authorization flow. For details please refer to the corresponding pages.</p>
+<p>The Titanium and Android SDKs now support this authorization flow. For details please refer to the corresponding pages.</p>
 
-<a href="/docs/javascript">Javascript SDK</a><br/>
-<a href="/docs/android">Android SDK</a>
+<ul>
+<li>
+<a href="#!/guide/titanium">Titanium SDK</a></li>
+<li><a href="#!/guide/android">Android SDK</a></li>
+</ul>
 
 ## Access Control Lists (ACLs)
 
-Access Control Lists (ACLs) provide several APIs to implement access control lists for ACS objects. An access control list controls read and write access to ACS objects it's attached to. Please refer to <a href="/docs/api/v1/acls/info">Access Control List</a> for more information.
+Access Control Lists (ACLs) provide several APIs to implement access control lists for ACS
+objects. An access control list controls read and write access to ACS objects it's
+attached to. Please refer to {@link ACLs Access Control Lists} for more information.
