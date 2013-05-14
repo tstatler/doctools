@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #
-# Copyright (c) 2012 Appcelerator, Inc. All Rights Reserved.
+# Copyright (c) 2012,2013 Appcelerator, Inc. All Rights Reserved.
 # Licensed under the Apache Public License (version 2)
 
 import os, shutil, json, sys, re, xml.dom.minidom, pprint, optparse, urllib
