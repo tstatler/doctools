@@ -3,15 +3,14 @@
 
 ## Download the SDK
 
-Grab the ACS iOS SDK from <https://github.com/cocoafish
-/cocoafish-ios-sdk>. See the [DemoApp](https://github.com/cocoafish/cocoafish-
-ios-sdk/tree/master/samples/DemoApp) and [APIs](https://github.com/cocoafish
-/cocoafish-ios-sdk/tree/master/samples/APIs) sample projects for examples of
-how to store and retrieve data with the SDK.
+Grab the ACS iOS SDK from <https://github.com/cocoafish/cocoafish-ios-sdk>. See the 
+[DemoApp](https://github.com/cocoafish/cocoafish-ios-sdk/tree/master/samples/DemoApp) and 
+[APIs](https://github.com/cocoafish/cocoafish-ios-sdk/tree/master/samples/APIs) sample projects for 
+examples of how to store and retrieve data with the SDK.
 
 ## Adding ACS to your XCode Project
 
-1.  Create a ACS app from the [Apps page](/apps/new). Then in
+1.  Create a ACS app from the [My Apps page](https://my.appcelerator.com/apps). Then in
     XCode, create an iOS project and add the following folders from `cocoafish-ios-sdk/src/` to your project:
     
         ACS
@@ -20,9 +19,9 @@ how to store and retrieve data with the SDK.
     
     {@img ios1.png}  
   
-    You can choose to use your own copy of ASIHTTPRequest (v1.8 or above) and
-    FBConnect from facebook-ios-sdk (updated on or after Jan 31, 2011). The only
-    change we made to the ASIHTTPRequest in our copy is in `ASIHttpRequest.m`:    
+    You can choose to use your own copy of `ASIHTTPRequest` (v1.8 or above) and
+    `FBConnect` from facebook-ios-sdk (updated on or after Jan 31, 2011). The only
+    change we made to the `ASIHTTPRequest` in our copy is in `ASIHttpRequest.m`:    
     
         - (void)readResponseHeaders
         {
@@ -37,13 +36,13 @@ how to store and retrieve data with the SDK.
         }
         
     The ACS API server returns HTTP response code `401` in a number
-    of different error situations. However, ASIHttpRequest interprets all `401`
+    of different error situations. However, `ASIHttpRequest` interprets all `401`
     responses as Authentication Needed. This can be confusing if you want to
     show users the exact error that has occurred. For instance: Invalid user
     email/password, invalid oauth token. We commented out the above line to let
     the server error message to pass through.  
       
-    If you are using your own version of ASIHttpRequest, you can choose to do the
+    If you are using your own version of `ASIHttpRequest`, you can choose to do the
     same to let server authentication error message pass through.  
   
 2.  Add the following frameworks to your project:   
@@ -115,8 +114,8 @@ Once ACS is initialized, you can access it by calling:
 1.  Create a new [Facebook App](https://developers.facebook.com/apps) if you
     don't have one yet.
 
-2.  Obtain the Facebook App id from Facebook.  
-    You can get the Facebook App id from Facebook, you will use it later in your
+2.  Obtain the Facebook App ID from Facebook.  
+    You can get the Facebook App ID from Facebook, you will use it later in your
     project.
 
 3.  Add the Facebook framework to your Xcode project.  
@@ -166,7 +165,7 @@ Once ACS is initialized, you can access it by calling:
 
         cocoafish-ios-sdk/src/FBConnect
 
-8.  Add the facebook ID to your app's `Info.plist` file under `URL types`.
+8.  Add the Facebook ID to your app's `Info.plist` file under `URL types`.
 
     {@img facebook_ios_setting.png}
 
@@ -196,7 +195,7 @@ if you haven't already done so.
 
 ### Create Push Notification Certificates for Development and Production
 
-Logging into the [iOS Provisioning
+Log into the [iOS Provisioning
 Portal](https://developer.apple.com/ios/manage/overview/index.action). Go to
 the **App IDs** section, create a new App or select an existing app, and click
 **Configure**. Make sure to log in to Apple's developer site as Team Agent to
@@ -211,14 +210,14 @@ click the download button to get the file.
   
 Create a development certificate for development purpose. You will need to
 create a production certificate before you release your app to the app store.
-Double click on the downloaded app_developer_identity.cer to install it in
+Double click on the downloaded `app_developer_identity.cer` to install it in
 your login keychain. Once it's installed, you can see it in the **My
 Certificates** category.  
   
 {@img ios_push3.png}  
   
 If your certificate doesn't show up in the **My Certificates** Category. Try to
-drag the app_developer_identity.cer file to keychain under **Certificates**
+drag the `app_developer_identity.cer` file to keychain under **Certificates**
 Category. You will not be able to export the certificate until it shows up in
 the **My Certificates** Category.  
 Next, select the **My Certificate** Category and select the newly installed push
@@ -246,7 +245,7 @@ and install ad-hoc release on your device.
 ### Update your provisional profile
 
 You'll need to regenerate your provisioning profile if you just enabled push
-notifications for your app. In [the iOS Provisioning
+notifications for your app. In the [iOS Provisioning
 Portal](https://developer.apple.com/ios/manage/overview/index.action), click
 **Provisioning** and find the profile you've been using. To ensure that
 the profile gets regenerated, edit a field and set it back to its original
@@ -260,7 +259,7 @@ in method didFinishLaunchingWithOptions:
 
     - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     {
-    	// Initialize Cocoafish with facebook App Id if you set one
+    	// Initialize Cocoafish with Facebook App Id if you set one
     	[Cocoafish initializeWithOauthConsumerKey:COCOAFISH_OAUTH_CONSUMER_KEY consumerSecret:COCOAFISH_OAUTH_CONSUMER_SECRET customAppIds:[NSDictionary dictionaryWithObject:facebookAppId forKey:@"Facebook"]];
     	
     	...
@@ -311,8 +310,9 @@ or `CCObjectWithPhoto`.
 
 The ACS iOS SDK provides the `CCRequest` class with delegate
 callbacks to make synchronous or asynchronous REST calls to the ACS
-server easier. `CCRequest` is a subclass of
-[ASIHttpRequest](https://allseeing-i.com/ASIHTTPRequest/).
+server easier. `CCRequest` is a subclass of the `ASIHttpRequest` class.
+(For more information on `ASIHTTPRequest`, see the 
+[`ASIHTTPRequest` web site](http://allseeing-i.com/ASIHTTPRequest/).)
 
 To instantiate a `CCRequest` object:
     
@@ -449,7 +449,7 @@ the given URL and if the URL is not available, you have to try again until the
     CCPhoto *photo;
     [photo getImage:(PhotoSize)photoSize];
     
-It returns the UIImage of the photo requested if it has already been
+It returns the `UIImage` of the photo requested if it has already been
 downloaded, otherwise it returns `nil` and kicks off the download in the
 background. If the photo size is not available (if you request an incorrect
 size or the requested size hasn't been processed yet), no background download
