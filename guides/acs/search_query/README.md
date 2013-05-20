@@ -127,7 +127,7 @@ For non-exact matches, `where` supports these options:
      </tr>
     <tr>
         <td><code>$regex</code></td>
-        <td>Regex match on a string, Currently, only prefix matches are supported: the
+        <td>Regex match on a string. Currently, only prefix matches are supported: the
         regular expression must begin with an anchor (^) followed by a letter or digit. For
         example, '^a', '^a.*', and '^a.*$' are allowed, but not '^.*a*'.</td>
     </tr>
