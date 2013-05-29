@@ -72,6 +72,11 @@ For Alloy projects, Alloy may process the bindings file, such as removing commen
 copy the bindings file to the `app/lib` folder and edit the file there.  The file will be copied
 to the `Resources` folder by Alloy during compilation.
 
+The `Resources` folder may be hidden in the **App Explorer** and **Project Explorer** views.
+If your `Resources` folder is hidden, click the **View Menu** button (white
+triangle pointing down) and select **Customize View...**, then the **Available Customizations** dialog
+appears. In the **Filters** tab, uncheck the **Titanium Resources Folder** checkbox, then click **OK**.
+
 ## Connecting Your Client Application to Your Node.ACS Service
 
 In your client application, require in the bindings file and call the exported functions to access the
