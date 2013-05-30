@@ -131,8 +131,8 @@ App**.  If your project is part of the mobile application project, click the **P
 select **Publish Node.ACS Service**.
 
 When your sevice is published, a dialog appears providing you with the URL to access the service.
-You can optionally set a custom domain name, using the `acs cname` command.
-Before deploying your app, modify your `tiapp.xml` file to point to the published URL.
+You can optionally set a custom domain name by right-clicking on the project and selecting **Node.ACS >
+Set CNAME**. Before deploying your app, modify your `tiapp.xml` file to point to the published URL.
 Follow the directions from the previous section except replace the entire URL with your published URL.
 
 You can run your client project to test the service, then publish it to a mobile market place.

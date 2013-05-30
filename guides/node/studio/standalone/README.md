@@ -53,3 +53,19 @@ Explorer** or **Project Explorer** view, then select **Publish > Unpublish Node.
 To manage and stop the server, from the menu bar, select **Windows > Show Views > Other**, to open
 the **Show View** dialog.  Select **Studio > Servers** to open the **Servers** view.
 
+## Setting a Custom Domain Name
+
+Once your service is published, you can set a custom domain name.
+
+  1. Select your project in the **App Explorer** or **Project Explorer** view.
+  2. Right-click on the project and choose **Node.ACS > Set CNAME**. A dialog appears.
+  3. Enter the new domain name and click **OK**.
+
+## Viewing Service Runtime Logs
+
+Once your service is published, you can access the service runtime logs.
+
+  1. Select your project in the **App Explorer** or **Project Explorer** view.
+  2. Right-click on the project and choose **Node.ACS > Tail Logs**.
+
+A new console view opens with your runtime logs, which will be continuously updated.
