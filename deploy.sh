@@ -158,7 +158,8 @@ if [ $include_modules ]; then
         fi
     fi
     module_dirs="$TI_MODULES/map/mobile/apidoc $TI_MODULES/facebook/mobile/apidoc
-                 $APPC_MODULES/ti.nfc/apidoc $APPC_MODULES/ti.newsstand/apidoc $TIZEN_MODULE"
+                 $APPC_MODULES/ti.nfc/apidoc $APPC_MODULES/ti.newsstand/apidoc $TIZEN_MODULE
+                 $APPC_MODULES/ti.passbook/apidoc $APPC_MODULES/ti.newsstand/apidoc"
 fi
 
 python ${TI_DOCS}/docgen.py -f jsduck -o ./build $module_dirs
