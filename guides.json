@@ -213,7 +213,7 @@
                     },
                     {
                         "name": "node_cli_unpublish",
-                        "title": "unpublish -- Unpublish an Applicatoin",
+                        "title": "unpublish -- Unpublish an Application",
                         "url": "guides/node/cli/unpublish",
                         "description": "Unpublish an Application"
                     },
@@ -222,6 +222,32 @@
                         "title": "whoami -- Show Current User",
                         "url": "guides/node/cli/whoami",
                         "description": "Show Current User"
+                    }
+                ]
+            },
+            {
+                "name": "node_studio",
+                "title": "Studio",
+                "url": "guides/node/studio/index",
+                "description": "Studio guides for Node.ACS projects",
+                "items" : [
+                    {
+                        "name": "node_studio_standalone",
+                        "title": "Standalone Projects",
+                        "url": "guides/node/studio/standalone",
+                        "description": "Managing Standalone projects with Studio"
+                    },
+                    {
+                        "name": "node_studio_integrated",
+                        "title": "Integrated Projects",
+                        "url": "guides/node/studio/integrated",
+                        "description": "Managing Integrated projects with Studio"
+                    },
+                    {
+                        "name": "node_studio_debugging",
+                        "title": "Debugging Node.ACS Services",
+                        "url": "guides/node/studio/debugging",
+                        "description": "Debugging projects with Studio"
                     }
                 ]
             },

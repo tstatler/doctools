@@ -17,9 +17,6 @@ simple tutorial to help you get started with Node.ACS.
 
 If you just want to deploy an existing Node.js app, see [Standard Node Applications](#!/guide/node_standard).
 
-**Note:** Node.ACS is currently in Developer Preview state, so users may experience some instability.
-
-  
 
 ## Getting Ready
 
@@ -52,6 +49,27 @@ steps to install Node and **acs**:
 Done. It's that easy!
 
 ## Create Your First Node.ACS App   
+
+### Using Studio
+
+**1\. Start Studio and create a new application**
+
+From the menubar, select **File > New > Node.ACS Project**. The **New Node.ACS Project**
+wizard appears.  Enter `MyFirstApp` as the name for your project, then click **Finish**.
+
+This creates a new application in the `MyFirstApp` folder. By default, the new application
+is configured to use the Node.ACS MVC framework.
+
+**2\. Publish your application to the cloud**
+
+In the **App Explorer** or **Project Explorer** view, make sure your application is selected, then
+click the **Publish** button and select **Deploy App**.  Once your application is deployed to the cloud,
+a dialog appears with the URL to access your Node.ACS application.
+
+Click the **Publish** button again and select **View Node.ACS Service** to open your application in
+your default web browser.
+
+### Using the CLI
 
 **1\. Login with Appcelerator credentials**  
 
@@ -285,7 +303,18 @@ under the `public` directory.
     }
     
 
-**You're done! Now let's run it and publish to the cloud!**
+**You're done! Now let's run it!**
+
+
+#### Using Studio
+
+In the **App Explorer** or **Project Explorer** view, make sure your application is selected, then
+click the **Run** button and select **Local Node.ACS Server**.  A port number appears in the
+**Console** view once your application starts.  Use the port number to access your application.
+
+Open a web browser and visit http://localhost:<port_number> to start chatting.
+
+#### Using the CLI
 
 Change to the the working directory to the app's directory and use the **acs run** command
 to start the server locally:
@@ -296,7 +325,7 @@ Open a web browser and visit http://localhost:8080 to start chatting. Open a
 different browser window and type a random message and click **send**. You will
 see the message show up in the first window!
 
-Now let's publish the app to Node.ACS cloud!  
+**Now let's publish the app to Node.ACS cloud!**
   
 First, replace the 'http://localhost:8080' in file `/views/chatroom.ejs` on
 line 8 with your app's URL as returned by 'acs publish' command
@@ -305,7 +334,21 @@ client connection to the server running in the cloud instead of your local
 machine.  
 
 Second, since you have already published this app before (step #3), 
-you have to use the `--force` option to overwrite the previous deployment:
+you need to republish your application.
+
+
+#### Using Studio
+
+In the **App Explorer** or **Project Explorer** view, make sure your application is selected, then
+click the **Publish** button and select **Deploy App**. A dialog appears informing you that the
+application already exists. Click the **Overwrite** button to replace the existing version.
+
+Once your application is deployed to the cloud, a dialog appears with the URL to access your
+Node.ACS application.
+
+#### Using the CLI
+
+Use the `--force` option with the `publish` command to overwrite the previous deployment:
 
     acs publish --force
 
