@@ -5,7 +5,7 @@ git checkout 2.1.4_docs
 # git pull appcelerator 2_1_X
 cd $TI_ROOT/doctools
 rm -rf $outdir
-sh deploy.sh -c jsduck_21.config -d $outdir -g htmlguides-2.1.3 prod
+sh deploy.sh -d $outdir -g htmlguides-2.1.3 -t "Titanium 2.X - Appcelerator Docs" debug 
 rm -rf ~/Sites/titanium/2.1
 rm -rf ~/Sites/titanium/landing/index.html
 cp -rf $outdir ~/Sites/titanium/2.1
