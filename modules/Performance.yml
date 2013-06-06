@@ -21,10 +21,10 @@ methods:
     parameters:
       - name: appid
         summary: | 
-            Crittercism App ID found in the `tiapp.xml` file or the Appcelerator Performance dashboard.
+            APM App ID found in the `tiapp.xml` file or the Appcelerator Performance dashboard.
 
             By default, if this parameter is not specified, the module uses the value stored
-            as the `com-crittercism-id` key in the `tiapp.xml` file to initialize the module.
+            as the `com-appcelerator-apm-id` key in the `tiapp.xml` file to initialize the module.
         type: String
         optional: true
 
