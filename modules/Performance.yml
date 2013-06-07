@@ -1,8 +1,8 @@
----
+----
 name: Modules.Performance
 summary: Add-on module that provides support for real-time crash reporting and performance monitoring services.
 description: |
-    The Appcelerator Performance Management module provides hooks to the Crittercism-powered services for
+    The Appcelerator Performance Management (APM) module provides hooks to the Crittercism-powered services for
     real-time crash reporting and app monitoring to capture errors and provide valuable diagnostic
     information of your mobile application.
 
@@ -39,11 +39,8 @@ methods:
     summary: |
         Leaves a breadcrumb trail in your code to get a playback of events leading up to a crash.
     description: |
-        These breadcrumbs are collected and passed to the Crittercism service.
+        These breadcrumbs are collected and passed to the Performance service.
         The most recent 100 breadcrumbs are displayed before the crash occurred.
-
-        For more information, see
-        [Crittcism Compendium: Getting Started with Breadcrumbs](http://support.crittercism.com/customer/portal/articles/675671-getting-started-with-breadcrumbs).
     parameters:
       - name: breadcrumb
         type: String
@@ -53,9 +50,6 @@ methods:
     summary: Sets a username to differentiate user metadata for crash reports.
     description: |
         Updates only if there has been a change to the username from previous settings.
-
-        For more information, see
-        [Crittcism Compendium: Getting Started with Metadata](http://support.crittercism.com/customer/portal/articles/675611-getting-started-with-user-metadata).
     parameters:
       - name: username
         type: String
@@ -65,9 +59,6 @@ methods:
     summary: Sets an e-mail address to differentiate user metdata for crash reports.
     description: |
         Updates only if there has been a change to the e-mail address from previous settings.
-
-        For more information, see
-        [Crittcism Compendium: Getting Started with Metadata](http://support.crittercism.com/customer/portal/articles/675611-getting-started-with-user-metadata).
     parameters:
       - name: email
         type: String
@@ -78,9 +69,6 @@ methods:
     description: | 
         The data is stored in a dictionary and displayed on the developer portal
         when viewing a user profile.
-
-        For more information, see
-        [Crittcism Compendium: Getting Started with Metadata](http://support.crittercism.com/customer/portal/articles/675611-getting-started-with-user-metadata).
     parameters:
       - name: key
         type: String
@@ -95,9 +83,6 @@ methods:
     description: |
         Crittercism limits the logging of handled errors to one per minute. Up to five
         errors are buffered and are subsequently sent after the one minute limit.
-
-        For more information, see
-        [Crittcism Compendium: Getting Started with Handled Exceptions](http://support.crittercism.com/customer/portal/articles/685301-getting-started-with-handled-exceptions).
     parameters:
       - name: error
         type: Error
@@ -105,15 +90,15 @@ methods:
 
   - name: setOptOutStatus
     summary: |
-        Sets the users opt-out status from sending **any and all** information to the Crittercism service.
+        Sets the users opt-out status from sending **any and all** information to the Performance service.
     parameters:
       - name: optOutStatus
         type: Boolean
-        summary: If set to `true`, data is not sent to Crittercism.
+        summary: If set to `true`, data is not sent to the Performance service.
         default: false
 
   - name: getOptOutStatus
-    summary: Returns `true` if the user opt out to send information to Crittercism else returns `false`.
+    summary: Returns `true` if the user opt out to send information else returns `false`.
     returns:
       - type: Boolean
 
