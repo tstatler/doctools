@@ -55,15 +55,6 @@ methods:
         type: String
         summary: Up to 32 characters to set to identify a user.
 
-  - name: setEmail
-    summary: Sets an e-mail address to differentiate user metdata for crash reports.
-    description: |
-        Updates only if there has been a change to the e-mail address from previous settings.
-    parameters:
-      - name: email
-        type: String
-        summary: Up to 100 characters to set an e-mail address.
-
   - name: setMetadata
     summary: Used to set a single pair of arbitrary user metadata.
     description: | 
