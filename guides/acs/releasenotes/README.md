@@ -1,5 +1,23 @@
 # ACS Release Notes
 
+## 10 June 2013
+
+This update includes the following bug fixes and enhancements:
+
+  * Removed dependency between push notifications, and device and user registrations.
+    Users are no longer required to have an ACS account to receive push notifications.
+
+  * Fixed an issue where using special characters cause the query to fail.
+
+  * Website: Fixed an issue viewing relational field objects.
+    Relational field objects were being displayed as objects and not ID strings.
+
+  * Website: Fixed an issue viewing custom objects.
+    Some custom objects could not be viewed in the web interface.
+
+  * Website: Fixed an issue with SMTP settings.
+    If a TLS value was specified, it was not properly checked.
+
 ## 26 Apr 2013 
 
 This update includes bug fixes and performance improvements.
