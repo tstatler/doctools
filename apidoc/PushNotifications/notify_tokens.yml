@@ -57,7 +57,7 @@ methods:
         example: |
             This example sends a push notification to a channel and checks the response.
             
-                Cloud.PushNotifications.notify_tokens({
+                Cloud.PushNotifications.notifyTokens({
                     channel: 'friend_request',
                     to_tokens: TOKEN_LIST,
                     payload: 'Welcome to push notifications'

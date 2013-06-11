@@ -39,7 +39,7 @@ methods:
 
             This example subscribes to a push notification channel and checks the response.
 
-                Cloud.PushNotifications.subscribe_token({
+                Cloud.PushNotifications.subscribeToken({
                     device_token: DEVICE_TOKEN,
                     channel: 'friend_request',
                     type: 'ios'
