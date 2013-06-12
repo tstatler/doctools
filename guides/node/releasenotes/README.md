@@ -1,5 +1,22 @@
 # Node.ACS Release Notes
 
+## 13 June 2013 -- version 1.0.3
+
+  * Fixed an issue to support proxies requiring authentication.
+
+  * Added "The app is being deployed and will be available soon" message to all URL endpoints
+    after an app is deployed.  Previously, only the main index would display this message and all
+    other endpoints would show an error message.
+
+  * Fixed an issue with the remove command to delete project files both locally and remotely.
+    Previously, only the remote files were deleted and not the local files.
+
+  * Fixed an issue where the list command did not indicate if an application failed to launch.
+
+  * Fixed an issue where the usage command did not accurately report the memory usage.  Previously, the
+    free memory would be reported lower than actual.
+
+
 ## 2 May 2013 -- version 1.0.2
 
 Version 1.0.2 fixes an issue where the **acs list** command included some incorrect
