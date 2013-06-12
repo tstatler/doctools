@@ -8,3 +8,13 @@ description: |
     or the [iOS SDK guide](#!/guide/ios) to set up your app for push notifications to
     Android or iOS.
 
+    For methods that require device tokens, to retrieve your device token using the Titanium SDK API:
+
+      * For Android, use the
+        [Titanium.CloudPush](http://docs.appcelerator.com/titanium/latest/#!/api/Titanium.CloudPush)
+        module.
+
+      * For iOS, use the
+        [Titanium.Network.registerForPushNotifications](http://docs.appcelerator.com/titanium/latest/#!/api/Titanium.Network-method-registerForPushNotifications)
+        method.
+
