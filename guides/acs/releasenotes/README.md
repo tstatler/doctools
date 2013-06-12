@@ -2,6 +2,42 @@
 
 ## 10 June 2013
 
+### Application User Session Expiration
+
+An application user session never expires today.  We are introducing a policy of expiring and
+removing sessions that have been inactive for six months.
+
+If your application logins a user and saves the `session_id`,
+normally stored in a cookie, every time it makes a REST call to ACS using the same `session_id`, the
+expiry clock is reset and the user gets another six months. As long as the ACS user is active using
+the same `session_id` within six months, there is no impact on your application and currently logged in
+user. If an application user is completely inactive for six months or more, this user session is
+removed and any subsequent ACS call that requires user login such as `create.json`, `update.json` and
+`remove.json` will get a 404 error. We recommend your application to handle an invalid user session
+error and prompt a login screen to the user to login again.
+
+### Geo Query
+
+ACS currently supports MongoDB’s
+[$nearSphere](http://docs.mongodb.org/manual/reference/operator/nearSphere/) geo query.
+Geo query requires a field to be indexed with a geo index.
+The ACS fields you can perform `$nearSphere` on are `lnglat` (pre-defined location
+data and only available in [Places](http://docs.appcelerator.com/cloud/latest/#!/api/Places)
+and [Events](http://docs.appcelerator.com/cloud/latest/#!/api/Events)) and `coordinates`
+(list of custom defined location data and available in all objects).
+It implies that Places and Events have two geo indexes in the same
+collection and that prevents us from supporting the
+[$geoNear](http://docs.mongodb.org/manual/reference/command/geoNear/) operation that is more powerful than
+`$nearSphere`.  We will consolidate the `lnglat` value with the `coordinates` values and remove geo index on
+the `lnglat` field.
+
+For Events and Places, even if you never explicitly copied
+the `lnglat` value to `coordinates`, `lnglat` appears as the first element of `coordinates`.  Performing
+`$nearSphere` on the `coordinates` field returns a match if it matches the `lnglat` value.  `$nearSphere`
+query on `lnglat` or `coordinates` continues to work as before.
+
+### Fixed Issues and Enhancements
+
 This update includes the following bug fixes and enhancements:
 
   * Removed dependency between push notifications, and device and user registrations.
