@@ -33,6 +33,25 @@ methods:
             Type of device, either `android` for Android devices or `ios` for iOS devices.
         type: String
       
+    examples:
+      - platform: titanium
+        example: |
+
+            This example subscribes to a push notification channel and checks the response.
+
+                Cloud.PushNotifications.subscribeToken({
+                    device_token: DEVICE_TOKEN,
+                    channel: 'friend_request',
+                    type: 'ios'
+                }, function (e) {
+                    if (e.success) {
+                        alert('Success');
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
+    
       - platform: rest
         example: |
             Example cURL request:

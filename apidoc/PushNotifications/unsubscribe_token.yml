@@ -20,6 +20,23 @@ methods:
         type: String
         required: true
 
+    examples:
+      - platform: titanium
+        example: |
+            This example unsubscribes from a push notification channel and checks the response.
+            
+                Cloud.PushNotifications.unsubscribeToken({
+                    channel: 'friend_request',
+                    device_token: myPushDeviceToken
+                }, function (e) {
+                    if (e.success) {
+                        alert('Success');
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
+      
       - platform: rest
         example: |
             Example cURL request:
