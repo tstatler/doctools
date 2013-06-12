@@ -2,7 +2,30 @@
 
 ## 10 June 2013
 
-### Application User Session Expiration
+### Fixed Issues and Enhancements
+
+This update includes the following bug fixes and enhancements:
+
+  * Removed dependency between push notifications, and device and user registrations.
+    Users are no longer required to have an ACS account to receive push notifications.
+
+  * Fixed an issue where using special characters cause the query to fail.
+
+  * Website: Fixed an issue viewing relational field objects.
+    Relational field objects were being displayed as objects and not ID strings.
+
+  * Website: Fixed an issue viewing custom objects.
+    Some custom objects could not be viewed in the web interface.
+
+  * Website: Fixed an issue with SMTP settings.
+    If a TLS value was specified, it was not properly checked.
+
+### Future Behavior Changes
+
+In a future release, currently scheduled in a few months,
+the following changes are being made to user sessions and geo query.
+
+#### Application User Session Expiration
 
 An application user session never expires today.  We are introducing a policy of expiring and
 removing sessions that have been inactive for six months.
@@ -16,7 +39,7 @@ removed and any subsequent ACS call that requires user login such as `create.jso
 `remove.json` will get a 404 error. We recommend your application to handle an invalid user session
 error and prompt a login screen to the user to login again.
 
-### Geo Query
+#### Geo Query
 
 ACS currently supports MongoDB’s
 [$nearSphere](http://docs.mongodb.org/manual/reference/operator/nearSphere/) geo query.
@@ -35,24 +58,6 @@ For Events and Places, even if you never explicitly copied
 the `lnglat` value to `coordinates`, `lnglat` appears as the first element of `coordinates`.  Performing
 `$nearSphere` on the `coordinates` field returns a match if it matches the `lnglat` value.  `$nearSphere`
 query on `lnglat` or `coordinates` continues to work as before.
-
-### Fixed Issues and Enhancements
-
-This update includes the following bug fixes and enhancements:
-
-  * Removed dependency between push notifications, and device and user registrations.
-    Users are no longer required to have an ACS account to receive push notifications.
-
-  * Fixed an issue where using special characters cause the query to fail.
-
-  * Website: Fixed an issue viewing relational field objects.
-    Relational field objects were being displayed as objects and not ID strings.
-
-  * Website: Fixed an issue viewing custom objects.
-    Some custom objects could not be viewed in the web interface.
-
-  * Website: Fixed an issue with SMTP settings.
-    If a TLS value was specified, it was not properly checked.
 
 ## 26 Apr 2013 
 
