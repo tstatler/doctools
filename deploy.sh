@@ -161,7 +161,7 @@ if [ $include_modules ]; then
                  $APPC_MODULES/ti.nfc/apidoc $APPC_MODULES/ti.newsstand/apidoc $TIZEN_MODULE"
 
     if [ $addon_guidesdir ]; then
-        module_dirs+=" $DOCTOOLS/module"
+        module_dirs+=" $DOCTOOLS/modules"
     fi
 fi
 
