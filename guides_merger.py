@@ -13,6 +13,7 @@ def copy_node_html(node, basedir, destdir):
 	outpath = os.path.join(destdir, filename)
 	if os.path.exists(outpath):
 		print "ERROR: copy_node_html: Duplicate filename: %s" % filename
+		return
 	shutil.copyfile(os.path.join(basedir, filename), outpath)
 	for child_node in node.childNodes:
 		if child_node.nodeType == 1 and child_node.hasAttribute('href'): 
@@ -78,7 +79,7 @@ for node in addon_guides.documentElement.childNodes:
 		continue
 	if node.getAttribute('label') == 'Enterprise Features':
 		studio_nodes.append(node)
-	else:
+	elif node.getAttribute('label') != 'Quick Start':
 		top_level_nodes.append(node)
 	copy_node_html(node, os.path.dirname(options.addon), dest)
 
@@ -88,7 +89,7 @@ for node in main_guides.documentElement.childNodes:
 	# Copy HTML before manipulating the DOM -- addon guides are 
 	# already copied
 	copy_node_html(node, os.path.dirname(options.input), dest)
-	if node.getAttribute('label') == 'Titanium Studio':
+	if node.getAttribute('label') == 'Studio':
 		for new_node in top_level_nodes:
 			output_guides.documentElement.appendChild(new_node)
 		for child_node in node.childNodes:
