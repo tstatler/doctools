@@ -1,4 +1,4 @@
-----
+---
 name: Modules.Performance
 summary: Add-on module that provides support for real-time crash reporting and performance monitoring services.
 description: |
@@ -40,7 +40,7 @@ methods:
         Leaves a breadcrumb trail in your code to get a playback of events leading up to a crash.
     description: |
         These breadcrumbs are collected and passed to the Performance service.
-        The most recent 100 breadcrumbs are displayed before the crash occurred.
+        The most recent 100 breadcrumbs before the crash occurred are displayed on the Performance Dashboard.
     parameters:
       - name: breadcrumb
         type: String
