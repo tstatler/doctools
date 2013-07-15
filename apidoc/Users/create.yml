@@ -69,10 +69,25 @@ methods:
         description: User defined fields. See [Custom Data Fields](#!/guide/customfields).
         type: [ String, Hash ]
 
+      - name: acl_name
+        description: |
+            Name of an {@link ACLs} to associate with this object.
+
+            An ACL can be specified using `acl_name` or `acl_id`. The two parameters are
+            mutually exclusive.
+        type: String
+
+      - name: acl_id
+        description: |
+            ID of an {@link ACLs} to associate with this object.
+
+            An ACL can be specified using `acl_name` or `acl_id`. The two parameters are
+            mutually exclusive.
+        type: String
+
       - name: role    
         description: String representation of user role, for example, "teacher".
         type: String
-
 
       - name: template    
         description: |
