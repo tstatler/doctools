@@ -30,10 +30,10 @@ If the application was created, check to see if ACS keys were created for the ap
     Development and Production version of these items.  You can switch between the two by clicking the
     drop-down box in the top-right corner that displays either **Development** or **Production**.
 
-If you do *not* have ACS keys, you need to create a new application.
+If you do *not* have ACS keys, try to enable Cloud services again at a later time.
 
-If you do have ACS keys, you can either create a new application or manually enter the information
-in to the `tiapp.xml` file.  To manually enter this information:
+If you do have ACS keys, manually enter the ACS key information in the `tiapp.xml` file.
+To manually enter this information:
 
   1. Double-click your `tiapp.xml` file to open it in the **Editor**.
   2. Click the **tiapp.xml** tab in the lower-left corner of the **Editor**.
