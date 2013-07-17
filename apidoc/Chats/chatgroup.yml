@@ -1,6 +1,6 @@
 name: Chats
 methods:
-  - name: chatgroup
+  - name: get_chat_groups
     summary: List Chat Groups
     description: |
         Lists chat groups.
@@ -88,7 +88,7 @@ methods:
             Example cURL request:
             
                 Get a list of chat groups the current user belongs to, sorted by groups with most recent activity first.
-                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/chats/get_chat_groups.json?order=-updated_at&key;=<YOUR APP APP KEY>"
+                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/chats/get_chat_groups.json?order=-updated_at&key=<YOUR APP APP KEY>"
                 
             Example JSON response:
             

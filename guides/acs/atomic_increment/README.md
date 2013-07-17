@@ -144,7 +144,6 @@ If you apply $inc to multiple fields in one Update call, you will get error:
 
 The following ACS methods support the `$inc` operator:
 
-  * {@link Checkins#update}
   * {@link PhotoCollections#update}
   * {@link Events#update}
   * {@link Files#update}
@@ -153,6 +152,5 @@ The following ACS methods support the `$inc` operator:
   * {@link Places#update}
   * {@link Posts#update}
   * {@link Reviews#update}
-  * {@link Statuses#update}
   * {@link Users#update}
 

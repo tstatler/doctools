@@ -1,6 +1,6 @@
 name: SocialIntegrations
 methods:
-  - name: facebook_friends
+  - name: facebook_search_friends
     summary: Find Facebook Friends
     description: |
         Find the current user's Facebook Friends who also registered in the same App.

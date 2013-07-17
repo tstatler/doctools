@@ -1,6 +1,6 @@
 name: SocialIntegrations
 methods:
-  - name: unlinkexternal
+  - name: external_account_unlink
     summary: Unlink an external account
     description: |
         Disassociate an external account from a Appcelerator Cloud Services user
@@ -55,7 +55,7 @@ methods:
         example: |
             Example cURL request:
             
-                $ curl -b cookies.txt -c cookies.txt -X DELETE "https://api.cloud.appcelerator.com/v1/users/external_account_unlink.json?key=<YOUR APP APP KEY>&id;=1234567&type;=facebook"
+                $ curl -b cookies.txt -c cookies.txt -X DELETE "https://api.cloud.appcelerator.com/v1/users/external_account_unlink.json?key=<YOUR APP APP KEY>&id;=1234567&type=facebook"
                 
             Example JSON response:
             

@@ -5,8 +5,8 @@ methods:
 
     description: |
         Shows information about a collection including the cover photo, owner, parent
-        collection, and counts of its contents. See {@link PhotoCollections#subcollections Show
-        Subcollections} and {@link PhotoCollections#photos Show Photos} to view the contents 
+        collection, and counts of its contents. See {@link PhotoCollections#show_subcollections Show
+        Subcollections} and {@link PhotoCollections#show_photos Show Photos} to view the contents 
         of a collection.
         
     url: collections/show.json
@@ -60,7 +60,7 @@ methods:
         example: |
             Example cURL request:
             
-                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/collections/show.json?key=<YOUR APP APP KEY>&collection;_id=4e012ce0d0afbe362a00000a"
+                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/collections/show.json?key=<YOUR APP APP KEY>&collection_id=4e012ce0d0afbe362a00000a"
                 
             Example JSON response:
             

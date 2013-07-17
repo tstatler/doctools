@@ -102,7 +102,7 @@ methods:
                 
             Example JSON response:
             
-                $ curl -b c.txt -c c.txt -X GET --data-urlencode  'where=["user_id":"4f0fe764d9ca72833d000002", "name":"my_file"] "https://localhost/v1/files/query.json?key=<YOUR APP APP KEY>&order;=-created_at&per;_page=3"
+                $ curl -b c.txt -c c.txt -X GET --data-urlencode  'where=["user_id":"4f0fe764d9ca72833d000002", "name":"my_file"] "https://localhost/v1/files/query.json?key=<YOUR APP APP KEY>&order=-created_at&per_page=3"
                 {
                   "meta": {
                     "code": 200,

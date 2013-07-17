@@ -4,7 +4,7 @@ methods:
     summary: Show User Profile
     description: |
         Shows public user information. For private information about the currently
-        logged in user, see {@link Users#showme Show Logged In User Info}.
+        logged in user, see {@link Users#show_me Show Logged In User Info}.
     url: users/show.json
     login-required: false
 
@@ -61,7 +61,7 @@ methods:
         example: |
             Example cURL request:
                 
-                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/users/show.json?key=<YOUR APP APP KEY>&user;_id=4d6e77386f70950c89000001"
+                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/users/show.json?key=<YOUR APP APP KEY>&user_id=4d6e77386f70950c89000001"
             
             Example JSON response:
                 
