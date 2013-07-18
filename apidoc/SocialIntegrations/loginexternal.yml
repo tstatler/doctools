@@ -33,6 +33,22 @@ methods:
             validated  by the Appcelerator Cloud Services server.
         required: True
 
+      - name: acl_name
+        description: |
+            Name of an {@link ACLs} to associate with this object.
+
+            An ACL can be specified using `acl_name` or `acl_id`. The two parameters are
+            mutually exclusive.
+        type: String
+
+      - name: acl_id
+        description: |
+            ID of an {@link ACLs} to associate with this object.
+
+            An ACL can be specified using `acl_name` or `acl_id`. The two parameters are
+            mutually exclusive.
+        type: String
+
     response-parameters: 
       - name: users
         description: |
