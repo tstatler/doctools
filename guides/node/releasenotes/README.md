@@ -1,5 +1,17 @@
 # Node.ACS Release Notes
 
+## 18 July 2013 -- version 1.0.4
+
+  * Updated "The app is being deployed" message to display the application name.
+
+  * Added a check to prevent the application from including `acs` as a dependency.
+    `acs` is automatically installed by the server when the application is deployed.
+    This check was added to prevent possible version compatibility issues.
+
+  * Fixed an issue where setting the CNAME with the protocol prefix (`http://` or `https://`)
+    in the URL reported a 404 error. The CLI now reports the error as an invalid domain name.
+    Do not include the protocol prefix when setting the CNAME.
+
 ## 13 June 2013 -- version 1.0.3
 
   * Fixed an issue to support proxies requiring authentication.
