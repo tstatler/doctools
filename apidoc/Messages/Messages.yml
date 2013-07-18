@@ -675,7 +675,7 @@ methods:
   - name: show
     summary: Shows a Message
     description: Shows a message in the user's mailbox.
-    url: message/show.json
+    url: messages/show.json
     login-required: true
 
     parameters:
