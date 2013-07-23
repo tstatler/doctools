@@ -95,7 +95,7 @@ photo is still processing in the background. Once the photo has been
 processed, the `processed` flag will be set to `true` and the URLs 
 to access the photo are shown:
     
-    $ curl -b cookies.txt -c cookies.txt "http://api.cloud.appcelerator.com/v1/photos/show.json?key=gKr9bfv4nOlfKkqyh4UoAxpPvDqBPrSE&photo;_id=4eab39f7d3e986d677000001"
+    $ curl -b cookies.txt -c cookies.txt "http://api.cloud.appcelerator.com/v1/photos/show.json?key=gKr9bfv4nOlfKkqyh4UoAxpPvDqBPrSE&photo_id=4eab39f7d3e986d677000001"
     {
       "meta": {
         "status": "ok",
@@ -171,7 +171,7 @@ After processing, the photo will show URLs for the specified custom sizes:
 
     
     
-    $ curl -b cookies.txt -c cookies.txt "http://api.cloud.appcelerator.com/v1/photos/show.json?key=aKgDjsrxM2wqL9fjhS1nnvgvnTlRDdJn&photo;_id=4edc8af33ae7406bf7000003"  
+    $ curl -b cookies.txt -c cookies.txt "http://api.cloud.appcelerator.com/v1/photos/show.json?key=aKgDjsrxM2wqL9fjhS1nnvgvnTlRDdJn&photo_id=4edc8af33ae7406bf7000003"  
     {
       "meta": {
         "code": 200,
@@ -272,7 +272,7 @@ be set.
 
     
     
-    $ curl -b cookies.txt -c cookies.txt "http://api.cloud.appcelerator.com/v1/photos/show.json?key=aKgDjsrxM2wqL9fjhS1nnvgvnTlRDdJn&photo;_id=4edc8ff43ae7406bf7000008"
+    $ curl -b cookies.txt -c cookies.txt "http://api.cloud.appcelerator.com/v1/photos/show.json?key=aKgDjsrxM2wqL9fjhS1nnvgvnTlRDdJn&photo_id=4edc8ff43ae7406bf7000008"
     {
       "meta": {
         "code": 200,

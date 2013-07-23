@@ -49,7 +49,7 @@ methods:
         example: |
             Example cURL request:
             
-                $ curl -b cookies.txt -c cookies.txt --request DELETE "http://api.cloud.appcelerator.com/v1/keyvalues/delete.json?key=<YOUR APP APP KEY>&name;=welcome_message"
+                $ curl -b cookies.txt -c cookies.txt --request DELETE "http://api.cloud.appcelerator.com/v1/keyvalues/delete.json?key=<YOUR APP APP KEY>&name=welcome_message"
                 
             Example JSON response:
             

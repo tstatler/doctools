@@ -1,6 +1,6 @@
 name: Users
 methods:
-  - name: showme
+  - name: show_me
     summary: Show Current User Profile
     description: |
         Shows both public and private user information about the user who is

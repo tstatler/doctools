@@ -1,6 +1,6 @@
 name: SocialIntegrations
 methods:
-  - name: linkexternal
+  - name: external_account_link
     summary: Link an external Account
     description: |
         Associates an external account with an existing Appcelerator Cloud Services

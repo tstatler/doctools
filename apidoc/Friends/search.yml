@@ -91,7 +91,7 @@ methods:
         example: |
             Example cURL request:
             
-                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/friends/search.json?user_id=4e02e022d0afbe41ef000002&q;=alice%40gal.com&key;=<YOUR APP APP KEY>"
+                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/friends/search.json?user_id=4e02e022d0afbe41ef000002&q=alice%40gal.com&key=<YOUR APP APP KEY>"
                 
             Example JSON response:
             

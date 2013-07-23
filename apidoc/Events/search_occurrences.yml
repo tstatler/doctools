@@ -104,7 +104,7 @@ methods:
         example: |
             Example cURL request:
             
-                $ curl -b cookies.txt -c cookies.txt "http://api.cloud.appcelerator.com/v1/events/search/occurrences.json?key=<YOUR APP APP KEY>&place;_id=4d7e62d6d0afbe04170000a4"
+                $ curl -b cookies.txt -c cookies.txt "http://api.cloud.appcelerator.com/v1/events/search/occurrences.json?key=<YOUR APP APP KEY>&place_id=4d7e62d6d0afbe04170000a4"
                 
             Example JSON response:
             

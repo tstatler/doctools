@@ -5,7 +5,8 @@ methods:
     description: |
         Log a user in using their ACS credentials.
 
-        To log a user in using an external account, see {@link SocialIntegrations#loginexternal External Account Login}.
+        To log a user in using an external account, see {@link
+        SocialIntegrations#external_account_login External Account Login}.
 
         To log a user out, see {@link Users#logout logout}.
 

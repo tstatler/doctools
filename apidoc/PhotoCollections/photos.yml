@@ -1,6 +1,6 @@
 name: PhotoCollections
 methods:
-  - name: photos
+  - name: show_photos
     summary: Show Photos in a Collection
 
     description: |
@@ -75,7 +75,7 @@ methods:
         example: |
             Example cURL request:
             
-                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/collections/show/photos.json?key=<YOUR APP APP KEY>&collection;_id=4e004df9d0afbe2f18000010"
+                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/collections/show/photos.json?key=<YOUR APP APP KEY>&collection_id=4e004df9d0afbe2f18000010"
                 
             Example JSON response:
             
