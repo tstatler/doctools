@@ -20,6 +20,8 @@ methods:
         type: String
         required: true
 
+    examples:
+
       - platform: rest
         example: |
             Example cURL request:

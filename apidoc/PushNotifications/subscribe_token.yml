@@ -16,10 +16,6 @@ methods:
       - name: device_token
         description: |
             Android or iOS device token.
-
-            For Android, the length is 23 characters.
- 
-            For iOS, the length is 64 characters.
         type: String
         required: true
 
@@ -30,8 +26,12 @@ methods:
 
       - name: type
         description: |
-            Type of device, either `android` for Android devices or `ios` for iOS devices.
+            Selects the push type--either `android` for Android devices using the MQTT protocol, `gcm`
+            for Android devices using Google Cloud Messaging or `ios` for iOS devices
+            using Apple Push Notification Service.
         type: String
+
+    examples:
       
       - platform: rest
         example: |
