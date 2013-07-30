@@ -23,7 +23,9 @@ methods:
 
       - name: type
         description: |
-            Device type: "ios" or "android".
+            Selects the push type--either `android` for Android devices using the MQTT protocol,
+            `gcm` for Android devices using Google Cloud Messaging or `ios` for iOS devices
+            using Apple Push Notification Service.
         type: String
 
       - name: page  
