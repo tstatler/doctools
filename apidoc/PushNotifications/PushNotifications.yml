@@ -8,7 +8,25 @@ description: |
     or the [iOS SDK guide](#!/guide/ios) to set up your app for push notifications to
     Android or iOS.
 
-    For methods that require device tokens, to retrieve your device token using the Titanium SDK API:
+    The Push Notifications API provides two mechanisms to register and send push notifications.  One
+    relies on the user session, which requires the user to be logged in to receive push notifications.
+    The other method uses devices tokens, which does not require the user to be logged in to
+    receive notifications.
+
+    ### Push Notifications with Device Tokens
+
+    The methods with the `_token` suffix rely on the device's token to subscribe, receive, send or
+    unsubscribe from push notifications:
+
+      * {@link PushNotifications#subscribe_token}
+      * {@link PushNotifications#notify_tokens}
+      * {@link PushNotifications#unsubscribe_token}
+
+    To retrieve your device token using the Android or iOS SDK API, refer to the
+    Push Notifications sections of the [Android SDK guide](#!/guide/android)
+    or the [iOS SDK guide](#!/guide/ios).
+
+    To retrieve your device token using the Titanium SDK API:
 
       * For Android, use the
         [Titanium.CloudPush](http://docs.appcelerator.com/titanium/latest/#!/api/Titanium.CloudPush)
@@ -18,3 +36,16 @@ description: |
         [Titanium.Network.registerForPushNotifications](http://docs.appcelerator.com/titanium/latest/#!/api/Titanium.Network-method-registerForPushNotifications)
         method.
 
+    ### Push Notifications with User Sessions
+
+    The following methods require the user to be logged in to subscribe, receive or unsubscribe from
+    push notifications:
+
+      * {@link PushNotifications#subscribe}
+      * {@link PushNotifications#notify}
+      * {@link PushNotifications#unsubscribe}
+
+    To send push notifications, the `notify.json` method uses the user's ID.
+
+    You can also use the {@link Users#logout} method to unsubscribe from all push notifications by
+    specifying the `device_id` parameter.

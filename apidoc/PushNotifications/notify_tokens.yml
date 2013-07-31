@@ -52,6 +52,8 @@ methods:
         type: [String, Object]
         required: true
 
+    examples:
+
       - platform: rest
         example: |
             Example cURL request:

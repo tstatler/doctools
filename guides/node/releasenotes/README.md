@@ -1,6 +1,6 @@
 # Node.ACS Release Notes
 
-## 18 July 2013 -- version 1.0.4
+## 22 July 2013 -- version 1.0.4
 
   * Updated "The app is being deployed" message to display the application name.
 
