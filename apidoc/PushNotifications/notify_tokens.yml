@@ -54,6 +54,23 @@ methods:
 
     examples:
 
+      - platform: titanium
+        example: |
+            This example sends a push notification to a channel and checks the response.
+            
+                Cloud.PushNotifications.notifyTokens({
+                    channel: 'friend_request',
+                    to_tokens: TOKEN_LIST,
+                    payload: 'Welcome to push notifications'
+                }, function (e) {
+                    if (e.success) {
+                        alert('Success');
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
+    
       - platform: rest
         example: |
             Example cURL request:
