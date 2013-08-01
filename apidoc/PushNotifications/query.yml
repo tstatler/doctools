@@ -23,7 +23,9 @@ methods:
 
       - name: type
         description: |
-            Device type: "ios" or "android".
+            Selects the push type--either `android` for Android devices using the MQTT protocol,
+            `gcm` for Android devices using Google Cloud Messaging or `ios` for iOS devices
+            using Apple Push Notification Service.
         type: String
 
       - name: page  
@@ -57,7 +59,7 @@ methods:
         example: |
             Example cURL request:
             
-                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/push_notification/query.json?key=<YOUR APP APP KEY>&user;_id=4f5905b5d2951316a9000020"
+                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/push_notification/query.json?key=<YOUR APP APP KEY>&user_id=4f5905b5d2951316a9000020"
                 
             Example JSON response:
             

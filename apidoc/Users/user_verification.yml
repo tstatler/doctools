@@ -1,6 +1,6 @@
 name: Users
 methods:
-  - name: resend
+  - name: resend_confirmation
     summary: Re-send user email verification.
     description: |
         If you enabled new user account email verification in your App settings, all
@@ -50,7 +50,7 @@ methods:
         example: |
             Example cURL request:
             
-                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/users/resend_confirmation.json?key=<YOUR APP APP KEY>&email;=foo@foo.com"
+                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/users/resend_confirmation.json?key=<YOUR APP APP KEY>&email=foo@foo.com"
                 
             Example JSON response:
             

@@ -1,6 +1,6 @@
 name: SocialIntegrations
 methods:
-  - name: loginexternal
+  - name: external_account_login
     summary: Login with external account
     description: |
         Users can login using an external account such as Facebook, Twitter,
@@ -32,6 +32,22 @@ methods:
             Token provided by the external account. Currently only Facebook tokens are
             validated  by the Appcelerator Cloud Services server.
         required: True
+
+      - name: acl_name
+        description: |
+            Name of an {@link ACLs} to associate with this object.
+
+            An ACL can be specified using `acl_name` or `acl_id`. The two parameters are
+            mutually exclusive.
+        type: String
+
+      - name: acl_id
+        description: |
+            ID of an {@link ACLs} to associate with this object.
+
+            An ACL can be specified using `acl_name` or `acl_id`. The two parameters are
+            mutually exclusive.
+        type: String
 
     response-parameters: 
       - name: users

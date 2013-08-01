@@ -53,6 +53,7 @@ methods:
         required: true
 
     examples:
+
       - platform: titanium
         example: |
             This example sends a push notification to a channel and checks the response.

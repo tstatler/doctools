@@ -1,6 +1,6 @@
 name: Emails
 methods:
-  - name: send
+  - name: email_from_template
     summary: Send Emails
     description: |
         Send an email to a list of email addresses from your App. If you haven't

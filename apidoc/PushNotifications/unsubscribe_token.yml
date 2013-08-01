@@ -21,6 +21,7 @@ methods:
         required: true
 
     examples:
+
       - platform: titanium
         example: |
             This example unsubscribes from a push notification channel and checks the response.

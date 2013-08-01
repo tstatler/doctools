@@ -129,7 +129,7 @@ These methods differ from the `login` and `create` methods in several important 
     modal dialog, as shown in the sample above.
 
 *   The user's information is not returned in the response object. If you need information 
-    about the logged-in user, call the {@link Users#showme} method.
+    about the logged-in user, call the {@link Users#show_me} method.
 
 *   After a successful login, the OAuth access token is available in `Cloud.accessToken`. 
     If desired, you can persist this value in a secure method and restore it when the application

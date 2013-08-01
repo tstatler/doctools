@@ -5,7 +5,7 @@ methods:
 
     description: |
         Search for top-level collections owned by the given user. Subcollections cannot
-        be found this way. See {@link PhotoCollections#subcollections Show Subcollections} to view the
+        be found this way. See {@link PhotoCollections#show_subcollections Show Subcollections} to view the
         subcollections of a collection.
         
     url: collections/search.json
@@ -71,7 +71,7 @@ methods:
         example: |
             Example cURL request:
             
-                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/collections/search.json?user_id=4e004e4ed0afbe2f1800003c&key;=<YOUR APP APP KEY>"
+                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/collections/search.json?user_id=4e004e4ed0afbe2f1800003c&key=<YOUR APP APP KEY>"
                 
             Example JSON response:
             

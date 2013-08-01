@@ -47,7 +47,7 @@ methods:
         example: |
             Example cURL request:
             
-                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/acls/show.json?key=<YOUR APP APP KEY>&name;=access_photo_album"
+                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/acls/show.json?key=<YOUR APP APP KEY>&name=access_photo_album"
                 
             Example JSON response:
             

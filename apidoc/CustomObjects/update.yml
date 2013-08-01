@@ -126,7 +126,7 @@ methods:
         example: |
             Example cURL request:
             
-                $ curl -b cookies.txt -c cookies.txt -X PUT --data-urlencode 'fields={"color":"purple", "purchased_at":null, "mileage":10000}' "https://api.cloud.appcelerator.com/v1/objects/car/update.json?key=<YOUR APP APP KEY>&id;=4ec42de1d9ca72c50700000d"
+                $ curl -b cookies.txt -c cookies.txt -X PUT --data-urlencode 'fields={"color":"purple", "purchased_at":null, "mileage":10000}' "https://api.cloud.appcelerator.com/v1/objects/car/update.json?key=<YOUR APP APP KEY>&id=4ec42de1d9ca72c50700000d"
                 
             Example JSON response:
             

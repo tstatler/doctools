@@ -161,11 +161,65 @@ for (int i=0;i&lt;users.length();i++) {
 }
 </pre>
 
-<h2>Push Notification</h2>
+<h2>Push Notifications</h2>
 
-<h3>Configure Your App For Enabling Push Notification</h3>
-<p>1. Open <a target="_blank" href="https://cloud.appcelerator.com/apps">https://cloud.appcelerator.com/apps</a> and select a proper app from "My Apps" list;</p>
-<p>2. Click on "App Settings", in the "Android Push Configuration" section, fill in your android app's package name for the "Application Package" item; then save the change.</p>
+<h3>Configure Your App For Enabling Push Notifications</h3>
+
+<p>
+ACS supports two protocols to send push notifications to Android devices:
+<ul>
+<li>Google Cloud Messaging (GCM)</li>
+<li>MQTT</li>
+</ul>
+</p>
+
+<p>
+To use GCM, you need to create a Google API project to obtain a <b>Google API key</b> and <b>GCM sender ID</b>.
+For instructions on creating and obtaining these items, see
+<a href="http://developer.android.com/google/gcm/gs.html">Getting Started with GCM</a> and follow the
+directions in "Creating a Google API Project", "Enabling the GCM Service" and "Obtaining an API Key".
+</p>
+
+<p>
+When creating a new server key, you are asked for a list of IP addresses to accept requests from.
+Do not enter any information in the textbox and click <b>Create</b> to accept all IP addresses.
+</p>
+
+<p>
+To use MQTT, you need your Android application's package name. MQTT support is only available for
+the non-enterprise version of ACS.
+</p>
+
+<p>
+To configure your application to use either GCM or MQTT, open up your application in the ACS web
+console and configure your settings in the <b>Android Push Configuration</b> section:
+
+<p>
+1. To open your application in the ACS web console:<ul>
+<li>For Appcelerator Enterprise users, open
+<a href="https://dashboard.appcelerator.com">https://dashboard.appcelerator.com</a>,
+select an application from the <b>Apps</b> drop-down list, then click the <b>Cloud</b> tab.</li>
+<li>For all other users, open
+<a href="https://cloud.appcelerator.com/apps">https://cloud.appcelerator.com/apps</a>,
+locate your application, then click the <b>Manage ACS</b> link.</li>
+</ul>
+</p>
+<p>
+2. Click either <b>Settings</b> (non-enterprise version) or <b>Configuration & Settings</b>
+(enterpirse version).</li>
+</p>
+<p>
+3. In the <b>Android Push Configuration</b> section, configure either GCM or MQTT :
+<ul>
+<li>For GCM, enter your Google API key in the <b>Google Cloud Messaging (GCM) API Key</b>
+textbox and GCM sender ID in the <b>Google Cloud Messaging (GCM) Sender ID</b> textbox.</li>
+<li>For MQTT, enter your package name in the <b>Application Package (MQTT)</b> textbox. Only
+configurable for non-enterprise users.</li>
+</ul>
+</p>
+<p>
+4. Save the changes to complete the configuration process.
+</p>
 
 {@img android_push.png}
 	

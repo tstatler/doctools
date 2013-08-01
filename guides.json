@@ -91,6 +91,12 @@
                   "description": "Using the MongoDB $inc operator."
               },
               {
+                  "name": "troubleshooting",
+                  "url": "guides/acs/troubleshooting",
+                  "title": "Troubleshooting",
+                  "description": "Troubleshooting guide."
+              },
+              {
                   "name": "acs_releasenotes",
                   "url": "guides/acs/releasenotes",
                   "title": "ACS Release Notes",

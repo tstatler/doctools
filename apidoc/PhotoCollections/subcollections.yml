@@ -1,6 +1,6 @@
 name: PhotoCollections
 methods:
-  - name: subcollections
+  - name: show_subcollections
     summary: Show Subcollections
     description: |
         Show subcollections of a collection.
@@ -70,7 +70,7 @@ methods:
         example: |
             Example cURL request:
             
-                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/collections/show/subcollections.json?key=<YOUR APP APP KEY>&collection;_id=4e004df9d0afbe2f18000010"
+                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/collections/show/subcollections.json?key=<YOUR APP APP KEY>&collection_id=4e004df9d0afbe2f18000010"
                 
             Example JSON response:
             
