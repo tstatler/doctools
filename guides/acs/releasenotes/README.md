@@ -1,5 +1,17 @@
 # ACS Release Notes
 
+## 1 August 2013
+
+### Google Cloud Messaging for Android Push Notifications
+
+ACS now supports Google Cloud Messaging (GCM) for push notifications on Android devices.
+
+For instructions on setting up GCM, see the "Configure Your App For Enabling Push Notifications"
+subsection under the "Push Notifications" section of the [Android SDK guide](#!/guide/android).
+
+To send push notifications, refer to [PushNotifications](#!/api/PushNotifications).
+
+
 ## 10 June 2013
 
 ### Fixed Issues and Enhancements
