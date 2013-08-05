@@ -6,6 +6,7 @@
     * [Tail active application logs](#!/guide/node_cli_logcat)
     * [List application logs](#!/guide/node_cli_loglist)
     * [Set CNAME for application](#!/guide/node_cli_cname)
+    * [Configures cloud resources for the app](#!/guide/node_cli_config)
     * [List application's access log](#!/guide/node_cli_accesslog)
     * [List applications](#!/guide/node_cli_list)
     * [Unpublish application](#!/guide/node_cli_unpublish)

@@ -164,6 +164,12 @@
                         "description": "Set a Custom Domain Name For an Application"
                     },
                     {
+                        "name": "node_cli_config",
+                        "title": "config -- Configures the Cloud servers for an Application",
+                        "url": "guides/node/cli/config",
+                        "description": "Configures the Cloud servers for an Application"
+                    },
+                    {
                         "name": "node_cli_list",
                         "title": "list -- List Applications",
                         "url": "guides/node/cli/list",
