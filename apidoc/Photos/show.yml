@@ -88,11 +88,13 @@ methods:
                   }	
                 }
                 
-            Please refer to [Photo Downloads](../../../ios#photodownloads) to see how
-            retrieve the actual image from a CCPhoto object.
             
       - platform: ios
         example: |
+
+            Refer to the "Photo Downloads" section of the [iOS SDK guide](#!/guide/ios) to see how
+            to retrieve the actual image from a CCPhoto object.
+
             Example iOS call:
             
                 NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:(CCPhoto *)photo.objectId, @"photo_id", nil];

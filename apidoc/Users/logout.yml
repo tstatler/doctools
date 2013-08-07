@@ -10,8 +10,8 @@ methods:
       - name: device_token
         description: |
             If specified, all push subscriptions associated with this device token are
-            canceled. See [Android Push Notifications](#!/guide/sdks/android#push) for more
-            information.
+            canceled. See the "Push Notifications" section in the
+            [Android SDK guide](#!/guide/sdks/android) for more information.
 
     examples:
       - platform: titanium

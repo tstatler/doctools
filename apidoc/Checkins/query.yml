@@ -34,14 +34,14 @@ methods:
         description: |
             Constraint values for fields. `where` should be encoded JSON.
             
-            If `where` is not specified, `query` returns all objects. See
-            [using where query](#!/guide/search_query#where) for more information.
+            If `where` is not specified, `query` returns all objects.
+            See the [Search and Query guide](#!/guide/search_query) for more information.
         type: String
 
       - name: order
         description: |
-            Sort results by one or more fields. See
-            [using order in query](#!/guide/search_query#order) for more information
+            Sort results by one or more fields.
+            See the [Search and Query guide](#!/guide/search_query) for more information.
         type: String
 
       - name: response_json_depth
@@ -158,8 +158,6 @@ methods:
                     ]
                   }	
                 }
-                
-            Refer to [Custom Fields on IOS](docs/search_query#ios) for more details.
             
       - platform: ios
         example: |

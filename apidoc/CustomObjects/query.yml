@@ -53,15 +53,15 @@ methods:
 
             *   `updated_at: Date`. Timestamp when the object was updated.
             
-            If `where` is not specified, `query` returns all objects. Please refer to 
-            [using where query](#!/docs/search_query#where) for more information.
+            If `where` is not specified, `query` returns all objects.
+            See the [Search and Query guide](#!/guide/search_query) for more information.
         type: String
 
       - name: order
         description: |
             Sort results by one or more fields, specified as a comma-separated list of 
-            field names. Refer to 
-            [using order in query](#!/guide/search_query#order) for more information.
+            field names.
+            See the [Search and Query guide](#!/guide/search_query) for more information.
 
             Fields with data type Array or Hash cannot be sorted. Custom objects include 
             two predefined sortable fields:
