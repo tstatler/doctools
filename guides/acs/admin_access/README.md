@@ -80,12 +80,11 @@ specify the `user_id` parameter to an ID of another user as part of the create m
 the admin user creates an object on behalf of that user. The `user` parameter for the object
 will be reported as the other user not the admin user.
 
-This admin operation is supported on any create, update and delete method, plus the following methods:
+This admin operation is supported by any create, update and delete method, plus the following methods:
 
  * {@link KeyValues#append}
  * {@link KeyValues#incrby}
  * {@link KeyValues#set}
- * {@link PhotoCollections#update}
  * {@link PushNotifications#subscribe}
 
 For example, the following curl command creates a new status for the specified user:
