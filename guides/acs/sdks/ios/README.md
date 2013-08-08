@@ -232,7 +232,7 @@ create.
   7. Upload your CSR and click **Generate**.
   8. You will be returned to the Certificates page with the status listed as Pending. Wait a moment then
      refresh the page in your browser.
-  9. Even though you are logged in as the Team Agent or Admin, you will need to approve your certificate.
+  9. Even though you are logged in as the Team Agent or Admin, you may need to approve your certificate.
      Click **Approve**.
  10. Download the certificate (.cer) file to your computer.
  11. Double-click the file to install it into your keychain.
@@ -266,13 +266,13 @@ Upload your PKCS #12 (.p12) file to ACS to enable Apple Push Notification servic
      top-right corner of the console, this is either a drop-down (enterprise version) or a set of two
      buttons (non-enterprise version).
 
-  3. Click either **Configuration & Settings** (enterprise version) or **Settings** (non-enterpirse version).
+  3. Click either **Configuration & Settings** (enterprise version) or **Settings** (non-enterprise version).
 
   4. Under the **Apple iOS Push Configuration** section, click **Choose File**, navigate to and select
      your PKCS #12 file, then click **Open**.
 
-  5. You may optionally enter your certificate password in the password textbox to verify
-     the certificate file.  This password will not be saved by ACS.
+  5. Enter your certificate password in the password textbox. This is required despite the optional
+     note or hint text.
 
   6. Save your changes.
 
@@ -285,17 +285,20 @@ ACS will verify that the certificate uploaded correctly and is valid.
 ### Create a Provisioning Profile
 
 You need to create a provisioning profile to embed in your application.  This verifies the
-integrity of the application to run on certain devices based on the information within the profile,
+integrity of the application based on the information within the profile,
 such as the App ID and certificate you created previously.
 
-These directions cover how to generate a provisioning profile for Development, Ad Hoc and App Store distribution.
+These directions cover how to generate a provisioning profile for Development, Ad Hoc, In House and App Store distribution.
+If you are distributing as a member of the iOS Developer Enterprise Program, you will have the
+**In House** distribution option instead of the **App Store** option.
 Only steps #4 and #7 differ based on which profile you create.
 
   1. Log in to the [Apple Developer Member Center](https://developer.apple.com/membercenter/) as the Team Agent or Admin.
   2. Click the link under **Certificates, Identifiers & Profiles**.
   3. Click **Provision Profiles**, then click the plus sign (**+**) button near the top-right corner.
   4. For testing, select **iOS App Development**, and for production, select either **App Store** to distribute to the
-     App Store or **Ad Hoc** to distribute to a limited number of devices, then click **Continue**.
+     App Store, **Ad Hoc** to distribute to a limited number of devices or **In House** for in house
+     distribution to your company's employees, then click **Continue**.
   5. Select the App ID you created previously from the drop-down list, then click **Continue**.
   6. Select the certificate you created previously, then click **Continue**.
   7. For development and ad hoc distributions, select the devices you want to be able to run the app on, then click
