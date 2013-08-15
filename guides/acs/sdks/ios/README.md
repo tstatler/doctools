@@ -185,72 +185,129 @@ Once ACS is initialized, you can access it by calling:
     
 ## Push Notification
 
-### Provisioning your Device for specialized Development
+To enable Apple Push Notification service for your application, create an
+Apple Push Notification certificate and upload the certificate to the ACS server.
 
 Note that Apple push notifications do **not** work on simulators. 
 
-To configure your device for testing notifications, follow the instructions in
-Apple's [Local and Push Notification Programming Guide](http://developer.apple.com/library/ios/#documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/Introduction.html)
-if you haven't already done so.
+For information about iOS push notifications, see
+[iOS Developer Library: Local and Push Notification Programming Guide](http://developer.apple.com/library/ios/#documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/Introduction.html).
 
-### Create Push Notification Certificates for Development and Production
+### Create and Upload a Push Notification Certificate
 
-Log into the [iOS Provisioning
-Portal](https://developer.apple.com/ios/manage/overview/index.action). Go to
-the **App IDs** section, create a new App or select an existing app, and click
-**Configure**. Make sure to log in to Apple's developer site as Team Agent to
-access team provisioning profiles.  
-  
-{@img ios_push.png}  
-  
-Check the **Enable for Apple Push Notification service** checkbox. Next, click
-**Configure** to walk through the Apple Certificate Assistant wizard. Finally,
-click the download button to get the file.  
-{@img ios_push2.png}  
-  
-Create a development certificate for development purpose. You will need to
-create a production certificate before you release your app to the app store.
-Double click on the downloaded `app_developer_identity.cer` to install it in
-your login keychain. Once it's installed, you can see it in the **My
-Certificates** category.  
-  
-{@img ios_push3.png}  
-  
-If your certificate doesn't show up in the **My Certificates** Category. Try to
-drag the `app_developer_identity.cer` file to keychain under **Certificates**
-Category. You will not be able to export the certificate until it shows up in
-the **My Certificates** Category.  
-Next, select the **My Certificate** Category and select the newly installed push
-certificate. Once selected, go to the **File** menu and select **Export Items**.
-to save it as a .p12 file.  
-  
-{@img ios_push4.png}  
-  
-Now you can go to the **App Settings** in your ACS App console and
-upload your .p12 file. Wait till the upload is finished and ACS
-verifies that upload is successful and the certificate file is valid. You may
-want to submit your certificate file password along with the certificate file
-if have to, the password is only for verifying the certificate file, it won't
-be persisted in ACS server.  
+To create an Apple Push Notification certificate, you need to first create an Explicit App ID.  The
+App ID is used to identify where to send the push notification, which is tied to the certificate
+when you create it.  After you create the certificate, export the certificate to PKCS #12 format and
+upload it to the ACS server. This certificate allows the ACS server to communicate with the Apple
+Push Notification server to send push notifications to iOS devices.
 
-You can upload both your development and production certificate files but you
-will only be able to choose to use one at a time. Make sure to switch to use
-the production certificate before you submit your app to Apple for review. If
-you want to test the push notification in production environment before you
-submit your app, set the ACS app to use production certificate
-and install ad-hoc release on your device.  
-  
-{@img ios_push5.png}  
+#### Register an App ID
 
-### Update your provisional profile
+  1. Log in to the [Apple Developer Member Center](https://developer.apple.com/membercenter/) as the Team Agent or Admin.
+  2. Click the link under **Certificates, Identifiers & Profiles**.
+  3. Click **Identifiers**, then click the plus sign (**+**) button near the top-right corner.
+  4. Enter a description, which cannot include special characters (including most punctuation).
+  5. Select the App ID Prefix to use.
+  6. For the App ID Suffix, choose **Explicit App ID** and enter your Bundle ID. For Titanium
+     applications, this is your Application ID from the `tiapp.xml` file.
+  7. Under App Services, check the **Push Notifications** checkbox to enable push notifications for
+     this App ID.
+  8. Click **Continue**, **Submit**, then **Done**.
 
-You'll need to regenerate your provisioning profile if you just enabled push
-notifications for your app. In the [iOS Provisioning
-Portal](https://developer.apple.com/ios/manage/overview/index.action), click
-**Provisioning** and find the profile you've been using. To ensure that
-the profile gets regenerated, edit a field and set it back to its original
-value if necessary. Once that's done, download the new profile and install it
-in Xcode as usual.
+Note: You cannot use a **Wildcard App ID** for an application with push notifications.
+
+#### Generate an Apple Push Notification Certificate
+
+These directions cover how to generate an Apple Push Notification certificate for both testing
+(Development) and production (Distribution).  Only step #4 differs based on which certificate you
+create.
+
+  1. Log in to the [Apple Developer Member Center](https://developer.apple.com/membercenter/) as the Team Agent or Admin.
+  2. Click the link under **Certificates, Identifiers & Profiles**.
+  3. Click **Certificates**, then click the plus sign (**+**) button near the top-right corner.
+  4. For testing, select **Apple Push Notification service SSL (Sandbox)** and for production,
+     select **Apple Push Notification service SSL (Production)**, then click **Continue**.
+  5. Select the App ID that you created previously from the drop-down list, then click **Continue**.
+  6. Follow the directions to create a Certificate Signing Request (CSR). Click **Continue**.
+  7. Upload your CSR and click **Generate**.
+  8. You will be returned to the Certificates page with the status listed as Pending. Wait a moment then
+     refresh the page in your browser.
+  9. Even though you are logged in as the Team Agent or Admin, you may need to approve your certificate.
+     Click **Approve**.
+ 10. Download the certificate (.cer) file to your computer.
+ 11. Double-click the file to install it into your keychain.
+
+#### Export the Certificate
+
+  1. Open your Keychain.  Select **Applications** > **Utitlies** > **Keychain Access**.
+  2. Under Categories on the left side, click **My Certificates**.
+  3. Right-click the certificate you installed previously and select **Export**.
+  4. In the **File Format** drop-down, select **Personal Information Exchange (.p12)**.
+  5. Click **Save**.
+  6. You are prompted to enter a password for the file. Enter a password, then click **Save**.
+
+Keychain exports your certificate as a PKCS #12 file.
+
+#### Configure the ACS Web Console
+
+Upload your PKCS #12 (.p12) file to ACS to enable Apple Push Notification service.
+
+  1. To open your application in the ACS web console:
+
+     >  For Appcelerator Enterprise users, open
+     >  [https://dashboard.appcelerator.com](https://dashboard.appcelerator.com), select an application
+     >  from the **Apps** drop-down list, then click the **Cloud** tab.
+     >
+     >  For all other users, open
+     >  [https://cloud.appcelerator.com/apps](https://cloud.appcelerator.com/apps), locate your application, then click
+     >  the **Manage ACS** link.
+
+  2. Select the correct environment to configure--either Development or Production.  Located in the
+     top-right corner of the console, this is either a drop-down (enterprise version) or a set of two
+     buttons (non-enterprise version).
+
+  3. Click either **Configuration & Settings** (enterprise version) or **Settings** (non-enterprise version).
+
+  4. Under the **Apple iOS Push Configuration** section, click **Choose File**, navigate to and select
+     your PKCS #12 file, then click **Open**.
+
+  5. Enter your certificate password in the password textbox. This is required despite the optional
+     note or hint text.
+
+  6. Save your changes.
+
+ACS will verify that the certificate uploaded correctly and is valid.
+
+{@img ios_push1.png}
+
+{@img ios_push2.png}
+
+### Create a Provisioning Profile
+
+You need to create a provisioning profile to embed in your application.  This verifies the
+integrity of the application based on the information within the profile,
+such as the App ID and certificate you created previously.
+
+These directions cover how to generate a provisioning profile for Development, Ad Hoc, In House and App Store distribution.
+If you are distributing as a member of the iOS Developer Enterprise Program, you will have the
+**In House** distribution option instead of the **App Store** option.
+Only steps #4 and #7 differ based on which profile you create.
+
+  1. Log in to the [Apple Developer Member Center](https://developer.apple.com/membercenter/) as the Team Agent or Admin.
+  2. Click the link under **Certificates, Identifiers & Profiles**.
+  3. Click **Provision Profiles**, then click the plus sign (**+**) button near the top-right corner.
+  4. For testing, select **iOS App Development**, and for production, select either **App Store** to distribute to the
+     App Store, **Ad Hoc** to distribute to a limited number of devices or **In House** for in house
+     distribution to your company's employees, then click **Continue**.
+  5. Select the App ID you created previously from the drop-down list, then click **Continue**.
+  6. Select the certificate you created previously, then click **Continue**.
+  7. For development and ad hoc distributions, select the devices you want to be able to run the app on, then click
+     **Continue**.
+  8. Enter a name for your provisioning profile. You should use a word like "dev", "distribution" or "ad hoc" in
+     the name so that it is clear later what this profile is for. Click **Generate**.
+  9. Click **Download** to save your provisioning profile file (.mobileprovision) to your computer, then
+     click **Done**.
+ 10. Double-click the provisioning profile file to install it to Xcode.
 
 ### Update your code to register for push notifications
 
