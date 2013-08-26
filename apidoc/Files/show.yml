@@ -8,7 +8,7 @@ methods:
 
     parameters:
       - name: file_id
-        description: ID of the file to delete.
+        description: ID of the file to retrieve information for.
         type: String
         required: true
 

@@ -163,8 +163,6 @@ methods:
                   }
                 }
                 
-            Refer to [Custom Fields on IOS](docs/search_query#ios) for more details.
-            
       - platform: ios
         example: |
             Example iOS call:

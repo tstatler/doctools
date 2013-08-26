@@ -75,8 +75,8 @@ methods:
 
       - name: photo_sizes
         description: |
-            User-defined photo sizes. See [Photo Uploading &
-            Sizes](#!/guide/photosizes#custom).  Sizes be specified as a JSON object, or using a separate parameter for each
+            User-defined photo sizes. See [Photo Uploading & Resizings](#!/guide/photosizes).
+            Sizes be specified as a JSON object, or using a separate parameter for each
             size. To specify a photo size called "preview" using JSON:
 
                 photo_size : { "preview" : "120x120#" } 
@@ -91,7 +91,7 @@ methods:
 
       - name: photo_sync_sizes
         description: |
-            Synchronous photo sizes to upload. See [Photo Uploading & Sizes](#!/guide/photosizes#sync).
+            Synchronous photo sizes to upload. See [Photo Uploading & Resizings](#!/guide/photosizes).
 
             The literal name for this parameter is `photo_sync_sizes[]`. This parameter can be specified 
             multiple times, once for each photo size that must be created before the request returns. 

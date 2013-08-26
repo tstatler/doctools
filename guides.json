@@ -51,7 +51,7 @@
               {
                   "name": "customfields",
                   "url": "guides/acs/customfields",
-                  "title": "Custom Fields and Custom Objects",
+                  "title": "Custom Objects and Fields",
                   "description": "Using custom fields and custom objects."
               },
               {
@@ -69,7 +69,7 @@
               {
                   "name": "photosizes",
                   "url": "guides/acs/photosizes",
-                  "title": "Photo Uploads and Photo Resizing",
+                  "title": "Photo Uploading & Resizing",
                   "description": "How to upload and resize photos."
               },
               {

@@ -86,7 +86,7 @@ methods:
 
       - name: photo_sync_sizes[]
         description: |
-            Synchronous photo sizes to upload. See [Photo Uploading & Sizes](#!/guide/photosizes#sync).
+            Synchronous photo sizes to upload. See [Photo Uploading & Resizing](#!/guide/photosizes).
 
             The literal name for this parameter is `photo_sync_sizes[]`. This parameter can be specified 
             multiple times, once for each photo size that must be created before the request returns. 
@@ -151,11 +151,11 @@ methods:
                   }	
                 }	
                 
-            Please refer to [Photo Downloads](../../../ios#photodownloads) to see how
-            retrieve the actual image from a CCPhoto object.
-            
       - platform: ios
         example: |
+            Refer to the "Photo Downloads" section of the [iOS SDK guide](#!/guide/ios) to see how
+            to retrieve the actual image from a CCPhoto object.
+
             Example iOS call:
             
                 NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
