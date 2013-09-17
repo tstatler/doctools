@@ -46,7 +46,9 @@ fetch, it cannot be greater than 1000. `skip` must be used together with
 
 ### where
 
-Constrains values for fields. `where` should be encoded JSON. 
+Constrains values for fields. `where` should be encoded JSON. Each value in the search query needs
+to be less that 1024 bytes.  If the value is larger than 1024 bytes, the query does not return any
+results.
 
 For each type of object,
 there is a set of predefined fields that can be queried using the `where` operator. (See the 
