@@ -84,11 +84,15 @@ types or an incorrect naming convention will be silently ignored.
 <table class="doc-table">
 	<tr><th>Type</th><th>Example</th>
 	<tr>
+		<td>Boolean&nbsp;&nbsp;&nbsp;&nbsp;</td>
+		<td>true or false</td>
+	</tr>
+	<tr>
 		<td>String&nbsp;&nbsp;&nbsp;&nbsp;</td>
 		<td>"blue"</td>
 	</tr>
 	<tr>
-		<td>Numeric&nbsp;&nbsp;&nbsp;&nbsp;</td>
+		<td>Number&nbsp;&nbsp;&nbsp;&nbsp;</td>
 		<td>23 or 1.234</td>
 	</tr>
 	<tr>
@@ -183,7 +187,7 @@ object's custom fields. Here is the mapping of data types in iOS:
 			<td>NString</td>
 		</tr>
 		<tr>
-			<td>Numeric&nbsp;&nbsp;&nbsp;&nbsp;</td>
+			<td>Number&nbsp;&nbsp;&nbsp;&nbsp;</td>
 			<td>123 or 1.234</td>
 			<td>[NSNumber numberWithInt:] or [NSNumber numberWithDouble:]&nbsp;&nbsp;&nbsp;&nbsp;</td>
 		</tr>

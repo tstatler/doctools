@@ -6,7 +6,9 @@ methods:
         Query custom object by specified fields with sorting and paginating. Right
         now, you cannot query or sort data stored inside array or hash in custom
         fields.
-        
+
+        For details about using the query parameters,
+        see the [Search and Query guide](#!/guide/search_query).
     url: objects/:class_name/query.json
 
     parameters:
@@ -54,8 +56,7 @@ methods:
             *   `updated_at: Date`. Timestamp when the object was updated.
             
             If `where` is not specified, `query` returns all objects.
-            See the [Search and Query guide](#!/guide/search_query) for more information.
-        type: String
+        type: Hash
 
       - name: order
         description: |
@@ -81,6 +82,16 @@ methods:
                 "order": "make,-created_at"
 
         type: String
+
+      - name: sel
+        description: |
+            Selects the object fields to display.
+        type: Hash
+
+      - name: unsel
+        description: |
+            Selects the object fields NOT to display.
+        type: Hash
 
       - name: response_json_depth
         description: |

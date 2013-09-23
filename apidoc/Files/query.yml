@@ -15,6 +15,9 @@ methods:
 
         *   `updated_at: Date`. Timestamp when the file was last updated.
 
+        For details about using the query parameters,
+        see the [Search and Query guide](#!/guide/search_query).
+
     url: files/query.json
 
     parameters:
@@ -43,14 +46,22 @@ methods:
             Constraint values for fields. `where` should be encoded JSON.
             
             If `where` is not specified, `query` returns all objects.
-            See the [Search and Query guide](#!/guide/search_query) for more information.
-        type: String
+        type: Hash
 
       - name: order
         description: |
             Sort results by one or more fields.
-            See the [Search and Query guide](#!/guide/search_query) for more information.
         type: String
+
+      - name: sel
+        description: |
+            Selects the object fields to display.
+        type: Hash
+
+      - name: unsel
+        description: |
+            Selects the object fields NOT to display.
+        type: Hash
 
       - name: response_json_depth
         description: |

@@ -20,7 +20,7 @@ prefixed, if you wish to perform your own custom search, please use query API.
 Query provides an interface to apply DB query constrains on predefined fields
 as well as [custom fields](#!/guide/customfields). When no parameters are
 provided, query will simply return all objects with default pagination. The
-following is a list of parameters supported.
+following is a list of parameters supported:
 
   * page
   * per_page
@@ -28,6 +28,8 @@ following is a list of parameters supported.
   * where
   * geo query
   * order
+  * sel
+  * unsel
 
 ### page
 
@@ -53,8 +55,9 @@ there is a set of predefined fields that can be queried using the `where` operat
 individual `query` methods for details.) 
 
 In addition, you can query the custom fields on any object. Note, however, that you can only query
-simple values, such as strings, Numbers, or Booleans. If a custom field takes an array or object as a 
-value, you can't query any of the values stored inside the array or object.
+simple values, such as Strings, Dates, Numbers, or Booleans. If a custom field takes an array or object as a
+value, you can't query any of the values stored inside the array or object.  For more information,
+see the "Data Types" section in the [Custom Object and Data Fields guide](#!/guide/customfields).
 
 Currently, ACS does not support case insensitive query. To perform case insensitive query 
 on a field, save an additional normalized copy of the original field and perform the query on the
@@ -201,6 +204,30 @@ to sort results by first_name in ascending order then created_at in descending
 order:
     
     order=first_name,-created_at
+
+### sel
+
+Selects which fields to return from the query. Do not use this parameter if you are using the
+`unsel` parameter.
+
+Assign an array of field names to filter to the `all` field to search all JSON fields including
+fields in nested objects.  Currently, this is the only supported option.
+
+For example, if you want to only return the `first_name` field:
+
+    sel={"all":["first_name"]}
+
+### unsel
+
+Deselects which fields to not return from the query. Do not use this parameter if you are using the
+`sel` parameter.
+
+Assign an array of field names to filter to the `all` field to search all JSON fields including
+fields in nested objects.  Currently, this is the only supported option.
+
+For example, if you want to return all fields except `first_name`:
+
+    unsel={"all":["first_name"]}
 
 ## Availability
 

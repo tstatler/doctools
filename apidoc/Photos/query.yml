@@ -19,6 +19,9 @@ methods:
         *   `created_at: Date`. Timestamp when the photo was created.
         *   `updated_at: Date`. Timestamp when the photo was updated.
 
+        For details about using the query parameters,
+        see the [Search and Query guide](#!/guide/search_query).
+
     url: photos/query.json
 
     parameters:
@@ -46,15 +49,23 @@ methods:
         description: |
             Constraint values for fields. `where` should be encoded JSON.
             
-            If `where` is not specified, `query` returns all objects. See
-            [Search and Query](#!/guide/search_query) for more information.
-        type: String
+            If `where` is not specified, `query` returns all objects.
+        type: Hash
 
       - name: order
         description: |
-            Sort results by one or more fields. Please refer to 
-            [Search and Query](#!/guide/search_query) for more information
+            Sort results by one or more fields.
         type: String
+
+      - name: sel
+        description: |
+            Selects the object fields to display.
+        type: Hash
+
+      - name: unsel
+        description: |
+            Selects the object fields NOT to display.
+        type: Hash
 
       - name: response_json_depth
         description: |
