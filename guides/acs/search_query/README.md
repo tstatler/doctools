@@ -219,7 +219,7 @@ For example, if you want to only return the `first_name` field:
 
 ### unsel
 
-Deselects which fields to not return from the query. Do not use this parameter if you are using the
+Selects which fields to not return from the query. Do not use this parameter if you are using the
 `sel` parameter.
 
 Assign an array of field names to filter to the `all` field to search all JSON fields including
