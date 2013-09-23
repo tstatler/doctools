@@ -5,7 +5,7 @@
   * Fixed an issue where using the ACS CLI with Node.js v0.10.14 did not display
     the correct error output when testing locally.
 
-  * Changed the `accesslog`, `loglist`, `usage` and `usagelist` commands to support
+  * Changed the `accesslog`, `loglist` and `usage` commands to support
     a `--more` option to load results faster. The `--page_number` option is removed
     since results will not be pre-counted. Previously, results were pre-counted.
 
