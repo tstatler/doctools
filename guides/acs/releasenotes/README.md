@@ -1,5 +1,15 @@
 # ACS Release Notes
 
+## 26 September 2013
+
+This update includes the following bug fixes and enhancements:
+
+  * Website: Added new feature to unsubscribe devices from push noticifactions using
+    the ACS web console.
+
+  * Fixed an issue where the `$inc` operation was not autoincrementing a custom field.
+
+
 ## 1 August 2013
 
 ### Google Cloud Messaging for Android Push Notifications

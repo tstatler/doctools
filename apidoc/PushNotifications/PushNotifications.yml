@@ -8,6 +8,9 @@ description: |
     or the [iOS SDK guide](#!/guide/ios) to set up your app for push notifications to
     Android or iOS.
 
+    To setup Titanium applications, refer to the
+    [Push Notification guide](http://docs.appcelerator.com/titanium/latest/#!#!/guide/Push_Notifications).
+
     The Push Notifications API provides two mechanisms to register and send push notifications.  One
     relies on the user session, which requires the user to be logged in to receive push notifications.
     The other method uses devices tokens, which does not require the user to be logged in to
