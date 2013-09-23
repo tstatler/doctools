@@ -53,12 +53,12 @@ of 100 log messages will be returned at a time.
             <td>Ending date for retrieving logs.</td>
         </tr>
         <tr>
-            <td nowrap>--page_number <i>page_number</i>/td>
-            <td>Page of log output to display, where 1 is the most recent.</td>
-        </tr>
-        <tr>
             <td>--per_page <i>per_page</i></td>
             <td>Number of log messages per page. Default: 100</td>
+        </tr>
+        <tr>
+            <td nowrap>--more</td>
+            <td>Display the next page of log messages.</td>
         </tr>
         <tr>
             <td>-h, --help</td>

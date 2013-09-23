@@ -58,6 +58,10 @@ Check server system resource usage within a specific period. The server in cloud
         <td>Number of usage logs per page. Default: 100</td>
     </tr>
     <tr>
+        <td>--more</td>
+        <td>Display the next page of log messages.</td>
+    </tr>
+    <tr>
         <td>-h, --help</td>
         <td>Show help information of the command</td>
     </tr>
