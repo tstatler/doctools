@@ -55,12 +55,12 @@ methods:
 
       - name: sel
         description: |
-            Selects the object fields to display.
+            Selects the object fields to display. Do not use this parameter with `unsel`.
         type: Hash
 
       - name: unsel
         description: |
-            Selects the object fields NOT to display.
+            Selects the object fields NOT to display. Do not use this parameter with `sel`.
         type: Hash
 
       - name: response_json_depth
