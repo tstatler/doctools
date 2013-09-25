@@ -9,6 +9,9 @@
     a `--more` option to load results faster. The `--page_number` option is removed
     since results will not be pre-counted. Previously, results were pre-counted.
 
+  * Fixed an issue where running `acs logcat` returned a 502 error.
+
+  * Fixed an issue where a request to the sync server returned a truncated response.
 
 ## 15 August 2013 -- version 1.0.6
 
