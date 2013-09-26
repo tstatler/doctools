@@ -213,6 +213,12 @@ Selects which fields to return from the query. Do not use this parameter if you 
 Assign an array of field names to filter to the `all` field to search all JSON fields including
 fields in nested objects.  Currently, this is the only supported option.
 
+If you want to display a field from the `custom_field` object, simply pass the field name of the
+`custom_field` object.
+
+If you want to display a field from a nested object, then both the name of the nested object and
+field need to be specified.
+
 For example, if you want to only return the `first_name` field:
 
     sel={"all":["first_name"]}
@@ -224,6 +230,12 @@ Selects which fields to not return from the query. Do not use this parameter if 
 
 Assign an array of field names to filter to the `all` field to search all JSON fields including
 fields in nested objects.  Currently, this is the only supported option.
+
+If you want to hide displaying a field from the `custom_field` object, simply pass the field name of the
+`custom_field` object.
+
+If you want to hide displaying a field from a nested object, then both the name of the nested object and
+field need to be specified.
 
 For example, if you want to return all fields except `first_name`:
 
