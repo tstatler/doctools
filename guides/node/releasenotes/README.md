@@ -1,5 +1,26 @@
 # Node.ACS Release Notes
 
+## 26 September 2013 -- version 1.0.7
+
+  * Fixed an issue where using the ACS CLI with Node.js v0.10.14 did not display
+    the correct error output when testing locally.
+
+  * Changed the `accesslog`, `loglist` and `usage` commands to support
+    a `--more` option to load results faster. The `--page_number` option is removed
+    since results will not be pre-counted. Previously, results were pre-counted.
+
+  * Fixed an issue where running `acs logcat` returned a 502 error.
+
+  * Fixed an issue where a request to the sync server returned a truncated response.
+
+## 15 August 2013 -- version 1.0.6
+
+This update includes bug fixes and performance improvements.
+
+## 1 August 2013 -- version 1.0.5
+
+This update includes bug fixes and performance improvements.
+
 ## 22 July 2013 -- version 1.0.4
 
   * Updated "The app is being deployed" message to display the application name.
@@ -59,7 +80,8 @@ environment. See the instructions in the next section.</p>
     <pre>sudo npm install –g acs</pre>
     </li>
     <li> If you are using Node.ACS through Titanium Studio, you will be prompted
-    to install an updated <b>acs</b> package the next time you launch Studio.
+    to install an updated <b>acs</b> package the next time you launch Studio. To manually check for
+    updates, in the menu bar, select <b>Help</b> > <b>Check for Titanium Updates</b>.
     </li>
     </ul>
     <p>Note that you cannot use older versions of the <b>acs</b> npm package to create or publish new

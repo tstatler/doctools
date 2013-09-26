@@ -300,7 +300,7 @@ Only steps #4 and #7 differ based on which profile you create.
      App Store, **Ad Hoc** to distribute to a limited number of devices or **In House** for in house
      distribution to your company's employees, then click **Continue**.
   5. Select the App ID you created previously from the drop-down list, then click **Continue**.
-  6. Select the certificate you created previously, then click **Continue**.
+  6. Select a certificate, then click **Continue**.
   7. For development and ad hoc distributions, select the devices you want to be able to run the app on, then click
      **Continue**.
   8. Enter a name for your provisioning profile. You should use a word like "dev", "distribution" or "ad hoc" in

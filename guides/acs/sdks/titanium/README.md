@@ -20,7 +20,7 @@ integrate it as descibed in [Adding an Existing ACS Application to a Titanium Pr
 If you are using Studio to create a new Titanium application, you can create a new ACS
 application at the same time:
 
-1. Click **File** > **New** > **Titanium Project** to start the new project wizard.
+1. Click **File** > **New** > **Mobile Project** to start the new project wizard.
 2. Choose a template and click **Next**.
 3. On the next screen, make sure **Automatically cloud-enable this application** checked.
 4. Enter the project name and ID and click **Finish**.
@@ -168,6 +168,12 @@ For more information, see [Authentication](#!/guide/acs/authentication).
 
 Each of the authentication methods requires a key or other data identifying
 your ACS application.
+
+## Push Notifications
+
+To setup your Titanium application to use push notifications, see
+[Push Notification guide](http://docs.appcelerator.com/titanium/latest/#!#!/guide/Push_Notifications).
+
 
 ## Using the ACS APIs
 

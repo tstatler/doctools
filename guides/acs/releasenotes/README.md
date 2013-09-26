@@ -1,5 +1,18 @@
 # ACS Release Notes
 
+## 26 September 2013
+
+This update includes the following bug fixes and enhancements:
+
+  * The query methods support two new parameters: `sel` and `unsel`.  Use these parameters to
+    specify which fields to return or not to return.  You cannot use these parameters together.
+
+  * Website: Added new feature to unsubscribe devices from push noticifactions using
+    the ACS web console.
+
+  * Fixed an issue where the `$inc` operation was not autoincrementing a custom field.
+
+
 ## 1 August 2013
 
 ### Google Cloud Messaging for Android Push Notifications
