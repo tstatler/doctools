@@ -9,6 +9,9 @@ methods:
         If user A sends a chat message to users B and C, users A, B and C automatically
         form a chat group. Use this API to get a list of chat groups the current user
         belongs to. 
+
+        For details about using the query parameters,
+        see the [Search and Query guide](#!/guide/search_query).
         
     url: chats/query_chat_groups.json
     login-required: true
@@ -54,14 +57,22 @@ methods:
             Constraint values for fields. `where` should be encoded JSON.
             
             If `where` is not specified, `query` returns all objects.
-            See the [Search and Query guide](#!/guide/search_query) for more information.
-        type: String
+        type: Hash
 
       - name: order
         description: |
             Sort results by one or more fields.
-            See the [Search and Query guide](#!/guide/search_query) for more information.
         type: String
+
+      - name: sel
+        description: |
+            Selects the object fields to display. Do not use this parameter with `unsel`.
+        type: Hash
+
+      - name: unsel
+        description: |
+            Selects the object fields NOT to display. Do not use this parameter with `sel`.
+        type: Hash
 
       - name: response_json_depth
         description: |

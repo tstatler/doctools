@@ -8,8 +8,11 @@ methods:
         sort data based on the values of any custom fields, if the values are simple JSON
         values.
         
-        Currently you **can't** sort or query based on data stored inside array or hash
+        Currently you **cannot** sort or query based on data stored inside array or hash
         objects in custom fields.
+
+        For details about using the query parameters,
+        see the [Search and Query guide](#!/guide/search_query).
 
     url: users/query.json
     login-required: false
@@ -40,14 +43,22 @@ methods:
             Constraint values for fields. `where` should be encoded JSON.
             
             If `where` is not specified, `query` returns all objects.
-            See the [Search and Query guide](#!/guide/search_query) for more information.
-        type: String
+        type: Hash
 
       - name: order
         description: |
             Sort results by one or more fields.
-            See the [Search and Query guide](#!/guide/search_query) for more information.
         type: String
+
+      - name: sel
+        description: |
+            Selects the object fields to display. Do not use this parameter with `unsel`.
+        type: Hash
+
+      - name: unsel
+        description: |
+            Selects the object fields NOT to display. Do not use this parameter with `sel`.
+        type: Hash
 
       - name: response_json_depth
         description: |

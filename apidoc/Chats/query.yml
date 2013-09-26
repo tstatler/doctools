@@ -5,6 +5,9 @@ methods:
     description: |
         Performs a custom query of chat messages with sorting and pagination. Currently you can
         not query or sort data stored inside array or hash in custom fields.
+
+        For details about using the query parameters,
+        see the [Search and Query guide](#!/guide/search_query).
     url: chats/query.json
     parameters: 
       - name: participate_ids
@@ -54,14 +57,22 @@ methods:
             values.
             
             If `where` is not specified, `query` returns all objects.
-            See the [Search and Query guide](#!/guide/search_query) for more information.
-        type: String
+        type: Hash
 
       - name: order
         description: |
             Sort results by one or more fields.
-            See the [Search and Query guide](#!/guide/search_query) for more information.
         type: String
+
+      - name: sel
+        description: |
+            Selects the object fields to display. Do not use this parameter with `unsel`.
+        type: Hash
+
+      - name: unsel
+        description: |
+            Selects the object fields NOT to display. Do not use this parameter with `sel`.
+        type: Hash
 
       - name: response_json_depth
         description: |

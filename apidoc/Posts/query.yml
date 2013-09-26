@@ -6,7 +6,6 @@ methods:
         Performs custom query of posts with sorting and pagination. Currently you can
         not query or sort data stored inside array or hash in custom fields.
 
-
         In addition to custom fields, the following pre-defined fields in posts 
         that can be queried and sorted:
         
@@ -19,6 +18,9 @@ methods:
         *   `reviews_count` : `Number`. Post's total number of reviews. See {@Reviews}.
         *   `created_at` : `Date`. Timestamp when the post was created.
         *   `updated_at` : `Date`. Timestamp when the post was last updated.
+
+        For details about using the query parameters,
+        see the [Search and Query guide](#!/guide/search_query).
     url: posts/query.json
 
     parameters:
@@ -47,15 +49,23 @@ methods:
         description: |
             Constraint values for fields. `where` should be encoded JSON.
             
-            If `where` is not specified, `query` returns all objects. Please refer to 
-            [using where query](#!/guide/search_query) for more information.
-        type: String
+            If `where` is not specified, `query` returns all objects.
+        type: Hash
 
       - name: order
         description: |
-            Sort results by one or more fields. Please refer to 
-            [using order in query](#!/guide/search_query) for more information
+            Sort results by one or more fields.
         type: String
+
+      - name: sel
+        description: |
+            Selects the object fields to display. Do not use this parameter with `unsel`.
+        type: Hash
+
+      - name: unsel
+        description: |
+            Selects the object fields NOT to display. Do not use this parameter with `sel`.
+        type: Hash
 
       - name: response_json_depth
         description: |
