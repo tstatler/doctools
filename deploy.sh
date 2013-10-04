@@ -128,8 +128,9 @@ if [ ! "$ALLOY" ]; then
 fi
 
 if [ $include_alloy ]; then
-    alloyDirs="${ALLOY}/alloy/builtins ${ALLOY}/alloy/lib ${ALLOY}/docs/apidoc "
-    alloyDirs+=$(find $ALLOY/widgets -type d -name controllers)
+    alloyDirs="${ALLOY}/Alloy/lib ${ALLOY}/docs/apidoc
+               $(find $ALLOY/widgets -type d -name controllers)
+               $(find $ALLOY/Alloy/builtins -maxdepth 1 -type f ! -name moment.js)"
 fi
 
 if [ $include_modules ]; then
@@ -157,7 +158,7 @@ if [ $include_modules ]; then
             exit 1
         fi
     fi
-    module_dirs="$TI_MODULES/map/mobile/apidoc $TI_MODULES/facebook/mobile/apidoc
+    module_dirs="$APPC_MODULES/ti.map/apidoc $TI_MODULES/facebook/mobile/apidoc
                  $APPC_MODULES/ti.nfc/apidoc $APPC_MODULES/ti.newsstand/apidoc $TIZEN_MODULE"
 
     if [ $addon_guidesdir ]; then
