@@ -14,16 +14,16 @@ outdir=$TI_ROOT/doctools/dist/platform/latest
 cd $TI_ROOT/titanium_mobile 
 git checkout 3_1_X 
 fail_on_error $? "Could not checkout titanium branch."
-git pull appcelerator 3_1_X
+git pull upstream 3_1_X
 fail_on_error $? "Pull failed on titanium branch."
 cd $TI_ROOT/alloy
-git checkout 1_1_X
+git checkout 1_2_X
 fail_on_error $? "Could not checkout alloy branch."
-git pull appcelerator 1_1_X
+git pull upstream 1_2_X
 fail_on_error $? "Pull failed on alloy branch."
 cd $TI_ROOT/doctools
 rm -rf $outdir
-sh deploy.sh -o alloy -o modules -g htmlguides-latest -a guides-enterprise -d $outdir -t "Appcelerator Platform - Appcelerator Docs" prod
+sh deploy.sh -o alloy -o modules -g htmlguides -a guides-enterprise -d $outdir -t "Appcelerator Platform - Appcelerator Docs" prod
 fail_on_error $? "Deploy failed."
 rm -rf ~/Sites/platform/latest
 rm -rf ~/Sites/platform/landing/index.html
