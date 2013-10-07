@@ -131,6 +131,8 @@ def parse_members(members):
 		if api["tagname"] == "event":
 			new_api["properties"] = parse_params(api["params"], api["owner"] + "." + api["name"], api["tagname"])
 
+		new_api["name"] = u2a(api["name"])
+
 		new_members.append(new_api)
 	return new_members
 
@@ -149,6 +151,8 @@ for obj in data:
 	if obj["tagname"] == "class":
 		new_obj = {}
 		new_obj["name"] = u2a(obj["name"])
+
+		new_obj["filename"] = u2a(obj["name"] + "-object")
 
 		parse_dict = parse_doc(obj["doc"])
 		if parse_dict is not None:
