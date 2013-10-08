@@ -99,10 +99,9 @@ methods:
 
       - platform: rest
         example: |
-            Example cURL request:
-            
-                Get a list of chat groups the current user belongs to, sorted by groups with most recent activity first.
-                $ curl -b cookies.txt -c cookies.txt -X GET --data-urlencode "participate_id=4ee04f4cd9ca72680d000002" "https://api.cloud.appcelerator.com/v1/chats/get_chat_groups.json?key=<YOUR APP APP KEY>"
+            Get a list of chat groups the current user belongs to, sorted by groups with most recent activity first.
+
+                $ curl -b cookies.txt -c cookies.txt -X GET --data-urlencode "participate_id=4ee04f4cd9ca72680d000002" "https://api.cloud.appcelerator.com/v1/chats/query_chat_groups.json?key=<YOUR APP APP KEY>"
                 
             Example JSON response:
             
