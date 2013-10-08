@@ -20,7 +20,10 @@ fields:
     type: String
 
   - name: email
-    description: User's email address.
+    description: |
+        User's email address.
+
+        For security, this field is not shown unless you have admin access.
     type: String
 
   - name: username

@@ -54,7 +54,7 @@ methods:
 
       - name: custom_fields
         description: User defined fields. See [Custom Data Fields](#!/guide/customfields).
-        type: [ String, Hash ]
+        type" [ String, Hash ]
 
       - name: channel 
         description: |
@@ -82,6 +82,8 @@ methods:
                     "sound": "default",
                      "alert" : "From Joe: Hello everyone!"
                 }
+
+        type: [ String, Hash ]
 
       - name: user_id
         description: |

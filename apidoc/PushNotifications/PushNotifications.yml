@@ -14,7 +14,8 @@ description: |
     The Push Notifications API provides two mechanisms to register and send push notifications.  One
     relies on the user session, which requires the user to be logged in to receive push notifications.
     The other method uses devices tokens, which does not require the user to be logged in to
-    receive notifications.
+    receive notifications.  If you are using the Titanium API, push notifications with device tokens
+    require Titanium SDK 3.1.2 and later.
 
     ### Push Notifications with Device Tokens
 

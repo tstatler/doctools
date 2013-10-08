@@ -40,6 +40,13 @@ for more information.
 To create or login a user and perform actions which require a logged-in user,
 the `_session_id` cookie must be saved and reused with each API call.
 
+With the cURL command, use the `-b` and `-c` options to read and write cookies to store your session
+ID. Many of the REST examples in the documentation use these options.
+
+You can also pass this parameter in the URL, for example:
+
+    https://api.cloud.appcelerator.com/v1/reviews/create.json?key=<API_KEY>&_session_id=<SESSION_ID>
+
 User login sessions expire after they have been unused for a period of time.
 By default, the expiration period is six months. You can configure the user session 
 expiration period in the application management console.

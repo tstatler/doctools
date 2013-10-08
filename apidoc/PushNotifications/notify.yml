@@ -59,7 +59,7 @@ methods:
             Note: For Android app, there are 3 more predefined keywords you can use,
             please refer to Push Notifications in the [Android SDK guide](#!/guide/android) for more
             details.
-        type: [String, Object]
+        type: [String, Hash]
 
     examples:
       - platform: titanium

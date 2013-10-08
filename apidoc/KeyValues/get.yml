@@ -24,6 +24,7 @@ methods:
             or from the user's private store.
 
             Default is false (publically readable). 
+        type: Boolean
 
       - name: user_id
         description: |
@@ -31,6 +32,7 @@ methods:
 
             Login user must be an application admin to retrieve a key-value from another
             user's store.
+        type: String
 
     reponse-parameters:
       - name: keyvalues

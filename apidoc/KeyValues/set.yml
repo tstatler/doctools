@@ -22,6 +22,7 @@ methods:
             Value type: "string" or "binary".
             
             Defaults to "string". 
+        type: String
         
       - name: value
         description: |
@@ -40,6 +41,7 @@ methods:
             Default is false (publically readable). If set to true, it sets the key/value stored
             in the current user's private key-value store. Otherwise, it sets the public
             key-value pair which is readable to everyone.
+        type: Boolean
 
       - name: user_id
         description: |
@@ -47,6 +49,7 @@ methods:
 
             The current user must be an application admin to set a key-value pair on
             behalf of another user.
+        type: String
 
     examples:
       - platform: titanium

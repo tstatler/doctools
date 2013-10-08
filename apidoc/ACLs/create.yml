@@ -40,6 +40,7 @@ methods:
             Determines whether objects controlled by this ACS are publically writable. 
 
             Default is false.
+        type: Boolean
 
       - name: user_id
         description: |
@@ -47,6 +48,7 @@ methods:
 
             Only allowed if the current login user is an application admin. Otherwise, the 
             new ACL is always owned by the current login user.
+        type: String
 
     response-parameters:
       - name: acls

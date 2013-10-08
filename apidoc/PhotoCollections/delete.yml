@@ -19,6 +19,14 @@ methods:
         type: String
         required: true
 
+      - name: user_id
+        description: |
+            User ID to delete the collection on behalf of. The user must be the creator of the collection.
+
+            The current login user must be an application admin to delete a collection on
+            behalf of another user.
+        type: String
+
     examples:
       - platform: titanium
         example: |

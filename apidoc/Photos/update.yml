@@ -100,6 +100,14 @@ methods:
 
                 "photo_sync_sizes[]=preview"
 
+      - name: user_id
+        description: |
+            User ID to update the Photo object on behalf of. The user must be the creator of the object.
+
+            The current login user must be an application admin to update a Photo object on
+            behalf of another user.
+        type: String
+
     response-parameters:
       - name: photos
         description: Single-element array containing the updated  photo.

@@ -10,12 +10,12 @@ any ACS objects.
 To add or update a relation, you must provide an ACS object ID and an ACS
 object type. These values together identify a unique ACS object. The relation
 is specified using one of these formats:
-    
-    [_ACS_TYPENAME_]_fieldname_id_ 
-    [_ACS_TYPENAME_]_fieldname_ids_ 
-    [_CUSTOM_TYPENAME_]_fieldname_id_ 
-    [_CUSTOM_TYPENAME_]_fieldname_ids_
-    
+
+    [ACS_<TYPENAME>]<fieldname_id>
+    [ACS_<TYPENAME>]<fieldname_ids>
+    [CUSTOM_<TYPENAME>]<fieldname_id>
+    [CUSTOM_<TYPENAME>]<fieldname_ids>
+
 Where _TYPENAME_ indicates ACS type or ACS custom object type of the object
 pointed to. For example, ACS_User represents an ACS User object, ACS_Photo
 represents an ACS Photo object, and CUSTOM_car represents an ACS custom object

@@ -36,12 +36,14 @@ methods:
             or in the user's private store.
 
             Default is false (publically readable). 
+        type: Boolean
 
       - name: user_id
         description: |
             Update the key-value pair on behalf of the identified user.
 
             Login user must be an admin to update a key-value on behalf of another user.
+        type: String
 
     reponse-parameters:
       - name: keyvalues

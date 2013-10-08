@@ -15,6 +15,7 @@ methods:
         
     url: chats/query_chat_groups.json
     login-required: true
+    admin-required: true
 
     parameters:
       - name: participate_ids
@@ -101,7 +102,7 @@ methods:
             Example cURL request:
             
                 Get a list of chat groups the current user belongs to, sorted by groups with most recent activity first.
-                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/chats/get_chat_groups.json?order=-updated_at&key=<YOUR APP APP KEY>"
+                $ curl -b cookies.txt -c cookies.txt -X GET --data-urlencode "participate_id=4ee04f4cd9ca72680d000002" "https://api.cloud.appcelerator.com/v1/chats/get_chat_groups.json?key=<YOUR APP APP KEY>"
                 
             Example JSON response:
             
@@ -109,7 +110,7 @@ methods:
                   "meta": {
                     "code": 200,
                     "status": "ok",
-                    "method_name": "getChatGroups",
+                    "method_name": "queryChatGroups",
                     "page": 1,
                     "per_page": 10,
                     "total_pages": 1,
@@ -230,9 +231,8 @@ methods:
         example: |
             Example iOS call:
             
-                NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:3];
-                [paramDict setObject:"-updated_at" forKey:@"order"]; // optional
-                CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"chats/get_chat_groups.json"  paramDict:paramDict];
+                NSDictionary *paramDict = [[NSArray arrayWithObjects:@"4e02f5b8d0afbe43c1000002", nil], @"participate_ids", nil];
+                request = [[[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"chats/query_chat_groups.json" paramDict:paramDict] autorelease];
                 [request startAsynchronous];
                 [request release];
                 
@@ -240,10 +240,10 @@ methods:
             
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
-                	if ([response.meta.methodName isEqualToString:@"getChatGroups"]) {
-                		NSArray *chat_groups = [response getObjectsOfType:[CCChatGroup class]];
-                		...
-                	}
+                    if ([response.meta.methodName isEqualToString:@"queryChatGroups"]) {
+                        NSArray *chat_groups = [response getObjectsOfType:[CCChatGroup class]];
+                        ...
+                    }
                 }
                 
       - platform: android
@@ -253,7 +253,7 @@ methods:
                 Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
                 //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
                 
-                CCResponse response = sdk.sendRequest("chats/get_chat_groups.json", CCRequestMethod.GET, null);
+                CCResponse response = sdk.sendRequest("chats/query_chat_groups.json", CCRequestMethod.GET, null);
                 
             SDK Callback:
             
@@ -261,7 +261,7 @@ methods:
                 CCMeta meta = response.getMeta();
                 if("ok".equals(meta.getStatus()) 
                     && meta.getCode() == 200 
-                    && "getChatGroups".equals(meta.getMethod())) {
+                    && "queryChatGroups".equals(meta.getMethod())) {
                   JSONArray chatGroups = responseJSON.getJSONArray("chat_groups");
                   ...
                 }
@@ -271,7 +271,7 @@ methods:
             Example Javascript call:
             
                 var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
-                sdk.sendRequest('chats/get_chat_groups.json', 'GET', null, callback);
+                sdk.sendRequest('chats/query_chat_groups.json', 'GET', null, callback);
                 
             SDK Callback:
             
@@ -279,7 +279,7 @@ methods:
                   if(data) {
                     if(data.meta) {
                       var meta = data.meta;
-                      if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'getChatGroups') {
+                      if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'queryChatGroups') {
                         var chatGroups = data.response.chat_groups;
                       	...
                       }
