@@ -54,7 +54,7 @@ methods:
 
       - name: custom_fields
         description: User defined fields. See [Custom Data Fields](#!/guide/customfields).
-        type" [ String, Hash ]
+        type: [ String, Hash ]
 
       - name: channel 
         description: |
