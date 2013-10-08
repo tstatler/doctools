@@ -85,7 +85,7 @@ methods:
                 {
                   "meta": {
                     "status":"ok",
-                    "code":200,
+                    "code":200
                   }
                 }
                 
