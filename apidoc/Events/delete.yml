@@ -26,6 +26,14 @@ methods:
             Appcelerator Cloud Services to not delete this photo.
         type: Boolean
 
+      - name: user_id
+        description: |
+            User to delete the Event object on behalf of. The user must be the creator of the object.
+
+            The current user must be an application admin to delete an Event object on
+            behalf of another user.
+        type: String
+
     examples:
       - platform: titanium
         example: |

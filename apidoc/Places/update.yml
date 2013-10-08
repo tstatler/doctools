@@ -101,6 +101,14 @@ methods:
             mutually exclusive.
         type: String
 
+      - name: user_id
+        description: |
+            User ID to update the Place object on behalf of. The user must be the creator of the object.
+
+            The current login user must be an application admin to update a Place object on
+            behalf of another user.
+        type: String
+
 
     response-parameters:
       - name: places

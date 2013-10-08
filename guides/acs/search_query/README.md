@@ -5,6 +5,11 @@ predefined objects. The difference is that search is predefined full text
 search using Appcelerator Cloud Services search engine, query is for advanced
 custom DB style search.
 
+## Email Field
+
+For security, when retrieiving results for users, the email field is not returned in the User
+object unless you have admin access.
+
 ## Search Overview
 
 Each Appcelerator Cloud Services predefined object provides a search API. It

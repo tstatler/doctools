@@ -44,6 +44,7 @@ methods:
         example: |
 
             This example subscribes to a push notification channel and checks the response.
+            Requires Titanium SDK 3.1.2 and later.
 
                 Cloud.PushNotifications.subscribeToken({
                     device_token: DEVICE_TOKEN,

@@ -85,8 +85,7 @@ methods:
                 {
                   "meta": {
                     "status":"ok",
-                    "code":200,
-                    "method_name":"deleteReview"
+                    "code":200
                   }
                 }
                 

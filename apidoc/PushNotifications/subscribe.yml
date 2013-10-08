@@ -31,6 +31,7 @@ methods:
 
             Only application admins can subscribe to push notifications on behalf of other
             users.
+        type: String
 
     examples:
       - platform: titanium

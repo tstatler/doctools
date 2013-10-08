@@ -126,10 +126,10 @@ methods:
         example: |
             Example cURL request:
             
-                $ curl -b cookies.txt -c cookies.txt -X PUT -F "post_id=4e33a9f5d9ca724769000003" -F "review_id=4e33a9f5d9ca724769000006" -F "rating=100" -F "content=Very very good" https://api.cloud.appcelerator.com/v1/reviews/update.json?key=<YOUR APP APP KEY>
-                
+                $ curl -b cookies.txt -c cookies.txt -X PUT -F "post_id=4e33a9f5d9ca724769000003" -F "review_id=4e33a9f5d9ca724769000006" -F "rating=10" -F "content=Very very good" https://api.cloud.appcelerator.com/v1/reviews/update.json?key=<YOUR APP APP KEY>
+
             Example JSON response:
-            
+
                 {
                   "meta": {
                     "status": "ok",
@@ -140,24 +140,45 @@ methods:
                     "reviews": [
                       {
                         "id": "4e33a9f5d9ca724769000006",
-                        "rating": 1,
+                        "rating": 10,
                         "content": "Very very good",
                         "created_at": "2011-07-30T06:51:33+0000",
-                        "updated_at": "2011-07-30T06:51:33+0000",
+                        "updated_at": "2011-07-31T06:51:33+0000",
                         "user": {
                           "id": "4e33a9f4d9ca724769000002",
                           "first_name": "Bob",
                           "last_name": "Dude",
                           "created_at": "2011-07-30T06:51:32+0000",
                           "updated_at": "2011-07-30T06:51:33+0000",
-                          "username": "bob",
                           "email": "bob@dude.com"
+                          "external_accounts": [
+
+                          ],
+                          "confirmed_at": "2011-07-30T06:51:33+0000",
+                          "username": "bob",
+                          "role": "",
+                          "admin": "true",
+                          "stats": {
+                            "photos": {
+                              "total_count": 0
+                            },
+                            "storage": {
+                              "used": 0
+                            }
+                          },
+                          "reviews_count": 0,
+                          "ratings_count": 0,
+                          "ratings_average": 0,
+                          "ratings_summary": {
+                          }
+                        },
+                        "custom_fields": {
                         }
                       }
                     ]
                   }
                 }
-                
+
       - platform: ios
         example: |
             Example iOS call:

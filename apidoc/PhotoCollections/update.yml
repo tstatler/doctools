@@ -60,9 +60,9 @@ methods:
 
       - name: user_id
         description: |
-            User ID to create the collection on behalf of.
+            User ID to update the collection on behalf of. The user must be the creator of the collection.
 
-            The current login user must be an application admin to create a collection on
+            The current login user must be an application admin to update a collection on
             behalf of another user.
         type: String
 

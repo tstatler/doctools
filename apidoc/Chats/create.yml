@@ -83,6 +83,8 @@ methods:
                      "alert" : "From Joe: Hello everyone!"
                 }
 
+        type: [ String, Hash ]
+
       - name: user_id
         description: |
             Send on behalf of the identified user. 

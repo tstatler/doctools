@@ -25,6 +25,7 @@ methods:
       - platform: titanium
         example: |
             This example unsubscribes from a push notification channel and checks the response.
+            Requires Titanium SDK 3.1.2 and later.
             
                 Cloud.PushNotifications.unsubscribeToken({
                     channel: 'friend_request',

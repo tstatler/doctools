@@ -86,6 +86,14 @@ methods:
             mutually exclusive.
         type: String
 
+      - name: user_id
+        description: |
+            User to update the Custom object on behalf of. The user must be the creator of the object.
+
+            The current user must be an application admin to update a Custom object on
+            behalf of another user.
+        type: String
+
     response-parameters:
       - name: classname
         description: |

@@ -62,6 +62,14 @@ methods:
             Default is false.
         type: Boolean
 
+      - name: user_id
+        description: |
+            User to update the ACL object on behalf of. The user must be the creator of the object.
+
+            The current user must be an application admin to update an ACL object on
+            behalf of another user.
+        type: String
+
     response-parameters:
       - name: acls
         description: A single-element array containing the updated ACS object.
