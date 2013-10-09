@@ -10,7 +10,10 @@ methods:
     parameters:
 
       - name: user_id
-        description: User to retrieve subscribed channels for. 
+        description: |
+            User to retrieve subscribed channels for.
+
+            Only application admins can query subscribed channels of a user.
         type: String
 
       - name: page  
