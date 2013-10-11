@@ -3,7 +3,10 @@ methods:
   - name: channels_query
     summary: Channels Query
     description: |
-        Returns a list of push notification channels with subscribed users.
+        Returns a list of push notification channels the user is subscribed to.
+
+        For application admins, if the `user_id` parameter is not specified, returns all channels
+        with subscribed users.
     url: push_notfication/channels/query.json
     login-required: true
 
@@ -39,7 +42,7 @@ methods:
         example: |
             Example cURL request:
             
-                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/push_notification/channels/query.json?key=<YOUR APP APP KEY>"
+                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/push_notification/channels/query.json?key=<YOUR APP API KEY>"
                 
             Example JSON response:
             
