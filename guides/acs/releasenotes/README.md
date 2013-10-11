@@ -1,5 +1,13 @@
 # ACS Release Notes
 
+## 10 October 2013
+
+This update includes the following enhancements:
+
+  * New PushNotifications API to query existing push channels and the number of devices subscribed
+    to a push channel. See [push_notification/channels/query.json](#!/api/PushNotifications-method-channels_query)
+    and [push_notification/channels/show.json](#!/api/PushNotifications-method-channels_show).
+
 ## 26 September 2013
 
 This update includes the following bug fixes and enhancements:
