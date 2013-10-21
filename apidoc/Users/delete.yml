@@ -9,13 +9,6 @@ methods:
     http-method: DELETE
     login-required: true
 
-    parameters:
-      - name: keep_photo
-        description: |
-            If the user has a primary photo that was created by using `photo=` option in
-            [create](Users#create) or [update](Users#update), the photo object will be deleted as well. Use
-            `keep_photo=true` to tell Appcelerator Cloud Services to not delete this photo.
-
     examples:
       - platform: titanium
         example: |

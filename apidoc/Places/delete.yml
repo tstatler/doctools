@@ -21,14 +21,6 @@ methods:
         type: String
         required: true
 
-      - name: keep_photo
-        description: |
-            If this place has a primary photo that was created by using the `photo`
-            parameter to {@link Places#create create} or {@link Places#update update}, 
-            the photo object will be deleted as well. Use `keep_photo=true` to tell 
-            Appcelerator Cloud Services to not delete this photo.
-        type: Boolean
-
       - name: user_id
         description: |
             User ID to delete the Place object on behalf of. The user must be the creator of the object.

@@ -17,17 +17,6 @@ methods:
         description: ID of the checkin to delete.
         type: String
 
-      - name: keep_photo
-        description: |
-            If the checkin has a primary photo that was created by using the `photo`
-            parameter to {@link Checkins#create create}, the photo object will be deleted as well. 
-            Use `keep_photo=true` to tell Appcelerator Cloud Services to not delete this photo.
-        type: Boolean
-
-      - name: user_id
-        description: |
-            User to delete the Checkin object on behalf of. The user must be the creator of the object.
-
             The current user must be an application admin to delete a Checkin object on
             behalf of another user.
         type: String
