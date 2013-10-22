@@ -49,6 +49,10 @@ Here is a list of available commands and brief description for each of them:
             <td>Configures cloud servers for the application</td>
         </tr>
         <tr>
+            <td><a href="#!/guide/node_cli_crt"><b>crt</b></a></td>
+            <td>Manages SSL certificates for the application</td>
+        </tr>
+        <tr>
             <td><a href="#!/guide/node_cli_list"><b>list</b></a></td>
             <td>List all applications</td>
         </tr>
