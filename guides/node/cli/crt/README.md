@@ -35,7 +35,9 @@ Once you've created the PEM file, you can add it to your application, as follows
 
 ## Usage
 
-    $ acs crt [options] [-d _app_directory_]
+<pre class="prettyprint">
+acs crt [options] [<i>appname</i>]
+</pre>
 
 
 ## Required Parameters
@@ -63,18 +65,18 @@ Once you've created the PEM file, you can add it to your application, as follows
             <th>Description</th>
         </tr>
         <tr>
-            <td>--add <i>PEM file</i></td>
+            <td><code>--add <i>PEM-file</i></code></td>
             <td> Adds the SSL certificate contained by the specified PEM file.</td>
         </tr>
         <tr>
-            <td>--remove </td>
+            <td><code>--remove</code></td>
             <td> Removes the SSL certificate of the associated application, if one exists.</td>
         </tr>
     </tbody>
 </table>
 
 
-## Example
+## Examples
     
 	$ acs crt --add customapp.com.pem
     $ acs crt --add customapp.com.pem MyApp
