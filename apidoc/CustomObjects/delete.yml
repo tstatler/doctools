@@ -34,14 +34,6 @@ methods:
             You must specify either `id` or `ids`.
         type: String
 
-      - name: keep_photo
-        description: |
-            If the checkin has a primary photo that was created by using the `photo`
-            parameter to {@link CustomObjects#create create} or {@link CustomObjects#update update}, 
-            the photo object will be deleted as well. Use `keep_photo=true` to tell 
-            Appcelerator Cloud Services to not delete this photo.
-        type: Boolean
-
       - name: user_id
         description: |
             User to delete the Custom object on behalf of. The user must be the creator of the object.
