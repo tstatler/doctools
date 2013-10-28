@@ -4,7 +4,7 @@ methods:
     summary: Query
     description: |
         Custom query of push notification subscriptions with paginating.
-    url: push_notfication/query.json
+    url: push_notification/query.json
 
     parameters:
 
@@ -23,9 +23,10 @@ methods:
 
       - name: type
         description: |
-            Selects the push type--either `android` for Android devices using the MQTT protocol,
-            `gcm` for Android devices using Google Cloud Messaging or `ios` for iOS devices
-            using Apple Push Notification Service.
+            Selects the push type.
+
+            Set to either `android` for Android devices using either Google Cloud Messaging
+            or  MQTT protocol, or `ios` for iOS devices using Apple Push Notification Service.
         type: String
 
       - name: page  

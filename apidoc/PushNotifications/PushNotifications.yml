@@ -1,7 +1,8 @@
 name: PushNotifications
 description: |
-    The Push Notifications API lets you send push notification to your users who are on iOS and
-    Andriod Devices. You can also send a system push notification to all users from the Admin
+
+    The Push Notifications API lets you send push notifications to your users who are on iOS and
+    Android Devices. You can also send a system push notification to all users from the Admin
     Console.
 
     Please refer to the Push Notifications sections of the [Android SDK guide](#!/guide/android)
@@ -16,6 +17,10 @@ description: |
     The other method uses devices tokens, which does not require the user to be logged in to
     receive notifications.  If you are using the Titanium API, push notifications with device tokens
     require Titanium SDK 3.1.2 and later.
+
+    **Note:** For Android device, ACS supports either Google Cloud Messaging (GCM) or MQTT.  MQTT is being
+    deprecated in favor of using GCM.  If you have an existing application using MQTT, transition it
+    to use GCM.  All new applications should use GCM.
 
     ### Push Notifications with Device Tokens
 

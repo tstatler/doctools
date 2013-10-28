@@ -1,0 +1,42 @@
+name: PushSchedules
+methods:
+  - name: delete
+    summary: delete
+    description: |
+        Deletes a scheduled push notification.
+
+        This feature is only avaiable for Appcelerator Platform users.
+
+        The current user must be an application admin.
+    url: push_schedule/delete.json
+    http-method: DELETE
+    login-required: true
+    admin-required: true
+
+    parameters: 
+
+      - name: ids
+        description: Array of push schedule IDs to delete.
+        type: Array<String>
+
+    examples:
+
+      - platform: titanium
+        example: |
+            This API is not yet supported in the `ti.cloud` module.
+    
+      - platform: rest
+        example: |
+            Example cURL request:
+
+                curl -b cookies.txt -c cookies.txt -X DELETE -F "ids=<schedule_ids>" "https://api.cloud.appcelerator.com/v1/push_schedules/delete.json?key=<APP_API_KEY>"
+
+
+            Example JSON response:
+
+                {
+                  "meta": {
+                    "code": 200,
+                    "status": "ok",
+                    "method_name": "deletePushSchedules"
+                }
