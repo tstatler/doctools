@@ -163,7 +163,6 @@ command and compare the user IDs:
       }
     }
 
-<!-- 
 
 ## Admin Batch Delete
 
@@ -197,10 +196,10 @@ delete operations:
   * {@link Photos}
   * {@link Places}
   * {@link Posts}
+  * {@link Reviews}
   * {@link Statuses}
   * {@link Users}
 
--->
 
 ## Admin Drop Custom Collection
 
