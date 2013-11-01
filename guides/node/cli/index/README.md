@@ -14,4 +14,5 @@
     * [Delete an application](#!/guide/node_cli_remove)
     * [Show login user](#!/guide/node_cli_whoami)
     * [Node.ACS logout](#!/guide/node_cli_logout)
+    * [Manage SSL certificates](#!/guide/node_cli_crt)
 

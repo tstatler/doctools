@@ -170,6 +170,12 @@
                         "description": "Configures the Cloud servers for an Application"
                     },
                     {
+                        "name": "node_cli_crt",
+                        "title": "crt -- Manages SSL certificates for an Application",
+                        "url": "guides/node/cli/crt",
+                        "description": "Manages SSL certificates for an Application"
+                    },
+                    {
                         "name": "node_cli_list",
                         "title": "list -- List Applications",
                         "url": "guides/node/cli/list",
