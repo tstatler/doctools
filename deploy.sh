@@ -189,6 +189,8 @@ fi
 
 ruby ${JSDUCK}/bin/jsduck --template ${TEMPLATE} $seo --output $outdir --title "$title" --config $config $alloyDirs 
 cp -r $guidesdir/images "$outdir/images"
+# TIDOC-1327 Fix server errors
+cp -r "$guidesdir/images/icons" "$outdir/resources/images/."
 cp -r $guidesdir/attachments "$outdir/attachments"
 cp -r $guidesdir/css/common.css "$outdir/resources/css/common.css"
 cp ./resources/mock_video.png $outdir/resources/images/mock_video.png
