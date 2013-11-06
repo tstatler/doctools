@@ -248,39 +248,33 @@ create.
 
 Keychain exports your certificate as a PKCS #12 file that you upload to ACS to enable Apple Push Notification for your application.
 
-#### Configure the ACS Web Console ####
+#### Configure the ACS web console ####
 
-<p>You use the Dashboard (Enterprise applications) or My App (Community applications) to upload your PKCS #12 (.p12) file to ACS and enable Apple Push Notification with your application.</p>
+You use the Dashboard (Enterprise applications) or My App (Community applications) to upload your PKCS #12 (.p12) file to ACS and enable Apple Push Notification with your application.
 
-<b>To configure your app for push notifications (Enterprise developers): </b>
-<ol>
-  <li>Open <a href="https://dashboard.appcelerator.com">Dashboard.</a> 
-  <li>Select your application from the drop-down list of applications.</a> 
-  <li>Select the <b>Cloud</b> tab.</a> 
-  <li>Select <b>Settings & Configuration</b> from the left-hand navigation.</li>
-  <li>Select the <b>iOS Push</b> tab.</li>
-  <li>Click <b>Choose File</b> in the Push Certificate field.</li>
-  <li>Locate the PKCS #12 file your exported previously and click **Choose**.</li>
-  <li>Enter the certificate's password in the Certificate Password box field.
-    <img src="ios_cert_enterprise.png">
-  </li> 
-  <li>Click <b>Save Changes</b>.</li>
-  </ul>
-</li>
-</ol>
+**To configure your app for push notifications (Enterprise developers):** 
 
-<b>To configure your app for push notifications (Community developers): </b>
+ 1. Open [Dashboard](https://dashboard.appcelerator.com).
+ 2. Select your application from the drop-down list of applications.
+ 3. Select the **Cloud** tab.
+ 4. Select **Settings & Configuration** from the left-hand navigation.
+ 5. Select the **iOS Push** tab.
+ 6. Click **Choose File** in the Push Certificate field.
+ 7. Locate the PKCS #12 file your exported previously and click **Choose**.
+ 8. Enter the certificate's password in the Certificate Password box field.
+   ![](ios_cert_enterprise.png)
+ 9. Click **Save Changes**.
 
-<ol>
-  <li>Open <a href="https://cloud.appcelerator.com/apps">My Apps</a>.</li>
-  <li>Find your application in the list of apps and click the <b>Manage ACS</b> link.</li>
-  <li>In the <b>Apple iOS Push Certificates</b> section, click <b>Choose File</b>.</li>
-  <li>Locate the PKCS #12 file your exported previously and click **Choose**.</li>
-  <li>Enter the certificate's password in the Certificate Password box field. (A password is required despite the placeholder text indicating it's optional.)
-      <img src="ios_cert_community.png">
-  </li>
-  <li>Click <b>Save Changes</b>.
-</ol>
+ **To configure your app for push notifications (Community developers):**
+
+1. Open [My Apps](https://cloud.appcelerator.com/apps).
+2. Find your application in the list of apps and click the **Manage ACS** link.
+3. In the **Apple iOS Push Certificates** section, click **Choose File**.
+4. Locate the PKCS #12 file your exported previously and click **Choose**.
+5. Enter the certificate's password in the Certificate Password box field. (A password is required despite the placeholder text indicating it's optional.)
+      ![](ios_cert_community.png)
+6. Click **Save Changes**.
+
 
 ### Create a Provisioning Profile
 

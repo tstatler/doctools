@@ -183,7 +183,7 @@ To use GCM in your Android application, you need to create a Google API project,
 
 <p>To configure your application for push notifications you use the Dashboard (Enterprise applications) or My App (Community applications).</p>
 
-<b>To configure your app for push notifications (Enterprise developers): </b>
+<p><b>To configure your app for push notifications (Enterprise developers): </b></p>
 <ol>
   <li>Open <a href="https://dashboard.appcelerator.com">Dashboard.</a> 
   <li>Select your application from the drop-down list.</a> 
@@ -191,14 +191,14 @@ To use GCM in your Android application, you need to create a Google API project,
   <li>Click <b>Settings & Configuration</b> from the left-side navigation.</li>
   <li>Select the <b>Android Push</b> tab.</li>
   <li>Enter your Google API key in the <b>GCM API Key</b> field and GCM sender ID in the <b>GCM Sender ID</b> field.
-    <img src="android_push_dashboard.png">
+    {@img android_push_dashboard.png}
   </li>
   <li>Click <b>Save Changes</b>.</li>
   </ul>
 </li>
 </ol>
 
-<b>To configure your app for push notifications (Community developers): </b>
+<p><b>To configure your app for push notifications (Community developers): </b></p>
 
 <ol>
   <li>Open <a href="https://cloud.appcelerator.com/apps">My Apps</a>.</li>
@@ -209,7 +209,8 @@ To use GCM in your Android application, you need to create a Google API project,
         <li>For MQTT, enter your Android application's package name in the <b>Application Package (MQTT)</b> field.
       </li>
       </ul>
-      <img src="android_push.png">
+    </li>
+      {@img android_push.png}
       <li>Click <b>Save Android Push Configuration Changes</b>.</li>
   </li>
 </ol>
