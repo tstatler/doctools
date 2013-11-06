@@ -6,7 +6,7 @@ This update includes the following bug fixes and enhancements:
 
   * Add ability to set an expiration date for push notificiations with the `expire_after_seconds`
     parameter. See the `options` parameter for [push_notification/notify.json](#!/api/PushNotifications-method-notify)
-    and [push_notification/notify_token.json](#!/api/PushNotifications-method-notify_token).
+    and [push_notification/notify_token.json](#!/api/PushNotifications-method-notify_tokens).
 
   * Add ability to schedule push notifications to be sent at specific times and intervals.  This
     feature is only avaiable to Enterprise customers.  See [PushSchedules](#!/api/PushSchedules).
