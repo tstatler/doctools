@@ -163,65 +163,57 @@ for (int i=0;i&lt;users.length();i++) {
 
 <h2>Push Notifications</h2>
 
-<h3>Configure Your App For Enabling Push Notifications</h3>
-
 <p>
-ACS supports two protocols to send push notifications to Android devices:
+ACS supports two protocols to send push notifications to Android devices:</p>
+
 <ul>
-<li>Google Cloud Messaging (GCM)</li>
-<li>MQTT</li>
+<li><a href="http://developer.android.com/google/gcm/index.html">Google Cloud Messaging</a> (GCM)</li>
+<li><a href="http://www.ibm.com/developerworks/webservices/library/ws-mqtt/index.html">Message Queuing Telemetry Transport</a> (MQTT)</li>
 </ul>
-</p>
+
+<p class="note">As of August 2013, MQTT has been <a href="http://www.appcelerator.com/blog/2013/08/android-push-notification-deprecating-mqtt-in-favor-of-gcm/">deprecated</a> in favor of GCM and is no longer available for Enterprise use. MQTT will continue to be available to Community users.</p>
+
+<h3>Obtaining a Google API key and GCM sender ID</h3>
 
 <p>
-To use GCM, you need to create a Google API project to obtain a <b>Google API key</b> and <b>GCM sender ID</b>.
-For instructions on creating and obtaining these items, see
-<a href="http://developer.android.com/google/gcm/gs.html">Getting Started with GCM</a> and follow the
-directions in "Creating a Google API Project", "Enabling the GCM Service" and "Obtaining an API Key".
+To use GCM in your Android application, you need to create a Google API project, enable its GCM service, and obtain the API project's Google API key and GCM sender ID. For steps on obtaining these items see <a href="http://developer.android.com/google/gcm/gs.html" target="_">Getting Started with GCM</a>. Follow the steps found there for for <i>Creating a Google API Project</i>, <i>Enabling the GCM Service</i> and <i>Obtaining an API Key</i>. When you create a new server key, per those instructions, you will be asked to provide a list of IP addresses the server will accept requests from. Leave this list empty if you want the server to accept requests from all IP addresses.
 </p>
 
-<p>
-When creating a new server key, you are asked for a list of IP addresses to accept requests from.
-Do not enter any information in the textbox and click <b>Create</b> to accept all IP addresses.
-</p>
+<h3>Configuring your app for push notifications</h3>
 
-<p>
-To use MQTT, you need your Android application's package name. MQTT support is only available for
-the non-enterprise version of ACS.
-</p>
+<p>To configure your application for push notifications you use the Dashboard (Enterprise applications) or My App (Community applications).</p>
 
-<p>
-To configure your application to use either GCM or MQTT, open up your application in the ACS web
-console and configure your settings in the <b>Android Push Configuration</b> section:
+<b>To configure your app for push notifications (Enterprise developers): </b>
+<ol>
+  <li>Open <a href="https://dashboard.appcelerator.com">Dashboard.</a> 
+  <li>Select your application from the drop-down list.</a> 
+  <li>Select the <b>Cloud</b> tab.</a> 
+  <li>Click <b>Settings & Configuration</b> from the left-side navigation.</li>
+  <li>Select the <b>Android Push</b> tab.</li>
+  <li>Enter your Google API key in the <b>GCM API Key</b> field and GCM sender ID in the <b>GCM Sender ID</b> field.
+    <img src="android_push_dashboard.png">
+  </li>
+  <li>Click <b>Save Changes</b>.</li>
+  </ul>
+</li>
+</ol>
 
-<p>
-1. To open your application in the ACS web console:<ul>
-<li>For Appcelerator Enterprise users, open
-<a href="https://dashboard.appcelerator.com">https://dashboard.appcelerator.com</a>,
-select an application from the <b>Apps</b> drop-down list, then click the <b>Cloud</b> tab.</li>
-<li>For all other users, open
-<a href="https://cloud.appcelerator.com/apps">https://cloud.appcelerator.com/apps</a>,
-locate your application, then click the <b>Manage ACS</b> link.</li>
-</ul>
-</p>
-<p>
-2. Click either <b>Settings</b> (non-enterprise version) or <b>Configuration & Settings</b>
-(enterpirse version).</li>
-</p>
-<p>
-3. In the <b>Android Push Configuration</b> section, configure either GCM or MQTT :
-<ul>
-<li>For GCM, enter your Google API key in the <b>Google Cloud Messaging (GCM) API Key</b>
-textbox and GCM sender ID in the <b>Google Cloud Messaging (GCM) Sender ID</b> textbox.</li>
-<li>For MQTT, enter your package name in the <b>Application Package (MQTT)</b> textbox. Only
-configurable for non-enterprise users.</li>
-</ul>
-</p>
-<p>
-4. Save the changes to complete the configuration process.
-</p>
+<b>To configure your app for push notifications (Community developers): </b>
 
-{@img android_push.png}
+<ol>
+  <li>Open <a href="https://cloud.appcelerator.com/apps">My Apps</a>.</li>
+  <li>Find your application in the list of apps and click the <b>Manage ACS</b> link.</li>
+  <li>In the <b>Android Push Configuration</b> section, configure either GCM or MQTT:
+      <ul>
+        <li>For GCM, enter your Google API key in the <b>Google Cloud Messaging (GCM) API Key</b> field and your GCM sender ID in the <b>Google Cloud Messaging (GCM) Sender ID</b> field.</li>
+        <li>For MQTT, enter your Android application's package name in the <b>Application Package (MQTT)</b> field.
+      </li>
+      </ul>
+      <img src="android_push.png">
+      <li>Click <b>Save Android Push Configuration Changes</b>.</li>
+  </li>
+</ol>
+
 	
 <h3>Setup Android Project</h3>
 
@@ -244,7 +236,7 @@ configurable for non-enterprise users.</li>
 
 <h3>Device Token</h3>
 
-<p>The device token is a unique identifer for an Android device, with having it, the push notification server can locate and push the desired notifications to the right device.</p>
+<p>The device token is a unique identifier for an Android device, with having it, the push notification server can locate and push the desired notifications to the right device.</p>
 <p>Device token is generated by Appcelecator Cloud Services push notification server, it is necessary to request a device token in your app to enable the push notification on Android device. To acquire a device token, you can simply call one of following methods from class <code>com.appcelerator.cloud.push.CCPushService</code>:</p>
 
 <pre class="prettyprint">
@@ -253,7 +245,7 @@ public static void getDeviceTokenAsnyc(final Context androidContext, final Strin
 </pre>
 
 <span style="font-weight: bold">androidContext</span> - The instance of <code>android.context.Context</code> from your app <br/>
-<span style="font-weight: bold">appKey</span> - The app's key of your Appecleartor Cloud Services app <br/>
+<span style="font-weight: bold">appKey</span> - The app's key of your Appcelerator Cloud Services app <br/>
 <span style="font-weight: bold">callback</span> - An instance of <code>com.appcelerator.cloud.push.DeviceTokenCallback</code> for which whenever a device token is available, its <code>receivedDeviceToken</code> will be called <br/>
 
 
