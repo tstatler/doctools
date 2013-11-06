@@ -169,13 +169,8 @@ for (int i=0;i&lt;users.length();i++) {
 ACS supports two protocols to send push notifications to Android devices:
 <ul>
 <li>Google Cloud Messaging (GCM)</li>
-<li>MQTT (deprecated)</li>
+<li>MQTT</li>
 </ul>
-</p>
-
-<p>
-<b>Note:</b> If you have an application that uses MQTT, transition it to use GCM. Any new
-application should use GCM.
 </p>
 
 <p>
@@ -214,7 +209,7 @@ locate your application, then click the <b>Manage ACS</b> link.</li>
 (enterpirse version).</li>
 </p>
 <p>
-3. In the <b>Android Push Configuration</b> section, configure either GCM or MQTT:
+3. In the <b>Android Push Configuration</b> section, configure either GCM or MQTT :
 <ul>
 <li>For GCM, enter your Google API key in the <b>Google Cloud Messaging (GCM) API Key</b>
 textbox and GCM sender ID in the <b>Google Cloud Messaging (GCM) Sender ID</b> textbox.</li>
