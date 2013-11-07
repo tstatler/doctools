@@ -16,14 +16,6 @@ methods:
         description: ID of the post to delete.
         type: String
 
-      - name: keep_photo
-        description: |
-            If the post has a primary photo that was created by using the `photo`
-            parameter to {@link Posts#create create} or {@link Posts#update update}, 
-            the photo object will be deleted as well. Use `keep_photo=true` to tell 
-            Appcelerator Cloud Services to not delete this photo.
-        type: Boolean
-
       - name: user_id
         description: |
             User ID to delete the Post object on behalf of. The user must be the creator of the object.
