@@ -171,12 +171,20 @@ ACS supports two protocols to send push notifications to Android devices:</p>
 <li><a href="http://www.ibm.com/developerworks/webservices/library/ws-mqtt/index.html">Message Queuing Telemetry Transport</a> (MQTT)</li>
 </ul>
 
-<p class="note">As of August 2013, MQTT has been <a href="http://www.appcelerator.com/blog/2013/08/android-push-notification-deprecating-mqtt-in-favor-of-gcm/">deprecated</a> in favor of GCM and is no longer available for Enterprise use. MQTT will continue to be available to Community users.</p>
+<p class="note">As of August 2013, MQTT has been 
+  <a href="http://www.appcelerator.com/blog/2013/08/android-push-notification-deprecating-mqtt-in-favor-of-gcm/">deprecated</a> 
+  in favor of GCM and is no longer available for Enterprise use. MQTT will continue to be available to Community users.</p>
 
 <h3>Obtaining a Google API key and GCM sender ID</h3>
 
 <p>
-To use GCM in your Android application, you need to create a Google API project, enable its GCM service, and obtain the API project's Google API key and GCM sender ID. For steps on obtaining these items see <a href="http://developer.android.com/google/gcm/gs.html" target="_">Getting Started with GCM</a>. Follow the steps found there for for <i>Creating a Google API Project</i>, <i>Enabling the GCM Service</i> and <i>Obtaining an API Key</i>. When you create a new server key, per those instructions, you will be asked to provide a list of IP addresses the server will accept requests from. Leave this list empty if you want the server to accept requests from all IP addresses.
+To use GCM in your Android application, you need to create a Google API project, enable its GCM service, 
+and obtain the API project's Google API key and GCM sender ID. For steps on obtaining these items 
+see <a href="http://developer.android.com/google/gcm/gs.html" target="_">Getting Started with GCM</a>. 
+Follow the steps found there for for <i>Creating a Google API Project</i>, <i>Enabling the GCM Service</i> 
+and <i>Obtaining an API Key</i>. When you create a new server key, per those instructions, you will be 
+asked to provide a list of IP addresses the server will accept requests from. Leave this list empty to 
+accept requests from all IP addresses.
 </p>
 
 <h3>Configuring your app for push notifications</h3>

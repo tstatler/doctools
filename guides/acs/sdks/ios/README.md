@@ -262,7 +262,7 @@ You use the Dashboard (Enterprise applications) or My App (Community application
  6. Click **Choose File** in the Push Certificate field.
  7. Locate the PKCS #12 file your exported previously and click **Choose**.
  8. Enter the certificate's password in the Certificate Password box field.
-   ![](ios_cert_enterprise.png)
+   {@img ios_cert_enterprise.png}
  9. Click **Save Changes**.
 
  **To configure your app for push notifications (Community developers):**
@@ -272,7 +272,7 @@ You use the Dashboard (Enterprise applications) or My App (Community application
 3. In the **Apple iOS Push Certificates** section, click **Choose File**.
 4. Locate the PKCS #12 file your exported previously and click **Choose**.
 5. Enter the certificate's password in the Certificate Password box field. (A password is required despite the placeholder text indicating it's optional.)
-      ![](ios_cert_community.png)
+      {@img ios_cert_community.png}
 6. Click **Save Changes**.
 
 
