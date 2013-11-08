@@ -34,8 +34,10 @@ methods:
         description: |
             Selects the push type.
 
-            Set to either `android` for Android devices using either Google Cloud Messaging
+            Set to `android` for Android devices using either Google Cloud Messaging
             or the MQTT protocol, or `ios` for iOS devices using Apple Push Notification Service.
+
+            Using `gcm` to specify Google Cloud Messaging still works.
         type: String
 
     examples:
