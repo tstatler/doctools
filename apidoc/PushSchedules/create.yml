@@ -27,11 +27,12 @@ methods:
                   * *channel* (String): Name of the channel to send the push notification to.
                   * *payload* (Hash): Payload to send to the device. Same format as {@link PushNotifications#notify} (**required**).
                   * *to_ids* (Array<String>/String): Array or comma-separated list of IDs to send push notifications to.
-                  * *expire_after_seconds* (Number): Expiration time in seconds of when to stop
-                    sending the push notification based on the start date. For example, if the push
-                    notification is scheduled to be sent in a week and the expiration time is for a
-                    day.  The push expires in eight days and will not be sent if the user's device
-                    has been off before the send day and after the end of the expiration period.
+                  * *options* (Hash): Dictionary to specify additional options:
+                      * *expire_after_seconds* (Number): Expiration time in seconds of when to stop
+                        sending the push notification based on the start date. For example, if the push
+                        notification is scheduled to be sent in a week and the expiration time is for a
+                        day.  The push expires in eight days and will not be sent if the user's device
+                        has been off before the send day and after the end of the expiration period.
          
               * *recurrence* (Hash): Schedules the recurrence of the push notification (**required**).
 
