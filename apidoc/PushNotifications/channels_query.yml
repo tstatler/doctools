@@ -7,7 +7,7 @@ methods:
 
         For application admins, if the `user_id` parameter is not specified, returns all channels
         with subscribed users.
-    url: push_notfication/channels/query.json
+    url: push_notification/channels/query.json
     login-required: true
 
     parameters:

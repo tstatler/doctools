@@ -1,0 +1,77 @@
+name: PushSchedules
+methods:
+  - name: query
+    summary: query
+    description: |
+        Queries the list of scheduled push notifications.
+
+        This feature is only avaiable for Appcelerator Platform users.
+
+        The current user must be an application admin.
+    url: push_schedule/update.json
+    http-method: GET
+    login-required: true
+    admin-required: true
+
+    parameters:
+
+      - name: name
+        description: Name given to the scheduled push notification.
+        type: String
+
+      - name: page
+        description: Request page number, default is 1.
+        type: Number
+
+      - name: per_page
+        description: Number of results per page, default is 10.
+        type: Number
+
+    response-parameters:
+      - name: push_schedules
+        description: |
+            A list of scheduled push notifications matching the query.
+        type: Array<PushSchedules>
+      
+    examples:
+
+      - platform: titanium
+        example: |
+            This API is not yet supported in the `ti.cloud` module.
+    
+      - platform: rest
+        example: |
+            Example cURL request:
+
+                curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/push_schedules/query.json?key=<APP_API_KEY>"
+
+            Example JSON response:
+
+                {
+                  "meta": {
+                    "code": 200,
+                    "status": "ok",
+                    "method_name": "queryPushSchedules",
+                    "page": 1,
+                    "per_page": 10,
+                    "total_pages": 1,
+                    "total_results": 1
+                  },
+                  "response": {
+                    "push_schedules": [
+                      {
+                        "id": "526ae82db93e7206700001e1",
+                        "name": "test",
+                        "start_time": "2013-10-24T00:00:00+0000",
+                        "push_notification": {
+                          "channel": "test",
+                          "payload": "test schedule"
+                        },
+                        "recurrence": {
+                          "interval": "daily",
+                          "end_time": "2013-10-31T00:00:00+0000"
+                        }
+                      }
+                    ]
+                  }
+                }

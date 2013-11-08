@@ -52,6 +52,17 @@ methods:
         type: [String, Hash]
         required: true
 
+      - name: options
+        description: |
+            Additional push options.
+
+            * *expire_after_seconds* (Number): Expiration time in seconds of when to stop sending the push notification.
+              For example, if the push notification expiration time is for a day and the user's device
+              is off for over a day, the user does not receive the push notification since it has expired.
+
+            For example, to specify a one day expiration period, use `options={'expire_after_seconds':86400}`.
+        type: Hash
+
     examples:
 
       - platform: titanium

@@ -4,7 +4,7 @@ methods:
     summary: Channels Show
     description: |
         Returns the number of devices subscribed to the specified channel.
-    url: push_notfication/channels/show.json
+    url: push_notification/channels/show.json
     login-required: true
     admin-required: true
 

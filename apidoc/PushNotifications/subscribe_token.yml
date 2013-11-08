@@ -17,9 +17,9 @@ methods:
         description: |
             Android or iOS device token.
 
-            For Android MQTT, the length is fixed and 23 characters.
-
             For Android GCM, the length is dynamic and is less than 4096 characters.
+
+            For Android MQTT, the length is fixed and 23 characters.
 
             For iOS, the length is 64 characters.
         type: String
@@ -32,9 +32,12 @@ methods:
 
       - name: type
         description: |
-            Selects the push type--either `android` for Android devices using the MQTT protocol, `gcm`
-            for Android devices using Google Cloud Messaging or `ios` for iOS devices
-            using Apple Push Notification Service.
+            Selects the push type.
+
+            Set to `android` for Android devices using either Google Cloud Messaging
+            or the MQTT protocol, or `ios` for iOS devices using Apple Push Notification Service.
+
+            Using `gcm` to specify Google Cloud Messaging still works.
         type: String
 
     examples:

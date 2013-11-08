@@ -1,0 +1,89 @@
+name: PushSchedules
+methods:
+  - name: create
+    summary: create
+    description: |
+        Creates a scheduled push notification.  At minimum, you must specify the `start_time`,
+        `end_time`, `interval` and `payload` parameters.
+
+        This feature is only avaiable for Appcelerator Platform users.
+
+        The current user must be an application admin.
+    url: push_schedule/create.json
+    http-method: POST
+    login-required: true
+    admin-required: true
+
+    parameters: 
+
+      - name: schedule
+        description: |
+            Push notification to schedule.
+
+              * *start_time* (Date): Datetime to start the push notifications in ISO 8601 format (**required**).
+              * *name* (String): Arbitray name to give to the scheduled push notification.
+              * *push_notification* (Hash): Push notification to send (**required**).
+              
+                  * *channel* (String): Name of the channel to send the push notification to.
+                  * *payload* (Hash): Payload to send to the device. Same format as {@link PushNotifications#notify} (**required**).
+                  * *to_ids* (Array<String>/String): Array or comma-separated list of IDs to send push notifications to.
+                  * *options* (Hash): Dictionary to specify additional options:
+                      * *expire_after_seconds* (Number): Expiration time in seconds of when to stop
+                        sending the push notification based on the start date. For example, if the push
+                        notification is scheduled to be sent in a week and the expiration time is for a
+                        day.  The push expires in eight days and will not be sent if the user's device
+                        has been off before the send day and after the end of the expiration period.
+         
+              * *recurrence* (Hash): Schedules the recurrence of the push notification (**required**).
+
+                   * *interval* (String): Set to either `daily`, `weeky` or `monthly` (**required**).
+                   * *end_time* (Date): Datetime to end the push notifications in ISO 8601 format.
+                     Must occur after *start_time* (**required**).
+    
+        type: Hash
+        required: true
+
+    response-parameters:
+      - name: push_schedules
+        description: |
+            A single-element array containing the newly-created scheduled push object.
+        type: Array<PushSchedules>
+      
+    examples:
+
+      - platform: titanium
+        example: |
+            This API is not yet supported in the `ti.cloud` module.
+    
+      - platform: rest
+        example: |
+            The following cURL command schedules push notifications to be sent every day for a week:
+
+                curl -b cookies.txt -c cookies.txt -F 'schedule={"start_time":"2013-10-24", "name":"test", "push_notification":{"channel":"test","payload":"test schedule"}, "recurrence":{"interval":"daily", "end_time":"2013-10-31"}}' "https://api.cloud.appcelerator.com/v1/push_schedules/create.json?key=<APP_API_KEY>"
+
+            Example JSON response:
+
+                {
+                  "meta": {
+                    "code": 200,
+                    "status": "ok",
+                    "method_name": "createPushSchedule"
+                  },
+                  "response": {
+                    "push_schedules": [
+                      {
+                        "id": "526ae82db93e7206700001e1",
+                        "name": "test",
+                        "start_time": "2013-10-24",
+                        "push_notification": {
+                          "channel": "test",
+                          "payload": "test schedule"
+                        },
+                        "recurrence": {
+                          "interval": "daily",
+                          "end_time": "2013-10-31"
+                        }
+                      }
+                    ]
+                  }
+                }

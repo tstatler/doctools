@@ -38,7 +38,8 @@
                    "name": "Communication",
                    "classes": [
                         "Emails",
-                        "PushNotifications"
+                        "PushNotifications",
+                        "PushSchedules"
                    ]
              },
              {
