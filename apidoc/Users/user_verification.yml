@@ -57,7 +57,6 @@ methods:
                     else {
                         error(e);
                     }
-                    button.show();
                 });
 
       - platform: rest
