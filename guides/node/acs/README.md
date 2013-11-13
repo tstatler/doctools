@@ -19,10 +19,8 @@ You install the ACS Node SDK using `npm`:
 To use the standard ACS APIs you first require the
 `acs-node` module and call its `initACS()` method, passing it your ACS application key:
 
-<pre class="prettyprint">
-var ACS = require('acs-node');
-ACS.initACS(<em>'&lt;App Key&gt;'</em>);
-</pre>
+    var ACS = require('acs-node');
+    ACS.initACS('<App Key>');
 
 This only needs to be done once, typically in the main `app.js` script file.
 
@@ -50,8 +48,7 @@ error response is displayed.
         }, req, res);
     }
 
-A complete [sample project](https://github.com/appcelerator/acs-node-
-sdk/tree/master/examples/UserWithACSAPI) is available on GitHub.
+A complete [sample project](https://github.com/appcelerator/acs-node-sdk/tree/master/examples/UserWithACSAPI) is available on GitHub.
 
 ### Using the REST APIs ###
 
