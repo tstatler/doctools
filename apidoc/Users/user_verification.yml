@@ -26,26 +26,24 @@ methods:
         description: |
             If you wish to use your custom email body. You can create a email template and
             pass the template name. Your email template must contain the following URL to
-            allow users to be redirected to Appcelerator Cloud Services email verification
-	    page:
+            allow users to be redirected to Appcelerator Cloud Services email verification page:
 
-		https://cloud.appcelerator.com/users/confirmation?key={{key}}&confirmation;_token={{confirmation_token}}
+                https://cloud.appcelerator.com/users/confirmation?key={{key}}&confirmation;_token={{confirmation_token}}
 
             If you have your own website that talks to Appcelerator Cloud Services backend
-	    and wish to use custom URL, you must provide a URL with the following format:
+            and wish to use custom URL, you must provide a URL with the following format:
 
-		https://[your_url.com]/[your_method]?key={{key}}&confirmation;_token={{confirmation_token}}
+                https://[your_url.com]/[your_method]?key={{key}}&confirmation;_token={{confirmation_token}}
 
             When a user visits the above URL, you make a call to Appcelerator Cloud
-	    Services to confirm the user internally from your web server:
+            Services to confirm the user internally from your web server:
 
                 GET https://api.cloud.appcelerator.com/v1/users/confirm_user.json?confirmation_token={{confirmation_token}}&key;=<Your App Key>
-
     examples:
       - platform: titanium
         example: |
             The following example re-sends a verification email to the user's registered email.
-            If the reset request is successful, an alert dialog is displayed asking the user to check their email; otherwise, an error is generated.
+            If the reset request is successful, an alert dialog is displayed asking the user to check their email; otherwise, an error is generated.  Available as a Titanium API since release 3.2.0.
 
                 Cloud.Users.resendConfirmation({
                     email: email.value
@@ -88,9 +86,9 @@ methods:
 
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
-                	if ([response.meta.method isEqualToString:@"resendConfirmation"]) {
-                		NSLog(@"User verification email sent!");
-                	}
+                  if ([response.meta.method isEqualToString:@"resendConfirmation"]) {
+                    NSLog(@"User verification email sent!");
+                  }
                 }
 
       - platform: android
