@@ -4,13 +4,44 @@ The ACS Node SDK lets you easily integrate ACS cloud services with your Node app
 provides two APIs:
 
 * A standard API that mirrors the one provided by the
-  [Ti.cloud](http://docs.appcelerator.com/titanium/latest/#!/api/Titanium.Cloud) client-side module.
+  [Titianium.Cloud](http://docs.appcelerator.com/titanium/latest/#!/api/Titanium.Cloud) client-side module.
   The examples from the Ti.Cloud documentation can be easily adapted for use with the ACS Node SDK.
 * An equivalent REST API.
 
+The main difference between the Titanium.Cloud APIs and those provided by the ACS Node SDK are two
+additional parameters, the HTTP connection's related HTTP request and response objects. For example,
+below is the Titanium.Cloud code to login a user.
+
+    Cloud.Users.login({
+        login: 'test@mycompany.com',
+        password: 'test_password'
+    }, function (e) {
+        if (e.success) {
+            // Handle successful login
+        } else {
+            // Handle unsuccessful login
+        }
+    });
+
+The ACS Node SDK version shown below is identical to the previous code except for the additional
+`res` and `req` parameters. This lets you share session data and cookies between ACS and connected
+clients (see "Cookie-Based Session Management" below for more information).
+
+    ACS.Users.login({
+        login: 'test@mycompany.com',
+        password: 'test_password'
+    }, function (e) {
+        if (e.success) {
+            // Handle successful login
+        } else {
+            // Handle unsuccessful login
+        }
+    }, req, res);
+
+
 ## Installing
 
-You install the ACS Node SDK using `npm`:
+Install the ACS Node SDK using `npm`:
 
     [sudo] npm install acs-node
 
@@ -52,32 +83,19 @@ A complete [sample project](https://github.com/appcelerator/acs-node-sdk/tree/ma
 
 ### Using the REST APIs ###
 
-To use the REST API you assign the return value of `ACS.initACS()` to a local object.
-This object provides a `rest()` method you use to make REST requests directly to ACS. The `rest()`
-method has the following signature:
+To use the REST API you assign the return value of `ACS.initACS()` to a local object. This object provides a `rest()` method you use to make REST requests directly to ACS. The `rest()` method has the following signature:
 
-<code>rest(<em>resource</em>, <em>action</em>, <em>action</em>, <em>callback</em>)</code>
+<code><em>sdkObject</em>.rest(<em>resource</em>, <em>action</em>, <em>action</em>, <em>callback</em>, `request`, `response`)</code>
 
 * `resource` -- The URL of the REST resource to call.
 * `method` -- The HTTP method to invoke on the resource.
 * `data` -- The data object to pass to the resource.
 * `callback` -- The function to callback when the request completes.
+* `request` -- The HTTP request object.
+* `response` -- The HTTP response object to
 
-The following code demonstrates basic REST API usage:
-
-    var ACS = require('acs-node');
-    var sdk = ACS.initACS('<App Key>');
-    var resource "users/login.json";
-    var method = 'POST';
-    var data = {username: 'joesmith', password: 'pwd'};
-    function handleLogin(response) {
-        // Handle response
-        if(response) { ... }
-    }
-    sdk.rest(resource, method, data, callback);
-
-Below is a more complete example using REST that's functionally equivalent to the [previous version](#usingtheacsapis)
-that used the standard ACS API.
+Below is a more complete REST example that's functionally equivalent to the [previous version](#usingtheacsapis)
+using the standard Titanium.Cloud APIs.
 
     var ACS = require('acs-node');
     var sdk = ACS.initACS('<App Key>');
@@ -102,7 +120,7 @@ that used the standard ACS API.
 
 A complete REST [sample project](https://github.com/appcelerator/acs-node-sdk/tree/master/examples/UserWithREST) is available on GitHub.
 
-## User Login Session Management
+## User Login Session Management ##
 
 Most of ACS APIs require a user to be logged in, so it is important to have a
 way to manage user sessions in your Node.ACS application. Node.ACS provides
