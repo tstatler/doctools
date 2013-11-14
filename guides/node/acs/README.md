@@ -55,6 +55,8 @@ To use the standard ACS APIs you first require the
 
 This only needs to be done once, typically in the main `app.js` script file.
 
+<p class="note">The previous way to require the ACS module (<code>require('acs').ACS</code>) has been deprecated but will continue to work.</p>
+
 Below is a more complete example that uses the standard ACS APIs to
 login a user. It defines a custom `login()` function that takes the `username` and `password`
 properties from the HTTP request body and, in turn, passes those values as input to the
