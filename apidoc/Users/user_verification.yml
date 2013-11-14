@@ -6,7 +6,7 @@ methods:
         If you enabled new user account email verification in your App settings, all
         new users will receive an email containing instructions to activate their
         account. You can use this API to re-send user verification email.
-        
+
     url: users/resend_confirmation.json
 
     parameters:
@@ -26,34 +26,45 @@ methods:
         description: |
             If you wish to use your custom email body. You can create a email template and
             pass the template name. Your email template must contain the following URL to
-            allow users to be redirected to Appcelerator Cloud Services email verification
-            page:  
-  
-                https://cloud.appcelerator.com/users/confirmation?key={{key}}&confirmation;_token={{confirmation_token}}  
+            allow users to be redirected to Appcelerator Cloud Services email verification page:
+
+                https://cloud.appcelerator.com/users/confirmation?key={{key}}&confirmation;_token={{confirmation_token}}
 
             If you have your own website that talks to Appcelerator Cloud Services backend
-            and wish to use custom URL, you must provide a URL with the following format:  
-  
-                https://[your_url.com]/[your_method]?key={{key}}&confirmation;_token={{confirmation_token}}  
-  
-            When a user visits the above URL, you make a call to Appcelerator Cloud
-            Services to confirm the user internally from your web server:  
-  
-                GET https://api.cloud.appcelerator.com/v1/users/confirm_user.json?confirmation_token={{confirmation_token}}&key;=<Your App Key>
+            and wish to use custom URL, you must provide a URL with the following format:
 
+                https://[your_url.com]/[your_method]?key={{key}}&confirmation;_token={{confirmation_token}}
+
+            When a user visits the above URL, you make a call to Appcelerator Cloud
+            Services to confirm the user internally from your web server:
+
+                GET https://api.cloud.appcelerator.com/v1/users/confirm_user.json?confirmation_token={{confirmation_token}}&key;=<Your App Key>
     examples:
       - platform: titanium
         example: |
-            This API is not yet supported in the `ti.cloud` module.
+            The following example re-sends a verification email to the user's registered email.
+            If the reset request is successful, an alert dialog is displayed asking the user to check their email; otherwise, an error is generated.  Available as a Titanium API since release 3.2.0.
+
+                Cloud.Users.resendConfirmation({
+                    email: email.value
+                }, function (e) {
+                    if (e.success) {
+                        alert('Please check your email!');
+                        email.value = '';
+                    }
+                    else {
+                        error(e);
+                    }
+                });
 
       - platform: rest
         example: |
             Example cURL request:
-            
+
                 $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/users/resend_confirmation.json?key=<YOUR APP APP KEY>&email=foo@foo.com"
-                
+
             Example JSON response:
-            
+
                 {
                   "meta": {
                     "status":"ok",
@@ -61,92 +72,92 @@ methods:
                     "method_name":"resendConfirmation"
                   }
                 }
-                
+
       - platform: ios
         example: |
             Example iOS call:
-            
+
                 NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
                 [paramDict setObject:@"foo@foo.com" forKey:@"email"];
                 CCRequest *request = [[[CCRequest alloc] httpMethod:@"GET" initWithDelegate:self baseUrl:@"users/resend_confirmation.json" paramDict:nil] autorelease];
                 [request startAsynchronous];
-                
+
             SDK Callback:
-            
+
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
-                	if ([response.meta.method isEqualToString:@"resendConfirmation"]) {
-                		NSLog(@"User verification email sent!");
-                	}
+                  if ([response.meta.method isEqualToString:@"resendConfirmation"]) {
+                    NSLog(@"User verification email sent!");
+                  }
                 }
-                
+
       - platform: android
         example: |
             Example Android call:
-            
+
                 Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
                 //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
                 Map<String, Object> data = new HashMap<String, Object>();
                 data.put("email", "foo@foo.com");
                 CCResponse response = sdk.sendRequest("users/resend_confirmation.json", CCRequestMethod.GET, data);
-                
+
             SDK Callback:
-            
+
                 JSONObject responseJSON = response.getResponseData();
                 CCMeta meta = response.getMeta();
-                if("ok".equals(meta.getStatus()) 
-                    && meta.getCode() == 200 
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
                     && "resendConfirmation".equals(meta.getMethod())) {
                   System.out.println("User verification email sent!");
                 }
-                
+
       - platform: javascript
         example: |
             Example Javascript call:
-            
+
                 var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
                 var data = {
                   email: 'foo@foo.com'
                 };
                 sdk.sendRequest('users/resend_confirmation.json', 'GET', data, false, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data) {
                   if(data) {
                     if(data.meta) {
                       var meta = data.meta;
-                      if(meta.status == 'ok' 
-                          && meta.code == 200 
+                      if(meta.status == 'ok'
+                          && meta.code == 200
                           && meta.method_name == 'resendConfirmation') {
                         alert('User verification email sent!');
                       }
                     }
                   }
                 }
-                
+
       - platform: actionscript
         example: |
             Example Actionscript call:
-            
+
                 var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
                 var data:Object = new Object();
                 data.email = "foo@foo.com";
                 sdk.sendRequest("users/resend_confirmation.json", URLRequestMethod.GET, data, false, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data:Object):void {
                   if(data) {
                     if(data.hasOwnProperty("meta")) {
                       var meta:Object = data.meta;
-                      if(meta.status == "ok" 
-                          && meta.code == 200 && 
+                      if(meta.status == "ok"
+                          && meta.code == 200 &&
                           meta.method_name == "resendConfirmation") {
                         Alert.show("User verification email sent!");
                       }
                     }
                   }
                 }
-                
+
