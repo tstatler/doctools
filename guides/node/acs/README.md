@@ -9,8 +9,8 @@ provides two APIs:
 * An equivalent REST API.
 
 The main difference between the Titanium.Cloud APIs and those provided by the ACS Node SDK are two
-additional parameters, the HTTP connection's related HTTP request and response objects. For example,
-below is the Titanium.Cloud code to login a user.
+additional, and optional, parameters: the HTTP connection's related HTTP request and response objects. For example,
+below is the Titanium.Cloud code to login a user:
 
     Cloud.Users.login({
         login: 'test@mycompany.com',
@@ -25,7 +25,7 @@ below is the Titanium.Cloud code to login a user.
 
 The ACS Node SDK version shown below is identical to the previous code except for the additional
 `res` and `req` parameters. This lets you share session data and cookies between ACS and connected
-clients (see "Cookie-Based Session Management" below for more information).
+clients.
 
     ACS.Users.login({
         login: 'test@mycompany.com',
@@ -38,20 +38,31 @@ clients (see "Cookie-Based Session Management" below for more information).
         }
     }, req, res);
 
+Your Node application can optionally handle session data itself. For more information see "Cookie-Based Session Management" below.
 
 ## Installing
 
-Install the ACS Node SDK using `npm`:
+To use the module within your Node application, add the `acs-node` module to the `dependencies` section of your package.json file, as follows:
+
+    "dependencies": {
+      "acs-node": ">=0.9.2"
+    }
+
+You can then run `npm install` from your application folder to install the module and its dependencies.
+
+You can also install the module directly using `npm`:
 
     [sudo] npm install acs-node
+
+As of this writing, the latest version of node-acs is **0.9.2**.
 
 ## Using the ACS APIs
 
 To use the standard ACS APIs you first require the
-`acs-node` module and call its `initACS()` method, passing it your ACS application key:
+`acs-node` module and call its `init()` method, passing it your ACS application key:
 
     var ACS = require('acs-node');
-    ACS.initACS('<App Key>');
+    ACS.init('<App Key>');
 
 This only needs to be done once, typically in the main `app.js` script file.
 
@@ -65,7 +76,7 @@ successful login, the user's information is displayed in the console or, in case
 error response is displayed.
 
     var ACS = require('acs-node');
-    ACS.initACS('<App Key>');
+    ACS.init('<App Key>');
     function login(req, res) {
         var data = {
             login: req.body.username,
@@ -85,22 +96,22 @@ A complete [sample project](https://github.com/appcelerator/acs-node-sdk/tree/ma
 
 ### Using the REST APIs ###
 
-To use the REST API you assign the return value of `ACS.initACS()` to a local object. This object provides a `rest()` method you use to make REST requests directly to ACS. The `rest()` method has the following signature:
+To use the REST API you assign the return value of `ACS.init()` to a variable. This object provides a `rest()` method you use to make REST requests directly to ACS. The `rest()` method has the following signature:
 
-<code><em>sdkObject</em>.rest(<em>resource</em>, <em>action</em>, <em>action</em>, <em>callback</em>, `request`, `response`)</code>
+<code><em>sdkObject</em>.rest(<em>resource</em>, <em>action</em>, <em>action</em>, <em>callback</em>, <em>request</em>, <em>response</em>)</code>
 
 * `resource` -- The URL of the REST resource to call.
 * `method` -- The HTTP method to invoke on the resource.
 * `data` -- The data object to pass to the resource.
 * `callback` -- The function to callback when the request completes.
-* `request` -- The HTTP request object.
-* `response` -- The HTTP response object to
+* `request` -- The HTTP request object from the client.
+* `response` -- The HTTP response object from the client.
 
-Below is a more complete REST example that's functionally equivalent to the [previous version](#usingtheacsapis)
-using the standard Titanium.Cloud APIs.
+Below is a more complete REST example that's functionally equivalent to the previous version
+that used the standard Titanium.Cloud APIs.
 
     var ACS = require('acs-node');
-    var sdk = ACS.initACS('<App Key>');
+    var sdk = ACS.init('<App Key>');
     function login(req, res) {
         var data = {
             login: req.body.username,
@@ -150,7 +161,7 @@ API call. For example:
         }, req, res);
     }
 
-The ACS library retrieves the session ID from the request's cookies. If a
+The ACS Node SDK retrieves the session ID from the request's cookies. If a
 `_session_id` cookie is present, it uses that session ID to make the ACS API
 call. If not, it performs a regular API call without session information.
 
@@ -161,9 +172,9 @@ project's client.
 
 **Important**
 
-*   The ACS library sets the cookie header in the response object, which must be done _before_
+*   The ACS Node SDK sets the cookie header in the response object, which must be done _before_
     sending any response data (for example, by calling the response object's `send` method). If you
-    send any response data _before_ the ACS API callback function is invoked, the ACS library will
+    send any response data _before_ the ACS API callback function is invoked, the ACS Node SDK will
     throw an exception when it tries to set the cookie headers, with a message like, "Can't render
     headers after they are sent to the client."
 
