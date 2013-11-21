@@ -45,7 +45,7 @@ Your Node application can optionally handle session data itself. For more inform
 To use the module within your Node application, add the `acs-node` module to the `dependencies` section of your package.json file, as follows:
 
     "dependencies": {
-      "acs-node": ">=0.9.2"
+      "acs-node": ">=0.9.3"
     }
 
 You can then run `npm install` from your application folder to install the module and its dependencies.
@@ -54,7 +54,7 @@ You can also install the module directly using `npm`:
 
     [sudo] npm install acs-node
 
-As of this writing, the latest version of node-acs is **0.9.2**.
+As of this writing, the latest version of node-acs is **0.9.3**.
 
 ## Using the ACS APIs
 
