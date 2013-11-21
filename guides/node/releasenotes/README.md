@@ -1,5 +1,21 @@
 # Node.ACS Release Notes
 
+## 22 November 2013 -- version 1.0.8
+
+  * New Node.ACS library method to make generic REST API calls to ACS.  For more information, see
+    [Using ACS APIs from Node](http://docs.appcelerator.com/cloud/latest/#!/guide/node_acs).
+
+  * Upgraded servers to Node v0.8.26.
+
+  * Fixed an issue where the CLI help command did not print out usage information for the `acs crt`
+    command.
+
+  * Fixed an issue when trying to send truncated data with express compression.  For MVC apps, the
+    server will try to reenable express compression.
+
+  * Fixed an issue where uploading a certificate containing a domain name with wildcard characters
+    would fail.
+
 ## 26 September 2013 -- version 1.0.7
 
   * Fixed an issue where using the ACS CLI with Node.js v0.10.14 did not display
