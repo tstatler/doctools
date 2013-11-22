@@ -1,6 +1,6 @@
 name: PushSchedules
 description: |
-    This feature is only avaiable for Appcelerator Platform users, and the current user must be an
+    This feature is only available for Appcelerator Platform users, and the current user must be an
     application admin to use this API. 
 
     The Push Schedule API lets you send scheduled push notifications to your users who are on iOS and

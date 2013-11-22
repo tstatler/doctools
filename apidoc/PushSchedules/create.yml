@@ -6,7 +6,7 @@ methods:
         Creates a scheduled push notification.  At minimum, you must specify the `start_time`,
         `end_time`, `interval` and `payload` parameters.
 
-        This feature is only avaiable for Appcelerator Platform users.
+        This feature is only available for Appcelerator Platform users.
 
         The current user must be an application admin.
     url: push_schedule/create.json
