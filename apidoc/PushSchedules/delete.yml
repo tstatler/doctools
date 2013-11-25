@@ -23,8 +23,18 @@ methods:
 
       - platform: titanium
         example: |
-            This API is not yet supported in the `ti.cloud` module.
-    
+            Requires Release 3.2.0.
+
+                Cloud.PushSchedules.remove({
+                    ids: savedPushId
+                }, function(e){
+                    if (e.success) {
+                        Ti.API.info("Success!");
+                    } else {
+                        Ti.API.error('Error: ' + ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
+
       - platform: rest
         example: |
             Example cURL request:

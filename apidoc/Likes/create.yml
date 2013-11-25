@@ -73,7 +73,21 @@ methods:
     examples:
       - platform: titanium
         example: |
-            This API is not yet supported in the `ti.cloud` module.
+            Requires Release 3.2.0. The following example increments the like count for the
+            specified Post object.
+
+                Cloud.Likes.create({
+                    post_id: savedPostId
+                }, function (e) {
+                    if (e.success) {
+                        var like = e.likes[0];
+                        alert('Success:\n' +
+                            'id: ' + like.id + '\n');
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
 
       - platform: rest
         example: |
