@@ -1,7 +1,7 @@
 name: Chats
 methods:
   - name: delete
-    summary: Delete a Chat (Beta).
+    summary: Delete a Chat.
     description: |
         Deletes a chat message.
     url: chats/delete.json
@@ -22,7 +22,18 @@ methods:
     examples:
       - platform: titanium
         example: |
-            This API is not yet supported in the `ti.cloud` module.
+            Requires Release 3.2.0.
+
+                Cloud.Chats.remove({
+                    chat_id: savedChatId
+                }, function (e) {
+                    if (e.success) {
+                        alert('Success');
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
 
       - platform: rest
         example: |

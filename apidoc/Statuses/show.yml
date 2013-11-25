@@ -31,7 +31,22 @@ methods:
     examples:
       - platform: titanium
         example: |
-            This API is not yet supported in the `ti.cloud` module.
+            Requires Release 3.2.0. This example retrieves information about a status and checks the response.
+
+                Cloud.Statuses.show({
+                    place_id: savedStatusId
+                }, function (e) {
+                    if (e.success) {
+                        var status = e.statuses[0];
+                        alert('Success:\n' +
+                            'id: ' + status.id + '\n' +
+                            'updated_at: ' + status.updated_at);
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
+
 
       - platform: rest
         example: |

@@ -53,7 +53,20 @@ methods:
     examples:
       - platform: titanium
         example: |
-            This API is not yet supported in the `ti.cloud` module.
+            Requires Release 3.2.0. The following example decrements the like count for the
+            specified post.
+
+                Cloud.Likes.remove({
+                    post_id: savedPostId
+                }, function (e) {
+                    if (e.success) {
+                        alert('Success');
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
+
 
       - platform: rest
         example: |

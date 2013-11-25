@@ -56,7 +56,21 @@ methods:
     examples:
       - platform: titanium
         example: |
-            This API is not yet supported in the `ti.cloud` module.
+
+            Requires Release 3.2.0.
+
+                Cloud.PushNotifications.query({
+                    user_id: userId
+                }, function (e) {
+                    if (e.success) {
+                        e.subscriptions.forEach(function(subscription){
+                            Ti.API.info(subscription.channel.join());
+                        });
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
 
       - platform: rest
         example: |

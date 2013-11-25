@@ -28,7 +28,20 @@ methods:
     examples:
       - platform: titanium
         example: |
-            This API is not yet supported in the `ti.cloud` module.
+
+            Requires Release 3.2.0.
+
+                Cloud.PushNotifications.showChannels({
+                    name: 'test'
+                }, function (e) {
+                    if (e.success) {
+                        Ti.API.info("Android:" + e.devices.android_counts);
+                        Ti.API.info("iOS:" + e.devices.ios_counts);
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
 
       - platform: rest
         example: |
@@ -45,10 +58,10 @@ methods:
                     "method_name": "showPushChannels",
                   },
                   "response": {
-                    "devices": [
+                    "devices": {
                       "ios_counts": 12,
                       "android_counts": 18
-                    ]
+                    }
                   }
                 }
                 

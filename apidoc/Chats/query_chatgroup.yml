@@ -95,7 +95,22 @@ methods:
     examples:
       - platform: titanium
         example: |
-            This API is not yet supported in the `ti.cloud` module.
+            Requires Release 3.2.0.
+
+                Cloud.Chats.queryChatGroups({
+                    page: 1,
+                    per_page: 20
+                }, function (e) {
+                    if (e.success) {
+                        alert('Success:\n' + 'Count: ' + e.chat_groups.length);
+                        e.chat_groups.forEach(function(chatGroup){
+                            Ti.API.info(JSON.stringify(chatGroup));
+                        });
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
 
       - platform: rest
         example: |
