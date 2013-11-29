@@ -11,13 +11,13 @@ methods:
         photo is included, the response includes a "processed" flag which indicates if
         the photo has been resized and stored reliably in the Appcelerator Cloud
         Services storage engine. This will be false initially be false.
-        
+
     url: checkins/create.json
     http-method: POST
     login-required: true
 
     parameters:
-      - name: place_id 
+      - name: place_id
         description: |
             ID of the {@link Places} to check in to.
 
@@ -35,14 +35,14 @@ methods:
         description: Message to attach to the checkin.
         type: String
 
-      - name: photo 
+      - name: photo
         description: |
             New photo to attach as the primary photo for the checkin.
-    
-            When you use the `photo` parameter to attach a new photo, you can use the 
+
+            When you use the `photo` parameter to attach a new photo, you can use the
             [custom resize and sync options](#!/guide/photosizes).
         type: Photos
-      
+
       - name: photo_id
         description: |
             ID of an existing photo to attach as the primary photo for the checkin.
@@ -90,7 +90,7 @@ methods:
       - platform: titanium
         example: |
             This example creates a checkin and checks the response.
-            
+
                 Cloud.Checkins.create({
                     place_id: myPlaceId,
                     message: 'What a great view!',
@@ -110,11 +110,11 @@ methods:
       - platform: rest
         example: |
             Example cURL request:
-            
+
                 $ curl -b cookies.txt -c cookies.txt -F "message=Try the grilled steak burrito" -F "place_id=4d6f13e96f70953608000012" -F "photo=@photo.jpg" https://api.cloud.appcelerator.com/v1/checkins/create.json?key=<YOUR APP APP KEY>
-                
+
             Example JSON response:
-            
+
                 {
                   "meta": {
                     "status":"ok",
@@ -159,13 +159,13 @@ methods:
                         }
                       }
                     ]
-                  }	
+                  }
                 }
-                
+
       - platform: ios
         example: |
             Example iOS call:
-            
+
                 NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:3];
                 [paramDict setObject:@"123" forKey:@"place_id"]; // or event_id
                 [paramDict setObject:@"Here is windy!" forKey:@"message"];
@@ -173,51 +173,51 @@ methods:
                 [request addPhotoUIImage:image paramDict:nil];
                 [request startAsynchronous];
                 [request release];
-                
+
             SDK Callback:
-            
+
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
                 	NSArray *checkins = [response getObjectsOfType:[CCCheckin class]];
                 	...
                 }
-                
+
       - platform: android
         example: |
             Example Android call:
-            
-                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 Map<String, Object> data = new HashMap<String, Object>();
                 data.put("place_id", "4d6f13e96f70953608000012");
                 //data.put("event_id", "4d6e77386f70950c89000001");
                 CCResponse response = sdk.sendRequest("checkins/create.json", CCRequestMethod.POST, data);
-                
+
             SDK Callback:
-            
+
                 JSONObject responseJSON = response.getResponseData();
                 CCMeta meta = response.getMeta();
-                if("ok".equals(meta.getStatus()) 
-                    && meta.getCode() == 200 
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
                     && "createCheckin".equals(meta.getMethod())) {
                   JSONArray checkins = responseJSON.getJSONArray("checkins");
                   ...
                 }
-                
+
       - platform: javascript
         example: |
             Example Javascript call:
-            
-                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+
+                var sdk = new ACSClient('<YOUR APP APP KEY>');  // app key
                 var data = {
                   place_id: '4d6f13e96f70953608000012'
                   //event_id: '4d6e77386f70950c89000001'
                 };
                 sdk.sendRequest('checkins/create.json', 'POST', data, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data) {
                   if(data) {
                     if(data.meta) {
@@ -229,21 +229,21 @@ methods:
                     }
                   }
                 }
-                
+
       - platform: actionscript
         example: |
             Example Actionscript call:
-            
-                var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                var sdk:ACSClient = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //var sdk:ACSClient = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 var data:Object = new Object();
                 data.place_id = "4d6f13e96f70953608000012";
                 //data.event_id = "4d6e77386f70950c89000001";
                 sdk.sendRequest("checkins/create.json", URLRequestMethod.POST, data, false, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data:Object):void {
                   if(data) {
                     if(data.hasOwnProperty("meta")) {
@@ -255,4 +255,4 @@ methods:
                     }
                   }
                 }
-                
+

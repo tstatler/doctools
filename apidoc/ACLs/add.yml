@@ -5,13 +5,13 @@ methods:
 
     description: |
         Adds one or more user(s) to an existing ACL object, identified by its `id` or `name`.
-        
+
     url: acls/add.json
     http-method: POST
     login-required: true
 
     parameters:
-      - name: name 
+      - name: name
         description: |
             Name of the ACL object.
 
@@ -21,7 +21,7 @@ methods:
       - name: id
         description: |
             ID of the ACL oject.
-      
+
             Either `name` or `id` must be specified.
         type: String
 
@@ -44,7 +44,7 @@ methods:
         title: Add user to an ACL
         example: |
             This example adds a user to an ACL object and checks the response.
-    
+
                 Cloud.ACLs.addUser({
                     name: 'testACL',
                     reader_ids: readers.ids.join(','),
@@ -61,11 +61,11 @@ methods:
       - platform: rest
         example: |
             Example cURL request:
-            
+
                 $ curl -b cookies.txt -c cookies.txt -F "name=access_photo_album" -F "reader_ids[]=4fcdab1f47b7b71933000008" -F "writer_ids[]=4fcdab1f47b7b71933000009" https://api.cloud.appcelerator.com/v1/acls/add.json?key=<YOUR APP APP KEY>
-                
+
             Example JSON response:
-            
+
                 {
                   "meta": {
                     "status": "ok",
@@ -73,11 +73,11 @@ methods:
                     "method_name": "addAcl"
                   }
                 }
-                
+
       - platform: ios
         example: |
             Example iOS call:
-            
+
                 NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
                 [paramDict setObject:@"access my album" forKey:@"name"];
                 [paramDict setObject:[NSArray arrayWithObjects:[@"4fcdab1f47b7b71933000008", nil] forKey:@"reader_ids"];
@@ -85,61 +85,61 @@ methods:
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:self  httpMethod:@"POST" baseUrl:@"acls/add.json" paramDict:paramDict];
                 [request startAsynchronous];
                 [request release];
-                
+
             SDK Callback:
-            
+
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
                 	if ([response.meta.method isEqualToString:@"addAcl"]) {
-                		
+
                 	}
                 }
-                
+
       - platform: android
         example: |
             Example Android call:
-            
-                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 Map<String, Object> data = new HashMap<String, Object>();
                 data.put("name", "access_photo_album");
                 data.put("reader_ids", "4fcdab1f47b7b71933000008");
                 data.put("writer_ids", "4fcdab1f47b7b71933000009");
                 CCResponse response = sdk.sendRequest("acls/add.json", CCRequestMethod.POST, data);
-                
+
             SDK Callback:
-            
+
                 JSONObject responseJSON = response.getResponseData();
                 CCMeta meta = response.getMeta();
-                if("ok".equals(meta.getStatus()) 
-                    && meta.getCode() == 200 
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
                     && "addAcl".equals(meta.getMethod())) {
-                
+
                 }
-                
+
       - platform: javascript
         example: |
             Example Javascript call:
-            
-                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+
+                var sdk = new ACSClient('<YOUR APP APP KEY>');  // app key
                 var data = {
                   name: 'access_photo_album',
                   reader_ids: '4fcdab1f47b7b71933000008',
                   writer_ids: '4fcdab1f47b7b71933000009'
                 };
                 sdk.sendRequest('acls/add.json', 'POST', data, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data) {
                   if(data) {
                     if(data.meta) {
                       var meta = data.meta;
                       if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'addAcl') {
-                
+
                       }
                     }
                   }
                 }
-                
+

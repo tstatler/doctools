@@ -5,18 +5,18 @@ methods:
 
     description: |
         Collections contain one or more photos and/or sub-collections. These can be
-        used as photo albums for a user. To create a subcollection, 
+        used as photo albums for a user. To create a subcollection,
         specify a `parent_collection_id` when creating a collection. If the collection has been
         created or updated with a `cover_photo_id`, photo details will be returned
         with collection information. If a `cover_photo_id` has not been assigned, the
         first photo found in the collection or its sub-collections will be returned as
         the cover photo.
-        
+
     url: collections/create.json
     http-method: POST
     login-required: true
 
-    parameters: 
+    parameters:
       - name: name
         description: |
             Name of the collection. The name must be unique across other top-level
@@ -72,7 +72,7 @@ methods:
       - platform: titanium
         example: |
             This example creates a new photo collection and checks the response.
-            
+
                 Cloud.PhotoCollections.create({
                     name: 'Party Pictures'
                 }, function (e) {
@@ -88,15 +88,15 @@ methods:
                             ((e.error && e.message) || JSON.stringify(e)));
                     }
                 });
-      
+
       - platform: rest
         example: |
             Example cURL request:
-            
+
                 $ curl -b cookies.txt -c cookies.txt -F "name=Office Fun" "https://api.cloud.appcelerator.com/v1/collections/create.json?key=<YOUR APP APP KEY>"
-                
+
             Example JSON response:
-            
+
                 {
                   "meta": {
                     "code": 200,
@@ -127,18 +127,18 @@ methods:
                     ]
                   }
                 }
-                
+
       - platform: ios
         example: |
             Example iOS call:
-            
+
                 NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
                 [paramDict setObject:@"My Photo Album" forKey:@"name"];
                 CCRequest *request = [[[CCRequest alloc] initWithDelegate:self httpMethod:@"POST" baseUrl:@"collections/create.json" paramDict:paramDict] autorelease];
                 [request startAsynchronous];
-                
+
             SDK Callback:
-            
+
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
                 	NSArray *collections = [response getObjectsOfType:[CCCollection class]];
@@ -147,41 +147,41 @@ methods:
                 		...
                 	}
                 }
-                
+
       - platform: android
         example: |
             Example Android call:
-            
-                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 Map<String, Object> data = new HashMap<String, Object>();
                 data.put("name", "Office Fun");
                 CCResponse response = sdk.sendRequest("collections/create.json", CCRequestMethod.POST, data);
-                
+
             SDK Callback:
-            
+
                 JSONObject responseJSON = response.getResponseData();
                 CCMeta meta = response.getMeta();
-                if("ok".equals(meta.getStatus()) 
-                    && meta.getCode() == 200 
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
                     && "createCollection".equals(meta.getMethod())) {
                   JSONArray collections = responseJSON.getJSONArray("collections");
                   ...
                 }
-                
+
       - platform: javascript
         example: |
             Example Javascript call:
-            
-                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+
+                var sdk = new ACSClient('<YOUR APP APP KEY>');  // app key
                 var data = {
                   name: 'Office Fun'
                 };
                 sdk.sendRequest('collections/create.json', 'POST', data, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data) {
                   if(data) {
                     if(data.meta) {
@@ -193,20 +193,20 @@ methods:
                     }
                   }
                 }
-                
+
       - platform: actionscript
         example: |
             Example Actionscript call:
-            
-                var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                var sdk:ACSClient = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //var sdk:ACSClient = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 var data:Object = new Object();
                 data.name = "Office Fun";
                 sdk.sendRequest("collections/create.json", URLRequestMethod.POST, data, false, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data:Object):void {
                   if(data) {
                     if(data.hasOwnProperty("meta")) {
@@ -218,4 +218,4 @@ methods:
                     }
                   }
                 }
-                
+

@@ -4,7 +4,7 @@ methods:
     summary: Create Custom Object
     description: |
         Create a custom object of type class_name.
-        
+
         The class_name of the object is part of the URL. You don't have to define
         class_name ahead of time. It will be created on the fly
     url: objects/:class_name/create.json
@@ -27,19 +27,19 @@ methods:
 
             For instance, if you want to define a car object:
 
-                { 
+                {
                    "make": "nissan",
                    "color": "blue",
                    "year": 2005,
                    "purchased_at": "2011-11-02 17:07:37 -0700",
-                   "used": false 
+                   "used": false
                 }
-                
+
             See the main description for {@link CustomObjects} for more information on
             fields.
         type: Hash
         required: true
-            
+
 
       - name: tags
         description: |
@@ -49,14 +49,14 @@ methods:
             `fields` dictionary, `fields.tags` will be used instead.
         type: String
 
-      - name: photo 
+      - name: photo
         description: |
             New photo to attach as the primary photo for the object.
-    
-            When you use the `photo` parameter to attach a new photo, you can use the 
+
+            When you use the `photo` parameter to attach a new photo, you can use the
             [custom resize and sync options](#!/guide/photosizes).
         type: Photos
-      
+
       - name: photo_id
         description: |
             ID of an existing photo to attach as the primary photo for the object.
@@ -98,7 +98,7 @@ methods:
       - platform: titanium
         example: |
             This example creates a new custom object and checks the response.
-            
+
                 Cloud.Objects.create({
                     classname: 'cars',
                     fields: {
@@ -120,17 +120,17 @@ methods:
                             ((e.error && e.message) || JSON.stringify(e)));
                     }
                 });
-      
+
       - platform: rest
         example: |
             Example cURL request:
-            
+
                 Create a car object with custom coordinates
-                
+
                 $ curl -b cookies.txt -c cookies.txt -F "fields={\"color\":\"blue\", \"make\": \"nissan\", \"purchased_at\" : \"2011-11-02 17:07:37 -0700\", \"year\" : 2005, \"used\" : false, \"coordinates\":[-122.1, 37.1]}"  https://api.cloud.appcelerator.com/v1/objects/car/create.json?key=<YOUR APP APP KEY>
-                
+
             Example JSON response:
-            
+
                 {
                   "meta": {
                     "code": 200,
@@ -158,7 +158,7 @@ methods:
                     ]
                   }
                 }
-                
+
             In iOS, you can simply create a NSDictionary to represent a custom object's
             fields. Here is the mapping of data types in iOS:
 
@@ -205,16 +205,16 @@ methods:
                     <td>NSNull</td>
                 </tr>
             </table>
-                
+
             If you would like to use your own custom data type, you need to provide an
             `-(id)JSON` encode method in your object class.
-            
+
                 @interface MyObject : NSObject {
                     NSString *color;
                     NSNumber *mileage;
                 }
                 @end
-                
+
                 @implementation MyObject
                 /*!
                  Provide custom and/or encodable object to parse to JSON string.
@@ -225,15 +225,15 @@ methods:
                     return [NSDictionary dictionaryWithObjectsAndKeys:self.color, @"color", self.mileage, @mileage, nil];
                 }
                 @end
-                
+
                 MyObject *object = [[MyObject alloc] init];
                 NSMutableDictionary *customFields = [NSMutableDictionary dictionaryWithCapacity:1];
                 [customFields setObject:object forKey:@"MyObject"];
-                
+
       - platform: ios
         example: |
             Example iOS call:
-            
+
                 NSMutableDictionary *fieldsDict = [NSMutableDictionary dictionaryWithCapacity:4];
                 [fieldsDict setObject:@"nissan" forKey:@"make"]; // set a string
                 [fieldsDict setObject:[NSDate date] forKey:@"purchased_at"]; // set a date
@@ -241,13 +241,13 @@ methods:
                 [fieldsDict setObject:[NSNumber numberWithBool:true] forKey:@"used"]; // set a boolean
                 [fieldsDict setObject:[NSArray arrayWithObjects:@"leather", @"sun roof", nil] forKey:@"features"]; // set an array
                 [fieldsDict setObject:[NSDictionary dictionaryWithObjectsAndKeys:@"blue", @"color", nil] forKey:@"others"]; // set a hash
-                
+
                 NSDictionary *paramDict = [NSDictionary dictionaryWithObject:fieldsDict forKey:@"fields"];
                 CCRequest *request = [[[CCRequest alloc] initWithDelegate:self httpMethod:@"POST" baseUrl:@"objects/car/create.json" paramDict:paramDict] autorelease];
                 [request startAsynchronous];
-                
+
             SDK Callback:
-            
+
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
                     if ([response.meta.methodName isEqualToString:@"createObject"]) {
@@ -256,41 +256,41 @@ methods:
                         ...
                     }
                 }
-                
+
       - platform: android
         example: |
             Example Android call:
-            
-                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 Map<String, Object> data = new HashMap<String, Object>();
                 data.put("fields", "{'color':'blue', 'make': 'nissan', 'purchased_at' : '2011-11-02 17:07:37 -0700', 'year' : 2005, 'used' : false, 'coordinates':[-122.1, 37.1]}");
                 CCResponse response = sdk.sendRequest("objects/car/create.json", CCRequestMethod.POST, data);
-                
+
             SDK Callback:
-            
+
                 JSONObject responseJSON = response.getResponseData();
                 CCMeta meta = response.getMeta();
-                if("ok".equals(meta.getStatus()) 
-                    && meta.getCode() == 200 
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
                     && "createObject".equals(meta.getMethod())) {
                   JSONArray cars = responseJSON.getJSONArray("car");
                   ...
                 }
-                
+
       - platform: javascript
         example: |
             Example Javascript call:
-            
-                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+
+                var sdk = new ACSClient('<YOUR APP APP KEY>');  // app key
                 var data = {
                   fields: '{"color": "blue", "make": "nissan", "purchased_at": "2011-11-02 17:07:37 -0700", "year": 2005, "used": false, "coordinates": [-122.1, 37.1]}'
                 };
                 sdk.sendRequest('objects/car/create.json', 'POST', data, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data) {
                   if(data) {
                     if(data.meta) {
@@ -302,4 +302,4 @@ methods:
                     }
                   }
                 }
-                
+

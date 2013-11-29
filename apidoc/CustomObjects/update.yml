@@ -6,28 +6,28 @@ methods:
         Any of the same parameters as [Create Custom
         Object](/docs/api/v1/custom_objects/create) can be used to update a custom
         object. Only the owner of the object or user who is entitled write
-        permission(ACL) to the object can update the object.  
-          
+        permission(ACL) to the object can update the object.
+
         Application Admin can update any Custom Object.
-        
+
     url: objects/:class_name/update.json
     http-method: PUT
     login-required: true
 
-    parameters: 
+    parameters:
 
-      - name: id 
+      - name: id
         description: |
-            The object ID of the custom object to update. 
+            The object ID of the custom object to update.
         type: String
         required: true
 
       - name: fields
         description: |
             JSON encoding of object fields to update.
-  
+
             If any of the fields do not exist in the current object, they will be added.
-            To delete an existing field, use {"field_name" : null}. For example, the car object created in 
+            To delete an existing field, use {"field_name" : null}. For example, the car object created in
             {@link CustomObjects#create CustomObject.create} is:
 
                 { "make": "nissan",
@@ -37,8 +37,8 @@ methods:
                   "used": false,
                   "coordinates": [-122.1, 37.1]
                 }
-    
-            To change color, remove the `purchased_at` field and add a new field `mileage`, 
+
+            To change color, remove the `purchased_at` field and add a new field `mileage`,
             you could pass the following JSON object to fields:
 
                 { "color": "purple",
@@ -47,7 +47,7 @@ methods:
                 }
         type: Hash
         required: true
-    
+
       - name: tags
         description: |
             Comma-separated list of tags to associate with this object, for example, "hiking,swiming."
@@ -57,14 +57,14 @@ methods:
             `fields` dictionary, `fields.tags` will be used instead.
         type: String
 
-      - name: photo 
+      - name: photo
         description: |
             New photo to attach as the primary photo for the object.
-    
-            When you use the `photo` parameter to attach a new photo, you can use the 
+
+            When you use the `photo` parameter to attach a new photo, you can use the
             [custom resize and sync options](#!/guide/photosizes).
         type: Photos
-      
+
       - name: photo_id
         description: |
             ID of an existing photo to attach as the primary photo for the object.
@@ -106,7 +106,7 @@ methods:
       - platform: titanium
         example: |
             This example updates a custom object and checks the response.
-            
+
                 Cloud.Objects.update({
                     classname: 'cars',
                     id: savedCar1.id,
@@ -129,15 +129,15 @@ methods:
                             ((e.error && e.message) || JSON.stringify(e)));
                     }
                 });
-      
+
       - platform: rest
         example: |
             Example cURL request:
-            
+
                 $ curl -b cookies.txt -c cookies.txt -X PUT --data-urlencode 'fields={"color":"purple", "purchased_at":null, "mileage":10000}' "https://api.cloud.appcelerator.com/v1/objects/car/update.json?key=<YOUR APP APP KEY>&id=4ec42de1d9ca72c50700000d"
-                
+
             Example JSON response:
-            
+
                 {
                   "meta": {
                     "code": 200,
@@ -165,24 +165,24 @@ methods:
                     ]
                   }
                 }
-                
+
             Update is almost the same as create. If you wish to remove a field, you can
             set the field to NSNull.
-            
+
       - platform: ios
         example: |
             Example iOS call:
-            
+
                 NSMutableDictionary *fieldsDict = [NSMutableDictionary dictionaryWithCapacity:4];
                 [fieldsDict setObject:@"honda" forKey:@"make"]; // change make to honda
                 [fieldsDict setObject:NSNull forKey:@"purchased_at"]; // remove purchased_at
-                
+
                 NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:fieldsDict, @"fields", @"4ec42de1d9ca72c50700000d", @"id", nil];
                 CCRequest *request = [[[CCRequest alloc] initWithDelegate:self httpMethod:@"PUT" baseUrl:@"objects/car/update.json" paramDict:paramDict] autorelease];
                 [request startAsynchronous];
-                
+
             SDK Callback:
-            
+
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
                 	if ([response.meta.methodName isEqualToString:@"updateObject"]) {
@@ -191,41 +191,41 @@ methods:
                 		...
                 	}
                 }
-                
+
       - platform: android
         example: |
             Example Android call:
-            
-                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 Map<String, Object> data = new HashMap<String, Object>();
                 data.put("fields", "{'color': 'purple', 'purchased_at': null, 'mileage': 10000}");
                 CCResponse response = sdk.sendRequest("objects/car/update.json", CCRequestMethod.PUT, data);
-                
+
             SDK Callback:
-            
+
                 JSONObject responseJSON = response.getResponseData();
                 CCMeta meta = response.getMeta();
-                if("ok".equals(meta.getStatus()) 
-                    && meta.getCode() == 200 
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
                     && "updateObject".equals(meta.getMethod())) {
                   JSONArray cars = responseJSON.getJSONArray("car");
                   ...
                 }
-                
+
       - platform: javascript
         example: |
             Example Javascript call:
-            
-                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+
+                var sdk = new ACSClient('<YOUR APP APP KEY>');  // app key
                 var data = {
                   fields: '{"color":"purple", "purchased_at":null, "mileage":10000}'
                 };
                 sdk.sendRequest('objects/car/update.json', 'PUT', data, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data) {
                   if(data) {
                     if(data.meta) {
@@ -237,4 +237,4 @@ methods:
                     }
                   }
                 }
-                
+

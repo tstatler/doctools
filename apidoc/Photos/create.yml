@@ -10,12 +10,12 @@ methods:
         Appcelerator Cloud Services storage engine. This will initially be `false`.
         The `md5` field gives the md5 sum of the file which can be used to verify file
         integrity.
-        
+
     url: photos/create.json
     http-method: POST
     login-required: true
 
-    parameters: 
+    parameters:
 
       - name: photo
         description: |
@@ -74,9 +74,9 @@ methods:
             Sizes](#!/guide/photosizes#custom).  Sizes be specified as a JSON object, or using a separate parameter for each
             size. To specify a photo size called "preview" using JSON:
 
-                photo_size : { "preview" : "120x120#" } 
+                photo_size : { "preview" : "120x120#" }
 
-            To pass each size as a separate parameter, do *not* use the literal parameter name `photo_sizes`, 
+            To pass each size as a separate parameter, do *not* use the literal parameter name `photo_sizes`,
             but add a parameter named `photo_sizes[`_sizeName_`]` for each custom photo
             size. The previous example in this format looks like this:
 
@@ -88,9 +88,9 @@ methods:
         description: |
             Synchronous photo sizes to upload. See [Photo Uploading & Resizing](#!/guide/photosizes).
 
-            The literal name for this parameter is `photo_sync_sizes[]`. This parameter can be specified 
-            multiple times, once for each photo size that must be created before the request returns. 
-            
+            The literal name for this parameter is `photo_sync_sizes[]`. This parameter can be specified
+            multiple times, once for each photo size that must be created before the request returns.
+
             For example:
 
                 "photo_sync_sizes[]=preview"
@@ -105,7 +105,7 @@ methods:
       - platform: titanium
         example: |
             This example creates a new photo and checks the response.
-    
+
                 Cloud.Photos.create({
                     photo: Titanium.Filesystem.getFile('photo.jpg')
                 }, function (e) {
@@ -121,15 +121,15 @@ methods:
                             ((e.error && e.message) || JSON.stringify(e)));
                     }
                 });
-    
+
       - platform: rest
         example: |
             Example cURL request:
-            
+
                 $ curl -b cookies.txt -c cookies.txt  -F "file=@photo.jpg" https://api.cloud.appcelerator.com/v1/photos/create.json?key=<YOUR APP APP KEY>
-                
+
             Example JSON response:
-            
+
                 {
                   "meta": {
                     "status":"ok",
@@ -148,25 +148,25 @@ methods:
                         "processed":false
                       }
                     ]
-                  }	
-                }	
-                
+                  }
+                }
+
       - platform: ios
         example: |
             Refer to the "Photo Downloads" section of the [iOS SDK guide](#!/guide/ios) to see how
             to retrieve the actual image from a CCPhoto object.
 
             Example iOS call:
-            
+
                 NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
                 [paramDict setObject:@"profile_photos" forKey:@"collection_name"]; // optional
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"POST" baseUrl:@"photos/create.json" paramDict:paramDict];
                 [request addPhotoUIImage:image paramDict:nil];
                 [request startAsynchronous];
                 [request release];
-                
+
             SDK Callback:
-            
+
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
                 	NSArray *photos = [response getObjectsOfType:[CCPhoto class]];
@@ -175,41 +175,41 @@ methods:
                 		...
                 	}
                 }
-                
+
       - platform: android
         example: |
             Example Android call:
-            
-                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 Map<String, Object> data = new HashMap<String, Object>();
                 data.put("photo", new File("/photos/profile.gif"));
                 CCResponse response = sdk.sendRequest("photos/create.json", CCRequestMethod.POST, data);
-                
+
             SDK Callback:
-            
+
                 JSONObject responseJSON = response.getResponseData();
                 CCMeta meta = response.getMeta();
-                if("ok".equals(meta.getStatus()) 
-                    && meta.getCode() == 200 
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
                     && "createPhoto".equals(meta.getMethod())) {
                   JSONArray photos = responseJSON.getJSONArray("photos");
                   ...
                 }
-                
+
       - platform: javascript
         example: |
             Example Javascript call:
-            
-                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+
+                var sdk = new ACSClient('<YOUR APP APP KEY>');  // app key
                 var data = {
                   photo: 'photoInput'  //the ID of file input control
                 };
                 sdk.sendRequest('photos/create.json', 'POST', data, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data) {
                   if(data) {
                     if(data.meta) {
@@ -221,20 +221,20 @@ methods:
                     }
                   }
                 }
-                
+
       - platform: actionscript
         example: |
             Example Actionscript call:
-            
-                var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                var sdk:ACSClient = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //var sdk:ACSClient = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 var data:Object = new Object();
                 data.photo = photo;	//instance of FileReference
                 sdk.sendRequest("photos/create.json", URLRequestMethod.POST, data, false, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data:Object):void {
                   if(data) {
                     if(data.hasOwnProperty("meta")) {
@@ -246,4 +246,4 @@ methods:
                     }
                   }
                 }
-                
+

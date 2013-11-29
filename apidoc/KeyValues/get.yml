@@ -3,7 +3,7 @@ methods:
   - name: get
     summary: Get a Value
     description: |
-        Gets the value of a key-value pair. 
+        Gets the value of a key-value pair.
 
         If the value is string, the KeyValue object is returned in JSON format. If the value is
         binary, the value is returned directly **without** a JSON wrapper and the content type
@@ -11,7 +11,7 @@ methods:
     url: keyvalues/get.json
 
     parameters:
-    
+
       - name: name
         description: Name (or key) for the key-value pair to retrieve.
         type: String
@@ -23,7 +23,7 @@ methods:
             Determines whether to retrieve this key-value from the publically readable store
             or from the user's private store.
 
-            Default is false (publically readable). 
+            Default is false (publically readable).
         type: Boolean
 
       - name: user_id
@@ -39,7 +39,7 @@ methods:
         description: |
             A single-element array containing the KeyValue object.
 
-            Supplied for string values only. For binary objects, the response body is a 
+            Supplied for string values only. For binary objects, the response body is a
             binary object with a content-type of "application/octet-stream".
         type: Array<KeyValues>
 
@@ -47,7 +47,7 @@ methods:
       - platform: titanium
         example: |
             This example gets a key-value and checks the response.
-    
+
                 Cloud.KeyValues.get({
                     name: 'welcome_message'
                 }, function (e) {
@@ -61,15 +61,15 @@ methods:
                             ((e.error && e.message) || JSON.stringify(e)));
                     }
                 });
-    
+
       - platform: rest
         example: |
             Example cURL request (String data)
-            
+
                 curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/keyvalues/get.json?key=<YOUR APP APP KEY>&name=welcome_message"
-                
+
             Example JSON response:
-            
+
                 {
                   "meta": {
                     "status":"ok",
@@ -88,62 +88,62 @@ methods:
                     ]
                   }
                 }
-        
+
             Example cURL request (binary data)
-                           
+
                 curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/keyvalues/get.json?key=<YOUR APP APP KEY>&name=myimage" > image.jpg
 
       - platform: ios
         example: |
             Example iOS call:
-            
+
                 NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:@"score", @"name", nil];
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"keyvalues/get.json" paramDict:nil];
                 [request startAsynchronous];
                 [request release];
-                
+
             SDK Callback:
-            
+
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
                 	NSArray *kvs = [response getObjectsOfType:[CCKeyValuePair class]];
                 	...
                 }
-                
+
       - platform: android
         example: |
             Example Android call:
-            
-                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 Map<String, Object> data = new HashMap<String, Object>();
                 data.put("name", "welcome_message");
                 CCResponse response = sdk.sendRequest("keyvalues/get.json", CCRequestMethod.GET, data);
-                
+
             SDK Callback:
-            
+
                 JSONObject responseJSON = response.getResponseData();
                 CCMeta meta = response.getMeta();
-                if("ok".equals(meta.getStatus()) 
-                    && meta.getCode() == 200 
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
                     && "getKeyvalue".equals(meta.getMethod())) {
                   JSONArray keyvalues = responseJSON.getJSONArray("keyvalues");
                   ...
                 }
-                
+
       - platform: javascript
         example: |
             Example Javascript call:
-            
-                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+
+                var sdk = new ACSClient('<YOUR APP APP KEY>');  // app key
                 var data = {
                   name: 'welcome_message'
                 };
                 sdk.sendRequest('keyvalues/get.json', 'GET', data, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data) {
                   if(data) {
                     if(data.meta) {
@@ -155,20 +155,20 @@ methods:
                     }
                   }
                 }
-                
+
       - platform: actionscript
         example: |
             Example Actionscript call:
-            
-                var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                var sdk:ACSClient = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //var sdk:ACSClient = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 var data:Object = new Object();
                 data.name = "welcome_message";
                 sdk.sendRequest("keyvalues/get.json", URLRequestMethod.GET, data, false, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data:Object):void {
                   if(data) {
                     if(data.hasOwnProperty("meta")) {

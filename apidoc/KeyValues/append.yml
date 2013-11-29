@@ -6,14 +6,14 @@ methods:
     description: |
         Add the given `value` to end of the existing one. Not allowed on key-values
         with binary data.
-        
+
     url: keyvalues/append.json
     http-method: PUT
     login-required: true
 
     parameters:
       - name: name
-        description: Name (or key) for the key-value pair. 
+        description: Name (or key) for the key-value pair.
         type: String
         required: true
 
@@ -27,7 +27,7 @@ methods:
             Determines whether to update this key-value in the publically readable store
             or in the user's private store.
 
-            Default is false (publically readable). 
+            Default is false (publically readable).
         type: Boolean
 
       - name: user_id
@@ -47,7 +47,7 @@ methods:
       - platform: titanium
         example: |
             This example appends a value to a key-value and checks the response.
-    
+
                 Cloud.KeyValues.append({
                     name: 'welcome_message',
                     value: ', take a look around'
@@ -61,17 +61,17 @@ methods:
                          alert('Error:\n' +
                              ((e.error && e.message) || JSON.stringify(e)));
                      }
-    
+
                 });
-    
+
       - platform: rest
         example: |
             Example cURL request:
-            
+
                 $ curl -b cookies.txt -c cookies.txt -X PUT -F "name=welcome_message" -F "value=, take a look around" https://api.cloud.appcelerator.com/v1/keyvalues/append.json?key=<YOUR APP APP KEY>
-                
+
             Example JSON response:
-            
+
                 {
                   "meta": {
                     "status":"ok",
@@ -90,20 +90,20 @@ methods:
                     ]
                   }
                 }
-                
+
       - platform: ios
         example: |
             Example iOS call:
-            
+
                 NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
                 [paramDict setObject:@"welcome_message" forKey:@"name"];
                 [paramDict setObject:@", take a look around" forKey:@"value"];
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"PUT" baseUrl:@"keyvalues/append.json"  paramDict:paramDict];
                 [request startAsynchronous];
                 [request release];
-                
+
             SDK Callback:
-            
+
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
                 	NSArray *keyvalues = [response getObjectsOfType:[CCKeyValuePair class]];
@@ -112,43 +112,43 @@ methods:
                 		...
                 	}
                 }
-                
+
       - platform: android
         example: |
             Example Android call:
-            
-                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 Map<String, Object> data = new HashMap<String, Object>();
                 data.put("name", "welcome_message");
                 data.put("value", ", take a look around");
                 CCResponse response = sdk.sendRequest("keyvalues/append.json", CCRequestMethod.PUT, data);
-                
+
             SDK Callback:
-            
+
                 JSONObject responseJSON = response.getResponseData();
                 CCMeta meta = response.getMeta();
-                if("ok".equals(meta.getStatus()) 
-                    && meta.getCode() == 200 
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
                     && "appendKeyvalue".equals(meta.getMethod())) {
                   JSONArray keyvalues = responseJSON.getJSONArray("keyvalues");
                   ...
                 }
-                
+
       - platform: javascript
         example: |
             Example Javascript call:
-            
-                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+
+                var sdk = new ACSClient('<YOUR APP APP KEY>');  // app key
                 var data = {
                   name: 'welcome_message',
                   value: ', take a look around'
                 };
                 sdk.sendRequest('keyvalues/append.json', 'PUT', data, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data) {
                   if(data) {
                     if(data.meta) {
@@ -160,21 +160,21 @@ methods:
                     }
                   }
                 }
-                
+
       - platform: actionscript
         example: |
             Example Actionscript call:
-            
-                var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                var sdk:ACSClient = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //var sdk:ACSClient = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 var data:Object = new Object();
                 data.name = "welcome_message";
                 data.value = ", take a look around";
                 sdk.sendRequest("keyvalues/append.json", URLRequestMethod.PUT, data, false, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data:Object):void {
                   if(data) {
                     if(data.hasOwnProperty("meta")) {
@@ -186,4 +186,4 @@ methods:
                     }
                   }
                 }
-                
+

@@ -6,8 +6,8 @@ methods:
     description: |
         Perform custom query of photos with sorting and paginating. Currently you can
         not query or sort data stored inside array or hash in custom fields.
-        
-        In addition to custom fields, here is a list of pre-defined fields 
+
+        In addition to custom fields, here is a list of pre-defined fields
         that can be queried and sorted:
 
         *   `user_id: String`. Photo owner's user ID.
@@ -25,10 +25,10 @@ methods:
     url: photos/query.json
 
     parameters:
-      - name: page  
+      - name: page
         description: Request page number, default is 1.
         type: Number
-      
+
       - name: per_page
         description: Number of results per page, default is 10.
         type: Number
@@ -48,7 +48,7 @@ methods:
       - name: where
         description: |
             Constraint values for fields. `where` should be encoded JSON.
-            
+
             If `where` is not specified, `query` returns all objects.
         type: Hash
 
@@ -69,11 +69,11 @@ methods:
 
       - name: response_json_depth
         description: |
-            Nested object depth level counts in response json.  
+            Nested object depth level counts in response json.
             In order to reduce server API calls from an applicaton, the response json may
             include not just the objects that are being queried/searched, but also with
             some important data related to the returning objects such as object's owner or
-            referencing objects.  
+            referencing objects.
 
             Default is 3, valid range is 1 to 8.
         type: Number
@@ -87,7 +87,7 @@ methods:
       - platform: titanium
         example: |
             This example requests a list of photos and checks the response.
-    
+
                 Cloud.Photos.query({
                     page: 1,
                     per_page: 20,
@@ -113,16 +113,16 @@ methods:
                             ((e.error && e.message) || JSON.stringify(e)));
                     }
                 });
-    
+
       - platform: rest
         example: |
             Example cURL request:
-            
+
                 Example: If your app assigns a geo location to each photo, query photos with tag "Appcelerator Cloud Services" near latitude 37.12, longitude -122.23 within 5 miles
                 $ curl -c cookies.txt -b cookies.txt -X GET --data-urlencode 'where={"tags_array":"Appcelerator Cloud Services","coordinates":{"$nearSphere":[-122.23,37.12], "$maxDistance" : 0.00126}}' "https://api.cloud.appcelerator.com/v1/photos/query.json?key=<YOUR APP APP KEY>"
-                
+
             Example JSON response:
-            
+
                 {
                   "meta": {
                     "status":"ok",
@@ -159,22 +159,22 @@ methods:
                         }
                       }
                     ]
-                  }	
+                  }
                 }
-                
+
       - platform: ios
         example: |
             Example iOS call:
-            
+
                 CCWhere *where = [[[CCWhere alloc] init] autorelease];
                 [where fieldName:@"coordinates" nearLat:37.12 nearLng:-122.23x maxDistanceMi:5.0];
                 [where fieldName:@"tags_array" equalTo:@"Appcelerator Cloud Services"];
                 NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:where, @"where", nil]
                 request = [[[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"photos/query.json" paramDict:paramDict] autorelease];
                 [request startAsynchronous];
-                
+
             SDK Callback:
-            
+
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
                 	if ([response.meta.methodName isEqualToString:@"queryPhotos"]) {
@@ -184,41 +184,41 @@ methods:
                 		}
                 	}
                 }
-                
+
       - platform: android
         example: |
             Example Android call:
-            
-                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 Map<String, Object> data = new HashMap<String, Object>();
                 data.put("where", "{'tags_array: Appcelerator Cloud Services','coordinates': {'$nearSphere': [-122.23,37.12], '$maxDistance': 0.00126}}");
                 CCResponse response = sdk.sendRequest("photos/create.json", CCRequestMethod.POST, data);
-                
+
             SDK Callback:
-            
+
                 JSONObject responseJSON = response.getResponseData();
                 CCMeta meta = response.getMeta();
-                if("ok".equals(meta.getStatus()) 
-                    && meta.getCode() == 200 
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
                     && "queryPhotos".equals(meta.getMethod())) {
                   JSONArray photos = responseJSON.getJSONArray("photos");
                   ...
                 }
-                
+
       - platform: javascript
         example: |
             Example Javascript call:
-            
-                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+
+                var sdk = new ACSClient('<YOUR APP APP KEY>');  // app key
                 var data = {
                   where: '{"tags_array":"Appcelerator Cloud Services","coordinates":{"$nearSphere":[-122.23,37.12], "$maxDistance" : 0.00126}}'
                 };
                 sdk.sendRequest('photos/query.json', 'GET', data, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data) {
                   if(data) {
                     if(data.meta) {
@@ -230,4 +230,4 @@ methods:
                     }
                   }
                 }
-                
+

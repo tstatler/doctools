@@ -19,10 +19,10 @@ methods:
             Only application admins can query subscribed channels of a user.
         type: String
 
-      - name: page  
+      - name: page
         description: Request page number, default is 1.
         type: Number
-      
+
       - name: per_page
         description: Number of results per page, default is 10.
         type: Number
@@ -53,11 +53,11 @@ methods:
       - platform: rest
         example: |
             Example cURL request:
-            
+
                 $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/push_notification/channels/query.json?key=<YOUR APP API KEY>"
-                
+
             Example JSON response:
-            
+
                 {
                   "meta": {
                     "status": "ok",
@@ -75,21 +75,21 @@ methods:
                     ]
                   }
                 }
-                
+
       - platform: android
         example: |
             Example Android call:
-            
-                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
                 CCResponse response = sdk.sendRequest("push_notification/channels/query.json", CCRequestMethod.GET, null);
-                
+
             SDK Callback:
-            
+
                 JSONObject responseJSON = response.getResponseData();
                 CCMeta meta = response.getMeta();
-                if("ok".equals(meta.getStatus()) 
-                    && meta.getCode() == 200 
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
                     && "queryPushChannels".equals(meta.getMethod())) {
                   JSONArray channels = responseJSON.getJSONArray("push_channels");
                   ...
@@ -98,15 +98,15 @@ methods:
       - platform: ios
         example: |
             Example iOS call:
-                
+
                 CCRequest *request = [[[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"push_notification/channels/query.json" ] autorelease];
                 [request startAsynchronous];
                 [request release];
-            
+
             SDK Callback:
-                
+
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
 
                 }
-                
+

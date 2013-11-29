@@ -95,8 +95,8 @@ methods:
         example: |
             Example Android call:
 
-                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
 
                 Map<String, Object> data = new HashMap<String, Object>();
                 data.put("email", "foo@foo.com");
@@ -116,7 +116,7 @@ methods:
         example: |
             Example Javascript call:
 
-                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+                var sdk = new ACSClient('<YOUR APP APP KEY>');  // app key
                 var data = {
                   email: 'foo@foo.com'
                 };
@@ -141,7 +141,7 @@ methods:
         example: |
             Example Actionscript call:
 
-                var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                var sdk:ACSClient = new ACSClient("<YOUR APP APP KEY>"); // app key
                 var data:Object = new Object();
                 data.email = "foo@foo.com";
                 sdk.sendRequest("users/resend_confirmation.json", URLRequestMethod.GET, data, false, callback);

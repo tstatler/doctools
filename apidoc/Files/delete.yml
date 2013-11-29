@@ -8,7 +8,7 @@ methods:
         *   the file's owner
         *   a user with write priviledges granted by the file's ACL
         *   an application admin
-        
+
     url: files/delete.json
     http-method: DELETE
     login-required: true
@@ -31,7 +31,7 @@ methods:
       - platform: titanium
         example: |
             This example deletes a file and checks the response.
-            
+
                 Cloud.Files.remove({
                     file_id: savedFileId
                 }, function (e) {
@@ -42,15 +42,15 @@ methods:
                             ((e.error && e.message) || JSON.stringify(e)));
                     }
                 });
-    
+
       - platform: rest
         example: |
             Example cURL request:
-            
+
                 $ curl -b cookies.txt -c cookies.txt -X DELETE "https://api.cloud.appcelerator.com/v1/files/delete.json?key=<YOUR APP APP KEY>&file_id=4f05446bc3666eb7ba000001"
-                
+
             Example JSON response:
-            
+
                 {
                   "meta": {
                     "status":"ok",
@@ -58,58 +58,58 @@ methods:
                     "method_name":"deleteFile"
                   }
                 }
-                
+
       - platform: ios
         example: |
             Example iOS call:
-            
+
                 NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:(CCFile *)file.objectId, @"file_id", nil];
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"DELETE" baseUrl:@"files/delete.json" paramDict:paramDict];
                 [request startAsynchronous];
                 [request release];
-                
+
             SDK Callback:
-            
+
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
                 	if ([response.meta.method isEqualToString:@"deleteFile"]) {
                 		NSLog(@"File deleted!");
                 	}
                 }
-                
+
       - platform: android
         example: |
             Example Android call:
-            
-                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 Map<String, Object> data = new HashMap<String, Object>();
                 data.put("file_id", "4f05446bc3666eb7ba000001");
                 CCResponse response = sdk.sendRequest("files/delete.json", CCRequestMethod.DELETE, data);
-                
+
             SDK Callback:
-            
+
                 JSONObject responseJSON = response.getResponseData();
                 CCMeta meta = response.getMeta();
-                if("ok".equals(meta.getStatus()) 
-                    && meta.getCode() == 200 
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
                     && "deleteFile".equals(meta.getMethod())) {
                   System.out.println("file deleted!");
                 }
-                
+
       - platform: javascript
         example: |
             Example Javascript call:
-            
-                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+
+                var sdk = new ACSClient('<YOUR APP APP KEY>');  // app key
                 var data = {
                   file_id: '4f05446bc3666eb7ba000001'
                 };
                 sdk.sendRequest('files/delete.json', 'DELETE', data, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data) {
                   if(data) {
                     if(data.meta) {
@@ -120,20 +120,20 @@ methods:
                     }
                   }
                 }
-                
+
       - platform: actionscript
         example: |
             Example Actionscript call:
-            
-                var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                var sdk:ACSClient = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //var sdk:ACSClient = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 var data:Object = new Object();
                 data.file_id = "4f05446bc3666eb7ba000001";
                 sdk.sendRequest("files/delete.json", URLRequestMethod.DELETE, data, false, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data:Object):void {
                   if(data) {
                     if(data.hasOwnProperty("meta")) {
@@ -144,4 +144,4 @@ methods:
                     }
                   }
                 }
-                
+

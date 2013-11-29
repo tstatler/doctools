@@ -2,7 +2,7 @@ name: Messages
 description: |
     APIs for sending private messages between users.
 
-fields: 
+fields:
   - name: id
     description: ID of the sent message.
     type: String
@@ -14,7 +14,7 @@ fields:
   - name: status
     description: |
         Status of the message: inbox messages have status of `read`, `unread`, or
-        `replied`. 
+        `replied`.
     type: String
 
   - name: subject
@@ -41,11 +41,11 @@ fields:
     description: Message sender.
     type: Users
 
-methods: 
+methods:
   - name: create
     summary: Sends a message.
     url: messages/create.json
-    http-method: post 
+    http-method: post
     login-required: true
     description: |
         Sends a message with an optional subject to one or more specified users. The thread_id of
@@ -53,26 +53,26 @@ methods:
         the thread will all use the id of the first message as their thread_id. The output of this
         API method is the copy of the message saved to the sender's sent mail.
 
-    parameters: 
+    parameters:
       - name: to_ids
         description: Comma-separated list of one or more IDs of users to send the message to.
         type: String
         required: true
 
       - name: body
-        description: The body of the message 
+        description: The body of the message
         type: String
         required: true
-        
-      - name: subject 
+
+      - name: subject
         description: Message subject.
         type: String
 
-      - name: custom_data_fields  
+      - name: custom_data_fields
         description: User-defined data. See Custom Data Fields.
         type: String
 
-      - name: user_id 
+      - name: user_id
         type: String
         description: |
             User ID to send message on behalf of.
@@ -89,7 +89,7 @@ methods:
       - platform: titanium
         example: |
             This example creates a new message and checks the response.
-            
+
                 Cloud.Messages.create({
                     to_ids: toSet.ids.join(','),
                     body: 'Hello World',
@@ -107,7 +107,7 @@ methods:
                             ((e.error && e.message) || JSON.stringify(e)));
                     }
                 });
-      
+
       - platform: rest
         example: |
             Example cURL request:
@@ -157,13 +157,13 @@ methods:
                         ]
                       }
                     ]
-                  }     
+                  }
                 }
 
       - platform: ios
         example: |
             Example iOS call:
-            
+
                 NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
                 NSDictionary *to_ids = [NSArray arrayWithObjects:user1.objectId, user2.objectId, nil];
                 [paramDict setObject:to_ids forKey:@"to_ids"];
@@ -172,9 +172,9 @@ methods:
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"POST" baseUrl:@"messages/create.json" paramDict:paramDict];
                 [request startAsynchronous];
                 [request release];
-            
+
             SDK Callback:
-                
+
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
                 	NSArray *messages = [response getObjectsOfType:[CCMessage class]];
@@ -183,37 +183,37 @@ methods:
                 		...
                 	}
                 }
-            
+
       - platform: android
         example: |
             Example Android call:
-                
-                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 Map<String, Object> data = new HashMap<String, Object>();
                 data.put("to_ids", "4d71445b6f70951043000006,4d7184f06f70951043000012");
                 data.put("body", "new message!");
                 CCResponse response = sdk.sendRequest("messages/create.json", CCRequestMethod.POST, data);
-            
+
             SDK Callback:
-                
+
                 JSONObject responseJSON = response.getResponseData();
                 CCMeta meta = response.getMeta();
-                if("ok".equals(meta.getStatus()) 
-                    && meta.getCode() == 200 
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
                     && "createMessage".equals(meta.getMethod())) {
                   JSONArray messages = responseJSON.getJSONArray("messages");
                   ...
                 }
-    
+
 
   - name: delete
     description: |
         Delete the message with the given `id`. The message must be in the current
         user's inbox or sent mail. There is currently no trash folder and deletion is
-        permanent.  
-          
+        permanent.
+
         Application Admin can delete any Message object.
     url: messages/delete.json
     http-method: delete
@@ -231,12 +231,12 @@ methods:
             The current user must be an application admin to delete a Message object on
             behalf of another user.
         type: String
-    
+
     examples:
       - platform: titanium
         example: |
             This example deletes a message and checks the response.
-            
+
                 Cloud.Messages.remove({
                     message_id: savedMessageId
                 }, function (e) {
@@ -247,15 +247,15 @@ methods:
                             ((e.error && e.message) || JSON.stringify(e)));
                     }
                 });
-    
+
       - platform: rest
         example: |
             Example cURL request:
-            
+
                 $ curl -b cookies.txt -c cookies.txt -X DELETE "https://api.cloud.appcelerator.com/v1/messages/delete.json?key=<YOUR APP APP KEY>&message_id=4d854389d0afbe013e000029"
-            
+
             Example JSON response:
-                
+
                 {
                   "meta": {
                     "status":"ok",
@@ -263,18 +263,18 @@ methods:
                     "method_name":"deleteMessage"
                   }
                 }
-    
+
       - platform: ios
         example: |
             Example iOS call:
-                
+
                 NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:(CCMessage *)message.objectId, @"message_id", nil];
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:self  httpMethod:@"DELETE" baseUrl:@"messages/delete.json" paramDict:paramDict];
                 [request startAsynchronous];
                 [request release];
-            
+
             SDK Callback:
-                
+
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
                 	if ([response.meta.method isEqualToString:@"deleteMessage"]) {
@@ -285,20 +285,20 @@ methods:
       - platform: android
         example: |
             Example Android call:
-                
-                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 Map<String, Object> data = new HashMap<String, Object>();
                 data.put("message_id", "4d854389d0afbe013e000029");
                 CCResponse response = sdk.sendRequest("messages/delete.json", CCRequestMethod.DELETE, data);
-            
+
             SDK Callback:
-                
+
                 JSONObject responseJSON = response.getResponseData();
                 CCMeta meta = response.getMeta();
-                if("ok".equals(meta.getStatus()) 
-                    && meta.getCode() == 200 
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
                     && "deleteMessage".equals(meta.getMethod())) {
                   System.out.println("message deleted!");
                 }
@@ -306,15 +306,15 @@ methods:
       - platform: javascript
         example: |
             Example JavaScript call:
-                
-                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+
+                var sdk = new ACSClient('<YOUR APP APP KEY>');  // app key
                 var data = {
                   message_id: '4d854389d0afbe013e000029'
                 };
                 sdk.sendRequest('messages/delete.json', 'DELETE', data, callback);
-            
+
             SDK Callback:
-                
+
                 function callback(data) {
                   if(data) {
                     if(data.meta) {
@@ -325,20 +325,20 @@ methods:
                     }
                   }
                 }
-    
+
       - platform: actionscript
         example: |
             Example Actionscript call:
-                
-                var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                var sdk:ACSClient = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //var sdk:ACSClient = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 var data:Object = new Object();
                 data.message_id="4d854389d0afbe013e000029";
                 sdk.sendRequest("messages/delete.json", URLRequestMethod.DELETE, data, false, callback);
-            
+
             SDK Callback:
-                
+
                 function callback(data:Object):void {
                   if(data) {
                     if(data.hasOwnProperty("meta")) {
@@ -349,7 +349,7 @@ methods:
                     }
                   }
                 }
-    
+
 
   - name: delete_thread
     summary: Delete All Messages in a Thread
@@ -360,8 +360,8 @@ methods:
         Delete all messages in a thread with the given `thread_id`. The thread must be
         in the current user's inbox or sent mail. There is currently no trash folder
         and deletion is permanent.
-    
-    parameters: 
+
+    parameters:
       - name: thread_id
         description: Thread ID of the message thread to delete.
         type: String
@@ -370,7 +370,7 @@ methods:
       - platform: titanium
         example: |
             This example deletes all messages in a thread and checks the response.
-    
+
                 Cloud.Messages.removeThread({
                     thread_id: savedThreadId
                 }, function (e) {
@@ -381,15 +381,15 @@ methods:
                             ((e.error && e.message) || JSON.stringify(e)));
                     }
                 });
-    
+
       - platform: rest
         example: |
             Example cURL request:
-                
+
                 $ curl -b cookies.txt -c cookies.txt -X DELETE "https://api.cloud.appcelerator.com/v1/messages/delete/thread.json?key=<YOUR APP APP KEY>&thread_id=4d854389d0afbe013e000029"
-            
+
             Example JSON response:
-                
+
                 {
                   "meta": {
                     "status":"ok",
@@ -397,60 +397,60 @@ methods:
                     "method_name":"deleteMessageThread"
                   }
                 }
-                
+
       - platform: ios
         example: |
             Example iOS call:
-                
+
                 NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:message.threadId, @"thread_id", nil];
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"DELETE" baseUrl:@"messages/delete/thread.json" paramDict:paramDict];
                 [request startAsynchronous];
                 [request release];
-            
+
             SDK Callback:
-                
+
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
                 	if ([response.meta.method isEqualToString:@"deleteMessageThread"]) {
                 		NSLog(@"message deleted!");
                 	}
                 }
-                
+
       - platform: android
         example: |
-            
+
             Example Android call:
-                
-                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 Map<String, Object> data = new HashMap<String, Object>();
                 data.put("thread_id", "4d854389d0afbe013e000029");
                 CCResponse response = sdk.sendRequest("messages/delete.json", CCRequestMethod.DELETE, data);
-            
+
             SDK Callback:
-            
+
                 JSONObject responseJSON = response.getResponseData();
                 CCMeta meta = response.getMeta();
-                if("ok".equals(meta.getStatus()) 
-                    && meta.getCode() == 200 
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
                     && "deleteMessageThread".equals(meta.getMethod())) {
                   System.out.println("messages deleted!");
                 }
-                
+
       - platform: javascript
         example: |
-            
+
             Example Javascript call:
-            
-                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+
+                var sdk = new ACSClient('<YOUR APP APP KEY>');  // app key
                 var data = {
                   thread_id: '4d854389d0afbe013e000029'
                 };
                 sdk.sendRequest('messages/delete.json', 'DELETE', data, callback);
-            
+
             SDK Callback:
-                
+
                 function callback(data) {
                   if(data) {
                     if(data.meta) {
@@ -461,20 +461,20 @@ methods:
                     }
                   }
                 }
-                
+
       - platform: actionscript
         example: |
             Example Actionscript call:
-                
-                var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                var sdk:ACSClient = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //var sdk:ACSClient = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 var data:Object = new Object();
                 data.thread_id="4d854389d0afbe013e000029";
                 sdk.sendRequest("messages/delete.json", URLRequestMethod.DELETE, data, false, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data:Object):void {
                   if(data) {
                     if(data.hasOwnProperty("meta")) {
@@ -493,24 +493,24 @@ methods:
     url: messages/reply.json
     http-method: post
     login-required: true
-    
-    parameters: 
+
+    parameters:
       - name: message_id
         description: ID of the message to reply to.
-    
+
       - name: body
         description: Reply message body text.
-    
+
     response-parameters:
       - name: messages
         description: An array containing a single message, the sent message.
         type: Array<Messages>
-    
-    examples: 
+
+    examples:
       - platform: titanium
         example: |
             This example replies to a message and checks the response.
-            
+
                 Cloud.Messages.reply({
                     message_id: savedMessageId,
                     body: 'Welcome'
@@ -527,15 +527,15 @@ methods:
                             ((e.error && e.message) || JSON.stringify(e)));
                     }
                 });
-    
+
       - platform: rest
         example: |
             Example cURL request:
-            
+
                 $ curl -b cookies.txt -c cookies.txt -F "body=Academy of sciences sounds great!" -F "message_id=4d85418dd0afbe013e000025" https://api.cloud.appcelerator.com/v1/messages/reply.json?key=<YOUR APP APP KEY>
-                
+
             Example JSON response:
-                
+
                 {
                   "meta": {
                     "status":"ok",
@@ -577,27 +577,27 @@ methods:
                         ]
                       }
                     ]
-                  }	
+                  }
                 }
-        
+
       - platform: ios
         example: |
             Example iOS call:
-            
-                
-                
+
+
+
                 NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
                 [paramDict setObject:message.objectId forKey:@"message_id"];
                 [paramDict setObject:@"This is a reply message." forKey:@"body"];
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"POST" baseUrl:@"messages/reply.json" paramDict:paramDict];
                 [request startAsynchronous];
                 [request release];
-                
-            
+
+
             SDK Callback:
-            
-                
-                
+
+
+
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
                 	NSArray *messages = [response getObjectsOfType:[CCMessage class]];
@@ -606,43 +606,43 @@ methods:
                 		...
                 	}
                 }
-        
+
       - platform: android
         example: |
             Example Android call:
-                
-                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 Map<String, Object> data = new HashMap<String, Object>();
                 data.put("message_id", "4d85418dd0afbe013e000025");
                 data.put("body", "reply message!");
                 CCResponse response = sdk.sendRequest("messages/reply.json", CCRequestMethod.POST, data);
-                
+
             SDK Callback:
-                
+
                 JSONObject responseJSON = response.getResponseData();
                 CCMeta meta = response.getMeta();
-                if("ok".equals(meta.getStatus()) 
-                    && meta.getCode() == 200 
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
                     && "replyMessage".equals(meta.getMethod())) {
                   JSONArray messages = responseJSON.getJSONArray("messages");
                   ...
                 }
-        
+
       - platform: javascript
         example: |
             Example Javascript call:
-                
-                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+
+                var sdk = new ACSClient('<YOUR APP APP KEY>');  // app key
                 var data = {
                   message_id: '4d85418dd0afbe013e000025',
                   body: 'reply message!'
                 };
                 sdk.sendRequest('messages/reply.json', 'POST', data, callback);
-                
+
             SDK Callback:
-                
+
                 function callback(data) {
                   if(data) {
                     if(data.meta) {
@@ -654,21 +654,21 @@ methods:
                     }
                   }
                 }
-        
+
       - platform: javascript
         example: |
             Example Actionscript call:
-                
-                var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                var sdk:ACSClient = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //var sdk:ACSClient = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 var data:Object = new Object();
                 data.message_id = "4d85418dd0afbe013e000025";
                 data.body = "reply message!";
                 sdk.sendRequest("messages/reply.json", URLRequestMethod.POST, data, false, callback);
-            
+
             SDK Callback:
-                
+
                 function callback(data:Object):void {
                   if(data) {
                     if(data.hasOwnProperty("meta")) {
@@ -789,8 +789,8 @@ methods:
         example: |
             Example Android call:
 
-                Cocoafish sdk = new Cocoafish("<YOUR APP API KEY>"); // app key
-                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key secret
+                ACSClient sdk = new ACSClient("<YOUR APP API KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key secret
 
                 Map<String, Object> data = new HashMap<String, Object>();
                 data.put("message_id", <MESSAGE_ID>);
@@ -815,13 +815,13 @@ methods:
     url: messages/show/inbox.json `
     login-required: true
 
-    parameters: 
+    parameters:
       - name: page
         description: Request page number, default is 1.
         type: Number
         optional: true
 
-      - name: per_page 
+      - name: per_page
         description: Number of results per page, default is 10.
         type: Number
         optional: true
@@ -831,11 +831,11 @@ methods:
         description: List of inbox messages.
         type: Array<Messages>
 
-    examples: 
+    examples:
       - platform: titanium
         example: |
             This example requests a list of messages in the inbox and checks the response.
-    
+
                 Cloud.Messages.showInbox(function (e) {
                     if (e.success) {
                         alert('Success:\n' +
@@ -853,15 +853,15 @@ methods:
                             ((e.error && e.message) || JSON.stringify(e)));
                     }
                 });
-    
+
       - platform: rest
         example: |
             Example cURL request:
-                
+
                 $ curl -b cookies.txt -c cookies.txt https://api.cloud.appcelerator.com/v1/messages/show/inbox.json?key=<YOUR APP APP KEY>
-            
+
             Example JSON response:
-                
+
                 {
                   "meta": {
                     "status":"ok",
@@ -907,13 +907,13 @@ methods:
                         ]
                       }
                     ]
-                  }	
+                  }
                 }
-                
+
       - platform: ios
         example: |
             Example iOS call:
-                
+
                 // search for current user's checkins
                 NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:3];
                 [paramDict setObject:[NSNumber nubmerWithInt:1] forKey:@"page"]; // optional
@@ -921,48 +921,48 @@ methods:
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"messages/show/inbox.json" paramDict:paramDict];
                 [request startAsynchronous];
                 [request release];
-            
+
             SDK Callback:
-                
+
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
                 	NSArray *messages = [response getObjectsOfType:[CCMessage class]];
                 }
-            
+
       - platform: android
         example: |
             Example Android call:
-            
-                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 CCResponse response = sdk.sendRequest("messages/show/inbox.json", CCRequestMethod.GET, null);
-            
+
             SDK Callback:
-                
+
                 JSONObject responseJSON = response.getResponseData();
                 CCMeta meta = response.getMeta();
-                if("ok".equals(meta.getStatus()) 
-                    && meta.getCode() == 200 
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
                     && "showMessagesInbox".equals(meta.getMethod())) {
                   JSONArray messages = responseJSON.getJSONArray("messages");
                   ...
                 }
-            
+
       - platform: javascript
         example: |
             Example JavaScript call:
-            
-                
-                
-                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+
+
+
+                var sdk = new ACSClient('<YOUR APP APP KEY>');  // app key
                 sdk.sendRequest('messages/show/inbox.json', 'GET', null, callback);
-                
-            
+
+
             SDK Callback:
-            
-                
-                
+
+
+
                 function callback(data) {
                   if(data) {
                     if(data.meta) {
@@ -974,18 +974,18 @@ methods:
                     }
                   }
                 }
-                
+
       - platform: actionscript
         example: |
             Example Actionscript call:
-                
-                var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                var sdk:ACSClient = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //var sdk:ACSClient = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 sdk.sendRequest("messages/show/inbox.json", URLRequestMethod.GET, null, false, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data:Object):void {
                   if(data) {
                     if(data.hasOwnProperty("meta")) {
@@ -1004,7 +1004,7 @@ methods:
     url: messages/show/sent.json
     login-required: true
 
-    parameters: 
+    parameters:
       - name: page
         description: Request page number, default is 1.
         type: Number
@@ -1023,7 +1023,7 @@ methods:
       - platform: titanium
         example: |
             This example requests a list of messages that have been sent and checks the response.
-    
+
                 Cloud.Messages.showSent(function (e) {
                     if (e.success) {
                         alert('Success:\n' +
@@ -1041,15 +1041,15 @@ methods:
                             ((e.error && e.message) || JSON.stringify(e)));
                     }
                 });
-    
+
       - platform: rest
         example: |
             Example cURL request:
-                
+
                 $ curl -b cookies.txt -c cookies.txt https://api.cloud.appcelerator.com/v1/messages/show/sent.json?key=<YOUR APP APP KEY>
-                
+
             Example JSON response:
-            
+
                 {
                   "meta": {
                     "status":"ok",
@@ -1095,13 +1095,13 @@ methods:
                         ]
                       }
                     ]
-                  }	
+                  }
                 }
-                
+
       - platform: ios
         example: |
             Example iOS call:
-            
+
                 // search for current user's checkins
                 NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:3];
                 [paramDict setObject:[NSNumber nubmerWithInt:1] forKey:@"page"]; // optional
@@ -1109,44 +1109,44 @@ methods:
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"messages/show/sent.json" paramDict:paramDict];
                 [request startAsynchronous];
                 [request release];
-            
+
             SDK Callback:
-                
+
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
                 	NSArray *messages = [response getObjectsOfType:[CCMessage class]];
                 }
-            
-            
+
+
       - platform: android
         example: |
             Example Android call:
-                
-                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 CCResponse response = sdk.sendRequest("messages/show/sent.json", CCRequestMethod.GET, null);
-            
+
             SDK Callback:
-            
+
                 JSONObject responseJSON = response.getResponseData();
                 CCMeta meta = response.getMeta();
-                if("ok".equals(meta.getStatus()) 
-                    && meta.getCode() == 200 
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
                     && "showMessagesSent".equals(meta.getMethod())) {
                   JSONArray messages = responseJSON.getJSONArray("messages");
                   ...
                 }
-                
+
       - platform: javascript
         example: |
             Example JavaScript call:
-                
-                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+
+                var sdk = new ACSClient('<YOUR APP APP KEY>');  // app key
                 sdk.sendRequest('messages/show/sent.json', 'GET', null, callback);
-                
+
             SDK Callback:
-                
+
                 function callback(data) {
                   if(data) {
                     if(data.meta) {
@@ -1158,18 +1158,18 @@ methods:
                     }
                   }
                 }
-                
+
       - platform: actionscript
         example: |
             Example Actionscript call:
-                
-                var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                var sdk:ACSClient = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //var sdk:ACSClient = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 sdk.sendRequest("messages/show/sent.json", URLRequestMethod.GET, null, false, callback);
-                
+
             SDK Callback:
-                
+
                 function callback(data:Object):void {
                   if(data) {
                     if(data.hasOwnProperty("meta")) {
@@ -1181,7 +1181,7 @@ methods:
                     }
                   }
                 }
-        
+
   - name: show_thread
     summary: Show Messages in a Thread
     description: |
@@ -1200,7 +1200,7 @@ methods:
         type: Number
         optional: true
 
-      - name: per_page 
+      - name: per_page
         description: Number of results per page, default is 10.
         type: Number
         optional: true
@@ -1214,7 +1214,7 @@ methods:
       - platform: titanium
         example: |
             This example requests a list of messages in a thread and checks the response.
-    
+
                 Cloud.Messages.showThread({
                     thread_id: savedThreadId
                 }, function (e) {
@@ -1235,15 +1235,15 @@ methods:
                             ((e.error && e.message) || JSON.stringify(e)));
                     }
                 });
-    
+
       - platform: rest
         example: |
             Example cURL request:
-                
+
                 $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/messages/show/thread.json?key=<YOUR APP APP KEY>&thread_id=4d85418dd0afbe013e000025"
-            
+
             Example JSON response:
-                
+
                 {
                   "meta": {
                     "status":"ok",
@@ -1353,13 +1353,13 @@ methods:
                         ]
                       }
                     ]
-                  }	
+                  }
                 }
-                
+
       - platform: ios
         example: |
             Example iOS call:
-            
+
                 // search for current user's checkins
                 NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:3];
                 [paramDict setObject:message.threadId forKey:@"thread_id"];
@@ -1368,48 +1368,48 @@ methods:
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"messages/show/thread.json" paramDict:paramDict];
                 [request startAsynchronous];
                 [request release];
-                
+
             SDK Callback:
-            
+
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
                 	NSArray *messages = [response getObjectsOfType:[CCMessage class]];
                 }
-                
+
       - platform: android
         example: |
             Example Android call:
-                
-                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 Map<String, Object> data = new HashMap<String, Object>();
                 data.put("thread_id", "4d85418dd0afbe013e000025");
                 CCResponse response = sdk.sendRequest("messages/show/thread.json", CCRequestMethod.GET, data);
-            
+
             SDK Callback:
-                
+
                 JSONObject responseJSON = response.getResponseData();
                 CCMeta meta = response.getMeta();
-                if("ok".equals(meta.getStatus()) 
-                    && meta.getCode() == 200 
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
                     && "showThreadMessages".equals(meta.getMethod())) {
                   JSONArray messages = responseJSON.getJSONArray("messages");
                   ...
                 }
-                
+
       - platform: javascript
         example: |
             Example JavaScript call:
-            
-                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+
+                var sdk = new ACSClient('<YOUR APP APP KEY>');  // app key
                 var data = {
                   thread_id: '4d85418dd0afbe013e000025'
                 };
                 sdk.sendRequest('messages/show/thread.json', 'GET', data, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data) {
                   if(data) {
                     if(data.meta) {
@@ -1421,20 +1421,20 @@ methods:
                     }
                   }
                 }
-                
+
       - platform: actionscript
         example: |
             Example Actionscript call:
-            
-                var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                var sdk:ACSClient = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //var sdk:ACSClient = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 var data:Object = new Object();
                 data.thread_id = "4d85418dd0afbe013e000025";
                 sdk.sendRequest("messages/show/thread.json", URLRequestMethod.GET, data, false, callback);
-                
+
             SDK Callback:
-                
+
                 function callback(data:Object):void {
                   if(data) {
                     if(data.hasOwnProperty("meta")) {
@@ -1446,7 +1446,7 @@ methods:
                     }
                   }
                 }
-    
+
 
   - name: show_threads
     summary: Show User's Message Threads
@@ -1454,29 +1454,29 @@ methods:
     url: messages/show/threads.json `
     login-required: true
 
-    parameters: 
+    parameters:
       - name: page
         description: Request page number, default is 1.
         type: Number
         optional: true
 
-      - name: per_page 
+      - name: per_page
         description: Number of results per page, default is 10.
         type: Number
         optional: true
-    
-    response-parameters: 
+
+    response-parameters:
       - name: messages
         description: |
             List of messages representing the first message in each of the user's
             recent threads.
         type: Array<Messages>
 
-    examples: 
+    examples:
       - platform: titanium
         example: |
             This example requests a list of message threads and checks the response.
-    
+
                 Cloud.Messages.showThreads(function (e) {
                     if (e.success) {
                         alert('Success:\n' +
@@ -1498,11 +1498,11 @@ methods:
       - platform: rest
         example: |
             Example cURL request:
-                
+
                 $ curl -b cookies.txt -c cookies.txt https://api.cloud.appcelerator.com/v1/messages/show/threads.json?key=<YOUR APP APP KEY>
-                
+
             Example JSON response:
-                
+
                 {
                   "meta": {
                     "status":"ok",
@@ -1580,13 +1580,13 @@ methods:
                         ]
                       }
                     ]
-                  }	
+                  }
                 }
-                
+
       - platform: ios
         example: |
             Example iOS call:
-                
+
                 // search for current user's checkins
                 NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:3];
                 [paramDict setObject:[NSNumber nubmerWithInt:1] forKey:@"page"]; // optional
@@ -1594,43 +1594,43 @@ methods:
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"messages/show/threads.json" paramDict:paramDict];
                 [request startAsynchronous];
                 [request release];
-                
+
             SDK Callback:
-            
+
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
                 	NSArray *messages = [response getObjectsOfType:[CCMessage class]];
                 }
-            
+
       - platform: android
         example: |
             Example Android call:
-                
-                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 CCResponse response = sdk.sendRequest("messages/show/threads.json", CCRequestMethod.GET, null);
-            
+
             SDK Callback:
-                
+
                 JSONObject responseJSON = response.getResponseData();
                 CCMeta meta = response.getMeta();
-                if("ok".equals(meta.getStatus()) 
-                    && meta.getCode() == 200 
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
                     && "showThreads".equals(meta.getMethod())) {
                   JSONArray messages = responseJSON.getJSONArray("messages");
                   ...
                 }
-                
+
       - platform: javascript
         example: |
             Example JavaScript call:
-                
-                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+
+                var sdk = new ACSClient('<YOUR APP APP KEY>');  // app key
                 sdk.sendRequest('messages/show/threads.json', 'GET', null, callback);
-            
+
             SDK Callback:
-                
+
                 function callback(data) {
                   if(data) {
                     if(data.meta) {
@@ -1642,18 +1642,18 @@ methods:
                     }
                   }
                 }
-                
+
       - platform: actionscript
         example: |
             Example Actionscript call:
-                
-                var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                var sdk:ACSClient = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //var sdk:ACSClient = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 sdk.sendRequest("messages/show/threads.json", URLRequestMethod.GET, null, false, callback);
-                
+
             SDK Callback:
-                
+
                 function callback(data:Object):void {
                   if(data) {
                     if(data.hasOwnProperty("meta")) {
@@ -1665,4 +1665,4 @@ methods:
                     }
                   }
                 }
-                
+

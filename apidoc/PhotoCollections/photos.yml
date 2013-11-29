@@ -5,32 +5,32 @@ methods:
 
     description: |
         Show photos in a collection.
-        
+
     url: collections/show/photos.json
-    
-    parameters: 
+
+    parameters:
 
       - name: collection_id
-        description: ID of the collection to retrieve photos from. 
+        description: ID of the collection to retrieve photos from.
         type: String
         required: true
 
-      - name: page  
+      - name: page
         description: Request page number, default is 1.
         type: Number
-      
+
       - name: per_page
         description: Number of results per page, default is 10.
         type: Number
 
       - name: response_json_depth
         description: |
-            Nested object depth level counts in the response JSON.  
+            Nested object depth level counts in the response JSON.
 
             In order to reduce server API calls from an applicaton, the response JSON may
-            include not just the objects that are being queried/searched, but also 
+            include not just the objects that are being queried/searched, but also
             some important data related to the returned objects such as the object's owner or
-            referenced objects.  
+            referenced objects.
 
             Default is 3, valid range is 1 to 8.
         type: Number
@@ -44,7 +44,7 @@ methods:
       - platform: titanium
         example: |
             This example requests a list of photos in a photo collections and checks the response.
-            
+
                 Cloud.PhotoCollections.showPhotos({
                     page: 1,
                     per_page: 20,
@@ -70,15 +70,15 @@ methods:
                             ((e.error && e.message) || JSON.stringify(e)));
                     }
                 });
-      
+
       - platform: rest
         example: |
             Example cURL request:
-            
+
                 $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/collections/show/photos.json?key=<YOUR APP APP KEY>&collection_id=4e004df9d0afbe2f18000010"
-                
+
             Example JSON response:
-            
+
                 {
                   "meta": {
                     "code": 200,
@@ -112,11 +112,11 @@ methods:
                     ]
                   }
                 }
-                
+
       - platform: ios
         example: |
             Example iOS call:
-            
+
                 NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:3];
                 [paramDict setObject:(CCCollection *)collection.objectId forKey:@"collection_id"];
                 [paramDict setObject:[NSNumber nubmerWithInt:1] forKey:@"page"]; // optional
@@ -124,9 +124,9 @@ methods:
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"collections/show/photos.json"  paramDict:paramDict];
                 [request startAsynchronous];
                 [request release];
-                
+
             SDK Callback:
-            
+
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
                 	NSArray *photos = [response getObjectsOfType:[CCPhoto class]];
@@ -134,41 +134,41 @@ methods:
                 		...
                 	}
                 }
-                
+
       - platform: android
         example: |
             Example Android call:
-            
-                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 Map<String, Object> data = new HashMap<String, Object>();
                 data.put("collection_id", "4e013938d0afbe3896000009");
                 CCResponse response = sdk.sendRequest("collections/show/photos.json", CCRequestMethod.GET, data);
-                
+
             SDK Callback:
-            
+
                 JSONObject responseJSON = response.getResponseData();
                 CCMeta meta = response.getMeta();
-                if("ok".equals(meta.getStatus()) 
-                    && meta.getCode() == 200 
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
                     && "showCollectionPhotos".equals(meta.getMethod())) {
                   JSONArray photos = responseJSON.getJSONArray("photos");
                   ...
                 }
-                
+
       - platform: javascript
         example: |
             Example Javascript call:
-            
-                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+
+                var sdk = new ACSClient('<YOUR APP APP KEY>');  // app key
                 var data = {
                   collection_id: '4e013938d0afbe3896000009'
                 };
                 sdk.sendRequest('collections/show/photos.json', 'GET', data, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data) {
                   if(data) {
                     if(data.meta) {
@@ -180,20 +180,20 @@ methods:
                     }
                   }
                 }
-                
+
       - platform: actionscript
         example: |
             Example Actionscript call:
-            
-                var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                var sdk:ACSClient = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //var sdk:ACSClient = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 var data:Object = new Object();
                 data.collection_id = "4e013938d0afbe3896000009";
                 sdk.sendRequest("collections/show/photos.json", URLRequestMethod.GET, data, false, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data:Object):void {
                   if(data) {
                     if(data.hasOwnProperty("meta")) {
@@ -205,4 +205,4 @@ methods:
                     }
                   }
                 }
-                
+

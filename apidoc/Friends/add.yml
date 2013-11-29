@@ -6,8 +6,8 @@ methods:
         Add friends to the current user. By default the friend request is two-way
         (like Facebook), so after a friend request is made and approved both users
         will show up in each others' friend lists. This default can be changed to one-
-        way following (like Twitter) in the App Settings for each of your apps.  
-          
+        way following (like Twitter) in the App Settings for each of your apps.
+
         Two-way or one-way friend requests must be approved by the recipient unless
         `approval_required=false` is also sent with the request. This allows the user
         to add any user as a friend without requiring approval.
@@ -17,7 +17,7 @@ methods:
 
     parameters:
 
-      - name: user_ids 
+      - name: user_ids
         description: |
             Comma-separated list consisting of IDs of one or more users to add as
             friends to the current user. A user cannot add himself or herself as a friend.
@@ -26,8 +26,8 @@ methods:
       - name: approval_required
         description: |
             Indicates whether the friend request requires
-            approval by the other users. 
-            
+            approval by the other users.
+
             Default: `true`
         type: Boolean
 
@@ -35,7 +35,7 @@ methods:
       - platform: titanium
         example: |
             This example adds a friend and checks the response.
-    
+
                 Cloud.Friends.add({
                     user_ids: checked.join(",")
                 }, function (e) {
@@ -46,15 +46,15 @@ methods:
                             ((e.error && e.message) || JSON.stringify(e)));
                     }
                 });
-    
+
       - platform: rest
         example: |
             Example cURL request:
-            
+
                 $ curl -b cookies.txt -c cookies.txt -F "user_ids=4e02e027d0afbe41ef000003" "https://api.cloud.appcelerator.com/v1/friends/add.json?key=<YOUR APP APP KEY>"
-                
+
             Example JSON response:
-            
+
                 {
                   "meta": {
                     "code": 200,
@@ -62,11 +62,11 @@ methods:
                     "status": "ok"
                   }
                 }
-                
+
       - platform: ios
         example: |
             Example iOS call:
-            
+
                 NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
                 NSArray *user_ids = [NSArray arrayWithObjects:@"124", @"345", nil];
                 [paramDict setObject:user_ids forKey:@"user_ids"];
@@ -74,49 +74,49 @@ methods:
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"POST" baseUrl:@"friends/add.json" paramDict:paramDict];
                 [request startAsynchronous];
                 [request release];
-                
+
             SDK Callback:
-            
+
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
                 	if ([response.meta.method isEqualToString:@"addFriends"]) {
                 		NSLog(@"new friends added!");
                 	}
                 }
-                
+
       - platform: android
         example: |
             Example Android call:
-            
-                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 Map<String, Object> data = new HashMap<String, Object>();
                 data.put("user_ids", "4d6e77386f70950c89000001,5f6e77386f70950c890efew01");
                 CCResponse response = sdk.sendRequest("friends/add.json", CCRequestMethod.POST, data);
-                
+
             SDK Callback:
-            
+
                 JSONObject responseJSON = response.getResponseData();
                 CCMeta meta = response.getMeta();
-                if("ok".equals(meta.getStatus()) 
-                    && meta.getCode() == 200 
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
                     && "addFriends".equals(meta.getMethod())) {
                   System.out.println("new friends added!");
                 }
-                
+
       - platform: javascript
         example: |
             Example Javascript call:
-            
-                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+
+                var sdk = new ACSClient('<YOUR APP APP KEY>');  // app key
                 var data = {
                   user_ids: '4d6e77386f70950c89000001,5f6e77386f70950c890efew01'
                 };
                 sdk.sendRequest('friends/add.json', 'POST', data, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data) {
                   if(data) {
                     if(data.meta) {
@@ -127,21 +127,21 @@ methods:
                     }
                   }
                 }
-                
+
       - platform: actionscript
         example: |
             Example Actionscript call:
-            
-                var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                var sdk:ACSClient = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //var sdk:ACSClient = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 var data:Object = new Object();
                 data.user_ids = "4d6e77386f70950c89000001,5f6e77386f70950c890efew01";
                 data.approval_required = false;
                 sdk.sendRequest("friends/add.json", URLRequestMethod.POST, data, false, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data:Object):void {
                   if(data) {
                     if(data.hasOwnProperty("meta")) {
@@ -152,4 +152,4 @@ methods:
                     }
                   }
                 }
-                
+

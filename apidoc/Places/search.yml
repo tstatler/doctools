@@ -6,35 +6,35 @@ methods:
     description: |
         Returns the list of places that have been added to the app, sorted by search
         relevancy.
-        
+
         Optionally, `latitude` and `longitude` can be given to return the list of
         places starting from a particular location. To bound the results within a
         certain radius (in km) from the starting coordinates, add the `distance`
         parameter. `q` can be given to search by place name.
-        
+
         If you have provided a starting latitude and longitude for place search, each
         result will return a distance to the starting point in km.
-        
+
     url: places/search.json
 
     parameters:
 
-      - name: page  
+      - name: page
         description: Request page number, default is 1.
         type: Number
-      
+
       - name: per_page
         description: Number of results per page, default is 10.
         type: Number
 
       - name: response_json_depth
         description: |
-            Nested object depth level counts in the response JSON.  
+            Nested object depth level counts in the response JSON.
 
             In order to reduce server API calls from an applicaton, the response JSON may
-            include not just the objects that are being queried/searched, but also 
+            include not just the objects that are being queried/searched, but also
             some important data related to the returned objects, such as owners and
-            referenced objects.  
+            referenced objects.
 
             Default is 3, valid range is 1 to 8.
         type: Number
@@ -64,7 +64,7 @@ methods:
       - platform: titanium
         example: |
             This example searches for places and checks the response.
-            
+
                 Cloud.Places.search({
                     latitude: lat,
                     longitude: lon
@@ -85,15 +85,15 @@ methods:
                             ((e.error && e.message) || JSON.stringify(e)));
                     }
                 });
-      
+
       - platform: rest
         example: |
             Example cURL request:
-            
+
                 $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/places/search.json?key=<YOUR APP APP KEY>&latitude;=37.743722&longitude;=-122.393159"
-                
+
             Example JSON response:
-            
+
                 {
                   "meta": {
                     "status":"ok",
@@ -132,16 +132,16 @@ methods:
                         "phone":"(415) 824-7877",
                         "latitude": 37.782227,
                         "longitude": -122.393159,
-                        "distance": 4.28	
+                        "distance": 4.28
                       }
                     ]
                   }
                 }
-                
+
       - platform: ios
         example: |
             Example iOS call:
-            
+
                 // search for current user's checkins
                 NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:3];
                 [paramDict setObject:@"appcelerator"  forKey:@"q"]; // optional
@@ -150,43 +150,43 @@ methods:
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"places/search.json" paramDict:paramDict];
                 [request startAsynchronous];
                 [request release];
-                
+
             SDK Callback:
-            
+
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
                 	NSArray *places = [response getObjectsOfType:[CCPlace class]];
                 }
-                
+
       - platform: android
         example: |
             Example Android call:
-            
-                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 CCResponse response = sdk.sendRequest("places/search.json", CCRequestMethod.GET, null);
-                
+
             SDK Callback:
-            
+
                 JSONObject responseJSON = response.getResponseData();
                 CCMeta meta = response.getMeta();
-                if("ok".equals(meta.getStatus()) 
-                    && meta.getCode() == 200 
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
                     && "searchPlaces".equals(meta.getMethod())) {
                   JSONArray places = responseJSON.getJSONArray("places");
                   ...
                 }
-                
+
       - platform: javascript
         example: |
             Example Javascript call:
-            
-                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+
+                var sdk = new ACSClient('<YOUR APP APP KEY>');  // app key
                 sdk.sendRequest('places/search.json', 'GET', null, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data) {
                   if(data) {
                     if(data.meta) {
@@ -198,18 +198,18 @@ methods:
                     }
                   }
                 }
-                
+
       - platform: actionscript
         example: |
             Example Actionscript call:
-            
-                var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                var sdk:ACSClient = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //var sdk:ACSClient = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 sdk.sendRequest("places/search.json", URLRequestMethod.GET, null, false, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data:Object):void {
                   if(data) {
                     if(data.hasOwnProperty("meta")) {
@@ -221,4 +221,4 @@ methods:
                     }
                   }
                 }
-                
+

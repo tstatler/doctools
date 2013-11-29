@@ -4,15 +4,15 @@ methods:
     summary: Delete Custom Object
     description: |
         Only the owner of the object or user who is granted write permission by the
-        object's ACL can delete the object. 
-         
+        object's ACL can delete the object.
+
         An application admin can delete any custom object.
-        
+
     url: objects/:class_name/delete.json
     http-method: DELETE
     login-required: true
 
-    parameters: 
+    parameters:
       - name: class_name
         description: |
             Type of custom object. Specified as part of the URL path, not in the
@@ -20,15 +20,15 @@ methods:
         type: String
         required: true
 
-      - name: id 
+      - name: id
         description: |
-            The object ID of the custom object to delete. 
+            The object ID of the custom object to delete.
 
             You must specify either `id` or `ids`.
         type: String
 
       - name: ids
-        description: 
+        description:
             A comma-separated list of object IDs of the custom objects to delete.
 
             You must specify either `id` or `ids`.
@@ -46,7 +46,7 @@ methods:
       - platform: titanium
         example: |
             This example deletes a custom object and checks the response.
-            
+
                 Cloud.Objects.remove({
                     classname: 'cars',
                     id: savedCar1.id
@@ -58,15 +58,15 @@ methods:
                             ((e.error && e.message) || JSON.stringify(e)));
                     }
                 });
-      
+
       - platform: rest
         example: |
             Example cURL request:
-            
+
                 $ curl -b cookies.txt -c cookies.txt -X DELETE "https://api.cloud.appcelerator.com/v1/objects/car/delete.json?key=<YOUR APP APP KEY>&id=4ec42e91d9ca72c507000010"
-                
+
             Example JSON response:
-            
+
                 {
                   "meta": {
                     "status": "ok",
@@ -74,57 +74,57 @@ methods:
                     "method_name": "deleteObjects"
                   }
                 }
-                
+
       - platform: ios
         example: |
             Example iOS call:
-            
+
                 NSDictionary *paramDict = [NSDictionary dictionaryWithObject:car.objectId forKey:@"id", nil];
                 CCRequest *request = [[[CCRequest alloc] initWithDelegate:self httpMethod:@"DELETE" baseUrl:@"objects/car/delete.json" paramDict:paramDict] autorelease];
                 [request startAsynchronous];
-                
+
             SDK Callback:
-            
+
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
                 	if ([response.meta.methodName isEqualToString:@"deleteObjects"]) {
                 		...
                 	}
                 }
-                
+
       - platform: android
         example: |
             Example Android call:
-            
-                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 Map<String, Object> data = new HashMap<String, Object>();
                 data.put("id", "4ec42e91d9ca72c507000010");
                 CCResponse response = sdk.sendRequest("objects/car/delete.json", CCRequestMethod.DELETE, data);
-                
+
             SDK Callback:
-            
+
                 JSONObject responseJSON = response.getResponseData();
                 CCMeta meta = response.getMeta();
-                if("ok".equals(meta.getStatus()) 
-                    && meta.getCode() == 200 
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
                     && "deleteObjects".equals(meta.getMethod())) {
                   System.out.println("car deleted!");
                 }
-                
+
       - platform: javascript
         example: |
             Example Javascript call:
-            
-                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+
+                var sdk = new ACSClient('<YOUR APP APP KEY>');  // app key
                 var data = {
                   id: '4ec42e91d9ca72c507000010'
                 };
                 sdk.sendRequest('objects/car/delete.json', 'DELETE', data, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data) {
                   if(data) {
                     if(data.meta) {
@@ -135,4 +135,4 @@ methods:
                     }
                   }
                 }
-                
+

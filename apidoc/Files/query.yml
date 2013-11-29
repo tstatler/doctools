@@ -8,10 +8,10 @@ methods:
 
         In addition to custom fields, here is a list of pre-defined fields in the File
         object that can be queried and sorted:
-        
+
         *   `user_id: String`.  User ID of the File's owner.
 
-        *   `created_at: Date`. Timestamp when the file was created. 
+        *   `created_at: Date`. Timestamp when the file was created.
 
         *   `updated_at: Date`. Timestamp when the file was last updated.
 
@@ -21,10 +21,10 @@ methods:
     url: files/query.json
 
     parameters:
-      - name: page  
+      - name: page
         description: Request page number, default is 1.
         type: Number
-      
+
       - name: per_page
         description: Number of results per page, default is 10.
         type: Number
@@ -44,7 +44,7 @@ methods:
       - name: where
         description: |
             Constraint values for fields. `where` should be encoded JSON.
-            
+
             If `where` is not specified, `query` returns all objects.
         type: Hash
 
@@ -65,11 +65,11 @@ methods:
 
       - name: response_json_depth
         description: |
-            Nested object depth level counts in response json.  
+            Nested object depth level counts in response json.
             In order to reduce server API calls from an applicaton, the response json may
             include not just the objects that are being queried/searched, but also with
             some important data related to the returning objects such as object's owner or
-            referencing objects.  
+            referencing objects.
 
             Default is 3, valid range is 1 to 8.
         type: Number
@@ -84,7 +84,7 @@ methods:
       - platform: titanium
         example: |
             This example requests a list of files and checks the response.
-            
+
                 Cloud.Files.query({
                     page: 1,
                     per_page: 20
@@ -103,16 +103,16 @@ methods:
                             ((e.error && e.message) || JSON.stringify(e)));
                     }
                 });
-      
+
       - platform: rest
         example: |
             Example cURL request:
-            
+
                 Example: Query files with name "Appcelerator Cloud Services"
                 $ curl -c cookies.txt -b cookies.txt -X GET --data-urlencode  'where={"name":"Appcelerator Cloud Services"}' "https://api.cloud.appcelerator.com/v1/files/query.json?key=<YOUR APP APP KEY>"
-                
+
             Example JSON response:
-            
+
                 $ curl -b c.txt -c c.txt -X GET --data-urlencode  'where=["user_id":"4f0fe764d9ca72833d000002", "name":"my_file"] "https://localhost/v1/files/query.json?key=<YOUR APP APP KEY>&order=-created_at&per_page=3"
                 {
                   "meta": {
@@ -140,7 +140,7 @@ methods:
                           "created_at": "2012-01-13T08:12:20+0000",
                           "updated_at": "2012-01-13T08:12:43+0000",
                           "external_accounts": [
-                
+
                           ],
                           "email": "a@mike.com"
                         }
@@ -148,19 +148,19 @@ methods:
                     ]
                   }
                 }
-                
+
       - platform: ios
         example: |
             Example iOS call:
-            
+
                 CCWhere *where = [[[CCWhere alloc] init] autorelease];
                 [where fieldName:@"name" equalTo:@"test_file"];
                 NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:where, @"where", nil]
                 request = [[[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"files/query.json" paramDict:paramDict] autorelease];
                 [request startAsynchronous];
-                
+
             SDK Callback:
-            
+
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
                 	if ([response.meta.method isEqualToString:@"queryFiles"]) {
@@ -171,41 +171,41 @@ methods:
                 		}
                 	}
                 }
-                
+
       - platform: android
         example: |
             Example Android call:
-            
-                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 Map<String, Object> data = new HashMap<String, Object>();
                 data.put("where", "{'name':'Appcelerator Cloud Services'}");
                 CCResponse response = sdk.sendRequest("files/query.json", CCRequestMethod.GET, data);
-                
+
             SDK Callback:
-            
+
                 JSONObject responseJSON = response.getResponseData();
                 CCMeta meta = response.getMeta();
-                if("ok".equals(meta.getStatus()) 
-                    && meta.getCode() == 200 
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
                     && "queryFiles".equals(meta.getMethod())) {
                   JSONArray files = responseJSON.getJSONArray("files");
                   ...
                 }
-                
+
       - platform: javascript
         example: |
             Example Javascript call:
-            
-                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+
+                var sdk = new ACSClient('<YOUR APP APP KEY>');  // app key
                 var data = {
                   where: '{"name":"Appcelerator Cloud Services"}'
                 };
                 sdk.sendRequest('files/query.json', 'GET', data, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data) {
                   if(data) {
                     if(data.meta) {
@@ -216,4 +216,4 @@ methods:
                     }
                   }
                 }
-                
+

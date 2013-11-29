@@ -4,7 +4,7 @@ methods:
     summary: Show Event Occurrences
     description: |
         Show the event occurrences of an event with the given `event_id`.
-        
+
     url: events/show/occurrences.json
 
     parameters:
@@ -13,21 +13,21 @@ methods:
         type: String
         required: true
 
-      - name: page  
+      - name: page
         description: Request page number, default is 1.
         type: Number
-      
+
       - name: per_page
         description: Number of results per page, default is 10.
         type: Number
 
       - name: response_json_depth
         description: |
-            Nested object depth level counts in response json.  
+            Nested object depth level counts in response json.
             In order to reduce server API calls from an applicaton, the response json may
             include not just the objects that are being queried/searched, but also with
             some important data related to the returning objects such as object's owner or
-            referencing objects.  
+            referencing objects.
 
             Default is 3, valid range is 1 to 8.
         type: Number
@@ -40,7 +40,7 @@ methods:
 
             *   `start_time`: `Date`. Start time for the occurrence.
             *   `end_time`: `Date`. End time for the occurrence.
-            *   `event`: `Events`. The event object associated with this occurrence. 
+            *   `event`: `Events`. The event object associated with this occurrence.
 
             Since the event information will be the same for each occurrence, you can omit
             this information by setting `response_json_depth` to 1.
@@ -51,7 +51,7 @@ methods:
       - platform: titanium
         example: |
             This example retrieves information about an event's occurrences and checks the response.
-    
+
                 Cloud.Events.showOccurrences({
                     event_id: savedEventId
                 }, function (e) {
@@ -70,15 +70,15 @@ methods:
                             ((e.error && e.message) || JSON.stringify(e)));
                     }
                 });
-    
+
       - platform: rest
         example: |
             Example cURL request:
-            
+
                 $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/events/show/occurrences.json?key=<YOUR APP APP KEY>&event_id=4d870f8bd0afbe1074000017"
-                
+
             Example JSON response:
-            
+
                 {
                   "meta": {
                     "status":"ok",
@@ -130,67 +130,67 @@ methods:
                         }
                       }
                     ]
-                  }	
+                  }
                 }
-                
+
       - platform: ios
         example: |
             Example iOS call:
-            
+
                 NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:(CCEvent *)event.objectId, @"event_id", nil];
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"events/show/occurrences.json" paramDict:paramDict];
                 [request startAsynchronous];
                 [request release];
-                
+
             SDK Callback:
-            
+
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
                 	if ([response.meta.method isEqualToString:@"showEventOccurrences"]) {
                 		NSArray *occurrences = [response getObjectsOfType:[CCEventOccurrence class]];
                 	}
                 }
-                
+
       - platform: android
         example: |
             Example Android call:
-            
-                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 Map<String, Object> data = new HashMap<String, Object>();
                 data.put("event_id", "4d870f8bd0afbe1074000017");
                 CCResponse response = sdk.sendRequest("events/show/occurrences.json", CCRequestMethod.GET, data);
-                
+
             SDK Callback:
-            
+
                 JSONObject responseJSON = response.getResponseData();
                 CCMeta meta = response.getMeta();
-                if("ok".equals(meta.getStatus()) 
-                    && meta.getCode() == 200 
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
                     && "showEventOccurrences".equals(meta.getMethod())) {
                   JSONArray eventOccurrences = responseJSON.getJSONArray("event_occurrences");
                   ...
                 }
-                
+
       - platform: javascript
         example: |
             Example Javascript call:
-            
-                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+
+                var sdk = new ACSClient('<YOUR APP APP KEY>');  // app key
                 var data = {
                   event_id: '4d870f8bd0afbe1074000017'
                 };
                 sdk.sendRequest('events/show/occurrences.json', 'GET', data, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data) {
                   if(data) {
                     if(data.meta) {
                       var meta = data.meta;
-                      if(meta.status == 'ok' 
-                          && meta.code == 200 
+                      if(meta.status == 'ok'
+                          && meta.code == 200
                           && meta.method_name == 'showEventOccurrences') {
                         var eventOccurrences = data.response.event_occurrences;
                       	...
@@ -198,26 +198,26 @@ methods:
                     }
                   }
                 }
-                
+
       - platform: actionscript
         example: |
             Example Actionscript call:
-            
-                var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                var sdk:ACSClient = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //var sdk:ACSClient = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 var data:Object = new Object();
                 data.event_id = "4d870f8bd0afbe1074000017";
                 sdk.sendRequest("events/show/occurrences.json", URLRequestMethod.GET, data, false, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data:Object):void {
                   if(data) {
                     if(data.hasOwnProperty("meta")) {
                       var meta:Object = data.meta;
-                      if(meta.status == "ok" 
-                          && meta.code == 200 
+                      if(meta.status == "ok"
+                          && meta.code == 200
                           && meta.method_name == "showEventOccurrences") {
                       	var eventOccurrences:Array = data.response.event_occurrences;
                       	...
@@ -225,4 +225,4 @@ methods:
                     }
                   }
                 }
-                
+

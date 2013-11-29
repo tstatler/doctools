@@ -5,16 +5,16 @@ methods:
 
     description: |
         Unsubscribes one of the current user's devices from a push notification channel. If channel name is not
-        provided, unsubscribe the device from all channels.  
-          
+        provided, unsubscribe the device from all channels.
+
         When a user logs out from a device, you can cancel all subscriptions for the
         device by passing the device's token to the {@link Users#logout} method.
-        
+
     url: push_notification/unsubscribe.json
     http-method: DELETE
     login-required: true
 
-    parameters: 
+    parameters:
 
       - name: channel
         description: Name of the push notification channel.
@@ -27,7 +27,7 @@ methods:
 
       - name: user_id
         description: |
-            User ID to unsubscribe from push notifications. 
+            User ID to unsubscribe from push notifications.
 
             Only application admins can unsubscribe another user from push notifications.
 
@@ -35,7 +35,7 @@ methods:
       - platform: titanium
         example: |
             This example unsubscribes from a push notification channel and checks the response.
-            
+
                 Cloud.PushNotifications.unsubscribe({
                     channel: 'friend_request',
                     device_token: myPushDeviceToken
@@ -47,15 +47,15 @@ methods:
                             ((e.error && e.message) || JSON.stringify(e)));
                     }
                 });
-      
+
       - platform: rest
         example: |
             Example cURL request:
-            
+
                 $ curl -b cookies.txt -c cookies.txt -X DELETE "https://api.cloud.appcelerator.com/v1/push_notification/unsubscribe.json?key=<YOUR API APP KEY>&channel=friend_request&device_token=f7702d77b34ed94869f664e7a297ccc173bec93a2b815css6asd28461a0358db"
-                
+
             Example JSON response:
-            
+
                 {
                   "meta": {
                     "status": "ok",
@@ -63,115 +63,115 @@ methods:
                     "method_name": "UnsubscribeNotification"
                   }
                 }
-                
+
       - platform: ios
         example: |
             Example iOS call:
-            
+
                 NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:3];
-                [paramDict setObject:@"friend_request" forKey:@"channel"]; 
+                [paramDict setObject:@"friend_request" forKey:@"channel"];
                 [paramDict setObject:@"f7702d77b34ed94869f664e7a297ccc173bec93a2b815css6asd28461a0358db" forKey:@"device_token"];
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"DELETE" baseUrl:@"push_notification/unsubscribe.json" paramDict:paramDict];
                 [request startAsynchronous];
                 [request release];
-                
+
             SDK Callback:
-            
+
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
                 	// successfully unsubscribed
                 }
-                
+
       - platform: android
         example: |
             Example Android call:
-            
-                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 Map<String, Object> data = new HashMap<String, Object>();
                 data.put("channel", "friend_request");
                 data.put("device_token", "4e7a297ccc173bec93a2b81");
-                CCResponse response = 
+                CCResponse response =
                     sdk.sendRequest("push_notification/subscribe.json", CCRequestMethod.DELETE, data);
-                
+
             SDK Callback:
-            
+
                 JSONObject responseJSON = response.getResponseData();
                 CCMeta meta = response.getMeta();
-                if("ok".equals(meta.getStatus()) 
-                    && meta.getCode() == 200 
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
                     && "UnsubscribeNotification".equals(meta.getMethod())) {
                   ...
                 }
-                
+
       - platform: javascript
         example: |
             Example Javascript call:
-            
-                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+
+                var sdk = new ACSClient('<YOUR APP APP KEY>');  // app key
                 var data = {
                   channel: 'friend_request',
                   device_token: 'f7702d77b34ed94869f664e7a297ccc173bec93a2b815css6asd28461a0358db'
                 };
                 sdk.sendRequest('push_notification/unsubscribe.json', 'DELETE', data, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data) {
                   if(data) {
                     if(data.meta) {
                       var meta = data.meta;
-                      if(meta.status == 'ok' 
-                          && meta.code == 200 
+                      if(meta.status == 'ok'
+                          && meta.code == 200
                           && meta.method_name == 'UnsubscribeNotification') {
                       	...
                       }
                     }
                   }
                 }
-                
+
       - platform: actionscript
         example: |
             Example Actionscript call:
-            
-                var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                var sdk:ACSClient = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //var sdk:ACSClient = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 var data:Object = new Object();
                 data.channel = "friend_request";
                 data.device_token = "f7702d77b34ed94869f664e7a297ccc173bec93a2b815css6asd28461a0358db";
                 sdk.sendRequest("push_notification/unsubscribe.json", URLRequestMethod.DELETE, data, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data:Object):void {
                   if(data) {
                     if(data.hasOwnProperty("meta")) {
                       var meta:Object = data.meta;
-                      if(meta.status == "ok" 
-                          && meta.code == 200 
+                      if(meta.status == "ok"
+                          && meta.code == 200
                           && meta.method_name == "UnsubscribeNotification") {
                       	...
                       }
                     }
                   }
                 }
-                
+
             ![](https://static.appcelerator.com/images/nav/appcelerator-footer-logo.png)
-            
+
               * [Twitter](https://twitter.com/appcelerator)
               * [Facebook](http://www.facebook.com/appcelerator)
               * [Pinterest](http://pinterest.com/appcelerator/)
               * [RSS](http://developer.appcelerator.com/blog/feed)
               * [Email](mailto:info@appcelerator.com)
-            
+
             (C) 2008-2013 Appcelerator Inc. All rights reserved. Appcelerator is a
             registered trademark.
-            
+
             [Legal information](http://www.appcelerator.com/legal)
-            
+
             [Privacy Policy](http://www.appcelerator.com/legal/privacy-policy)
-            
+
             [Help & Support](http://www.appcelerator.com/help)
-            
+

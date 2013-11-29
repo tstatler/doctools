@@ -12,24 +12,24 @@ methods:
     http-method: POST
     login-required: true
 
-    parameters: 
+    parameters:
 
       - name: channel
         description: Name of the channel.
         type: String
         required: true
 
-      - name: friends 
+      - name: friends
         description: |
-            If this parameter is specified (regardless of the parameter's value), 
-            push notifications are sent to any of the user's {@link Friends} who are 
-            subscribed to the identified channel. 
+            If this parameter is specified (regardless of the parameter's value),
+            push notifications are sent to any of the user's {@link Friends} who are
+            subscribed to the identified channel.
         type: Any
-      
+
       - name: to_ids
         description: |
             Comma separated list of user IDs. Sends push notification to the specified
-            users who are subscribed to the specified channel.  
+            users who are subscribed to the specified channel.
         type: String
 
       - name: payload
@@ -49,13 +49,13 @@ methods:
                     "sound": "default",
                     "alert" : "Push Notification Test"
                 }
-    
-            In the above example, key `atras` and `tags` are custom payloads. 
+
+            In the above example, key `atras` and `tags` are custom payloads.
             `"badge" : 2`
             puts a badge with the value 2 on the app's icon, `"sound" : "default"` plays a
             default system sound and `"alert" : "Push Notification Test"` pops up a
-            alert window with text "Push Notification Test".  
-            
+            alert window with text "Push Notification Test".
+
             Note: For Android app, there are 3 more predefined keywords you can use,
             please refer to Push Notifications in the [Android SDK guide](#!/guide/android) for more
             details.
@@ -76,7 +76,7 @@ methods:
       - platform: titanium
         example: |
             This example sends a push notification to a channel and checks the response.
-            
+
                 Cloud.PushNotifications.notify({
                     channel: 'friend_request',
                     payload: 'Welcome to push notifications'
@@ -88,15 +88,15 @@ methods:
                             ((e.error && e.message) || JSON.stringify(e)));
                     }
                 });
-    
+
       - platform: rest
         example: |
             Example cURL request:
-            
+
                 $ curl -b cookies.txt -c cookies.txt -F "channel=friend_request" -F "to_ids=123456,34567" -F "payload=test" https://api.cloud.appcelerator.com/v1/push_notification/notify.json?key=<YOUR APP APP KEY>
-                
+
             Example JSON response:
-            
+
                 {
                   "meta": {
                     "status": "ok",
@@ -104,63 +104,63 @@ methods:
                     "method_name": "Notify"
                   }
                 }
-                
+
       - platform: ios
         example: |
             Example iOS call:
-            
+
                 NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:3];
-                [paramDict setObject:@"friend_request" forKey:@"channel"]; 
-                [paramDict setObject:@"123456" forKey:@"to_ids[]"]; 
-                [paramDict setObject:@"345667" forKey:@"to_ids[]"]; 
+                [paramDict setObject:@"friend_request" forKey:@"channel"];
+                [paramDict setObject:@"123456" forKey:@"to_ids[]"];
+                [paramDict setObject:@"345667" forKey:@"to_ids[]"];
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"POST" baseUrl:@"push_notification/notify.json" paramDict:paramDict];
                 [request startAsynchronous];
                 [request release];
-                
+
             SDK Callback:
-            
+
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
                 	// successfully subscribed
                 }
-                
+
       - platform: android
         example: |
             Example Android call:
-            
-                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 Map<String, Object> data = new HashMap<String, Object>();
                 data.put("channel", "friend_request");
                 data.put("to_ids", "123456,34567");
                 data.put("payload", "Push Notification Test");
                 CCResponse response = sdk.sendRequest("push_notification/notify.json", CCRequestMethod.POST, data);
-                
+
             SDK Callback:
-            
+
                 JSONObject responseJSON = response.getResponseData();
                 CCMeta meta = response.getMeta();
-                if("ok".equals(meta.getStatus()) 
-                    && meta.getCode() == 200 
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
                     && "Notify".equals(meta.getMethod())) {
                   ...
                 }
-                
+
       - platform: javascript
         example: |
             Example Javascript call:
-            
-                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+
+                var sdk = new ACSClient('<YOUR APP APP KEY>');  // app key
                 var data = {
                   channel: 'friend_request',
                   to_ids: '123456,34567',
                   payload: 'Push Notification Test'
                 };
                 sdk.sendRequest('push_notification/notify.json', 'POST', data, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data) {
                   if(data) {
                     if(data.meta) {
@@ -171,22 +171,22 @@ methods:
                     }
                   }
                 }
-                
+
       - platform: actionscript
         example: |
             Example Actionscript call:
-            
-                var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                var sdk:ACSClient = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //var sdk:ACSClient = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 var data:Object = new Object();
                 data.channel = "friend_request";
                 data.to_ids = "123456,34567";
                 data.payload = "Push Notification Test";
                 sdk.sendRequest("push_notification/notify.json", URLRequestMethod.POST, data, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data:Object):void {
                   if(data) {
                     if(data.hasOwnProperty("meta")) {
@@ -197,4 +197,4 @@ methods:
                     }
                   }
                 }
-                
+

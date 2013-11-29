@@ -11,22 +11,22 @@ methods:
         `owner_id`.
 
         In addition to custom fields, the following pre-defined fields can be used to
-        query and sort reviews: 
+        query and sort reviews:
 
         *   `user_id` : `String`. Review owner's user ID.
 
-        *   `rating` : `Integer`. Rating assigned to this review. 
+        *   `rating` : `Integer`. Rating assigned to this review.
 
         *   `tags_array` : `String`. Tags associated with the review.
-        
+
         *   `created_at` : `Date`. Timestamp when the review was created.
-        
+
         *   `updated_at` : `Date`. Timestamp when the review was last updated.
 
         For details about using the query parameters,
         see the [Search and Query guide](#!/guide/search_query).
     url: reviews/query.json
-    parameters: 
+    parameters:
 
       - name: post_id
         description: Limit query to reviews on the identified Post object.
@@ -63,10 +63,10 @@ methods:
       - name: owner_id
         description: Limit query results to reviews submitted by the identified  user.
 
-      - name: page  
+      - name: page
         description: Request page number, default is 1.
         type: Number
-      
+
       - name: per_page
         description: Number of results per page, default is 10.
         type: Number
@@ -86,7 +86,7 @@ methods:
       - name: where
         description: |
             Constraint values for fields. `where` should be encoded JSON.
-            
+
             If `where` is not specified, `query` returns all objects.
         type: Hash
 
@@ -107,12 +107,12 @@ methods:
 
       - name: response_json_depth
         description: |
-            Nested object depth level counts in the response JSON.  
+            Nested object depth level counts in the response JSON.
 
             In order to reduce server API calls from an applicaton, the response JSON may
-            include not just the objects that are being queried/searched, but also 
+            include not just the objects that are being queried/searched, but also
             some important data related to the returned objects, such as owners and
-            referenced objects.  
+            referenced objects.
 
             Default is 3, valid range is 1 to 8.
         type: Number
@@ -126,7 +126,7 @@ methods:
       - platform: titanium
         example: |
             This example requests a list of reviews and checks the response.
-            
+
                 Cloud.Reviews.query({
                     page: 1,
                     per_page: 20,
@@ -150,7 +150,7 @@ methods:
                             ((e.error && e.message) || JSON.stringify(e)));
                     }
                 });
-      
+
       - platform: rest
         example: |
             Queries for reviews with a rating greater than 7.
@@ -209,16 +209,16 @@ methods:
       - platform: ios
         example: |
             Example iOS call:
-            
+
                 CCWhere *where = [[[CCWhere alloc] init] autorelease];
                 [where fieldName:@"coordinates" nearLat:37.12 nearLng:-122.23 maxDistanceMi:5.0];
                 [where fieldName:@"rating" greaterThan:[NSNumber numberWithInt:7]];
                 NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:where, @"where", nil]
                 request = [[[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"reviews/query.json" paramDict:paramDict] autorelease];
                 [request startAsynchronous];
-                
+
             SDK Callback:
-            
+
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
                 	if ([response.meta.methodName isEqualToString:@"queryReviews"]) {
@@ -228,34 +228,34 @@ methods:
                 		}
                 	}
                 }
-                
+
       - platform: android
         example: |
             Example Android call:
-            
-                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 Map<String, Object> data = new HashMap<String, Object>();
                 data.put("where", "{'rating': {'$gt': 7.0}, 'coordinates': {'$nearSphere': [-122.23,37.12], '$maxDistance': 0.00126}}");
                 CCResponse response = sdk.sendRequest("reviews/query.json", CCRequestMethod.GET, data);
-                
+
             SDK Callback:
-            
+
                 JSONObject responseJSON = response.getResponseData();
                 CCMeta meta = response.getMeta();
-                if("ok".equals(meta.getStatus()) 
-                    && meta.getCode() == 200 
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
                     && "queryReviews".equals(meta.getMethod())) {
                   JSONArray reviews = responseJSON.getJSONArray("reviews");
                   ...
                 }
-                
+
       - platform: javascript
         example: |
             Example Javascript call:
-            
-                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+
+                var sdk = new ACSClient('<YOUR APP APP KEY>');  // app key
                 var data = {
                   post_id: '4e33a817d9ca724745000003',
                   review_id: '4e33a9f5d9ca724769000006',
@@ -263,9 +263,9 @@ methods:
                   content: 'Good'
                 };
                 sdk.sendRequest('reviews/query.json', 'GET', data, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data) {
                   if(data) {
                     if(data.meta) {
@@ -277,4 +277,4 @@ methods:
                     }
                   }
                 }
-                
+

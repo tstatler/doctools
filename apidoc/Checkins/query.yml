@@ -12,10 +12,10 @@ methods:
     url: checkins/query.json
     parameters:
 
-      - name: page  
+      - name: page
         description: Request page number, default is 1.
         type: Number
-      
+
       - name: per_page
         description: Number of results per page, default is 10.
         type: Number
@@ -35,7 +35,7 @@ methods:
       - name: where
         description: |
             Constraint values for fields. `where` should be encoded JSON.
-            
+
             If `where` is not specified, `query` returns all objects.
         type: Hash
 
@@ -56,11 +56,11 @@ methods:
 
       - name: response_json_depth
         description: |
-            Nested object depth level counts in response json.  
+            Nested object depth level counts in response json.
             In order to reduce server API calls from an applicaton, the response json may
             include not just the objects that are being queried/searched, but also with
             some important data related to the returning objects such as object's owner or
-            referencing objects.  
+            referencing objects.
 
             Default is 3, valid range is 1 to 8.
         type: Number
@@ -74,7 +74,7 @@ methods:
       - platform: titanium
         example: |
             This example requests information about checkins and checks the response.
-            
+
                 Cloud.Checkins.query({
                     page: 1,
                     per_page: 20,
@@ -94,17 +94,17 @@ methods:
                             ((e.error && e.message) || JSON.stringify(e)));
                     }
                 });
-      
+
       - platform: rest
         example: |
             Example cURL request:
-            
+
                 Example: If your app assigns a location to each checkin, you can search checkins by location:
-                
+
                 $ curl -c cookies.txt -b cookies.txt -X GET --data-urlencode 'where={"coordinates":{"$nearSphere":[-122.23,37.12], "$maxDistance" : 0.00126}}' "https://api.cloud.appcelerator.com/v1/checkins/query.json?key=<YOUR APP APP KEY>"
-                
+
             Example JSON response:
-            
+
                 {
                   "meta": {
                     "status":"ok",
@@ -166,21 +166,21 @@ methods:
                         }
                       }
                     ]
-                  }	
+                  }
                 }
-            
+
       - platform: ios
         example: |
             Example iOS call:
-            
+
                 CCWhere *where = [[[CCWhere alloc] init] autorelease];
                 [where fieldName:@"coordinates" nearLat:37.12 nearLng:-122.23 maxDistanceMi:5.0];
                 NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:where, @"where", nil]
                 request = [[[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"checkins/query.json" paramDict:paramDict] autorelease];
                 [request startAsynchronous];
-                
+
             SDK Callback:
-            
+
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
                 	if ([response.meta.methodName isEqualToString:@"queryCheckins"]) {
@@ -190,41 +190,41 @@ methods:
                 		}
                 	}
                 }
-                
+
       - platform: android
         example: |
             Example Android call:
-            
-                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 Map<String, Object> data = new HashMap<String, Object>();
                 data.put("where", "{'coordinates':{'$nearSphere':[-122.23,37.12], '$maxDistance' : 0.00126}}");
                 CCResponse response = sdk.sendRequest("checkins/query.json", CCRequestMethod.GET, data);
-                
+
             SDK Callback:
-            
+
                 JSONObject responseJSON = response.getResponseData();
                 CCMeta meta = response.getMeta();
-                if("ok".equals(meta.getStatus()) 
-                    && meta.getCode() == 200 
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
                     && "queryCheckins".equals(meta.getMethod())) {
                   JSONArray checkins = responseJSON.getJSONArray("checkins");
                   ...
                 }
-                
+
       - platform: javascript
         example: |
             Example Javascript call:
-            
-                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+
+                var sdk = new ACSClient('<YOUR APP APP KEY>');  // app key
                 var data = {
                   where: '{"coordinates":{"$nearSphere":[-122.23,37.12], "$maxDistance" : 0.00126}}'
                 };
                 sdk.sendRequest('checkins/query.json', 'GET', data, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data) {
                   if(data) {
                     if(data.meta) {
@@ -236,4 +236,4 @@ methods:
                     }
                   }
                 }
-                
+
