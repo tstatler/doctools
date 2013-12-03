@@ -26,8 +26,28 @@ methods:
         description: |
             Payload to send with the push notification.
 
-            If it is a string, it will be sent as an alert. You can also specify a JSON
-            payload with custom values. For example:
+            For a string, it will be sent as an alert (message notification).
+
+            For a JSON payload, you can specify the following fields as well as custom fields:
+
+              * `alert` (String): Notification message to be displayed.
+              * `badge` (Number): Number to set as the badge on the application's icon.
+                For iOS, you can also specify postive and negative numbers with the `+` and `-`
+                symbols to increment or decrement the current badge number, respectively.
+              * `sound` (String): Filename minus the extension of the sound to play.
+                  * For Android applications, place the file in the `/assets/sound` directory.
+                  * For iOS applications, place the file in the main bundle.
+                  * For Titanium Android applications, place the file in the `/Resources/sound` directory.
+                  * For Titanium iOS applications, place the file in the `/Resources` directory.
+              * `icon` (String): **Available on Android only.** Filename minus the extension of the
+                icon to display in the notification center. Place the file in `/res/drawable`
+                for Android applications or `/Resources` for Titanium applications.
+                Uses the app's icon by default.
+              * `title` (String): **Available on Android only.** Title of the notification.
+              * `vibrate` (Boolean): **Available on Android only.** If true, the device vibrates for
+                one second.
+
+            For example:
 
                 {
                     "atras": "your_user_id",
@@ -39,16 +59,12 @@ methods:
                     "sound": "default",
                     "alert" : "Push Notification Test"
                 }
-    
-            In the above example, key `atras` and `tags` are custom payloads. 
-            `"badge" : 2`
-            puts a badge with the value 2 on the app's icon, `"sound" : "default"` plays a
-            default system sound and `"alert" : "Push Notification Test"` pops up a
-            alert window with text "Push Notification Test".  
-            
-            Note: For Android app, there are 3 more predefined keywords you can use,
-            please refer to Push Notifications in the [Android SDK guide](#!/guide/android) for more
-            details.
+
+            In the above example, the `atras` and `tags` keys are custom fields,
+            `"badge" : 2` puts a badge with the value 2 on the app's icon,
+            `"sound" : "default"` plays a default system sound and `"alert" : "Push Notification Test"`
+            pops up a alert window with text "Push Notification Test".
+
         type: [String, Hash]
         required: true
 
