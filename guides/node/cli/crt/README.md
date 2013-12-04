@@ -4,6 +4,8 @@
 
 Manages custom SSL certificates for accessing your application via HTTPS.
 
+**Only available for Enterprise users.**
+
 ### Creating a custom SSL PEM file
 Your SSL certificate provider will provide you with three files:
 

@@ -11,7 +11,7 @@ bindings file.
 
 To create a mobile client project, either a classic Titanium or Alloy application:
 
-  1. From the menu bar, select **File > New > Mobile Project** to open the **New Project** wizard.
+  1. From the menu bar, select **File > New > Mobile App Project** to open the **New Project** wizard.
   2. Follow the wizard directions and fill out the fields.
   3. Enable cloud services for your application:
 
@@ -30,9 +30,8 @@ mobile client project under an `acs` folder.
 
 To create a new Node.ACS service in your mobile project:
 
-  1. Select your project in the **App Explorer** or **Project Explorer** view.
-  2. Right-click on the project and select **New > Node.ACS Service**.
-  3. Give the service a name.
+  1. In the **Project Explorer** view, right-click on the project and select **New > Node.ACS Service**.
+  2. Give the service a name.
 
 Studio creates a new Node.ACS service, using the MVC framework, in the
 `<project>/acs/<service_name>` folder, and adds the bindings file,
@@ -48,11 +47,10 @@ changes to your `acs/<service_name>/config.json` file, as described in the next 
 
 To create a bindings file to connect your application to your Node.ACS service:
 
-  1. Select your project in the **App Explorer** or **Project Explorer** view.
-  2. Right-click on the project and select **Node.ACS > Import Node.ACS Bindings**
-  3. Select a project from the list of available Node.ACS projects. Remote third-party services are
+  1. In the **Project Explorer** view, right-click on the project and select **Node.ACS > Import Node.ACS Bindings**
+  2. Select a project from the list of available Node.ACS projects. Remote third-party services are
      not yet supported.
-  4. Click **OK**.
+  3. Click **OK**.
 
 A bindings file, called `Resources/ti.cloud.<project_name>.js`, is a CommonJS module used 
 to access the Node.ACS service. The bindings file abstracts HTTP requests to access your Node.ACS
@@ -72,7 +70,7 @@ For Alloy projects, Alloy may process the bindings file, such as removing commen
 copy the bindings file to the `app/lib` folder and edit the file there.  The file will be copied
 to the `Resources` folder by Alloy during compilation.
 
-The `Resources` folder may be hidden in the **App Explorer** and **Project Explorer** views.
+The `Resources` folder may be hidden in the **Project Explorer** views.
 If your `Resources` folder is hidden, click the **View Menu** button (white
 triangle pointing down) and select **Customize View...**, then the **Available Customizations** dialog
 appears. In the **Filters** tab, uncheck the **Titanium Resources Folder** checkbox, then click **OK**.
@@ -107,9 +105,12 @@ where to access your service.
 
 ## Running Your Project Locally
 
-First, start your Node.ACS service.  If you are using a standalone Node.ACS project, first select the
-project in the **App Explorer** or **Project Explorer** view.
-Click the **Run** button and select **Local Node.ACS Server** to start your service.
+First, start your Node.ACS service:
+
+  1. Select your project in the **Project Explorer** view.
+  2. Select **Run** from the **Launch Modes** drop-down list.
+  3. Make sure **Local Node.ACS Server** is selected in the **Target** drop-down list.
+  4. Click the **Launch** button.
 
 If you want to run your client on a device, you need to modify your `tiapp.xml` file to use an IP
 address rather than `localhost` as the base URL.  Your computer and device must be on the same network.
@@ -119,16 +120,20 @@ address rather than `localhost` as the base URL.  Your computer and device must 
   3. Change `localhost` to your computer's IP address.
   4. Save and close the file.
 
-Next, start your mobile client.  Click the **Run** button and select one of the deployment options.
+Next, start your mobile client:
+
+  1. Select your project in the **Project Explorer** view.
+  2. Select **Run** from the **Launch Modes** drop-down list.
+  3. Select a device or simulator in the **Target** drop-down list.
+  4. Click the **Launch** button.
 
 Your client application should be able to communicate with your service.
 
 ## Publish Your Service
 
-Publish your Node.ACS service. If you are using a standalone Node.ACS project, select the project in
-the **App Explorer** or **Project Explorer** view, then click the **Publish** button and select **Deploy
-App**.  If your project is part of the mobile application project, click the **Publish** button and
-select **Publish Node.ACS Service**.
+In the **Project Explorer** view, right-click the project, then choose either **Publish > Publish
+Node.ACS service** or **Publish > Deploy App**. The option displayed depends if your Node.ACS service
+is integrated or standalone.
 
 When your sevice is published, a dialog appears providing you with the URL to access the service.
 You can optionally set a custom domain name by right-clicking on the project and selecting **Node.ACS >

@@ -11,8 +11,13 @@ For complete Studio debugger directions, review the
 
 ## Starting a Debug Session
 
-To start a debug session, in the **App Explorer** or **Project Explorer** view, select your project,
-then click on the **Debug** button and select **Local Node.ACS Server**.
+To start a debug session:
+
+  1. Select your project in the **Project Explorer** view.
+  2. Select **Debug** from the **Launch Modes** drop-down list.
+  3. Make sure **Local Node.ACS Server** is selected in the **Target** drop-down list.
+  4. Click the **Launch** button.
+
 When prompted to switch to the **Debug** perspective, click **Yes**.
 
 Studio first creates a temporary project called `Local Node.ACS Server - <project-name>`,
@@ -24,7 +29,7 @@ When you are finished debugging, you can terminate the debug session by clicking
 in the **Debug** view.
 
 After your debug session, Studio removes the temporary project, `Local Node.ACS Server - <project-name>`.
-If for some reason, you see a project with this name in your **App Explorer** or
+If for some reason, you see a project with this name in your
 **Project Explorer** view after you completed a debug session, you can safely delete this project.
 If the temporary project is not removed, subsequent debug sessions may not start.
 
