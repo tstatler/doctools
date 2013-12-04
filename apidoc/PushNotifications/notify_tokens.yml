@@ -79,6 +79,22 @@ methods:
             For example, to specify a one day expiration period, use `options={'expire_after_seconds':86400}`.
         type: Hash
 
+      - name: where
+        description: |
+            Use a query to specify the users to receive a push notification. Up to 1000 users can be 
+            returned by the query. `where` should be JSON-encoded.
+
+            **Available only for Enterprise users.**
+
+            To specify a user query, set the `user` field to a custom query, for example, the
+            following query searches for all users with the first name of Joe:
+
+                where={"user": {"first_name":"Joe"}}
+
+            For details about using the `where` parameter,
+            see the [Search and Query guide](#!/guide/search_query).
+        type: Hash
+
     examples:
 
       - platform: titanium

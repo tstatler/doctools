@@ -32,11 +32,8 @@ methods:
         description: |
             Set to `everyone` to send to all users on the specifieid channel,
             or specify a comma-separated list of user IDs to send
-            to the users who are subscribed to the specified channel.
-
-            For existing applications, that is, applications created before 6 Decemeber 2013,
-            you do not need to specify this parameter and the application will continue to work with
-            the previous behavior.
+            to the users who are subscribed to the specified channel. Up to 1000 users can be
+            specified.
         type: String
 
       - name: payload
@@ -98,9 +95,10 @@ methods:
 
       - name: where
         description: |
-            Use a query to specify the users for the push notification.
+            Use a query to specify the users to receive the push notification. Up to 1000 users can be
+            returned by the query. `where` should be JSON-encoded.
+
             **Available only for Enterprise users.**
-            `where` should be JSON-encoded.
 
             To specify a user query, set the `user` field to a custom query, for example, the
             following query searches for all users with the first name of Joe:
