@@ -30,7 +30,7 @@ methods:
 
       - name: to_ids
         description: |
-            Comma-separated list of user IDs to send devices whose users are subscribed
+            Comma-separated list of user IDs to send the notification to users who are subscribed
             to the specified channel. Up to 1000 users can be specified.
 
             Application admins can set this parameter to `everyone` to send to all devices
