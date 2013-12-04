@@ -5,8 +5,8 @@ methods:
     description: |
         Sends push notifications to one or more users who are subscribed to a channel.
 
-        Specify either `friends`, `to_ids` or `where`. One of these parameters must be used.
-        These parameters cannot be used simulatenously.
+        Specify either `friends` or `to_ids`. Enterprise users can also specify `where`.
+        One of these parameters must be used. These parameters cannot be used simultaneously.
 
         Application admins can omit these parameters to send to all of the devices subscribed to the
         identified channel.
@@ -98,27 +98,17 @@ methods:
 
       - name: where
         description: |
-            Use a query to specify the users or location for the push notification.
-            `where` should be encoded JSON.
+            Use a query to specify the users for the push notification.
+            **Available only for Enterprise users.**
+            `where` should be JSON-encoded.
 
             To specify a user query, set the `user` field to a custom query, for example, the
             following query searches for all users with the first name of Joe:
 
                 where={"user": {"first_name":"Joe"}}
 
-            For details about using the where parameter with a user query,
+            For details about using the `where` parameter,
             see the [Search and Query guide](#!/guide/search_query).
-
-            To specify a location query, set the `loc` field to a custom query, for example, the
-            following query searches for devices 10 miles of San Francisco, CA, USA:
-
-                where={"loc":{"$geoWithin":{"$centerSphere":[ [37.7833, 122.4167] , 0.00252589 ] }}}
-
-            To use location queries, the device's channel subscription needs to have its `loc`
-            parameter defined.
-
-            For details about creating location queries, see
-            [MongoDB Doc: Query a 2D index](http://docs.mongodb.org/manual/tutorial/query-a-2d-index/).
         type: Hash
 
 

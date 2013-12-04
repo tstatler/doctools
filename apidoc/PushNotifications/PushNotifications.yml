@@ -43,11 +43,16 @@ description: |
       * `title` (String): Title of the notification.
       * `vibrate` (Boolean): If true, the device vibrates for one second.
 
-    ### iOS Notes
 
-    #### Badges
+    ### Badges
 
-    When setting the value of the badge on iOS, you can either directly set the badge number, or
+    When sending a push notification, you can specify a badge value, which is usually used to indicate the
+    number of unread messages or other content waiting to be addressed by the user in your application.
+
+    On Android, the badge number is displayed in the notification center, while on iOS, the badge
+    number is displayed with the application icon.
+
+    When setting the value of the badge, you can either directly set the badge number, or
     increment and decrement the current value of the badge. Set the `badge` field in the `payload`
     parameter of the {@link PushNotifications#notify_tokens} or {@link PushNotifications#notify}
     method to specify a value for the badge.
@@ -58,13 +63,14 @@ description: |
     For example, the value `+2` increments the current badge value by two, the value `-1`,
     decrements the badge value by one, and the value `12` sets the badge value to twelve.
 
-    iOS supports two additional methods for setting the internal value of the badge:
+    Use the following methods to set the internally stored value of the badge and not update the
+    displayed value in the application:
 
       * {@link PushNotifications#set_badge}: set, increment or decrement the value of the badge
       * {@link PushNotifications#reset_badge}: set the value of the badge to zero
 
-    These methods only set the internally stored value of the badge and do not update the badge value on the
-    icon.  To update the icon, you need to send a push notification with the `badge` field defined.
+    To update the displayed value in the application, you need to send a push notification with the
+    `badge` field defined.
 
 
     ### Push Notifications with Device Tokens
