@@ -35,13 +35,13 @@ methods:
                 For iOS, you can also specify postive and negative numbers with the `+` and `-`
                 symbols to increment or decrement the current badge number, respectively.
               * `sound` (String): Filename minus the extension of the sound to play.
-                  * For Android applications, place the file in the `/assets/sound` directory.
-                  * For iOS applications, place the file in the main bundle.
-                  * For Titanium Android applications, place the file in the `/Resources/sound` directory.
-                  * For Titanium iOS applications, place the file in the `/Resources` directory.
+                  * For native Android applications, place the file in the `/assets/sound` directory.
+                  * For native iOS applications, place the file in the main bundle.
+                  * For Android applications built with Titanium, place the file in the `/Resources/sound` directory.
+                  * For iOS applications built with Titanium, place the file in the `/Resources` directory.
               * `icon` (String): **Available on Android only.** Filename minus the extension of the
                 icon to display in the notification center. Place the file in `/res/drawable`
-                for Android applications or `/Resources` for Titanium applications.
+                for native Android applications or `/Resources` for Titanium applications.
                 Uses the app's icon by default.
               * `title` (String): **Available on Android only.** Title of the notification.
               * `vibrate` (Boolean): **Available on Android only.** If true, the device vibrates for
@@ -81,8 +81,8 @@ methods:
 
       - name: where
         description: |
-            Use a query to specify the users to receive a push notification. Up to 1000 users can be 
-            returned by the query. `where` should be JSON-encoded.
+            JSON-encoded object that defines the query used to select the users that will receive the
+            notification. Up to 1000 users can be returned by the query.
 
             **Available only for Enterprise users.**
 

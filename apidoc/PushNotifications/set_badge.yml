@@ -66,8 +66,8 @@ methods:
         example: |
             Example Android call:
             
-                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+                ACSClient sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
                 
                 Map<String, Object> data = new HashMap<String, Object>();
                 data.put("badge_number", 12);
