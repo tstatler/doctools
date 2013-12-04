@@ -28,7 +28,7 @@ Studio creates the method and adds it to the `services.js` file.
      endpoint URL for the application.
 
 By default, the service URL will be `http://<app_id>.cloudapp.appcelerator.com` or
-`http://<app_id>.cloudapp-enterprise.appcelerator.com`, where <app_id> is the
+`http://<app_id>.cloudapp-enterprise.appcelerator.com`, where `<app_id>` is the
 generated ID for your application. It may take a few minutes for the application to be available.
 
 To retrieve the service URL later, in the **Project Explorer** view, right-click your project
