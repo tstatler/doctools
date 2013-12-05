@@ -22,7 +22,7 @@ methods:
             Number to set as the badge on the application's icon.
             Specify postive and negative values with the `+` and `-`
             symbols to increment or decrement the current badge number, respectively.
-        type: Number
+        type: String
       
     examples:
       - platform: titanium
