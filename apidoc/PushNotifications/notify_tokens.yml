@@ -4,6 +4,9 @@ methods:
     summary: notify_tokens
     description: |
         Sends push notifications to one or more users who are subscribed to a channel.
+
+        Application admins can set the `to_tokens` parameter to `everyone` to send to all devices
+        subscribed to the identified channel.
     url: push_notification/notify_tokens.json
     http-method: POST
     login-required: false
@@ -18,7 +21,12 @@ methods:
       - name: to_tokens
         description: |
             Comma-separated list of device tokens. Sends push notification to the specified
-            tokens who are subscribed to the specified channel.  
+            tokens who are subscribed to the specified channel.
+
+            Application admins can set this parameter to `everyone` to send to all devices
+            subscribed to the channel.
+
+            If you are using the web interface, you do not need to specify this parameter.
         type: String
         required: true
 
