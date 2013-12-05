@@ -20,7 +20,7 @@ methods:
       - name: badge_number
         description: |
             Number to set as the badge on the application's icon.
-            You can also specify postive and negative values with the `+` and `-`
+            Specify postive and negative values with the `+` and `-`
             symbols to increment or decrement the current badge number, respectively.
         type: Number
       

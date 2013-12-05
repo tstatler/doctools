@@ -31,8 +31,8 @@ methods:
             For a JSON payload, you can specify the following fields as well as custom fields:
 
               * `alert` (String): Notification message to be displayed.
-              * `badge` (Number): Number to set as the badge on the application's icon.
-                For iOS, you can also specify postive and negative numbers with the `+` and `-`
+              * `badge` (String): Number to set as the badge on the application's icon.
+                Specify postive and negative numbers with the `+` and `-`
                 symbols to increment or decrement the current badge number, respectively.
               * `sound` (String): Filename minus the extension of the sound to play.
                   * For native Android applications, place the file in the `/assets/sound` directory.
@@ -55,13 +55,13 @@ methods:
                         "tag1",
                         "tag2"
                     ],
-                    "badge": 2,
+                    "badge": "+2",
                     "sound": "default",
                     "alert" : "Push Notification Test"
                 }
 
             In the above example, the `atras` and `tags` keys are custom fields,
-            `"badge" : 2` puts a badge with the value 2 on the app's icon,
+            `"badge" : "+2"` increments the current badge value by two,
             `"sound" : "default"` plays a default system sound and `"alert" : "Push Notification Test"`
             pops up a alert window with text "Push Notification Test".
 
