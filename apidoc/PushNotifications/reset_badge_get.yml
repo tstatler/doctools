@@ -3,7 +3,7 @@ methods:
   - name: reset_badge_get
     summary: reset_badge
     description: |
-        Sets the internally stored value of the badge to zero.
+        Sets the internally stored value of the badge to zero for all devices.
 
         **Only available to application admins.**
 

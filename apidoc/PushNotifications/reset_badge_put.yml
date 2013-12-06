@@ -3,7 +3,7 @@ methods:
   - name: reset_badge_put
     summary: reset_badge
     description: |
-        Sets the internally stored value of the badge to zero.
+        Sets the internally stored value of the badge to zero of a specific device.
 
         This method only updates the internally stored value of the badge.  To update the badge value
         on the iOS icon or Android notification center, send a push notification with the `badge` field defined.
