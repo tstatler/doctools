@@ -1,5 +1,14 @@
 # Node.ACS Release Notes
 
+## 6 December 2013 -- version 1.0.10
+
+  * Fixed an issue where a application could not be published due to node-tar not generating the
+    correct headers for certain NPM modules.
+
+## 23 November 2013 -- version 1.0.9
+
+  * Fixed an issue where the CLI was not working on Windows systems.
+
 ## 22 November 2013 -- version 1.0.8
 
   * New Node.ACS library method to make generic REST API calls to ACS.  For more information, see
