@@ -11,15 +11,15 @@ fail_on_error() {
 
 outdir=$TI_ROOT/doctools/dist/platform/latest
 
-cd $TI_ROOT/titanium_mobile 
-git checkout 3_1_X 
+cd $TI_ROOT/titanium_mobile
+git checkout 3_2_X
 fail_on_error $? "Could not checkout titanium branch."
-git pull upstream 3_1_X
+git pull upstream 3_2_X
 fail_on_error $? "Pull failed on titanium branch."
 cd $TI_ROOT/alloy
-git checkout 1_2_X
+git checkout 1_3_X
 fail_on_error $? "Could not checkout alloy branch."
-git pull upstream 1_2_X
+git pull upstream 1_3_X
 fail_on_error $? "Pull failed on alloy branch."
 cd $TI_ROOT/doctools
 rm -rf $outdir
