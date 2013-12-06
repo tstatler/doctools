@@ -8,8 +8,8 @@ methods:
         This method only updates the internally stored value of the badge.  To update the badge value
         on the iOS icon or Android notification center, send a push notification with the `badge` field defined.
 
-        In the examples, because the `device_token` parameter was omitted, the PUT request requires
-        some content to be sent or else an error is returned.
+        This method can either be a GET or PUT request.  If you are not specifying any parameters,
+        use GET, else you have to use PUT.
     url: push_notification/reset_badge.json
     http-method: PUT
 
@@ -18,6 +18,9 @@ methods:
       - name: device_token
         description: | 
             Device token. Required if you are not an application admin.
+
+            If you specify this parameter, use a PUT request.  If you do **NOT** specify this
+            parameter, use a GET request.
         type: String
       
     examples:
@@ -29,7 +32,7 @@ methods:
         example: |
             Example cURL request:
             
-                $ curl -b cookies.txt -c cookies.txt -X PUT -F "blah=blah" "https://api.cloud.appcelerator.com/v1/push_notification/reset_badge.json?key=<API_KEY>"
+                $ curl -b cookies.txt -c cookies.txt -X GET "https://api.cloud.appcelerator.com/v1/push_notification/reset_badge.json?key=<API_KEY>"
 
             Example JSON response:
             
@@ -45,9 +48,7 @@ methods:
         example: |
             Example iOS call:
             
-                NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
-                [paramDict setObject:@"blah" forKey:@"blah"]; 
-                CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"PUT" baseUrl:@"push_notification/reset_badge.json" paramDict:paramDict];
+                CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"push_notification/reset_badge.json"];
                 [request startAsynchronous];
                 [request release];
                 
@@ -65,9 +66,7 @@ methods:
                 ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
                 //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
                 
-                Map<String, Object> data = new HashMap<String, Object>();
-                data.put("blah", "blah");
-                CCResponse response = sdk.sendRequest("push_notification/reset_badge.json", CCRequestMethod.PUT, data);
+                CCResponse response = sdk.sendRequest("push_notification/reset_badge.json", CCRequestMethod.GET);
                 
             SDK Callback:
             
