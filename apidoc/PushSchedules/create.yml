@@ -4,9 +4,9 @@ methods:
     summary: create
     description: |
         Creates a scheduled push notification.  At minimum, you must specify the `start_time`,
-        `end_time`, `interval` and `payload` parameters.
+        and `payload` parameters.
 
-        This feature is only available for Appcelerator Platform users.
+        This feature is only available for Enterprise users.
 
         The current user must be an application admin.
     url: push_schedule/create.json
@@ -34,11 +34,11 @@ methods:
                         day.  The push expires in eight days and will not be sent if the user's device
                         has been off before the send day and after the end of the expiration period.
          
-              * *recurrence* (Hash): Schedules the recurrence of the push notification (**required**).
+              * *recurrence* (Hash): Schedules the recurrence of the push notification.
 
-                   * *interval* (String): Set to either `daily`, `weeky` or `monthly` (**required**).
+                   * *interval* (String): Set to either `daily`, `weeky` or `monthly`.
                    * *end_time* (Date): Datetime to end the push notifications in ISO 8601 format.
-                     Must occur after *start_time* (**required**).
+                     Must occur after *start_time*.
     
         type: Hash
         required: true
@@ -53,7 +53,7 @@ methods:
 
       - platform: titanium
         example: |
-            Requires Release 3.2.0.
+            Available for Release 3.2.0 and later.
 
                 Cloud.PushSchedules.create({
                     schedule: {
