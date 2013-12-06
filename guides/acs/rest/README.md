@@ -64,14 +64,6 @@ For example:
             "username": "admin",
             "role": "",
             "admin": "true",
-            "stats": {
-              "photos": {
-                "total_count": 0
-              },
-              "storage": {
-                "used": 0
-              }
-            }
           }
         ]
       }
