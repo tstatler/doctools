@@ -2,7 +2,7 @@
 
 ## 6 December 2013 -- version 1.0.10
 
-  * Fixed an issue where a application could not be published due to node-tar not generating the
+  * Fixed an issue where an application could not be published due to node-tar not generating the
     correct headers for certain NPM modules.
 
 ## 23 November 2013 -- version 1.0.9
