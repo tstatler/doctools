@@ -257,7 +257,7 @@ methods:
         example: |
             Example Javascript call:
 
-                var sdk = new ACSClient('<YOUR APP APP KEY>');  // app key
+                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
                 sdk.sendRequest('chats/get_chat_groups.json', 'GET', null, callback);
 
             SDK Callback:

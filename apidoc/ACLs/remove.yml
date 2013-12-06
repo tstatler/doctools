@@ -120,7 +120,7 @@ methods:
         example: |
             Example Javascript call:
 
-                var sdk = new ACSClient('<YOUR APP APP KEY>');  // app key
+                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
                 var data = {
                   name: 'access_photo_album',
                   reader_ids: '4fcdab1f47b7b71933000008',

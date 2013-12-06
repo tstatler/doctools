@@ -172,7 +172,7 @@ methods:
         example: |
             Example Javascript call:
 
-                var sdk = new ACSClient('<YOUR APP APP KEY>');  // app key
+                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
                 var data = {
                   name: 'my_file',
                   file: 'fileInputId'  //the ID of file input control
@@ -196,8 +196,8 @@ methods:
         example: |
             Example Actionscript call:
 
-                var sdk:ACSClient = new ACSClient("<YOUR APP APP KEY>"); // app key
-                //var sdk:ACSClient = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+                var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
                 //the user's parameters
                 var data:Object = new Object();
                 data.name = "my_file";

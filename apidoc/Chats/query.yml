@@ -256,7 +256,7 @@ methods:
         example: |
             Example Javascript call:
 
-                var sdk = new ACSClient('<YOUR APP APP KEY>');  // app key
+                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
                 var data = {
                   participate_ids: '4ee05d69d9ca726b85000002,4ee05d69d9ca726b85000003',
                   where: '{"created_at":{"$gte":"2011-11-17T22:53:48+0000"}, "coordinates":{"$nearSphere":[-122.23,37.12], "$maxDistance" : 0.00126}}',

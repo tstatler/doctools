@@ -255,7 +255,7 @@ methods:
         example: |
             Example Javascript call:
 
-                var sdk = new ACSClient('<YOUR APP APP KEY>');  // app key
+                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
                 var data = {
                   post_id: '4e33a817d9ca724745000003',
                   review_id: '4e33a9f5d9ca724769000006',

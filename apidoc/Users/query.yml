@@ -196,7 +196,7 @@ methods:
         example: |
             Example JavaScript call:
 
-                var sdk = new ACSClient('<YOUR APP APP KEY>');  // app key
+                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
                 var data = {
                   where: '{"first_name":"joe","coordinates":{"$nearSphere":[-122.1,37.1], "$maxDistance" : 0.00126}}'
                 };

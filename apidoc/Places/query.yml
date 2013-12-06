@@ -209,7 +209,7 @@ methods:
         example: |
             Example Javascript call:
 
-                var sdk = new ACSClient('<YOUR APP APP KEY>');  // app key
+                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
                 var data = {
                   where: '{"name":"Appcelerator Cloud Services","lnglat":{"$nearSphere":[-122.23,37.12], "$maxDistance" : 0.00126}}'
                 };

@@ -260,7 +260,7 @@ methods:
         example: |
             Example Javascript call:
 
-                var sdk = new ACSClient('<YOUR APP APP KEY>');  // app key
+                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
                 var data = {
                   to_ids: '4ee05d69d9ca726b85000003,4ee05d69d9ca726b85000004',
                   message: 'Hello!'
@@ -286,8 +286,8 @@ methods:
         example: |
             Example Actionscript call:
 
-                var sdk:ACSClient = new ACSClient("<YOUR APP APP KEY>"); // app key
-                //var sdk:ACSClient = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+                var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
 
                 var data:Object = new Object();
                 data.to_ids = "4edef6f7d9ca7247b8000004,4edf0c20d9ca724a82000003";
