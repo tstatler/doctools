@@ -22,9 +22,6 @@ This update includes the following bug fixes and enhancements:
     `push_notification/notify_tokens.json` method. Set the `to_tokens` parameter to `everyone`.
     Previously, you could not send push notifications to all users with this method.
 
-  * Add new API to return the application's API logs, which is only available to an application
-    administrator.  See [logs/apps/query.json](#!/api/Logs-method-apps_query).
-
 ## 7 November 2013
 
 This update includes the following bug fixes and enhancements:
@@ -34,7 +31,7 @@ This update includes the following bug fixes and enhancements:
     and [push_notification/notify_token.json](#!/api/PushNotifications-method-notify_tokens).
 
   * Add ability to schedule push notifications to be sent at specific times and intervals.  This
-    feature is only avaiable to Enterprise customers.  See [PushSchedules](#!/api/PushSchedules).
+    feature is only available to Enterprise customers.  See [PushSchedules](#!/api/PushSchedules).
 
   * Changed PushNotification API to use `android` as the push notification type for either MQTT or GCM.
     After you have configured the ACS web console for either MQTT or GCM,
