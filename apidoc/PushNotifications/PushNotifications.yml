@@ -67,7 +67,7 @@ description: |
     displayed value in the application:
 
       * {@link PushNotifications#set_badge}: set, increment or decrement the value of the badge
-      * {@link PushNotifications#reset_badge}: set the value of the badge to zero
+      * [reset_badge](#!/api/PushNotifications-method-reset_badge_put): set the value of the badge to zero
 
     To update the displayed value in the application, you need to send a push notification with the
     `badge` field defined.
