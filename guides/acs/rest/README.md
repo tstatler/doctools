@@ -37,15 +37,45 @@ for more information.
 
 ## User Sessions and Cookies
 
-To create or login a user and perform actions which require a logged-in user,
-the `_session_id` cookie must be saved and reused with each API call.
+To create a user and perform actions which require a logged-in user,
+the `session_id` cookie must be saved and reused with each API call.
+
+To get a session ID, use the `users/login.json` method to login in to the application.  If the API
+call is successful, the `session_id` field is returned in the `meta` object of the response.
+For example:
+
+    curl -F "login=admin" -F "password=admin" "https://api.cloud.appcelerator.com/v1/users/login.json?key=<API_KEY>"
+    {
+      "meta": {
+        "code": 200,
+        "status": "ok",
+        "method_name": "loginUser",
+        "session_id": "sjuvQqSEYTD3DekMCrUHcCTf7GU"
+      },
+      "response": {
+        "users": [
+          {
+            "id": "526edc0d294e712499000004",
+            "created_at": "2013-10-28T21:50:05+0000",
+            "updated_at": "2013-12-05T01:02:32+0000",
+            "external_accounts": [
+            ],
+            "confirmed_at": "2013-10-28T21:50:05+0000",
+            "username": "admin",
+            "role": "",
+            "admin": "true",
+          }
+        ]
+      }
+    }
+
+
+Pass the `session_id` value to the `_session_id` parameter in the URL, for example:
+
+    https://api.cloud.appcelerator.com/v1/reviews/create.json?key=<API_KEY>&_session_id=<SESSION_ID>
 
 With the cURL command, use the `-b` and `-c` options to read and write cookies to store your session
 ID. Many of the REST examples in the documentation use these options.
-
-You can also pass this parameter in the URL, for example:
-
-    https://api.cloud.appcelerator.com/v1/reviews/create.json?key=<API_KEY>&_session_id=<SESSION_ID>
 
 User login sessions expire after they have been unused for a period of time.
 By default, the expiration period is six months. You can configure the user session 
