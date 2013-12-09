@@ -16,6 +16,12 @@ methods:
         A user can have both an email address and username specified. However, if username
         is omitted, email address, first name and last name are required.
 
+        For regular users (non-admin users), after successully executing this command, you will be logged
+        in as the new user and the session ID will be associated with the newly created user.  For
+        example, when user A creates user B, user A is now logged in as user B and user A's session
+        ID belongs to user B.
+
+        For admin users, you will still be logged in as the admin user.
     parameters: 
 
       - name: email
