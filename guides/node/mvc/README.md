@@ -8,9 +8,9 @@ simple command. Working with this framework, all you have to do is to focus on
 your application's features.
 
 This framework and web server are built based on the Express web application framework
-(version 3.0.0). The MVC framework also includes a websocket server based on socket.io (0.9.10). 
+(version 3.0.0). The MVC framework also includes a websocket server based on socket.io (0.9.16).
 
-The framework parses and loads routes, filters and websockets configurations, and sets them 
+The framework parses and loads routes, filters and websockets configurations, and sets them
 up before starting the Express and socket.io servers. Applications can add their
 own `start` and `stop` functions to set up server settings before
 starting the server and to release resources before stopping the server. 
@@ -23,7 +23,7 @@ application.
 ### Application Startup Sequence 
 
 A Node.ACS application can be started locally (in the development environment) for
-developing/testing purposes by using the [**acs run**](#!/guide/cli/run) command. Once
+developing/testing purposes by using the [**acs run**](#!/guide/node_cli_run) command. Once
 published to the cloud, it is automatically started. When an application using
 the Node.ACS MVC framework is started (locally or in cloud), the
 following process takes place:
@@ -51,12 +51,12 @@ following process takes place:
     * io.set("polling duration", 10)
     * io.set('transports', [ 'websocket', 'htmlfile', 'xhr-polling', 'jsonp-polling' ])
 
-2.  Load the main script file and execute its "start" function (if it exists), passing
-    in the Express server object.
+2.  Load the main script file and execute its `start` function (if it exists), passing
+    in the Express server and socket.io objects.
 
-    If a function defined as `function start(app, express)` in the application's
+    If a function defined as `function start(app, express, io)` in the application's
     main script file (`app.js` by default), it will be called by the framework,
-    passing in the "app" and "express" objects. This allows the application to 
+    passing in the `app`, `express` and `io` objects. This allows the application to
     modify the default application configuration before the servers start.
 
 3.  Setup routes, filters and websockets.
@@ -104,7 +104,7 @@ contains the following files/directories:
 
 ### package.json
 
-The basic configuration file for a Node.ACS application.  
+The basic configuration file for a Node.ACS application.
     
     {
       "name": "MyNodeACSApp",
@@ -136,29 +136,41 @@ value.  For more details, see the "Node.js Engine" section in [Standard Node.js 
 
 Main script file for Node.ACS to load and start the app. If the app is using
 the MVC framework, the `start` and `stop` functions are invoked during application
-startup and shutdown, respectively. 
-    
+startup and shutdown, respectively.
+
+The `start` function is passed the following objects:
+
+  * `app`: handle to the Express application instance
+  * `express`: handle to the Express library
+  * `io`: handle to the socket.io instance (only available for Node.ACS 1.0.11 and later)
+
+The `stop` function is not passed any parameters.
+
     // setup app session and favicon
-    function start(app, express) {
+    function start(app, express, io) {
         app.use(express.session(
                 { key: 'node.acs', secret: "my secret" }));
         app.use(express.favicon(
                 __dirname + '/public/images/favicon.ico'));
+
+	//save the socket.io io object to app,
+	//so that it can be accessed via req.app.io from the controllers or filters
+	app.io = io;
     }
     
     function stop() {
-        // release resources before server stop
+	// release resources before server stops
     }
-    
+
 
 The `start` or `stop` functions are both optional; if they are not defined, the startup
 and shutdown sequence proceeds as described above.
 
 ### config.json
 
-The configuration file for defining the application's url routing, filters and
+The configuration file for defining the application's URL routing, filters and
 websockets.
-    
+
     {
       "routes":
       [
@@ -176,26 +188,38 @@ websockets.
         {"event": "scores", "callback": "game#postScores"}
       ]
     }
-    
 
-* **routes** \-- Each router definition has 'path', 'method' and 'callback' which maps a URL path to a certain handler(function) through a certain http method (one of 'get', 'post', 'put', 'delete' and 'options'). The 'method' is not case sensitive and is optional, if no method defined, the routes will be treated as GET. The handler is combined with controller's name and its function name, joined by '#'. The controller's name should be the same as file's name in 'controllers' folder.
-* **filters** \-- Filters are defined the same as controllers, except for it doesn't have 'method'. Matched request URL with any method will be intercept by the filter. All filters are placed under "filters" folder.
-* **websockets** \-- The websockets defines event-handler mappings, whenever a websocket client emits a certain event, take 'msg' event here as an example, the 'domsg' function in /websockets/user.js file will be invoked to handle the request.
-  
-For example, the URL path "/" will be handled by the `index` function in
-`/controllers/home.js`. The 'index' function should be declared as 
 
-    function index(req, res) { 
-        // implementation 
-    }
+  * **routes** \-- Each router definition has `path`, `method` and `callback` which maps a URL path to
+    a certain handler (function) through a certain HTTP method (one of `get`, `post`, `put`, `delete` and `options`).
+    The `method` is not case sensitive and is optional. If no method is defined, the routes will be treated as GET.
+    The handler is combined with controller's name and its function name, joined by '#'.
+    The controller's name should be the same as the file's name in `controllers` folder.
+    For example, the URL path "/" will be handled by the `index` function in
+    `/controllers/home.js`. The `index` function should be declared as
+
+	function index(req, res) {
+	    // implementation
+	}
+
+  * **filters** \-- Filters are defined the same as controllers, except it doesn't have a `method` field.
+    A Matched request URL with any method will be intercepted by the filter.
+    All filters are placed in the `filters` folder.
+
+  * **websockets** \-- The websockets define event-handler mappings. Whenever a websocket client
+    emits a certain event, specified with the `event` field, a certain handler is called, specified
+    with the `callback` field. All websockets are placed in the `websockets` folder.
+    For example, in the above `config.json` file, when the `msg` event is triggered,
+    the `domsg` function is invoked in the `/websockets/chat.js` file.
+
 
 ### Controller
 
 The HTTP request handler (function) for handling a certain request URL path
 defined in `config.json`.
-  
+
 **/controllers/users.js**
-    
+
     function login(req, res) {
       //do user login here
       if(req.params.username == 'test' 
@@ -205,11 +229,12 @@ defined in `config.json`.
         res.render('error');
       }
     }
-    
 
-Node.ACS uses Express to handle routing internally, the "req" and "res" are
-standard Express request, response object.  
-All controller files reside in "controllers" folder with '.js' extension.
+
+Node.ACS uses Express to handle routing internally. The `req` and `res` are
+standard Express request and response objects.
+
+All controller files reside in `controllers` folder with '.js' extension.
 There could be any number of controller files in an application, and could be
 any number functions in a controller file.
 
@@ -218,10 +243,10 @@ any number functions in a controller file.
 A function will be called whenever a request URL path matched the defined path
 in `config.json`.
 
-  
+
 **/filters/session_filter.js**
-    
-    
+
+
     function validateSession(req, res, next) {
       if(!req.session.user) {
         res.send('Unauthenticated!');
@@ -229,12 +254,13 @@ in `config.json`.
         next();
       }
     }
-    
+
 
 Node.ACS uses `app.all()` internally to setup the filters, all filters will be
 set before routes so that it can be reached before the request gets handled by
-controllers.  
-All filter files reside in "filters" folder with '.js' extension. There could
+controllers.
+
+All filter files reside in `filters` folder with '.js' extension. There could
 be any number of filter files in an application, and there could be any number
 of functions in a filter file.
 
@@ -243,41 +269,52 @@ of functions in a filter file.
 A function will be called whenever a websocket event defined in `config.json`
 is triggered.
 
-  
+
 **/websockets/chat.js**
-    
-    
+
+
     function domsg(data, socket) {
       // broadcast received message to all connected clients
       socket.broadcast.emit('message', data);
     }
-    
 
-Node.ACS uses socket.io internally as websocket server, the "communication"
-between server and client is through the "event" emitting. The client could be
-any standard socket.io client. Node.ACS server also provides a socket.io
-javascript client, it can be downloaded from your app through URL:  
-http://<your app's url>/socket.io/socket.io.js  
-All websocket files reside in "websockets" folder with '.js' extension. There
+
+Node.ACS uses socket.io internally as the websocket server, the communication
+between server and client is through event emitting. The client could be
+any standard socket.io client. The Node.ACS server also provides a socket.io
+JavaScript client, it can be downloaded from your app through the following URL:
+`http://<your app's url>/socket.io/socket.io.js`:
+
+All websocket files reside in `websockets` folder with '.js' extension. There
 could be any number of websocket files in an application, and could be any
 number functions(event handlers) in a websocket file.
 
+Since Node.ACS 1.0.11, you can use the socket.io instance directly in your controllers and filters
+rather than using `websockets`. In the `start` function of the `app.js` file,
+you need to assign the `io` object as a property of the `app` object, for example, `app.io = io`.
+This allows the controller or filter to access the `io` object with the `req` parameters, for example,
+`req.app.io`. Use this passed `io` object to make socket.io API calls.
+
+**Note:** If there is not a handler defined in the `websockets` array of the `config.json` file, the
+framework will not listen to connections on `/`.
+
+
 ### Logs
 
-All log files are placed in the "logs" folder, the log file's name is defined
-by the "logfile" field in `config.json`, if it is not configured, the log file
+All log files are placed in the `logs` folder, the log file's name is defined
+by the `logfile` field in `config.json`, if it is not configured, the log file
 name will be the project's name.
 
 ### Public
 
-All application's static files are placed in the "public" folder, it usually
+All application static files are placed in the `public` folder, it usually
 contains stylesheets, image assets and script files.
 
 ### View
 
-All application's view files are placed in the "views" folder, the Node.ACS
-MVC framework uses "ejs" as view engine by default. Other view engines can be
-set through the "start" function in the main script file.
+All application view files are placed in the `views` folder, the Node.ACS
+MVC framework uses Embedded JavaScript (EJS) as the view engine by default.
+Other view engines can be set through the `start` function in the main script file.
 
 ## Add a New Controller (Route)
 
@@ -285,12 +322,15 @@ One of the most common features of web applications are to define the URL
 routing and handler (controller). With the Node.ACS MVC framework, you can
 easily do this by following the instructions above. Node.ACS also provides a
 utility CLI command that can help you to quickly generate a code stub of route
-and controller. See the [**acs add**](#!/guide/cli/add) command for more details.
+and controller. See the [**acs add**](#!/guide/node_cli_add) command for more details.
 
 ## For More Information
 
-*   See the [Express web site](http://expressjs.com) for guides and API reference
+  * See the [Express web site](http://expressjs.com) for guides and API reference
     documentation for the Express web application framework.
 
-*   See the [socket.io web site](http://socket.io) for more information on using
+  * See the [socket.io web site](http://socket.io) for more information on using
     socket.io websockets.
+
+  * See the [Multi-Chat Room sample](#!/guide/node_samples_multichatroom) for another MVC example
+    that demonstrates how to use socket.io for handling web socket events.

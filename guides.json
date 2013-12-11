@@ -280,6 +280,12 @@
                         "title": "Accessing a MongoDB Database from Node.ACS",
                         "url": "guides/node/samples/mongohq",
                         "description": "Accessing a MongoDB Database from Node.ACS"
+		    },
+		    {
+			"name": "node_samples_multichatroom",
+			"title": "Multi-Chat Room Sample",
+			"url": "guides/node/samples/multichatroom",
+			"description": "Multi-Chat Room Sample"
                     }
                ]
             },
