@@ -12,7 +12,7 @@ def copy_node_html(node, basedir, destdir):
 	filename = node.getAttribute('href')
 	outpath = os.path.join(destdir, filename)
 	if os.path.exists(outpath):
-		print "ERROR: copy_node_html: Duplicate filename: %s" % filename
+		print "Warning: copy_node_html: Overwriting file: %s" % filename
 		return
 	shutil.copyfile(os.path.join(basedir, filename), outpath)
 	for child_node in node.childNodes:
