@@ -110,9 +110,20 @@ description: |
     You can also use the {@link Users#logout} method to unsubscribe from all push notifications by
     specifying the `device_id` parameter.
 
+    ### Scheduling Push Notifications
+
+    <p class="note">This feature is only available for Enterprise users, and the current user must be an
+    application admin to use this API.</p>
+
+    You can send push notifications to users at specific times, over a span of time; or at daily,
+    weekly, or monthly intervals.
+
+    For more information, refer to the {@link PushSchedules} API.
+
     ### Location-Based Push Notifications
 
-    Only available for Enterprise users.
+    <p class="note">This feature is only available for Enterprise users, and the current user must be an
+    application admin to use this API.</p>
 
     You can send push notifications to users based on their location.  To use location-based push
     notifications, the ACS server needs to know the location of the device.  To update the device's

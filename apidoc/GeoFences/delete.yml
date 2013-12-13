@@ -1,0 +1,41 @@
+name: GeoFences
+methods:
+  - name: delete
+    summary: Deletes a Geofence
+    description: |
+        Deletes an existing geo-fence object.
+
+        Available only for Enterprise administrators. 
+    url: geo_fences/delete.json
+    http-method: DELETE
+    login-required: true
+    admin-required: true
+
+    parameters: 
+
+      - name: id
+        description: ID of the geo-fence object to delete.
+        type: String
+        required: true
+
+    examples:
+      - platform: titanium
+        example: |
+            This API is not yet supported in the `ti.cloud` module.
+    
+      - platform: rest
+        example: |
+            Example cURL request:
+
+                $ curl  -b cookies.txt -c cookies.txt -X DELETE -F 'id=52aa2da0d7de142e0e000040' "http://api.cloud.appcelerator.com/v1/geo_fences/delete.json?key=<API_KEY>"
+
+            Example cURL response:
+
+                {
+                  "meta": {
+                    "code": 200,
+                    "status": "ok",
+                    "method_name": "destroyGeoFence"
+                  }
+                }
+

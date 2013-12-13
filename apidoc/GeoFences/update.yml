@@ -1,0 +1,78 @@
+name: GeoFences
+methods:
+  - name: update
+    summary: Updates a Geofence
+    description: |
+        Updates an existing geo-fence object.
+
+        Available only for Enterprise administrators. 
+    url: geo_fences/update.json
+    http-method: POST
+    login-required: true
+    admin-required: true
+
+    parameters: 
+
+      - name: id
+        description: ID of the geo-fence object to update.
+        type: String
+        required: true
+
+      - name: geo_fence
+        description: |
+            JSON object describing the geographic perimeter, data payload, and start and end time
+            for the geo-fence object.  Specify the following propertes:
+
+              * `loc` (Hash): **Required.** Geographic perimeter.  See {@link GeoFences#loc}.
+              * `payload` (Hash/String): Data to retrieve if a device intersects the geographic
+                perimeter.
+              * `start_time` (Date): Datetime to start the geo-fence.
+              * `end_time` (Date): Datetime to end the geo-fence.
+             
+        type: Hash
+
+    response-parameters:
+      - name: geo_fences
+        description: |
+            Single-element array containing the updated geo-fence object.
+        type: Array<GeoFences>
+
+    examples:
+      - platform: titanium
+        example: |
+            This API is not yet supported in the `ti.cloud` module.
+    
+      - platform: rest
+        example: |
+            Example cURL request:
+
+                $ curl  -b cookies.txt -c cookies.txt -X PUT -F 'id=52aa2da0d7de142e0e000040' -F 'geo_fence={"loc":{"places":["52aa310765fe160b3f000042","52aa3116043cc70b48000035","52aa312465fe160b3f000044"]}}' "http://api.cloud.appcelerator.com/v1/geo_fences/update.json?key=<API_KEY>"
+
+            Example JSON response:
+
+                {
+                  "meta": {
+                    "code": 200,
+                    "status": "ok",
+                    "method_name": "updateGeoFence"
+                  },
+                  "response": {
+                    "geo_fences": [
+                      {
+                        "id": "52aa2da0d7de142e0e000040",
+                        "start_time": "2013-12-25T00:00:00.000Z",
+                        "end_time": "2013-12-26T19:00:00.000Z",
+                        "loc": {
+                          "places": [
+                            "52aa310765fe160b3f000042",
+                            "52aa3116043cc70b48000035",
+                            "52aa312465fe160b3f000044"
+                          ]
+                        },
+                        "payload": "24-hour sale at our SF flagship store on 12/26!",
+                        "created_at": "2013-12-12T21:41:52.000Z",
+                        "updated_at": "2013-12-12T22:01:18.000Z"
+                      }
+                    ]
+                  }
+                }

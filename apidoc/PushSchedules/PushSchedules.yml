@@ -1,7 +1,7 @@
 name: PushSchedules
 description: |
-    This feature is only available for Enterprise users, and the current user must be an
-    application admin to use this API. 
+    <p class="note">This feature is only available for Enterprise users, and the current user must
+    be an application admin to use this API.</p>
 
     The Push Schedule API lets you send scheduled push notifications to your users who are on iOS and
     Android Devices. You can also send a scheduled push notification to all users from the Appcelerator

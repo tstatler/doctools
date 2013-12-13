@@ -1,0 +1,97 @@
+name: GeoFences
+methods:
+  - name: query
+    summary: Custom Query of Geofences
+    description: |
+        Perform custom query of geofences with sorting and paginating.
+
+        Available only for Enterprise administrators.
+
+        For details about using the query parameters,
+        see the [Search and Query guide](#!/guide/search_query).
+
+    url: geo_fences/query.json
+
+    parameters:
+      - name: page  
+        description: Request page number, default is 1.
+        type: Number
+      
+      - name: per_page
+        description: Number of results per page, default is 10.
+        type: Number
+
+      - name: limit
+        description: |
+            Instead of using `page` and `per_page` for pagination, you can use `limit` and
+            `skip` to do your own pagination. `limit` is the maximum number of records to
+            fetch. `limit` cannot be greater than 1000.
+        type: Number
+
+      - name: skip
+        description: |
+            Number of records to skip. Must be used together with `limit`.
+        type: Number
+
+      - name: where
+        description: |
+            A JSON-encoded object that defines the query used.
+
+            The following fields can be used for the query:
+
+              * {@link GeoFences#start_time}
+              * {@link GeoFences#end_time}
+              * `loc` : For this property, specify a
+                [MongoDB Geospatial Query](http://docs.mongodb.org/manual/reference/operator/query-geospatial/).
+            
+            If `where` is not specified, `query` returns all objects.
+        type: Hash
+
+    response-parameters:
+      - name: geo_fences
+        description: List of geo-fence objects matching the query parameters.
+        type: Array<GeoFences>
+
+    examples:
+      - platform: titanium
+        example: |
+    
+      - platform: rest
+        example: |
+            This example searches for geo-fences within 2 km of Oakland, CA, USA:
+
+                curl -b cookies.txt -c cookies.txt -X GET -F 'where={"loc": { "$nearSphere" : { "$geometry" : { "type" : "Point" , "coordinates" : [-122.2708,37.8044] } , "$maxDistance" : 2000 }}}' "http://api.cloud.appcelerator.com/v1/geo_fences/query.json?key=<API_KEY>"
+
+            Example JSON response:
+
+                {
+                  "meta": {
+                    "code": 200,
+                    "status": "ok",
+                    "method_name": "queryGeoFence",
+                    "page": 1,
+                    "per_page": 10,
+                    "total_pages": 1,
+                    "total_results": 1
+                  },
+                  "response": {
+                    "geo_fences": [
+                      {
+                        "id": "52aa2ebbd7de142e0e000041",
+                        "start_time": "2013-12-25T00:00:00+0000",
+                        "end_time": "2013-12-26T19:00:00+0000",
+                        "loc": {
+                          "radius": "10/3959",
+                          "coordinates": [
+                            -122.4167,
+                            37.7833
+                          ]
+                        },
+                        "payload": "24-hour sale at our SF flagship store on 12/26!",
+                        "created_at": "2013-12-12T21:46:35+0000",
+                        "updated_at": "2013-12-12T22:41:38+0000"
+                      }
+                    ]
+                  }
+                }
+            
