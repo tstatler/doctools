@@ -46,6 +46,7 @@
                  "name": "Miscellaneous",
                  "classes": [
                     "Clients",
+                    "GeoFences",
                     "Likes"
                  ]
              }

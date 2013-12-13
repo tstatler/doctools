@@ -109,3 +109,23 @@ description: |
 
     You can also use the {@link Users#logout} method to unsubscribe from all push notifications by
     specifying the `device_id` parameter.
+
+    ### Location-Based Push Notifications
+
+    Only available for Enterprise users.
+
+    You can send push notifications to users based on their location.  To use location-based push
+    notifications, the ACS server needs to know the location of the device.  To update the device's
+    location, you need to periodically call the {@link PushNotifications#subscription_update} method and specify
+    the `loc` parameter to update the device's location.
+
+    To send a location-based push notification, use either the {@link PushNotifications#notify} or
+    {@link PushNotifications#notify_tokens} method and specify a location query with the `where`
+    parameter.  For example, the following cURL command, sends a push notification to any device within
+    10 miles of Mountain View, CA, USA:
+
+        $ curl -b cookies.txt -c cookies.txt -X POST --data-urlencode 'payload=Come visit our brand new Mountain View location!' "https://api.cloud.appcelerator.com/v1/push_notification/notify.json?key=<API_KEY>" --data-urlencode 'where={"loc":{"$geoWithin":{"$centerSphere":[[-122.0507049560547,37.38685989379883] , 0.00252589 ]}}}'
+
+    You can use the {@link GeoFences} API to have the device periodically check the ACS server for
+    data based on location instead of having the server push it to the device.
+
