@@ -46,10 +46,10 @@ of Node.js to use. For example, to specify to use version 0.10.22 or greater:
 
 Currently, the supported versions are 0.8.26 and 0.10.22.
 
-If this field is undefined when you publish your application, the latest installed node version is
+If this field is undefined when you publish your application, the latest supported Node.js version is
 used.
 
-If this field is undefined when you republish your application and the latest installed node version
+If this field is undefined when you republish your application and the latest supported Node.js version
 changed on the ACS servers, you will receive an error message when trying to publish your application.
 You must set the Node.js version to republish your application.
 
