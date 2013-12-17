@@ -46,7 +46,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl  -b cookies.txt -c cookies.txt -X PUT -F 'id=52aa2da0d7de142e0e000040' -F 'geo_fence={"loc":{"places":["52aa310765fe160b3f000042","52aa3116043cc70b48000035","52aa312465fe160b3f000044"]}}' "http://api.cloud.appcelerator.com/v1/geo_fences/update.json?key=<API_KEY>"
+                $ curl  -b cookies.txt -c cookies.txt -X PUT -F 'id=52aa2da0d7de142e0e000040' -F 'geo_fence={"loc":{"place_id":"52aa310765fe160b3f000042","radius":"2/6371"}}' "http://api.cloud.appcelerator.com/v1/geo_fences/update.json?key=<API_KEY>"
 
             Example JSON response:
 
@@ -63,11 +63,8 @@ methods:
                         "start_time": "2013-12-25T00:00:00.000Z",
                         "end_time": "2013-12-26T19:00:00.000Z",
                         "loc": {
-                          "places": [
-                            "52aa310765fe160b3f000042",
-                            "52aa3116043cc70b48000035",
-                            "52aa312465fe160b3f000044"
-                          ]
+                          "place_id": "52aa310765fe160b3f000042",
+                          "radius": "2/6378"
                         },
                         "payload": "24-hour sale at our SF flagship store on 12/26!",
                         "created_at": "2013-12-12T21:41:52.000Z",

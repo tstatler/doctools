@@ -16,6 +16,10 @@ description: |
     Coordinates are specified as arrays with the longitude as the first element and latitude as the
     second element, that is, `[longitude,latitude]`.
 
+    Distance is specified in radians. To calculate the distance in radians,
+    divide the distance you want by the approximate circumference of the Earth in the same
+    units. For example, 10 miles is 10 / 3959 or 2 kilometers is 2 / 6371.
+
     ## Getting Started
 
     To use the GeoFences API, create geo-fence objects with data to download, then have the device
@@ -44,20 +48,16 @@ fields:
 
   - name: loc
     description: |
-        Geographic perimeter of the geo-fence, specified with the one of the following properties.
-        The`radius` property requires a center point as a place or coordinate:
+        JSON-encode object describing the geographic perimeter of the geo-fence, specified as a circle with
+        a center point of either `place_id` or `coordinate` property and the `radius` property:
 
-          * `places` (Array<{@link Places}>): Use ACS Place objects as the bounding coordinates for the
-            perimeter. Specify an array of Place IDs.  Specify at least three Places.
-          * `coordinates` (Array<[long,lat]>): Bounding coordinates for the perimeter.  Specify a
-            point as `[longitude,latitude]`.  Specify at least three points.
+          * `place_id` (String): Use an ACS {@link Places} object as the center of the circle. Specify the
+            ID of the Place.
+          * `coordinates` (Array<Number>): Center coordinate of the circle.  Specify a point as `[longitude,latitude]`.
           * `radius` (Number/String): Radius of the bounding circle in radians. To calculate the distance in radians,
             divide the distance you want by the approximate circumference of the Earth in the same
             units. For example, 10 miles is 10 / 3959 or 2 kilometers is 2 / 6371.  Specify the
             fraction as a string, for example, `"10/3959"` or `"2/6371"`.
-            To specify a center point of the circle, set the `coordinates` property to a
-            one-element array with a single point or the `places` property to a
-            one-element array with a single ACS Place object ID.
 
     type: Hash
 
@@ -67,9 +67,9 @@ fields:
     type: Hash/String
     
   - name: created_at
-    description: Date when the geofence was created.
+    description: Date when the geo-fence was created.
     type: Date
 
   - name: update_at
-    description: Date when the geofence was updated.
+    description: Date when the geo-fence was updated.
     type: Date
