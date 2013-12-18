@@ -35,6 +35,23 @@ In this case, `/app.js` is first file loaded and run by Node.ACS when the
 "run" command is executed to start the app locally, or when running the app in
 the cloud.
 
+## Node.js Engine
+
+You can specify which version of Node.js to run your application on.  Use the `engines` field in
+`package.json` to specify engine versions.  To specify the Node.js version, set the `node` key in
+the `engines` dictionary to either a version or [version range](https://github.com/isaacs/node-semver)
+of Node.js to use. For example, to specify to use version 0.10.22 or greater:
+
+    "engines" : { "node": ">=0.10.22" }
+
+If this field is undefined when you publish your application, the latest supported Node.js version is
+used.  The current supported version is 0.10.22.
+
+If this field is undefined when you republish your application and the latest supported Node.js version
+changed on the ACS servers, you will receive an error message when trying to publish your application.
+You must set the Node.js version to republish your application.
+
+
 ## Module Dependencies
 
 The application can import any 3rd-party modules that are supported by
