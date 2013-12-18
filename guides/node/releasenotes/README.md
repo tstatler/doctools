@@ -2,15 +2,15 @@
 
 ## 18 Decemeber 2013 -- version 1.0.11
 
-Add support to run Node.ACS applications on different versions of Node.js.
-Currently, you can either use version 0.8.26 or 0.10.22.
+Upgrade Node.js version to 0.10.22.  New applications will run on Node.js v0.10.22.  Existing
+applications will run on v0.8.26.
 
-If you republish your current application, you will need to set the `engines` field,
-which is a dictionary of key-value pairs, in the `package.json` file.  Set the `node` key
-in the dictionary to the version or version range you want to run your application on.
-For example, to continue to use version 0.8.26, add the following to your `package.json` file:
+If you republish your current application, running v0.8.26, you need to upgrade your application to use
+v0.10.22 by modifying your `packagage.json` file. Set the `engines` field,
+which is a dictionary of key-value pairs, with a `node` key and it value as `0.10.22`.
+For example, add the following to your `package.json` file:
 
-    "engines": {"node": "0.8.26"}
+    "engines": {"node": "0.10.22"}
 
 For more details, see the "Node.js Engine" section in
 [Standard Node.js Applications](http://docs.appcelerator.com/cloud/latest/#!/guide/node_standard).
