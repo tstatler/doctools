@@ -9,12 +9,14 @@
 <p>The ACS Android SDK works in any Android development environment. The following steps assume you are
 using Eclipse.</p>
 
+<p>The first step is to clone the ACS Android SDK from GitHub.</p>
+
 <p>
 <strong>Clone the ACS Android SDK</strong>:
 <pre class="prettyprint">git clone git@github.com:appcelerator/acs-android-sdk.git</pre>
 </p>
 
-<p>The next step is to create a new project in Eclipse for the ACS SDK.</p>
+<p>Next, you'll create a new project in Eclipse for the ACS SDK.</p>
 
 <p><strong>Create a new project for the ACS SDK</strong>:
 <ol>
@@ -645,8 +647,6 @@ sdk = new ACSClient(APP_ID, appContext);</pre>
 
 <strong>Run the application:</strong>
 
-<p></p>
-
 <ol>
   <li>Create an appropriate Android virtual device (AVD):
     <ul>
@@ -657,33 +657,16 @@ sdk = new ACSClient(APP_ID, appContext);</pre>
     </ul>
   </li>
   <li>In Eclipse, create a <a href="http://developer.android.com/tools/building/building-eclipse.html#RunConfig">Android run configuration</a>
-    that targets the AVD you just created:
-    <ul>
-      <li>Select <strong>Run > Run Configurations...</strong>.</li>
-      <li>Create a new Android Application run configuration for the project.</li>
-      <li></li>
-    </ul>
+    that targets the AVD you created.
   </li>
+  <li>Launch the run configuration to run the application in the simulator.</li>
 </ol>
-
-
- -> Virtual devices -> new -> input name and select Google APIs - API Level 13 -> Create AVD"<br />
-
-
-2. Create an Android AVD:<br />
-Open "Android SDK & AVD Manager -> Virtual devices -> new -> input name and select Google APIs - API Level 13 -> Create AVD"<br />
-3. Android Configuration:<br />
-"File -> Properties -> Android -> Project Build Target", select "Google APIs API Level 13" -> apply <br />
-"Run -> Run Configurations... -> Android Application (right click) -> new -> Project Browse -> cocoafish-android-example -> Target -> select an AVD", then apply the changes.<br />
-4. Set up the Google Map API debuging key<br />
-See <a href="https://code.google.com/intl/zh-CN/android/add-ons/google-apis/mapkey.html" target="_blank">http://code.google.com/intl/zh-CN/android/add-ons/google-apis/mapkey.html</a> and follow the steps to get a google map debuging api key.
-open file "examples/Demo/res/layout/main.xml" with a text editor, update the line 12 [android:apiKey="01JhK0bOMyGs-xmcTAL3B1h6J7F8_RiSpUoYkbA"] with your new key.
-<p>Then build the project, start the AVD and run the app.<br /><br />
-
 
 <h2>3-Legged OAuth process</h2>
 
-Since 2.1.1, Android SDK supports interactions with Authorization Server. It provides APIs for Android application developers to sign in/sign up/sign out users with Authorization Server. For signing-in and signing-up the SDK uses a webview to load pages from Authorization Server.
+<p>Android SDK 2.1.1 and later supports interactions with Authorization Server. It provides APIs for
+Android application developers to sign in/sign up/sign out users with Authorization Server. For
+signing-in and signing-up the SDK uses a webview to load pages from Authorization Server.</p>
 
 <h3>1. Create a ACSClient object</h3>
 
