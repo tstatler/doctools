@@ -1,5 +1,9 @@
 # ACS Release Notes
 
+## 18 December 2013
+
+  * Fixed a JSON parsing error with the Messages API.
+
 ## 6 December 2013
 
 This update includes the following bug fixes and enhancements:
