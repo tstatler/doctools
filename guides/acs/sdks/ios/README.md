@@ -16,7 +16,7 @@ an example of storing and retrieving data with the SDK.
         ASIHTTPRequest
         FBConnect
 
-    {@img ios1.png}
+    {@img addfiles.png}
 
     You can choose to use your own copy of `ASIHTTPRequest` (v1.8 or above) and
     `FBConnect` from facebook-ios-sdk (updated on or after Jan 31, 2011). The only
@@ -66,8 +66,6 @@ an example of storing and retrieving data with the SDK.
     is also availabe from the following github repo:
 
     <https://github.com/gabriel/yajl-objc>
-
-    {@img addfiles.png}
 
 3.  Under Other Linker Flags in your target, add:
 
