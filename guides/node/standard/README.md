@@ -44,8 +44,6 @@ of Node.js to use. For example, to specify to use version 0.10.22 or greater:
 
     "engines" : { "node": ">=0.10.22" }
 
-Currently, the supported versions are 0.8.26 and 0.10.22.
-
 If this field is undefined when you publish your application, the latest supported Node.js version is
 used.
 
