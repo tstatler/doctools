@@ -544,7 +544,7 @@ protected void showNotification(Context context, JSONObject payload, int notific
 // Create a File instance
 File file = new File("/photos/profile.gif");
 // Upload the image file by calling <code>sendRequest</code>:
-Cocoafish sdk = new Cocoafish('vw1G7wq6KTKd52m76XwjvoiIhxeHxeXG');
+ACSClient sdk = new ACSClient('vw1G7wq6KTKd52m76XwjvoiIhxeHxeXG');
 Map&lt;String, Object&gt; data = new HashMap&lt;String, Object&gt;();
 data.put("photo", file);
 sdk.sendRequest("photos/create.json", CCRequestMethod.POST, data, false);
@@ -609,9 +609,8 @@ if("ok".equals(meta.getStatus())
 
 <h2>Run the ACS Demo sample application</h2>
 
-<p>Below are instructions for creating and running the <a href="https://github.com/cocoafish
-/cocoafish-android-sdk/tree/master/examples/Demo">Demo sample</a> using Eclipse. The sample
-application uses the Google Maps v2 API to display location data. To build the application you will need to install <a
+<p>Below are instructions for creating and running the <a href="https://github.com/appcelerator/acs-android-sdk/tree/master/examples/Demo">Demo sample</a> using Eclipse.
+  The sample application uses the Google Maps v2 API to display location data. To build the application you will need to install <a
 href="http://developer.android.com/google/play-services/setup.html">Google Play services</a> and add
 it to your project as a library. You'll also need to <a href="https://developers.google.com/maps/documentation/android/start#obtain_a_google_maps_api_key">generate an API key</a>
 for the Google Maps Android API v2 service.</p>
@@ -673,12 +672,12 @@ signing-in and signing-up the SDK uses a webview to load pages from Authorizatio
 <p>To create a ACSClient object use one of the following constructors:</p>
 
 <pre class="prettyprint">
-Cocoafish sdk = new Cocoafish(appConsumerKey);
-Cocoafish sdk = new Cocoafish(appConsumerKey, appContext);
-Cocoafish sdk = new Cocoafish(appConsumerKey, appContext, APIhost);
-Cocoafish sdk = new Cocoafish(appConsumerKey, appConsumerSecret);
-Cocoafish sdk = new Cocoafish(appConsumerKey, appConsumerSecret, appContext);
-Cocoafish sdk = new Cocoafish(appConsumerKey, appConsumerSecret, appContext, APIhost);
+ACSClient sdk = new ACSClient(appConsumerKey);
+ACSClient sdk = new ACSClient(appConsumerKey, appContext);
+ACSClient sdk = new ACSClient(appConsumerKey, appContext, APIhost);
+ACSClient sdk = new ACSClient(appConsumerKey, appConsumerSecret);
+ACSClient sdk = new ACSClient(appConsumerKey, appConsumerSecret, appContext);
+ACSClient sdk = new ACSClient(appConsumerKey, appConsumerSecret, appContext, APIhost);
 </pre>
 If <i>appConsumerSecret</i> is not passed in the SDK will fail to sign requests. <i>appContext</i> is an android.content.Context object. <i>APIhost</i> is used to specify the ACS API server. The default is api.cloud.appcelerator.com/v1/.
 
@@ -703,7 +702,7 @@ sdk.authorize(Activity activity, String action, final DialogListener listener);
 sdk.authorize(Activity activity, String action, final DialogListener listener, boolean useSecure);
 </pre>
 <b>activity</b>: (android.app.Activity) The Android activity relevant.<br/>
-<b>action</b>: (String) Should be <i>Cocoafish.ACTION_LOGIN</i>.<br/>
+<b>action</b>: (String) Should be <i>ACSClient.ACTION_LOGIN</i>.<br/>
 <b>useSecure</b>: (Boolean) Specify if HTTPS should be used for sending request. If not specified default to false.<br/>
 <b>listener</b>: (com.appcelerator.cloud.sdk.oauth2.DialogListener) The listener object is used to provide various callbacks to the signing-in process. Please refer to the Listener for more detail. The most significant callback method is <i>onComplete(Bundle values)</i> where you can get token information by calling the following methods and save them as you want.
 
@@ -714,7 +713,7 @@ sdk.getAccessExpires();
 <p>The following code from the demo application shows a call to this method.</p>
 
 <pre class="prettyprint">
-sdk.authorize(UserView.this, Cocoafish.ACTION_LOGIN, new LoginDialogListener(), false);
+sdk.authorize(UserView.this, ACSClient.ACTION_LOGIN, new LoginDialogListener(), false);
 </pre>
 <h3>4. Sign up</h3>
 <p>Use one of the following methods to sign an user up.</p>
@@ -724,7 +723,7 @@ sdk.authorize(Activity activity, String action, final DialogListener listener);
 sdk.authorize(Activity activity, String action, final DialogListener listener, boolean useSecure);
 </pre>
 <b>activity</b>: (android.app.Activity) The Android activity relevant.<br/>
-<b>action</b>: (String) Should be <i>Cocoafish.ACTION_SINGUP</i>.<br/>
+<b>action</b>: (String) Should be <i>ACSClient.ACTION_SINGUP</i>.<br/>
 <b>useSecure</b>: (Boolean) Specify if HTTPS should be used for sending request. If not specified default to false.<br/>
 <b>listener</b>: (com.appcelerator.cloud.sdk.oauth2.DialogListener) The listener object is used to provide various callbacks to the signing-up process. Please refer to the Listenr class for more detail. The most significant callback method is <i>onComplete(Bundle values)</i> where you can get token information by calling the following methods and save them as you want.
 
@@ -735,7 +734,7 @@ sdk.getAccessExpires();
 <p>The following code from the demo application shows a call to this method.</p>
 
 <pre class="prettyprint">
-sdk.authorize(UserView.this, Cocoafish.ACTION_SINGUP, new LoginDialogListener());
+sdk.authorize(UserView.this, ACSClient.ACTION_SINGUP, new LoginDialogListener());
 </pre>
 <h3>5. Sign out</h3>
 <p>Signing-out should be done the same way as before. That is calling sdk.sendRequest to send a request to <i>users/logout.json</i>.
@@ -768,7 +767,7 @@ public class MyDlgCustomizer implements DlgCustomizer {
     }
 
     public TextView setUpTitle(Context context) {
-        Drawable icon = context.getResources().getDrawable(R.drawable.cocoafish_icon);
+        Drawable icon = context.getResources().getDrawable(R.drawable.application_icon);
         TextView title = new TextView(context);
         title.setText("ACS - To be customized");
         title.setTextColor(Color.WHITE);
