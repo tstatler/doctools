@@ -7,23 +7,23 @@ methods:
     description: |
         Create an event. Times given with time zones other than UTC (for example PST
         during daylight savings is -0700) will be converted to UTC. An ical string
-        will be returned to represent the occurrences of the event.  
-          
+        will be returned to represent the occurrences of the event.
+
         For the event that is set as a recurring event, once created, there will be
         several "event occurrences" created associating with the event object on
         server side, one "event occurrence" represents a single occurrence of the
         recurring event. An "event occurrence" contains start and end time of the
         event's occurrence which are calculated according to the "recurring" settings
-        of the event object.  
-        
+        of the event object.
+
         Instead of computing actual individual occurrences of a recurring event on the
         client side, you can use event occurrences query api to get a list of
-        occurrences associated of a repeating event.  
-        
+        occurrences associated of a repeating event.
+
         To get all occurrences for a recurring event object, you can call {@link Events#show_occurrences}
-        event occurrence](/docs/api/v1/events/show_occurrences) and pass in the 
+        event occurrence](/docs/api/v1/events/show_occurrences) and pass in the
         event's `id`.
-        
+
     url: events/create.json
     http-method: POST
     login-required: true
@@ -33,24 +33,24 @@ methods:
         description: Event name.
         type: String
         required: true
-      
+
       - name: start_time
         description: Event start time.
         type: Date
         required: true
-    
+
       - name: details
         description: Description of the event.
         type: String
-        
+
       - name: duration
         description: Event duration, in seconds.
         type: Number
-    
+
       - name: ical
         description: Event time and recurrance in iCalendar (RFC 5545) format.
         type: String
-    
+
       - name: recurring
         description: |
             Recurrance schedule. Can take the following values: "daily", "weekly", "monthly", or "yearly".
@@ -59,31 +59,31 @@ methods:
             number of occurances. The total number of occurrences of an event in either
             case is limited to 1000.
         type: String
-    
+
       - name: recurring_count
-        description: Number of occurrences for the event. 
+        description: Number of occurrences for the event.
         type: Number
-    
+
       - name: recurring_until
-        description: Date of last recurrance. 
+        description: Date of last recurrance.
         type: Date
-    
+
       - name: user
         description: Event owner.
         type: Users
-    
+
       - name: place_id
         description: ID for the {@link Places} where the event takes place.
         type: String
 
-      - name: photo 
+      - name: photo
         description: |
             New photo to attach as the primary photo for the event.
-    
-            When you use the `photo` parameter to attach a new photo, you can use the 
+
+            When you use the `photo` parameter to attach a new photo, you can use the
             [custom resize and sync options](#!/guide/photosizes).
         type: Photos
-      
+
       - name: photo_id
         description: |
             ID of an existing photo to attach as the primary photo for the event.
@@ -135,7 +135,7 @@ methods:
       - platform: titanium
         example: |
             This example creates a new event and checks the response.
-            
+
                 Cloud.Events.create({
                     name: 'Celebration',
                     start_time: starttime,
@@ -154,15 +154,15 @@ methods:
                             ((e.error && e.message) || JSON.stringify(e)));
                     }
                 });
-      
+
       - platform: rest
         example: |
             Example cURL request:
-            
+
                 $ curl -b cookies.txt -c cookies.txt -F "name=Appcelerator Meetup Group" -F "photo=@photo.jpg" -F "place_id=4d7e62d6d0afbe04170000a4" -F "start_time=2011-03-22T20:59:50+0000" -F "duration=3600" https://api.cloud.appcelerator.com/v1/events/create.json?key=<YOUR APP APP KEY>
-                
+
             Example JSON response:
-            
+
                 {
                   "meta": {
                     "status":"ok",
@@ -215,13 +215,13 @@ methods:
                         }
                       }
                     ]
-                  }	
+                  }
                 }
-                
+
       - platform: ios
         example: |
             Example iOS call:
-            
+
                 NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
                 [paramDict setObject:@"Appcelerator Happy Hour" forKey:@"name"];
                 [paramDict setObject:[NSDate date] forKey:@"start_time"];
@@ -231,9 +231,9 @@ methods:
                 [request addPhotoUIImage:image paramDict:nil];
                 [request startAsynchronous];
                 [request release];
-                
+
             SDK Callback:
-            
+
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
                 	if ([response.meta.method isEqualToString:@"createEvent"]) {
@@ -244,36 +244,36 @@ methods:
                 		}
                 	}
                 }
-                
+
       - platform: android
         example: |
             Example Android call:
-            
-                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 Map<String, Object> data = new HashMap<String, Object>();
                 data.put("start_time", "2011-03-22T20:59:50+0000");
                 data.put("duration", "3600");
                 data.put("name", "Appcelerator Meetup Group");
                 data.put("place_id", "4d7e62d6d0afbe04170000a4");
                 CCResponse response = sdk.sendRequest("events/create.json", CCRequestMethod.POST, data);
-                
+
             SDK Callback:
-            
+
                 JSONObject responseJSON = response.getResponseData();
                 CCMeta meta = response.getMeta();
-                if("ok".equals(meta.getStatus()) 
-                    && meta.getCode() == 200 
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
                     && "createEvent".equals(meta.getMethod())) {
                   JSONArray events = responseJSON.getJSONArray("events");
                   ...
                 }
-                
+
       - platform: javascript
         example: |
             Example Javascript call:
-            
+
                 var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
                 var data = {
                   start_time: '2011-03-22T20:59:50+0000',
@@ -282,9 +282,9 @@ methods:
                   place_id: '4d7e62d6d0afbe04170000a4'
                 };
                 sdk.sendRequest('events/create.json', 'POST', data, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data) {
                   if(data) {
                     if(data.meta) {
@@ -296,23 +296,23 @@ methods:
                     }
                   }
                 }
-                
+
       - platform: actionscript
         example: |
             Example Actionscript call:
-            
+
                 var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
                 //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
                 var data:Object = new Object();
                 data.start_time = "2011-03-22T20:59:50+0000";
                 data.duration="3600";
                 data.name = "Appcelerator Meetup Group";
                 data.place_id="4d7e62d6d0afbe04170000a4";
                 sdk.sendRequest("events/create.json", URLRequestMethod.POST, data, false, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data:Object):void {
                   if(data) {
                     if(data.hasOwnProperty("meta")) {
@@ -324,4 +324,4 @@ methods:
                     }
                   }
                 }
-                
+

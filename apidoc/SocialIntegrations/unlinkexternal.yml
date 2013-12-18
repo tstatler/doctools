@@ -9,10 +9,10 @@ methods:
     http-method: DELETE
     login-required: true
 
-    parameters: 
+    parameters:
       - name: id
         description: |
-            External account's user ID. 
+            External account's user ID.
         type: String
         required: True
 
@@ -24,7 +24,7 @@ methods:
         required: True
 
 
-    response-parameters: 
+    response-parameters:
       - name: users
         description: |
             Single-element array containing the updated user record.
@@ -34,7 +34,7 @@ methods:
       - platform: titanium
         example: |
             This example unlinks an external Facebook account.
-            
+
                 Cloud.SocialIntegrations.externalAccountLink({
                     type: 'facebook',
                     id: facebookUserId
@@ -50,15 +50,15 @@ methods:
                             ((e.error && e.message) || JSON.stringify(e)));
                     }
                 });
-    
+
       - platform: rest
         example: |
             Example cURL request:
-            
+
                 $ curl -b cookies.txt -c cookies.txt -X DELETE "https://api.cloud.appcelerator.com/v1/users/external_account_unlink.json?key=<YOUR APP APP KEY>&id;=1234567&type=facebook"
-                
+
             Example JSON response:
-            
+
                 {
                   "meta": {
                     "status":"ok",
@@ -77,75 +77,75 @@ methods:
                         ]
                       }
                     ]
-                  }	
+                  }
                 }
-                
+
                 For Facebook:
-                
+
                 NSError *error;
-                [[Cocoafish defaultCocoafish] unlinkFromFacebook:&error;];
-                
+                [[ACSClient defaultACSClient] unlinkFromFacebook:&error;];
+
             This is a synchronous call and doesn't have a callback method.
-            
+
             For other types of external account, you need to perform the
             external_account_unlink call.
-            
+
       - platform: ios
         example: |
             Example iOS call:
-            
+
                 NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
                 [paramDict setObject:@"1234567" forKey:@"id"];
                 [paramDict setObject:@"twitter" forKey:@"type"];
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"DELETE" baseUrl:@"users/external_account_unlink.json" paramDict:paramDict];
                 [request startAsynchronous];
                 [request release];
-                
+
             SDK Callback:
-            
+
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
                 	if (response.meta.status == 200 && response.meta.method == "unlinkExternalAccount") {
                 		// success
                 	}
                 }
-                
+
       - platform: android
         example: |
             Example Android call:
-            
-                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 data = new HashMap<String, Object>();
                 data.put("id", "109216395704353");
                 data.put("type", "facebook");
                 CCResponse response = sdk.sendRequest("social/facebook/unlink.json", CCRequestMethod.DELETE, data);
-                
+
             SDK Callback:
-            
+
                 JSONObject responseJSON = response.getResponseData();
                 CCMeta meta = response.getMeta();
-                if("ok".equals(meta.getStatus()) 
-                    && meta.getCode() == 200 
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
                     && "unlinkExternalAccount".equals(meta.getMethod())) {
                   JSONArray users = responseJSON.getJSONArray("users");
                   ...
                 }
-                
+
       - platform: javascript
         example: |
             Example Javascript call:
-            
+
                 var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
                 var data = {
                   id: '109216395704353',
                   type: 'facebook'
                 }
                 sdk.sendRequest('social/facebook/unlink.json', 'DELETE', data, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data) {
                   if(data) {
                     if(data.meta) {
@@ -157,20 +157,20 @@ methods:
                     }
                   }
                 }
-                
+
       - platform: actionscript
         example: |
             Example Actionscript call:
-            
+
                 var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
                 //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
                 var data:Object = new Object();
                 data.id = "109216395704353";
                 data.type = "facebook";
                 sdk.sendRequest("social/facebook/unlink.json", URLRequestMethod.DELETE, data, false, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data:Object):void {
                   if(data) {
                     if(data.hasOwnProperty("meta")) {
@@ -182,4 +182,4 @@ methods:
                     }
                   }
                 }
-                
+

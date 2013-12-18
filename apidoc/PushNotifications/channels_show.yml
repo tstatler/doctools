@@ -14,7 +14,7 @@ methods:
         description: Name of the push channel.
         type: String
         required: true
-      
+
     response-parameters:
       - name: devices
         description: |
@@ -46,11 +46,11 @@ methods:
       - platform: rest
         example: |
             Example cURL request:
-            
+
                 $ curl -b cookies.txt -c cookies.txt -X GET --data-urlencode "name=chat" "https://api.cloud.appcelerator.com/v1/push_notification/channels/show.json?key=<YOUR APP APP KEY>"
-                
+
             Example JSON response:
-            
+
                 {
                   "meta": {
                     "status": "ok",
@@ -64,24 +64,24 @@ methods:
                     }
                   }
                 }
-                
+
       - platform: android
         example: |
             Example Android call:
-            
-                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
 
                 Map<String, Object> data = new HashMap<String, Object>();
                 data.put("name", "chat");
                 CCResponse response = sdk.sendRequest("push_notification/channels/show.json", CCRequestMethod.GET, data);
-                
+
             SDK Callback:
-            
+
                 JSONObject responseJSON = response.getResponseData();
                 CCMeta meta = response.getMeta();
-                if("ok".equals(meta.getStatus()) 
-                    && meta.getCode() == 200 
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
                     && "showPushChannels".equals(meta.getMethod())) {
                   JSONArray devices = responseJSON.getJSONArray("devices);
                   ...
@@ -93,15 +93,15 @@ methods:
 
 
                 NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:2];
-                [paramDict setObject:@"chat" forKey:@"channel"]; 
+                [paramDict setObject:@"chat" forKey:@"channel"];
                 CCRequest *request = [[[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"push_notification/channels/show.json" paramDict:paramDict] autorelease];
                 [request startAsynchronous];
                 [request release];
-            
+
             SDK Callback:
-                
+
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
 
                 }
-                
+

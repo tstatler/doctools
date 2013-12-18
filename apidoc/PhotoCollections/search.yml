@@ -7,32 +7,32 @@ methods:
         Search for top-level collections owned by the given user. Subcollections cannot
         be found this way. See {@link PhotoCollections#show_subcollections Show Subcollections} to view the
         subcollections of a collection.
-        
+
     url: collections/search.json
 
-    parameters: 
+    parameters:
 
       - name: user_id
         description: ID of the user to find collections for.
         type: String
         required: true
 
-      - name: page  
+      - name: page
         description: Request page number, default is 1.
         type: Number
-      
+
       - name: per_page
         description: Number of results per page, default is 10.
         type: Number
 
       - name: response_json_depth
         description: |
-            Nested object depth level counts in response JSON.  
+            Nested object depth level counts in response JSON.
 
             In order to reduce server API calls from an applicaton, the response JSON may
-            include not just the objects that are being queried/searched, but also 
+            include not just the objects that are being queried/searched, but also
             some important data related to the returned objects such as object's owner and
-            referenced objects.  
+            referenced objects.
 
             Default is 3, valid range is 1 to 8.
         type: Number
@@ -46,7 +46,7 @@ methods:
       - platform: titanium
         example: |
             This example searches for collections and checks the response.
-            
+
                 Cloud.PhotoCollections.search({
                     user_id: savedUserId
                 }, function (e) {
@@ -66,15 +66,15 @@ methods:
                             ((e.error && e.message) || JSON.stringify(e)));
                     }
                 });
-      
+
       - platform: rest
         example: |
             Example cURL request:
-            
+
                 $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/collections/search.json?user_id=4e004e4ed0afbe2f1800003c&key=<YOUR APP APP KEY>"
-                
+
             Example JSON response:
-            
+
                 {
                   "meta": {
                     "total_pages": 1,
@@ -109,59 +109,59 @@ methods:
                     ]
                   }
                 }
-                
+
       - platform: ios
         example: |
             Example iOS call:
-            
+
                 NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:3];
                 [paramDict setObject:[NSNumber nubmerWithInt:1] forKey:@"page"]; // optional
                 [paramDict setObject:[NSNumber nubmerWithInt:10] forKey:@"per_page"]; // optional
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"collections/search.json" paramDict:paramDict];
                 [request startAsynchronous];
                 [request release];
-                
+
             SDK Callback:
-            
+
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
                 	NSArray *collections = [response getObjectsOfType:[CCCollection class]];
                 }
-                
+
       - platform: android
         example: |
             Example Android call:
-            
-                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 Map<String, Object> data = new HashMap<String, Object>();
                 data.put("user_id", "4e004e4ed0afbe2f1800003c");
                 CCResponse response = sdk.sendRequest("collections/search.json", CCRequestMethod.GET, data);
-                
+
             SDK Callback:
-            
+
                 JSONObject responseJSON = response.getResponseData();
                 CCMeta meta = response.getMeta();
-                if("ok".equals(meta.getStatus()) 
-                    && meta.getCode() == 200 
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
                     && "searchCollections".equals(meta.getMethod())) {
                   JSONArray collections = responseJSON.getJSONArray("collections");
                   ...
                 }
-                
+
       - platform: javascript
         example: |
             Example Javascript call:
-            
+
                 var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
                 var data = {
                   user_id: '4e004e4ed0afbe2f1800003c'
                 };
                 sdk.sendRequest('collections/search.json', 'GET', data, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data) {
                   if(data) {
                     if(data.meta) {
@@ -173,20 +173,20 @@ methods:
                     }
                   }
                 }
-                
+
       - platform: actionscript
         example: |
             Example Actionscript call:
-            
+
                 var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
                 //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
                 var data:Object = new Object();
                 data.user_id = "4e004e4ed0afbe2f1800003c";
                 sdk.sendRequest("collections/search.json", URLRequestMethod.GET, data, false, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data:Object):void {
                   if(data) {
                     if(data.hasOwnProperty("meta")) {
@@ -198,4 +198,4 @@ methods:
                     }
                   }
                 }
-                
+

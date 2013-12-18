@@ -1,5 +1,5 @@
 name: Users
-methods: 
+methods:
   - name: logout
     summary: Logout User
     description: Log out a user.
@@ -17,7 +17,7 @@ methods:
       - platform: titanium
         example: |
             This example logs out the current user and checks the response.
-            
+
                 Cloud.Users.logout(function (e) {
                     if (e.success) {
                         alert('Success: Logged out');
@@ -26,15 +26,15 @@ methods:
                             ((e.error && e.message) || JSON.stringify(e)));
                     }
                 });
-      
+
       - platform: rest
         example: |
             Example cURL request:
-                
+
                 $ curl -b cookies.txt -c cookies.txt https://api.cloud.appcelerator.com/v1/users/logout.json?key=<YOUR APP APP KEY>
-            
+
             Example JSON response:
-                
+
                 {
                   "meta": {
                     "status":"ok",
@@ -42,51 +42,51 @@ methods:
                     "method_name":"logoutUser"
                   }
                 }
-                
+
       - platform: ios
         example: |
             Example iOS call:
-                
+
                 CCRequest *request = [[[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"users/logout.json" paramDict:nil] autorelease];
                 [request startAsynchronous];
-                
+
             SDK Callback:
-                
+
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
                 	if ([response.meta.method isEqualToString:@"logoutUser"]) {
                 		NSLog(@"user logged out!");
                 	}
                 }
-                
+
       - platform: android
         example: |
             Example Android call:
-                
-                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 CCResponse response = sdk.sendRequest("users/logout.json", CCRequestMethod.GET, null);
-            
+
             SDK Callback:
-                
+
                 JSONObject responseJSON = response.getResponseData();
                 CCMeta meta = response.getMeta();
-                if("ok".equals(meta.getStatus()) 
-                    && meta.getCode() == 200 
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
                     && "logoutUser".equals(meta.getMethod())) {
                   System.out.println("user logged out!");
                 }
-            
+
       - platform: javascript
         example: |
             Example JavaScript call:
-                
+
                 var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
                 sdk.sendRequest('users/logout.json', 'GET', null, callback);
-            
+
             SDK Callback:
-                
+
                 function callback(data) {
                   if(data) {
                     if(data.meta) {
@@ -97,18 +97,18 @@ methods:
                     }
                   }
                 }
-            
+
       - platform: javascript
         example: |
             Example Actionscript call:
-                
+
                 var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
                 //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
                 sdk.sendRequest("users/logout.json", URLRequestMethod.GET, null, false, callback);
-            
+
             SDK Callback:
-            
+
                 function callback(data:Object):void {
                   if(data) {
                     if(data.hasOwnProperty("meta")) {

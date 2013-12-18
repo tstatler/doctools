@@ -5,12 +5,12 @@ methods:
 
     description: |
         Adds a review with an optional integer rating. You can also use this API to add
-        comments or likes. 
-        
+        comments or likes.
+
         Once an object has one or more reviews (comments) attached to it, it will
         return a total review count, rating_count, average rating and a breakdown of
         each rating value:
-        
+
             "reviews_count": 2,
             "ratings_count": 2,
             "ratings_average": 150.0,
@@ -20,9 +20,9 @@ methods:
             },
 
         To create a review, you must specify a target object using one of the `id` parameters. Only one `id` parameter may be specified.
-        
+
         A review must include either `content` or `rating`. It can also include both.
-            
+
     url: reviews/create.json
     http-method: POST
     login-required: true
@@ -63,7 +63,7 @@ methods:
 
       - name: content
         description: |
-            Review or comment text.  
+            Review or comment text.
         type: String
 
       - name: rating
@@ -72,9 +72,9 @@ methods:
 
       - name: allow_duplicate
         description: |
-            By default, the same user can only submit one review/comment per object. 
-            Set this flag to `true` to allow the user to add multiple  reviews or comments to 
-            the same object. 
+            By default, the same user can only submit one review/comment per object.
+            Set this flag to `true` to allow the user to add multiple  reviews or comments to
+            the same object.
         type: Boolean
 
       - name: tags
@@ -114,12 +114,12 @@ methods:
       - name: reviews
         description: Single-element array containing the newly-created review.
         type: Array<Reviews>
-    
+
     examples:
       - platform: titanium
         example: |
             This example creates a new review and checks the response.
-            
+
                 Cloud.Reviews.create({
                     post_id: savedPostId,
                     rating: 1,
@@ -137,11 +137,11 @@ methods:
                             ((e.error && e.message) || JSON.stringify(e)));
                     }
                 });
-      
+
       - platform: rest
         example: |
            Creates a new Review for the specified Post object.
-            
+
                 $ curl -b cookies.txt -c cookies.txt -F "post_id=4e33a817d9ca724745000003" -F "rating=8" -F "content=Good"  https://api.cloud.appcelerator.com/v1/reviews/create.json?key=<YOUR APP APP KEY>
 
 
@@ -197,16 +197,16 @@ methods:
       - platform: ios
         example: |
             Example iOS call:
-            
+
                 NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
                 [paramDict setObject:@"4e33a817d9ca724745000003" forKey:@"post_id"];
                 [paramDict setObject:@"1" forKey:@"rating"];
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"POST" baseUrl:@"reviews/create.json" paramDict:paramDict];
                 [request startAsynchronous];
                 [request release];
-                
+
             SDK Callback:
-            
+
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
                 	NSArray *reviews = [response getObjectsOfType:[CCReview class]];
@@ -215,35 +215,35 @@ methods:
                 		...
                 	}
                 }
-                
+
       - platform: android
         example: |
             Example Android call:
-            
-                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 Map<String, Object> data = new HashMap<String, Object>();
                 data.put("post_id", "4e33a817d9ca724745000003");
                 data.put("rating", "1");
                 data.put("content", "Good");
                 CCResponse response = sdk.sendRequest("reviews/create.json", CCRequestMethod.POST, data);
-                
+
             SDK Callback:
-            
+
                 JSONObject responseJSON = response.getResponseData();
                 CCMeta meta = response.getMeta();
-                if("ok".equals(meta.getStatus()) 
-                    && meta.getCode() == 200 
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
                     && "createReview".equals(meta.getMethod())) {
                   JSONArray reviews = responseJSON.getJSONArray("reviews");
                   ...
                 }
-                
+
       - platform: javascript
         example: |
             Example Javascript call:
-            
+
                 var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
                 var data = {
                   post_id: '4e33a817d9ca724745000003',
@@ -251,9 +251,9 @@ methods:
                   content: 'Good'
                 };
                 sdk.sendRequest('reviews/create.json', 'POST', data, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data) {
                   if(data) {
                     if(data.meta) {
@@ -265,22 +265,22 @@ methods:
                     }
                   }
                 }
-                
+
       - platform: actionscript
         example: |
             Example Actionscript call:
-            
+
                 var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
                 //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
                 var data:Object = new Object();
                 data.post_id = "4e33a817d9ca724745000003";
                 data.rating = "1";
                 data.content = "Good";
                 sdk.sendRequest("reviews/create.json", URLRequestMethod.POST, data, false, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data:Object):void {
                   if(data) {
                     if(data.hasOwnProperty("meta")) {
@@ -292,4 +292,4 @@ methods:
                     }
                   }
                 }
-                
+

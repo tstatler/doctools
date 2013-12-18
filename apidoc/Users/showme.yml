@@ -8,15 +8,15 @@ methods:
     url: users/show/me.json `
     login-required: true
 
-    parameters: 
-        
+    parameters:
+
       - name: response_json_depth
         description: |
-            Nested object depth level counts in response json.  
+            Nested object depth level counts in response json.
             In order to reduce server API calls from an applicaton, the response json may
             include not just the objects that are being queried/searched, but also with
             some important data related to the returning objects such as object's owner or
-            referencing objects.  
+            referencing objects.
 
             Default is 3, valid range is 1 to 8.
         type: Number
@@ -25,7 +25,7 @@ methods:
       - platform: titanium
         example: |
             This example requests information about the currently logged in user and checks the response.
-            
+
                 Cloud.Users.showMe(function (e) {
                     if (e.success) {
                         var user = e.users[0];
@@ -38,15 +38,15 @@ methods:
                             ((e.error && e.message) || JSON.stringify(e)));
                     }
                 });
-      
+
       - platform: rest
         example: |
             Example cURL request:
-            
+
                 $ curl -b cookies.txt -c cookies.txt  https://api.cloud.appcelerator.com/v1/users/show/me.json?key=<YOUR APP APP KEY>
-                
+
             Example JSON response:
-            
+
                 {
                   "meta": {
                     "status":"ok",
@@ -84,19 +84,19 @@ methods:
                 				}
                       }
                     ]
-                  }	
+                  }
                 }
-                
+
       - platform: ios
         example: |
             Example iOS call:
-            
+
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"users/show/me.json" paramDict:nil];
                 [request startAsynchronous];
                 [request release];
-                
+
             SDK Callback:
-            
+
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
                 	NSArray *users = [response getObjectsOfType:[CCUser class]];
@@ -104,26 +104,26 @@ methods:
                 		NSLog(@"Current user is %@", user);
                 	}
                 }
-                
+
       - platform: android
         example: |
             Example Android call:
-            
-                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 CCResponse response = sdk.sendRequest("users/show/me.json", CCRequestMethod.GET, null);
-                
+
             SDK Callback:
-            
+
                 JSONObject responseJSON = response.getResponseData();
                 CCMeta meta = response.getMeta();
-                if("ok".equals(meta.getStatus()) 
-                    && meta.getCode() == 200 
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
                     && "showMe".equals(meta.getMethod())) {
                   JSONArray users = responseJSON.getJSONArray("users");
                   JSONObject user = users.getJSONObject(0);
-                  
+
                   StringBuffer sb = new StringBuffer();
                   sb.append("Create user successful!\n");
                   sb.append("id:" + user.getString("id") + "\n");
@@ -132,16 +132,16 @@ methods:
                   sb.append("email:" + user.getString("email") + "\n");
                   System.out.println(sb.toString());
                 }
-                
+
       - platform: javascript
         example: |
             Example JavaScript call:
-            
+
                 var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
                 sdk.sendRequest('users/show/me.json', 'GET', null, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data) {
                   if(data) {
                     if(data.meta) {
@@ -159,18 +159,18 @@ methods:
                     }
                   }
                 }
-                
+
       - platform: actionscript
         example: |
             Example Actionscript call:
-            
+
                 var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
                 //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
                 sdk.sendRequest("users/show/me.json", URLRequestMethod.GET, null, false, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data:Object):void {
                   if(data) {
                     if(data.hasOwnProperty("meta")) {
@@ -188,4 +188,4 @@ methods:
                     }
                   }
                 }
-                
+

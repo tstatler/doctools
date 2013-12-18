@@ -16,7 +16,7 @@ methods:
       - platform: titanium
         example: |
             This example retrieves a list of Facebook friends and checks the response.
-            
+
                 Cloud.SocialIntegrations.searchFacebookFriends(function (e){
                     if (e.success) {
                         alert('Success:\n' +
@@ -32,15 +32,15 @@ methods:
                             ((e.error && e.message) || JSON.stringify(e)));
                     }
                 });
-    
+
       - platform: rest
         example: |
             Example cURL request:
-            
+
                 $ curl -b cookies.txt -c cookies.txt https://api.cloud.appcelerator.com/v1/social/facebook/search_friends.json?key=<YOUR APP APP KEY>
-                
+
             Example JSON response:
-            
+
                 {
                   "meta": {
                     "status":"ok",
@@ -63,55 +63,55 @@ methods:
                         ]
                       }
                     ]
-                  }	
+                  }
                 }
-                
+
       - platform: ios
         example: |
             Example iOS call:
-            
+
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"social/facebook/search_friends.json" paramDict:nil];
                 [request startAsynchronous];
                 [request release];
-                
+
             SDK Callback:
-            
+
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
                 	if (response.meta.status == 200 && response.meta.method == "searchFacebookFriends") {
                 		// success
                 	}
                 }
-                
+
       - platform: android
         example: |
             Example Android call:
-            
-                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 CCResponse response = sdk.sendRequest("social/facebook/search_friends.json", CCRequestMethod.GET, null);
-                
+
             SDK Callback:
-            
+
                 JSONObject responseJSON = response.getResponseData();
                 CCMeta meta = response.getMeta();
-                if("ok".equals(meta.getStatus()) 
-                    && meta.getCode() == 200 
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
                     && "searchFacebookFriends".equals(meta.getMethod())) {
                   JSONArray users = responseJSON.getJSONArray("users");
                   ...
                 }
-                
+
       - platform: javascript
         example: |
             Example Javascript call:
-            
+
                 var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
                 sdk.sendRequest('social/facebook/search_friends.json', 'GET', null, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data) {
                   if(data) {
                     if(data.meta) {
@@ -123,17 +123,17 @@ methods:
                     }
                   }
                 }
-                
+
       - platform: actionscript
         example: |
             Example Actionscript call:
-            
+
                 var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
                 //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
                 sdk.sendRequest("social/facebook/search_friends.json", URLRequestMethod.GET, nil, false, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data:Object):void {
                   if(data) {
                     if(data.hasOwnProperty("meta")) {
@@ -145,4 +145,4 @@ methods:
                     }
                   }
                 }
-                
+

@@ -7,13 +7,13 @@ methods:
         Subscribes a mobile device to a push notifications channel. Developers can
         create different channels for different types of push notifications. For
         instance, a channel for friend request, a channel for chat, etc. Push
-        notifications currently only work on iOS and Andriod. 
-        
+        notifications currently only work on iOS and Andriod.
+
     url: push_notification/subscribe.json
     http-method: POST
     login-required: true
 
-    parameters: 
+    parameters:
 
       - name: channel
         description: Push notification channel to subscribe to.
@@ -27,7 +27,7 @@ methods:
 
       - name: user_id
         description: |
-            User ID to subscribe on behalf of. 
+            User ID to subscribe on behalf of.
 
             Only application admins can subscribe to push notifications on behalf of other
             users.
@@ -37,7 +37,7 @@ methods:
       - platform: titanium
         example: |
             This example subscribes to a push notification channel and checks the response.
-            
+
                 Cloud.PushNotifications.subscribe({
                     channel: 'friend_request',
                     device_token: myPushDeviceToken
@@ -49,15 +49,15 @@ methods:
                             ((e.error && e.message) || JSON.stringify(e)));
                     }
                 });
-      
+
       - platform: rest
         example: |
             Example cURL request:
-            
+
                 $ curl -b cookies.txt -c cookies.txt -F "type=ios" -F "channel=friend_request" -F "device_token=f7702d77b34ed94869f664e7a297ccc173bec93a2b815css6asd28461a0358db" https://api.cloud.appcelerator.com/v1/push_notification/subscribe.json?key=<YOUR APP APP KEY>
-                
+
             Example JSON response:
-            
+
                 {
                   "meta": {
                     "status": "ok",
@@ -65,53 +65,53 @@ methods:
                     "method_name": "SubscribeNotification"
                   }
                 }
-                
+
       - platform: ios
         example: |
             Example iOS call:
-            
+
                 NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:3];
-                [paramDict setObject:@"friend_request" forKey:@"channel"]; 
+                [paramDict setObject:@"friend_request" forKey:@"channel"];
                 [paramDict setObject:@"f7702d77b34ed94869f664e7a297ccc173bec93a2b815css6asd28461a0358db" forKey:@"device_token"];
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"POST" baseUrl:@"push_notification/subscribe.json" paramDict:paramDict];
                 [request startAsynchronous];
                 [request release];
-                
+
             SDK Callback:
-            
+
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
                 	// successfully subscribed
                 }
-                
+
       - platform: android
         example: |
             Example Android call:
-            
-                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 Map<String, Object> data = new HashMap<String, Object>();
                 data.put("type", "android");
                 data.put("channel", "friend_request");
                 data.put("device_token:", "4e7a297ccc173bec93a2b81");
-                CCResponse response = 
+                CCResponse response =
                       sdk.sendRequest("push_notification/subscribe.json", CCRequestMethod.POST, data);
-                
+
             SDK Callback:
-            
+
                 JSONObject responseJSON = response.getResponseData();
                 CCMeta meta = response.getMeta();
-                if("ok".equals(meta.getStatus()) 
-                    && meta.getCode() == 200 
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
                     && "SubscribeNotification".equals(meta.getMethod())) {
                   ...
                 }
-                
+
       - platform: javascript
         example: |
             Example Javascript call:
-            
+
                 var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
                 var data = {
                   type: 'android',
@@ -119,46 +119,46 @@ methods:
                   device_token: 'f7702d77b34ed94869f664e7a297ccc173bec93a2b815css6asd28461a0358db'
                 };
                 sdk.sendRequest('push_notification/subscribe.json', 'POST', data, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data) {
                   if(data) {
                     if(data.meta) {
                       var meta = data.meta;
-                      if(meta.status == 'ok' 
-                          && meta.code == 200 
+                      if(meta.status == 'ok'
+                          && meta.code == 200
                           && meta.method_name == 'SubscribeNotification') {
                       	...
                       }
                     }
                   }
                 }
-                
+
       - platform: actionscript
         example: |
             Example Actionscript call:
-            
+
                 var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
                 //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
                 var data:Object = new Object();
                 data.channel = "friend_request";
                 data.device_token = "f7702d77b34ed94869f664e7a297ccc173bec93a2b815css6asd28461a0358db";
                 sdk.sendRequest("push_notification/subscribe.json", URLRequestMethod.POST, data, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data:Object):void {
                   if(data) {
                     if(data.hasOwnProperty("meta")) {
                       var meta:Object = data.meta;
-                      if(meta.status == "ok" 
-                          && meta.code == 200 
+                      if(meta.status == "ok"
+                          && meta.code == 200
                           && meta.method_name == "SubscribeNotification") {
                       	...
                       }
                     }
                   }
                 }
-                
+
