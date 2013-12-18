@@ -5,7 +5,7 @@ methods:
     description: |
         Deletes a scheduled push notification.
 
-        This feature is only available for Appcelerator Platform users.
+        This feature is only available for Enterprise users.
 
         The current user must be an application admin.
     url: push_schedule/delete.json
@@ -23,7 +23,7 @@ methods:
 
       - platform: titanium
         example: |
-            Requires Release 3.2.0.
+            Available on Release 3.2.0 and later.
 
                 Cloud.PushSchedules.remove({
                     ids: savedPushId

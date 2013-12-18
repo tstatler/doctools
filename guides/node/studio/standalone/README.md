@@ -15,39 +15,39 @@ Studio creates a new Node.ACS MVC project.
 
 ## Adding Additional Methods to Your Service
 
-  1. Select your project in the **App Explorer** or **Project Explorer** view.
-  2. Right-click on the project and choose **New > Node.ACS Method**.
-  3. Give the method a name.
-  4. Click **OK**.
+  1. In the **Project Explorer** view, right-click on the project and choose **New > Node.ACS Method**.
+  2. Give the method a name.
+  3. Click **OK**.
 
 Studio creates the method and adds it to the `services.js` file.
 
 ## Publishing Your Service
 
-  1. Select your project in the **App Explorer** or **Project Explorer** view.
-  2. Click on the **Publish** button, then select **Deploy App**.
-  3. Once your application is deployed, a dialog appears providing you information about the
+  1. In the **Project Explorer** view, right-click on the project and choose **Publish > Deploy App**.
+  2. Once your application is deployed, a dialog appears providing you information about the
      endpoint URL for the application.
 
 By default, the service URL will be `http://<app_id>.cloudapp.appcelerator.com` or
-`http://<app_id>.cloudapp-enterprise.appcelerator.com`, where <app_id> is the
+`http://<app_id>.cloudapp-enterprise.appcelerator.com`, where `<app_id>` is the
 generated ID for your application. It may take a few minutes for the application to be available.
 
-To retrieve the service URL later, select **Publish > View Node.ACS Service**, which opens the
-service in your default web browser.
+To retrieve the service URL later, in the **Project Explorer** view, right-click your project
+and select **Publish > View Node.ACS Service**, which opens the service in your default web browser.
 
 ## Unpublishing Your Service
 
-To unpublish a specific version of the application, make sure your project is selected in the **App
-Explorer** or **Project Explorer** view, then select **Publish > Unpublish Node.ACS Service**.
+To unpublish a specific version of the application, right-click the project in the **Project Explorer** view,
+then select **Publish > Unpublish Node.ACS Service**.
 
 ## Testing Your Service Locally
 
-  1. Select your project in the **App Explorer** or **Project Explorer** view.
-  2. Click on the **Run** button and choose **Local Node.ACS Server**.
-  3. Once the service starts, the local port number assigned to the service is displayed 
-     in the **Console** view. 
-  4. Use your computer's IP address or http://localhost, with the port number to
+  1. Select your project in the **Project Explorer** view.
+  2. Select **Run** from the **Launch Modes** drop-down list.
+  3. Make sure **Local Node.ACS Server** is selected in the **Target** drop-down list.
+  4. Click the **Launch** button.
+  5. Once the service starts, the local port number assigned to the service is displayed
+     in the **Console** view.
+  6. Use your computer's IP address or http://localhost, with the port number to
      access the running service with a browser or console command, such as `curl` or `wget`.
 
 To manage and stop the server, from the menu bar, select **Windows > Show Views > Other**, to open
@@ -57,15 +57,13 @@ the **Show View** dialog.  Select **Studio > Servers** to open the **Servers** v
 
 Once your service is published, you can set a custom domain name.
 
-  1. Select your project in the **App Explorer** or **Project Explorer** view.
-  2. Right-click on the project and choose **Node.ACS > Set CNAME**. A dialog appears.
-  3. Enter the new domain name and click **OK**.
+  1. In the **Project Explorer** view, right-click on the project and choose **Node.ACS > Set CNAME**. A dialog appears.
+  2. Enter the new domain name and click **OK**.
 
 ## Viewing Service Runtime Logs
 
 Once your service is published, you can access the service runtime logs.
 
-  1. Select your project in the **App Explorer** or **Project Explorer** view.
-  2. Right-click on the project and choose **Node.ACS > Tail Logs**.
+In the **Project Explorer** view, right-click on the project and choose **Node.ACS > Tail Logs**.
 
 A new console view opens with your runtime logs, which will be continuously updated.

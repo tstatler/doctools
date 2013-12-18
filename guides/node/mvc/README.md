@@ -116,7 +116,8 @@ The basic configuration file for a Node.ACS application.
       "dependencies": {
         "mongodb": "1.0.2"
       },
-      "logfile" : "MyNodeACSApp.log"
+      "logfile" : "MyNodeACSApp.log",
+      "engines" : { "node": "0.10.22" }
     }
     
 
@@ -127,6 +128,9 @@ Important fields are summarized below (* indicates mandatory fields):
 * **framework*** \-- the "type" of app, if the value is "mvc", Node.ACS will run it as an app with the MVC framework.
 * **dependencies** \-- app dependencies, when an app starts, every modules declared here will be installed before starting the app
 * **logfile** \-- log file's name, log file will be placed in "logs" folder
+* **engines** \-- contains key-value pairs of engine versions.  Use this field to specify the version
+of Node.js to run your application on. Use `node` as the key and the version or version range as the
+value.  For more details, see the "Node.js Engine" section in [Standard Node.js Applications](#!/guide/node_standard).
 
 ### app.js
 

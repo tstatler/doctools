@@ -5,9 +5,11 @@ methods:
     description: |
         Sends push notifications to one or more users who are subscribed to a channel.
 
-        Normal users must specify either `friends` **or** `to_ids`. Application admins
-        can omit these parameters to send to all of the devices subscribed to the
-        identified channel.
+        Specify either `friends` or `to_ids`. Enterprise users can also specify `where`.
+        One of these parameters must be used. These parameters cannot be used simultaneously.
+
+        Application admins can set the `to_ids` parameter to `everyone` to send to all devices
+        subscribed to the identified channel.
     url: push_notification/notify.json
     http-method: POST
     login-required: true
@@ -28,16 +30,41 @@ methods:
 
       - name: to_ids
         description: |
-            Comma separated list of user IDs. Sends push notification to the specified
-            users who are subscribed to the specified channel.
+            Comma-separated list of user IDs to send the notification to users who are subscribed
+            to the specified channel. Up to 1000 users can be specified.
+
+            Application admins can set this parameter to `everyone` to send to all devices
+            subscribed to the channel.
+
+            If you are using the web interface, you do not need to specify this parameter.
         type: String
 
       - name: payload
         description: |
             Payload to send with the push notification.
 
-            If it is a string, it will be sent as an alert. You can also specify a JSON
-            payload with custom values. For example:
+            For a string, it will be sent as an alert (notification message).
+
+            For a JSON payload, you can specify the following fields as well as custom fields:
+
+              * `alert` (String): Notification message to be displayed.
+              * `badge` (String): Number to set as the badge on the application's icon.
+                Specify postive and negative numbers with the `+` and `-`
+                symbols to increment or decrement the current badge number, respectively.
+              * `sound` (String): Filename minus the extension of the sound to play.
+                  * For native Android applications, place the file in the `/assets/sound` directory.
+                  * For native iOS applications, place the file in the main bundle.
+                  * For Android applications built with Titanium, place the file in the `/Resources/sound` directory.
+                  * For iOS applications built with Titanium, place the file in the `/Resources` directory.
+              * `icon` (String): **Available on Android only.** Filename minus the extension of the
+                icon to display in the notification center. Place the file in `/res/drawable`
+                for native Android applications or `/Resources` for Titanium applications.
+                Uses the app's icon by default.
+              * `title` (String): **Available on Android only.** Title of the notification.
+              * `vibrate` (Boolean): **Available on Android only.** If true, the device vibrates for
+                one second.
+
+            For example:
 
                 {
                     "atras": "your_user_id",
@@ -45,21 +72,18 @@ methods:
                         "tag1",
                         "tag2"
                     ],
-                    "badge": 2,
+                    "badge": "+2",
                     "sound": "default",
                     "alert" : "Push Notification Test"
                 }
 
-            In the above example, key `atras` and `tags` are custom payloads.
-            `"badge" : 2`
-            puts a badge with the value 2 on the app's icon, `"sound" : "default"` plays a
-            default system sound and `"alert" : "Push Notification Test"` pops up a
-            alert window with text "Push Notification Test".
+            In the above example, the `atras` and `tags` keys are custom fields,
+            `"badge" : "+2"` increments the current badge value by two,,
+            `"sound" : "default"` plays a default system sound and `"alert" : "Push Notification Test"`
+            pops up a alert window with text "Push Notification Test".
 
-            Note: For Android app, there are 3 more predefined keywords you can use,
-            please refer to Push Notifications in the [Android SDK guide](#!/guide/android) for more
-            details.
         type: [String, Hash]
+        required: true
 
       - name: options
         description: |
@@ -71,6 +95,23 @@ methods:
 
             For example, to specify a one day expiration period, use `options={'expire_after_seconds':86400}`.
         type: Hash
+
+      - name: where
+        description: |
+            A JSON-encoded object that defines the query used to select the users that will receive
+            the notification. Up to 1000 users can be returned by the query.
+
+            **Available only for Enterprise users.**
+
+            To specify a user query, set the `user` field to a custom query, for example, the
+            following query searches for all users with the first name of Joe:
+
+                where={"user": {"first_name":"Joe"}}
+
+            For details about using the `where` parameter,
+            see the [Search and Query guide](#!/guide/search_query).
+        type: Hash
+
 
     examples:
       - platform: titanium

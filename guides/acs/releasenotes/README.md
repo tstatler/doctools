@@ -1,5 +1,31 @@
 # ACS Release Notes
 
+## 18 December 2013
+
+  * Fixed a JSON parsing error with the Messages API.
+
+## 6 December 2013
+
+This update includes the following bug fixes and enhancements:
+
+  * Add ability to increment or decrement the badge value when sending a push notification.  See the
+    "Badge" section in [PushNotifications](#!/api/PushNotifications).
+
+  * Add ability to use a query to send push notifications to specific users.  See the `where`
+    parameter in [push_notification/notify.json](#!/api/PushNotifications-method-notify).
+
+  * Add support for admin batch delete operations.  See the "Admin Batch Delete" section in
+    [Admin Access](#!/guide/admin_access).
+
+  * Change admin operation to send push notification to all users.  Set the `to_ids` parameter to
+    `everyone` for the `push_notification/notify.json` method.  Only new applications need to
+    use this mechanism.  Old applications made prior to this release can continue not to specify
+    `to_ids`.  You do not need to set this parameter in the web interface.
+
+  * Add support for application admin to send push notifications to all users with the
+    `push_notification/notify_tokens.json` method. Set the `to_tokens` parameter to `everyone`.
+    Previously, you could not send push notifications to all users with this method.
+
 ## 7 November 2013
 
 This update includes the following bug fixes and enhancements:
@@ -9,7 +35,7 @@ This update includes the following bug fixes and enhancements:
     and [push_notification/notify_token.json](#!/api/PushNotifications-method-notify_tokens).
 
   * Add ability to schedule push notifications to be sent at specific times and intervals.  This
-    feature is only avaiable to Enterprise customers.  See [PushSchedules](#!/api/PushSchedules).
+    feature is only available to Enterprise customers.  See [PushSchedules](#!/api/PushSchedules).
 
   * Changed PushNotification API to use `android` as the push notification type for either MQTT or GCM.
     After you have configured the ACS web console for either MQTT or GCM,
