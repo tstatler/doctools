@@ -11,6 +11,18 @@ NFC_DIR=$TI_ROOT/appc_modules/ti.nfc
 NEWSSTAND_DIR=$TI_ROOT/appc_modules/ti.newsstand
 TIZEN_DIR=$TI_ROOT/titanium_mobile_tizen
 
+## Error handling
+fail_on_error() {
+    if [ $# -ne 2 ] ; then
+        echo "Wrong number of arguments."
+        exit 1
+    fi
+    if [ $1 -ne 0 ] ; then
+        echo "Error: " $2
+        exit 1
+    fi
+}
+
 
 ## $1 - repo name
 ## $2 - repo dir
@@ -21,7 +33,9 @@ function repo_update {
         echo "Attempting to update the $1 repo on $3/$4..."
         cd $2
         git checkout $4
+        fail_on_error $? "Could not checkout $3/$4 for the $1 repo"
         git pull $3 $4
+        fail_on_error $? "Pull failed for $1 repo"
     else
         echo "Warning: Cannot locate the $1 repo at $2"
     fi

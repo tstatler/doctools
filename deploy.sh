@@ -171,6 +171,13 @@ python ${TI_DOCS}/docgen.py -f jsduck -o ./build $module_dirs
 
 if [ $addon_guidesdir ]; then
     python ./guides_merger.py --input "${guidesdir}/toc.xml" --addon "${addon_guidesdir}/toc.xml"  --output "./build/merged_guides"
+
+    ## Workaround for new Confluence plug-in
+    cp -r $guidesdir/attachments_* ./build/merged_guides/.
+    cp -r $guidesdir/images_* ./build/merged_guides/.
+    #cp -r $addon_guidesdir/attachments_* ./build/merged_guides/.
+    cp -r $addon_guidesdir/images_* ./build/merged_guides/.
+
     guidesdir="./build/merged_guides"
 fi
 python ./guides_parser.py --input "${guidesdir}/toc.xml" --output "./build/guides"
@@ -189,10 +196,18 @@ else
 fi
 
 ruby ${JSDUCK}/bin/jsduck --template ${TEMPLATE} $seo --output $outdir --title "$title" --config $config $alloyDirs 
-cp -r $guidesdir/images "$outdir/images"
+
 # TIDOC-1327 Fix server errors
 cp -r "$guidesdir/images/icons" "$outdir/resources/images/."
-cp -r $guidesdir/attachments "$outdir/attachments"
+
+## Copy resources
+## Workaround for new Confluence plugin
+cp -r $guidesdir/attachments_* $outdir/.
+cp -r $guidesdir/images_* $outdir/.
+
 cp -r $guidesdir/css/common.css "$outdir/resources/css/common.css"
+#cp -r $guidesdir/images "$outdir/images"
+#cp -r $guidesdir/attachments "$outdir/attachments"
+
 cp ./resources/mock_video.png $outdir/resources/images/mock_video.png
 cp ./resources/codestrong_logo_short.png $outdir/resources/images/codestrong_logo_short.png

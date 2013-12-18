@@ -35,7 +35,7 @@ def copy_resources(src, dst):
 			if os.path.isdir(srcname):
 				copy_resources(srcname, dstname)
 			elif os.path.exists(dstname):
-				print "ERROR: copy_resources: duplicate path: %s" % dstname
+				print "Warning: copy_resources: duplicate path: %s" % dstname
 			else:
 				shutil.copyfile(srcname, dstname)
 		except Exception as err:

@@ -2,6 +2,7 @@ DEBUG_TEMPLATE=template
 PROD_TEMPLATE=template-min
 VIDEO_LIST="videos.json"
 PROCESSED_VIDEO_LIST="build/videos.json"
+OUT_DIR="./dist/cloud/latest"
 config="./jsduck.config"
 
 progname=$0
@@ -86,4 +87,8 @@ else
     compass compile ${JSDUCK}/template/resources/sass
     TEMPLATE=${JSDUCK}/${DEBUG_TEMPLATE}
 fi
-ruby ${JSDUCK}/bin/jsduck --template ${TEMPLATE} $seo --config jsduck_cloud.config
+
+rm -rf $OUT_DIR
+mkdir -p $OUT_DIR
+
+ruby ${JSDUCK}/bin/jsduck --template ${TEMPLATE} --output ${OUT_DIR} $seo --config jsduck_cloud.config

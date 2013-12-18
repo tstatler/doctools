@@ -116,6 +116,10 @@ def node2obj(node):
 				if fragment.startswith('!'):
 					tag['href'] = '/platform/latest/#' + fragment
 
+			## HACK: Need a better way to handle this
+			elif href.startswith('https://wiki.appcelerator.org/display/guides2/Installing+Platform+SDKs'):
+				tag['href'] = 'platform/latest/#!/guide/Installing_Platform_SDKs'
+
 			# In general, any link back to the wiki is a bad link.
 			# There are a very few exceptions, such as the community wiki.
 			elif href.startswith('https://wiki.appcelerator.org'):
