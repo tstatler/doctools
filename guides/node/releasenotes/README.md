@@ -6,8 +6,8 @@ Upgrade Node.js version to 0.10.22.  New applications will run on Node.js v0.10.
 applications will run on v0.8.26.
 
 If you republish your current application, running v0.8.26, you need to upgrade your application to use
-v0.10.22 by modifying your `packagage.json` file. Set the `engines` field,
-which is a dictionary of key-value pairs, with a `node` key and it value as `0.10.22`.
+v0.10.22 by modifying your `package.json` file. Set the `engines` field,
+which is a dictionary of key-value pairs, with a `node` key and its value as `0.10.22`.
 For example, add the following to your `package.json` file:
 
     "engines": {"node": "0.10.22"}
