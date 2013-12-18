@@ -1,5 +1,20 @@
 # Node.ACS Release Notes
 
+## 18 Decemeber 2013 -- version 1.0.11
+
+Add support to run Node.ACS applications on different versions of Node.js.
+Currently, you can either use version 0.8.26 or 0.10.22.
+
+If you republish your current application, you will need to set the `engines` field,
+which is a dictionary of key-value pairs, in the `package.json` file.  Set the `node` key
+in the dictionary to the version or version range you want to run your application on.
+For example, to continue to use version 0.8.26, add the following to your `package.json` file:
+
+    "engines": {"node": "0.8.26"}
+
+For more details, see the "Node.js Engine" section in
+[Standard Node.js Applications](http://docs.appcelerator.com/cloud/latest/#!/guide/node_standard).
+
 ## 6 December 2013 -- version 1.0.10
 
   * Fixed an issue where an application could not be published due to node-tar not generating the
