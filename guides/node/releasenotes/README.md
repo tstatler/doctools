@@ -2,17 +2,21 @@
 
 ## 18 Decemeber 2013 -- version 1.0.11
 
-Upgrade Node.js version to 0.10.22.  New applications will run on Node.js v0.10.22.  Existing
-applications will run on v0.8.26.
+Node.js has been upgraded to [Node.js v0.10.22](http://blog.nodejs.org/2013/11/12/node-v0-10-22-stable/) from v0.8.26. This version contains a fix for the ["infamous Walmart leak"](https://groups.google.com/forum/#!topic/nodejs/dVn_WcfT5qk), a [uvlib update](https://github.com/joyent/libuv/releases/tag/v0.10.19), and generally increased performance and stability. Developers are strongly encouraged to update their Node applications to be compatible with this version of Node.js.
 
-If you republish your current application, running v0.8.26, you need to upgrade your application to use
-v0.10.22 by modifying your `package.json` file. Set the `engines` field,
-which is a dictionary of key-value pairs, with a `node` key and its value as `0.10.22`.
-For example, add the following to your `package.json` file:
+To ease migration of Node applications to this new version, applications **currently deployed** on Node.ACS will continue to use v0.8.26 and function as before. If you republish your application to Node.ACS, you will get an error explaining that you should upgrade and test your application with 0.10.22, and republish it.
 
-    "engines": {"node": "0.10.22"}
+If you choose not to upgrade, and want to continue using 0.8.26, specify that version in the [`engines`](https://npmjs.org/doc/json.html#engines) key of your project's package.json file, and republish to ACS:
+ 
+	"engines": {
+		"node": "0.8.26"
+	}
 
-For more details, see the "Node.js Engine" section in
+All newly published Node applications will run on v0.10.22, by default. As with existing applications, you can always "downgrade" your Node.js runtime environment to 0.8.26, if necessary.
+
+To summarize: we strongly encourage you to upgrade and republish your application with v0.10.22 compatibility. If that's not possible, you can continue to publish updates to your application by specifying the 0.8.26 runtime engine in the package.json file.
+
+For more information, see the "Node.js Engine" section in
 [Standard Node.js Applications](http://docs.appcelerator.com/cloud/latest/#!/guide/node_standard).
 
 ## 6 December 2013 -- version 1.0.10
