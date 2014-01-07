@@ -30,5 +30,5 @@ alloyDirs="${ALLOY}/Alloy/lib ${ALLOY}/docs/apidoc
 	$(find $ALLOY/Alloy/builtins -maxdepth 1 -type f ! -name moment.js)"
 
 ruby ${JSDUCK}/bin/jsduck --external "void,Callback,Backbone.Collection,Backbone.Model,Backbone.Events" --export full --pretty-json -o - $alloyDirs > ${DOCTOOLS}/build/alloy.json
-python ${DOCTOOLS}/jsduck2json/jsduck2json.py ${DOCTOOLS}/build/alloy.json ${DOCTOOLS}/build/api.json
+python ${DOCTOOLS}/jsduck2json/jsduck2solr.py ${DOCTOOLS}/build/alloy.json ${DOCTOOLS}/dist/api.json
 echo "Done! File generated at: $DOCTOOLS/build/api.json"
