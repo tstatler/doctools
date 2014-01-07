@@ -59,14 +59,14 @@ The following un-publishes the deployed and active version of the application na
 
     $ acs unpublish MyProject
     
-    App 'MyProject' is now marked for unpublication.
+    App MyProject version 0.1.0 is now marked for unpublication
 
 The following un-publishes version 0.3.0 of the ChatApp application located in the `myprojects/chatapp/` folder:
 
     $ cd myprojects/chatapp
     $ acs unpublish  --ver 0.3.0
     
-    App 'ChatApp' is now marked for unpublication.
+    App ChatApp version 0.3.0 is now marked for unpublication.
 
 
 

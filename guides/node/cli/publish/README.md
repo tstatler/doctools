@@ -1,5 +1,5 @@
 
-# CHANGEMEpublish -- Publish a Node.ACS Application
+# publish -- Publish a Node.ACS Application
 
 ## Description
 
@@ -9,9 +9,9 @@ versions. This command also lists all currently published versions and the curre
 version.
 
 You must run this command in the application's root directory, or specify the application's
-directory with the **--dir** option.
+directory with the **--dir** or **-d** option.
 
-### Managing and Deploying Application Versions ###
+### Publishing Application Versions ###
 
 You can publish up to three different versions of your application to the Node.ACS cloud. Only one
 version may be deployed and active at a time. The application version number is determined by the
@@ -28,7 +28,7 @@ currently deployed version, if any:
 Published versions: 0.1.0, 0.2.0. The version is deployed currently: 0.2.0.`
 ```
 
-If no version is currently deployed, the output will specify that (see examples below) 
+If no version is currently deployed, the output will specify that (see examples below).
 
 To change the currently deployed and active version, add the `--set_active_version` option followed
 by the version to deploy. For example, the following deploys version 0.3.0 of the specified
@@ -42,6 +42,9 @@ Published versions: 0.1.0, 0.2.0., 0.3.0 The version is deployed currently: 0.3.
 When you publish a new version of an application it becomes the deployed and active application. By
 default, you cannot republish a version of an application that was previously published. Use the
 **\--force** command option to force republish of the application (see example below).
+
+When a version is republished it becomes the active and deployed version, regardless of whether it's
+active or not currently.
 
 You can un-publish a specific version of an application, whether it's currently deployed or not. See the 
 [unpublish](http://docs.appcelerator.com/cloud/latest/#!/guide/node_cli_unpublish) command for details.
@@ -71,11 +74,11 @@ $ acs publish [-d | --dir <em>application-directory</em> ]
         </tr>
         <tr>
             <td><code>--force</code></td>
-            <td>Required when publishing a version of an application that's already been deployed. </td>
+            <td>Required when publishing a version of an application that's already been published. </td>
         </tr>
         <tr>
             <td><code>--list_versions</code></td>
-            <td>List all published versions of the application.</td>
+            <td>List all published versions of the application, and the version deployed currently, if any.</td>
         </tr>
         <tr>
             <td><code>--set_active_version <em>version</em></code></td>
@@ -106,7 +109,7 @@ The following publishes the Node.ACS application in the current working director
     node_modules loading completed...
     Node modules are loaded. Cleaning up...
     Done loading node modules!
-    App MyProject published.
+    App MyProject version 0.1.0 published.
     App will be available at http://bb023745a993f41e38cb35ac7dfdca9947d64873.cloudapp.appcelerator.com
 
 The following re-publishes the same version of the Node.ACS application located in the `chatapp/` directory:
@@ -124,7 +127,7 @@ The following re-publishes the same version of the Node.ACS application located 
     node_modules loading completed...
     Node modules are loaded. Cleaning up...
     Done loading node modules!
-    App ChatApp published.
+    App ChatApp version 0.2.0 published.
     App will be available at http://bb023745a993f41e38cb35ac7dfdca9947d123456.cloudapp.appcelerator.com
 
 The following lists the published versions and the currently deployed version: 
