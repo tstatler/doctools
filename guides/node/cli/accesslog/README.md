@@ -3,8 +3,13 @@
 
 ## Description
 
-List application's access logs within a specific period. By default, a maximum
-of 100 log messages will be returned at a time.
+List application's access logs within a specified period. By default, a maximum
+of 100 log messages will be returned at a time. Each log record contains the following fields:
+
+* Date and time
+* IP of server that handled the request
+* URL of requested resource
+* The execution time of the request in milliseconds
 
 ## Usage
 
@@ -76,9 +81,11 @@ will be returned.
     
     $ acs accesslog MyProject
     
-    Retrieves the latest log files from the server
-    [Records] 3	[Pages] 1	[Current Page] 1
-    [02/25/2013 08:56:08.457]	74.125.178.85	/favicon.ico
-    [02/25/2013 08:56:07.616]	74.125.178.81	/css/style.css
-    [02/25/2013 08:56:06.847]	74.125.178.87	/
+    Retrieving access log from the server
+    [12/11/2013 08:46:23.092]   127.0.0.1   /   10068ms
+    [12/11/2013 08:43:55.790]   127.0.0.1   /css/style.css   10074ms
+    [12/11/2013 08:43:23.712]   127.0.0.1   /   10073ms
+    [12/11/2013 08:43:07.237]   127.0.0.1   /   10073ms
+    [12/11/2013 08:42:48.365]   127.0.0.1   /   10075ms
+
 

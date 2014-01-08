@@ -4,7 +4,14 @@
 ## Description
 
 List application's log within a specific period. By default, a maximum of 100
-log messages will be returned at a time.
+log messages will be returned at a time. Each log record contains the following fields:
+
+* Date and time
+* IP of server that handled the request
+* URL of requested resource
+* The execution time of the request in milliseconds
+
+The execution time reported by this command is the time 
 
 ## Usage
 
