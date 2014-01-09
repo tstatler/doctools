@@ -26,9 +26,26 @@ if [ ! "$ALLOY" ]; then
 fi
 
 alloyDirs="${ALLOY}/Alloy/lib ${ALLOY}/docs/apidoc
-	$(find $ALLOY/widgets -type d -name controllers)
-	$(find $ALLOY/Alloy/builtins -maxdepth 1 -type f ! -name moment.js)"
+       $(find $ALLOY/widgets -type d -name controllers)
+       $(find $ALLOY/Alloy/builtins -maxdepth 1 -type f ! -name moment.js)"
+
+case "$1" in
+    jsca)
+        OUTPUT="api.jsca"
+        SCRIPT="jsduck2jsca.py"
+        alloyDirs="${ALLOY}/Alloy/lib ${ALLOY}/docs/apidoc"
+        ;;
+    solr)
+        OUTPUT="solr_api.json"
+        SCRIPT="jsduck2solr.py"
+        ;;
+    *)
+        OUTPUT="api.json"
+        SCRIPT="jsduck2json.py"
+
+esac
+
 
 ruby ${JSDUCK}/bin/jsduck --external "void,Callback,Backbone.Collection,Backbone.Model,Backbone.Events" --export full --pretty-json -o - $alloyDirs > ${DOCTOOLS}/build/alloy.json
-python ${DOCTOOLS}/jsduck2json/jsduck2solr.py ${DOCTOOLS}/build/alloy.json ${DOCTOOLS}/dist/api.json
-echo "Done! File generated at: $DOCTOOLS/build/api.json"
+python ${DOCTOOLS}/jsduck2json/${SCRIPT} ${DOCTOOLS}/build/alloy.json ${DOCTOOLS}/dist/${OUTPUT}
+echo "Done! File generated at: $DOCTOOLS/dist/$OUTPUT"
