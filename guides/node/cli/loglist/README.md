@@ -6,6 +6,8 @@
 List application's log within a specific period. By default, a maximum of 100
 log messages will be returned at a time.
 
+Note that results from `acs loglist` commands may require a few seconds before displaying.
+
 ## Usage
 
 `$ acs loglist` [ _options_ ] [ _appname_ | -d _app_dir_ ]

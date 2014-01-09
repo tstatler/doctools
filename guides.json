@@ -288,6 +288,12 @@
                   "url": "guides/node/releasenotes",
                   "title": "Node.ACS Release Notes",
                   "description": "Changes in the latest releases."
+              },
+              {
+                  "name": "node_troubleshootin",
+                  "url": "guides/node/troubleshooting",
+                  "title": "Troubleshooting",
+                  "description": "Troubleshooting deployment and runtime exceptions"
               }
 
          ]
