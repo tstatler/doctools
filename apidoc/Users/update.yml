@@ -5,61 +5,61 @@ methods:
         Any of the same parameters as {@link Users#create create} can be
         used to update the current user. If `password` is updated then
         `password_confirmation` must be sent as well.
-    
+
     url: users/update.json
     http-method: PUT
     login-required: true
 
     parameters:
-    
+
       - name: email
         description: Email address.
         type: String
-    
+
       - name: username
         description: User name.
         type: String
-    
+
       - name: password
         description: Password.
         type: String
-    
+
       - name: password_confirmation
         description: Password.
         type: String
-    
+
       - name: first_name
         description: First name.
         type: String
-    
+
       - name: last_name
         description: First name.
         type: String
-    
-      - name: photo 
+
+      - name: photo
         description: |
             New photo to assign as the user's primary photo.
-    
+
             When you use `photo` parameter to attach a new photo, you can use it with
             [custom resize and sync options](/docs/photosizes)
-    
+
             To remove primary photo, simply set "photo=" or "photo_id=". If the original
             photo was created by using `photo` parameter, the photo will be deleted.
         type: Photos
-      
+
       - name: photo_id
         description: |
             ID of an existing photo to use as the user's primary photo.
-    
+
             To remove primary photo, simply set "photo=" or "photo_id=". If the original
             photo was created by using `photo` parameter, the photo will be deleted.
         type: String
-        
+
       - name: tags
         description: |
             Comma separated tags, overwrites the existing tags. For example, "hiking,swimming".
         type: String
-    
+
       - name: custom data fields
         description: |
             User-defined data. See [Custom Data Fields](/docs/customfields).
@@ -90,7 +90,7 @@ methods:
       - platform: titanium
         example: |
             This example updates information about the currently logged in user and checks the response.
-            
+
                 Cloud.Users.update({
                     email: 'joeuser@mycompany.com',
                     first_name: 'joe',
@@ -111,15 +111,15 @@ methods:
                             ((e.error && e.message) || JSON.stringify(e)));
                     }
                 });
-      
+
       - platform: rest
         example: |
             Example cURL request:
-            
+
                 $ curl -b cookies.txt -c cookies.txt -X PUT -d "email=mike@appcelerator.com" https://api.cloud.appcelerator.com/v1/users/update.json?key=<YOUR APP APP KEY>
-            
+
             Example JSON response:
-            
+
                 {
                   "meta": {
                     "status":"ok",
@@ -138,22 +138,22 @@ methods:
                         "email":"mike@appcelerator.com"
                       }
                     ]
-                  }	
+                  }
                 }
-                
+
       - platform: ios
         example: |
             Example iOS call:
-            
+
                 If you want to change user name to Joe and update with a new photo, you can pass in the new user name and a new photo to the update request.
                 NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:@"Joe", @"name", nil]
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"PUT" baseUrl:@"users/update.json" paramDict:paramDict];
                 [request addPhotoUIImage:(UIImage *)newUserImage paramDict:nil];
                 [request startAsynchronous];
                 [request release];
-                
+
             SDK Callback:
-            
+
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
                 	NSArray *users = [response getObjectsOfType:[CCUser class]];
@@ -161,14 +161,14 @@ methods:
                 		NSLog(@"Successfully updated user %@", user);
                 	}
                 }
-                
+
       - platform: android
         example: |
             Example Android call:
-            
-                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 //the user's parameters
                 Map<String, Object> data = new HashMap<String, Object>();
                 data.put("email", "test@appcelerator.com");
@@ -178,19 +178,19 @@ methods:
                 data.put("password_confirmation", "test_password");
                 File file = new File("/photos/profile.gif");
                 data.put("photo", file);
-                
+
                 CCResponse response = sdk.sendRequest("users/update.json", CCRequestMethod.PUT, data);
-                
+
             SDK Callback:
-            
+
                 JSONObject responseJSON = response.getResponseData();
                 CCMeta meta = response.getMeta();
-                if("ok".equals(meta.getStatus()) 
-                    && meta.getCode() == 200 
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
                     && "updateUser".equals(meta.getMethod())) {
                   JSONArray users = responseJSON.getJSONArray("users");
                   JSONObject user = users.getJSONObject(0);
-                  
+
                   StringBuffer sb = new StringBuffer();
                   sb.append("Create user successful!\n");
                   sb.append("id:" + user.getString("id") + "\n");
@@ -199,24 +199,24 @@ methods:
                   sb.append("email:" + user.getString("email") + "\n");
                   System.out.println(sb.toString());
                 }
-                
+
       - platform: javascript
         example: |
             Example Javascript call:
-            
+
                 var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
                 var data = {
-                  email: 'test@appcelerator.com', 
-                  first_name: 'test_firstname', 
-                  last_name: 'test_lastname', 
-                  password: 'test_password', 
+                  email: 'test@appcelerator.com',
+                  first_name: 'test_firstname',
+                  last_name: 'test_lastname',
+                  password: 'test_password',
                   password_confirmation: 'test_password',
                   photo: 'testPhoto'
                 };
                 sdk.sendRequest('users/update.json', 'PUT', data, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data) {
                   if(data) {
                     if(data.meta) {
@@ -234,11 +234,11 @@ methods:
                     }
                   }
                 }
-                
+
       - platform: actionscript
         example: |
             Example Actionscript call:
-            
+
                 var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
                 //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
                 //the user's parameters
@@ -250,9 +250,9 @@ methods:
                 data.password_confirmation = "test_password";
                 data.photo = photo;
                 sdk.sendRequest("users/update.json", URLRequestMethod.PUT, data, false, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data:Object):void {
                   if(data) {
                     if(data.hasOwnProperty("meta")) {
@@ -270,4 +270,4 @@ methods:
                     }
                   }
                 }
-                
+

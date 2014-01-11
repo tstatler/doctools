@@ -8,25 +8,25 @@ methods:
     url: users/show.json
     login-required: false
 
-    parameters: 
+    parameters:
       - name: user_id
         description: |
-            User ID of the user to show. Either `user_id` or `user_ids` must be specified. 
+            User ID of the user to show. Either `user_id` or `user_ids` must be specified.
         type: String
 
       - name: user_ids
         description: |
-            Comma-separated list of user IDs to show. Either `user_id` or `user_ids` must be specified. 
+            Comma-separated list of user IDs to show. Either `user_id` or `user_ids` must be specified.
         type: String
 
       - name: response_json_depth
         description: |
-            Nested object depth level counts in response json.  
+            Nested object depth level counts in response json.
 
             In order to reduce server API calls from an applicaton, the response json may
             include not just the objects that are being queried/searched, but also with
             some important data related to the returning objects such as object's owner or
-            referencing objects.  
+            referencing objects.
 
             Default is 3, valid range is 1 to 8.
         type: Number
@@ -41,7 +41,7 @@ methods:
       - platform: titanium
         example: |
             This example requests information about a user and checks the response.
-            
+
                 Cloud.Users.show({
                     user_id: savedUserInfo.id
                 }, function (e) {
@@ -56,15 +56,15 @@ methods:
                             ((e.error && e.message) || JSON.stringify(e)));
                     }
                 });
-      
+
       - platform: rest
         example: |
             Example cURL request:
-                
+
                 $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/users/show.json?key=<YOUR APP APP KEY>&user_id=4d6e77386f70950c89000001"
-            
+
             Example JSON response:
-                
+
                 {
                   "meta": {
                     "status":"ok",
@@ -97,23 +97,23 @@ methods:
                 			      "large_1024":"http://storage.appcelerator.com/4dc5d024d0afbe0aec000011/photos/4dcf0cefd0afbe017a000061/photo_large_1024.jpg",
                 			      "original":"http://storage.appcelerator.com/4dc5d024d0afbe0aec000011/photos/4dcf0cefd0afbe017a000061/photo_original.jpg"
                 		      }
-                				}			
+                				}
                       }
                     ]
-                  }	
+                  }
                 }
-                
+
       - platform: ios
         example: |
             Example iOS call:
-                
+
                 NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:(CCUser *)user.objectId, @"user_id", nil];
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"users/show.json" paramDict:paramDict];
                 [request startAsynchronous];
                 [request release];
-            
+
             SDK Callback:
-                
+
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
                 	NSArray *users = [response getObjectsOfType:[CCUser class]];
@@ -121,28 +121,28 @@ methods:
                 		NSLog(@"user is %@", user);
                 	}
                 }
-            
+
       - platform: android
         example: |
             Example Android call:
-                
-                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 Map<String, Object> data = new HashMap<String, Object>();
                 data.put("user_id", "4d6e77386f70950c89000001");
                 CCResponse response = sdk.sendRequest("users/show.json", CCRequestMethod.GET, data);
-            
+
             SDK Callback:
-                
+
                 JSONObject responseJSON = response.getResponseData();
                 CCMeta meta = response.getMeta();
-                if("ok".equals(meta.getStatus()) 
-                    && meta.getCode() == 200 
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
                     && "showUsers".equals(meta.getMethod())) {
                   JSONArray users = responseJSON.getJSONArray("users");
                   JSONObject user = users.getJSONObject(0);
-                  
+
                   StringBuffer sb = new StringBuffer();
                   sb.append("Create user successful!\n");
                   sb.append("id:" + user.getString("id") + "\n");
@@ -151,19 +151,19 @@ methods:
                   sb.append("email:" + user.getString("email") + "\n");
                   System.out.println(sb.toString());
                 }
-            
+
       - platform: javascript
         example: |
             Example Javascript call:
-                
+
                 var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
                 var data = {
                   user_id: '4d6e77386f70950c89000001'
                 };
                 sdk.sendRequest('users/show.json', 'GET', data, callback);
-                
+
             SDK Callback:
-                
+
                 function callback(data) {
                   if(data) {
                     if(data.meta) {
@@ -181,20 +181,20 @@ methods:
                     }
                   }
                 }
-            
+
       - platform: actionscript
         example: |
             Example Actionscript call:
-                
+
                 var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
                 //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
                 var data:Object = new Object();
                 data.user_id = "4d6e77386f70950c89000001";
                 sdk.sendRequest("users/show.json", URLRequestMethod.GET, data, false, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data:Object):void {
                   if(data) {
                     if(data.hasOwnProperty("meta")) {
@@ -212,4 +212,4 @@ methods:
                     }
                   }
                 }
-    
+

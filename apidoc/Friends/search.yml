@@ -6,7 +6,7 @@ methods:
         Search for friends of the current user or a specified user. Specifying the optional `q` parameter
         allows searching by first name, last name, email address, or username. Without
         the `q` parameter, all friends of the specified user are returned.
-        
+
     url: friends/search.json
     login-required: true
 
@@ -25,13 +25,13 @@ methods:
 
       - name: q
         description: |
-            Space-separated list of keywords used to perform full text search on first name, last name, 
+            Space-separated list of keywords used to perform full text search on first name, last name,
             email address, username and tags.
 
-      - name: page  
+      - name: page
         description: Request page number, default is 1.
         type: Number
-      
+
       - name: per_page
         description: Number of results per page, default is 10.
         type: Number
@@ -50,25 +50,25 @@ methods:
 
       - name: response_json_depth
         description: |
-            Nested object depth level counts in response json.  
+            Nested object depth level counts in response json.
             In order to reduce server API calls from an applicaton, the response json may
             include not just the objects that are being queried/searched, but also with
             some important data related to the returning objects such as object's owner or
-            referencing objects.  
+            referencing objects.
 
             Default is 3, valid range is 1 to 8.
         type: Number
 
     response-parameters:
       - name: users
-        description: List of users matching the search criteria. 
+        description: List of users matching the search criteria.
         type: Array<Users>
 
     examples:
       - platform: titanium
         example: |
             This example requests information about particular friends and checks the response.
-    
+
                 Cloud.Friends.search({
                     user_id: searchID
                 }, function (e) {
@@ -86,15 +86,15 @@ methods:
                             ((e.error && e.message) || JSON.stringify(e)));
                     }
                 });
-    
+
       - platform: rest
         example: |
             Example cURL request:
-            
+
                 $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/friends/search.json?user_id=4e02e022d0afbe41ef000002&q=alice%40gal.com&key=<YOUR APP APP KEY>"
-                
+
             Example JSON response:
-            
+
                 {
                   "meta": {
                     "total_pages": 1,
@@ -119,12 +119,12 @@ methods:
                     ]
                   }
                 }
-                
+
       - platform: ios
         example: |
             Example iOS call:
-            
-                CCUser *current_user = [[Cocoafish defaultCocoafish] getCurrentUser];
+
+                CCUser *current_user = [[ACSClient defaultACSClient] getCurrentUser];
                 NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
                 [paramDict setObject:current_user.objectId forKey:@"user_id"];
                 [paramDict setObject:[NSNumber nubmerWithInt:1] forKey:@"page"]; // optional, request the first page
@@ -132,9 +132,9 @@ methods:
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"friends/search.json" paramDict:paramDict];
                 [request startAsynchronous];
                 [request release];
-                
+
             SDK Callback:
-            
+
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
                 	NSArray *friendRequests = [response getObjectsOfType:[CCFriendRequest class]];
@@ -143,41 +143,41 @@ methods:
                 		...
                 	}
                 }
-                
+
       - platform: android
         example: |
             Example Android call:
-            
-                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 Map<String, Object> data = new HashMap<String, Object>();
                 data.put("user_id", "4d6e77386f70950c89000001");
                 CCResponse response = sdk.sendRequest("friends/search.json", CCRequestMethod.GET, data);
-                
+
             SDK Callback:
-            
+
                 JSONObject responseJSON = response.getResponseData();
                 CCMeta meta = response.getMeta();
-                if("ok".equals(meta.getStatus()) 
-                    && meta.getCode() == 200 
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
                     && "searchFriends".equals(meta.getMethod())) {
                   JSONArray users = responseJSON.getJSONArray("users");
                   ...
                 }
-                
+
       - platform: javascript
         example: |
             Example Javascript call:
-            
+
                 var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
                 var data = {
                   user_id: '4d6e77386f70950c89000001'
                 };
                 sdk.sendRequest('friends/search.json', 'GET', data, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data) {
                   if(data) {
                     if(data.meta) {
@@ -191,20 +191,20 @@ methods:
                     }
                   }
                 }
-                
+
       - platform: actionscript
         example: |
             Example Actionscript call:
-            
+
                 var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
                 //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
                 var data:Object = new Object();
                 data.user_id = "4d6e77386f70950c89000001";
                 sdk.sendRequest("friends/search.json", URLRequestMethod.GET, data, false, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data:Object):void {
                   if(data) {
                     if(data.hasOwnProperty("meta")) {
@@ -218,4 +218,4 @@ methods:
                     }
                   }
                 }
-                
+

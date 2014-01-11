@@ -23,12 +23,12 @@ methods:
 
       - name: response_json_depth
         description: |
-            Nested object depth level counts in response JSON.  
+            Nested object depth level counts in response JSON.
 
             In order to reduce server API calls from an applicaton, the response JSON may
-            include not just the identified objects, but also 
+            include not just the identified objects, but also
             some important data related to the returned objects such as object's owner or
-            referenced objects.  
+            referenced objects.
 
             Default is 3, valid range is 1 to 8.
         type: Number
@@ -42,7 +42,7 @@ methods:
       - platform: titanium
         example: |
             This example retrieves information about a post and checks the response.
-            
+
                 Cloud.Posts.show({
                     post_id: savedPostId
                 }, function (e) {
@@ -58,15 +58,15 @@ methods:
                             ((e.error && e.message) || JSON.stringify(e)));
                     }
                 });
-      
+
       - platform: rest
         example: |
             Example cURL request:
-            
+
                 $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/posts/show.json?key=<YOUR APP APP KEY>&post_id=4e33a5b7d9ca7246ba000003"
-                
+
             Example JSON response:
-            
+
                 {
                   "meta": {
                     "status": "ok",
@@ -109,57 +109,57 @@ methods:
                     ]
                   }
                 }
-                
+
       - platform: ios
         example: |
             Example iOS call:
-            
+
                 NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:(CCPost *)post.objectId, @"post_id", nil];
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:self baseUrl:@"posts/show.json" httpMethod:@"GET" paramDict:paramDict];
                 [request startAsynchronous];
                 [request release];
-                
+
             SDK Callback:
-            
+
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
                 	NSArray *reviews = [response getObjectsOfType:[CCReview class]];
                 }
-                
+
       - platform: android
         example: |
             Example Android call:
-            
-                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 Map<String, Object> data = new HashMap<String, Object>();
                 data.put("post_id", "4e33a5b7d9ca7246ba000003");
                 CCResponse response = sdk.sendRequest("posts/show.json", CCRequestMethod.GET, data);
-                
+
             SDK Callback:
-            
+
                 JSONObject responseJSON = response.getResponseData();
                 CCMeta meta = response.getMeta();
-                if("ok".equals(meta.getStatus()) 
-                    && meta.getCode() == 200 
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
                     && "showPosts".equals(meta.getMethod())) {
                   JSONArray posts = responseJSON.getJSONArray("posts");
                   ...
                 }
-                
+
       - platform: javascript
         example: |
             Example Javascript call:
-            
+
                 var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
                 var data = {
                   post_id: '4e33a5b7d9ca7246ba000003'
                 };
                 sdk.sendRequest('posts/show.json', 'GET', data, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data) {
                   if(data) {
                     if(data.meta) {
@@ -171,20 +171,20 @@ methods:
                     }
                   }
                 }
-                
+
       - platform: actionscript
         example: |
             Example Actionscript call:
-            
+
                 var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
                 //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
                 var data:Object = new Object();
                 data.post_id = "4e33a5b7d9ca7246ba000003";
                 sdk.sendRequest("posts/show.json", URLRequestMethod.GET, data, false, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data:Object):void {
                   if(data) {
                     if(data.hasOwnProperty("meta")) {
@@ -196,21 +196,21 @@ methods:
                     }
                   }
                 }
-                
+
             ![](https://static.appcelerator.com/images/nav/appcelerator-footer-logo.png)
-            
+
               * [Twitter](https://twitter.com/appcelerator)
               * [Facebook](http://www.facebook.com/appcelerator)
               * [Pinterest](http://pinterest.com/appcelerator/)
               * [RSS](http://developer.appcelerator.com/blog/feed)
               * [Email](mailto:info@appcelerator.com)
-            
+
             (C) 2008-2013 Appcelerator Inc. All rights reserved. Appcelerator is a
             registered trademark.
-            
+
             [Legal information](http://www.appcelerator.com/legal)
-            
+
             [Privacy Policy](http://www.appcelerator.com/legal/privacy-policy)
-            
+
             [Help & Support](http://www.appcelerator.com/help)
-            
+

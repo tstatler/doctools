@@ -7,14 +7,14 @@ methods:
 
         An existing collection's cover photo can be added or updated by specifying a
         new `cover_photo_id`. The cover photo can be removed by sending an empty
-        string as the value for `cover_photo_id`.  
+        string as the value for `cover_photo_id`.
         Application Admin can update any Photo Collection.
-        
+
     url: collections/update.json
     http-method: PUT
     login-required: true
 
-    parameters: 
+    parameters:
 
       - name: collection_id
         description: ID of the collection to update.
@@ -75,7 +75,7 @@ methods:
       - platform: titanium
         example: |
             This example updates a photo collection and checks the response.
-            
+
                 Cloud.PhotoCollections.update({
                     collection_id: savedPhotoCollectionId,
                     cover_photo_id: savedPhotoId
@@ -92,15 +92,15 @@ methods:
                             ((e.error && e.message) || JSON.stringify(e)));
                     }
                 });
-      
+
       - platform: rest
         example: |
             Example cURL request:
-            
+
                 $ curl -b cookies.txt -c cookies.txt -X PUT -F "cover_photo_id=4deece22d0afbe3ab4000002" -F "collection_id=4deb4496d0afbec69e000008" "https://api.cloud.appcelerator.com/v1/collections/update.json?key=<YOUR APP APP KEY>"
-                
+
             Example JSON response:
-            
+
                 {
                   "meta": {
                     "code": 200,
@@ -157,59 +157,59 @@ methods:
                     ]
                   }
                 }
-                
+
       - platform: ios
         example: |
             Example iOS call:
-            
+
                 NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:(CCCollection *)collection.objectId, @"collection_id", @"new album", @"name", nil];
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"collections/update.json" paramDict:paramDict];
                 [request startAsynchronous];
                 [request release];
-                
+
             SDK Callback:
-            
+
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
                 	NSArray *collections = [response getObjectsOfType:[CCCollection class]];
                 }
-                
+
       - platform: android
         example: |
             Example Android call:
-            
-                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 Map<String, Object> data = new HashMap<String, Object>();
                 data.put("collection_id", "4deb4496d0afbec69e000008");
                 data.put("cover_photo_id", "4deece22d0afbe3ab4000002");
                 CCResponse response = sdk.sendRequest("collections/update.json", CCRequestMethod.PUT, data);
-                
+
             SDK Callback:
-            
+
                 JSONObject responseJSON = response.getResponseData();
                 CCMeta meta = response.getMeta();
-                if("ok".equals(meta.getStatus()) 
-                    && meta.getCode() == 200 
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
                     && "updateCollection".equals(meta.getMethod())) {
                   JSONArray collections = responseJSON.getJSONArray("collections");
                   ...
                 }
-                
+
       - platform: javascript
         example: |
             Example Javascript call:
-            
+
                 var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
                 var data = {
                   collection_id: '4deb4496d0afbec69e000008',
                   cover_photo_id: '4deece22d0afbe3ab4000002'
                 };
                 sdk.sendRequest('collections/update.json', 'PUT', data, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data) {
                   if(data) {
                     if(data.meta) {
@@ -221,21 +221,21 @@ methods:
                     }
                   }
                 }
-                
+
       - platform: actionscript
         example: |
             Example Actionscript call:
-            
+
                 var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
                 //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
                 var data:Object = new Object();
                 data.collection_id = "4deb4496d0afbec69e000008";
                 data.cover_photo_id="4deece22d0afbe3ab4000002";
                 sdk.sendRequest("collections/update.json", URLRequestMethod.PUT, data, false, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data:Object):void {
                   if(data) {
                     if(data.hasOwnProperty("meta")) {
@@ -247,4 +247,4 @@ methods:
                     }
                   }
                 }
-                
+

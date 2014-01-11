@@ -13,7 +13,7 @@ methods:
     url: custom_mailer/email_from_template.json
     http-method: POST
 
-    parameters: 
+    parameters:
       - name: template
         description: |
             Name of the email template you have created.
@@ -33,7 +33,7 @@ methods:
             such as BlueHost requires the sender's email address to be present.
 
       - name: dynamic fields
-        description: | 
+        description: |
             Dynamic fields you defined in your email template. If you have defined a field
             {{username}} in the email template, you can pass username=joe to have the
             field `username` substituted by the value you provide in the outgoing email.
@@ -42,7 +42,7 @@ methods:
       - platform: titanium
         example: |
             This example sends an Email and checks the response.
-            
+
                 Cloud.Emails.send({
                     template: 'welcome',
                     recipients: 'joe@company.com'
@@ -58,11 +58,11 @@ methods:
       - platform: rest
         example: |
             Example cURL request:
-            
+
                 $ curl -b cookies.txt -c cookies.txt -F "recipients=joe@company.com" -F "template=welcome" https://api.cloud.appcelerator.com/v1/custom_mailer/email_from_template.json?key=<YOUR APP APP KEY>
-                
+
             Example JSON response:
-            
+
                 {
                   "meta": {
                     "status": "ok",
@@ -70,59 +70,59 @@ methods:
                     "method_name": "emailFromTemplate"
                   }
                 }
-                
+
       - platform: ios
         example: |
             Example iOS call:
-            
+
                 NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:@"welcome", @"template", @"joe@company.com", @"recipients", nil ];
                 CCRequest *request = [[[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"custom_mailer/email_from_template.json" paramDict:paramDict] autorelease];
                 [request startAsynchronous];
-                
+
             SDK Callback:
-            
+
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
                 	if ([response.meta.method isEqualToString:@"emailFromTemplate"]) {
                 		NSLog(@"Email from template sent!");
                 	}
                 }
-                
+
       - platform: android
         example: |
             Example Android call:
-            
-                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 Map<String, Object> data = new HashMap<String, Object>();
                 data.put("recipients", "joe@company.com");
                 data.put("template", "welcome");
                 CCResponse response = sdk.sendRequest("custom_mailer/email_from_template.json", CCRequestMethod.POST, data);
-                
+
             SDK Callback:
-            
+
                 JSONObject responseJSON = response.getResponseData();
                 CCMeta meta = response.getMeta();
-                if("ok".equals(meta.getStatus()) 
-                    && meta.getCode() == 200 
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
                     && "emailFromTemplate".equals(meta.getMethod())) {
                   ...
                 }
-                
+
       - platform: javascript
         example: |
             Example Javascript call:
-            
+
                 var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
                 var data = {
                   recipients: 'joe@company.com',
                   template: 'welcome'
                 };
                 sdk.sendRequest('custom_mailer/email_from_template.json', 'POST', data, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data) {
                   if(data) {
                     if(data.meta) {
@@ -133,4 +133,4 @@ methods:
                     }
                   }
                 }
-                
+

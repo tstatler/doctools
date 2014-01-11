@@ -6,14 +6,14 @@ methods:
         Updates the file object. When replacing the existing file attachment with a
         new one, `processing` will be set to `false`, the `url` will not be valid
         until the new file has been processed and uploaded to the Appcelerator Cloud
-        Services storage cloud.  
-          
+        Services storage cloud.
+
         Application Admin can update any File object.
-        
+
     url: files/update.json
     http-method: PUT
     login-required: true
-    
+
     parameters:
       - name: file_id
         description: ID of the file to update.
@@ -61,14 +61,14 @@ methods:
             Single-element array containing the updated file object.
 
             Note that the file URL may not be available if the file hasn't finished
-            processing. 
+            processing.
         type: Array<Files>
 
     examples:
       - platform: titanium
         example: |
             This example updates a file and checks the response.
-            
+
                 Cloud.Files.update({
                     file_id: savedFileId,
                     name: 'Notice'
@@ -84,15 +84,15 @@ methods:
                             ((e.error && e.message) || JSON.stringify(e)));
                     }
                 });
-      
+
       - platform: rest
         example: |
             Example cURL request:
-            
+
                 curl -b cookies.txt -c cookies.txt -X PUT -F "file=@newresume.pdf" -F "name=new_file_name" -F "file_id=4f05446bc3666eb7ba000001" https://api.cloud.appcelerator.com/v1/files/update.json?key=<YOUR APP APP KEY>
-                
+
             Example JSON response:
-            
+
                 {
                   "meta": {
                     "status": "ok",
@@ -114,7 +114,7 @@ methods:
                           "created_at": "2012-01-13T08:12:20+0000",
                           "updated_at": "2012-01-13T08:12:43+0000",
                           "external_accounts": [
-                
+
                           ],
                           "email": "a@mike.com"
                         }
@@ -122,20 +122,20 @@ methods:
                     ]
                   }
                 }
-                
+
       - platform: ios
         example: |
             Example iOS call:
-            
+
                 NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
                 [paramDict setObject:@"my_new_file" forKey:@"name"];
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"PUT" baseUrl:@"files/update.json" paramDict:paramDict];
                 [request setData:(NSData *)myFileData withFileName:@"newresume.pdf" andContentType:@"application/octet-stream" forKey:@"file"];
                 [request startAsynchronous];
                 [request release];
-                
+
             SDK Callback:
-            
+
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
                 	if ([response.meta.method isEqualToString:@"updateFile"]) {
@@ -146,35 +146,35 @@ methods:
                 		}
                 	}
                 }
-                
+
       - platform: android
         example: |
             Example Android call:
-            
-                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 Map<String, Object> data = new HashMap<String, Object>();
                 data.put("file_id", "4f05446bc3666eb7ba000001");
                 data.put("name", "new_file_name");
                 data.put("file", new File("/photos/profile.gif"));
                 CCResponse response = sdk.sendRequest("files/update.json", CCRequestMethod.PUT, data);
-                
+
             SDK Callback:
-            
+
                 JSONObject responseJSON = response.getResponseData();
                 CCMeta meta = response.getMeta();
-                if("ok".equals(meta.getStatus()) 
-                    && meta.getCode() == 200 
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
                     && "updateFile".equals(meta.getMethod())) {
                   JSONArray files = responseJSON.getJSONArray("files");
                   ...
                 }
-                
+
       - platform: javascript
         example: |
             Example Javascript call:
-            
+
                 var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
                 var data = {
                   file_id: '4f05446bc3666eb7ba000001',
@@ -182,9 +182,9 @@ methods:
                   file: 'fileInputId'  //the ID of file input control
                 };
                 sdk.sendRequest('files/update.json', 'PUT', data, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data) {
                   if(data) {
                     if(data.meta) {
@@ -196,22 +196,22 @@ methods:
                     }
                   }
                 }
-                
+
       - platform: actionscript
         example: |
             Example Actionscript call:
-            
+
                 var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
                 //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
                 var data:Object = new Object();
                 data.file_id="4f05446bc3666eb7ba000001";
                 data.name="new_file_name";
                 data.file = fileObject;	//instance of FileReference
                 sdk.sendRequest("files/update.json", URLRequestMethod.PUT, data, false, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data:Object):void {
                   if(data) {
                     if(data.hasOwnProperty("meta")) {
@@ -223,4 +223,4 @@ methods:
                     }
                   }
                 }
-                
+
