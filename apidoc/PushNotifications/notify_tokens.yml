@@ -68,7 +68,6 @@ methods:
                     "alert" : "Push Notification Test"
                 }
 
-
             In the above example, the `atras` and `tags` keys are custom fields,
             `"badge" : "+2"` increments the current badge value by two,
             `"sound" : "default"` plays a default system sound and `"alert" : "Push Notification Test"`
