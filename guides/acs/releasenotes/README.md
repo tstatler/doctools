@@ -1,5 +1,10 @@
 # ACS Release Notes
 
+## 11 January 2013
+
+  * The namespace used by the ACS SDKs for [Android](#!/guide/android) and [iOS](#!/guide/ios)
+  has changed from `Cocoafish` to `ACSClient`. The documentation and sample code has been updated to reflect this change.
+
 ## 18 December 2013
 
   * Fixed a JSON parsing error with the Messages API.
