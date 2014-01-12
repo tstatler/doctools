@@ -4,17 +4,17 @@ methods:
     summary: Update a Review/Comment/Rating/Like
 
     description: |
-        Updates the review with the given `id`. 
-        
-        Ordinary users can update reviews they own or have update access to. 
-          
+        Updates the review with the given `id`.
+
+        Ordinary users can update reviews they own or have update access to.
+
         An application admin can update any Review object.
-        
+
     url: reviews/update.json
     http-method: PUT
     login-required: true
 
-    parameters: 
+    parameters:
 
       - name: post_id
         description: Post object associated with this review.
@@ -54,7 +54,7 @@ methods:
         required: true
 
       - name: content
-        description: Review or comment text.  
+        description: Review or comment text.
         type: String
 
       - name: rating
@@ -63,9 +63,9 @@ methods:
 
       - name: allow_duplicate
         description: |
-            By default, the same user can only submit one review/comment per object. 
-            Set this flag to `true` to allow the user to add multiple  reviews or comments to 
-            the same object. 
+            By default, the same user can only submit one review/comment per object.
+            Set this flag to `true` to allow the user to add multiple  reviews or comments to
+            the same object.
         type: Boolean
 
       - name: tags
@@ -102,7 +102,7 @@ methods:
       - platform: titanium
         example: |
             This example updates a review and checks the response.
-            
+
                 Cloud.Reviews.update({
                     post_id: savedPostId,
                     review_id: savedReviewId,
@@ -121,11 +121,11 @@ methods:
                             ((e.error && e.message) || JSON.stringify(e)));
                     }
                 });
-      
+
       - platform: rest
         example: |
             Example cURL request:
-            
+
                 $ curl -b cookies.txt -c cookies.txt -X PUT -F "post_id=4e33a9f5d9ca724769000003" -F "review_id=4e33a9f5d9ca724769000006" -F "rating=10" -F "content=Very very good" https://api.cloud.appcelerator.com/v1/reviews/update.json?key=<YOUR APP APP KEY>
 
             Example JSON response:
@@ -182,48 +182,48 @@ methods:
       - platform: ios
         example: |
             Example iOS call:
-            
+
                 NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:(CCPost *)post.objectId, @"post_id", (CCReview *)review.objectId, @"review_id", @"100", @"rating", nil];
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"reviews/update.json" paramDict:paramDict];
                 [request startAsynchronous];
                 [request release];
-                
+
             SDK Callback:
-            
+
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
                 	NSArray *reviews = [response getObjectsOfType:[CCReview class]];
                 }
-                
+
       - platform: android
         example: |
             Example Android call:
-            
-                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 Map<String, Object> data = new HashMap<String, Object>();
                 data.put("post_id", "4e33a817d9ca724745000003");
                 data.put("review_id", "4e33a9f5d9ca724769000006");
                 data.put("rating", "1");
                 data.put("content", "Good");
                 CCResponse response = sdk.sendRequest("reviews/update.json", CCRequestMethod.PUT, data);
-                
+
             SDK Callback:
-            
+
                 JSONObject responseJSON = response.getResponseData();
                 CCMeta meta = response.getMeta();
-                if("ok".equals(meta.getStatus()) 
-                    && meta.getCode() == 200 
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
                     && "updateReview".equals(meta.getMethod())) {
                   JSONArray reviews = responseJSON.getJSONArray("reviews");
                   ...
                 }
-                
+
       - platform: javascript
         example: |
             Example Javascript call:
-            
+
                 var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
                 var data = {
                   post_id: '4e33a817d9ca724745000003',
@@ -232,9 +232,9 @@ methods:
                   content: 'Good'
                 };
                 sdk.sendRequest('reviews/update.json', 'PUT', data, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data) {
                   if(data) {
                     if(data.meta) {
@@ -246,23 +246,23 @@ methods:
                     }
                   }
                 }
-                
+
       - platform: actionscript
         example: |
             Example Actionscript call:
-            
+
                 var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
                 //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
                 var data:Object = new Object();
                 data.post_id = "4e33a817d9ca724745000003";
                 data.review_id = "4e33a9f5d9ca724769000006";
                 data.rating = "100";
                 data.content = "Very very good";
                 sdk.sendRequest("reviews/update.json", URLRequestMethod.PUT, data, false, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data:Object):void {
                   if(data) {
                     if(data.hasOwnProperty("meta")) {
@@ -274,4 +274,4 @@ methods:
                     }
                   }
                 }
-                
+

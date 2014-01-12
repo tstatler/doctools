@@ -62,10 +62,10 @@ methods:
 
     parameters:
 
-      - name: page  
+      - name: page
         description: Request page number, default is 1.
         type: Number
-      
+
       - name: per_page
         description: Number of results per page, default is 10.
         type: Number
@@ -85,7 +85,7 @@ methods:
       - name: where
         description: |
             Constraint values for fields. `where` should be encoded JSON.
-            
+
             If `where` is not specified, `query` returns all objects.
         type: Hash
 
@@ -106,11 +106,11 @@ methods:
 
       - name: response_json_depth
         description: |
-            Nested object depth level counts in response json.  
+            Nested object depth level counts in response json.
             In order to reduce server API calls from an applicaton, the response json may
             include not just the objects that are being queried/searched, but also with
             some important data related to the returning objects such as object's owner or
-            referencing objects.  
+            referencing objects.
 
             Default is 3, valid range is 1 to 8.
         type: Number
@@ -119,7 +119,7 @@ methods:
       - platform: titanium
         example: |
             This example requests a list of events and checks the response.
-    
+
                 Cloud.Events.query(function (e) {
                     if (e.success) {
                         alert('Success:\n' +
@@ -136,16 +136,16 @@ methods:
                             ((e.error && e.message) || JSON.stringify(e)));
                     }
                 });
-    
+
       - platform: rest
         example: |
             Example cURL request:
-            
+
                 Example: query events with name "meetup" near latitude 37.12, longitude -122.23 within 5 miles
                 $ curl -c cookies.txt -b cookies.txt -X GET --data-urlencode  'where={"name":"meetup","lnglat":{"$nearSphere":[-122.23,37.12], "$maxDistance" : 0.00126}}' "https://api.cloud.appcelerator.com/v1/events/query.json?key=<YOUR APP APP KEY>"
-                
+
             Example JSON response:
-            
+
                 {
                   "meta": {
                     "status":"ok",
@@ -186,22 +186,22 @@ methods:
                         }
                       }
                     ]
-                  }	
+                  }
                 }
-            
+
       - platform: ios
         example: |
             Example iOS call:
-            
+
                 CCWhere *where = [[[CCWhere alloc] init] autorelease];
                 [where fieldName:@"lnglat" nearLat:37.12 nearLng:-122.23 maxDistanceMi:5.0];
                 [where fieldName:@"name" equalTo:@"meetup"];
                 NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:where, @"where", nil]
                 request = [[[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"events/query.json" paramDict:paramDict] autorelease];
                 [request startAsynchronous];
-                
+
             SDK Callback:
-            
+
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
                 	if ([response.meta.methodName isEqualToString:@"queryEvents"]) {
@@ -211,41 +211,41 @@ methods:
                 		}
                 	}
                 }
-                
+
       - platform: android
         example: |
             Example Android call:
-            
-                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 Map<String, Object> data = new HashMap<String, Object>();
                 data.put("where", "{'name':'meetup','lnglat':{'$nearSphere':[-122.23,37.12], '$maxDistance' : 0.00126}}");
                 CCResponse response = sdk.sendRequest("events/query.json", CCRequestMethod.GET, data);
-                
+
             SDK Callback:
-            
+
                 JSONObject responseJSON = response.getResponseData();
                 CCMeta meta = response.getMeta();
-                if("ok".equals(meta.getStatus()) 
-                    && meta.getCode() == 200 
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
                     && "queryEvents".equals(meta.getMethod())) {
                   JSONArray events = responseJSON.getJSONArray("events");
                   ...
                 }
-                
+
       - platform: javascript
         example: |
             Example Javascript call:
-            
+
                 var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
                 var data = {
                   where: '{"name":"meetup","lnglat":{"$nearSphere":[-122.23,37.12], "$maxDistance" : 0.00126}}'
                 };
                 sdk.sendRequest('events/query.json', 'GET', data, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data) {
                   if(data) {
                     if(data.meta) {
@@ -257,20 +257,20 @@ methods:
                     }
                   }
                 }
-                
+
       - platform: actionscript
         example: |
             Example Actionscript call:
-            
+
                 var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
                 //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
                 var data:Object = new Object();
                 data.where = '{"name":"meetup","lnglat":{"$nearSphere":[-122.23,37.12], "$maxDistance" : 0.00126}}';
                 sdk.sendRequest("events/query.json", URLRequestMethod.GET, data, false, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data:Object):void {
                   if(data) {
                     if(data.hasOwnProperty("meta")) {
@@ -282,4 +282,4 @@ methods:
                     }
                   }
                 }
-                
+

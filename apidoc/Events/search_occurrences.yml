@@ -5,21 +5,21 @@ methods:
 
     description: |
         Full text search of event occurrences.
-        
+
         Optionally, `latitude` and `longitude` can be given to return the list of
         event occurrences starting from a particular location (location is retrieved
         from place if the event is associated with a place). To bound the results
         within a certain radius (in km) from the starting coordinates, add the
         `distance` parameter. `q` can be given to search by event name.
-        
+
     url: events/search/occurrences.json
 
     parameters:
 
-      - name: page  
+      - name: page
         description: Request page number, default is 1.
         type: Number
-      
+
       - name: per_page
         description: Number of results per page, default is 10.
         type: Number
@@ -61,11 +61,11 @@ methods:
 
       - name: response_json_depth
         description: |
-            Nested object depth level counts in response json.  
+            Nested object depth level counts in response json.
             In order to reduce server API calls from an applicaton, the response json may
             include not just the objects that are being queried/searched, but also with
             some important data related to the returning objects such as object's owner or
-            referencing objects.  
+            referencing objects.
 
             Default is 3, valid range is 1 to 8.
         type: Number
@@ -79,7 +79,7 @@ methods:
       - platform: titanium
         example: |
             This example retrieves a list of event occurrences and checks the response.
-    
+
                 Cloud.Events.searchOccurrences({
                     place_id: savedPlaceId,
                     start_time: startTime
@@ -99,15 +99,15 @@ methods:
                             ((e.error && e.message) || JSON.stringify(e)));
                     }
                 });
-    
+
       - platform: rest
         example: |
             Example cURL request:
-            
+
                 $ curl -b cookies.txt -c cookies.txt "http://api.cloud.appcelerator.com/v1/events/search/occurrences.json?key=<YOUR APP APP KEY>&place_id=4d7e62d6d0afbe04170000a4"
-                
+
             Example JSON response:
-            
+
                 {
                   "meta": {
                     "status":"ok",
@@ -143,7 +143,7 @@ methods:
                             "created_at": "2012-02-07T02:23:32+0000",
                             "updated_at": "2012-02-07T02:23:34+0000",
                             "external_accounts": [
-                
+
                             ],
                             "username": "bob",
                             "email": "bob@dude.com"
@@ -161,13 +161,13 @@ methods:
                         }
                       }
                     ]
-                  }	
+                  }
                 }
-                
+
       - platform: ios
         example: |
             Example iOS call:
-            
+
                 NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:2];
                 [pramDict setObject:(CCPlace *)place.objectId forKey:@"place_id"];
                 [paramDict setObject:[NSNumber nubmerWithInt:1] forKey:@"page"]; // optional
@@ -175,9 +175,9 @@ methods:
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"events/search/occurrences.json" paramDict:paramDict];
                 [request startAsynchronous];
                 [request release];
-                
+
             SDK Callback:
-            
+
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
                 	if ([response.meta.method isEqualToString:@"searchEventOccurrences"]) {
@@ -188,43 +188,43 @@ methods:
                 		}
                 	}
                 }
-                
+
       - platform: android
         example: |
             Example Android call:
-            
-                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 Map<String, Object> data = new HashMap<String, Object>();
                 data.put("place_id", "4d7e62d6d0afbe04170000a4");
                 //data.put("user_id", "4d7e62d6d0afbe04170000a4");
                 CCResponse response = sdk.sendRequest("events/search/occurrences.json", CCRequestMethod.GET, data);
-                
+
             SDK Callback:
-            
+
                 JSONObject responseJSON = response.getResponseData();
                 CCMeta meta = response.getMeta();
-                if("ok".equals(meta.getStatus()) 
-                    && meta.getCode() == 200 
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
                     && "searchEventOccurrences".equals(meta.getMethod())) {
                   JSONArray eventOccurrences = responseJSON.getJSONArray("event_occurrences");
                   ...
                 }
-                
+
       - platform: javascript
         example: |
             Example Javascript call:
-            
+
                 var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
                 var data = {
                   place_id: '4d7e62d6d0afbe04170000a4'
                   //user_id: '4d7e62d6d0afbe04170000a4'
                 };
                 sdk.sendRequest('events/search/occurrences.json', 'GET', data, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data) {
                   if(data) {
                     if(data.meta) {
@@ -236,21 +236,21 @@ methods:
                     }
                   }
                 }
-                
+
       - platform: actionscript
         example: |
             Example Actionscript call:
-            
+
                 var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
                 //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
                 var data:Object = new Object();
                 data.place_id="4d7e62d6d0afbe04170000a4";
                 //data.user_id="4d7e62d6d0afbe04170000a4";
                 sdk.sendRequest("events/search/occurrences.json", URLRequestMethod.GET, data, false, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data:Object):void {
                   if(data) {
                     if(data.hasOwnProperty("meta")) {

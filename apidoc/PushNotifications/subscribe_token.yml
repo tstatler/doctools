@@ -6,12 +6,12 @@ methods:
         Subscribes a mobile device to a push notifications channel.
 
         Developers can create different channels for different types of push notifications, such as
-        a friend request, chat, etc. 
+        a friend request, chat, etc.
     url: push_notification/subscribe_token.json
     http-method: POST
     login-required: false
 
-    parameters: 
+    parameters:
 
       - name: device_token
         description: |
@@ -41,7 +41,7 @@ methods:
         type: String
 
     examples:
-      
+
     examples:
       - platform: titanium
         example: |
@@ -61,7 +61,7 @@ methods:
                             ((e.error && e.message) || JSON.stringify(e)));
                     }
                 });
-    
+
       - platform: rest
         example: |
             Example cURL request:
@@ -69,7 +69,7 @@ methods:
                 curl -i -X POST -F "type=ios" -F "device_token=<token>" -F "channel="friend_request" "http://api.cloud.appcelerator.com/v1/push_notification/subscribe_token.json?key=<app key>"
 
             Example JSON response:
-            
+
                 {
                   "meta": {
                     "status": "ok",
@@ -77,45 +77,45 @@ methods:
                     "method_name": "SubscribeNotificationByToken"
                   }
                 }
-                
+
       - platform: ios
         example: |
             Example iOS call:
-            
+
                 NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:3];
-                [paramDict setObject:@"friend_request" forKey:@"channel"]; 
+                [paramDict setObject:@"friend_request" forKey:@"channel"];
                 [paramDict setObject:@"f7702d77b34ed94869f664e7a297ccc173bec93a2b815css6asd28461a0358db" forKey:@"device_token"];
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"POST" baseUrl:@"push_notification/subscribe_token.json" paramDict:paramDict];
                 [request startAsynchronous];
                 [request release];
-                
+
             SDK Callback:
-            
+
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
                 	// successfully subscribed
                 }
-                
+
       - platform: android
         example: |
             Example Android call:
-            
-                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 Map<String, Object> data = new HashMap<String, Object>();
                 data.put("type", "android");
                 data.put("channel", "friend_request");
                 data.put("device_token", "4e7a297ccc173bec93a2b81");
-                CCResponse response = 
+                CCResponse response =
                       sdk.sendRequest("push_notification/subscribe_token.json", CCRequestMethod.POST, data);
-                
+
             SDK Callback:
-            
+
                 JSONObject responseJSON = response.getResponseData();
                 CCMeta meta = response.getMeta();
-                if("ok".equals(meta.getStatus()) 
-                    && meta.getCode() == 200 
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
                     && "SubscribeNotificationByToken".equals(meta.getMethod())) {
                   ...
                 }

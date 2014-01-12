@@ -3,14 +3,14 @@ methods:
   - name: create
     summary: Create an access control list
     description: |
-        Creates an ACL object, which can be used to control access to ACS objects. 
-        
+        Creates an ACL object, which can be used to control access to ACS objects.
+
     url: acls/create.json
     http-method: POST
     login-required: true
 
     parameters:
-      - name: name 
+      - name: name
         description: |
             Name of the ACL object.
         type: String
@@ -30,14 +30,14 @@ methods:
 
       - name: public_read
         description: |
-            Determines whether objects controlled by this ACS are publically readable. 
+            Determines whether objects controlled by this ACS are publically readable.
 
             Default is false.
         type: Boolean
 
       - name: public_write
         description: |
-            Determines whether objects controlled by this ACS are publically writable. 
+            Determines whether objects controlled by this ACS are publically writable.
 
             Default is false.
         type: Boolean
@@ -46,7 +46,7 @@ methods:
         description: |
             Specifies the owner of the new URL.
 
-            Only allowed if the current login user is an application admin. Otherwise, the 
+            Only allowed if the current login user is an application admin. Otherwise, the
             new ACL is always owned by the current login user.
         type: String
 
@@ -60,7 +60,7 @@ methods:
       - platform: titanium
         example: |
             This example creates an ACL object and checks the response.
-    
+
                 Cloud.ACLs.create({
                     name: 'testACL',
                     reader_ids: readers.ids.join(','),
@@ -79,11 +79,11 @@ methods:
       - platform: rest
         example: |
             Example cURL request:
-            
+
                 $ curl -b c.txt -c c.txt -F "name=access_photo_album" -F "reader_ids[]=4fcdab1f47b7b71933000003" -F "reader_ids[]=4fcdab1f47b7b71933000004" -F "reader_ids[]=4fcdab2047b7b71933000005" -F "writer_ids[]=4fcdab1f47b7b71933000003" https://api.cloud.appcelerator.com/v1/acls/create.json?key=<YOUR APP APP KEY>
-                
+
             Example JSON response:
-            
+
                 {
                   "meta": {
                     "code": 200,
@@ -105,7 +105,7 @@ methods:
                           "created_at": "2012-06-01T06:43:01+0000",
                           "updated_at": "2012-06-01T06:43:01+0000",
                           "external_accounts": [
-                
+
                           ],
                           "confirmed_at": "2012-06-01T06:43:01+0000",
                           "email": "a@mike.com",
@@ -126,23 +126,23 @@ methods:
                     ]
                   }
                 }
-                
+
       - platform: ios
         example: |
             Example iOS call:
-            
+
                 NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
                 [paramDict setObject:@"access my album" forKey:@"name"];
                 [paramDict setObject:[NSArray arrayWithObjects:[@"4fcdab1f47b7b71933000003", "4fcdab1f47b7b71933000004", "4fcdab2047b7b71933000005", nil] forKey:@"reader_ids"];
                 [paramDict setObject:[NSArray arrayWithObjects:[@"4fcdab1f47b7b71933000003", nil] forKey:@"writer_ids"];
-                
+
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"POST" baseUrl:@"acls/create.json" paramDict:paramDict];
                 [request addPhotoUIImage:(UIImage *)placeImage paramDict:nil];
                 [request startAsynchronous];
                 [request release];
-                
+
             SDK Callback:
-            
+
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
                 	NSArray *acls = [response getObjectsOfType:[CCACL class]];
@@ -151,45 +151,45 @@ methods:
                 		...
                 	}
                 }
-                
+
       - platform: android
         example: |
             Example Android call:
-            
-                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 Map<String, Object> data = new HashMap<String, Object>();
                 data.put("name", "access_photo_album");
                 data.put("reader_ids", "4fcdab1f47b7b71933000003,4fcdab1f47b7b71933000004,4fcdab1f47b7b71933000005");
                 data.put("writer_ids", "4fcdab1f47b7b71933000003");
                 CCResponse response = sdk.sendRequest("acls/create.json", CCRequestMethod.POST, data);
-                
+
             SDK Callback:
-            
+
                 JSONObject responseJSON = response.getResponseData();
                 CCMeta meta = response.getMeta();
-                if("ok".equals(meta.getStatus()) 
-                    && meta.getCode() == 200 
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
                     && "createAcl".equals(meta.getMethod())) {
                   JSONArray acls = responseJSON.getJSONArray("acls");
                   ...
                 }
-                
+
       - platform: javascript
         example: |
             Example Javascript call:
-            
+
                 var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
                 var data = {
-                  name: 'access_photo_album', 
-                  reader_ids: '4fcdab1f47b7b71933000003,4fcdab1f47b7b71933000004,4fcdab1f47b7b71933000005', 
+                  name: 'access_photo_album',
+                  reader_ids: '4fcdab1f47b7b71933000003,4fcdab1f47b7b71933000004,4fcdab1f47b7b71933000005',
                   writer_ids: '4fcdab1f47b7b71933000003'
                 };
                 sdk.sendRequest('acls/create.json', 'POST', data, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data) {
                   if(data) {
                     if(data.meta) {
@@ -201,4 +201,4 @@ methods:
                     }
                   }
                 }
-                
+
