@@ -1,7 +1,7 @@
 
 This document summarizes the kinds of exceptions you may encounter in a Node.ACS application, and how to check the errors using the [`acs list`](#!/guide/node_cli_list) and [`acs loglist`](#!/guide/node_cli_loglist) CLI commands.
 
-Note that output from `acs loglist` may not appear initially for a few seconds.
+Note that `acs loglist` may not get the latest logs from the server immediately. You may need to wait a few seconds. 
 
 ## Exceptions thrown upon deployment
 
