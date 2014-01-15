@@ -11,6 +11,9 @@ of 100 log messages will be returned at a time. Each log record contains the fol
 * URL of requested resource
 * The execution time of the request in milliseconds
 
+Note that these fields are only reported for Node.ACS applications that use the
+ [Node.ACS MVC framework](http://docs.appcelerator.com/cloud/latest/#!/guide/node_mvc).
+
 ## Usage
 
 `$ acs accesslog` [_options_] [_appname_]

@@ -11,7 +11,8 @@ log messages will be returned at a time. Each log record contains the following 
 * URL of requested resource
 * The execution time of the request in milliseconds
 
-The execution time reported by this command is the time 
+Note that these fields are only reported for Node.ACS applications that use the
+ [Node.ACS MVC framework](http://docs.appcelerator.com/cloud/latest/#!/guide/node_mvc).
 
 ## Usage
 
