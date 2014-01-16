@@ -147,7 +147,7 @@ to null.
 ##  Querying Custom Fields
 
 Data stored in custom fields other than Array and Hash can be queried together
-with predefined fields. Please refer to [Query](#!/guide/search_query-section-2) 
+with predefined fields. Please refer to [Query](#!/guide/search_query-section-query-overview) 
 for more information. If you define a
 custom field name that is the same as one of predefined fields, you will be
 able to store and retrieve it but you won't be able to query on it since the
