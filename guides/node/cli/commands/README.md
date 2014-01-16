@@ -51,13 +51,13 @@ Here is a list of available commands and brief description for each of them:
         <tr>
             <td><a href="#!/guide/node_cli_crt"><b>crt</b></a></td>
             <td>Manages SSL certificates for the application</td>
-        </tr>
-        <tr>
-	    <td><a href="#!/guide/node_cli_download"><b>download</b></a></td>
-	    <td>Download the Node.ACS application source files with specified version.</td>
 	</tr>
 	<tr>
-            <td><a href="#!/guide/node_cli_list"><b>list</b></a></td>
+	    <td><a href="#!/guide/node_cli_download"><b>download</b></a></td>
+	    <td>Downloads source files for the specified application and version.</td>
+	</tr>
+	<tr>
+	    <td><a href="#!/guide/node_cli_list"><b>list</b></a></td>
             <td>List all applications</td>
         </tr>
         <tr>
