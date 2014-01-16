@@ -29,12 +29,51 @@ acs download [options] [<i>appname</i>]
             <td><i>version</i></td>
             <td>The version of the application to download. If omitted, the currently deployed and active application is downloaded.</td>
         </tr>
+        <tr>
+            <td><i>path</i></td>
+            <td>The path to the folder where the downloaded files are saved.</td>
+        </tr>
     </tbody>
 </table>
 
 ## Examples
     
-	$ acs crt --add customapp.com.pem
-    $ acs crt --add customapp.com.pem MyApp
-    $ acs crt --remove
-    $ acs crt --remove -d ../apps/myapp
+$ acs download testapp
+3.1 output/response:
+ACS: Appcelerator Cloud Services Command-Line Interface, version 1.0.12
+Copyright (c) 2012-2014, Appcelerator, Inc. All Rights Reserved.
+
+Admin Hostname: http://localhost
+App name: testapp Version: 0.2.0
+– Request sent, awaiting response...
+– Length: 13825281 (13502K)
+– Saving to: 'testapp_0.2.0.tar.gz'
+########## 15%
+
+$ acs download --ver 0.2.0 testapp
+ACS: Appcelerator Cloud Services Command-Line Interface, version 1.0.12
+Copyright (c) 2012-2014, Appcelerator, Inc. All Rights Reserved.
+
+App name: testapp Version: 0.2.0
+– Request sent, awaiting response...
+– Length: 13825281 (13502K)
+– Saving to: 'testapp_0.2.0.tar.gz'
+########################### 38%
+
+$ acs download --ver 0.1.0 --path ./acs testapp
+ACS: Appcelerator Cloud Services Command-Line Interface, version 1.0.12
+Copyright (c) 2012-2014, Appcelerator, Inc. All Rights Reserved.
+
+Admin Hostname: http://localhost
+App name: testapp Version: 0.1.0
+– Request sent, awaiting response...
+– Length: 13825281 (13502K)
+– Saving to: 'acs/testapp_0.1.0.tar.gz'
+###### 9%
+
+$ acs download does_not_exist
+ACS: Appcelerator Cloud Services Command-Line Interface, version 1.0.12
+Copyright (c) 2012-2014, Appcelerator, Inc. All Rights Reserved.
+
+Admin Hostname: http://localhost
+[ERROR] App not found! 
