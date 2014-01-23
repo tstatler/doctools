@@ -158,7 +158,7 @@ if [ $include_modules ]; then
             exit 1
         fi
     fi
-    module_dirs="$APPC_MODULES/ti.map/apidoc $TI_MODULES/facebook/mobile/apidoc
+    module_dirs="$APPC_MODULES/ti.map/apidoc $APPC_MODULES/ti.facebook/apidoc
                  $APPC_MODULES/ti.nfc/apidoc $APPC_MODULES/ti.newsstand/apidoc $TIZEN_MODULE
                  $TI_MODULES/urlSession/apidoc"
 
