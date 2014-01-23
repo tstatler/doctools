@@ -1,5 +1,7 @@
 import json, re, sys
 
+solr_category = "platform"
+
 # Helper function to convert unicode string to ASCII
 def u2a(str):
 	if isinstance(str, unicode):
@@ -44,7 +46,9 @@ def parse_members(members):
 	for api in members:
 		extra_desc = ""
 		new_api = {}
-		new_api["id"] = u2a(api["owner"] + "-" + api["tagname"] + "-" + api["name"])
+		new_api["id"] = u2a(api["owner"] + "-" + api["tagname"] + "-" + api["name"] + "-" + solr_category)
+		new_api["url"] = u2a(api["owner"] + "-" + api["tagname"] + "-" + api["name"])
+		new_api["type"] = solr_category
 		new_api["name"] = u2a(api["owner"] + "." + api["name"])
 
 		if api["tagname"] == "property":
@@ -90,7 +94,9 @@ for obj in data:
 	if obj["tagname"] == "class":
 		new_obj = {}
 		new_obj["name"] = u2a(obj["name"])
-		new_obj["id"] = u2a(obj["name"])
+		new_obj["id"] = u2a(obj["name"] + "-" + solr_category)
+		new_obj["url"] = u2a(obj["name"])
+		new_obj["type"] = solr_category
 		new_obj["content"] = strip_tags(u2a(obj["doc"]))
 
 		export_data.append(new_obj)

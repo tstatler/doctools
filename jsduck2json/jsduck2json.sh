@@ -32,16 +32,16 @@ alloyDirs="${ALLOY}/Alloy/lib ${ALLOY}/docs/apidoc
 case "$1" in
     jsca)
         OUTPUT="api.jsca"
-        SCRIPT="jsduck2jsca.py"
+        SCRIPT="alloy2jsca.py"
         alloyDirs="${ALLOY}/Alloy/lib ${ALLOY}/docs/apidoc"
         ;;
     solr)
         OUTPUT="solr_api.json"
-        SCRIPT="jsduck2solr.py"
+        SCRIPT="alloy2solr.py"
         ;;
     *)
         OUTPUT="api.json"
-        SCRIPT="jsduck2json.py"
+        SCRIPT="alloy2json.py"
 
 esac
 
