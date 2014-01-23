@@ -2,14 +2,13 @@
 
 ## Description
 
-Note: This command is only available for enterprise customers using the Appcelerator Platform.
+<p class="note">This command is  available for enterprise customers using the Appcelerator Platform.</p>
 
-This command configures the number of cloud servers for the application to use.
-
-The application can enable the autoscaling feature to automatically scale up and down the number of
-cloud servers based on the access session rate.  The access session rate is the total number of HTTP
-requests per second within a minute. You need to set the `maxsessionrate` to use this feature.
-
+This `config` command configures the number of cloud servers available to your application. 
+You can configure your application to automatically scale up (or down) the number of servers based on the number queued requests. 
+You specify the maximum number of queued requests that should occur before the application is scaled up. 
+You can also specify the maximum number of servers that should be used.
+ 
 By default, a new Node.ACS application is limited to only one cloud server. To increase the maximum
 number of cloud servers, contact Appcelerator Support and provide the following information with
 your request:
@@ -32,34 +31,38 @@ your request:
         <th>Description</th>
     </tr>
     <tr>
-        <td>appname</td>
+        <td><code>appname</code></td>
         <td>
             The name of the app to configure cloud server resources for. If omitted, the command needs to be run
-            in the application's root directory, or specify the application's directory with the '-d' option.
+            In the application's root directory, or specify the application's directory with the <code>-d</code> or <code>--directory</code> option.
         </td>
     </tr>
     <tr>
-        <td nowrap>--autoscale &lt;true|false&gt;</td>
-        <td>Enables or disables autoscaling.  This setting must be enabled to set the 'maxsessionrate', 'autoscaleup' and 'autoscaledown' settings.</td>
+        <td nowrap><code>--autoscale &lt;true|false&gt;</code></td>
+        <td>Enables or disables autoscaling.  This setting must be enabled to use the <code>autoscaleup</code> and <code>autoscaledown</code> settings.</td>
     </tr>
     <tr>
-        <td nowrap>--autoscaleup &lt;true|false&gt;</td>
-        <td>Enables or disables automatically scaling up the number of cloud servers based on the 'maxsessionrate' setting.</td>
+        <td nowrap><code>--autoscaleup &lt;true|false&gt;</code></td>
+        <td>Enables or disables automatically scaling up the number of cloud servers based on the <code>maxqueuedrequests</code> setting.</td>
     </tr>
     <tr>
-        <td nowrap>--autoscaledown &lt;true|false&gt;</td>
-        <td>Enables or disables automatically scaling down the number of cloud servers based on the 'maxsessionrate' setting.</td>
+        <td nowrap><code>--autoscaledown &lt;true|false&gt;</code></td>
+        <td>Enables or disables automatically scaling down the number of cloud servers based on the <code>maxqueuedrequests</code>  setting.</td>
     </tr>
     <tr>
-        <td nowrap>--setsize &lt;n&gt;</td>
+        <td nowrap><code>--maxqueuedrequests &lt;n&gt;</code></td>
+        <td>Specifies the maximum number of queued requests for autoscaling to occur. The number should be based on the response time of your application; the longer the response time is, the smaller this value should be. The default value is 50.</td>
+    </tr>
+    <tr>
+        <td nowrap><code>--setsize &lt;n&gt;</code></td>
         <td>Sets the current number of cloud servers to use.</td>
-    </tr>
+    </tr>    
     <tr>
-        <td nowrap>--maxsessionrate &lt;n&gt;</td>
-        <td>Sets the session rate threshold for autoscaling.</td>
-    </tr>
+        <td nowrap><code>--maxsize &lt;n&gt;</code></td>
+        <td>Sets the maximum number of cloud servers to use.</td>
+    </tr>        
     <tr>
-        <td>-h, --help</td>
+        <td><code>-h</code>, <code>--help</code></td>
         <td>Displays help information of the command</td>
     </tr>
     </tbody>
@@ -69,8 +72,7 @@ your request:
 
 To setup autoscaling, run the following commands:
 
-    $ acs config --autoscale true MyProject
-    $ acs config --maxsessionrate 50 MyProject
-    $ acs config --autoscaleup true MyProject
-    $ acs config --autoscaledown true MyProject
+    $ acs config --autoscale true MyFirstApp
+    $ acs config --maxsize 5 MyFirstApp
+    $ acs config --maxqueuedrequests 20 MyFirstApp
 
