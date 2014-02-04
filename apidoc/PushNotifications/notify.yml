@@ -98,8 +98,11 @@ methods:
 
       - name: where
         description: |
-            A JSON-encoded object that defines the user or location query used to select the device
+            A JSON-encoded object that defines either the user or location query used to select the device
             that will receive the notification. Up to 1000 users can be returned by the query.
+
+            You **cannot** specify both a user and location query.  You can only specify one type of
+            query.
 
             **Available only for Enterprise users.**
 
