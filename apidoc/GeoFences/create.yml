@@ -21,7 +21,7 @@ methods:
             for the geo-fence object.  Specify the following propertes:
 
               * `loc` (Hash): **Required.** Geographic perimeter.  See {@link GeoFences#loc}.
-              * `payload` (Hash/String): **Required.** Data to retrieve if a device intersects
+              * `payload` (Hash): **Required.** JSON-encoded data to retrieve if a device intersects
                 the geographic perimeter.
               * `start_time` (Date): Datetime to start the geo-fence.
               * `end_time` (Date): Datetime to end the geo-fence.
@@ -45,7 +45,7 @@ methods:
             The following example creates a geo-fence covering a ten-mile area with San
             Francisco, CA, USA as the center point:
 
-                $ curl -b cookies.txt -c cookies.txt -X POST -F 'geo_fence={"loc":{"coordinates":[-122.4167,37.7833], "radius":"10/3959"}, "payload":"24-hour sale at our SF flagship store on 12/26!", "start_time":"2013-12-25T00:00","end_time":"2013-12-26T19:00"}' "http://api.cloud.appcelerator.com/v1/geo_fences/create.json?key=<API_KEY>"
+                $ curl -b cookies.txt -c cookies.txt -X POST -F 'geo_fence={"loc":{"coordinates":[-122.4167,37.7833], "radius":"10/3959"}, "payload":{"alert":"24-hour sale at our SF flagship store on 12/26!"}, "start_time":"2013-12-25T00:00","end_time":"2013-12-26T19:00"}' "http://api.cloud.appcelerator.com/v1/geo_fences/create.json?key=<API_KEY>"
 
             Example JSON response:
 
@@ -68,7 +68,9 @@ methods:
                           ],
                           "radius": "10/3959"
                         },
-                        "payload": "24-hour sale at our SF flagship store on 12/26!",
+                        "payload": {
+                          "alert": "24-hour sale at our SF flagship store on 12/26!"
+                        },
                         "created_at": "2013-12-12T21:41:52+0000",
                         "updated_at": "2013-12-12T21:41:52+0000"
                       }

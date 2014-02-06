@@ -63,8 +63,8 @@ fields:
 
   - name: payload
     description: |
-        Data to retrieve if the geo-fence area intersects the device's location.
-    type: Hash/String
+        JSON-encoded data to retrieve if the geo-fence area intersects the device's location.
+    type: Hash
     
   - name: created_at
     description: Date when the geo-fence was created.

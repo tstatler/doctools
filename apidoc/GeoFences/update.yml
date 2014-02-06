@@ -24,7 +24,7 @@ methods:
             for the geo-fence object.  Specify the following propertes:
 
               * `loc` (Hash): **Required.** Geographic perimeter.  See {@link GeoFences#loc}.
-              * `payload` (Hash/String): Data to retrieve if a device intersects the geographic
+              * `payload` (Hash): JSON-encoded data to retrieve if a device intersects the geographic
                 perimeter.
               * `start_time` (Date): Datetime to start the geo-fence.
               * `end_time` (Date): Datetime to end the geo-fence.
@@ -66,7 +66,9 @@ methods:
                           "place_id": "52aa310765fe160b3f000042",
                           "radius": "2/6378"
                         },
-                        "payload": "24-hour sale at our SF flagship store on 12/26!",
+                        "payload": {
+                          "alert": "24-hour sale at our SF flagship store on 12/26!"
+                        },
                         "created_at": "2013-12-12T21:41:52.000Z",
                         "updated_at": "2013-12-12T22:01:18.000Z"
                       }
