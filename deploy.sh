@@ -211,3 +211,6 @@ cp -r $guidesdir/css/common.css "$outdir/resources/css/common.css"
 
 cp ./resources/mock_video.png $outdir/resources/images/mock_video.png
 cp ./resources/codestrong_logo_short.png $outdir/resources/images/codestrong_logo_short.png
+
+# Copy api_images folder to $outdir
+cp -r $TI_DOCS/api_images $outdir/.
