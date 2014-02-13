@@ -68,8 +68,8 @@ methods:
         description: Message subject.
         type: String
 
-      - name: custom_data_fields
-        description: User-defined data. See Custom Data Fields.
+      - name: custom_fields
+        description: User-defined data. See [Custom Objects and Custom Fields](/#!/guide/customfields).
         type: String
 
       - name: user_id
