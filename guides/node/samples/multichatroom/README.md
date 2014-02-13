@@ -253,9 +253,6 @@ This sample contains four views:
   * `login.ejs`: presents the application login
   * `signup.ejs`: presents the account sign-up form
 
-For the `chatroom.ejs` file, you need to replace `http://localhost:8080` on line 10 with your
-service's actual URL after you have published or ran it once.
-
 All view files reside in `views` directory in the application's project directory.
 
 **/views/chatroom.ejs**
@@ -270,7 +267,7 @@ All view files reside in `views` directory in the application's project director
             <script>
             $(function(){
                 //establish websocket connection with server
-                var iosocket = io.connect('http://localhost:8080/<%= (room=='default'?'':room)%>');
+                var iosocket = io.connect('/<%= (room=='default'?'':room)%>');
                 iosocket.on('connect', function () {
                     $('#incomingChatMessages').append($('<li class="alert">Connected</li>'));
 
@@ -464,11 +461,7 @@ under the `public` directory.
 After creating, copying and pasting the required files in to the application, you are ready to run or
 publish the service.
 
-After running or publishing the application once, you need to replace `http://localhost:8080` on
-line 10 of the `/views/chatrooms.ejs` file with your service's actual URL. Then, rerun or republish
-your service.  If you are publishing, be sure to overwrite the previous version.
-
-You are now ready to test your service.  In a browser:
+To test your service, in a browser:
 
   1. Navigate to your service's URL.
   2. Click the **signup** link to create a new account.
