@@ -7,7 +7,7 @@ methods:
         Deletes a checkin.
 
         An application admin can delete any Checkin object.
-        
+
     url: checkins/delete.json
     http-method: DELETE
     login-required: true
@@ -19,7 +19,7 @@ methods:
 
       - name: user_id
         description: |
-            User to delete the Checkin object on behalf of. The user must be the creator of the object.        
+            User to delete the Checkin object on behalf of. The user must be the creator of the object.
 
             The current user must be an application admin to delete a Checkin object on
             behalf of another user.
@@ -29,7 +29,7 @@ methods:
       - platform: titanium
         example: |
             This example deletes a checkin and checks the response.
-            
+
                 Cloud.Checkins.remove({
                     checkin_id: myCheckinId
                 }, function (e) {
@@ -44,11 +44,11 @@ methods:
       - platform: rest
         example: |
             Example cURL request:
-            
+
                 $ curl -b cookies.txt -c cookies.txt -X DELETE http://api.cloud.appcelerator.com/v1/checkins/delete.json?key=<YOUR APP APP KEY>&checkin_id=4d8bc645d0afbe0363000013
-                
+
             Example JSON response:
-            
+
                 {
                   "meta": {
                     "status":"ok",
@@ -56,58 +56,58 @@ methods:
                     "method_name":"deleteCheckin"
                   }
                 }
-                
+
       - platform: ios
         example: |
             Example iOS call:
-            
+
                 NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:checkin.objectId, @"checkin_id", nil];
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"DELETE" baseUrl:@"checkins/delete.json" paramDict:paramDict];
                 [request startAsynchronous];
                 [request release];
-                
+
             SDK Callback:
-            
+
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
                 	if ([response.meta.method isEqualToString:@"deleteCheckin"]) {
                 		NSLog(@"Checkin deleted!");
                 	}
                 }
-                
+
       - platform: android
         example: |
             Example Android call:
-            
-                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 Map<String, Object> data = new HashMap<String, Object>();
                 data.put("checkin_id", "4d713b4f6f70951043000001");
                 CCResponse response = sdk.sendRequest("checkins/delete.json", CCRequestMethod.DELETE, data);
-                
+
             SDK Callback:
-            
+
                 JSONObject responseJSON = response.getResponseData();
                 CCMeta meta = response.getMeta();
-                if("ok".equals(meta.getStatus()) 
-                    && meta.getCode() == 200 
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
                     && "deleteCheckin".equals(meta.getMethod())) {
                   System.out.println("Checkin deleted!");
                 }
-                
+
       - platform: javascript
         example: |
             Example Javascript call:
-            
+
                 var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
                 var data = {
                   checkin_id: '4d713b4f6f70951043000001'
                 };
                 sdk.sendRequest('checkins/delete.json', 'DELETE', data, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data) {
                   if(data) {
                     if(data.meta) {
@@ -118,20 +118,20 @@ methods:
                     }
                   }
                 }
-                
+
       - platform: actionscript
         example: |
             Example Actionscript call:
-            
+
                 var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
                 //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
                 var data:Object = new Object();
                 data.checkin_id = "4d713b4f6f70951043000001";
                 sdk.sendRequest("checkins/delete.json", URLRequestMethod.DELETE, data, false, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data:Object):void {
                   if(data) {
                     if(data.hasOwnProperty("meta")) {
@@ -142,4 +142,4 @@ methods:
                     }
                   }
                 }
-                
+

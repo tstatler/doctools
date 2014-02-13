@@ -8,8 +8,8 @@ methods:
     http-method: DELETE
     login-required: true
 
-    parameters: 
-     
+    parameters:
+
       - name: status_id
         description: ID of the status to delete.
         type: String
@@ -27,7 +27,7 @@ methods:
       - platform: titanium
         example: |
             Requires Release 3.2.0. This example deletes a status and checks the response.
-            
+
                 Cloud.Statuses.delete({
                     status_id: statusID
                 }, function (e) {
@@ -38,15 +38,15 @@ methods:
                             ((e.error && e.message) || JSON.stringify(e)));
                     }
                 });
-      
+
       - platform: rest
         example: |
             Example cURL request:
-            
+
                 $ curl -b cookies.txt -c cookies.txt -X DELETE "https://api.cloud.appcelerator.com/v1/places/delete.json?key=<YOUR APP APP KEY>&status_id=4d51d4186f70952d4c000006"
 
             Example JSON response:
-            
+
                 {
                   "meta": {
                     "status":"ok",
@@ -54,43 +54,43 @@ methods:
                     "method_name":"deleteStatus"
                   },
                 }
-                
+
       - platform: ios
         example: |
             Example iOS call:
-            
+
                 NSMutableDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:(CCStatus *)status.objectId, @"status_id", nil];
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"DELETE" baseUrl:@"statuses/delete.json" paramDict:paramDict];
                 [request startAsynchronous];
                 [request release];
-                
+
             SDK Callback:
-            
+
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
                     if ([response.meta.method isEqualToString:@"statusPlace"]) {
                         NSLog(@"status deleted!");
                     }
                 }
-                
+
       - platform: android
         example: |
             Example Android call:
-            
-                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 Map<String, Object> data = new HashMap<String, Object>();
                 data.put("status_id", "3453452345deadbeef345");
                 CCResponse response = sdk.sendRequest("statuses/delete.json", CCRequestMethod.POST, data);
-                
+
             SDK Callback:
-            
+
                 JSONObject responseJSON = response.getResponseData();
                 CCMeta meta = response.getMeta();
-                if("ok".equals(meta.getStatus()) 
-                    && meta.getCode() == 200 
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
                     && "deleteStatus".equals(meta.getMethod())) {
                   System.out.println("status deleted!");
                 }
-                
+

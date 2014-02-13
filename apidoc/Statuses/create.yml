@@ -8,8 +8,8 @@ methods:
     http-method: POST
     login-required: true
 
-    parameters: 
-     
+    parameters:
+
       - name: message
         description: Status message.
         type: String
@@ -22,14 +22,14 @@ methods:
         description: ID of the event this status is associated with.
         type: String
 
-      - name: photo 
+      - name: photo
         description: |
             New photo to attach as the primary photo for this status.
-    
-            When you use the `photo` parameter to attach a new photo, you can use the 
+
+            When you use the `photo` parameter to attach a new photo, you can use the
             [custom resize and sync options](#!/guide/photosizes).
         type: Photos
-      
+
       - name: photo_id
         description: |
             ID of an existing photo to attach as the primary photo for this status.
@@ -77,7 +77,7 @@ methods:
       - platform: titanium
         example: |
             This example creates a status and checks the response.
-            
+
                 Cloud.Statuses.create({
                     place_id: myPlaceId,
                     message: 'What a great view!',
@@ -93,15 +93,15 @@ methods:
                             ((e.error && e.message) || JSON.stringify(e)));
                     }
                 });
-      
+
       - platform: rest
         example: |
             Example cURL request:
-            
+
                 $ curl -b cookies.txt -c cookies.txt -F "message=Having fun at the beach" -F "photo=@photo.jpg" https://api.cloud.appcelerator.com/v1/statuses/create.json?key=<YOUR APP APP KEY>
-                
+
             Example JSON response:
-            
+
                 {
                   "meta": {
                     "status":"ok",
@@ -126,22 +126,22 @@ methods:
                         }
                       }
                     ]
-                  }	
+                  }
                 }
-                
+
       - platform: ios
         example: |
             Example iOS call:
-            
+
                 NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
                 [paramDict setObject:@"Working hard at Appcelerator Cloud Services Office" forKey:@"message"];
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"POST" baseUrl:@"statuses/create.json" paramDict:paramDict];
                 [request addPhotoUIImage:(UIImage *)meworkinghardImage paramDict:nil];
                 [request startAsynchronous];
                 [request release];
-                
+
             SDK Callback:
-            
+
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
                 	NSArray *statuses = [response getObjectsOfType:[CCStatuses class]];
@@ -150,41 +150,41 @@ methods:
                 		...
                 	}
                 }
-                
+
       - platform: android
         example: |
             Example Android call:
-            
-                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 Map<String, Object> data = new HashMap<String, Object>();
                 data.put("message", "new status!");
                 CCResponse response = sdk.sendRequest("statuses/create.json", CCRequestMethod.POST, data);
-                
+
             SDK Callback:
-            
+
                 JSONObject responseJSON = response.getResponseData();
                 CCMeta meta = response.getMeta();
-                if("ok".equals(meta.getStatus()) 
-                    && meta.getCode() == 200 
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
                     && "createStatus".equals(meta.getMethod())) {
                   JSONArray statuses = responseJSON.getJSONArray("statuses");
                   ...
                 }
-                
+
       - platform: javascript
         example: |
             Example Javascript call:
-            
+
                 var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
                 var data = {
                   message: 'new status!'
                 };
                 sdk.sendRequest('statuses/create.json', 'POST', data, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data) {
                   if(data) {
                     if(data.meta) {
@@ -196,20 +196,20 @@ methods:
                     }
                   }
                 }
-                
+
       - platform: actionscript
         example: |
             Example Actionscript call:
-            
+
                 var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
                 //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
                 var data:Object = new Object();
                 data.message = "new status!";
                 sdk.sendRequest("statuses/create.json", URLRequestMethod.POST, data, false, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data:Object):void {
                   if(data) {
                     if(data.hasOwnProperty("meta")) {
@@ -221,4 +221,4 @@ methods:
                     }
                   }
                 }
-                
+

@@ -5,7 +5,7 @@ methods:
     description: |
         Create a post, which can be a Facebook-style wall post or Digg-style
         submission with content.
-        
+
     url: posts/create.json
     http-method: POST
     login-required: true
@@ -16,23 +16,23 @@ methods:
         description: Text content of the post.
         type: String
         required: true
-    
+
       - name: title
         description: Title of the post.
         type: String
-    
+
       - name: event_id
         description: ID of the {@link Events} this post belongs to.
         type: String
 
-      - name: photo 
+      - name: photo
         description: |
             New photo to attach as the primary photo for this object.
-    
-            When you use the `photo` parameter to attach a new photo, you can use the 
+
+            When you use the `photo` parameter to attach a new photo, you can use the
             [custom resize and sync options](#!/guide/photosizes).
         type: Photos
-      
+
       - name: photo_id
         description: |
             ID of an existing photo to attach as the primary photo for this object.
@@ -80,7 +80,7 @@ methods:
       - platform: titanium
         example: |
             This example creates a new post and checks the response.
-            
+
                 Cloud.Posts.create({
                     content: 'Man Walks On Moon',
                     title: 'News of the day',
@@ -98,15 +98,15 @@ methods:
                             ((e.error && e.message) || JSON.stringify(e)));
                     }
                 });
-      
+
       - platform: rest
         example: |
             Example cURL request:
-            
+
                 $ curl -b cookies.txt -c cookies.txt -F "photo=@photo.jpg" -F "content=Buzz at Appcelerator Cloud Services" -F "title=Today's News" https://api.cloud.appcelerator.com/v1/posts/create.json?key=<YOUR APP APP KEY>
-                
+
             Example JSON response:
-            
+
                 {
                   "meta": {
                     "status": "ok",
@@ -147,11 +147,11 @@ methods:
                     ]
                   }
                 }
-                
+
       - platform: ios
         example: |
             Example iOS call:
-            
+
                 NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
                 [paramDict setObject:@"Appcelerator Cloud Services buzz" forKey:@"title"];
                 [paramDict setObject:@"More users joined Appcelerator Cloud Services" forKey:@"content"];
@@ -159,9 +159,9 @@ methods:
                 [request addPhotoUIImage:image paramDict:nil];
                 [request startAsynchronous];
                 [request release];
-                
+
             SDK Callback:
-            
+
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
                 	NSArray *posts = [response getObjectsOfType:[CCPost class]];
@@ -170,43 +170,43 @@ methods:
                 		...
                 	}
                 }
-                
+
       - platform: android
         example: |
             Example Android call:
-            
-                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 Map<String, Object> data = new HashMap<String, Object>();
                 data.put("content", "Buzz at Appcelerator Cloud Services");
                 data.put("title", "Today's News");
                 CCResponse response = sdk.sendRequest("posts/create.json", CCRequestMethod.POST, data);
-                
+
             SDK Callback:
-            
+
                 JSONObject responseJSON = response.getResponseData();
                 CCMeta meta = response.getMeta();
-                if("ok".equals(meta.getStatus()) 
-                    && meta.getCode() == 200 
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
                     && "createPost".equals(meta.getMethod())) {
                   JSONArray posts = responseJSON.getJSONArray("posts");
                   ...
                 }
-                
+
       - platform: javascript
         example: |
             Example Javascript call:
-            
+
                 var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
                 var data = {
                   content: 'Buzz at Appcelerator Cloud Services',
                   title: 'Today's News'
                 };
                 sdk.sendRequest('posts/create.json', 'POST', data, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data) {
                   if(data) {
                     if(data.meta) {
@@ -218,21 +218,21 @@ methods:
                     }
                   }
                 }
-                
+
       - platform: actionscript
         example: |
             Example Actionscript call:
-            
+
                 var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
                 //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
                 var data:Object = new Object();
                 data.content = "Buzz at Appcelerator Cloud Services";
                 data.title = "Today's News";
                 sdk.sendRequest("posts/create.json", URLRequestMethod.POST, data, false, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data:Object):void {
                   if(data) {
                     if(data.hasOwnProperty("meta")) {
@@ -244,4 +244,4 @@ methods:
                     }
                   }
                 }
-                
+

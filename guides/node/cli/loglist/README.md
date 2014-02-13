@@ -4,7 +4,17 @@
 ## Description
 
 List application's log within a specific period. By default, a maximum of 100
-log messages will be returned at a time.
+log messages will be returned at a time. Each log record contains the following fields:
+
+* Date and time
+* IP of server that handled the request
+* URL of requested resource
+* The execution time of the request in milliseconds
+
+Note that these fields are only reported for Node.ACS applications that use the
+ [Node.ACS MVC framework](http://docs.appcelerator.com/cloud/latest/#!/guide/node_mvc).
+
+Note that `acs loglist` may not get the latest logs from server immediately. You may need to wait a few seconds. 
 
 ## Usage
 

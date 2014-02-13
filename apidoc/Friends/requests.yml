@@ -11,18 +11,18 @@ methods:
 
       - name: response_json_depth
         description: |
-            Nested object depth level counts in response JSON.  
+            Nested object depth level counts in response JSON.
 
             In order to reduce server API calls from an applicaton, the response JSON may
-            include not just the objects that are being referred to, but also 
+            include not just the objects that are being referred to, but also
             some important data related to the returned objects such as object's owner or
-            referenced objects.  
+            referenced objects.
 
             Default is 3, valid range is 1 to 8.
         type: Number
 
-    response-parameters: 
-      
+    response-parameters:
+
       - name: friend_requests
         description: |
             A list of friend requests, where each friend request is an object with
@@ -32,7 +32,7 @@ methods:
 
             *   `user: Users`. User object for the user making the request.
 
-            *   `created_at: Date`. Timestamp when the file was created. 
+            *   `created_at: Date`. Timestamp when the file was created.
 
             *   `updated_at: Date`. Timestamp when the file was last updated.
         type: Array<Hash>
@@ -41,7 +41,7 @@ methods:
       - platform: titanium
         example: |
             This example shows pending friend requests and checks the response.
-    
+
                 Cloud.Friends.requests(function (e) {
                     if (e.success) {
                         alert('Success:\n' +
@@ -57,15 +57,15 @@ methods:
                             ((e.error && e.message) || JSON.stringify(e)));
                     }
                 });
-    
+
       - platform: rest
         example: |
             Example cURL request:
-            
+
                 $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/friends/requests.json?key=<YOUR APP APP KEY>"
-                
+
             Example JSON response:
-            
+
                 {
                   "meta": {
                     "code": 200,
@@ -91,17 +91,17 @@ methods:
                     ]
                   }
                 }
-                
+
       - platform: ios
         example: |
             Example iOS call:
-            
+
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"friends/requests.json" paramDict:nil];
                 [request startAsynchronous];
                 [request release];
-                
+
             SDK Callback:
-            
+
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
                 	NSArray *friendRequests = [response getObjectsOfType:[CCFriendRequest class]];
@@ -110,36 +110,36 @@ methods:
                 		...
                 	}
                 }
-                
+
       - platform: android
         example: |
             Example Android call:
-            
-                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 CCResponse response = sdk.sendRequest("friends/requests.json", CCRequestMethod.GET, null);
-                
+
             SDK Callback:
-            
+
                 JSONObject responseJSON = response.getResponseData();
                 CCMeta meta = response.getMeta();
-                if("ok".equals(meta.getStatus()) 
-                    && meta.getCode() == 200 
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
                     && "friendRequests".equals(meta.getMethod())) {
                   JSONArray requests = responseJSON.getJSONArray("friend_requests");
                   ...
                 }
-                
+
       - platform: javascript
         example: |
             Example Javascript call:
-            
+
                 var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
                 sdk.sendRequest('friends/requests.json', 'GET', null, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data) {
                   if(data) {
                     if(data.meta) {
@@ -153,18 +153,18 @@ methods:
                     }
                   }
                 }
-                
+
       - platform: actionscript
         example: |
             Example Actionscript call:
-            
+
                 var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
                 //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
                 sdk.sendRequest("friends/requests.json", URLRequestMethod.GET, null, false, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data:Object):void {
                   if(data) {
                     if(data.hasOwnProperty("meta")) {
@@ -178,4 +178,4 @@ methods:
                     }
                   }
                 }
-                
+

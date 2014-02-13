@@ -4,17 +4,17 @@ methods:
     summary: Update an ACL
     description: |
         Updates an ACL object to change its access control list. When updating an ACL,
-        you can change the members of the `readers` list and the `writers` list, or change the value 
-        of the `public_read` and `public_write` flags. 
-          
+        you can change the members of the `readers` list and the `writers` list, or change the value
+        of the `public_read` and `public_write` flags.
+
         An application admin can update any ACL object.
-        
+
     url: acls/update.json
     http-method: PUT
     login-required: true
 
     parameters:
-      - name: name 
+      - name: name
         description: |
             Name of the ACL object.
 
@@ -24,7 +24,7 @@ methods:
       - name: id
         description: |
             ID of the ACL oject.
-      
+
             Either `name` or `id` must be specified.
         type: String
 
@@ -33,7 +33,7 @@ methods:
             Comma separated list of IDs identifying users who can read objects
             controlled by this ACL.
 
-            To remove all users from the `readers` list, simply set `reader_ids=""`. 
+            To remove all users from the `readers` list, simply set `reader_ids=""`.
             This removes all users except for the owner from the list.
         type: String
         required: true
@@ -43,21 +43,21 @@ methods:
             Comma separated list of IDs identifying users who can update an object.
             controlled by this ACL.
 
-            To remove all users from the `writers` list, simply set `writer_ids=""`. 
+            To remove all users from the `writers` list, simply set `writer_ids=""`.
             This removes all users except for the owner from the list.
         type: String
         required: true
 
       - name: public_read
         description: |
-            Determines whether objects controlled by this ACS are publically readable. 
+            Determines whether objects controlled by this ACS are publically readable.
 
             Default is false.
         type: Boolean
 
       - name: public_write
         description: |
-            Determines whether objects controlled by this ACS are publically writable. 
+            Determines whether objects controlled by this ACS are publically writable.
 
             Default is false.
         type: Boolean
@@ -79,7 +79,7 @@ methods:
       - platform: titanium
         example: |
             This example updates an ACL object and checks the response.
-    
+
                 Cloud.ACLs.update({
                     name: 'testACL',
                     reader_ids: '',
@@ -98,11 +98,11 @@ methods:
       - platform: rest
         example: |
             Example cURL request:
-            
+
                 $ curl -b c.txt -c c.txt -X PUT -F "name=access_photo_album" -F "public_read=true" -F "public_write=true" https://api.cloud.appcelerator.com/v1/acls/update.json?key=<YOUR APP APP KEY>
-                
+
             Example JSON response:
-            
+
                 {
                   "meta": {
                     "code": 200,
@@ -123,11 +123,11 @@ methods:
                     ]
                   }
                 }
-                
+
       - platform: ios
         example: |
             Example iOS call:
-            
+
                 NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
                 [paramDict setObject:@"access_photo_album" forKey:@"name"];
                 [paramDict setObject:@"true" forKey:@"public_read"];
@@ -135,9 +135,9 @@ methods:
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"PUT" baseUrl:@"acls/update.json" paramDict:paramDict];
                 [request startAsynchronous];
                 [request release];
-                
+
             SDK Callback:
-            
+
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
                 	if ([response.meta.method isEqualToString:@"updateAcl"]) {
@@ -148,35 +148,35 @@ methods:
                 		}
                 	}
                 }
-                
+
       - platform: android
         example: |
             Example Android call:
-            
-                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 Map<String, Object> data = new HashMap<String, Object>();
                 data.put("name", "access_photo_album");
                 data.put("public_read", true);
                 data.put("public_write", true);
                 CCResponse response = sdk.sendRequest("acls/update.json", CCRequestMethod.PUT, data);
-                
+
             SDK Callback:
-            
+
                 JSONObject responseJSON = response.getResponseData();
                 CCMeta meta = response.getMeta();
-                if("ok".equals(meta.getStatus()) 
-                    && meta.getCode() == 200 
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
                     && "updateAcl".equals(meta.getMethod())) {
                   JSONArray acls = responseJSON.getJSONArray("acls");
                   ...
                 }
-                
+
       - platform: javascript
         example: |
             Example Javascript call:
-            
+
                 var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
                 var data = {
                   name: 'access_photo_album',
@@ -184,9 +184,9 @@ methods:
                   public_write: 'true'
                 };
                 sdk.sendRequest('acls/update.json', 'PUT', data, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data) {
                   if(data) {
                     if(data.meta) {
@@ -198,4 +198,4 @@ methods:
                     }
                   }
                 }
-                
+

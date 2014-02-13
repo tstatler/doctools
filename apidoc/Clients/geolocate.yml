@@ -11,8 +11,8 @@ methods:
         GPS signals nor WiFi triangulation commonly used on mobile devices. See
         [MaxMind GeoIP city accuracy](https://www.maxmind.com/app/city_accuracy) for
         more information. An example use of this data is to verify the country that
-        the app user in, so that access can be given to application data.  
-          
+        the app user in, so that access can be given to application data.
+
         An error will be returned of the location cannot be determined from the IP
         address. A successful lookup will return at minimum a [ISO 3166 country
         code](https://www.maxmind.com/app/iso3166).
@@ -32,7 +32,7 @@ methods:
         description: |
             Device's approximate location, represented as an object with the following
             properties:
-                
+
             * `latitude` : `Number`
             * `longitude` : `Number`
             * `city` : `String`
@@ -45,7 +45,7 @@ methods:
       - platform: titanium
         example: |
             This example locates a client and checks the response.
-            
+
                 Cloud.Clients.geolocate({
                     ip_address: clientIPAddress
                 }, function (e) {
@@ -63,11 +63,11 @@ methods:
       - platform: rest
         example: |
             Example cURL request:
-            
+
                 $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/clients/geolocate.json?key=<YOUR APP APP KEY>"
-                
+
             Example JSON response:
-            
+
                 {
                   "meta": {
                     "status": "ok",
@@ -86,54 +86,54 @@ methods:
                     }
                   }
                 }
-                
+
       - platform: ios
         example: |
             Example iOS call:
-            
+
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:controller httpMethod:@"GET" baseUrl:@"clients/geolocate.json" paramDict:nil];
                 [request startAsynchronous]'
                 [request release];
-                
+
             SDK Callback:
-            
+
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
-                
+
                 	if ([response.meta.methodName isEqualToString:@"geolocateClient"]) {
                 		NSDictionary *location = [response.response objectForKey:@"location"];
                 		NSLog(@"location is %@", location);
                 	}
                 }
-                
+
       - platform: android
         example: |
             Example Android call:
-            
-                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 CCResponse response = sdk.sendRequest("clients/geolocate.json", CCRequestMethod.GET, null);
-                
+
             SDK Callback:
-            
+
                 JSONObject responseJSON = response.getResponseData();
                 CCMeta meta = response.getMeta();
-                if("ok".equals(meta.getStatus()) 
-                    && meta.getCode() == 200 
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
                     && "geolocateClient".equals(meta.getMethod())) {
                   JSONObject location = responseJSON.getJSONObject("location");
                   System.out.println(location);
                 }
-                
+
       - platform: javascript
         example: |
             Example Javascript call:
-            
+
                 var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
                 sdk.sendRequest('clients/geolocate.json', 'GET', null, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data) {
                   if(data) {
                     if(data.meta) {
@@ -144,18 +144,18 @@ methods:
                     }
                   }
                 }
-                
+
       - platform: actionscript
         example: |
             Example Actionscript call:
-            
+
                 var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
                 //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
                 sdk.sendRequest("clients/geolocate.json", URLRequestMethod.GET, null, false, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data:Object):void {
                   if(data) {
                     if(data.hasOwnProperty("meta")) {
@@ -166,4 +166,4 @@ methods:
                     }
                   }
                 }
-                
+

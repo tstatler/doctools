@@ -13,26 +13,26 @@ methods:
 
       - name: response_json_depth
         description: |
-            Nested object depth level counts in the response JSON.  
+            Nested object depth level counts in the response JSON.
 
             In order to reduce server API calls from an applicaton, the response JSON may
-            include not just the identified object, but also 
+            include not just the identified object, but also
             some important data related to the returned objects, such as owners and
-            referenced objects.  
+            referenced objects.
 
             Default is 3, valid range is 1 to 8.
         type: Number
 
     response-parameters:
       - name: places
-        description: Single-element array containing the identified place object. 
+        description: Single-element array containing the identified place object.
         type: Array<Places>
 
     examples:
       - platform: titanium
         example: |
             This example retrieves information about a place and checks the response.
-            
+
                 Cloud.Places.show({
                     place_id: savedPlaceId
                 }, function (e) {
@@ -47,15 +47,15 @@ methods:
                             ((e.error && e.message) || JSON.stringify(e)));
                     }
                 });
-      
+
       - platform: rest
         example: |
             Example cURL request:
-            
+
                 $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/places/show.json?key=<YOUR APP APP KEY>&place_id=4d6f13e96f70953608000012"
-                
+
             Example JSON response:
-            
+
                 {
                   "meta": {
                     "status":"ok",
@@ -75,62 +75,62 @@ methods:
                           "country":"United States",
                           "phone":"(415) 543-2928",
                           "lat":37.784732,
-                          "lng":-122.395441	
+                          "lng":-122.395441
                       }
                     ]
-                  }	
+                  }
                 }
-                
+
       - platform: ios
         example: |
             Example iOS call:
-            
+
                 NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:(CCPlace *)place.objectId, @"place_id", nil];
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"places/show.json" paramDict:nil];
                 [request startAsynchronous];
                 [request release];
-                
+
             SDK Callback:
-            
+
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
                 	NSArray *places = [response getObjectsOfType:[CCPlace class]];
                 }
-                
+
       - platform: android
         example: |
             Example Android call:
-            
-                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 Map<String, Object> data = new HashMap<String, Object>();
                 data.put("place_id", "4d6f13e96f70953608000012");
                 CCResponse response = sdk.sendRequest("places/show.json", CCRequestMethod.GET, data);
-                
+
             SDK Callback:
-            
+
                 JSONObject responseJSON = response.getResponseData();
                 CCMeta meta = response.getMeta();
-                if("ok".equals(meta.getStatus()) 
-                    && meta.getCode() == 200 
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
                     && "showPlace".equals(meta.getMethod())) {
                   JSONArray places = responseJSON.getJSONArray("places");
                   ...
                 }
-                
+
       - platform: javascript
         example: |
             Example Javascript call:
-            
+
                 var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
                 var data = {
                   place_id: '4d6f13e96f70953608000012'
                 };
                 sdk.sendRequest('places/show.json', 'GET', data, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data) {
                   if(data) {
                     if(data.meta) {
@@ -142,20 +142,20 @@ methods:
                     }
                   }
                 }
-                
+
       - platform: actionscript
         example: |
             Example Actionscript call:
-            
+
                 var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
                 //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
                 var data:Object = new Object();
                 data.place_id = "4d8910aed0afbe0e4e000006";
                 sdk.sendRequest("places/show.json", URLRequestMethod.GET, data, false, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data:Object):void {
                   if(data) {
                     if(data.hasOwnProperty("meta")) {
@@ -167,4 +167,4 @@ methods:
                     }
                   }
                 }
-                
+

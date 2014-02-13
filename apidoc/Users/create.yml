@@ -3,11 +3,11 @@ methods:
   - name: create
     summary: Creates a user.
     url: users/create.json
-    http-method: post 
+    http-method: post
     login-required: false
     description: |
         Creates a new user.
-        
+
         When creating a user, you must specify either:
 
         *   username
@@ -22,6 +22,7 @@ methods:
         ID belongs to user B.
 
         For admin users, you will still be logged in as the admin user.
+
     parameters: 
 
       - name: email
@@ -35,32 +36,32 @@ methods:
             If `username` is not specified, `email`, `first_name`, and `last_name` must be included.
         type: String
 
-      - name: password  
+      - name: password
         description: User's password.
         type: String
         required: true
 
-      - name: password_confirmation 
+      - name: password_confirmation
         description: Copy of user's password for confirmation.
         type: String
         required: true
 
-      - name: first_name  
+      - name: first_name
         description: User's first name. Required when `username` is not provided.
         type: String
 
-      - name: last_name  
+      - name: last_name
         description: User's last name. Required when `username` is not provided.
         type: String
 
-      - name: photo 
+      - name: photo
         description: |
             New photo to attach as the primary photo for the user.
-    
-            When you use the `photo` parameter to attach a new photo, you can use the 
+
+            When you use the `photo` parameter to attach a new photo, you can use the
             [custom resize and sync options](#!/guide/photosizes).
         type: Photos
-      
+
       - name: photo_id
         description: |
             ID of an existing photo to attach as the primary photo for the user.
@@ -91,20 +92,20 @@ methods:
             mutually exclusive.
         type: String
 
-      - name: role    
+      - name: role
         description: String representation of user role, for example, "teacher".
         type: String
 
-      - name: template    
+      - name: template
         description: |
             Send a congratulation email to notify that the user has been created successfully.
 
             You need to create an email template and pass the template name.
         type: String
 
-      - name: confirmation_template   
+      - name: confirmation_template
         description: |
-            If "New User Email Verification" is enabled for the application, ACS sends a confirmation email to 
+            If "New User Email Verification" is enabled for the application, ACS sends a confirmation email to
             the user.
 
             If you don't pass the `confirmation_template` parameter, then ACS sends a default
@@ -113,17 +114,17 @@ methods:
             If you wish to use your custom email body, you can create a email template and pass
             the template name. Your email template must contain the following URL to allow users
             to be redirected to Appcelerator Cloud Services email verification page:
-        
+
                  https://cloud.appcelerator.com/users/confirmation?key={{key}}&confirmation_token={{confirmation_token}}
 
             If you have your own website that talks to Appcelerator Cloud Services backend and
             wish to use custom URL, you must provide a URL with the following format:
-        
+
                  https://<your_url.com>/<your_method>?key={{key}}&confirmation_token={{confirmation_token}}
-        
+
             When a user visits the above URL, you make a call to Appcelerator Cloud Services to
             confirm the user internally from your web server:
-        
+
                  GET https://api.cloud.appcelerator.com/v1/users/confirm_user.json?confirmation_token={{confirmation_token}}&key=<Your App Key>
         type: String
 
@@ -136,7 +137,7 @@ methods:
       - platform: titanium
         example: |
             This example creates a new user and checks the response.
-            
+
                 Cloud.Users.create({
                     email: 'test@mycompany.com',
                     first_name: 'test_firstname',
@@ -156,15 +157,15 @@ methods:
                             ((e.error && e.message) || JSON.stringify(e)));
                     }
                 });
-      
+
       - platform: rest
         example: |
             Example cURL request:
-            
+
                 $ curl -b cookies.txt -c cookies.txt -X POST --data-urlencode "email=john.smith@company.com" --data-urlencode "role=teacher" --data-urlencode "first_name=John" --data-urlencode "last_name=Smith" --data-urlencode "password=pass" --data-urlencode "password_confirmation=pass" --data-urlencode 'custom_fields={"age":28, "favorite_color":"blue"}' "https://api.cloud.appcelerator.com/v1/users/create.json?key=<YOUR APP APP KEY>"
-                
+
             Example JSON response:
-            
+
                 {
                   "meta": {
                     "stat":"ok",
@@ -198,35 +199,35 @@ methods:
                         }
                       }
                     ]
-                  }	
+                  }
                 }
-                
-            The User object is defined in `Cocoafish/Models/CCUser.h` The Appcelerator
+
+            The User object is defined in `ACSClient/Models/CCUser.h` The Appcelerator
             Cloud Services SDK automatically stores a logged in user’s session in memory
             and on disk. So once a user is logged in, you can access the current user info
             anytime by calling:
-            
-                [[Cocoafish defaultCocoafish] getCurrentUser]
-            
+
+                [[ACSClient defaultACSClient] getCurrentUser]
+
             It will work after the app is restarted since the session is persisted on disk
             as well.
-            
+
       - platform: ios
         example: |
             Example iOS call:
-            
+
                 NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
-                [paramDict setObject:@"foo@foo.com" forKey:@"email"];   
-                [paramDict setObject:@"John" forKey:@"first_name"];   
-                [paramDict setObject:@"Woo" forKey:@"last_name"];   
-                [paramDict setObject:@"pass" forKey:@"password"];   
-                [paramDict setObject:@"pass" forKey:@"password_confirmation"];   
+                [paramDict setObject:@"foo@foo.com" forKey:@"email"];
+                [paramDict setObject:@"John" forKey:@"first_name"];
+                [paramDict setObject:@"Woo" forKey:@"last_name"];
+                [paramDict setObject:@"pass" forKey:@"password"];
+                [paramDict setObject:@"pass" forKey:@"password_confirmation"];
                 CCRequest *request = [[[CCRequest alloc] initWithDelegate:self httpMethod:@"POST" baseUrl:@"users/create.json" paramDict:paramDict] autorelease];
                 [request addPhotoUIImage:[UIImage imageNamed:@"john.jpg"] paramDict:nil];
                 [request startAsynchronous];
-                
+
             SDK Callback:
-            
+
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
                 	NSArray *users = [response getObjectsOfType:[CCUser class]];
@@ -234,14 +235,14 @@ methods:
                 		NSLog(@"Successfully registered user %@", user);
                 	}
                 }
-                
+
       - platform: android
         example: |
             Example Android call:
-            
-                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 //the user's parameters
                 Map<String, Object> data = new HashMap<String, Object>();
                 data.put("email", "test@appcelerator.com");
@@ -252,17 +253,17 @@ methods:
                 File file = new File("/photos/profile.gif");
                 data.put("photo", file);
                 CCResponse response = sdk.sendRequest("users/create.json", CCRequestMethod.POST, data);
-                
+
             SDK Callback:
-            
+
                 JSONObject responseJSON = response.getResponseData();
                 CCMeta meta = response.getMeta();
-                if("ok".equals(meta.getStatus()) 
-                    && meta.getCode() == 200 
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
                     && "createUser".equals(meta.getMethod())) {
                   JSONArray users = responseJSON.getJSONArray("users");
                   JSONObject user = users.getJSONObject(0);
-                  
+
                   StringBuffer sb = new StringBuffer();
                   sb.append("Create user successful!\n");
                   sb.append("id:" + user.getString("id") + "\n");
@@ -271,24 +272,24 @@ methods:
                   sb.append("email:" + user.getString("email") + "\n");
                   System.out.println(sb.toString());
                 }
-                
+
       - platform: javascript
         example: |
             Example Javascript call:
-            
+
                 var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
                 var data = {
-                  email: 'test@appcelerator.com', 
-                  first_name: 'test_firstname', 
-                  last_name: 'test_lastname', 
-                  password: 'test_password', 
+                  email: 'test@appcelerator.com',
+                  first_name: 'test_firstname',
+                  last_name: 'test_lastname',
+                  password: 'test_password',
                   password_confirmation: 'test_password',
                   photo: 'testPhoto'
                 };
                 sdk.sendRequest('users/create.json', 'POST', data, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data) {
                   if(data) {
                     if(data.meta) {
@@ -306,11 +307,11 @@ methods:
                     }
                   }
                 }
-                
+
       - platform: actionscript
         example: |
             Example Actionscript call:
-            
+
                 var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
                 //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
                 //the user's parameters
@@ -322,9 +323,9 @@ methods:
                 data.password_confirmation = "test_password";
                 data.photo = photo;
                 sdk.sendRequest("users/create.json", URLRequestMethod.POST, data, false, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data:Object):void {
                   if(data) {
                     if(data.hasOwnProperty("meta")) {

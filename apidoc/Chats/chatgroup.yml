@@ -7,17 +7,17 @@ methods:
 
         If user A sends chat message to user B and C, users A, B and C automatically
         form a chat group. Use this API to get a list of chat groups the current user
-        belongs to. 
-        
+        belongs to.
+
     url: chats/get_chat_groups.json
     login-required: true
 
-    parameters: 
+    parameters:
 
-      - name: page  
+      - name: page
         description: Request page number, default is 1.
         type: Number
-      
+
       - name: per_page
         description: Number of results per page, default is 10.
         type: Number
@@ -25,7 +25,7 @@ methods:
       - name: where
         description: |
             Constraint values for fields. `where` should be encoded JSON.
-            
+
             If `where` is not specified, `query` returns all objects.
             See the [Search and Query guide](#!/guide/search_query) for more information.
         type: String
@@ -38,11 +38,11 @@ methods:
 
       - name: response_json_depth
         description: |
-            Nested object depth level counts in response json.  
+            Nested object depth level counts in response json.
             In order to reduce server API calls from an applicaton, the response json may
             include not just the objects that are being queried/searched, but also with
             some important data related to the returning objects such as object's owner or
-            referencing objects.  
+            referencing objects.
 
             Default is 3, valid range is 1 to 8.
         type: Number
@@ -65,9 +65,9 @@ methods:
     examples:
       - platform: titanium
         example: |
-            This example requests a lists of chat groups that the current user belongs to and checks 
+            This example requests a lists of chat groups that the current user belongs to and checks
             the response.
-            
+
                 Cloud.Chats.getChatGroups(function (e) {
                     if (e.success) {
                         for (var i = 0; i < e.chats.length; i++) {
@@ -86,12 +86,12 @@ methods:
       - platform: rest
         example: |
             Example cURL request:
-            
+
                 Get a list of chat groups the current user belongs to, sorted by groups with most recent activity first.
                 $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/chats/get_chat_groups.json?order=-updated_at&key=<YOUR APP APP KEY>"
-                
+
             Example JSON response:
-            
+
                 {
                   "meta": {
                     "code": 200,
@@ -116,7 +116,7 @@ methods:
                             "created_at": "2011-12-08T05:46:52+0000",
                             "updated_at": "2011-12-08T05:46:52+0000",
                             "external_accounts": [
-                
+
                             ],
                             "username": "bob",
                             "email": "bob@dude.com"
@@ -128,7 +128,7 @@ methods:
                             "created_at": "2011-12-08T05:46:52+0000",
                             "updated_at": "2011-12-08T05:46:52+0000",
                             "external_accounts": [
-                
+
                             ],
                             "username": "alice",
                             "email": "alice@gal.com"
@@ -147,7 +147,7 @@ methods:
                             "created_at": "2011-12-08T05:46:52+0000",
                             "updated_at": "2011-12-08T05:46:52+0000",
                             "external_accounts": [
-                
+
                             ],
                             "username": "bob",
                             "email": "bob@dude.com"
@@ -159,7 +159,7 @@ methods:
                             "created_at": "2011-12-08T05:46:52+0000",
                             "updated_at": "2011-12-08T05:46:52+0000",
                             "external_accounts": [
-                
+
                             ],
                             "username": "alice",
                             "email": "alice@gal.com"
@@ -171,7 +171,7 @@ methods:
                             "created_at": "2011-12-08T05:46:52+0000",
                             "updated_at": "2011-12-08T05:46:52+0000",
                             "external_accounts": [
-                
+
                             ],
                             "username": "joe",
                             "email": "joe@guy.com"
@@ -190,7 +190,7 @@ methods:
                             "created_at": "2011-12-08T05:46:52+0000",
                             "updated_at": "2011-12-08T05:46:52+0000",
                             "external_accounts": [
-                
+
                             ],
                             "username": "bob",
                             "email": "bob@dude.com"
@@ -202,7 +202,7 @@ methods:
                             "created_at": "2011-12-08T05:46:52+0000",
                             "updated_at": "2011-12-08T05:46:52+0000",
                             "external_accounts": [
-                
+
                             ],
                             "username": "joe",
                             "email": "joe@guy.com"
@@ -212,19 +212,19 @@ methods:
                     ]
                   }
                 }
-                
+
       - platform: ios
         example: |
             Example iOS call:
-            
+
                 NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:3];
                 [paramDict setObject:"-updated_at" forKey:@"order"]; // optional
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"chats/get_chat_groups.json"  paramDict:paramDict];
                 [request startAsynchronous];
                 [request release];
-                
+
             SDK Callback:
-            
+
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
                 	if ([response.meta.methodName isEqualToString:@"getChatGroups"]) {
@@ -232,36 +232,36 @@ methods:
                 		...
                 	}
                 }
-                
+
       - platform: android
         example: |
             Example Android call:
-            
-                Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
-                //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
                 CCResponse response = sdk.sendRequest("chats/get_chat_groups.json", CCRequestMethod.GET, null);
-                
+
             SDK Callback:
-            
+
                 JSONObject responseJSON = response.getResponseData();
                 CCMeta meta = response.getMeta();
-                if("ok".equals(meta.getStatus()) 
-                    && meta.getCode() == 200 
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
                     && "getChatGroups".equals(meta.getMethod())) {
                   JSONArray chatGroups = responseJSON.getJSONArray("chat_groups");
                   ...
                 }
-                
+
       - platform: javascript
         example: |
             Example Javascript call:
-            
+
                 var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
                 sdk.sendRequest('chats/get_chat_groups.json', 'GET', null, callback);
-                
+
             SDK Callback:
-            
+
                 function callback(data) {
                   if(data) {
                     if(data.meta) {
@@ -273,4 +273,4 @@ methods:
                     }
                   }
                 }
-                
+
