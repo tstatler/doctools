@@ -70,9 +70,12 @@ your request:
 
 ## Example
 
-To setup autoscaling, run the following commands:
+The following example enables autoscaling, using a maximum of five servers, when there are at least
+20 queued requests. The application is also configured to automatically scale down the number of servers
+when the number of queued requests drops below 20.
 
     $ acs config --autoscale true MyFirstApp
     $ acs config --maxsize 5 MyFirstApp
     $ acs config --maxqueuedrequests 20 MyFirstApp
+    $ acs config --autoscaledown true MyFirstApp
 
