@@ -256,10 +256,6 @@ in `config.json`.
     }
 
 
-Node.ACS uses `app.all()` internally to setup the filters, all filters will be
-set before routes so that it can be reached before the request gets handled by
-controllers.
-
 All filter files reside in `filters` folder with '.js' extension. There could
 be any number of filter files in an application, and there could be any number
 of functions in a filter file.
