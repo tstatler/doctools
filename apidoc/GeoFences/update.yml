@@ -64,7 +64,7 @@ methods:
                         "end_time": "2013-12-26T19:00:00.000Z",
                         "loc": {
                           "radius": "2/6378",
-                          "coordinate": [
+                          "coordinates": [
                             0,
                             0
                           ],
