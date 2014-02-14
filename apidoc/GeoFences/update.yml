@@ -63,8 +63,21 @@ methods:
                         "start_time": "2013-12-25T00:00:00.000Z",
                         "end_time": "2013-12-26T19:00:00.000Z",
                         "loc": {
-                          "place_id": "52aa310765fe160b3f000042",
-                          "radius": "2/6378"
+                          "radius": "2/6378",
+                          "coordinate": [
+                            0,
+                            0
+                          ],
+                          "place": {
+                            "id":  "52aa310765fe160b3f000042",
+                            "name": "pointOne",
+                            "created_at": "2013-12-12T18:41:52.000Z",
+                            "updated_at": "2013-12-12T18:01:18.000Z",
+                            "latitude": 0,
+                            "longitude": 0,
+                            "custom_fields": {
+                              "coordinates": []
+                            }
                         },
                         "payload": {
                           "alert": "24-hour sale at our SF flagship store on 12/26!"

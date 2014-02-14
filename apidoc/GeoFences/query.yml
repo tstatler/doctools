@@ -28,6 +28,17 @@ methods:
             fetch. `limit` cannot be greater than 1000.
         type: Number
 
+      - name: response_json_depth
+        description: |
+            Nested object depth level for response data.
+
+            Default value is 3.  Valid range is from 1 to 8.
+
+            Response data may include references to other objects, which the server performs
+            additional queries on to include in the response. To reduce server response time,
+            set this parameter to a lower value to reduce server API calls.
+        type: Number
+
       - name: skip
         description: |
             Number of records to skip. Must be used together with `limit`.

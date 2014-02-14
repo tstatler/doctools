@@ -48,8 +48,8 @@ fields:
 
   - name: loc
     description: |
-        JSON-encode object describing the geographic perimeter of the geo-fence, specified as a circle with
-        a center point of either `place_id` or `coordinate` property and the `radius` property:
+        JSON-encoded object describing the geographic perimeter of the geo-fence, specified as a circle with
+        a center point of either `place_id` or `coordinates` property and the `radius` property:
 
           * `place_id` (String): Use an ACS {@link Places} object as the center of the circle. Specify the
             ID of the Place.
