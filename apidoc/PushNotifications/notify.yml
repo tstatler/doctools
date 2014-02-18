@@ -33,6 +33,8 @@ methods:
             Comma-separated list of user IDs to send the notification to users who are subscribed
             to the specified channel. Up to 1000 users can be specified.
 
+            You **cannot** use this parameter when using a location query with the `where` parameter.
+
             Application admins can set this parameter to `everyone` to send to all devices
             subscribed to the channel.
 
@@ -98,8 +100,10 @@ methods:
 
       - name: where
         description: |
-            A JSON-encoded object that defines the query used to select the users that will receive
-            the notification. Up to 1000 users can be returned by the query.
+            A JSON-encoded object that defines either the user or location query used to select the device
+            that will receive the notification. Up to 1000 users can be returned by the query.
+
+            If you are using a location query, you **cannot** use the `to_ids` parameter.
 
             **Available only for Enterprise users.**
 
@@ -107,6 +111,12 @@ methods:
             following query searches for all users with the first name of Joe:
 
                 where={"user": {"first_name":"Joe"}}
+
+            To specify a location query, set the `loc` field to a
+            [MongoDB Geospatial Query](http://docs.mongodb.org/manual/reference/operator/query-geospatial/).
+            The following query searches for all users within 2 km of Oakland, CA, USA:
+
+                where={"loc": { "$nearSphere" : { "$geometry" : { "type" : "Point" , "coordinates" : [-122.2708,37.8044] } , "$maxDistance" : 2000 }}}
 
             For details about using the `where` parameter,
             see the [Search and Query guide](#!/guide/search_query).
