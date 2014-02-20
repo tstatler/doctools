@@ -206,52 +206,15 @@ for (int i=0;i&lt;users.length();i++) {
 
 <h2>Push Notifications</h2>
 
-<p> ACS supports <a href="http://developer.android.com/google/gcm/index.html">Google Cloud
-Messaging</a> (GCM) for sending notifications to Android clients.</p> This section describes how to
+ACS supports <a href="http://developer.android.com/google/gcm/index.html">Google Cloud
+Messaging</a> (GCM) for sending notifications to Android clients. This section describes how to
 integrate GCM notifications into your Android application with ACS.
 
 <h3>Obtaining a Google API key and GCM sender ID</h3>
 
-<p>
 To use GCM in your Android application, you need to create a Google API project, enable its GCM service,
 and obtain the API project's Google API key and GCM sender ID. For steps on obtaining these items
-see <a href="http://developer.android.com/google/gcm/gs.html" target="_">Getting Started with GCM</a>.
-Follow the steps found there for <i>Creating a Google API Project</i>, <i>Enabling the GCM Service</i>
-and <i>Obtaining an API Key</i>. When you create a new server key, per those instructions, you will be
-asked to provide a list of IP addresses the server will accept requests from. Leave this list empty to
-accept requests from all IP addresses.
-</p>
-
-<h3>Configuring your app for push notifications</h3>
-
-<p>To configure your application for push notifications you use the Dashboard (Enterprise applications) or My App (Community applications).</p>
-
-<p><b>To configure your app for push notifications (Enterprise developers): </b></p>
-<ol>
-  <li>Open <a href="https://dashboard.appcelerator.com">Dashboard.</a>
-  <li>Select your application from the drop-down list.</a>
-  <li>Select the <b>Cloud</b> tab.</a>
-  <li>Click <b>Settings & Configuration</b> from the left-side navigation.</li>
-  <li>Select the <b>Android Push</b> tab.</li>
-  <li>Enter your Google API key in the <b>GCM API Key</b> field and GCM sender ID in the <b>GCM Sender ID</b> field.
-    {@img android_push_dashboard.png}
-  </li>
-  <li>Click <b>Save Changes</b>.</li>
-  </ul>
-</li>
-</ol>
-
-<p><b>To configure your app for push notifications (Community developers): </b></p>
-
-<ol>
-  <li>Open <a href="https://cloud.appcelerator.com/apps">My Apps</a>.</li>
-  <li>Find your application in the list of apps and click the <b>Manage ACS</b> link.</li>
-  <li>In the <b>Android Push Configuration</b> section, enter your Google API key in the <b>Google Cloud Messaging (GCM) API Key</b> field and your GCM sender ID in the <b>Google Cloud Messaging (GCM) Sender ID</b> field.</li>
-      {@img android_push.png}
-      <li>Click <b>Save Android Push Configuration Changes</b>.</li>
-  </li>
-</ol>
-
+see <a href="/titanium/latest/#!/guide/Push_Notifications-section-37532857_PushNotifications-SettingupGoogleCloudMessaging" target="_">Setting up Google Cloud Messaging</a>.
 
 <h3>Setup the Android Project</h3>
 
