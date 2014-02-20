@@ -16,8 +16,9 @@ methods:
         *   `user_id` : String. ID of the user who created this place.
         *   `google_cid` : Google Customer ID (CID) associated with this place.
         *   `tags_array` : String. Search tags.
-        *   `lnglat` : `[longitude, latitude]`. Search this places' default coordinates.
-             (Other coordinates can be stored as custom fields, and queried separately.)
+        *   `lnglat` : `[longitude, latitude]`. The Place's default coordinates. You can also store
+             custom coordinates in a custom field and query for those coordinates separately 
+             (see [Geographic Coordinates in Custom Fields](#!/guide/customfields-section-geographic-coordinates-in-custom-fields)).
         *   `ratings_average:  Number`.  Place's average rating (see {@link Reviews}).
         *   `ratings_count: Number`. Place's total number of ratings (see {@link Reviews}).
         *   `reviews_count: Number`. Place's total number of reviews (see {@link Reviews}).
