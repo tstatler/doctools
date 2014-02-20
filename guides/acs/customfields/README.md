@@ -115,24 +115,18 @@ You could also store more complex data types such as Array and Hash. Hash and Ar
 </tr>
 </table>
     	
-    
-    
-
 ##  Geographic Coordinates in Custom Fields
 
 To enable geographical search, there is a predefined custom field,
 `coordinates`, for optionally storing geographic coordinates. The `coordinates` field can
-store a single location with format [longitude, latitude] or multiple
-locations [[longitude1,latitude1], [longitude2, latitude2]...]. So for the
-above example, to store location information about the user, we
-might have:
-
-    
+store a single location as an array ( `[longitude, latitude]` ) or multiple
+locations as an array of arrays ( `[[longitude1,latitude1], [longitude2, latitude2]]` ). So for the
+above example, to store location information about the user, we might have:
     
     custom_fields = '{ "color": "blue",
     	  "age": 23,
-    	  "coordinates": [-122.1, 37.1] }'
-    
+    	  "coordinates": [-122.1, 37.1] 
+    }'
 
 ##  Remove a Field
 
