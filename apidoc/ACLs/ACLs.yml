@@ -91,6 +91,7 @@ fields:
         Determines whether objects controlled by this ACS are publically writable. 
 
         Default is false.
+    type: Boolean
 
   - name: user
     description: Owner of the ACL.

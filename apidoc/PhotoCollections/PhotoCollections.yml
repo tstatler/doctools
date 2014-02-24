@@ -10,6 +10,7 @@ fields:
         *   `photos: Number`. Number of photos in this collection.
         *   `total_photos: Number`.  Number of photos in this collection and subcollections.
         *   `subcollections: Number`. Number of subcollections in this collection.
+    type: Hash
   
   - name: cover_photo
     description: Photo to use as a cover photo for the collection.
