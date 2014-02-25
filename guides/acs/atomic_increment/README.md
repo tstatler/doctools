@@ -5,19 +5,32 @@ ACS supports the Mongo `$inc` atomic increment operator.
 
 ## `$inc`
 
-ACS supports the use of the `$inc` atomic increment operator in `update`
-api calls. You can use `$inc` to increment a custom field by the specified value
-in a single operation. The `$inc` operator can only can be applied to a single
-field per method call.  
-  
-`$inc` is specified in the Update api with the following form:  
+You can use `$inc` to increment (or decrement) a [custom field](#!/guide/customfields) by a specified value
+in a single update operation. 
 
-    "_fieldName_": { $inc: _value_}  
+* The operator accepts positive and negative increment amounts
+* It can only can be applied to a single field per method call. 
   
-Where _fieldName_ is the name of the field to increment and _value_ is the
-value to increment by (_value_ can be positive or negative).  
-  
-Here are 2 examples:
+`$inc` is specified with the following form, where `fieldName` is the name of the field to update and 
+`value` is a positive (or negative) number to increment (or decrement) `fieldName` by:
+
+    "fieldName": { "$inc:" value} 
+
+The `$inc` operator must be enclosed quotes, as shown above. The following methods support the `$inc` operator:
+
+  * {@link PhotoCollections#update}
+  * {@link Events#update}
+  * {@link Files#update}
+  * {@link CustomObjects#update}
+  * {@link Photos#update}
+  * {@link Places#update}
+  * {@link Posts#update}
+  * {@link Reviews#update}
+  * {@link Users#update}
+
+### Examples
+
+The following example increments the `score` custom field by 10 in a {@link CustomObjects} update to a custom object called `family`:
     
     $ curl -b c.txt -c c.txt -X PUT -F "id=511117915554f74313000009" -F "fields={"favorite":"play xbox 360", "pet":"shark" ,"score":{$inc:10}}" "https://api.cloud.appcelerator.com/v1/objects/family/update.json?key=TENIhpXtjFbkBbztvfZMwnciOjE9aHjd"
     {
@@ -57,7 +70,9 @@ Here are 2 examples:
       }
     }
     
-    $ curl -b c.txt -c c.txt -X PUT -F "checkin_id=511111945554f742d300000b" -F "custom_fields={"favorite":"play xbox 360", "pet":"shark" ,"score":{$inc:10}}" "https://api.cloud.appcelerator.com/v1/checkins/update.json?key=TENIhpXtjFbkBbztvfZMwnciOjE9aHjd"
+The following example decrements the `score` custom field by 20 in an {@link Checkins} update:
+
+    $ curl -b c.txt -c c.txt -X PUT -F "checkin_id=511111945554f742d300000b" -F "custom_fields={"favorite":"play xbox 360", "pet":"shark" ,"score":{$inc:-20}}" "https://api.cloud.appcelerator.com/v1/checkins/update.json?key=TENIhpXtjFbkBbztvfZMwnciOjE9aHjd"
     {
       "meta": {
         "code": 200,
@@ -114,7 +129,7 @@ Here are 2 examples:
             },
             "custom_fields": {
               "family_name": "ACS",
-              "score": 10,
+              "score": 15,
               "age": 40,
               "cars": 1,
               "favorite": "play xbox 360",
@@ -128,8 +143,6 @@ Here are 2 examples:
 
   
 If you apply $inc to multiple fields in one Update call, you will get error:
-
-    
     
     $ curl -b c.txt -c c.txt -X PUT -F "checkin_id=511111945554f742d300000b" -F "custom_fields={"favorite":"play xbox 360", "pet":"shark" ,"score":{$inc:10}, "age":{$inc:10}}" "http://api.cloud.appcelerator.com/v1/checkins/update.json?key=HSejkGE9ghavAelMJv7bZYNM5HyMhqYq"
     {
@@ -141,16 +154,4 @@ If you apply $inc to multiple fields in one Update call, you will get error:
       }
     }
     
-
-The following ACS methods support the `$inc` operator:
-
-  * {@link PhotoCollections#update}
-  * {@link Events#update}
-  * {@link Files#update}
-  * {@link CustomObjects#update}
-  * {@link Photos#update}
-  * {@link Places#update}
-  * {@link Posts#update}
-  * {@link Reviews#update}
-  * {@link Users#update}
 
