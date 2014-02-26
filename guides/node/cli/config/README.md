@@ -2,7 +2,7 @@
 
 ## Description
 
-<p class="note">This command is  available for enterprise customers using the Appcelerator Platform.</p>
+<p class="note">The <code>config</code> command is only available to <a href="http://www.appcelerator.com/platform/appcelerator-platform/" target="_blank">Appcelerator Platform</a> users.</p>
 
 This `config` command configures the number of cloud servers available to your application. 
 You can configure your application to automatically scale up (or down) the number of servers based on the number queued requests. 
@@ -34,20 +34,20 @@ your request:
         <td><code>appname</code></td>
         <td>
             The name of the app to configure cloud server resources for. If omitted, the command needs to be run
-            In the application's root directory, or specify the application's directory with the <code>-d</code> or <code>--directory</code> option.
+            in the application's root directory, or specify the application's directory with the <code>-d</code> or <code>--directory</code> option.
         </td>
     </tr>
     <tr>
-        <td nowrap><code>--autoscale &lt;true|false&gt;</code></td>
-        <td>Enables or disables autoscaling.  This setting must be enabled to use the <code>autoscaleup</code> and <code>autoscaledown</code> settings.</td>
+        <td nowrap><code>--autoscale</code></td>
+        <td>Boolean (default is <code>false</code>). Enables or disables autoscaling. Must be set to <code>true</code> to use the <code>autoscaleup</code> and <code>autoscaledown</code> settings.</td>
     </tr>
     <tr>
-        <td nowrap><code>--autoscaleup &lt;true|false&gt;</code></td>
-        <td>Enables or disables automatically scaling up the number of cloud servers based on the <code>maxqueuedrequests</code> setting.</td>
+        <td nowrap><code>--autoscaleup</code></td>
+        <td>Boolean (default is <code>false</code>). Enables or disables automatically scaling up the number of cloud servers based on the <code>maxqueuedrequests</code> setting.</td>
     </tr>
     <tr>
-        <td nowrap><code>--autoscaledown &lt;true|false&gt;</code></td>
-        <td>Enables or disables automatically scaling down the number of cloud servers based on the <code>maxqueuedrequests</code>  setting.</td>
+        <td nowrap><code>--autoscaledown</code></td>
+        <td>Boolean (default is <code>false</code>). Enables or disables automatically scaling down the number of cloud servers based on the <code>maxqueuedrequests</code>  setting.</td>
     </tr>
     <tr>
         <td nowrap><code>--maxqueuedrequests &lt;n&gt;</code></td>
