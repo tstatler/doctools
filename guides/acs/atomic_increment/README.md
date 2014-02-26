@@ -16,23 +16,24 @@ in a single update operation.
 
     "fieldName": { "$inc:" value} 
 
-The `$inc` operator must be enclosed quotes, as shown above. The following methods support the `$inc` operator:
+The operator must be enclosed quotes, as shown above. The following methods support the `$inc` operator:
 
-  * {@link PhotoCollections#update}
+  * {@link CustomObjects#update}
   * {@link Events#update}
   * {@link Files#update}
-  * {@link CustomObjects#update}
+  * {@link PhotoCollections#update}
   * {@link Photos#update}
   * {@link Places#update}
   * {@link Posts#update}
   * {@link Reviews#update}
   * {@link Users#update}
+  * {@link Statuses#update}
 
 ### Examples
 
 The following example increments the `score` custom field by 10 in a {@link CustomObjects} update to a custom object called `family`:
     
-    $ curl -b c.txt -c c.txt -X PUT -F "id=511117915554f74313000009" -F "fields={"favorite":"play xbox 360", "pet":"shark" ,"score":{$inc:10}}" "https://api.cloud.appcelerator.com/v1/objects/family/update.json?key=TENIhpXtjFbkBbztvfZMwnciOjE9aHjd"
+    $ curl -b c.txt -c c.txt -X PUT -F "id=511117915554f74313000009" -F "fields={"favorite":"play xbox 360", "pet":"shark" ,"score":{"$inc":10}}" "https://api.cloud.appcelerator.com/v1/objects/family/update.json?key=TENIhpXtjFbkBbztvfZMwnciOjE9aHjd"
     {
       "meta": {
         "code": 200,
@@ -72,7 +73,7 @@ The following example increments the `score` custom field by 10 in a {@link Cust
     
 The following example decrements the `score` custom field by 20 in an {@link Checkins} update:
 
-    $ curl -b c.txt -c c.txt -X PUT -F "checkin_id=511111945554f742d300000b" -F "custom_fields={"favorite":"play xbox 360", "pet":"shark" ,"score":{$inc:-20}}" "https://api.cloud.appcelerator.com/v1/checkins/update.json?key=TENIhpXtjFbkBbztvfZMwnciOjE9aHjd"
+    $ curl -b c.txt -c c.txt -X PUT -F "checkin_id=511111945554f742d300000b" -F "custom_fields={"favorite":"play xbox 360", "pet":"shark" ,"score":{"$inc:"-20}}" "https://api.cloud.appcelerator.com/v1/checkins/update.json?key=TENIhpXtjFbkBbztvfZMwnciOjE9aHjd"
     {
       "meta": {
         "code": 200,
