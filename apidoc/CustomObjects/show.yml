@@ -18,14 +18,14 @@ methods:
 
       - name: id
         description: |
-            The object ID of the custom object to delete.
+            The object ID of the custom object to show.
 
             You must specify either `id` or `ids`.
         type: String
 
       - name: ids
         description:
-            A comma-separated list of object IDs of the custom objects to delete.
+            A comma-separated list of object IDs of the custom objects to show.
 
             You must specify either `id` or `ids`.
         type: String
