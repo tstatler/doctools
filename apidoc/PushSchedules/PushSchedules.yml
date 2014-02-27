@@ -31,6 +31,7 @@ fields:
         Push notification to send for scheduled pushes.
 
           * *channel* (String): Name of the channel to send the push notification to.
+            The name of the push channel cannot start with a hash symbol ('#').
           * *payload* (Hash): Payload to send to the device. Same format as {@link PushNotifications#notify}.
           * *to_ids* (Array<String>/String): Array or comma-separated list of IDs to send push notifications to.
           * *options* (Hash): Dictionary of additional options

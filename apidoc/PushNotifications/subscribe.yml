@@ -16,7 +16,10 @@ methods:
     parameters:
 
       - name: channel
-        description: Push notification channel to subscribe to.
+        description: |
+            Push notification channel to subscribe to.
+
+            The name of the push channel cannot start with a hash symbol ('#').
         type: String
         required: true
 
