@@ -27,8 +27,20 @@ methods:
     examples:
       - platform: titanium
         example: |
-            This API is not yet supported in the `ti.cloud` module.
-    
+            Requires Titanium SDK 3.2.1 and later.
+
+                Cloud.PushNotifications.setBadge({
+                    device_token: device_token.value,
+                    badge_number: badge_number.value
+                }, function (e) {
+                    if (e.success) {
+                        Ti.API.info('Badge Set!');
+                    }
+                    else {
+                        Ti.API.error(e);
+                    }
+                });
+
       - platform: rest
         example: |
             Example cURL request:
