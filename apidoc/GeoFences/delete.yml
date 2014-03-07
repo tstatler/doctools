@@ -21,7 +21,18 @@ methods:
     examples:
       - platform: titanium
         example: |
-            This API is not yet supported in the `ti.cloud` module.
+            Requires Titanium SDK 3.2.1 or later.
+
+                Cloud.GeoFences.remove({
+                    id: geoFenceId
+                }, function (e) {
+                    if (e.success) {
+                        Ti.API.info(JSON.stringify(e));
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
     
       - platform: rest
         example: |

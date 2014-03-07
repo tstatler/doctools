@@ -40,7 +40,19 @@ methods:
     examples:
       - platform: titanium
         example: |
-            This API is not yet supported in the `ti.cloud` module.
+            Requires Titanium SDK 3.2.1 or later.
+
+                Cloud.GeoFences.update({
+                    id: geoFenceId
+                    geo_fence:{"loc":{"place_id":"531a1217447d300f05003b69","radius":"2/6371"}}
+                }, function (e) {
+                    if (e.success) {
+                        Ti.API.info(JSON.stringify(e.geo_fences));
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
     
       - platform: rest
         example: |
