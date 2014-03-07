@@ -38,7 +38,26 @@ methods:
     examples:
       - platform: titanium
         example: |
-            This API is not yet supported in the `ti.cloud` module.
+            Requires Titanium SDK 3.2.1 or later.
+
+            The following example creates a geo-fence covering a ten-mile area with San
+            Francisco, CA, USA as the center point:
+
+                Cloud.GeoFences.create({
+                    geo_fence: {
+                        "loc":{"coordinates":[-122.4167,37.7833], "radius":"10/3959"},
+                        "payload":{"alert":"24-hour sale at our SF flagship store on 12/26!"},
+                        "start_time": "2014-03-08T00:00",
+                        "end_time":"2014-12-26T19:00"
+                    }
+                }, function (e) {
+                    if (e.success) {
+                        Ti.API.info(JSON.stringify(e.geo_fences));
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
 
       - platform: rest
         example: |

@@ -1,7 +1,7 @@
 name: GeoFences
 description: |
     <p class="note">This feature is only available for Enterprise users, and the current user must
-    be an application admin to use this API.</p>
+    be an application admin to create, update or delete a geo-fence object.</p>
 
     The GeoFences API lets you manage spatial objects with data.  Use this API to have the device
     query the ACS server to retrieve data based on a location.
