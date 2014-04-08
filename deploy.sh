@@ -160,7 +160,7 @@ if [ $include_modules ]; then
     fi
     module_dirs="$APPC_MODULES/ti.map/apidoc $APPC_MODULES/ti.facebook/apidoc
                  $APPC_MODULES/ti.nfc/apidoc $APPC_MODULES/ti.newsstand/apidoc $TIZEN_MODULE
-                 $TI_MODULES/urlSession/apidoc"
+                 $TI_MODULES/urlSession/apidoc $APPC_MODULES/ti.geofence/apidoc"
 
     if [ $addon_guidesdir ]; then
         module_dirs+=" $DOCTOOLS/modules"
@@ -212,5 +212,5 @@ cp -r $guidesdir/css/common.css "$outdir/resources/css/common.css"
 cp ./resources/mock_video.png $outdir/resources/images/mock_video.png
 cp ./resources/codestrong_logo_short.png $outdir/resources/images/codestrong_logo_short.png
 
-# Copy api_images folder to $outdir
+# Copy API images folder to $outdir
 cp -r $TI_DOCS/apidoc_resources $outdir/.
