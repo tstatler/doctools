@@ -163,7 +163,7 @@ if [ $include_modules ]; then
                  $TI_MODULES/urlSession/apidoc"
 
     if [ $addon_guidesdir ]; then
-        module_dirs+=" $DOCTOOLS/modules"
+        module_dirs+=" $DOCTOOLS/modules $APPC_MODULES/ti.geofence/apidoc"
     fi
 fi
 
