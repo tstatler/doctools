@@ -30,9 +30,9 @@ methods:
 
     examples:
       - platform: titanium
-        example: |
-	    The following example gets the device's current location, and updates the user's
-	    subscription with the location.
+	example: |
+	    The following example gets the device's current geographic location and updates the user's
+	    subscription with the coordinates.
 
 		Titanium.Geolocation.getCurrentPosition(function(e) {
 		    if (e.error) {
