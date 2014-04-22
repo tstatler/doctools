@@ -23,10 +23,10 @@ methods:
         type: String
 
       - name: loc
-        description: |
-	    The device current location specified as an array with longitude as the first element and latitude
-            as the second element, that is, `[longitude,latitude]`.
-        type: Array<Number>
+	description: |
+	    The device's current location specified as an array with longitude as the first element, and latitude
+	    as the second element (`[longitude,latitude]`).
+	type: Array<Number>
 
     examples:
       - platform: titanium
