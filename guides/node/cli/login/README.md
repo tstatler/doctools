@@ -3,12 +3,12 @@
 
 ## Description
 
-An interactive command that will prompt for username and password to login to
-Node.ACS.
+Command for logging in to Node.ACS using your Appcelerator Network account credentials. 
+[Sign-up](https://my.appcelerator.com/auth/signup) for a free account if you don't have one.
 
 ## Usage
 
-`$ acs login` [ -h ] [ _username_ [, _password_ ]]
+`$ acs login` [ _username_ ] [ _password_ ]
 
 ## Optional Parameters
 
@@ -20,11 +20,11 @@ Node.ACS.
         </tr>
         <tr>
             <td><i>username</i></td>
-            <td>Username for a Node.ACS user account. If not specified, **acs** prompts for the username.</td>
+            <td>Your Appcelerator Network account user name. If not specified, you are prompted for the username.</td>
         </tr>
         <tr>
             <td><i>password</i></td>
-            <td>Password for the Node.ACS user account. If not specified, **acs** prompts for the password.</td>
+            <td>Your Appcelerator Network account password. If not specified, you are prompted for the password.</td>
         </tr>
         <tr>
             <td>-h, --help</td>
@@ -34,10 +34,24 @@ Node.ACS.
 </table>
 
 ## Example
-    
+
+The following example specifies the username and password in the command:
+
+    $ acs login nobody@appceleator.com mypassword
+
+    ACS: Appcelerator Cloud Services Command-Line Interface, version 1.0.14
+    Copyright (c) 2012-2014, Appcelerator, Inc.  All Rights Reserved.
+
+    Welcome back, Nobody! You are now logged in.
+
+In the following example the CLI prompts the user to enter their username and password:
+
     $ acs login
-    
-    username: sam@nodeacs.com
+
+    username: nobody@appceleator.com
     password: ********
-    Welcome back, Sam! You are now logged in.
     
+    ACS: Appcelerator Cloud Services Command-Line Interface, version 1.0.14
+    Copyright (c) 2012-2014, Appcelerator, Inc.  All Rights Reserved.
+
+    Welcome back, Nobody! You are now logged in.
