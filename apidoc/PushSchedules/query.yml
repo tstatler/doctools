@@ -8,7 +8,7 @@ methods:
         This feature is only available for Enterprise users.
 
         The current user must be an application admin.
-    url: push_schedule/update.json
+    url: push_schedule/query.json
     http-method: GET
     login-required: true
     admin-required: true
