@@ -92,7 +92,7 @@ methods:
 	example: |
 	    The following cURL command updates just the `payload` of the scheduled push notification.
 
-		curl -X PUT -b cookies.txt -c cookies.txt -F "id=<PUSH_NOTIFICTION_ID>" -F 'schedule={"start_time":"2016-12-25T00:00", "name":"test", "push_notification":{"channel":"test","payload":"test schedule"}, "recurrence":{"interval":"daily", "end_time":"2017-03-25T00:00"}}' "https://api.cloud.appcelerator.com/v1/push_schedules/update.json?key=g5d7G8agFnzjOJ5kV2qjhIaKp9Hi4EXW"
+	      curl -X PUT -b cookies.txt -c cookies.txt -F "id=<PUSH_NOTIFICTION_ID>" -F 'schedule={"start_time":"2016-12-25T00:00", "name":"test", "push_notification":{"channel":"test","payload":"test schedule"}, "recurrence":{"interval":"daily", "end_time":"2017-03-25T00:00"}}' "https://api.cloud.appcelerator.com/v1/push_schedules/update.json?key=g5d7G8agFnzjOJ5kV2qjhIaKp9Hi4EXW"
 
 	    Example JSON response:
 
@@ -115,10 +115,8 @@ methods:
 			"recurrence": {
 			  "interval": "daily",
 			  "end_time": "2017-03-25T00:00:00+0000"
-			}
 		      }
 		    ]
 		  }
 		}
-
 
