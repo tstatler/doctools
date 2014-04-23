@@ -52,6 +52,30 @@ methods:
 	type: String
 	required: true
 
+      - name: where
+	description: |
+	    **Available only for Enterprise users.**
+	    A JSON-encoded object that defines a location query used to select the devices
+	    that will receive the scheduled notification. Up to 1000 users can be returned by the query. To specify a location query, set the `loc` field to a
+	    [MongoDB Geospatial Query](http://docs.mongodb.org/manual/reference/operator/query-geospatial/).
+	    The following query searches for all users within 2 km of Oakland, CA, USA:
+
+		where={
+		  "loc": {
+		    "$nearSphere" : {
+		      "$geometry" : {
+			"type" : "Point" ,
+			"coordinates" : [-122.2708,37.8044] } ,
+			"$maxDistance" : 2000
+		      }
+		    }
+		  }
+
+	    For an example of using this parameter, see the REST examples in the PushSchedules {@link PushSchedules#create} method.
+	    For details about using the `where` parameter, see the [Search and Query guide](#!/guide/search_query).
+	type: Hash
+
+
     response-parameters:
       - name: push_schedules
 	description: |
