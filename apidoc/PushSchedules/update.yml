@@ -3,8 +3,8 @@ methods:
   - name: update
     summary: update
     description: |
-	Updates a scheduled push notification. All parameters specified in
-	the PushSchedules {@link PushSchedules#create} method can be updated, with the following exceptions:
+	Updates a scheduled push notification. All parameters specified in the PushSchedules
+	{@link PushSchedules#create} method can be updated, with the following exceptions:
 
 	  * The schedule's start time cannot be updated, and the `start_time` parameter is ignored, if provided.
 	  * When specifying a new `end_time` parameter, the new date and time must be greater than
