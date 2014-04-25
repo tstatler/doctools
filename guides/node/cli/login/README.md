@@ -3,7 +3,7 @@
 
 ## Description
 
-Command for logging in to Node.ACS using your Appcelerator Network account credentials.
+Command for logging in to Node.ACS using your Appcelerator Network account credentials. 
 [Sign-up](https://my.appcelerator.com/auth/signup) for a free account if you don't have one.
 
 ## Usage
@@ -20,11 +20,11 @@ Command for logging in to Node.ACS using your Appcelerator Network account crede
         </tr>
         <tr>
             <td><i>username</i></td>
-	    <td>Your Appcelerator Network account user name. If not specified, you are prompted for the username.</td>
+            <td>Your Appcelerator Network account user name. If not specified, you are prompted for the username.</td>
         </tr>
         <tr>
             <td><i>password</i></td>
-	    <td>Your Appcelerator Network account password. If not specified, you are prompted for the password.</td>
+            <td>Your Appcelerator Network account password. If not specified, you are prompted for the password.</td>
         </tr>
         <tr>
             <td>-h, --help</td>
