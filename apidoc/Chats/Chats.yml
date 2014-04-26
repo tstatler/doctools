@@ -1,7 +1,7 @@
 name: Chats
 description: |
 
-    The Chat object provides an API to send chat messages from one user to another user
+    The Chats object provides an API to send chat messages from one user to another user
     or a group of users. If you have configured push notification in your app, you
     can send optional push notifications to the recipients' devices as well.
 

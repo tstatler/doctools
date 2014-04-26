@@ -1,13 +1,13 @@
 name: ACLs
 summary: Access Control Lists (ACLs)
 description: |
-    The ACL tangram
-    provides an API to implement access control lists for ACS objects. An access
+    The ACL object implements access control lists for ACS objects. An access
     control list controls read and write access to any ACS objects it's attached
     to. For ACS, read and write permission are defined as follows:
     
       * **Read permission** includes the ability to show, query and search ACS objects.
       * **Write permission** includes the ability to update and delete ACS objects.
+    
     An ACL can include:
     
       * A _list_ of user IDs granted read permission.
@@ -30,7 +30,7 @@ description: |
     them.
     
       * **public read / public write: **
-    User1 creates an ACL ojbect which name is "photo_access", the value of its
+    User1 creates an ACL object which name is "photo_access", the value of its
     property _public_read_ is true, as well as _public_write_ is true, then User1
     create or update a photo object by specifying "acl_name=photo_access" or
     acl_id, so that the photo has relationship with the ACL object and is under
@@ -81,14 +81,14 @@ fields:
 
   - name: public_read
     description: |
-        Determines whether objects controlled by this ACS are publically readable. 
+        Determines whether objects controlled by this ACS are publicly readable. 
 
         Default is false.
     type: Boolean
 
   - name: public_write
     description: |
-        Determines whether objects controlled by this ACS are publically writable. 
+        Determines whether objects controlled by this ACS are publicly writable. 
 
         Default is false.
     type: Boolean

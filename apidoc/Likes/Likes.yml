@@ -1,8 +1,7 @@
 name: Likes
 description: |
-    This flexible object lets you add a "like" to an existing object.
-    
-    Currently, likes can only be added to the following object types:
+    The Likes API lets yo add a "like" to an existing object. Currently, likes can only be added to 
+    the following object types:
     
     *   {@link Posts}
     *   {@link Photos}

@@ -1,11 +1,11 @@
 name: CustomObjects
 description: |
-    Custom Objects lets you define your own object types that can be integrated with
-    existing ACS objects. Each Custom Object can have a default primary photo and
-    reviews/comments/likes.
+    The CustomObjects API lets you define your own object types that can be integrated with
+    existing ACS objects. Each CustomObject can have a default primary photo and
+    have associated reviews, comments, and likes.
 
-    To distinguish different typs of custom ACS objects, you use a unique URL for each class 
-    of objects. The URL for a custom object method has the format:
+    To distinguish different types of custom ACS objects, you use a unique URL for each class 
+    of custom object. The URL for a custom object method has the following format:
 
         https://api.cloud.appcelerator.com/v1/objects/:class_name/<method>.json
 

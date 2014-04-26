@@ -3,13 +3,14 @@ methods:
   - name: email_from_template
     summary: Send Emails
     description: |
-        Send an email to a list of email addresses from your App. If you haven't
-        configured your SMTP setting yet, please goto your App Settings and configure
+        Sends an email to a list of email addresses you specify. If you haven't
+        configured your SMTP settings yet, please goto your App Settings and configure
         and test your SMTP setting. You also need to create at least one email
-        template. Email template's subject and body can have dynamic fields wrapped in
-        "{{}}". For example, if you want to dynamically provide user name in your
-        email, you can define "{{username}}" in your email template. The email
-        template body support HTML format.
+        template. The email template body supports HTML formatting.
+
+        Before you can send email you must first configure your SMTP
+        server settings on the Settings & Configuration tab in [Appcelerator Dashboard](https://dashboard.appcelerator.com)
+        or [My Apps](https://my.appcelerator.com/apps).
     url: custom_mailer/email_from_template.json
     http-method: POST
 
@@ -31,12 +32,6 @@ methods:
             change your sender's email address dynamically, your email will always be sent
             out as the email account you used to configure the SMTP. Some SMTP service
             such as BlueHost requires the sender's email address to be present.
-
-      - name: dynamic fields
-        description: |
-            Dynamic fields you defined in your email template. If you have defined a field
-            {{username}} in the email template, you can pass username=joe to have the
-            field `username` substituted by the value you provide in the outgoing email.
 
     examples:
       - platform: titanium

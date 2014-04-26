@@ -1,5 +1,5 @@
 name: Photos
-description: The Photo API lets you upload, resize and manage photos in your app.
+description: The Photos API lets you upload, resize and manage photos for your application.
 mixin: Reviewable
 fields: 
   - name: id
