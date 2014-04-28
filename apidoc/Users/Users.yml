@@ -4,8 +4,8 @@ description: |
     Represents a user account. 
     
     By default, new user accounts are activated as soon as they are created. You can enable new user
-    account email verification on the Setting & Configuration tab in [Appcelerator Dashboard](https://dashboard.appcelerator.com)
-    or [My Apps](https://my.appcelerator.com/apps). Once enabled, new users will receive an email
+    account email verification in the **Cloud > Settings & Configuration > Settings** tab in [Appcelerator Dashboard](https://dashboard.appcelerator.com)
+    or the Settings tab in [My Apps](https://my.appcelerator.com/apps). Once enabled, new users will receive an email
     with instructions to activate their account. This setting doesn't apply when a new user
     is created by logging in with an external account (see {@link SocialIntegrations}).
 

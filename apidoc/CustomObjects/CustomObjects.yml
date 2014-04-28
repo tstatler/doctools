@@ -7,7 +7,9 @@ description: |
     To distinguish different types of custom ACS objects, you use a unique URL for each class 
     of custom object. The URL for a custom object method has the following format:
 
-        https://api.cloud.appcelerator.com/v1/objects/:class_name/<method>.json
+    <!-- Note: Using HTML to have more control over formatting of the URL string.  -->
+
+    <code class="prettyprint">https://api.cloud.appcelerator.com/v1/objects/<em>class_name</em>/<em>method</em>.json</code>
 
     For example, if your application uses `cars` and `drivers` objects, you would use
     different URLs to create them:
@@ -40,7 +42,7 @@ description: |
 
     Supported data types for custom object fields are:
 
-    <table class="doc_content_table">
+    <table class="doc-table">
     <tr><th>Type</th><th>Example</th>
     <tr>
     <td>String&nbsp;&nbsp;&nbsp;&nbsp;</td>
@@ -59,15 +61,15 @@ description: |
     Fields can also include more complex data types such as Array and Hash. Hash and Array can be nested inside each other. 
     Currently, data stored inside an Array or Hash is not queryable.
 
-    <table class="doc_content_table">
+    <table class="doc-table">
             <tr><th>Type</th><th>Example</th>
             <tr>
                 <td>Hash&nbsp;&nbsp;</td>
-                <td>{"age":23,"scores":{"math":90, "physics":100}, "my_favorite_colors":["blue","red"]}</td>
+                <td><code>{"age":23,"scores":{"math":90, "physics":100}, "my_favorite_colors":["blue","red"]}</code></td>
             </tr>
             <tr>
                 <td>Array&nbsp;&nbsp;</td>
-                <td>["nissan", "honda"] or [2006, 2008], [{"age":28}, {"color":"blue"}]</td>
+                <td><code>["nissan", "honda", "toyota"]</code> or <code>[2006, 2008], [{"age":28}, {"color":"blue"}]</code></td>
             </tr>
     </table>
 

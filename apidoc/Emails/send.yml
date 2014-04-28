@@ -9,8 +9,8 @@ methods:
         template. The email template body supports HTML formatting.
 
         Before you can send email you must first configure your SMTP
-        server settings on the Settings & Configuration tab in [Appcelerator Dashboard](https://dashboard.appcelerator.com)
-        or [My Apps](https://my.appcelerator.com/apps).
+        server settings on the Cloud > Settings & Configuration tab in [Appcelerator Dashboard](https://dashboard.appcelerator.com)
+        or the Settings tab in [My Apps](https://my.appcelerator.com/apps).
     url: custom_mailer/email_from_template.json
     http-method: POST
 
