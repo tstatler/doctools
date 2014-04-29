@@ -40,6 +40,13 @@ overwrites the previous setting.
             <td>--remove</td>
             <td>Remove CNAME binding from the application.</td>
         </tr>
+        <tr>
+            <td><code>--org <em>orgID</em></code></td>
+            <td>The ID of the organization the application belongs to.  This parameter is required
+            if the target application has the same name as an application in another organization 
+            you belong to.
+             </td>
+        </tr>
     </tbody>
 </table>
 
@@ -68,4 +75,7 @@ overwrites the previous setting.
     
     Set CNAME succeed. App will be available at: my.nodeacs.com
     
+    $ acs cname --set my.nodeacs.com
+    
+    Set CNAME succeed. App will be available at: my.nodeacs.com
 

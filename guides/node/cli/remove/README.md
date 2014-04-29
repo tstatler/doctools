@@ -46,6 +46,13 @@ The local application directory is not deleted by default. Use the
                 or the command is running in application's root directory.</td>
         </tr>
         <tr>
+            <td><code>--org <em>orgID</em></code></td>
+            <td>The ID of the organization the application belongs to.  This parameter is required
+            if the target application has the same name as an application in another organization 
+            you belong to.
+             </td>
+        </tr>
+        <tr>
             <td>-h, --help</td>
             <td>Show help information for this command.</td>
         </tr>
@@ -54,8 +61,17 @@ The local application directory is not deleted by default. Use the
 
 ## Example
 
+The following example remove the project named **MyProject**.
+
     $ acs remove MyProject
     
-    Remove app: ttt
+    Remove app: MyProject
+    MyProject has been successfully deleted.
+
+The following example remove the project named **MyProject** from the organization with the ID of **12345**.
+
+    $ acs remove MyProject --org 12345
+    
+    Remove app: MyProject
     MyProject has been successfully deleted.
     

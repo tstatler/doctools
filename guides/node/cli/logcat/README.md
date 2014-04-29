@@ -53,6 +53,13 @@ information.
             <td>Interval for retrieving application logs, in seconds.  Default: 5s.</td>
         </tr>
         <tr>
+            <td><code>--org <em>orgID</em></code></td>
+            <td>The ID of the organization the application belongs to.  This parameter is required
+            if the target application has the same name as an application in another organization 
+            you belong to.
+             </td>
+        </tr>
+        <tr>
             <td>-h, --help</td>
             <td>Show help information for this command.</td>
         </tr>

@@ -8,8 +8,45 @@ your Node application, and choose the active and deployed version from the avail
 versions. This command also lists all currently published versions and the currently deployed
 version.
 
-You must run this command in the application's root directory, or specify the application's
+You must run this command from the application's root directory, or specify the application's
 directory with the **--dir** or **-d** option.
+
+### Appcelerator Platform Notes ###
+
+If you have an application with the same name in different [organizations](/platform/latest/#!/guide/Managing_Organizations), 
+and try to publish one of them, the CLI will generate an error. For example, the [`list`](/cloud/latest/#!/guide/node_cli_list) 
+CLI command output below indicates that the user has two applications, both named **newApp**, in different organizations:
+
+    $ acs list
+
+    Organization: Appcelerator, Inc (12345)
+    ============ 
+    App name: newApp
+     -- Created by: anotherone@appcelerator.com
+     -- ...
+     
+    Organization: Another Organization (12346)
+    ============ 
+    App name: newApp
+     -- Created by: anotherone@appcelerator.com
+     -- ..
+
+If you attempt to publish **newApp** the CLI displays an error message:
+
+    $ acs publish -d newApp
+     
+    [ERROR] There are multiple apps with name 'newApp' in different organizations. Please specify an organization.
+
+The solution is to add the `--org` parameter to specify the ID of the organization from which the application should be published:
+
+    acs publish -d newApp --org 12345
+     
+    Preparing application for publish... done
+    Packing application... done
+    Publishing to cloud...
+    [##########################################################################] 100%
+    ...
+
 
 ### Publishing Application Versions ###
 
@@ -81,6 +118,12 @@ $ acs publish [-d | --dir <em>application-directory</em> ]
             <td>List all published versions of the application, and the version deployed currently, if any.</td>
         </tr>
         <tr>
+            <td><code>--org</code></td>
+            <td>The ID of the organization the application belongs to. You only need to this parameter
+            if you have published an application with the same name to multiple organizations.
+             </td>
+        </tr>
+        <tr>
             <td><code>--set_active_version <em>version</em></code></td>
             <td>Set the currently deployed and active version of the application to <code><em>version</em></code>.</td>
         </tr>
@@ -129,6 +172,7 @@ The following re-publishes the same version of the Node.ACS application located 
     Done loading node modules!
     App ChatApp version 0.2.0 published.
     App will be available at http://bb023745a993f41e38cb35ac7dfdca9947d123456.cloudapp.appcelerator.com
+
 
 The following lists the published versions and the currently deployed version: 
 

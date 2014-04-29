@@ -61,6 +61,12 @@ Note that these fields are only reported for Node.ACS applications that use the
             <td>Ending date for retrieving logs.</td>
         </tr>
         <tr>
+            <td><code>--org <em>orgID</em></code></td>
+            <td>The ID of the organization the application belongs to. This parameter is required
+            if the target application has the same name as one in another organization.
+             </td>
+        </tr>
+        <tr>
             <td>--per_page <i>per_page</i></td>
             <td>Number of log messages per page. Default: 100</td>
         </tr>
