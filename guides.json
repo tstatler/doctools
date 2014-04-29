@@ -27,7 +27,7 @@
                   "title": "SDKs",
                   "url": "guides/acs/sdks/overview",
                   "items": [
-                      { 
+                      {
                           "name": "titanium",
                           "url": "guides/acs/sdks/titanium",
                           "title": "Titanium SDK",
@@ -113,31 +113,31 @@
             "name": "node_quickstart",
             "title": "Node.ACS Quickstart",
             "url": "guides/node/quickstart",
-            "description": "Getting started with Node.ACS." 
+            "description": "Getting started with Node.ACS."
             },
             {
             "name": "node_mvc",
             "title": "Node.ACS MVC Framework",
             "url": "guides/node/mvc",
-            "description": "Using the Node.ACS MVC Framework." 
+            "description": "Using the Node.ACS MVC Framework."
             },
             {
             "name": "node_standard",
             "title": "Standard Node Applications",
             "url": "guides/node/standard",
-            "description": "Using standard Node applications in Node.ACS." 
+            "description": "Using standard Node applications in Node.ACS."
             },
             {
             "name": "node_acs",
             "title": "Using ACS APIs from Node",
             "url": "guides/node/acs",
-            "description": "Using ACS applications from your Node application." 
+            "description": "Using ACS applications from your Node application."
             },
             {
             "name": "node_logging",
             "title": "Logging",
             "url": "guides/node/logging",
-            "description": "Logging facilities in Node.ACS." 
+            "description": "Logging facilities in Node.ACS."
             },
             {
                 "name": "node_cli",
@@ -174,6 +174,12 @@
                         "title": "crt -- Manages SSL certificates for an Application",
                         "url": "guides/node/cli/crt",
                         "description": "Manages SSL certificates for an Application"
+                    },
+                    {
+                        "name": "node_cli_download",
+                        "title": "download -- Downloads Source Files for Published Application",
+                        "url": "guides/node/cli/download",
+                        "description": "Downloads application source files for Node.ACS application "
                     },
                     {
                         "name": "node_cli_list",
