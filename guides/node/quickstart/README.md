@@ -242,7 +242,7 @@ client-side scripts in that directory. You can create any directory structure yo
 under the `public` directory.
 
   
-**/public/style.css**
+**/public/css/style.css**
     
     
     * { font: 400 14px/24px "helvetica neue", arial, sans-serif; }
@@ -308,9 +308,12 @@ under the `public` directory.
 
 #### Using Studio
 
-In the **App Explorer** or **Project Explorer** view, make sure your application is selected, then
-click the **Run** button and select **Local Node.ACS Server**.  A port number appears in the
-**Console** view once your application starts.  Use the port number to access your application.
+  1. Select your project in the **Project Explorer** view.
+  2. Select **Run** from the **Launch Modes** drop-down list.
+  3. Make sure **Local Node.ACS Server** is selected in the **Target** drop-down list.
+  4. Click the **Launch** button.
+  5. Once the service starts, the local port number assigned to the service is displayed
+     in the **Console** view. Use the port number to acces your service.
 
 Open a web browser and visit http://localhost:<port_number> to start chatting.
 
@@ -339,9 +342,9 @@ you need to republish your application.
 
 #### Using Studio
 
-In the **App Explorer** or **Project Explorer** view, make sure your application is selected, then
-click the **Publish** button and select **Deploy App**. A dialog appears informing you that the
-application already exists. Click the **Overwrite** button to replace the existing version.
+In the **Project Explorer** view, right-click on the project and choose **Publish** > **Deploy App**.
+A dialog appears informing you that the application already exists. Click the **Overwrite** button
+to replace the existing version.
 
 Once your application is deployed to the cloud, a dialog appears with the URL to access your
 Node.ACS application.

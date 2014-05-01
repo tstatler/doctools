@@ -1,14 +1,19 @@
 name: PushSchedules
 methods:
-  - name: create
-    summary: create
+  - name: update
+    summary: update
     description: |
-        Creates a scheduled push notification.  At minimum, you must specify the `start_time`,
-        and `payload` parameters. A push schedule can optionally define a location query so that
-        only devices in the specified geographic region will receive the push notification.
+        Updates a scheduled push notification. All parameters specified in the PushSchedules 
+        {@link PushSchedules#create} method can be updated, with the following exceptions:
 
-        This feature is only available for Enterprise users, and the current user must be an application admin.
-    url: push_schedule/create.json
+          * The schedule's start time cannot be updated, and the `start_time` parameter is ignored, if provided.
+          * When specifying a new `end_time` parameter, the new date and time must be greater than 
+            the current time, and the previously specified `end_time` value must not have expired.
+
+        This feature is only available for Enterprise users. Also, the current user must be an 
+        application administrator to invoke the command.
+
+    url: push_schedule/update.json
     http-method: POST
     login-required: true
     admin-required: true
@@ -19,8 +24,7 @@ methods:
         description: |
             Push notification to schedule.
 
-              * *start_time* (Date): Datetime to start the push notifications in ISO 8601 format (**required**).
-              * *name* (String): Arbitray name to give to the scheduled push notification.
+              * *name* (String): Arbitrary name to give to the scheduled push notification.
               * *push_notification* (Hash): Push notification to send (**required**).
               
                   * *channel* (String): Name of the channel to send the push notification to.
@@ -36,14 +40,21 @@ methods:
               * *recurrence* (Hash): Schedules the recurrence of the push notification.
 
                    * *interval* (String): Set to either `daily`, `weeky` or `monthly`.
-                   * *end_time* (Date): Datetime to end the push notifications in ISO 8601 format.
-                     Must occur after *start_time*.
+                   * *end_time* (Date): Datetime to end the push notifications in ISO 8601 format. 
+                   Value must be greater than the current date and time, and the previous `end_time` must not have expired.
     
         type: Hash
         required: true
 
+      - name: id
+        description: |
+            ID of the PushSchedule object returned by {@link PushSchedules#create}.
+        type: String
+        required: true
+
       - name: where
         description: |
+          
             A JSON-encoded object that defines a location query used to select the devices
             that will receive the scheduled notification. Up to 1000 users can be returned by the query. To specify a location query, set the `loc` field to a
             [MongoDB Geospatial Query](http://docs.mongodb.org/manual/reference/operator/query-geospatial/).
@@ -60,48 +71,28 @@ methods:
                     }
                   }
 
+            For an example of using this parameter, see the REST examples in the PushSchedules {@link PushSchedules#create} method.
             For details about using the `where` parameter, see the [Search and Query guide](#!/guide/search_query).
         type: Hash        
+
 
     response-parameters:
       - name: push_schedules
         description: |
-            A single-element array containing the newly-created scheduled push object.
+            A single-element array containing the updated scheduled push object.
         type: Array<PushSchedules>
       
     examples:
 
       - platform: titanium
         example: |
-            Available for Release 3.2.0 and later.
-
-                Cloud.PushSchedules.create({
-                    schedule: {
-                        name: 'push schedule',
-                        start_time: '2015-09-05T10:11',
-                        recurrence: {
-                            interval: 'weekly',
-                            end_time: '2015-09-10T10:11'
-                        },
-                        push_notification: {
-                        payload: 'hello world',
-                        channel: 'channelOne'
-                    }
-                }, function(e) {
-                    if (e.success) {
-                        Ti.API.info('Success! \n id: ' + e.push_schedules[0].id);
-                    } else {
-                        Ti.API.error('Error: ' + ((e.error && e.message) || JSON.stringify(e)));
-                    }
-                });
-
+            This method is not supported by Titanium.
 
       - platform: rest
         example: |
-            The following example schedules a weekly push notification to be sent to devices that are located
-            within 10 miles of Appcelerator corporate headquarters:
+            The following cURL command updates just the `payload` of the scheduled push notification.
 
-                curl -b cookies.txt -c cookies.txt -F 'schedule={"start_time":"2016-01-01T00:00", "name":"test", "push_notification":{"channel":"test","payload":"test schedule"}, "recurrence":{"interval":"weekly", "end_time":"2016-01-08T00:00"}}' -F 'where={"loc":{"$geoWithin":{"$centerSphere":[[-122.0507049560547,37.38685989379883] , 0.00252589 ]}}}' "https://api.cloud.appcelerator.com/v1/push_schedules/create.json?key=<APP-KEY>
+                curl -X PUT -b cookies.txt -c cookies.txt -F "id=<PUSH_NOTIFICTION_ID>" -F 'schedule={"start_time":"2016-12-25T00:00", "name":"test", "push_notification":{"channel":"test","payload":"test schedule"}, "recurrence":{"interval":"daily", "end_time":"2017-03-25T00:00"}}' "https://api.cloud.appcelerator.com/v1/push_schedules/update.json?key=g5d7G8agFnzjOJ5kV2qjhIaKp9Hi4EXW"
 
             Example JSON response:
 
@@ -109,24 +100,25 @@ methods:
                   "meta": {
                     "code": 200,
                     "status": "ok",
-                    "method_name": "createPushSchedule"
+                    "method_name": "updatePushSchedule"
                   },
                   "response": {
                     "push_schedules": [
                       {
-                        "id": "535ac45b5714f50a99002e1e",
+                        "id": "5357f7055714f51855013525",
                         "name": "test",
-                        "start_time": "2016-01-01T00:00:00+0000",
+                        "start_time": "2016-12-25T00:00:00+0000",
                         "push_notification": {
                           "channel": "test",
-                          "payload": "test schedule",
-                          "geo_condition": "{\"$geoWithin\":{\"$centerSphere\":[[-122.0507049560547,37.38685989379883],0.00252589]}}"
+                          "payload": "test schedule"
                         },
                         "recurrence": {
-                          "interval": "weekly",
-                          "end_time": "2016-01-08T00:00:00+0000"
+                          "interval": "daily",
+                          "end_time": "2017-03-25T00:00:00+0000"
                         }
                       }
                     ]
                   }
                 }
+
+
