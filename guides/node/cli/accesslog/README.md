@@ -20,7 +20,7 @@ Note that these fields are only reported for Node.ACS applications that use the
 
 **Login Required:** Yes (See [login](#!/guide/node_cli_login) command)
 
-## Required Parameters
+## Parameters
 
 <table class="doc-table">
     <tbody>
@@ -33,49 +33,37 @@ Note that these fields are only reported for Node.ACS applications that use the
             <td>The name of the app to retrieve and show access logs for. If omitted, you must run the command in the application's root directory, 
                  or specify the application's directory with '-d' option.</td>
         </tr>
-    </tbody>
-</table>
-
-## Optional Parameters
-
-<table class="doc-table">
-    <tbody>
         <tr>
-            <th>Name</th>
-            <th>Description</th>
-        </tr>
-        <tr>
-            <td nowrap>--server_id &lt;serverid&gt;</td>
+            <td nowrap><code>--server_id</code> <em>serverid</em></td>
             <td>Id of the server which the logs from. An app may be deployed to multiple servers in cloud.</td>
         </tr>
         <tr>
-            <td nowrap>--show_serverid</td>
+            <td nowrap><code>--show_serverid</code></td>
             <td>Show server ID in logs</td>
         </tr>
         <tr>
-            <td nowrap>--start_date <i>start_date</i></td>
+            <td nowrap><code>--start_date <em>start_date</em></td>
             <td>Starting date for retrieving logs.</td>
         </tr>
         <tr>
-            <td>--end_date <i>end_date</i></td>
+            <td><code>--end_date<code> <em>end_date</em></td>
             <td>Ending date for retrieving logs.</td>
         </tr>
         <tr>
             <td><code>--org <em>orgID</em></code></td>
-            <td>The ID of the organization the application belongs to. This parameter is required
-            if the target application has the same name as one in another organization.
+            <td>The ID of the organization the application belongs to. This parameter only is required if the target application has the same name as an application in another organization you belong to.
              </td>
         </tr>
         <tr>
-            <td>--per_page <i>per_page</i></td>
+            <td><code>--per_page<code> <em>per_page</em></td>
             <td>Number of log messages per page. Default: 100</td>
         </tr>
         <tr>
-            <td nowrap>--more</td>
+            <td nowrap><code>--more</code></td>
             <td>Display the next page of log messages.</td>
         </tr>
         <tr>
-            <td>-h, --help</td>
+            <td><code>-h</code>, <code>--help</code></td>
             <td>Show help information for this command.</td>
         </tr>
     </tbody>

@@ -64,9 +64,7 @@ acs crt [options] [<i>appname</i>]
         </tr>        
         <tr>
             <td><code>--org <em>orgID</em></code></td>
-            <td>The ID of the organization the application belongs to.  This parameter is required
-            if the target application has the same name as an application in another organization 
-            you belong to.
+            <td>The ID of the organization the application belongs to. This parameter only is required if the target application has the same name as an application in another organization you belong to.
              </td>
         </tr>
 

@@ -30,7 +30,7 @@ The following fields are listed:
 
 **Login Required:** Yes (See [login](#!/guide/node_cli_login) command)
 
-## Optional Parameters
+## Parameters
 
 <table class="doc-table">
     <tbody>

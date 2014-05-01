@@ -11,33 +11,14 @@ version.
 You must run this command from the application's root directory, or specify the application's
 directory with the **--dir** or **-d** option.
 
-### Appcelerator Platform Notes ###
-
-If you have an application with the same name in different [organizations](/platform/latest/#!/guide/Managing_Organizations), 
-and try to publish one of them, the CLI will generate an error. For example, the [`list`](/cloud/latest/#!/guide/node_cli_list) 
-CLI command output below indicates that the user has two applications, both named **newApp**, in different organizations:
-
-    $ acs list
-
-    Organization: Appcelerator, Inc (12345)
-    ============ 
-    App name: newApp
-     -- Created by: anotherone@appcelerator.com
-     -- ...
-     
-    Organization: Another Organization (12346)
-    ============ 
-    App name: newApp
-     -- Created by: anotherone@appcelerator.com
-     -- ..
-
-If you attempt to publish **newApp** the CLI displays an error message:
+If you have created an application with the same name in different [organizations](/platform/latest/#!/guide/Managing_Organizations), 
+and try to publish one of them, the CLI will generate an error:
 
     $ acs publish -d newApp
      
     [ERROR] There are multiple apps with name 'newApp' in different organizations. Please specify an organization.
 
-The solution is to add the `--org` parameter to specify the ID of the organization from which the application should be published:
+To resolve, use the `--org` parameter to specify the ID of the organization from which the application should be published:
 
     acs publish -d newApp --org 12345
      
@@ -47,6 +28,8 @@ The solution is to add the `--org` parameter to specify the ID of the organizati
     [##########################################################################] 100%
     ...
 
+You can run the [`list`](/cloud/latest/#!/guide/node_cli_list) CLI command to determine which organizations 
+you belong to.
 
 ### Publishing Application Versions ###
 

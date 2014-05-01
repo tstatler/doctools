@@ -140,6 +140,12 @@
             "description": "Logging facilities in Node.ACS."
             },
             {
+            "name": "node_orgs",
+            "title": "Node.ACS & Platform Organizations",
+            "url": "guides/node/organizations",
+            "description": "Describes Platform organization support for Node.ACS applications."
+            },
+            {
                 "name": "node_cli",
                 "title": "Command-Line Interface",
                 "url": "guides/node/cli/commands",

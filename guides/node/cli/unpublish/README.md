@@ -31,7 +31,7 @@ $ acs unpublish [ <em>appname</em> |\--dir <em>app_dir</em>] [\--ver <em>version
     </tbody>
 </table> -->
 
-## Optional Parameters
+## Parameters
 
 <table class="doc-table">
     <tbody>

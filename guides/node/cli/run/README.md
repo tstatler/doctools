@@ -2,9 +2,9 @@
 
 ## Description
 
-Start a Node.ACS application locally for developing and testing purpose.  
-The command needs to be run in application's root directory, or specify the
-application's directory with **-d** option.
+Start a Node.ACS application locally for development and testing purposes.  
+The command needs to be run from the application's root directory, or you must specify the
+application's directory with **-d** or **--dir** options.
 
 ## Usage
 
@@ -12,7 +12,7 @@ application's directory with **-d** option.
 
 **Login Required:** No
 
-## Optional Parameters
+## Parameters
 
 <table class="doc-table">
     <tbody>
@@ -21,23 +21,25 @@ application's directory with **-d** option.
             <th>Description</th>
         </tr>
         <tr>
-            <td>-p, --port</td>
-            <td>Start application with a specific port. If omitted, port '8080' will be used.  
-                This option only takes effect when app is running with MVC framework.</td>
+            <td><code>-p</code>, <code>--port</code> <em>Port</em></td>
+            <td>Start the application on a specific port. If omitted, port '8080' is be used.  
+                This option only takes effect for applications using the [Node.ACS MVC framework](/cloud/latest/#!/guide/node_mvc).</td>
         </tr>
         <tr>
-            <td>--random</td>
+            <td><code>--random</code></td>
             <td>Start application with a random port.  
-                This option only takes effect when app is running with MVC framework.</td>
+                This option only takes effect for applications using the [Node.ACS MVC framework](/cloud/latest/#!/guide/node_mvc).</td>
         </tr>
         <tr>
-            <td>-h, --help</td>
+            <td><code>-h,</code>, <code>--help</code></td>
             <td>Show help information for this command.</td>
         </tr>
     </tbody>
 </table>
 
 ## Example
+
+The following runs the Node.ACS application on port 3000.
 
     $ acs run --port 3000
     

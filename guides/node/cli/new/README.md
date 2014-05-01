@@ -4,21 +4,17 @@
 ## Description
 
 Creates a new Node.ACS application. A new application directory will be created
-in the current working directory, or in the location specified by the '-d' option. The new application 
-directory's name will be the same as the application's. If a folder with the name already exists, the command will fail. 
+in the current working directory, or in the location specified by the `-d` or `--dir` options. The 
+application directory's name will match the specified application name. If a folder with the 
+specified name already exists, the command will fail. 
 
-By default, the **new** command creates an application that uses the Node.ACS MVC framework. 
-To create a standard Node.js application, call **new** with the **--framework none**
-option. For more information, see [Node.ACS MVC Framework](/cloud/latest/#!/guide/node_mvc) 
-and [Standard Node.js Applications](/cloud/latest/#!/guide/node_standard).
+By default, this command creates an application that uses the [Node.ACS MVC Framework](/cloud/latest/#!/guide/node_mvc). 
+To create a [standard Node.js applications](/cloud/latest/#!/guide/node_standard) without the MVC framework, 
+pass the **--framework none** CLI option. 
 
-### Appcelerator Platform Notes ###
-
-For Appcelerator Platform users, a new Node.ACS application must be assigned to a 
-[Dashboard organization](http://docs.appcelerator.com/platform/latest/#!/guide/Managing_Organizations). 
-If the user creating the application belongs to just one organization it's assigned 
-automatically to that organization. If the user belongs to more than one organization, 
-they are prompted to choose an organization for the application. 
+If the user creating the application belongs to just one [organization](/cloud/latest/#!/guide/node_orgs), 
+the application is assigned automatically to that organization. If the user belongs to more than one organization, 
+they are prompted to choose an organization. See [Examples](#!/guide/node_cli_new-section-example).
 
 ## Usage
 
@@ -26,7 +22,7 @@ they are prompted to choose an organization for the application.
 
 **Login Required:** Yes  (See [login](#!/guide/node_cli_login) command)
 
-## Required Parameters
+## Parameters
 
 <table class="doc-table">
     <tbody>
@@ -38,39 +34,29 @@ they are prompted to choose an organization for the application.
             <td>name</td>
             <td>The name of new application</td>
         </tr>
-    </tbody>
-</table>
-
-## Optional Parameters
-
-<table class="doc-table">
-    <tbody>
         <tr>
-            <th>Name</th>
-            <th>Description</th>
+            <td><code>--framework</code> none</td>
+            <td>Create a standard Node.js application with the Node.ACS 
+            <a href="/cloud/latest/#!/guide/node_mvc">MVC framework</a>.</td>
         </tr>
         <tr>
-            <td>--framework none</td>
-            <td>Create the new app with standard node.js sample</td>
-        </tr>
-        <tr>
-            <td>-h, --help</td>
-            <td>Show help information of the command</td>
+            <td><code>-h</code>, <code>--help</code></td>
+            <td>Show help information for the command.</td>
         </tr>
     </tbody>
 </table>
 
 ## Example
 
-In the following example, the current user belongs to a single organization, so the application 
-is automatically assigned to that organization without prompting. 
+In the following example, the current user belongs to a single organization so the application is automatically assigned to that organization. 
 
     $ acs new MyProject
     
     [DEBUG] Creating project at: /home/user/MyProject
     New project created at /home/user/MyProject
 
-In this example the current user belongs to two organizations
+In the following example the user belongs to two organizations, "Appcelerator, Inc" and "Appceleator Support", 
+and is prompted to select an organization from a list.
     
     $ acs new MyApp
 
@@ -81,3 +67,10 @@ In this example the current user belongs to two organizations
 
     Creating new Node.ACS app for organization Appcelerator, Inc (14301)...
     New project created at /projects/MyApp
+
+The following example creates a standard Node.js application without the Node.ACS MVC framework. 
+
+    $ acs new StandardApp --framework none
+    
+    [DEBUG] Creating project at: /home/user/StandardApp
+    New project created at /home/user/StandardApp

@@ -3,24 +3,24 @@
 
 ## Description
 
-Adds a new route or service to an existing application. This command is a
-utility that helps you to quickly add a new route and handler to your Node.ACS MVC
-framework application. 
+Adds a new route or service to an existing application. The _name_ parameter specifies the new the 
+route's name, as well as the name of the handler function. For example, running `acs add myservice` 
+is equivalent to manually adding the following route and handle to your Node.ACS project's config.json and services.js file, respectively:
 
-The _name_ argument specified on the command line is used as the route's name as well
-as the name of the handler function
+**config.json**:
 
-You can also add a new route and handler manually by doing the following:
+    {
+        "path": "/myservice", 
+        "method": "get", 
+        "callback": "services#myservice"
+    }
 
-*    Add a new route item into `config.json`:  
 
-        {"path": "/myservice", "method": "get", "callback": "services#myservice"}
+**controllers/services.js**
 
-*    Add a new route handler (function) into `/controllers/services.js`
-
-        function myservice(req, res) {
-            res.send('Hello, world!');
-        };
+    function myservice(req, res) {
+        res.send('Hello, world!');
+    };
     
 ## Usage
 
@@ -31,7 +31,7 @@ application's directory with '-d' option.
 
 **Login Required:** No
 
-## Required Parameters
+## Parameters
 
 <table class="doc-table">
     <tbody>
@@ -43,23 +43,12 @@ application's directory with '-d' option.
             <td><i>name</i></td>
             <td>Name of the new route/service to add.</td>
         </tr>
-    </tbody>
-</table>
-
-## Optional Parameters
-
-<table class="doc-table">
-    <tbody>
         <tr>
-            <th>Name</th>
-            <th>Description</th>
-        </tr>
-        <tr>
-            <td>-d <i>app_directory</i></td>
+            <td><code>-d</code>, <code>--dir</code> <em>path/to/app_directory</em></td>
             <td>Specifies the application to add a route to.</td>
         </tr>
         <tr>
-            <td>-h, --help</td>
+            <td><code>-h</code>, <code>--help</code></td>
             <td>Show help information for this command.</td>
         </tr>
     </tbody>

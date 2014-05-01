@@ -3,8 +3,8 @@
 
 ## Description
 
-List application's log within a specific period. By default, a maximum of 100
-log messages will be returned at a time. Each log record contains the following fields:
+Lists the application's log within a specific period. By default, a maximum of 100
+log messages are returned at a time. Each log record contains the following fields:
 
 * Date and time
 * IP of server that handled the request
@@ -16,13 +16,15 @@ Note that these fields are only reported for Node.ACS applications that use the
 
 Note that `acs loglist` may not get the latest logs from server immediately. You may need to wait a few seconds. 
 
+For an overview of Node.ACS logging utilities see , see [Logging Utilities](/cloud/latest/#!/guide/node_logging-section-logging-utilities).
+
 ## Usage
 
 `$ acs loglist` [ _options_ ] [ _appname_ | -d _app_dir_ ]
 
 **Login Required:** Yes (See [login](#!/guide/node_cli_login) command)
 
-## Required Parameters
+## Parameters
 
 <table class="doc-table">
     <tbody> 
@@ -34,17 +36,6 @@ Note that `acs loglist` may not get the latest logs from server immediately. You
             <td>appname</td>
             <td>The name of the app to retrieve and show runtime logs for. If omitted, you must run the command in the application's root directory,
                  or specify the application's directory with '-d' option.</td>
-        </tr>
-    </tbody>
-</table>
-        
-## Optional Parameters
-            
-<table class="doc-table">
-    <tbody>
-        <tr>
-            <th>Name</th>
-            <th>Description</th>
         </tr>
         <tr>
             <td nowrap>--server_id <i>serverid</i></td>
@@ -72,9 +63,7 @@ Note that `acs loglist` may not get the latest logs from server immediately. You
         </tr>
         <tr>
             <td><code>--org <em>orgID</em></code></td>
-            <td>The ID of the organization the application belongs to.  This parameter is required
-            if the target application has the same name as an application in another organization 
-            you belong to.
+            <td>The ID of the organization the application belongs to. This parameter only is required if the target application has the same name as an application in another organization you belong to.
              </td>
         </tr>
         <tr>
