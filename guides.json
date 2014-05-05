@@ -140,6 +140,12 @@
             "description": "Logging facilities in Node.ACS."
             },
             {
+            "name": "node_clustering",
+            "title": "Using Node Cluster",
+            "url": "guides/node/clustering",
+            "description": "Clustering in Node.ACS applications"
+            },
+            {
                 "name": "node_cli",
                 "title": "Command-Line Interface",
                 "url": "guides/node/cli/commands",
