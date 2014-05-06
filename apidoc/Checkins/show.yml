@@ -19,6 +19,12 @@ methods:
             some important data related to the returning objects such as object's owner or
             referencing objects.
 
+      - name: show_user_like
+	description: |
+	    If set to **true** the Checkin object in the response will include `"current_user_liked: true"`
+	    if the current user has liked the object. If the user has not liked the object, the
+	    `current_user_liked` field is not included in the response.
+	type: Boolean
             Default is 3, valid range is 1 to 8.
         type: Number
 
