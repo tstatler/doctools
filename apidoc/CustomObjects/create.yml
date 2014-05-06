@@ -122,10 +122,10 @@ methods:
                 });
 
       - platform: rest
-        example: |
-	    Example cURL request that create a "car" object with custom coordinates:
+	example: |
+	    Example cURL request that creates a "car" object with custom coordinates:
 
-                $ curl -b cookies.txt -c cookies.txt -F "fields={\"color\":\"blue\", \"make\": \"nissan\", \"purchased_at\" : \"2011-11-02 17:07:37 -0700\", \"year\" : 2005, \"used\" : false, \"coordinates\":[-122.1, 37.1]}"  https://api.cloud.appcelerator.com/v1/objects/car/create.json?key=<YOUR APP APP KEY>
+		$ curl -b cookies.txt -c cookies.txt -F "fields={\"color\":\"blue\", \"make\": \"nissan\", \"purchased_at\" : \"2011-11-02 17:07:37 -0700\", \"year\" : 2005, \"used\" : false, \"coordinates\":[-122.1, 37.1]}"  https://api.cloud.appcelerator.com/v1/objects/car/create.json?key=<YOUR APP APP KEY>
 
             Example JSON response:
 
