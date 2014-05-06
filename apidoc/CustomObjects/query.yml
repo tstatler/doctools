@@ -39,6 +39,13 @@ methods:
             Number of records to skip. Must be used together with `limit`.
         type: Number
 
+      - name: show_user_like
+        description: |
+            If set to **true**, each CustomObject in the response includes `"current_user_liked: true"`
+             if the current user has liked the object. If the current user has not liked the object, the 
+            `current_user_liked` field is not included in the response.
+        type: Boolean
+
       - name: where
         description: |
             Constraint values for fields. `where` should be encoded JSON.
