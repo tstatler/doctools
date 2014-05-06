@@ -21,7 +21,7 @@ methods:
 
             "likes_count": 2
 
-        Specify one and only one of the ID parameters to identify  the target object.
+        Specify one and only one of the ID parameters to identify the target object.
 
     url: likes/create.json
     http-method: POST
