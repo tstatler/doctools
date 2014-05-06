@@ -55,9 +55,11 @@ methods:
 
       - platform: rest
         example: |
-            Example cURL request:
+	    Example cURL request that passes `show_user_like=true` as a parameter; the Checkin object
+	    returned in the JSON response contains `"current_user_liked": true`, indicating that the current user
+	    liked the retrieved object.
 
-                $ curl -b cookies.txt -c cookies.txt https://api.cloud.appcelerator.com/v1/checkins/show.json?key=<YOUR APP APP KEY>&checkin_id=4d8bc645d0afbe0363000013
+		$ curl -b cookies.txt -c cookies.txt https://api.cloud.appcelerator.com/v1/checkins/show.json?key=<YOUR APP APP KEY>&checkin_id=4d8bc645d0afbe0363000013&show_user_like=true
 
             Example JSON response:
 
@@ -72,6 +74,7 @@ methods:
                       {
                         "id":"4d8bc645d0afbe0363000013",
                         "created_at":"2011-03-24T22:31:34+0000",
+			"current_user_liked": true,
                         "updated_at":"2011-03-24T22:31:34+0000",
                         "place": {
                           "id":"4d8bc62ad0afbe0363000012",
