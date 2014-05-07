@@ -133,7 +133,7 @@ methods:
 
 	      * `id`: The ID of the requested push notification.
 	      * `payload`: The notification payload.
-	      * `channel` : The notification channel.
+	      * `channel`: The notification channel.
 
 	type: Hash
 
