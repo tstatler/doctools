@@ -126,6 +126,16 @@ methods:
             see the [Search and Query guide](#!/guide/search_query).
         type: Hash
 
+    response-parameters:
+      - name: push_notification
+        description: |
+            Information about the requested push notification:
+
+              * `id`: The ID of the requested push notification.
+              * `payload`: The notification payload.
+              * `channel` : The notification channel.
+
+        type: Hash
 
     examples:
       - platform: titanium
