@@ -6,7 +6,7 @@
 Retrieves and displays a published application's runtime logs continuously from
 Node.ACS. It lets you see in real-time what's happening with an application running in the cloud.  By default, runtime logs are retrieved every 5 seconds, and you can configure this interval with the `--interval` parameter. 
 
-For an overview of Node.ACS logging utilities see , see [Logging Utilities](/cloud/latest/#!/guide/node_logging-section-logging-utilities).
+For an overview of Node.ACS logging utilities see [Logging Utilities](#!/guide/node_logging-section-logging-utilities).
 
 ## Usage
 
@@ -67,7 +67,6 @@ For an overview of Node.ACS logging utilities see , see [Logging Utilities](/clo
 ## Example
 
 **Note: **Each line in the following example begins with the server ID.
-    
     
     $ acs logcat MyProject
     

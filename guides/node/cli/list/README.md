@@ -4,23 +4,23 @@
 ## Description
 
 Shows a list of applications owned by the current user. By default, data is listed for all applications. 
-You can an application name to only show details for that application. The listed data 
-also includes error messages, if any, related to deploying and running the application. 
+You can specify an application name to only show details for that application. The information returned
+by this command also includes error messages, if any, related to the application's deployment and execution. 
 
-Application are grouped by the organization they belong to (see [examples](#!/guide/node_cli_list-section-example)). 
-If you've created applications that are not assigned to an organization, they are included in a group named "Not Assigned".
+Application are grouped by the Appcelerator Platform [organization](#!/guide/node_orgs) that they belong to (see [Examples](#!/guide/node_cli_list-section-examples)). 
+If you've created applications that are not assigned to any organization, they are included in a group named "Not Assigned".
 
-The following fields are listed:
+The following fields are displayed for each application:
 
 * **Created by** &mdash; Email of user that created application.
 * **URL** &mdash; URL of application.
 * **Created at**  &mdash; Date the application was created.
-* **Node Version**  &mdash; Node version used to run the application (see [Node.js Engine](/cloud/latest/#!/guide/node_standard-section-node-js-engine))
+* **Node Version**  &mdash; Node version used to run the application (see [Node.js Engine](#!/guide/node_standard-section-node-js-engine))
 * **Maximum allowed number of servers**  &mdash; By default, this is set to **1**. Contact Appcelerator Support to increase this value.
 * **Desired number of servers**  &mdash; Number of servers specified by the `--setsize` parameter of the 
-[config](/cloud/latest/#!/guide/node_cli_config) command.
+[config](#!/guide/node_cli_config) command.
 * **Current number of deployed servers**  &mdash; Number of servers currently in use.
-* **Active version** &mdash;  Version of the currently active application. Use the [publish](/cloud/latest/#!/guide/node_cli_publish) command to change the version.
+* **Active version** &mdash;  Version of the currently active application. Use the [publish](#!/guide/node_cli_publish) command to change the version.
 * **Published at** &mdash;  Date the application was published. Not shown if application hasn't been published.
 * **Servers** &mdash; List of servers in use and their current status.
 
@@ -60,7 +60,7 @@ The following fields are listed:
     </tbody>
 </table>
 
-## Example
+## Examples
 
 In the following example the current user owns two applications that belong to the "Appcelerator, Inc" 
 organization, one that belongs to the "Acme, Inc" organization, and one that isn't assigned to any

@@ -2,11 +2,11 @@
 
 <p class="note">This feature requires an Appcelerator Platform subscription.</p>
 
-Starting with Node.ACS release 1.1.1, Node.ACS supports [Platform organizations](/platform/latest/#!/guide/Managing_Organizations). 
+Starting with Node.ACS release 1.1.1, Node.ACS supports [Appcelerator Platform organizations](http://docs.appcelerator.com/platform/latest/#!/guide/Managing_Organizations). This means that all members of an organization, including administrators and normal users, share applications that belong to that organization. Any member can make changes to any Node.ACS applications in that organization.
+
 Note the following:
 
 * Each Node.ACS application is assigned to exactly one organization
-* All members of an organization, administrators and normal users, share applications that belong to that organization. Any member can make changes to any Node.ACS applications in that organization.
 * Applications names must be unique within an organization.
 
 When you [create](#!/guide/node_cli_new) a new Node.ACS application, you specify the ID of an organization to assign the application. Existing applications &mdash; those created before organization 

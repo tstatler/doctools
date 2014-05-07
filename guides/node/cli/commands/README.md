@@ -17,7 +17,8 @@ an administrator:
 
 ## CLI Commands
 
-**acs** provides 14 commands for you to create, manage Node.ACS applications, command usage of these commands is like the following: 
+**acs** provides commands for you to create and manage Node.ACS applications. Command usage has the 
+following format: 
     
     acs [_COMMAND_] [_COMMON OPTIONS_] [_COMMAND OPTIONS_]
 

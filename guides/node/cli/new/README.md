@@ -8,11 +8,11 @@ in the current working directory, or in the location specified by the `-d` or `-
 application directory's name will match the specified application name. If a folder with the 
 specified name already exists, the command will fail. 
 
-By default, this command creates an application that uses the [Node.ACS MVC Framework](/cloud/latest/#!/guide/node_mvc). 
-To create a [standard Node.js applications](/cloud/latest/#!/guide/node_standard) without the MVC framework, 
+By default, this command creates an application that uses the [Node.ACS MVC Framework](#!/guide/node_mvc). 
+To create a [standard Node.js applications](#!/guide/node_standard) without the MVC framework, 
 pass the **--framework none** CLI option. 
 
-If the user creating the application belongs to just one [organization](/cloud/latest/#!/guide/node_orgs), 
+If the user creating the application belongs to just one Platform [organization](#!/guide/node_orgs), 
 the application is assigned automatically to that organization. If the user belongs to more than one organization, 
 they are prompted to choose an organization. See [Examples](#!/guide/node_cli_new-section-example).
 

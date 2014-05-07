@@ -11,27 +11,8 @@ version.
 You must run this command from the application's root directory, or specify the application's
 directory with the **--dir** or **-d** option.
 
-If you have created an application with the same name in different [organizations](/platform/latest/#!/guide/Managing_Organizations), 
-and try to publish one of them, the CLI will generate an error:
 
-    $ acs publish -d newApp
-     
-    [ERROR] There are multiple apps with name 'newApp' in different organizations. Please specify an organization.
-
-To resolve, use the `--org` parameter to specify the ID of the organization from which the application should be published:
-
-    acs publish -d newApp --org 12345
-     
-    Preparing application for publish... done
-    Packing application... done
-    Publishing to cloud...
-    [##########################################################################] 100%
-    ...
-
-You can run the [`list`](/cloud/latest/#!/guide/node_cli_list) CLI command to determine which organizations 
-you belong to.
-
-### Publishing Application Versions ###
+### About publishing application versions ###
 
 You can publish up to three different versions of your application to the Node.ACS cloud. Only one
 version may be deployed and active at a time. The application version number is determined by the
@@ -67,7 +48,29 @@ When a version is republished it becomes the active and deployed version, regard
 active or not currently.
 
 You can un-publish a specific version of an application, whether it's currently deployed or not. See the 
-[unpublish](http://docs.appcelerator.com/cloud/latest/#!/guide/node_cli_unpublish) command for details.
+[unpublish](#!/guide/node_cli_unpublish) command for details.
+
+### About publishing applications with identical names in different organizations  ###
+
+If you have created an application with the same name in different [organizations](#!/guide/node_orgs), 
+and try to publish one of them, the CLI will generate an error:
+
+    $ acs publish -d newApp
+     
+    [ERROR] There are multiple apps with name 'newApp' in different organizations. Please specify an organization.
+
+To resolve this issue, use the `--org` parameter to specify the ID of the organization from which the application should be published:
+
+    acs publish -d newApp --org 12345
+     
+    Preparing application for publish... done
+    Packing application... done
+    Publishing to cloud...
+    [##########################################################################] 100%
+    ...
+
+You can run the [`list`](#!/guide/node_cli_list) CLI command to determine which organizations 
+you belong to.
 
 ## Usage ##
 

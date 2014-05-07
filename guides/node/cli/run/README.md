@@ -23,12 +23,12 @@ application's directory with **-d** or **--dir** options.
         <tr>
             <td><code>-p</code>, <code>--port</code> <em>Port</em></td>
             <td>Start the application on a specific port. If omitted, port '8080' is be used.  
-                This option only takes effect for applications using the [Node.ACS MVC framework](/cloud/latest/#!/guide/node_mvc).</td>
+                This option only takes effect for applications using the [Node.ACS MVC framework](#!/guide/node_mvc).</td>
         </tr>
         <tr>
             <td><code>--random</code></td>
             <td>Start application with a random port.  
-                This option only takes effect for applications using the [Node.ACS MVC framework](/cloud/latest/#!/guide/node_mvc).</td>
+                This option only takes effect for applications using the [Node.ACS MVC framework](#!/guide/node_mvc).</td>
         </tr>
         <tr>
             <td><code>-h,</code>, <code>--help</code></td>
@@ -39,18 +39,11 @@ application's directory with **-d** or **--dir** options.
 
 ## Example
 
-The following runs the Node.ACS application on port 3000.
+The following runs the Node.ACS application in the current working directory on port 3000.
 
     $ acs run --port 3000
     
-          _/_/      _/_/_/    _/_/_/ 
-       _/    _/  _/        _/        
-      _/_/_/_/  _/          _/_/     
-     _/    _/  _/              _/    
-    _/    _/    _/_/_/  _/_/_/       
-    
     [INFO]  No dependencies detected
-    [INFO]  The app is running locally, log file is: /home/user/MyProject/logs/MyProject.log
-       info  - socket.io started
+    [INFO]  socket.io started
     [INFO]  ACS started on port 3000
     

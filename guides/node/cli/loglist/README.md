@@ -12,11 +12,11 @@ log messages are returned at a time. Each log record contains the following fiel
 * The execution time of the request in milliseconds
 
 Note that these fields are only reported for Node.ACS applications that use the
- [Node.ACS MVC framework](http://docs.appcelerator.com/cloud/latest/#!/guide/node_mvc).
+ [Node.ACS MVC framework](#!/guide/node_mvc).
 
 Note that `acs loglist` may not get the latest logs from server immediately. You may need to wait a few seconds. 
 
-For an overview of Node.ACS logging utilities see , see [Logging Utilities](/cloud/latest/#!/guide/node_logging-section-logging-utilities).
+For an overview of Node.ACS logging utilities see [Logging Utilities](#!/guide/node_logging-section-logging-utilities).
 
 ## Usage
 

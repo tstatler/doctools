@@ -141,7 +141,7 @@
             },
             {
             "name": "node_orgs",
-            "title": "Node.ACS & Platform Organizations",
+            "title": "Node.ACS Organization Support",
             "url": "guides/node/organizations",
             "description": "Describes Platform organization support for Node.ACS applications."
             },

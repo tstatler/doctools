@@ -74,8 +74,10 @@ is included, the date string must be quoted. If the specified date range
 contains more than specified maximum number of logs, the most recent messages
 will be returned.
 
-## Example
-    
+## Examples
+
+The following example retrieves the access logs for the application named "MyProject".
+
     $ acs accesslog MyProject
     
     Retrieving access log from the server
@@ -84,5 +86,18 @@ will be returned.
     [12/11/2013 08:43:23.712]   127.0.0.1   /   10073ms
     [12/11/2013 08:43:07.237]   127.0.0.1   /   10073ms
     [12/11/2013 08:42:48.365]   127.0.0.1   /   10075ms
+
+The following example retrieves the access logs for the application named "MyProject" that resides
+in the organization with the ID of "1234567890".
+
+    $ acs accesslog MyProject --org 1234567890
+    
+    Retrieving access log from the server
+    [12/11/2013 08:46:23.092]   127.0.0.1   /   10068ms
+    [12/11/2013 08:43:55.790]   127.0.0.1   /css/style.css   10074ms
+    [12/11/2013 08:43:23.712]   127.0.0.1   /   10073ms
+    [12/11/2013 08:43:07.237]   127.0.0.1   /   10073ms
+    [12/11/2013 08:42:48.365]   127.0.0.1   /   10075ms
+
 
 

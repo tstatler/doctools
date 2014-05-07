@@ -1,5 +1,9 @@
 # Node.ACS Release Notes
 
+## 9 May 2014 -- version 1.1.1
+
+Node.ACS organization support
+
 ## 18 Decemeber 2013 -- version 1.0.11
 
 Node.js has been upgraded to [Node.js v0.10.22](http://blog.nodejs.org/2013/11/12/node-v0-10-22-stable/) from v0.8.26. This version contains a fix for the ["infamous Walmart leak"](https://groups.google.com/forum/#!topic/nodejs/dVn_WcfT5qk), a [uvlib update](https://github.com/joyent/libuv/releases/tag/v0.10.19), and generally increased performance and stability. Developers are strongly encouraged to update their Node applications to be compatible with this version of Node.js.
