@@ -35,7 +35,7 @@ methods:
 
       - name: show_user_like
         description: | 
-            If set to **true** the Place object in the response will include `"current_user_liked: true"`
+            If set to **true** the Post object in the response will include `"current_user_liked: true"`
             if the current user has liked the object. If the user has not liked the object, the 
             `current_user_liked` field is not included in the response.
         type: Boolean                
