@@ -189,7 +189,7 @@ for obj in data:
 
 		fields = parse_fields(obj["members"]["property"])
 		if len(fields) > 0:
-			new_obj["doc"] += "  * The REST object of this class contains the following fields:<ul>\n"
+			new_obj["doc"] += " * The REST object of this class contains the following fields:<ul>\n"
 			new_obj["doc"] += fields + " * </ul>\n"
 
 		new_obj["doc"] += ' * For more details about the underlining REST object, see the <a href="http://docs.appcelerator.com/cloud/latest/#!/api/' + name + '">ACS API Docs</a>.'

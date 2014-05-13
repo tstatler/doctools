@@ -133,12 +133,12 @@ def parse_methods(members):
 		desc += ' * For more details about the underlining REST method, see the\n'
 		desc += ' * [ACS API Docs](http://docs.appcelerator.com/cloud/latest/#!/api/' + owner + '-method-' + name + ').\n'
 		if dict_has_non_empty_member(api, "params"):
-			desc += " * @param data Method parameters specified as a Map with the following key-value pairs:<ul> \n"  
+			desc += " * @param data Method parameters specified as an NSDictionary with the following key-value pairs:<ul> \n"
 			desc += parse_params(api["params"]) + " * </ul>\n"
 		else:
 			desc += " * @param data Unused.\n"
 		
-		desc += " * @param handler Callback to handle the server response."
+		desc += " * @param handler Callback to handle the server response. See the Callback section in APSClient."
 		#if "response" in api:
 		#	value = convert_to_android_type(api["response"][0]["type"])
 		#	if value.find("[]") != -1:
@@ -148,7 +148,7 @@ def parse_methods(members):
 
 		new_members[tiname] = desc
 		
-		extra_desc = "\n * @param progressHandler Callback to handle the progress of the request."
+		extra_desc = "\n * @param progressHandler Callback to handle the progress of the request. See the Callback section in APSClient."
 
 		new_members[tiname+"WithProgress"] = desc + extra_desc
 	return new_members
