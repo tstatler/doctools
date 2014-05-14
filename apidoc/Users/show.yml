@@ -112,22 +112,21 @@ methods:
 
       - platform: ios
         example: |
-            Example iOS call:
+            In the following example the value of the APSResponse object's `responseString` property 
+            is displayed in a UITextView object. The callback block runs on a separate thread, so you 
+            must switch to the main thread before interacting with the UI.
 
-                NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:(CCUser *)user.objectId, @"user_id", nil];
-                CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"users/show.json" paramDict:paramDict];
-                [request startAsynchronous];
-                [request release];
-
-            SDK Callback:
-
-                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
-                {
-                	NSArray *users = [response getObjectsOfType:[CCUser class]];
-                	if ([users count] == 1) {
-                		NSLog(@"user is %@", user);
-                	}
-                }
+                NSDictionary *data = @{@"user_id": self.userId};
+                
+                [APSUsers show:data withBlock:^(APSResponse *e) {
+                    if (e.success) {
+                        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                            self.textView.text = e.responseString;
+                        }];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error" message:e.message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    }
+                }];
 
       - platform: android
         example: |

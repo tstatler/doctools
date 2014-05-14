@@ -148,26 +148,18 @@ methods:
 
       - platform: ios
         example: |
-            Example iOS call:
+            In the following example, the list of users returned from the query is assigned to 
+            an array named `users` used as the data source for a `UITableView` object (`tableView`, not shown).
+            The `reloadData` method is then called on `tableView`.
 
-                CCWhere *where = [[[CCWhere alloc] init] autorelease];
-                [where fieldName:@"first_name" equalTo:@"joe"];
-                [where fieldName:@"coordinates" nearLat:37.1 nearLng:-122.1 maxDistanceMi:5.0];
-                paramDict = [NSDictionary dictionaryWithObjectsAndKeys:where, @"where", @"created_at", @"order", nil];
-                request = [[[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"users/query.json" paramDict:paramDict] autorelease];
-                [request startAsynchronous];
-
-            SDK Callback:
-
-                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
-                {
-                	if ([response.meta.methodName isEqualToString:@"queryUsers"]) {
-                		NSArray *users = [response getObjectsOfType:[CCUser class]];
-                		for (CCUser *user in users) {
-                			...
-                		}
-                	}
-                }
+                [APSUsers query:nil withBlock:^(APSResponse *e) {
+                    if (e.success) {
+                        self.users = [e.response objectForKey:@"users"];
+                        [self.tableView reloadData];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error" message:e.message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    }
+                }];
 
       - platform: android
         example: |

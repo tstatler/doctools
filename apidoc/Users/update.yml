@@ -145,22 +145,30 @@ methods:
         example: |
             Example iOS call:
 
-                If you want to change user name to Joe and update with a new photo, you can pass in the new user name and a new photo to the update request.
-                NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:@"Joe", @"name", nil]
-                CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"PUT" baseUrl:@"users/update.json" paramDict:paramDict];
-                [request addPhotoUIImage:(UIImage *)newUserImage paramDict:nil];
-                [request startAsynchronous];
-                [request release];
-
-            SDK Callback:
-
-                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
-                {
-                	NSArray *users = [response getObjectsOfType:[CCUser class]];
-                	if ([users count] == 1) {
-                		NSLog(@"Successfully updated user %@", user);
-                	}
+                // Create dictionary of parameters to be passed with the request
+                NSDictionary *data = @{
+                    @"username": self.usernameField.text,
+                    @"first_name": self.firstNameField.text,
+                    @"last_name": self.lastNameField.text,
+                    @"email": self.emailField.text,
+                    @"tags": self.tagsField.text
+                };
+                
+                if (self.passwordField.text && self.passwordField.text.length > 0) {
+                    NSMutableDictionary *mutableData = [data mutableCopy];
+                    [mutableData setObject:self.passwordField.text forKey:@"password"];
+                    [mutableData setObject:self.passwordConfField.text forKey:@"password_confirmation"];
+                    data = mutableData;
                 }
+                
+                [APSUsers update:data withBlock:^(APSResponse *e) {
+                    if (e.success) {
+                        [[[UIAlertView alloc] initWithTitle:@"Success" message:@"Updated!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    } else {
+                        [Utils handleErrorInResponse:e];
+                    }
+                    self.createButton.hidden = NO;
+                }];
 
       - platform: android
         example: |

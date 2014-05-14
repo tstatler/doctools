@@ -91,19 +91,17 @@ methods:
         example: |
             Example iOS call:
 
-                CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"users/show/me.json" paramDict:nil];
-                [request startAsynchronous];
-                [request release];
-
-            SDK Callback:
-
-                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
-                {
-                	NSArray *users = [response getObjectsOfType:[CCUser class]];
-                	if ([users count] == 1) {
-                		NSLog(@"Current user is %@", user);
-                	}
-                }
+                [APSUsers showMe:nil withBlock:^(APSResponse *e) {
+                    if (e.success) {
+                        // The callback runs on a background thread.
+                        // Switch to the main thread before interacting with the UI:
+                        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                            self.textView.text = e.responseString;
+                        }];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error" message:e.message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    }
+                }];
 
       - platform: android
         example: |

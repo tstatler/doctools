@@ -93,24 +93,16 @@ methods:
         example: |
             Example iOS call:
 
-                // search for current user's checkins
-                NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:3];
-                [paramDict setObject:@"John"  forKey:@"q"]; // optional
-                [paramDict setObject:[NSNumber nubmerWithInt:1] forKey:@"page"]; // optional
-                [paramDict setObject:[NSNumber nubmerWithInt:10] forKey:@"per_page"]; // optional
-                CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"users/search.json" paramDict:paramDict];
-                [request startAsynchronous];
-                [request release];
-
-            SDK Callback:
-
-                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
-                {
-                	NSArray *users = [response getObjectsOfType:[CCUser class]];
-                	for (CCUser *user in users) {
-                		...
-                	}
-                }
+                NSDictionary *data = @{@"q": self.searchField.text};
+                
+                [APSUsers search:data withBlock:^(APSResponse *e) {
+                    if (e.success) {
+                        self.users = [e.response objectForKey:@"users"];
+                        [self.tableView reloadData];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error" message:e.message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    }
+                }];
 
       - platform: android
         example: |

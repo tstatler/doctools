@@ -77,19 +77,17 @@ methods:
         example: |
             Example iOS call:
 
-                NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
-                [paramDict setObject:@"foo@foo.com" forKey:@"email"];
-                CCRequest *request = [[[CCRequest alloc] httpMethod:@"GET" initWithDelegate:self baseUrl:@"users/resend_confirmation.json" paramDict:nil] autorelease];
-                [request startAsynchronous];
-
-            SDK Callback:
-
-                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
-                {
-                  if ([response.meta.method isEqualToString:@"resendConfirmation"]) {
-                    NSLog(@"User verification email sent!");
-                  }
-                }
+                NSDictionary *data = @{
+                    @"email": self.emailField.text
+                };
+                
+                [APSUsers resendConfirmation:data withBlock:^(APSResponse *e) {
+                    if (e.success) {
+                        [[[UIAlertView alloc] initWithTitle:@"Success" message:@"Please check your email!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error" message:e.message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    }
+                }];
 
       - platform: android
         example: |
