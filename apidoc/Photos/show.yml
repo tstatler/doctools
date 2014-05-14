@@ -100,22 +100,23 @@ methods:
       - platform: ios
         example: |
 
-            Refer to the "Photo Downloads" section of the [iOS SDK guide](#!/guide/ios) to see how
-            to retrieve the actual image from a CCPhoto object.
-
             Example iOS call:
 
-                NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:(CCPhoto *)photo.objectId, @"photo_id", nil];
-                CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"photos/show.json" paramDict:paramDict];
-                [request startAsynchronous];
-                [request release];
+                NSDictionary *data = @{@"photo_id": self.photoId};
+                
+                [APSPhotos show:data withBlock:^(APSResponse *e) {
+                    if (e.success) {
+                        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                            // Remove the backslashes from URLs in the JSON
+                            self.textView.text = [e.responseString stringByReplacingOccurrencesOfString:@"\\" withString:@""];
+                        }];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error" message:e.message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];                        
+                    }
+                }];
 
-            SDK Callback:
+            For information about retrieving photos, see the "Photo Downloads" section of the [iOS SDK guide](#!/guide/ios).
 
-                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
-                {
-                	NSArray *photos = [response getObjectsOfType:[CCPhoto class]];
-                }
 
       - platform: android
         example: |

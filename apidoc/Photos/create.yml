@@ -153,28 +153,27 @@ methods:
 
       - platform: ios
         example: |
-            Refer to the "Photo Downloads" section of the [iOS SDK guide](#!/guide/ios) to see how
-            to retrieve the actual image from a CCPhoto object.
+            The following example uploads a new photo and uses the `progressBlock` parameter to display 
+            the upload progress in a `UIProgressView`. For information about retrieving photos 
+            that have been uploaded, see the "Photo Downloads" section of the [iOS SDK guide](#!/guide/ios).
 
             Example iOS call:
 
-                NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
-                [paramDict setObject:@"profile_photos" forKey:@"collection_name"]; // optional
-                CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"POST" baseUrl:@"photos/create.json" paramDict:paramDict];
-                [request addPhotoUIImage:image paramDict:nil];
-                [request startAsynchronous];
-                [request release];
-
-            SDK Callback:
-
-                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
-                {
-                	NSArray *photos = [response getObjectsOfType:[CCPhoto class]];
-                	for (CCPhoto *photo in photos)
-                	{
-                		...
-                	}
-                }
+                // Put photo data in a dictionary:
+                NSDictionary *data = @{
+                    @"photo": self.photoData
+                };
+                
+                [APSPhotos create:data withBlock:^(APSResponse *e) {
+                    if (e.success) {
+                        [[[UIAlertView alloc] initWithTitle:@"Success" message:@"Uploaded!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];                        
+                        self.photoData = nil;
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error" message:e.message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];                        
+                    }
+                } progressBlock:^(float progress, BOOL upload) {
+                    self.progressBar.progress = progress;
+                }];
 
       - platform: android
         example: |

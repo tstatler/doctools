@@ -171,26 +171,19 @@ methods:
 
       - platform: ios
         example: |
-            Example iOS call:
+            The following example queries for all photos. If the request is successful, the contents of the
+            "photos" collection is assigned to the `photos` array, which is used
+            as the data source for a `UITableView` (not shown). The table is then asked to reload its
+            data.
 
-                CCWhere *where = [[[CCWhere alloc] init] autorelease];
-                [where fieldName:@"coordinates" nearLat:37.12 nearLng:-122.23x maxDistanceMi:5.0];
-                [where fieldName:@"tags_array" equalTo:@"Appcelerator Cloud Services"];
-                NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:where, @"where", nil]
-                request = [[[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"photos/query.json" paramDict:paramDict] autorelease];
-                [request startAsynchronous];
-
-            SDK Callback:
-
-                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
-                {
-                	if ([response.meta.methodName isEqualToString:@"queryPhotos"]) {
-                		NSArray *photos = [response getObjectsOfType:[CCPhoto class]];
-                		for (CCPhoto *photo in photos) {
-                			...
-                		}
-                	}
-                }
+                [APSPhotos query:nil withBlock:^(APSResponse *e) {
+                    if (e.success) {
+                        self.photos = [e.response objectForKey:@"photos"];
+                        [self.tableView reloadData];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error" message:e.message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];                        
+                    }
+                }];
 
       - platform: android
         example: |
