@@ -20,9 +20,6 @@ implementation.
 
 * Fixed an Android issue with UTF-8 encoded characters not being displayed properly in push notifications. 
 
-* Fixed an issue in Dashboard where an administrator was not able to export an application's data if
-they were not the application's owner. 
-
 * Fixed an issue where an application administrator was unable to check ACLs for a regular user.
 
 ## 11 January 2013
