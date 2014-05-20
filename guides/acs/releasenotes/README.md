@@ -22,6 +22,12 @@ implementation.
 
 * Fixed an issue where an application administrator was unable to check ACLs for a regular user.
 
+## 07 March 2014
+
+  * ACS now supports sending push notifications to devices located within a geographic region you specify.
+  For more information, see "Location-Based Push Notifications" in the [PushNotification](/cloud/latest/#!/api/PushNotifications) 
+  API reference.
+
 ## 11 January 2013
 
   * The namespace used by the ACS SDKs for [Android](#!/guide/android) and [iOS](#!/guide/ios)
