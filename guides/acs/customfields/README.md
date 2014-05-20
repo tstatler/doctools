@@ -3,18 +3,17 @@
 ##  Custom Objects and Custom Fields
 
 Appcelerator Cloud Services provides many types of commonly used predefined
-objects such as {@link Users} and {@link Photos}. However, there is likely to be
-extra data types you would like to use or extra data fields you would like to
-store together with predefined objects. That's where our Custom Objects and
-Custom Data Fields can be used.
+objects such as {@link Users} and {@link Photos}. However, you may want to create
+custom data types, or store custom fields on predefined ACS objects. Custom Objects and
+Custom Data Fields provide your application with this ability.
 
-##  Create Custom Objects
+##  Creating Custom Objects
 
-If you would like to create custom objects with custom object type, please
+If you would like to create custom objects with a custom object type, please
 refer to {@link CustomObjects} to get a list of API calls that can be used to create and access
 custom objects.
 
-##  Add Custom Fields to Predefined Objects
+##  Adding Custom Fields to Predefined Objects
 
 If you would like to store additional custom data into any predefined
 Appcelerator Cloud Services objects, you can simply pass in JSON encoded
@@ -23,18 +22,14 @@ a predefined object.
   
 For example, if you are using the Users API and want to store the age and
 favorite color of each user, simply include JSON encoding of custom_fields
-
-    
     
     custom_fields='{
-    	"age": 23,
-    	"favorite_color": "blue"
+      "age": 23,
+      "favorite_color": "blue"
     }'
     
 
 For example, to associate the above custom fields in user create
-
-    
     
     $ curl -b cookies.txt -c cookies.txt -X POST --data-urlencode "email=john.smith@company.com" --data-urlencode "role=teacher" --data-urlencode "first_name=John" --data-urlencode "last_name=Smith" --data-urlencode "password=pass" --data-urlencode "password_confirmation=pass" --data-urlencode 'custom_fields={"age":23, "favorite_color":"blue"}' https://api.cloud.appcelerator.com/v1/users/create.json?key=<YOUR APP APP KEY>
     {
@@ -82,23 +77,23 @@ types or an incorrect naming convention will be silently ignored.
 ##  Supported Data Types
 
 <table class="doc-table">
-	<tr><th>Type</th><th>Example</th>
-	<tr>
-		<td>Boolean&nbsp;&nbsp;&nbsp;&nbsp;</td>
-		<td>true or false</td>
-	</tr>
-	<tr>
-		<td>String&nbsp;&nbsp;&nbsp;&nbsp;</td>
-		<td>"blue"</td>
-	</tr>
-	<tr>
-		<td>Number&nbsp;&nbsp;&nbsp;&nbsp;</td>
-		<td>23 or 1.234</td>
-	</tr>
-	<tr>
-		<td>Date&nbsp;&nbsp;&nbsp;&nbsp;</td>
-		<td>"2011-11-02 17:07:37 -0700". If a string value matches date format "yyyy-mm-dd hh:mm:ss +zzzz" or "yyyy-mm-ddThh:mm:ss+zzzz", it will be converted to Date type on the Appcelerator Cloud Services backend</td>
-	</tr>
+  <tr><th>Type</th><th>Example</th>
+  <tr>
+    <td>Boolean&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>true or false</td>
+  </tr>
+  <tr>
+    <td>String&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>"blue"</td>
+  </tr>
+  <tr>
+    <td>Number&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>23 or 1.234</td>
+  </tr>
+  <tr>
+    <td>Date&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>"2011-11-02 17:07:37 -0700". If a string value matches date format "yyyy-mm-dd hh:mm:ss +zzzz" or "yyyy-mm-ddThh:mm:ss+zzzz", it will be converted to Date type on the Appcelerator Cloud Services backend</td>
+  </tr>
 </table>
 
 You could also store more complex data types such as Array and Hash. Hash and Array can be embedded into each other. Currently, data stored inside an Array or Hash is not queryable.
@@ -106,15 +101,45 @@ You could also store more complex data types such as Array and Hash. Hash and Ar
 <table class="doc-table">
 <tr><th>Type</th><th>Example</th>
 <tr>
-	<td>Hash&nbsp;&nbsp;</td>
-	<td>{"age":23,"scores":{"math":90, "physics":100}, "my_favorite_colors":["blue","red"]}</td>
+  <td>Hash&nbsp;&nbsp;</td>
+  <td>{"age":23,"scores":{"math":90, "physics":100}, "my_favorite_colors":["blue","red"]}</td>
 </tr>
 <tr>
-	<td>Array&nbsp;&nbsp;</td>
-	<td>["nissan", "honda"] or [2006, 2008], [{"age":28}, {"color":"blue"}]</td>
+  <td>Array&nbsp;&nbsp;</td>
+  <td>["nissan", "honda"] or [2006, 2008], [{"age":28}, {"color":"blue"}]</td>
 </tr>
 </table>
-    	
+
+## Indexing Size Limit for Custom Objects and Fields
+
+To support efficient data query operations, Appcelerator Cloud Services (ACS) indexes the
+field names and values of each custom object, or custom fields you add to a predefined object. For example,
+suppose you create a custom object, `cars`, with the fields `make` and `model`. ACS will create
+two index entries in the MongoDB database, one for each field. The total size of an index entry,
+including meta-data added by ACS, must be less than **1024 bytes** (1KB).
+
+If a custom field's name or value exceeds this size, then no index entry for that field is created.
+Consequently, if you run a custom [query](#!/guide/search_query-section-query-overview) against that field,
+nothing will be returned.
+
+For instance, in the previous example, suppose the string value assigned to `model`
+was greater than 1KB. If you queried the `cars` collection for objects whose `model`
+matched that value, no objects would be returned:
+
+    Cloud.Objects.query({
+	classname: 'cars',
+	where: {
+	    make: {
+	      $regex:"^That Really Long Model Name*"
+	    }
+	}
+    }, function (e) {
+	  if (e.success) {
+	    console.log(e.cars.length); // 0
+	  }
+    });
+
+
 ##  Geographic Coordinates in Custom Fields
 
 To enable geographical search, there is a predefined custom field,
@@ -124,8 +149,8 @@ locations as an array of arrays ( `[[longitude1,latitude1], [longitude2, latitud
 above example, to store location information about the user, we might have:
     
     custom_fields = '{ "color": "blue",
-    	  "age": 23,
-    	  "coordinates": [-122.1, 37.1] 
+	"age": 23,
+	"coordinates": [-122.1, 37.1]
     }'
 
 ##  Remove a Field
@@ -134,7 +159,7 @@ If you wish to remove a custom field during update, simply set the field value
 to null.  
     
     {
-    	"age": null
+      "age": null
     }
     
 
@@ -174,47 +199,47 @@ In iOS, you can simply create a NSDictionary to represent a predefined
 object's custom fields. Here is the mapping of data types in iOS:
 
 <table class="doc-table">
-		<tr><th>Type</th><th>Example</th><th>iOS Class</th>
-		<tr>
-			<td>String&nbsp;&nbsp;&nbsp;&nbsp;</td>
-			<td>"blue"&nbsp;&nbsp;&nbsp;&nbsp;</td>
-			<td>NString</td>
-		</tr>
-		<tr>
-			<td>Number&nbsp;&nbsp;&nbsp;&nbsp;</td>
-			<td>123 or 1.234</td>
-			<td>[NSNumber numberWithInt:] or [NSNumber numberWithDouble:]&nbsp;&nbsp;&nbsp;&nbsp;</td>
-		</tr>
-		<tr>
-			<td>Boolean&nbsp;&nbsp;&nbsp;&nbsp;</td>
-			<td>true or false</td>
-			<td>[NSNumber numberWithBoo:]&nbsp;&nbsp;&nbsp;&nbsp;</td>
-		</tr>
-		<tr>
-			<td>Date&nbsp;&nbsp;&nbsp;&nbsp;</td>
-			<td>"2011-11-02 17:07:37 -0700")&nbsp;&nbsp;&nbsp;&nbsp;</td>
-			<td>NSDate</td>
-		</tr>
-		<tr>
-			<td>Hash&nbsp;&nbsp;&nbsp;&nbsp;</td>
-			<td>{"age": 23, "color": "blue"}&nbsp;&nbsp;&nbsp;&nbsp;</td>
-			<td>NSDictionary</td>
-		</tr>
-		<tr>
-			<td>Array&nbsp;&nbsp;&nbsp;&nbsp;</td>
-			<td>[123, 234] or ["mike", "joe"]&nbsp;&nbsp;&nbsp;&nbsp;</td>
-			<td>NSArray</td>
-		</tr>
-		<tr>
-			<td>Geo coordinates&nbsp;&nbsp;&nbsp;&nbsp;</td>
-			<td>[lng, lat], e.g. [122.33, 37.48]&nbsp;&nbsp;&nbsp;&nbsp;</td>
-			<td>CLLocation</td>
-		</tr>
-		<tr>
-			<td>null&nbsp;&nbsp;&nbsp;&nbsp;</td>
-			<td>Set a value to null&nbsp;&nbsp;&nbsp;&nbsp;</td>
-			<td>NSNull</td>
-		</tr>
+    <tr><th>Type</th><th>Example</th><th>iOS Class</th>
+    <tr>
+      <td>String&nbsp;&nbsp;&nbsp;&nbsp;</td>
+      <td>"blue"&nbsp;&nbsp;&nbsp;&nbsp;</td>
+      <td>NString</td>
+    </tr>
+    <tr>
+      <td>Number&nbsp;&nbsp;&nbsp;&nbsp;</td>
+      <td>123 or 1.234</td>
+      <td>[NSNumber numberWithInt:] or [NSNumber numberWithDouble:]&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    </tr>
+    <tr>
+      <td>Boolean&nbsp;&nbsp;&nbsp;&nbsp;</td>
+      <td>true or false</td>
+      <td>[NSNumber numberWithBoo:]&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    </tr>
+    <tr>
+      <td>Date&nbsp;&nbsp;&nbsp;&nbsp;</td>
+      <td>"2011-11-02 17:07:37 -0700")&nbsp;&nbsp;&nbsp;&nbsp;</td>
+      <td>NSDate</td>
+    </tr>
+    <tr>
+      <td>Hash&nbsp;&nbsp;&nbsp;&nbsp;</td>
+      <td>{"age": 23, "color": "blue"}&nbsp;&nbsp;&nbsp;&nbsp;</td>
+      <td>NSDictionary</td>
+    </tr>
+    <tr>
+      <td>Array&nbsp;&nbsp;&nbsp;&nbsp;</td>
+      <td>[123, 234] or ["mike", "joe"]&nbsp;&nbsp;&nbsp;&nbsp;</td>
+      <td>NSArray</td>
+    </tr>
+    <tr>
+      <td>Geo coordinates&nbsp;&nbsp;&nbsp;&nbsp;</td>
+      <td>[lng, lat], e.g. [122.33, 37.48]&nbsp;&nbsp;&nbsp;&nbsp;</td>
+      <td>CLLocation</td>
+    </tr>
+    <tr>
+      <td>null&nbsp;&nbsp;&nbsp;&nbsp;</td>
+      <td>Set a value to null&nbsp;&nbsp;&nbsp;&nbsp;</td>
+      <td>NSNull</td>
+    </tr>
 </table>
     
 
@@ -244,20 +269,20 @@ The returned user object will have customFields in user.customFields
     
     -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
     {
-    	NSArray *users = [response getObjectsOfType:[CCUser class]];
-    	if ([users count] == 1) {
-    		NSLog(@"Successfully registered user %@", user);
-    		CCUser *user = [users objectAtIndex:0];
-    		NSLog(@"custom fields are %@", user.customFields);
-    	}
+      NSArray *users = [response getObjectsOfType:[CCUser class]];
+      if ([users count] == 1) {
+	NSLog(@"Successfully registered user %@", user);
+	CCUser *user = [users objectAtIndex:0];
+	NSLog(@"custom fields are %@", user.customFields);
+      }
     }
     
 If you would like to use your own custom data type, you need to provide the
 `-(id)JSON` encode method in your object class.   
     
     @interface MyObject : NSObject {
-    	NSString *color;
-    	NSNumber *mileage;
+      NSString *color;
+      NSNumber *mileage;
     }
     @end
     
@@ -268,7 +293,7 @@ If you would like to use your own custom data type, you need to provide the
      */
     - (id)JSON
     {
-    	return [NSDictionary dictionaryWithObjectsAndKeys:self.color, @"color", self.mileage, @mileage, nil];
+      return [NSDictionary dictionaryWithObjectsAndKeys:self.color, @"color", self.mileage, @mileage, nil];
     }
     @end
     

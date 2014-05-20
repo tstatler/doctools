@@ -3,9 +3,13 @@ methods:
   - name: query
     summary: Query Custom Objects
     description: |
-        Query custom object by specified fields with sorting and paginating. Right
-        now, you cannot query or sort data stored inside array or hash in custom
-        fields.
+	Query custom object by specified fields with sorting and paginating.
+
+	**Notes**:
+
+	* If a custom object contains fields or values that are greater than 1KB in length, you will
+	not be able to query on that field. For more information, see [Indexing Size Limit for Custom Objects and Fields](#!/guide/customfields-section-indexing-size-limit-for-custom-objects-and-fields).
+	* Currently, you cannot query or sort data stored inside an array or hash.
 
         For details about using the query parameters,
         see the [Search and Query guide](#!/guide/search_query).
