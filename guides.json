@@ -251,7 +251,7 @@
             },
             {
                 "name": "node_studio",
-                "title": "Studio",
+                "title": "Creating Node.ACS projects in Studio",
                 "url": "guides/node/studio/index",
                 "description": "Studio guides for Node.ACS projects",
                 "items" : [
