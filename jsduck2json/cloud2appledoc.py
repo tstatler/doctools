@@ -130,7 +130,7 @@ def parse_methods(members):
 			desc += strip_tags(u2a(api["shortDoc"][:-3])) + "\n"
 		else: 
 			desc += strip_tags(u2a(shorten_desc(api["doc"]))) + "\n"
-		desc += ' * For more details about the underlining REST method, see the\n'
+		desc += ' * For more details about the underlying REST method, see the\n'
 		desc += ' * [ACS API Docs](http://docs.appcelerator.com/cloud/latest/#!/api/' + owner + '-method-' + name + ').\n'
 		if dict_has_non_empty_member(api, "params"):
 			desc += " * @param data Method parameters specified as an NSDictionary with the following key-value pairs:<ul> \n"
@@ -192,7 +192,7 @@ for obj in data:
 			new_obj["doc"] += " * The REST object of this class contains the following fields:<ul>\n"
 			new_obj["doc"] += fields + " * </ul>\n"
 
-		new_obj["doc"] += ' * For more details about the underlining REST object, see the [ACS API Docs](http://docs.appcelerator.com/cloud/latest/#!/api/' + name + ').'
+		new_obj["doc"] += ' * For more details about the underlying REST object, see the [ACS API Docs](http://docs.appcelerator.com/cloud/latest/#!/api/' + name + ').'
 
 		methods = parse_methods(obj["members"]["method"])
 		if methods is not None:
