@@ -7,7 +7,7 @@ custom DB style search.
 
 ## Email Field
 
-For security, when retrieiving results for users, the email field is not returned in the User
+For security, when retrieving results for users, the email field is not returned in the User
 object unless you have admin access.
 
 ## Search Overview
@@ -143,7 +143,7 @@ For non-exact matches, `where` supports these options:
     </tr>
 </table>
 
-For quering geographic coordinates, the following operators are supported:
+For querying geographic coordinates, the following operators are supported:
 
 <table class="doc-table">
     <tr>

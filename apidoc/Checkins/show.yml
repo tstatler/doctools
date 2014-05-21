@@ -10,7 +10,7 @@ methods:
         description: ID of the checkin to show.
         type: String
         required: true
-
+        
       - name: response_json_depth
         description: |
             Nested object depth level counts in response json.
@@ -19,6 +19,12 @@ methods:
             some important data related to the returning objects such as object's owner or
             referencing objects.
 
+      - name: show_user_like
+        description: | 
+            If set to **true** the Checkin object in the response will include `"current_user_liked: true"`
+            if the current user has liked the object. If the user has not liked the object, the 
+            `current_user_liked` field is not included in the response.
+        type: Boolean
             Default is 3, valid range is 1 to 8.
         type: Number
 
@@ -49,9 +55,11 @@ methods:
 
       - platform: rest
         example: |
-            Example cURL request:
+            Example cURL request that passes `show_user_like=true` as a parameter; the Checkin object 
+            returned in the JSON response contains `"current_user_liked": true`, indicating that the current user 
+            liked the retrieved object.
 
-                $ curl -b cookies.txt -c cookies.txt https://api.cloud.appcelerator.com/v1/checkins/show.json?key=<YOUR APP APP KEY>&checkin_id=4d8bc645d0afbe0363000013
+                $ curl -b cookies.txt -c cookies.txt https://api.cloud.appcelerator.com/v1/checkins/show.json?key=<YOUR APP APP KEY>&checkin_id=4d8bc645d0afbe0363000013&show_user_like=true
 
             Example JSON response:
 
@@ -66,6 +74,7 @@ methods:
                       {
                         "id":"4d8bc645d0afbe0363000013",
                         "created_at":"2011-03-24T22:31:34+0000",
+                        "current_user_liked": true,
                         "updated_at":"2011-03-24T22:31:34+0000",
                         "place": {
                           "id":"4d8bc62ad0afbe0363000012",
