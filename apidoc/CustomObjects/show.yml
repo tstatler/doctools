@@ -42,11 +42,11 @@ methods:
         type: Number
 
       - name: show_user_like
-	description: |
-	    If set to **true** the CustomObject in the response will include `"current_user_liked: true"`
-	    if the current user has liked the object. If the user has not liked the object, the
-	    `current_user_liked` field is not included in the response.
-	type: Boolean
+        description: |
+            If set to **true** the CustomObject in the response will include `"current_user_liked: true"`
+            if the current user has liked the object. If the user has not liked the object, the
+            `current_user_liked` field is not included in the response.
+        type: Boolean
 
     response-parameters:
       - name: classname
@@ -145,10 +145,10 @@ methods:
 
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
-                	if ([response.meta.methodName isEqualToString:@"showObjects"]) {
-                		NSArray *cars = [response.response objectForKey:@"car"];
-                		...
-                	}
+                  if ([response.meta.methodName isEqualToString:@"showObjects"]) {
+                    NSArray *cars = [response.response objectForKey:@"car"];
+                    ...
+                  }
                 }
 
       - platform: android
@@ -191,7 +191,7 @@ methods:
                       var meta = data.meta;
                       if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'showObjects') {
                         var cars = data.response.car;
-                      	...
+                        ...
                       }
                     }
                   }

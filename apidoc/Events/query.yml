@@ -100,11 +100,11 @@ methods:
         type: Hash
 
       - name: show_user_like
-	description: |
-	    If set to **true**, each Event in the response includes `"current_user_liked: true"`
-	     if the current user has liked the object. If the current user has not liked the object, the
-	    `current_user_liked` field is not included in the response.
-	type: Boolean
+        description: |
+            If set to **true**, each Event in the response includes `"current_user_liked: true"`
+             if the current user has liked the object. If the current user has not liked the object, the
+            `current_user_liked` field is not included in the response.
+        type: Boolean
 
       - name: unsel
         description: |
@@ -211,12 +211,12 @@ methods:
 
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
-                	if ([response.meta.methodName isEqualToString:@"queryEvents"]) {
-                		NSArray *events = [response getObjectsOfType:[CCEvent class]];
-                		for (CCEvent *event in events) {
-                			...
-                		}
-                	}
+                  if ([response.meta.methodName isEqualToString:@"queryEvents"]) {
+                    NSArray *events = [response getObjectsOfType:[CCEvent class]];
+                    for (CCEvent *event in events) {
+                      ...
+                    }
+                  }
                 }
 
       - platform: android
@@ -259,7 +259,7 @@ methods:
                       var meta = data.meta;
                       if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'queryEvents') {
                         var events = data.response.events;
-                      	...
+                        ...
                       }
                     }
                   }
@@ -283,8 +283,8 @@ methods:
                     if(data.hasOwnProperty("meta")) {
                       var meta:Object = data.meta;
                       if(meta.status == "ok" && meta.code == 200 && meta.method_name == "queryEvents") {
-                      	var events:Array = data.response.events;
-                      	...
+                        var events:Array = data.response.events;
+                        ...
                       }
                     }
                   }

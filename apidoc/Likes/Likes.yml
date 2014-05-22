@@ -16,7 +16,7 @@ description: |
     If an object has one or more likes associated to it, it will return a total
     like count with the object:  
 
-	"likes_count": 2
+    "likes_count": 2
 
     ## Determining if the Current User Likes an Object ##
 

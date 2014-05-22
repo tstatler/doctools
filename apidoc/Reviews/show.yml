@@ -3,7 +3,7 @@ methods:
   - name: show
     summary: Show a review
     description: |
-	Shows the review with the given `id`.
+        Shows the review with the given `id`.
 
     url: reviews/show.json
     parameters:
@@ -36,11 +36,11 @@ methods:
         type: String
 
       - name: show_user_like
-	description: |
-	    If set to **true** the Review object in the response will include `"current_user_liked: true"`
-	    if the current user has liked the object. If the user has not liked the object, the
-	    `current_user_liked` field is not included in the response.
-	type: Boolean
+        description: |
+            If set to **true** the Review object in the response will include `"current_user_liked: true"`
+            if the current user has liked the object. If the user has not liked the object, the
+            `current_user_liked` field is not included in the response.
+        type: Boolean
 
       - name: review_id
         description: Review object to show.
@@ -48,8 +48,8 @@ methods:
         required: true
 
       - name: review_object_id
-	description: Review object associated with this review.
-	type: String
+        description: Review object associated with this review.
+        type: String
 
       - name: response_json_depth
         description: |
@@ -162,7 +162,7 @@ methods:
 
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
-                	NSArray *reviews = [response getObjectsOfType:[CCReview class]];
+                  NSArray *reviews = [response getObjectsOfType:[CCReview class]];
                 }
 
       - platform: android
@@ -207,7 +207,7 @@ methods:
                       var meta = data.meta;
                       if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'showReview') {
                         var reviews = data.response.reviews;
-                      	...
+                        ...
                       }
                     }
                   }
@@ -232,8 +232,8 @@ methods:
                     if(data.hasOwnProperty("meta")) {
                       var meta:Object = data.meta;
                       if(meta.status == "ok" && meta.code == 200 && meta.method_name == "showReview") {
-                      	var reviews:Array = data.response.reviews;
-                      	...
+                        var reviews:Array = data.response.reviews;
+                        ...
                       }
                     }
                   }

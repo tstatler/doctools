@@ -31,11 +31,11 @@ methods:
         type: Number
 
       - name: show_user_like
-	description: |
-	    If set to **true** the Event object in the response will include `"current_user_liked: true"`
-	    if the current user has liked the object. If the user has not liked the object, the
-	    `current_user_liked` field is not included in the response.
-	type: Boolean
+        description: |
+            If set to **true** the Event object in the response will include `"current_user_liked: true"`
+            if the current user has liked the object. If the user has not liked the object, the
+            `current_user_liked` field is not included in the response.
+        type: Boolean
 
     response-parameters:
       - name: events
@@ -129,9 +129,9 @@ methods:
 
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
-                	if ([response.meta.method isEqualToString:@"showEvents"]) {
-                		NSArray *events = [response getObjectsOfType:[CCEvent class]];
-                	}
+                  if ([response.meta.method isEqualToString:@"showEvents"]) {
+                    NSArray *events = [response getObjectsOfType:[CCEvent class]];
+                  }
                 }
 
       - platform: android
@@ -174,7 +174,7 @@ methods:
                       var meta = data.meta;
                       if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'showEvents') {
                         var events = data.response.events;
-                      	...
+                        ...
                       }
                     }
                   }
@@ -198,8 +198,8 @@ methods:
                     if(data.hasOwnProperty("meta")) {
                       var meta:Object = data.meta;
                       if(meta.status == "ok" && meta.code == 200 && meta.method_name == "showEvents") {
-                      	var events:Array = data.response.events;
-                      	...
+                        var events:Array = data.response.events;
+                        ...
                       }
                     }
                   }

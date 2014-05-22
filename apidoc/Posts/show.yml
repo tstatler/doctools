@@ -34,11 +34,11 @@ methods:
         type: Number
 
       - name: show_user_like
-	description: |
-	    If set to **true** the Post object in the response will include `"current_user_liked: true"`
-	    if the current user has liked the object. If the user has not liked the object, the
-	    `current_user_liked` field is not included in the response.
-	type: Boolean
+        description: |
+            If set to **true** the Post object in the response will include `"current_user_liked: true"`
+            if the current user has liked the object. If the user has not liked the object, the
+            `current_user_liked` field is not included in the response.
+        type: Boolean
 
     response-parameters:
       - name: posts
@@ -70,53 +70,53 @@ methods:
         example: |
             Example cURL request:
 
-		$ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/posts/show.json?key=<YOUR APP APP KEY>&post_id=4e33a5b7d9ca7246ba000003&show_user_like=true"
+                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/posts/show.json?key=<YOUR APP APP KEY>&post_id=4e33a5b7d9ca7246ba000003&show_user_like=true"
 
-            Example JSON response:
+                        Example JSON response:
 
-                {
-                  "meta": {
-                    "status": "ok",
-                    "code": 200,
-                    "method_name": "showPosts"
-                  },
-                  "response": {
-                    "posts": [
-                      {
-                        "id": "4e33a5b7d9ca7246ba000003",
-                        "title": "Post title",
-                        "created_at": "2011-07-30T06:33:27+0000",
-			"current_user_liked": true,
-                        "updated_at": "2011-07-30T06:33:27+0000",
-                        "content": "Post Body",
-                        "reviews_count": 10,
-                        "ratings_average": 7.5,
-                        "ratings_summary": {
-					     "10": 5,
-					     "5" : 5
-			},
-                        "user": {
-                          "id": "4e33a5b6d9ca7246ba000002",
-                          "first_name": "Bob",
-                          "last_name": "Dude",
-                          "created_at": "2011-07-30T06:33:26+0000",
-                          "updated_at": "2011-07-30T06:33:27+0000",
-                          "username": "bob",
-                          "email": "bob@dude.com"
-                        },
-                        "photo": {
-                          "id": "4e33a5b7d9ca7246ba000004",
-                          "filename": "photo.jpg",
-                          "size": 584344,
-                          "md5": "589b8ad43ed20bf8e622d719642bc939",
-                          "created_at": "2011-07-30T06:33:27+0000",
-                          "updated_at": "2011-07-30T06:33:27+0000",
-                          "processed": false
-                        }
-                      }
-                    ]
-                  }
-                }
+                            {
+                              "meta": {
+                                "status": "ok",
+                                "code": 200,
+                                "method_name": "showPosts"
+                              },
+                              "response": {
+                                "posts": [
+                                  {
+                                    "id": "4e33a5b7d9ca7246ba000003",
+                                    "title": "Post title",
+                                    "created_at": "2011-07-30T06:33:27+0000",
+                                    "current_user_liked": true,
+                                    "updated_at": "2011-07-30T06:33:27+0000",
+                                    "content": "Post Body",
+                                    "reviews_count": 10,
+                                    "ratings_average": 7.5,
+                                    "ratings_summary": {
+                                       "10": 5,
+                                       "5" : 5
+                                    },
+                                    "user": {
+                                      "id": "4e33a5b6d9ca7246ba000002",
+                                      "first_name": "Bob",
+                                      "last_name": "Dude",
+                                      "created_at": "2011-07-30T06:33:26+0000",
+                                      "updated_at": "2011-07-30T06:33:27+0000",
+                                      "username": "bob",
+                                      "email": "bob@dude.com"
+                                    },
+                                    "photo": {
+                                      "id": "4e33a5b7d9ca7246ba000004",
+                                      "filename": "photo.jpg",
+                                      "size": 584344,
+                                      "md5": "589b8ad43ed20bf8e622d719642bc939",
+                                      "created_at": "2011-07-30T06:33:27+0000",
+                                      "updated_at": "2011-07-30T06:33:27+0000",
+                                      "processed": false
+                                    }
+                                  }
+                                ]
+                              }
+                            }
 
       - platform: ios
         example: |
@@ -131,7 +131,7 @@ methods:
 
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
-                	NSArray *reviews = [response getObjectsOfType:[CCReview class]];
+                  NSArray *reviews = [response getObjectsOfType:[CCReview class]];
                 }
 
       - platform: android
@@ -174,7 +174,7 @@ methods:
                       var meta = data.meta;
                       if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'showPosts') {
                         var posts = data.response.posts;
-                      	...
+                        ...
                       }
                     }
                   }
@@ -198,8 +198,8 @@ methods:
                     if(data.hasOwnProperty("meta")) {
                       var meta:Object = data.meta;
                       if(meta.status == "ok" && meta.code == 200 && meta.method_name == "showPosts") {
-                      	var posts:Array = data.response.posts;
-                      	...
+                        var posts:Array = data.response.posts;
+                        ...
                       }
                     }
                   }

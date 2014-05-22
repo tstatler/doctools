@@ -56,11 +56,11 @@ methods:
         type: Hash
 
       - name: show_user_like
-	description: |
-	    If set to **true**, each User object in the response includes `"current_user_liked: true"`
-	     if the current user has liked the object. If the user has not liked the object, the
-	    `current_user_liked` field is not included in the response.
-	type: Boolean
+        description: |
+            If set to **true**, each User object in the response includes `"current_user_liked: true"`
+             if the current user has liked the object. If the user has not liked the object, the
+            `current_user_liked` field is not included in the response.
+        type: Boolean
 
       - name: unsel
         description: |
@@ -161,12 +161,12 @@ methods:
 
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
-                	if ([response.meta.methodName isEqualToString:@"queryUsers"]) {
-                		NSArray *users = [response getObjectsOfType:[CCUser class]];
-                		for (CCUser *user in users) {
-                			...
-                		}
-                	}
+                  if ([response.meta.methodName isEqualToString:@"queryUsers"]) {
+                    NSArray *users = [response getObjectsOfType:[CCUser class]];
+                    for (CCUser *user in users) {
+                      ...
+                    }
+                  }
                 }
 
       - platform: android

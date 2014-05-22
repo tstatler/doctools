@@ -63,11 +63,11 @@ methods:
         type: Hash
 
       - name: show_user_like
-	description: |
-	    If set to **true**, each Photo object in the response includes `"current_user_liked: true"`
-	     if the current user has liked the object. If the user has not liked the object, the
-	    `current_user_liked` field is not included in the response.
-	type: Boolean
+        description: |
+            If set to **true**, each Photo object in the response includes `"current_user_liked: true"`
+             if the current user has liked the object. If the user has not liked the object, the
+            `current_user_liked` field is not included in the response.
+        type: Boolean
 
       - name: unsel
         description: |
@@ -184,12 +184,12 @@ methods:
 
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
-                	if ([response.meta.methodName isEqualToString:@"queryPhotos"]) {
-                		NSArray *photos = [response getObjectsOfType:[CCPhoto class]];
-                		for (CCPhoto *photo in photos) {
-                			...
-                		}
-                	}
+                  if ([response.meta.methodName isEqualToString:@"queryPhotos"]) {
+                    NSArray *photos = [response getObjectsOfType:[CCPhoto class]];
+                    for (CCPhoto *photo in photos) {
+                      ...
+                    }
+                  }
                 }
 
       - platform: android
@@ -232,7 +232,7 @@ methods:
                       var meta = data.meta;
                       if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'queryPhotos') {
                         var photos = data.response.photos;
-                      	...
+                        ...
                       }
                     }
                   }

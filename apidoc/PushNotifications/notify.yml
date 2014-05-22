@@ -11,8 +11,8 @@ methods:
         Application admins can set the `to_ids` parameter to `everyone` to send to all devices
         subscribed to the identified channel.
 
-	The REST version of `notify` includes the push notification ID in its response.
-	See the REST example below.
+        The REST version of `notify` includes the push notification ID in its response.
+        See the REST example below.
 
     url: push_notification/notify.json
     http-method: POST
@@ -122,20 +122,19 @@ methods:
 
                 where={"loc": { "$nearSphere" : { "$geometry" : { "type" : "Point" , "coordinates" : [-122.2708,37.8044] } , "$maxDistance" : 2000 }}}
 
-            For details about using the `where` parameter,
-            see the [Search and Query guide](#!/guide/search_query).
+            For details about using the `where` parameter, see the [Search and Query guide](#!/guide/search_query).
         type: Hash
 
     response-parameters:
       - name: push_notification
-	description: |
-	    Information about the requested push notification:
+        description: |
+            Information about the requested push notification:
 
-	      * `id`: The ID of the requested push notification.
-	      * `payload`: The notification payload.
-	      * `channel`: The notification channel.
+              * `id`: The ID of the requested push notification.
+              * `payload`: The notification payload.
+              * `channel`: The notification channel.
 
-	type: Hash
+        type: Hash
 
     examples:
       - platform: titanium
@@ -156,45 +155,45 @@ methods:
 
       - platform: rest
         example: |
-	    Example cURL request. The JSON response object includes the ID of the push notification.
+            Example cURL request. The JSON response object includes the ID of the push notification.
 
-		$ curl -b cookies.txt -c cookies.txt -F "channel=friend_request" -F "to_ids=5354525d5714f565d3001c1e" -F "payload=test" https://api.cloud.appcelerator.com/v1/push_notification/notify.json?key=<APP_KEY>
+                $ curl -b cookies.txt -c cookies.txt -F "channel=friend_request" -F "to_ids=5354525d5714f565d3001c1e" -F "payload=test" https://api.cloud.appcelerator.com/v1/push_notification/notify.json?key=<APP_KEY>
 
-            Example JSON response:
+                        Example JSON response:
 
-                {
-                  "meta": {
-                    "code": 200,
-		    "status": "ok",
-                    "method_name": "Notify"
-		  },
-		  "response": {
-		    "push_notification": {
-		      "id": "53690d3fe10fa4582a00e887",
-		      "payload": "test",
-		      "channel": "friend_request"
-		    }
-                  }
-                }
+                            {
+                              "meta": {
+                                "code": 200,
+                    "status": "ok",
+                                "method_name": "Notify"
+                  },
+                  "response": {
+                    "push_notification": {
+                      "id": "53690d3fe10fa4582a00e887",
+                      "payload": "test",
+                      "channel": "friend_request"
+                    }
+                              }
+                            }
 
-      - platform: ios
-        example: |
-            Example iOS call:
+                  - platform: ios
+                    example: |
+                        Example iOS call:
 
-                NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:3];
-                [paramDict setObject:@"friend_request" forKey:@"channel"];
-                [paramDict setObject:@"123456" forKey:@"to_ids[]"];
-                [paramDict setObject:@"345667" forKey:@"to_ids[]"];
-                CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"POST" baseUrl:@"push_notification/notify.json" paramDict:paramDict];
-                [request startAsynchronous];
-                [request release];
+                            NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:3];
+                            [paramDict setObject:@"friend_request" forKey:@"channel"];
+                            [paramDict setObject:@"123456" forKey:@"to_ids[]"];
+                            [paramDict setObject:@"345667" forKey:@"to_ids[]"];
+                            CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"POST" baseUrl:@"push_notification/notify.json" paramDict:paramDict];
+                            [request startAsynchronous];
+                            [request release];
 
-            SDK Callback:
+                        SDK Callback:
 
-                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
-                {
-                	// successfully subscribed
-                }
+                            -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
+                            {
+                              // successfully subscribed
+                            }
 
       - platform: android
         example: |
@@ -238,7 +237,7 @@ methods:
                     if(data.meta) {
                       var meta = data.meta;
                       if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'Notify') {
-                      	...
+                        ...
                       }
                     }
                   }
@@ -264,7 +263,7 @@ methods:
                     if(data.hasOwnProperty("meta")) {
                       var meta:Object = data.meta;
                       if(meta.status == "ok" && meta.code == 200 && meta.method_name == "Notify") {
-                      	...
+                        ...
                       }
                     }
                   }

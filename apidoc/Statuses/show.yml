@@ -24,11 +24,11 @@ methods:
         type: Number
 
       - name: show_user_like
-	description: |
-	    If set to **true** the Status object in the response will include `"current_user_liked: true"`
-	    if the current user has liked the object. If the user has not liked the object, the
-	    `current_user_liked` field is not included in the response.
-	type: Boolean
+        description: |
+            If set to **true** the Status object in the response will include `"current_user_liked: true"`
+            if the current user has liked the object. If the user has not liked the object, the
+            `current_user_liked` field is not included in the response.
+        type: Boolean
 
     response-parameters:
       - name: statuses
@@ -96,7 +96,7 @@ methods:
 
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
-                	NSArray *statuses = [response getObjectsOfType:[CCStatus class]];
+                  NSArray *statuses = [response getObjectsOfType:[CCStatus class]];
                 }
 
       - platform: android
@@ -139,7 +139,7 @@ methods:
                       var meta = data.meta;
                       if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'showStatus') {
                         var statuses = data.response.statuses;
-                      	...
+                        ...
                       }
                     }
                   }
@@ -163,8 +163,8 @@ methods:
                     if(data.hasOwnProperty("meta")) {
                       var meta:Object = data.meta;
                       if(meta.status == "ok" && meta.code == 200 && meta.method_name == "showStatus") {
-                      	var statuses:Array = data.response.statuses;
-                      	...
+                        var statuses:Array = data.response.statuses;
+                        ...
                       }
                     }
                   }

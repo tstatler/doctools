@@ -18,40 +18,40 @@ methods:
 
       - name: user_id
         description: |
-	    User ID to update the subscription on behalf of. You must be logged in as an application administrator
-	    to update another user's notification subscription.
+            User ID to update the subscription on behalf of. You must be logged in as an application administrator
+            to update another user's notification subscription.
         type: String
 
       - name: loc
-	description: |
-	    The device's current location specified as an array with longitude as the first element, and latitude
-	    as the second element (`[longitude,latitude]`).
-	type: Array<Number>
+        description: |
+            The device's current location specified as an array with longitude as the first element, and latitude
+            as the second element (`[longitude,latitude]`).
+        type: Array<Number>
 
     examples:
       - platform: titanium
-	example: |
-	    The following example gets the device's current geographic location and updates the user's
-	    subscription with the coordinates.
+        example: |
+            The following example gets the device's current geographic location and updates the user's
+            subscription with the coordinates.
 
-		Titanium.Geolocation.getCurrentPosition(function(e) {
-		    if (e.error) {
-			Ti.API.error('Error: ' + e.error);
-		    } else {
-			var latitude = e.coords.latitude;
-			var longitude = e.coords.longitude;
-			Cloud.PushNotifications.updateSubscription({
-			    device_token : pushDeviceToken,
-			    loc : [longitude, latitude]
-			}, function(e) {
-			    if (e.success) {
-				alert('Subscription Updated.');
-			    } else {
-				alert(e);
-			    }
-			});
-		    }
-		});
+                Titanium.Geolocation.getCurrentPosition(function(e) {
+                    if (e.error) {
+                  Ti.API.error('Error: ' + e.error);
+                    } else {
+                  var latitude = e.coords.latitude;
+                  var longitude = e.coords.longitude;
+                  Cloud.PushNotifications.updateSubscription({
+                      device_token : pushDeviceToken,
+                      loc : [longitude, latitude]
+                  }, function(e) {
+                      if (e.success) {
+                    alert('Subscription Updated.');
+                      } else {
+                    alert(e);
+                      }
+                  });
+                    }
+                });
 
       - platform: rest
         example: |

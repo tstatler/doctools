@@ -28,14 +28,14 @@ methods:
 
       - name: from
         description: |
-	    The sender's email address.
+            The sender's email address.
 
-	    <p><strong>Notes:</strong></p>
+            <p><strong>Notes:</strong></p>
 
-	    * If you use Google as your SMTP server, the email will always be sent using the email account
-	    you used to configure the SMTP service.
-	    * Some SMTP service provider require the sender's email address to be present.
-	type: String
+            * If you use Google as your SMTP server, the email will always be sent using the email account
+            you used to configure the SMTP service.
+            * Some SMTP service provider require the sender's email address to be present.
+        type: String
 
     examples:
       - platform: titanium
@@ -82,9 +82,9 @@ methods:
 
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
-                	if ([response.meta.method isEqualToString:@"emailFromTemplate"]) {
-                		NSLog(@"Email from template sent!");
-                	}
+                    if ([response.meta.method isEqualToString:@"emailFromTemplate"]) {
+                        NSLog(@"Email from template sent!");
+                    }
                 }
 
       - platform: android
@@ -127,7 +127,7 @@ methods:
                     if(data.meta) {
                       var meta = data.meta;
                       if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'emailFromTemplate') {
-                      	...
+                        ...
                       }
                     }
                   }

@@ -20,13 +20,11 @@ methods:
             referencing objects.
 
       - name: show_user_like
-	description: |
-	    If set to **true** the Checkin object in the response will include `"current_user_liked: true"`
-	    if the current user has liked the object. If the user has not liked the object, the
-	    `current_user_liked` field is not included in the response.
-	type: Boolean
-            Default is 3, valid range is 1 to 8.
-        type: Number
+        description: |
+            If set to **true** the Checkin object in the response will include `"current_user_liked: true"`
+            if the current user has liked the object. If the user has not liked the object, the
+            `current_user_liked` field is not included in the response.
+        type: Boolean
 
     response-params:
       - name: checkins
@@ -55,81 +53,81 @@ methods:
 
       - platform: rest
         example: |
-	    Example cURL request that passes `show_user_like=true` as a parameter; the Checkin object
-	    returned in the JSON response contains `"current_user_liked": true`, indicating that the current user
-	    liked the retrieved object.
+            Example cURL request that passes `show_user_like=true` as a parameter; the Checkin object
+            returned in the JSON response contains `"current_user_liked": true`, indicating that the current user
+            liked the retrieved object.
 
-		$ curl -b cookies.txt -c cookies.txt https://api.cloud.appcelerator.com/v1/checkins/show.json?key=<YOUR APP APP KEY>&checkin_id=4d8bc645d0afbe0363000013&show_user_like=true
+              $ curl -b cookies.txt -c cookies.txt https://api.cloud.appcelerator.com/v1/checkins/show.json?key=<YOUR APP APP KEY>&checkin_id=4d8bc645d0afbe0363000013&show_user_like=true
 
-            Example JSON response:
+                      Example JSON response:
 
-                {
-                  "meta": {
-                    "status":"ok",
-                    "code":200,
-                    "method_name":"showCheckins"
-                  },
-                  "response": {
-                    "checkins": [
-                      {
-                        "id":"4d8bc645d0afbe0363000013",
-                        "created_at":"2011-03-24T22:31:34+0000",
-			"current_user_liked": true,
-                        "updated_at":"2011-03-24T22:31:34+0000",
-                        "place": {
-                          "id":"4d8bc62ad0afbe0363000012",
-                          "name":"Cocoafish",
-                          "created_at":"2011-03-24T22:31:06+0000",
-                          "updated_at":"2011-03-24T22:31:06+0000",
-                          "address":"58 South Park Ave.",
-                          "city":"San Francisco",
-                          "state":"California",
-                          "country":"United States",
-                          "website":"cocoafish.com",
-                          "twitter":"cocoafish",
-                          "latitude":37.782227,
-                          "longitude":-122.393159
-                        },
-                        "user": {
-                          "id":"4d7e6493d0afbe01d8000001",
-                          "first_name":"Mike",
-                          "last_name":"Goff",
-                          "created_at":"2011-03-14T18:55:15+0000",
-                          "updated_at":"2011-03-24T18:11:52+0000",
-                          "photo": {
-                            "id":"4d88448ed0afbe0e4e000003",
-                            "filename":"photo.jpg",
-                            "size":584344,
-                            "md5":"589b8ad43ed20bf8e622d719642bc939",
-                            "created_at":"2011-03-22T06:41:18+0000",
-                            "updated_at":"2011-03-22T06:41:24+0000",
-                            "processed":true,
-                            "collection_name":"_cocoafish_user_profile",
-                            "content_type":"image/jpeg",
-                            "urls": {
-                            "square_75":"http://storage.appcelerator.com/gjvI579NDKJNuhBBj9HGWhbGDISHcCvL/photos/4d88448ed0afbe0e4e000003/photo_square_75.jpg",
-                            "thumb_100":"http://storage.appcelerator.com/gjvI579NDKJNuhBBj9HGWhbGDISHcCvL/photos/4d88448ed0afbe0e4e000003/photo_thumb_100.jpg",
-                            "small_240":"http://storage.appcelerator.com/gjvI579NDKJNuhBBj9HGWhbGDISHcCvL/photos/4d88448ed0afbe0e4e000003/photo_small_240.jpg",
-                            "medium_500":"http://storage.appcelerator.com/gjvI579NDKJNuhBBj9HGWhbGDISHcCvL/photos/4d88448ed0afbe0e4e000003/photo_medium_500.jpg",
-                            "medium_640":"http://storage.appcelerator.com/gjvI579NDKJNuhBBj9HGWhbGDISHcCvL/photos/4d88448ed0afbe0e4e000003/photo_medium_640.jpg",
-                            "large_1024":"http://storage.appcelerator.com/gjvI579NDKJNuhBBj9HGWhbGDISHcCvL/photos/4d88448ed0afbe0e4e000003/photo_large_1024.jpg",
-                            "original":"http://storage.appcelerator.com/gjvI579NDKJNuhBBj9HGWhbGDISHcCvL/photos/4d88448ed0afbe0e4e000003/photo_original.jpg"
+                          {
+                            "meta": {
+                              "status":"ok",
+                              "code":200,
+                              "method_name":"showCheckins"
+                            },
+                            "response": {
+                              "checkins": [
+                                {
+                                  "id":"4d8bc645d0afbe0363000013",
+                                  "created_at":"2011-03-24T22:31:34+0000",
+                "current_user_liked": true,
+                                  "updated_at":"2011-03-24T22:31:34+0000",
+                                  "place": {
+                                    "id":"4d8bc62ad0afbe0363000012",
+                                    "name":"Cocoafish",
+                                    "created_at":"2011-03-24T22:31:06+0000",
+                                    "updated_at":"2011-03-24T22:31:06+0000",
+                                    "address":"58 South Park Ave.",
+                                    "city":"San Francisco",
+                                    "state":"California",
+                                    "country":"United States",
+                                    "website":"cocoafish.com",
+                                    "twitter":"cocoafish",
+                                    "latitude":37.782227,
+                                    "longitude":-122.393159
+                                  },
+                                  "user": {
+                                    "id":"4d7e6493d0afbe01d8000001",
+                                    "first_name":"Mike",
+                                    "last_name":"Goff",
+                                    "created_at":"2011-03-14T18:55:15+0000",
+                                    "updated_at":"2011-03-24T18:11:52+0000",
+                                    "photo": {
+                                      "id":"4d88448ed0afbe0e4e000003",
+                                      "filename":"photo.jpg",
+                                      "size":584344,
+                                      "md5":"589b8ad43ed20bf8e622d719642bc939",
+                                      "created_at":"2011-03-22T06:41:18+0000",
+                                      "updated_at":"2011-03-22T06:41:24+0000",
+                                      "processed":true,
+                                      "collection_name":"_cocoafish_user_profile",
+                                      "content_type":"image/jpeg",
+                                      "urls": {
+                                      "square_75":"http://storage.appcelerator.com/gjvI579NDKJNuhBBj9HGWhbGDISHcCvL/photos/4d88448ed0afbe0e4e000003/photo_square_75.jpg",
+                                      "thumb_100":"http://storage.appcelerator.com/gjvI579NDKJNuhBBj9HGWhbGDISHcCvL/photos/4d88448ed0afbe0e4e000003/photo_thumb_100.jpg",
+                                      "small_240":"http://storage.appcelerator.com/gjvI579NDKJNuhBBj9HGWhbGDISHcCvL/photos/4d88448ed0afbe0e4e000003/photo_small_240.jpg",
+                                      "medium_500":"http://storage.appcelerator.com/gjvI579NDKJNuhBBj9HGWhbGDISHcCvL/photos/4d88448ed0afbe0e4e000003/photo_medium_500.jpg",
+                                      "medium_640":"http://storage.appcelerator.com/gjvI579NDKJNuhBBj9HGWhbGDISHcCvL/photos/4d88448ed0afbe0e4e000003/photo_medium_640.jpg",
+                                      "large_1024":"http://storage.appcelerator.com/gjvI579NDKJNuhBBj9HGWhbGDISHcCvL/photos/4d88448ed0afbe0e4e000003/photo_large_1024.jpg",
+                                      "original":"http://storage.appcelerator.com/gjvI579NDKJNuhBBj9HGWhbGDISHcCvL/photos/4d88448ed0afbe0e4e000003/photo_original.jpg"
+                                      }
+                                    }
+                                  },
+                                  "photo": {
+                                    "id":"4d8bc645d0afbe0363000014",
+                                    "filename":"photo.jpg",
+                                    "size":584344,
+                                    "md5":"589b8ad43ed20bf8e622d719642bc939",
+                                    "created_at":"2011-03-24T22:31:33+0000",
+                                    "updated_at":"2011-03-24T22:31:33+0000",
+                                    "processed":false
+                                  }
+                                }
+                              ]
                             }
                           }
-                        },
-                        "photo": {
-                          "id":"4d8bc645d0afbe0363000014",
-                          "filename":"photo.jpg",
-                          "size":584344,
-                          "md5":"589b8ad43ed20bf8e622d719642bc939",
-                          "created_at":"2011-03-24T22:31:33+0000",
-                          "updated_at":"2011-03-24T22:31:33+0000",
-                          "processed":false
-                        }
-                      }
-                    ]
-                  }
-                }
 
       - platform: ios
         example: |
@@ -144,7 +142,7 @@ methods:
 
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
-                	NSArray *checkins = [response getObjectsOfType:[CCCheckin class]];
+                  NSArray *checkins = [response getObjectsOfType:[CCCheckin class]];
                 }
 
       - platform: android
@@ -187,7 +185,7 @@ methods:
                       var meta = data.meta;
                       if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'showCheckins') {
                         var checkins = data.response.checkins;
-                      	...
+                        ...
                       }
                     }
                   }
@@ -211,8 +209,8 @@ methods:
                     if(data.hasOwnProperty("meta")) {
                       var meta:Object = data.meta;
                       if(meta.status == "ok" && meta.code == 200 && meta.method_name == "showCheckins") {
-                      	var checkins:Array = data.response.checkins;
-                      	...
+                        var checkins:Array = data.response.checkins;
+                        ...
                       }
                     }
                   }
