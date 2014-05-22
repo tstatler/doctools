@@ -1,9 +1,9 @@
 name: KeyValues
 description: |
-    KeyValue objects allow you to store and retrieve string or binary data up to 2M.
+    The KeyValues API provides methods to store and retrieve string or binary data up to 2MB.
 
-    By default, a key-value pair is publically readable, but can only be updated or
-    deleted by its owner or an application admin.
+    By default, a key-value pair is publicly readable, but can only be updated or
+    deleted by the object's owner, or an application admin.
 
     Each registered user also has a private key-value store. Objects in the private store
     can only be accessed by the owner or an application admin.

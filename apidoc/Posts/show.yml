@@ -131,7 +131,7 @@ methods:
 
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
-                	NSArray *reviews = [response getObjectsOfType:[CCReview class]];
+                  NSArray *reviews = [response getObjectsOfType:[CCReview class]];
                 }
 
       - platform: android
@@ -174,7 +174,7 @@ methods:
                       var meta = data.meta;
                       if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'showPosts') {
                         var posts = data.response.posts;
-                      	...
+                        ...
                       }
                     }
                   }
@@ -198,8 +198,8 @@ methods:
                     if(data.hasOwnProperty("meta")) {
                       var meta:Object = data.meta;
                       if(meta.status == "ok" && meta.code == 200 && meta.method_name == "showPosts") {
-                      	var posts:Array = data.response.posts;
-                      	...
+                        var posts:Array = data.response.posts;
+                        ...
                       }
                     }
                   }

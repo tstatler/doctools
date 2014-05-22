@@ -67,7 +67,7 @@ methods:
         type: String
 
       - name: rating
-        description: Rating to be associated with review. You can use 1 to represent like.
+        description: Rating to be associated with review. You can use "1" to represent one {@link Likes Like}.
         type: String
 
       - name: allow_duplicate

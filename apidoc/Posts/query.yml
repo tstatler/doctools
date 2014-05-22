@@ -149,10 +149,10 @@ methods:
                         "content": "Post Body",
                         "reviews_count": 10,
                         "ratings_average": 7.5,
-                		"ratings_count" : 10,
+                    "ratings_count" : 10,
                         "ratings_summary": {
-                			"10": 5,
-                			"5" : 5
+                      "10": 5,
+                      "5" : 5
                         },
                         "user": {
                           "id": "4e33a251d9ca724676000002",
@@ -195,12 +195,12 @@ methods:
 
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
-                	if ([response.meta.methodName isEqualToString:@"queryPosts"]) {
-                		NSArray *posts = [response getObjectsOfType:[CCPost class]];
-                		for (CCPost *post in posts) {
-                			...
-                		}
-                	}
+                  if ([response.meta.methodName isEqualToString:@"queryPosts"]) {
+                    NSArray *posts = [response getObjectsOfType:[CCPost class]];
+                    for (CCPost *post in posts) {
+                      ...
+                    }
+                  }
                 }
 
       - platform: android
@@ -243,7 +243,7 @@ methods:
                       var meta = data.meta;
                       if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'queryPosts') {
                         var posts = data.response.posts;
-                      	...
+                        ...
                       }
                     }
                   }

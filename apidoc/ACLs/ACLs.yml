@@ -1,64 +1,75 @@
 name: ACLs
 summary: Access Control Lists (ACLs)
 description: |
-    The ACL tangram
-    provides an API to implement access control lists for ACS objects. An access
+    The ACL object implements access control lists for ACS objects. An access
     control list controls read and write access to any ACS objects it's attached
     to. For ACS, read and write permission are defined as follows:
     
       * **Read permission** includes the ability to show, query and search ACS objects.
       * **Write permission** includes the ability to update and delete ACS objects.
-    An ACL can include:
     
-      * A _list_ of user IDs granted read permission.
-      * A _list_ of user IDs granted write permission.
-      * A public read flag granting read permission to **all** users.
-      * A public write flag granting write permission to **all** users.
-    The object's owner always has read and write permission.  
-    You can specify an ACL when you create or update an object.  
-      
+    An ACL object includes four attributes:
+
+    * `public_read` &mdash; Boolean; if `true`, all users have read access. Default is `false`.
+    * `public_write` &mdash; Boolean; if `true`, all users have write access. Default is `false`.
+    * `reader_ids` &mdash; Comma-separated list of users with read access.
+    * `writer_ids` &mdash; Comma-separated list of users with write access.
     
-    Currently, ACLs can be used with the following ACS objects: Checkins, Custom
-    Objects, Events, Files, Photos, Photo Collections, Places, Posts, Reviews and
-    Statuses.
+    The object's owner always has read and write permission. 
+
+    You assign an ACL to an object via the object's `acl_id` or `acl_name` properties. Currently, ACLs 
+    can be assigned to the following types of ACS objects: {@link Checkins}, {@link CustomObjects}, 
+    {@link Events}, {@link Files}, {@link Photos}, {@link PhotoCollections}, {@link Places}, {@link Posts},
+    {@link Reviews} and {@link Statuses}. 
+  
+    ### ACL usage scenarios
+        
+    #### Public read and write ####
+
+    In the following example User1 creates an ACL object named "photo_access" that allows both public reading and writing.
+    It then creates a new {@link Photos Photo} object and assigns to it the "photo_access" ACL so 
+    that anyone can can update, delete, show, or query the photo.
+
+        // Logged in as User1:
+        Cloud.ACLs.create({
+            name: 'photo_access',
+            public_read: true,
+            public_write: true
+        }, function (e) {});      
+
+        // Then create Photo that uses the "photo_access" ACL:
+        Cloud.Photos.create({
+            photo: Titanium.Filesystem.getFile('photo.jpg'),
+            acl_name: 'photo_access'
+        }, function (e) { });          
+
+
+    #### Restrict read access to specific users
+
+    In the following example (continued), User1 updates the "photo_access" ACL object to limit 
+    read access to only User2 and User3. of this ACL object. Subsequently, only the application administrator, 
+    the ACL object owner (User1), User2 and User3 can read (show, search, or query) the Photo object;
+    write permissions have not changed.
     
-    For more details, please read following section **ACL Usage**  
-    An ACL object includes four important attributes, they are public_read,
-    public_write, reader_ids and writer_ids, and the value of the attributes
-    public_read and public_write are boolean type(true/false); the attributes
-    reader_ids and writer_ids are array which contains comma separated users id in
-    them.
+        // Logged in as User1:
+        Cloud.ACLs.update({
+            name: 'photo_access',
+            public_read: false,
+            reader_ids: [user2, user3]
+        }, function (e) {});      
     
-      * **public read / public write: **
-    User1 creates an ACL ojbect which name is "photo_access", the value of its
-    property _public_read_ is true, as well as _public_write_ is true, then User1
-    create or update a photo object by specifying "acl_name=photo_access" or
-    acl_id, so that the photo has relationship with the ACL object and is under
-    control of the ACL object, because the values of public_read and public_write
-    of the ACL object, so any user can update/delete/show/query/search this photo
-    which is attached by this ACL object. By default, the value of the properties
-    public_read and public_write are all false if they are not assigned to true
-    when creating the ACL object.
-    
-      * **private read / reader ids: **
-    Update the ACL object which name is "photo_access" by calling ACL update API,
-    and set public_read to false, so that the above photo object can only read by
-    App administrator and owner(User1); Then update "photo_access" to false, and
-    add the ids of user2 and user3 to the array reader_ids of this ACL object, at
-    this time, App administrator, owner(user1), user2 and user3 can
-    read(show/search/query) the photo object. Again, update the ACL's public_read
-    to true, so that any user can read(show/search/query) the photo object,
-    regardless of what users' id in the array reader_ids of the ACL object.
-    
-      * **private write / writer ids: **
-    Update the ACL object which name is "photo_access" by calling ACL update API,
-    and set public_write to false, so that the above photo object can only write
-    by App administrator and owner(User1); Then update "photo_access" to false,
-    and add the ids of user2 and user3 to the array writer_ids of this ACL object,
-    at this time, App administrator, owner(user1), user2 and user3 can
-    write(update/delete) the photo object. Again, update the ACL's public_write to
-    true, so that any user can write(update/delete) the photo object, regardless
-    of what users' id in the array writer_ids of the ACL object.
+    #### Restrict write access to specific users
+
+    In the following example (continued), User1 updates the "photo_access" ACL object to limit 
+    write access to only User2 and User3. After this update, the application administrator, 
+    the ACL object owner (User1), User2 and User3 can write (update/delete) the Photo object.
+
+        // Logged in as User1:
+        Cloud.ACLs.update({
+            name: 'photo_access',
+            public_write: false,
+            writer_ids: [user2, user3]
+        }, function (e) {}); 
 
 fields:
   - name: name 
@@ -81,14 +92,14 @@ fields:
 
   - name: public_read
     description: |
-        Determines whether objects controlled by this ACS are publically readable. 
+        Determines whether objects controlled by this ACS are publicly readable. 
 
         Default is false.
     type: Boolean
 
   - name: public_write
     description: |
-        Determines whether objects controlled by this ACS are publically writable. 
+        Determines whether objects controlled by this ACS are publicly writable. 
 
         Default is false.
     type: Boolean

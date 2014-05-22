@@ -109,7 +109,7 @@ You could also store more complex data types such as Array and Hash. Hash and Ar
   <td>["nissan", "honda"] or [2006, 2008], [{"age":28}, {"color":"blue"}]</td>
 </tr>
 </table>
-      
+
 ## Indexing Size Limit for Custom Objects and Fields
 
 To support efficient data query operations, Appcelerator Cloud Services (ACS) indexes the 
@@ -120,11 +120,11 @@ including meta-data added by ACS, must be less than **1024 bytes** (1KB).
 
 If a custom field's name or value exceeds this size, then no index entry for that field is created.
 Consequently, if you run a custom [query](#!/guide/search_query-section-query-overview) against that field,
-nothing will be returned. 
+nothing will be returned.
 
 For instance, in the previous example, suppose the string value assigned to `model`
 was greater than 1KB. If you queried the `cars` collection for objects whose `model`
-matched that value, no objects would be returned: 
+matched that value, no objects would be returned:
 
     Cloud.Objects.query({
         classname: 'cars',

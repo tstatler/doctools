@@ -61,7 +61,7 @@ methods:
                   }
 
             For details about using the `where` parameter, see the [Search and Query guide](#!/guide/search_query).
-        type: Hash        
+        type: Hash
 
     response-parameters:
       - name: push_schedules
@@ -103,7 +103,7 @@ methods:
 
                 curl -b cookies.txt -c cookies.txt -F 'schedule={"start_time":"2016-01-01T00:00", "name":"test", "push_notification":{"channel":"test","payload":"test schedule"}, "recurrence":{"interval":"weekly", "end_time":"2016-01-08T00:00"}}' -F 'where={"loc":{"$geoWithin":{"$centerSphere":[[-122.0507049560547,37.38685989379883] , 0.00252589 ]}}}' "https://api.cloud.appcelerator.com/v1/push_schedules/create.json?key=<APP-KEY>
 
-            Example JSON response:
+                  Example JSON response:
 
                 {
                   "meta": {

@@ -38,16 +38,15 @@ methods:
 
       - name: response_json_depth
         description: |
-            Nested object depth level counts in response json.
-            In order to reduce server API calls from an applicaton, the response json may
-            include not just the objects that are being queried/searched, but also with
-            some important data related to the returning objects such as object's owner or
-            referencing objects.
+            Nested object depth level counts in JSON response.
+            To reduce server API calls the JSON response may
+            include, in addition to the objects returned by the query, other important data related 
+            to the returned objects, such as object's owner or referencing objects.
 
             Default is 3, valid range is 1 to 8.
         type: Number
 
-    response-paramters:
+    response-parameters:
       - name: chat_groups
         description: |
             List of chat groups. Each chat group entry has the following fields:

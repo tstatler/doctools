@@ -34,7 +34,7 @@ Modify the code below by replacing `<API_KEY>` with your ACS application API key
 
     var ACS = require('acs').ACS;
     var logger = require('acs').logger;
-    
+
     // initialize app (setup ACS library and logger)
     function start(app, express, io) {
         // Replace <API_KEY> with your ACS API key
@@ -54,7 +54,7 @@ Modify the code below by replacing `<API_KEY>` with your ACS application API key
     
     // release resources
     function stop() {
-        
+
     }
 
 ## Configuration File
@@ -97,11 +97,11 @@ This sample contains three controllers:
 The controller code is invoked whenever a corresponding HTTP request comes in. All
 controller files should be placed in `controllers` directory in the app's
 project.
-  
+
 **/controllers/application.js**
 
     var logger = require('acs').logger;
-    
+
     // Render the home page which will either ask user to login or display a list of available
     // rooms.
     function index(req, res) {
@@ -128,7 +128,7 @@ project.
             openNewRoom(req, room);
         res.render('chatroom', {user: req.session.user, room: room});
     }
-    
+
     // Get available rooms currently
     function getRoom(req) {
         var rooms = [];
@@ -139,7 +139,7 @@ project.
         }
         return rooms;
     }
-    
+
     // Start listening on a new path (room)
     function openNewRoom(req, room) {
     
@@ -168,7 +168,7 @@ project.
 
     var ACS = require('acs').ACS;
     var logger = require('acs').logger;
-    
+
     //do ACS user login
     function login(req, res) {
         var un = req.body.username;
@@ -189,7 +189,7 @@ project.
             }
         });
     }
-    
+
     function logout(req, res) {
         delete req.session.user;
         res.redirect('/');
@@ -199,7 +199,7 @@ project.
 
     var ACS = require('acs').ACS;
     var logger = require('acs').logger;
-    
+
     function signup(req, res) {
         var data = {
             first_name: req.body.first_name,
@@ -268,8 +268,16 @@ All view files reside in `views` directory in the application's project director
             $(function(){
                 //establish websocket connection with server
                 var iosocket = io.connect('/<%= (room=='default'?'':room)%>');
-                iosocket.on('connect', function () {
-                    $('#incomingChatMessages').append($('<li class="alert">Connected</li>'));
+		iosocket.on('connect', function () {
+		    $('#incomingChatMessages').append($('<li class="alert">Connected</li>'));
+
+		    //when received message from server
+		    iosocket.on('message', function(data) {
+			var icm = $('<li class="active"></li>');
+			$('#incomingChatMessages').append(icm.text(data.user + ': ' + data.message));
+			setTimeout(function() { icm.removeClass('active') }, 1500);
+			$('#chat-ctnr').scrollTop($('#incomingChatMessages').height() + 100 );
+		    });
 
                     //when received message from server
                     iosocket.on('message', function(data) {
@@ -368,7 +376,7 @@ All view files reside in `views` directory in the application's project director
         if(message) { %>
         <%= message %>
     <% } %>
-    
+
     <form action="/login" method="post">
     <div><input name="username" placeholder="user name" title="username" required/></div>
     <div><input name="password" placeholder="password" type="password" title="password" required/></div>

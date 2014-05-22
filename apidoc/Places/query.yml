@@ -183,12 +183,12 @@ methods:
 
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
-                	if ([response.meta.methodName isEqualToString:@"queryPlaces"]) {
-                		NSArray *photos = [response getObjectsOfType:[CCPlace class]];
-                		for (CCPlace *place in places) {
-                			...
-                		}
-                	}
+                    if ([response.meta.methodName isEqualToString:@"queryPlaces"]) {
+                        NSArray *photos = [response getObjectsOfType:[CCPlace class]];
+                        for (CCPlace *place in places) {
+                            ...
+                        }
+                    }
                 }
 
       - platform: android
@@ -231,7 +231,7 @@ methods:
                       var meta = data.meta;
                       if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'queryPlaces') {
                         var places = data.response.places;
-                      	...
+                        ...
                       }
                     }
                   }

@@ -1,6 +1,6 @@
 name: Messages
 description: |
-    APIs for sending private messages between users.
+    The Messages APIs provides methods for sending private messages between users.
 
 fields:
   - name: id
@@ -13,7 +13,7 @@ fields:
 
   - name: status
     description: |
-        Status of the message: inbox messages have status of `read`, `unread`, or
+        Status of the message: in-box messages have status of `read`, `unread`, or
         `replied`.
     type: String
 

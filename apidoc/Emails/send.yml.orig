@@ -3,14 +3,21 @@ methods:
   - name: email_from_template
     summary: Send Emails
     description: |
-        Sends an email to a list of email addresses from your App. If you haven't
-        configured your project's SMTP settings yet, please goto your App Settings and configure
+<<<<<<< HEAD
+        Sends an email to a list of email addresses you specify. If you haven't
+        configured your SMTP settings yet, please goto your App Settings and configure
         and test your SMTP setting. You also need to create at least one email
-        template. The email template body supports HTML formatted text.
+        template. The email template body supports HTML formatting.
 
         Before you can send email you must first configure your SMTP
         server settings on the Cloud > Settings & Configuration tab in [Appcelerator Dashboard](https://dashboard.appcelerator.com)
         or the Settings tab in [My Apps](https://my.appcelerator.com/apps).
+=======
+	Sends an email to a list of email addresses from your App. If you haven't
+	configured your project's SMTP settings yet, please goto your App Settings and configure
+        and test your SMTP setting. You also need to create at least one email
+	template. The email template body supports HTML formatted text.
+>>>>>>> Removed discussion of dynamic fields.
     url: custom_mailer/email_from_template.json
     http-method: POST
 
@@ -28,15 +35,18 @@ methods:
 
       - name: from
         description: |
-            The sender's email address. 
+	    The sender's email address.
 
-            <p><strong>Notes:</strong></p>
+<<<<<<< HEAD
+=======
+	    <p><strong>Notes:</strong></p>
 
-            * If you use Google as your SMTP server, the email will always be sent using the email account 
-            you used to configure the SMTP service. 
-            * Some SMTP service provider require the sender's email address to be present.
-        type: String            
+	    * If you use Google as your SMTP server, the email will always be sent using the email account
+	    you used to configure the SMTP service.
+	    * Some SMTP service provider require the sender's email address to be present.
+	type: String
 
+>>>>>>> Removed discussion of dynamic fields.
     examples:
       - platform: titanium
         example: |
@@ -82,9 +92,9 @@ methods:
 
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
-                    if ([response.meta.method isEqualToString:@"emailFromTemplate"]) {
-                        NSLog(@"Email from template sent!");
-                    }
+                	if ([response.meta.method isEqualToString:@"emailFromTemplate"]) {
+                		NSLog(@"Email from template sent!");
+                	}
                 }
 
       - platform: android
@@ -127,7 +137,7 @@ methods:
                     if(data.meta) {
                       var meta = data.meta;
                       if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'emailFromTemplate') {
-                        ...
+                      	...
                       }
                     }
                   }
