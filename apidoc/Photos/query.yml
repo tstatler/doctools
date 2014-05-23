@@ -184,12 +184,12 @@ methods:
 
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
-                	if ([response.meta.methodName isEqualToString:@"queryPhotos"]) {
-                		NSArray *photos = [response getObjectsOfType:[CCPhoto class]];
-                		for (CCPhoto *photo in photos) {
-                			...
-                		}
-                	}
+                  if ([response.meta.methodName isEqualToString:@"queryPhotos"]) {
+                    NSArray *photos = [response getObjectsOfType:[CCPhoto class]];
+                    for (CCPhoto *photo in photos) {
+                      ...
+                    }
+                  }
                 }
 
       - platform: android
@@ -232,7 +232,7 @@ methods:
                       var meta = data.meta;
                       if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'queryPhotos') {
                         var photos = data.response.photos;
-                      	...
+                        ...
                       }
                     }
                   }

@@ -101,7 +101,7 @@ methods:
 
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
-                	NSArray *places = [response getObjectsOfType:[CCPlace class]];
+                  NSArray *places = [response getObjectsOfType:[CCPlace class]];
                 }
 
       - platform: android
@@ -144,7 +144,7 @@ methods:
                       var meta = data.meta;
                       if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'showPlace') {
                         var places = data.response.places;
-                      	...
+                        ...
                       }
                     }
                   }
@@ -168,8 +168,8 @@ methods:
                     if(data.hasOwnProperty("meta")) {
                       var meta:Object = data.meta;
                       if(meta.status == "ok" && meta.code == 200 && meta.method_name == "showPlace") {
-                      	var places:Array = data.response.places;
-                      	...
+                        var places:Array = data.response.places;
+                        ...
                       }
                     }
                   }

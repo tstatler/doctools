@@ -122,8 +122,7 @@ methods:
 
                 where={"loc": { "$nearSphere" : { "$geometry" : { "type" : "Point" , "coordinates" : [-122.2708,37.8044] } , "$maxDistance" : 2000 }}}
 
-            For details about using the `where` parameter,
-            see the [Search and Query guide](#!/guide/search_query).
+            For details about using the `where` parameter, see the [Search and Query guide](#!/guide/search_query).
         type: Hash
 
     response-parameters:
@@ -160,22 +159,22 @@ methods:
 
                 $ curl -b cookies.txt -c cookies.txt -F "channel=friend_request" -F "to_ids=5354525d5714f565d3001c1e" -F "payload=test" https://api.cloud.appcelerator.com/v1/push_notification/notify.json?key=<APP_KEY>
 
-            Example JSON response:
+                Example JSON response:
 
-                {
-                  "meta": {
-                    "code": 200,
-                    "status": "ok",
-                    "method_name": "Notify"
-                  },
-                  "response": {
-                    "push_notification": {
-                      "id": "53690d3fe10fa4582a00e887",
-                      "payload": "test",
-                      "channel": "friend_request"
+                    {
+                      "meta": {
+                        "code": 200,
+                        "status": "ok",
+                                    "method_name": "Notify"
+                      },
+                      "response": {
+                        "push_notification": {
+                          "id": "53690d3fe10fa4582a00e887",
+                          "payload": "test",
+                          "channel": "friend_request"
+                        }
+                      }
                     }
-                  }
-                }
 
       - platform: ios
         example: |
@@ -193,7 +192,7 @@ methods:
 
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
-                	// successfully subscribed
+                  // successfully subscribed
                 }
 
       - platform: android
@@ -238,7 +237,7 @@ methods:
                     if(data.meta) {
                       var meta = data.meta;
                       if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'Notify') {
-                      	...
+                        ...
                       }
                     }
                   }
@@ -264,7 +263,7 @@ methods:
                     if(data.hasOwnProperty("meta")) {
                       var meta:Object = data.meta;
                       if(meta.status == "ok" && meta.code == 200 && meta.method_name == "Notify") {
-                      	...
+                        ...
                       }
                     }
                   }

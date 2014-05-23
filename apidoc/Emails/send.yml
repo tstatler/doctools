@@ -7,6 +7,10 @@ methods:
         configured your project's SMTP settings yet, please goto your App Settings and configure
         and test your SMTP setting. You also need to create at least one email
         template. The email template body supports HTML formatted text.
+
+        Before you can send email you must first configure your SMTP
+        server settings on the Cloud > Settings & Configuration tab in [Appcelerator Dashboard](https://dashboard.appcelerator.com)
+        or the Settings tab in [My Apps](https://my.appcelerator.com/apps).
     url: custom_mailer/email_from_template.json
     http-method: POST
 
@@ -78,9 +82,9 @@ methods:
 
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
-                	if ([response.meta.method isEqualToString:@"emailFromTemplate"]) {
-                		NSLog(@"Email from template sent!");
-                	}
+                    if ([response.meta.method isEqualToString:@"emailFromTemplate"]) {
+                        NSLog(@"Email from template sent!");
+                    }
                 }
 
       - platform: android
@@ -123,7 +127,7 @@ methods:
                     if(data.meta) {
                       var meta = data.meta;
                       if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'emailFromTemplate') {
-                      	...
+                        ...
                       }
                     }
                   }

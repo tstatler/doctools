@@ -3,8 +3,8 @@
 You can use Appcelerator or Titanium Studio to create, run, manage and debug Node.ACS services.
 The `acs` command-line utility needs to be installed to manage Node.ACS projects with Studio.
 
-If you are an [Appcelerator Platform](http://www.appcelerator.com/platform) subscriber, each Node.ACS 
-application is bound to a Appcelerator Platform [organization](/platform/latest/#!/guide/Managing_Organizations). 
+If you are an [Appcelerator Platform](http://www.appcelerator.com/platform) subscriber, each Node.ACS
+application is bound to a Appcelerator Platform [organization](/platform/latest/#!/guide/Managing_Organizations).
 You can view analytics, metrics and other data about your service in [Appcelerator Dashboard](https://dashboard.appcelerator.com).
 
 ## Managing Node.ACS Projects

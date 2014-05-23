@@ -4,8 +4,8 @@ methods:
     summary: Geolocate a Client
 
     description: |
-        Provides location data about the mobile device or computer running your app is
-        running on, based on the IP address of the device. This feature uses [MaxMind
+        Provides location data about the mobile device or computer your app is
+        running on based on its IP address. This feature uses [MaxMind
         GeoIP](https://www.maxmind.com/app/ip-location) to return the most accurate
         IP-based geolocation data possible. Note that the results are not not based on
         GPS signals nor WiFi triangulation commonly used on mobile devices. See

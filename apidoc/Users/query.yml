@@ -161,12 +161,12 @@ methods:
 
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
-                	if ([response.meta.methodName isEqualToString:@"queryUsers"]) {
-                		NSArray *users = [response getObjectsOfType:[CCUser class]];
-                		for (CCUser *user in users) {
-                			...
-                		}
-                	}
+                  if ([response.meta.methodName isEqualToString:@"queryUsers"]) {
+                    NSArray *users = [response getObjectsOfType:[CCUser class]];
+                    for (CCUser *user in users) {
+                      ...
+                    }
+                  }
                 }
 
       - platform: android

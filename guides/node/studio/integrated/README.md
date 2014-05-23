@@ -32,7 +32,7 @@ To create a new Node.ACS service in your mobile project:
 
   1. In the **Project Explorer** view, right-click on the project and select **New > Node.ACS Service**.
   2. **Appcelerator Studio users**: Select the organization to associate with the Node.ACS service.
-      <img src="guides/node_studio_standalone/choose-org.png" alt="" width="431" height="370" style='border:1px solid #000000'>  
+      <img src="guides/node_studio_standalone/choose-org.png" alt="" width="431" height="370" style='border:1px solid #000000'>
   3. Give the service a name.
 
 Studio creates a new Node.ACS service, using the MVC framework, in the

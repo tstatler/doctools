@@ -251,10 +251,10 @@ methods:
 
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
-                	if ([response.meta.methodName isEqualToString:@"queryCustomObjects"]) {
-                		NSArray *cars = [response.response objectForKey:@"car"];
-                		...
-                	}
+                    if ([response.meta.methodName isEqualToString:@"queryCustomObjects"]) {
+                        NSArray *cars = [response.response objectForKey:@"car"];
+                        ...
+                    }
                 }
 
       - platform: android
@@ -299,7 +299,7 @@ methods:
                       var meta = data.meta;
                       if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'queryCustomObjects') {
                         var cars = data.response.car;
-                      	...
+                        ...
                       }
                     }
                   }

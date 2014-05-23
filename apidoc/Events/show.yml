@@ -129,9 +129,9 @@ methods:
 
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
-                	if ([response.meta.method isEqualToString:@"showEvents"]) {
-                		NSArray *events = [response getObjectsOfType:[CCEvent class]];
-                	}
+                  if ([response.meta.method isEqualToString:@"showEvents"]) {
+                    NSArray *events = [response getObjectsOfType:[CCEvent class]];
+                  }
                 }
 
       - platform: android
@@ -174,7 +174,7 @@ methods:
                       var meta = data.meta;
                       if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'showEvents') {
                         var events = data.response.events;
-                      	...
+                        ...
                       }
                     }
                   }
@@ -198,8 +198,8 @@ methods:
                     if(data.hasOwnProperty("meta")) {
                       var meta:Object = data.meta;
                       if(meta.status == "ok" && meta.code == 200 && meta.method_name == "showEvents") {
-                      	var events:Array = data.response.events;
-                      	...
+                        var events:Array = data.response.events;
+                        ...
                       }
                     }
                   }
