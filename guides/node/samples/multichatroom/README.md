@@ -279,14 +279,6 @@ All view files reside in `views` directory in the application's project director
                     $('#chat-ctnr').scrollTop($('#incomingChatMessages').height() + 100 );
                 });
 
-                //when received message from server
-                iosocket.on('message', function(data) {
-                    var icm = $('<li class="active"></li>');
-                    $('#incomingChatMessages').append(icm.text(data.user + ': ' + data.message));
-                    setTimeout(function() { icm.removeClass('active') }, 1500);
-                    $('#chat-ctnr').scrollTop($('#incomingChatMessages').height() + 100 );
-                });
-
                 iosocket.on('disconnect', function() {
                     iosocket.on('message', null);
                     $('#incomingChatMessages').append('<li class="alert">Disconnected</li>');
