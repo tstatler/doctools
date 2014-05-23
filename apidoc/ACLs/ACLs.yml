@@ -47,7 +47,7 @@ description: |
     #### Restrict read access to specific users
 
     In the following example (continued), User1 updates the "photo_access" ACL object to limit 
-    read access to only User2 and User3. of this ACL object. Subsequently, only the application administrator, 
+    read access to only User2 and User3 of this ACL object. Subsequently, only the application administrator, 
     the ACL object owner (User1), User2 and User3 can read (show, search, or query) the Photo object;
     write permissions have not changed.
     

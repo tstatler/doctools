@@ -1,6 +1,6 @@
 name: Likes
 description: |
-    The Likes API lets yo add a "like" to an existing object. Currently, likes can only be added to 
+    The Likes API lets you add a "like" to an existing object. Currently, likes can only be added to 
     the following object types:
     
     *   {@link Posts}
@@ -16,7 +16,7 @@ description: |
     If an object has one or more likes associated to it, it will return a total
     like count with the object:  
 
-    "likes_count": 2
+        "likes_count": 2
 
     ## Determining if the Current User Likes an Object ##
 

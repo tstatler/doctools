@@ -149,10 +149,10 @@ methods:
                         "content": "Post Body",
                         "reviews_count": 10,
                         "ratings_average": 7.5,
-                    "ratings_count" : 10,
+                        "ratings_count" : 10,
                         "ratings_summary": {
-                      "10": 5,
-                      "5" : 5
+                            "10": 5,
+                            "5" : 5
                         },
                         "user": {
                           "id": "4e33a251d9ca724676000002",
