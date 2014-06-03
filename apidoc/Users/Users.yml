@@ -3,13 +3,13 @@ base-url: https://api.cloud.appcelerator.com/v1/users/
 description: |
     Represents a user account. 
     
-    By default, new user accounts are
-    activated as soon as they are created. For security reason, you can enable new user
-    account email verification in App settings. Once enabled, new users will receive an email
+    By default, new user accounts are activated as soon as they are created. You can enable new user
+    account email verification in the **Cloud > Settings & Configuration > Settings** tab in [Appcelerator Dashboard](https://dashboard.appcelerator.com)
+    or the Settings tab in [My Apps](https://my.appcelerator.com/apps). Once enabled, new users will receive an email
     with instructions to activate their account. This setting doesn't apply when a new user
-    is created by logging in with an external account.
+    is created by logging in with an external account (see {@link SocialIntegrations}).
 
-    A user must have at least one of the following:
+    A new user must specify at least one of the following when creating an account:
     
     *    username
     *    email address, first_name **and** last_name.

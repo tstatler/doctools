@@ -61,7 +61,7 @@ methods:
                   }
 
             For details about using the `where` parameter, see the [Search and Query guide](#!/guide/search_query).
-        type: Hash        
+        type: Hash
 
     response-parameters:
       - name: push_schedules

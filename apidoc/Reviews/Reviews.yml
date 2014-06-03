@@ -1,11 +1,7 @@
 name: Reviews
 description: |
-    This flexible Tangram lets you add reviews with optional ratings to an existing object You
-    can use it to create reviews with rating, comments(text only), or Likes(rating only). You
-    can also create reviews to review objects to create comments on comments, etc.
-    
-    
-    Currently, reviews can be added to the following object types:
+    The Reviews API lets you associate user reviews and ratings with an ACS object. Currently, reviews 
+    can be added to the following ACS object types:
 
     *   {@link Posts}
     *   {@link Photos}
@@ -15,10 +11,11 @@ description: |
     *   {@link Places}
     *   {@link CustomObjects} 
     *   {@link Statuses}
-    *   {@link Reviews} -- Create comments on reviews/comments, etc.
+    *   {@link Reviews}
     
-    If an object has one or more reviews(comments) associated to it, it will return a total
-    review count, rating_count, average rating and a breakdown of each rating value:
+    If an ACS object has one or more reviews associated with it, it returns the total
+    number of reviews, number of ratings, average rating value, and a summary of ratings when the object is 
+    queried or updated:
 
         "reviews_count": 2,
         "ratings_count": 2,

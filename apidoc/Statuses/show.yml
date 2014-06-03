@@ -96,7 +96,7 @@ methods:
 
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
-                	NSArray *statuses = [response getObjectsOfType:[CCStatus class]];
+                  NSArray *statuses = [response getObjectsOfType:[CCStatus class]];
                 }
 
       - platform: android
@@ -139,7 +139,7 @@ methods:
                       var meta = data.meta;
                       if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'showStatus') {
                         var statuses = data.response.statuses;
-                      	...
+                        ...
                       }
                     }
                   }
@@ -163,8 +163,8 @@ methods:
                     if(data.hasOwnProperty("meta")) {
                       var meta:Object = data.meta;
                       if(meta.status == "ok" && meta.code == 200 && meta.method_name == "showStatus") {
-                      	var statuses:Array = data.response.statuses;
-                      	...
+                        var statuses:Array = data.response.statuses;
+                        ...
                       }
                     }
                   }

@@ -1,5 +1,7 @@
 name: Emails
 description: |
-    Emails Tangram lets you send custom emails to your users. You need to configure SMTP
-    server in the App setting first.
+    The Emails API lets you send custom emails to your users. Before you can send email you must first configure your SMTP
+    server settings on the Cloud > Settings & Configuration tab in [Appcelerator Dashboard](https://dashboard.appcelerator.com)
+    or the Settings tab in [My Apps](https://my.appcelerator.com/apps).
+    
 

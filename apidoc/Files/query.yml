@@ -163,13 +163,13 @@ methods:
 
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
-                	if ([response.meta.method isEqualToString:@"queryFiles"]) {
-                		NSArray *files = [response getObjectsOfType:[CCFile class]];
-                		for (CCFile *file in files)
-                		{
-                			...
-                		}
-                	}
+                  if ([response.meta.method isEqualToString:@"queryFiles"]) {
+                    NSArray *files = [response getObjectsOfType:[CCFile class]];
+                    for (CCFile *file in files)
+                    {
+                      ...
+                    }
+                  }
                 }
 
       - platform: android

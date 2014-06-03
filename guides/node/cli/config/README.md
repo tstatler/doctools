@@ -2,12 +2,12 @@
 
 ## Description
 
-<p class="note">This command is only available for enterprise customers using the Appcelerator Platform. 
+<p class="note">This command is only available for enterprise customers using the Appcelerator Platform.
 By default, a Node.ACS application is limited to one cloud server. To increase the maximum number of cloud servers, contact <a href="http://support2.appcelerator.com">Appcelerator Support</a>.</p>
 
-Configures the number of cloud servers for the application to use. Enable the auto-scaling 
-feature to automatically scale up and down the number of cloud servers based on the access session rate. 
-The access session rate is the total number of HTTP requests received per second within a minute. You must also set the `--maxsessionrate` parameter to use auto-scaling. 
+Configures the number of cloud servers for the application to use. Enable the auto-scaling
+feature to automatically scale up and down the number of cloud servers based on the access session rate.
+The access session rate is the total number of HTTP requests received per second within a minute. You must also set the `--maxsessionrate` parameter to use auto-scaling.
 
 </div>
 

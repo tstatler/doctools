@@ -1,9 +1,9 @@
 name: Friends
 description: |
-    Provides APIs for managing friendships between the current user and another user.
+    The Friends API provides methods for managing friendships between the current user and another user.
     
-    By default friendships are two-way (like Facebook), so after a friend request 
-    is made and approved both users will show up in each others' friend lists. 
-    This default can be changed to one-way following (like
-    Twitter) in the App Settings for each of your apps. 
-
+    By default, friendships are two-way (like Facebook): once a friend request 
+    is made and approved, both users will show up in each others' friend lists. 
+    This default behavior can be changed to one-way following (like
+    Twitter) in the Cloud > Settings & Configuration tab in [Appcelerator Dashboard](https://dashboard.appcelerator.com)
+    or the Settings tab [My Apps](https://my.appcelerator.com/apps).

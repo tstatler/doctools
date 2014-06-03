@@ -1,8 +1,7 @@
 name: Likes
 description: |
-    This flexible object lets you add a "like" to an existing object.
-    
-    Currently, likes can only be added to the following object types:
+    The Likes API lets you add a "like" to an existing object. Currently, likes can only be added to 
+    the following object types:
     
     *   {@link Posts}
     *   {@link Photos}
@@ -21,9 +20,9 @@ description: |
 
     ## Determining if the Current User Likes an Object ##
 
-    To determine if the current user has liked an ACS object, pass `show_user_like=true` as a parameter 
+    To determine if the current user has liked an ACS object, pass `show_user_like=true` as a parameter
     to the object's `query` or `show` REST methods. If the current user liked an object returned by
-    either of those methods, the response object contains the field `"current_user_liked: true"`. 
+    either of those methods, the response object contains the field `"current_user_liked: true"`.
 
     See the REST API examples for the {@link Checkins#method-query Checkins.query} 
     and {@link Checkins#method-show Checkins.show} methods for details.

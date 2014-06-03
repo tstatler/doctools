@@ -114,7 +114,7 @@ methods:
 
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
-                	NSArray *photos = [response getObjectsOfType:[CCPhoto class]];
+                  NSArray *photos = [response getObjectsOfType:[CCPhoto class]];
                 }
 
       - platform: android
@@ -157,7 +157,7 @@ methods:
                       var meta = data.meta;
                       if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'showPhoto') {
                         var photos = data.response.photos;
-                      	...
+                        ...
                       }
                     }
                   }
@@ -181,8 +181,8 @@ methods:
                     if(data.hasOwnProperty("meta")) {
                       var meta:Object = data.meta;
                       if(meta.status == "ok" && meta.code == 200 && meta.method_name == "showPhoto") {
-                      	var photos:Array = data.response.photos;
-                      	...
+                        var photos:Array = data.response.photos;
+                        ...
                       }
                     }
                   }
