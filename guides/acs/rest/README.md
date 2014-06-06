@@ -79,8 +79,8 @@ ID. Many of the REST examples in the documentation use these options.
 
 User login sessions expire after they have been unused for six months.
 If the application saves and uses a persistent reference to the user login session, and the
-user session expires, any ACS call that require a user login will return a 404 error.
-Your application needs to handle an invalid user session error, such as, prompting the user
+user session expires, any ACS call that requires a user login will return a 404 error.
+Your application needs to handle an invalid user session error, such as prompting the user
 to log in.
 
 ## Testing with cURL and wget
