@@ -145,6 +145,11 @@ def parse_members(members):
 			parse_dict = parse_doc(api["shortDoc"])
 			new_api["description"] = strip_desc(u2a(parse_dict["description"]))
 
+		if dict_has_non_empty_member(api, "meta"):
+			meta = api["meta"]
+			if dict_has_non_empty_member(meta, "since"):
+				new_api["since"] = { "since": u2a(meta["since"]), "version": "Titanium Mobile SDK"}
+
 		if api["tagname"] == "property":
 			new_api["type"] = to_jsca_type_name(u2a(api["type"]))
 			new_api["isInternal"] = False
@@ -185,6 +190,8 @@ output_file = sys.argv[2]
 
 json_data=open(input_file)
 data = json.load(json_data)
+import pprint
+pprint.pprint(data)
 export_types = []
 for obj in data:
 	if obj["tagname"] == "class":

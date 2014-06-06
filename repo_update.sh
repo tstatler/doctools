@@ -5,7 +5,9 @@ fi
 
 TI_DIR=$TI_ROOT/titanium_mobile
 ALLOY_DIR=$TI_ROOT/alloy
+CORE_MOTION_DIR=$TI_ROOT/appc_modules/ti.coremotion
 FB_DIR=$TI_ROOT/appc_modules/ti.facebook
+GEOFENCE_DIR=$TI_ROOT/appc_modules/ti.geofence
 MOD_DIR=$TI_ROOT/titanium_modules
 MAP_DIR=$TI_ROOT/appc_modules/ti.map
 NFC_DIR=$TI_ROOT/appc_modules/ti.nfc
@@ -42,10 +44,12 @@ function repo_update {
     fi
 }
 
-repo_update titanium_mobile $TI_DIR upstream 3_2_X
-repo_update alloy $ALLOY_DIR upstream 1_3_X
+repo_update titanium_mobile $TI_DIR upstream 3_3_X
+repo_update alloy $ALLOY_DIR upstream 1_4_X
 repo_update titanium_modules $MOD_DIR origin master
+repo_update ti.coremotione $CORE_MOTION_DIR origin master
 repo_update ti.facebook $FB_DIR origin master
+repo_update ti.geofence $GEOFENCE_DIR origin master
 repo_update ti.map $MAP_DIR origin master
 repo_update ti.nfc $NFC_DIR origin master
 repo_update ti.newsstand $NEWSSTAND_DIR origin master
