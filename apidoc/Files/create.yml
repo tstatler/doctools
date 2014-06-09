@@ -24,6 +24,7 @@ methods:
       - name: file
         description: The attached binary file.
         type: FileUpload
+        required: true
 
       - name: custom_fields
         description: User defined fields. See [Custom Data Fields](#!/guide/customfields).

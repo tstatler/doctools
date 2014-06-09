@@ -13,10 +13,10 @@ methods:
 
         For details about using the query parameters,
         see the [Search and Query guide](#!/guide/search_query).
-    url: objects/:class_name/query.json
+    url: objects/:classname/query.json
 
     parameters:
-      - name: class_name
+      - name: classname
         description: |
             Type of custom object. Specified as part of the URL path, not in the
             parameters.

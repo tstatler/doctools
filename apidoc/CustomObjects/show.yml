@@ -5,11 +5,11 @@ methods:
     description: |
         Show a custom object's info.
 
-    url: objects/:class_name/show.json
+    url: objects/:classname/show.json
 
     parameters:
 
-      - name: class_name
+      - name: classname
         description: |
             Type of custom object. Specified as part of the URL path, not in the
             parameters.
@@ -22,6 +22,7 @@ methods:
 
             You must specify either `id` or `ids`.
         type: String
+        required: true
 
       - name: ids
         description:
@@ -29,6 +30,7 @@ methods:
 
             You must specify either `id` or `ids`.
         type: String
+        required: true
 
       - name: response_json_depth
         description: |

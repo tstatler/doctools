@@ -8,12 +8,12 @@ methods:
 
         An application admin can delete any custom object.
 
-    url: objects/:class_name/delete.json
+    url: objects/:classname/delete.json
     http-method: DELETE
     login-required: true
 
     parameters:
-      - name: class_name
+      - name: classname
         description: |
             Type of custom object. Specified as part of the URL path, not in the
             parameters.
@@ -26,6 +26,7 @@ methods:
 
             You must specify either `id` or `ids`.
         type: String
+        required: true
 
       - name: ids
         description:
@@ -33,6 +34,7 @@ methods:
 
             You must specify either `id` or `ids`.
         type: String
+        required: true
 
       - name: user_id
         description: |
