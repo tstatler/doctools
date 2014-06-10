@@ -9,7 +9,7 @@ description: |
 
     <!-- Note: Using HTML to have more control over formatting of the URL string.  -->
 
-    <code class="prettyprint">https://api.cloud.appcelerator.com/v1/objects/<em>class_name</em>/<em>method</em>.json</code>
+    <code class="prettyprint">https://api.cloud.appcelerator.com/v1/objects/<em>classname</em>/<em>method</em>.json</code>
 
     For example, if your application uses `cars` and `drivers` objects, you would use
     different URLs to create them:
@@ -18,7 +18,7 @@ description: |
 
         https://api.cloud.appcelerator.com/v1/objects/drivers/create.json
 
-    When custom objects are returned in a response, the class_name is used as a property
+    When custom objects are returned in a response, the `classname` is used as a property
     name. For example, if you query a list of custom `cars` objects, the response would 
     include a `cars` array:
 
