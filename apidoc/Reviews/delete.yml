@@ -109,6 +109,43 @@ methods:
 
       - platform: android
         example: |
+            Example Android APS SDK call:
+
+                HashMap<String, Object> data = new HashMap<String, Object>();
+                data.put("post_id", "4e33a817d9ca724745000003");
+                data.put("review_id", "4e33a817d9ca724745000006");
+
+                try {
+
+                    APSReviews.remove(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            // The callback will be run on a background thread
+                            // Switch to the main thread before interacting with the UI
+                            if (currentActivity != null) {
+                                currentActivity.runOnUiThread(new Runnable() {
+                                    public void run() {
+                                        if (e.getSuccess()) {
+                                            new AlertDialog.Builder(currentActivity)
+                                            .setTitle("Success!").setMessage("Removed!")
+                                            .setPositiveButton(android.R.string.ok, null)
+                                            .setIcon(android.R.drawable.ic_dialog_info)
+                                            .show();
+                                        } else {
+                                            Log.e("APSReviews", "ERROR: " + e.getMessage());
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                    });
+                } catch (APSClientError e) {
+                    Log.e("APSReviews", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
+        example: |
             Example Android call:
 
                 ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key

@@ -78,6 +78,37 @@ methods:
 
       - platform: android
         example: |
+            Example Android APS SDK call:
+
+                HashMap<String, Object> data = new HashMap<String, Object>();
+                data.put("photo_id", "4d8971236f7095514800000a");
+
+                try {
+                    APSPhotos.remove(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            // The callback will be run on a background thread
+                            // Switch to the main thread before interacting with the UI
+                            if (currentActivity != null) {
+                                currentActivity.runOnUiThread(new Runnable() {
+                                    public void run() {
+                                        if (e.getSuccess()) {
+                                            Toast.makeText(currentActivity, "Photo removed!", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Log.e("APSPhotos", "ERROR: " + e.getMessage());
+                                        }
+                                    }
+                                });
+                            }
+
+                        }
+                    });
+                } catch (APSClientError e) {
+                    Log.e("APSPhotos", "Exception thrown: " + e.toString());
+                }
+      - platform: android-acssdk
+        example: |
             Example Android call:
 
                 ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key

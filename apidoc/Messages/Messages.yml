@@ -186,6 +186,46 @@ methods:
 
       - platform: android
         example: |
+            Example Android APS SDK call:
+
+                APSCloud.enable(this, 'APS_CLOUD_KEY');
+                final Activity currentActivity = this;
+
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("to_ids", "4d71445b6f70951043000006,4d7184f06f70951043000012");
+                data.put("body", "new message!");
+
+                try {
+                    APSMessages.create(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            // The callback will be run on a background thread
+                            // Switch to the main thread before interacting with the UI
+                            if (currentActivity != null) {
+                                currentActivity.runOnUiThread(new Runnable() {
+                                    public void run() {
+                                        if (e.getSuccess()) {
+                                            new AlertDialog.Builder(currentActivity)
+                                            .setTitle("Success!").setMessage("Created!")
+                                            .setPositiveButton(android.R.string.ok, null)
+                                            .setIcon(android.R.drawable.ic_dialog_info)
+                                            .show();
+                                        } else {
+                                            Log.e("APSMessages", "ERROR: " + e.getMessage());
+                                        }
+                                    }
+                                });
+                            }
+
+                        }
+                    });
+                } catch (APSClientError e) {
+                    Log.e("APSMessages", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
+        example: |
             Example Android call:
 
                 ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
@@ -283,6 +323,45 @@ methods:
                 }
 
       - platform: android
+        example: |
+            Example Android APS SDK call:
+
+                APSCloud.enable(this, 'APS_CLOUD_KEY');
+                final Activity currentActivity = this;
+
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("message_id", "4d854389d0afbe013e000029");
+
+                try {
+                    APSMessages.remove(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            // The callback will be run on a background thread
+                            // Switch to the main thread before interacting with the UI
+                            if (currentActivity != null) {
+                                currentActivity.runOnUiThread(new Runnable() {
+                                    public void run() {
+                                        if (e.getSuccess()) {
+                                            new AlertDialog.Builder(currentActivity)
+                                            .setTitle("Success!").setMessage("Removed!")
+                                            .setPositiveButton(android.R.string.ok, null)
+                                            .setIcon(android.R.drawable.ic_dialog_info)
+                                            .show();
+                                        } else {
+                                            Log.e("APSMessages", "ERROR: " + e.getMessage());
+                                        }
+                                    }
+                                });
+                            }
+
+                        }
+                    });
+                } catch (APSClientError e) {
+                    Log.e("APSMessages", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
         example: |
             Example Android call:
 
@@ -418,7 +497,42 @@ methods:
 
       - platform: android
         example: |
+            Example Android call:
 
+                APSCloud.enable(this, 'APS_CLOUD_KEY');
+                final Activity currentActivity = this;
+
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("thread_id", "4d854389d0afbe013e000029");
+
+                try {
+                    APSMessages.removeThread(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            // The callback will be run on a background thread
+                            // Switch to the main thread before interacting with the UI
+                            if (currentActivity != null) {
+                                currentActivity.runOnUiThread(new Runnable() {
+                                    public void run() {
+                                        if (e.getSuccess()) {
+                                            statusLabel.setText("Thread removed!");
+                                        } else {
+                                            Log.e("APSMessages", "ERROR: " + e.getMessage());
+                                        }
+                                    }
+                                });
+                            }
+
+                        }
+                    });
+                } catch (APSClientError e) {
+                    Log.e("APSMessages", "Exception thrown: " + e.toString());
+                }
+            }
+
+      - platform: android-acssdk
+        example: |
             Example Android call:
 
                 ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
@@ -609,6 +723,46 @@ methods:
 
       - platform: android
         example: |
+            Example Android APS SDK call:
+
+                APSCloud.enable(this, 'APS_CLOUD_KEY');
+                final Activity currentActivity = this;
+
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("message_id", "4d85418dd0afbe013e000025");
+                data.put("body", "reply message!");
+
+                try {
+                    APSMessages.reply(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            // The callback will be run on a background thread
+                            // Switch to the main thread before interacting with the UI
+                            if (currentActivity != null) {
+                                currentActivity.runOnUiThread(new Runnable() {
+                                    public void run() {
+                                        if (e.getSuccess()) {
+                                            new AlertDialog.Builder(currentActivity)
+                                            .setTitle("Success!").setMessage("Replied!")
+                                            .setPositiveButton(android.R.string.ok, null)
+                                            .setIcon(android.R.drawable.ic_dialog_info)
+                                            .show();
+                                        } else {
+                                            Log.e("APSMessages", "ERROR: " + e.getMessage());
+                                        }
+                                    }
+                                });
+                            }
+
+                        }
+                    });
+                } catch (APSClientError e) {
+                    Log.e("APSMessages", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
+        example: |
             Example Android call:
 
                 ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
@@ -782,10 +936,50 @@ methods:
 
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
-                    NSArray *messages = [response getObjectsOfType:[CCMessage class]];
+                	NSArray *messages = [response getObjectsOfType:[CCMessage class]];
                 }
 
       - platform: android
+        example: |
+            Example Android APS SDK call:
+                APSCloud.enable(this, 'APS_CLOUD_KEY');
+                final Activity currentActivity = this;
+
+                HashMap<String, Object> data = new HashMap<String, Object>();
+                data.put("message_id", 'MESSAGE_ID');
+
+                try {
+                    APSMessages.show(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            // The callback will be run on a background thread
+                            // Switch to the main thread before interacting with the UI
+                            if (currentActivity != null) {
+                                currentActivity.runOnUiThread(new Runnable() {
+                                    public void run() {
+                                        if (e.getSuccess()) {
+                                            try {
+                                                  JSONArray messages = responseJSON.getJSONArray("messages");
+                                                  // Do stuff with messages...
+                                              } catch (JSONException err) {
+                                                Log.e("APSMessages", "Exception thrown: " + err.toString());
+                                            }
+                                        } else {
+                                            Log.e("APSMessages", "ERROR: " + e.getMessage());
+                                        }
+
+                                    }
+                                });
+                            }
+
+                        }
+                    });
+                } catch (APSClientError e) {
+                    Log.e("APSMessages", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
         example: |
             Example Android call:
 
@@ -930,6 +1124,41 @@ methods:
                 }
 
       - platform: android
+        example: |
+            Example Android APS SDK call:
+
+                APSCloud.enable(this, 'APS_CLOUD_KEY');
+
+                try {
+                    APSMessages.showInbox(null, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                try {
+                                    JSONArray messages = e.getResponse().getJSONArray("messages");
+                                    if (messages.length() <= 0) {
+                                        Log.i("APSMessages", "No Messages");
+                                    } else {
+                                        for (int i = 0; i < messages.length(); i++) {
+                                            JSONObject message = messages.getJSONObject(i);
+                                            Log.i("APSMessages", message.get("subject"));
+                                        }
+                                    }
+                                }
+                                catch (JSONException err) {
+                                    Log.e("APSMessages", "Exception thrown: " + err.toString());
+                                }
+                            } else {
+                                Log.e("APSMessages", "ERROR: " + e.getMessage());
+                            }
+                        }
+                    });
+                } catch (APSClientError e) {
+                    Log.e("APSMessages", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
         example: |
             Example Android call:
 
@@ -1119,6 +1348,41 @@ methods:
 
 
       - platform: android
+        example: |
+            Example Android call:
+
+                APSCloud.enable(this, 'APS_CLOUD_KEY');
+
+                try {
+                    APSMessages.showSent(null, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                try {
+                                    JSONArray messages = e.getResponse().getJSONArray("messages");
+                                    if (messages.length() <= 0) {
+                                        Log.i("APSMessages", "No Messages");
+                                    } else {
+                                        for (int i = 0; i < messages.length(); i++) {
+                                            JSONObject message = messages.getJSONObject(i);
+                                            Log.i("APSMessages", message.get("subject"));
+                                        }
+                                    }
+                                }
+                                catch (JSONException err) {
+                                    Log.e("APSMessages", "Exception thrown: " + err.toString());
+                                }
+                            } else {
+                                Log.e("APSMessages", "ERROR: " + e.getMessage());
+                            }
+                        }
+                    });
+                } catch (APSClientError e) {
+                    Log.e("APSMessages", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
         example: |
             Example Android call:
 
@@ -1378,6 +1642,44 @@ methods:
 
       - platform: android
         example: |
+            Example Android APS SDK call:
+
+                APSCloud.enable(this, 'APS_CLOUD_KEY');
+
+                HashMap<String, Object> data = new HashMap<String, Object>();
+                data.put("thread_id", "4d85418dd0afbe013e000025");
+
+                try {
+                    APSMessages.showThread(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                try {
+                                    JSONArray messages = e.getResponse().getJSONArray("messages");
+                                    if (messages.length() <= 0) {
+                                        Log.i("APSMessages", "No Messages");
+                                    } else {
+                                        for (int i = 0; i < messages.length(); i++) {
+                                            JSONObject message = messages.getJSONObject(i);
+                                            Log.i("APSMessages", message.get("subject"));
+                                        }
+                                    }
+                                }
+                                catch (JSONException err) {
+                                    Log.e("APSMessages", "Exception thrown: " + err.toString());
+                                }
+                            } else {
+                                Log.e("APSMessages", "ERROR: " + e.getMessage());
+                            }
+                        }
+                    });
+                } catch (APSClientError e) {
+                    Log.e("APSMessages", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
+        example: |
             Example Android call:
 
                 ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
@@ -1603,6 +1905,41 @@ methods:
                 }
 
       - platform: android
+        example: |
+            Example Android call:
+
+                APSCloud.enable(this, 'APS_CLOUD_KEY');
+
+                try {
+                    APSMessages.showThreads(null, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                try {
+                                    JSONArray messages = e.getResponse().getJSONArray("messages");
+                                    if (messages.length() <= 0) {
+                                        Log.i("APSMessages", "No Messages");
+                                    } else {
+                                        for (int i = 0; i < messages.length(); i++) {
+                                            JSONObject message = messages.getJSONObject(i);
+                                            Log.i("APSMessages", message.get("subject"));
+                                        }
+                                    }
+                                }
+                                catch (JSONException err) {
+                                    Log.e("APSMessages", "Exception thrown: " + err.toString());
+                                }
+                            } else {
+                                Log.e("APSMessages", "ERROR: " + e.getMessage());
+                            }
+                        }
+                    });
+                } catch (APSClientError e) {
+                    Log.e("APSMessages", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
         example: |
             Example Android call:
 

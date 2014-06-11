@@ -130,6 +130,47 @@ methods:
 
       - platform: android
         example: |
+            Example Android APSI SDK call:
+
+                APSCloud.enable(this, 'APS_CLOUD_KEY');
+                final Activity currentActivity = this;
+
+                // Create dictionary of parameters to be passed with the reques
+                HashMap<String, Object> data = new HashMap<String, Object>();
+                data.put("name", "welcome_message");
+                data.put("value", "Welcome to Appcelerator Cloud Services");
+
+                try {
+                    APSKeyValues.set(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            // The callback will be run on a background thread
+                            // Switch to the main thread before interacting with the UI
+                            if (currentActivity != null) {
+                                currentActivity.runOnUiThread(new Runnable() {
+                                    public void run() {
+                                        if (e.getSuccess()) {
+                                            new AlertDialog.Builder(currentActivity)
+                                            .setTitle("Success!").setMessage("Set!")
+                                            .setPositiveButton(android.R.string.ok, null)
+                                            .setIcon(android.R.drawable.ic_dialog_info)
+                                            .show();
+                                        } else {
+                                            Log.e("APSKeyValues", "ERROR: " + e.getMessage());
+                                        }
+                                    }
+                                });
+                            }
+
+                        }
+                    });
+                } catch (APSClientError e) {
+                    Log.e("APSKeyValues", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
+        example: |
             Example Android call:
 
                 ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key

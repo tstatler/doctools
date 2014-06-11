@@ -71,6 +71,38 @@ methods:
 
       - platform: android
         example: |
+            Example Android APS SDK call:
+
+                APSCloud.enable(this, 'APS_CLOUD_KEY');
+
+                try {
+
+                    APSFriends.requests(null, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                try {
+                                    JSONArray friendRequests = e.getResponse().getJSONArray("friend_requests");
+                                    if (friendRequests.length() <= 0) {
+                                        Log.i("APSFriends", "No Results!");
+                                    } else {
+                                        Log.i("APSFriends", "Approve Friend Request!");
+                                    }
+                                } catch (JSONException err) {
+                                    Log.e("APSFriends", "Exception throwm: " + err.toString());
+                                }
+                            } else {
+                                Log.e("APSFriends", "ERROR: " + e.getMessage());
+                            }
+                        };
+                    });
+                } catch (APSClientError e) {
+                    Log.e("APSFriends", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
+        example: |
             Example Android call:
 
                 ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key

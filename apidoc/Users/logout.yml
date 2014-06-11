@@ -63,6 +63,37 @@ methods:
         example: |
             Example Android call:
 
+                APSCloud.enable(this, 'APS_CLOUD_KEY');
+                final Activity currentActivity = this;
+
+                try {
+                    APSUsers.logout(null, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            // The callback will be run on a background thread
+                            // Switch to the main thread before interacting with the UI
+                            if (currentActivity != null) {
+                                currentActivity.runOnUiThread(new Runnable() {
+                                    public void run() {
+                                        if (e.getSuccess()) {
+                                            Toast.makeText(currentActivity, "Logged out!", Toast.LENGTH_SHORT);
+                                        } else {
+                                            Log.e("APSUsers", "ERROR: " + e.getMessage());
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                    });
+                } catch (APSClientError e) {
+                    Log.e("APSUsers", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
+        example: |
+            Example Android call:
+
                 ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
                 //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
 

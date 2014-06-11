@@ -87,7 +87,48 @@ methods:
                     }
                 }
 
+
       - platform: android
+        example: |
+            Example Android APS SDK call:
+
+                APSCloud.enable(this, 'APS_CLOUD_KEY');
+                final Activity currentActivity = this;
+
+                HashMap<String, Object> data = new HashMap<String, Object>();
+                data.put("recipients", "joe@company.com");
+                data.put("template", "welcome");
+
+                try {
+                    APSEmails.send(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            // The callback will be run on a background thread
+                            // Switch to the main thread before interacting with the UI
+                            if (currentActivity != null) {
+                                currentActivity.runOnUiThread(new Runnable() {
+                                    public void run() {
+                                        if (e.getSuccess()) {
+                                            new AlertDialog.Builder(currentActivity)
+                                            .setTitle("Alert").setMessage("Sent!")
+                                            .setPositiveButton(android.R.string.ok, null)
+                                            .setIcon(android.R.drawable.ic_dialog_info)
+                                            .show();
+                                        } else {
+                                            Log.e("APSEmail", "ERROR: " + e.getMessage());
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                    });
+                } catch (APSClientError e) {
+                    Log.e("APSEmails", "Exception thrown: " + e.toString());
+                }
+
+
+      - platform: android-acssdk
         example: |
             Example Android call:
 

@@ -146,6 +146,39 @@ methods:
 
       - platform: android
         example: |
+            Example Android APS SDK call:
+
+                APSCloud.enable(this, 'APS_CLOUD_KEY');
+
+                HashMap<String, Object> data = new HashMap<String, Object>();
+                data.put("user_id", "4d6e77386f70950c89000001");
+
+                try {
+                    APSFriends.search(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                try {
+                                    JSONArray users = e.getResponse().getJSONArray("users");
+                                    for (int i = 0; i < users.length(); i++) {
+                                        JSONObject user = users.getJSONObject(i);
+                                        Log.i("APSFriends", user.get("first_name") + " " + user.get("last_name"));
+                                    }
+                                } catch (JSONException err) {
+                                    Log.e("APSFriends", "Exception thrown: " + err.toString());
+                                }
+                            } else {
+                                Log.e("APSFriends", "ERROR: " + e.getMessage());
+                            }
+                        }
+                    });
+                } catch (APSClientError e) {
+                    Log.e("APSFriends", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
+        example: |
             Example Android call:
 
                 ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key

@@ -171,6 +171,42 @@ methods:
 
       - platform: android
         example: |
+            Example Android APS SDK call:
+
+                HashMap<String,Object> data = new HashMap<String,Object>;
+                JSONObject params = new JSONObject("{'first_name': 'joe', 'coordinates': {'$nearSphere': [-122.1,37.1], '$maxDistance': 0.00126}}");
+                data.put("where", params);
+
+                try {
+                    APSUsers.query(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                try {
+                                    JSONArray users = e.getResponse().getJSONArray("users");
+                                    if (users.length() <= 0) {
+                                        Log.i("APSUsers", "No Results!");
+                                    } else {
+                                        for (int i = 0; i < users.length(); i++) {
+                                            JSONObject user = users.getJSONObject(i);
+                                            Log.i("APSUsers", user.get("first_name") + " " + user.get("last_name"));
+                                        }
+                                    }
+                                } catch (JSONException err) {
+                                       Log.e("APSUsers", "Exception thrown: " + err.toString());
+                                }
+                            } else {
+                                Log.e("APSUsers", "ERROR: " + e.getMessage());
+                            }
+                        }
+                    });
+                } catch (APSClientError e1) {
+                    Log.e("APSUsers", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
+        example: |
             Example Android call:
 
                 ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
