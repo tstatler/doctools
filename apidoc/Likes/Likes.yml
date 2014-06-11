@@ -18,15 +18,41 @@ description: |
 
         "likes_count": 2
 
-    ## Determining if the Current User Likes an Object ##
+    ## Determining if the Current User Likes an Object
 
-    To determine if the current user has liked an ACS object, pass `show_user_like=true` as a parameter
-    to the object's `query` or `show` REST methods. If the current user liked an object returned by
+    To determine if the current user has liked an ACS object, use the {@link Likes#method-query Likes.query}
+    method to retrieve a list of objects the user liked.
+
+    If you are executing a `query` or `show` method on the ACS object, pass `show_user_like=true`
+    as a parameter to the method. If the current user liked an object returned by
     either of those methods, the response object contains the field `"current_user_liked: true"`.
 
     See the REST API examples for the {@link Checkins#method-query Checkins.query} 
     and {@link Checkins#method-show Checkins.show} methods for details.
 
 
-    
+fields:
 
+  - name: id
+    description: Like Object ID.
+    type: String
+
+  - name: likeable_type
+    description: Object type of the liked object, which is the name of the object, such as `Post`, `Photo`, etc.
+    type: String
+
+  - name: likeable_id
+    description: Object ID of the liked object.
+    type: String
+
+  - name: created_at
+    description: Creation date for this like object.
+    type: Date
+
+  - name: updated_at
+    description: Last update time for this like object.
+    type: Date
+
+  - name: user
+    description: User who generated the like.
+    type: Users
