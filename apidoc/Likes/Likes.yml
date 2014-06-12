@@ -46,11 +46,11 @@ fields:
     type: String
 
   - name: created_at
-    description: Creation date for this like object.
+    description: Creation date for this liked object.
     type: Date
 
   - name: updated_at
-    description: Last update time for this like object.
+    description: Last update time for this liked object.
     type: Date
 
   - name: user
