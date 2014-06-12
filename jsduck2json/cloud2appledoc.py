@@ -88,7 +88,8 @@ def convert_to_tiname(str, parent):
 
 def shorten_desc(str):
 	token = str.split(".")
-	return token[0] + "."
+	desc = re.sub("ACS", "APS", token[0]) + '.'
+	return strip_tags(desc)
 
 def convert_to_android_type(str):
 	tokens = str.split("/")
@@ -130,6 +131,13 @@ def parse_methods(members):
 			desc += strip_tags(u2a(api["shortDoc"][:-3])) + "\n"
 		else: 
 			desc += strip_tags(u2a(shorten_desc(api["doc"]))) + "\n"
+		desc += "     *\n"
+
+		if "loginRequired" in api["meta"]:
+			if api["meta"]["loginRequired"]:
+				desc += '     * To use this method, **a user must be logged in before calling this method.**\n'
+				desc += "     *\n"
+
 		desc += ' * For more details about the underlying REST method, see the\n'
 		desc += ' * [ACS API Docs](http://docs.appcelerator.com/cloud/latest/#!/api/' + owner + '-method-' + name + ').\n'
 		if dict_has_non_empty_member(api, "params"):
@@ -139,12 +147,9 @@ def parse_methods(members):
 			desc += " * @param data Unused.\n"
 		
 		desc += " * @param handler Callback to handle the server response. See the Callback section in APSClient."
-		#if "response" in api:
-		#	value = convert_to_android_type(api["response"][0]["type"])
-		#	if value.find("[]") != -1:
-		#		desc += " Check the ASPResponse object's responses property to retrieve an array of APSResponse objects containing " + value[:-2] + ".\n"
-		#	else:
-		#		desc += " Check the APSResponse object's response property to retrieve the response data containing a " + value +".\n"
+		if dict_has_non_empty_member(api, "response"):
+			desc += "\n     * The response data returns the following method-specific properties:<ul>\n"
+			desc += parse_params(api["response"]) + "     * </ul>"
 
 		new_members[tiname] = desc
 		

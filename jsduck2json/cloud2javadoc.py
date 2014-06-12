@@ -74,6 +74,7 @@ def parse_params(params):
 
 	return new_params
 
+
 def convert_to_tiname(str, parent):
 	if str == "delete":
 		return "remove"
@@ -88,7 +89,8 @@ def convert_to_tiname(str, parent):
 
 def shorten_desc(str):
 	token = str.split(".")
-	return token[0] + "."
+	desc = re.sub("ACS", "APS", token[0]) + '.'
+	return strip_tags(desc)
 
 def convert_to_android_type(str):
 	tokens = str.split("/")
@@ -106,7 +108,7 @@ def convert_to_android_type(str):
 	elif str == "Number":
 		return "int/double"
 	elif str == "Hash":
-		return "HashMap"
+		return "JSONObject/HashMap"
 	elif str == "Boolean":
 		return "boolean"
 	elif str == "FileUpload" or str == "BinaryData":
@@ -127,9 +129,14 @@ def parse_methods(members):
 		desc = "     * "
 
 		if dict_has_non_empty_member(api, "shortDoc"):
-			desc += u2a(api["shortDoc"][:-3]) + "\n"
+			desc += u2a(api["shortDoc"][:-3]) + "<br/><br/>\n"
 		else: 
-			desc += u2a(shorten_desc(api["doc"])) + "\n"
+			desc += u2a(shorten_desc(api["doc"])) + "<br/><br/>\n"
+
+		if "loginRequired" in api["meta"]:
+			if api["meta"]["loginRequired"]:
+				desc += '     * To use this method, <b>a user must be logged in before calling this method.</b><br/><br/>\n'
+
 		desc += '     * For more details about the underlying REST method, see the\n'
 		desc += '     * <a href="http://docs.appcelerator.com/cloud/latest/#!/api/' + owner + '-method-' + name + '">ACS API Docs</a>.\n'
 		if dict_has_non_empty_member(api, "params"):
@@ -139,12 +146,10 @@ def parse_methods(members):
 			desc += "     * @param data Unused.\n"
 		
 		desc += "     * @param handler Callback to handle the server response."
-		#if "response" in api:
-		#	value = convert_to_android_type(api["response"][0]["type"])
-		#	if value.find("[]") != -1:
-		#		desc += "  Use the APSResponse object's getResponses method to retrieve an array of APSResponse objects containing " + value[:-2] + ".\n"
-		#	else:
-		#		desc += " Use the APSResponse object's getResponse method to retrieve the response data as a JSON object containing a " + value +".\n"
+
+		if dict_has_non_empty_member(api, "response"):
+			desc += "\n     * The response data returns the following method-specific properties:<ul>\n"
+			desc += parse_params(api["response"]) + "     * </ul>"
 
 		new_members[tiname] = desc
 		
