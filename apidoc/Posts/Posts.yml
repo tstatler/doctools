@@ -1,7 +1,6 @@
 name: Posts
 description: |
-    A Post represents a Facebook like wall post or a Digg-style
-    submission with content.
+    A Post represents a wall post or similar social media content.
 mixin: Reviewable
 fields:
   - name: id

@@ -69,6 +69,13 @@ methods:
             Selects the object fields to display. Do not use this parameter with `unsel`.
         type: Hash
 
+      - name: show_user_like
+        description: |
+            If set to **true**, each Place object in the response includes `"current_user_liked: true"`
+             if the current user has liked the object. If the user has not liked the object, the 
+            `current_user_liked` field is not included in the response.
+        type: Boolean    
+
       - name: unsel
         description: |
             Selects the object fields NOT to display. Do not use this parameter with `sel`.
@@ -176,12 +183,12 @@ methods:
 
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
-                	if ([response.meta.methodName isEqualToString:@"queryPlaces"]) {
-                		NSArray *photos = [response getObjectsOfType:[CCPlace class]];
-                		for (CCPlace *place in places) {
-                			...
-                		}
-                	}
+                    if ([response.meta.methodName isEqualToString:@"queryPlaces"]) {
+                        NSArray *photos = [response getObjectsOfType:[CCPlace class]];
+                        for (CCPlace *place in places) {
+                            ...
+                        }
+                    }
                 }
 
       - platform: android
@@ -224,7 +231,7 @@ methods:
                       var meta = data.meta;
                       if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'queryPlaces') {
                         var places = data.response.places;
-                      	...
+                        ...
                       }
                     }
                   }

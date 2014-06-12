@@ -49,6 +49,13 @@ methods:
             Selects the object fields to display. Do not use this parameter with `unsel`.
         type: Hash
 
+      - name: show_user_like
+        description: |
+            If set to **true**, each Checkin object in the response includes "current_user_liked: true"`
+            if the current user has liked the object. If the user has not liked the object, the
+            `current_user_liked` field is not included in the response.
+        type: Boolean
+
       - name: unsel
         description: |
             Selects the object fields NOT to display. Do not use this parameter with `sel`.
@@ -97,11 +104,14 @@ methods:
 
       - platform: rest
         example: |
-            Example cURL request:
+            The following cURL request searches checkins by location, if your app assigned a geographic
+            location to each checkin (see [Geographic Coordinates in Custom Fields](#!/guide/customfields-section-geographic-coordinates-in-custom-fields).
 
-                Example: If your app assigns a location to each checkin, you can search checkins by location:
+            The request includes `show_user_like=true` as a query string parameter. The sample JSON response 
+            includes a single Checkins object that contains `"current_user_liked":"true"`, 
+            indicating that the current user has liked this object.
 
-                $ curl -c cookies.txt -b cookies.txt -X GET --data-urlencode 'where={"coordinates":{"$nearSphere":[-122.23,37.12], "$maxDistance" : 0.00126}}' "https://api.cloud.appcelerator.com/v1/checkins/query.json?key=<YOUR APP APP KEY>"
+                $ curl -c cookies.txt -b cookies.txt -X GET --data-urlencode 'where={"coordinates":{"$nearSphere":[-122.23,37.12], "$maxDistance" : 0.00126}}' "https://api.cloud.appcelerator.com/v1/checkins/query.json?key=<YOUR APP APP KEY>&show_user_like=true"
 
             Example JSON response:
 
@@ -125,6 +135,7 @@ methods:
                         "custom_fields": {
                           "coordinates": [-122.23, 37.12] }
                         },
+                        "current_user_liked": true,
                         "place": {
                           "id":"4d6f13e96f70953608000012",
                           "name":"Maya Restaurant",
@@ -231,7 +242,7 @@ methods:
                       var meta = data.meta;
                       if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'queryCheckins') {
                         var checkins = data.response.checkins;
-                      	...
+                        ...
                       }
                     }
                   }

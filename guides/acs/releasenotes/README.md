@@ -1,5 +1,33 @@
 # ACS Release Notes
 
+## ACS Release 1.1.1 - 16 May 2014
+
+The 1.1.1 release of Appcelerator Cloud Services includes the following fixes and features:
+
+### New features ###
+
+* When calling an ACS object's `query` or `show` methods you can include a new parameter called 
+`show_user_like`. If the current user has liked the object being queried or shown, the JSON response 
+contains `"current_user_liked":true`. See the {@link Checkins#method-query Checkins.query}
+and {@link Checkins#method-show Checkins.show} REST API examples for examples.
+
+* ACS now uses `yajl-ruby` to generate JSON responses. YAJL is faster than the previous `Hash.to_json`
+implementation.
+
+* ACS now supports SSL uploads for File and Photo objects.
+
+### Bug fixes ###
+
+* Fixed an Android issue with UTF-8 encoded characters not being displayed properly in push notifications. 
+
+* Fixed an issue where an application administrator was unable to check ACLs for a regular user.
+
+## 07 March 2014
+
+  * ACS now supports sending push notifications to devices located within a geographic region you specify.
+  For more information, see "Location-Based Push Notifications" in the [PushNotification](/cloud/latest/#!/api/PushNotifications) 
+  API reference.
+
 ## 11 January 2013
 
   * The namespace used by the ACS SDKs for [Android](#!/guide/android) and [iOS](#!/guide/ios)

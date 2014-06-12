@@ -18,6 +18,7 @@ methods:
       - name: file_id
         description: ID of the file to update.
         type: String
+        required: true
 
       - name: name
         description: File name.

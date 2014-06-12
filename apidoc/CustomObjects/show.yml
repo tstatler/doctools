@@ -5,11 +5,11 @@ methods:
     description: |
         Show a custom object's info.
 
-    url: objects/:class_name/show.json
+    url: objects/:classname/show.json
 
     parameters:
 
-      - name: class_name
+      - name: classname
         description: |
             Type of custom object. Specified as part of the URL path, not in the
             parameters.
@@ -22,6 +22,7 @@ methods:
 
             You must specify either `id` or `ids`.
         type: String
+        required: true
 
       - name: ids
         description:
@@ -29,6 +30,7 @@ methods:
 
             You must specify either `id` or `ids`.
         type: String
+        required: true
 
       - name: response_json_depth
         description: |
@@ -41,6 +43,12 @@ methods:
             Default is 3, valid range is 1 to 8.
         type: Number
 
+      - name: show_user_like
+        description: | 
+            If set to **true** the CustomObject in the response will include `"current_user_liked: true"`
+            if the current user has liked the object. If the user has not liked the object, the
+            `current_user_liked` field is not included in the response.
+        type: Boolean
 
     response-parameters:
       - name: classname
@@ -139,10 +147,10 @@ methods:
 
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
-                	if ([response.meta.methodName isEqualToString:@"showObjects"]) {
-                		NSArray *cars = [response.response objectForKey:@"car"];
-                		...
-                	}
+                  if ([response.meta.methodName isEqualToString:@"showObjects"]) {
+                    NSArray *cars = [response.response objectForKey:@"car"];
+                    ...
+                  }
                 }
 
       - platform: android
@@ -185,7 +193,7 @@ methods:
                       var meta = data.meta;
                       if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'showObjects') {
                         var cars = data.response.car;
-                      	...
+                        ...
                       }
                     }
                   }

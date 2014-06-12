@@ -9,7 +9,9 @@ you can publish it to the cloud, where it can be accessed by multiple mobile cli
   1. In the menu bar, select **File > New > Node.ACS Project**.
   2. Give the project a name. You can have a period ('.') in the middle of the name,
      just not at the beginning or end.
-  3. Click **Finish**.
+  3. **Appcelerator Studio users**: Select the organization to associate with the Node.ACS service.
+      <img src="guides/node_studio_standalone/choose-org.png" alt="" width="431" height="370" style='border:1px solid #000000'>
+  4. Click **Finish**.
 
 Studio creates a new Node.ACS MVC project.
 

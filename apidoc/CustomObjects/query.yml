@@ -3,16 +3,20 @@ methods:
   - name: query
     summary: Query Custom Objects
     description: |
-        Query custom object by specified fields with sorting and paginating. Right
-        now, you cannot query or sort data stored inside array or hash in custom
-        fields.
+        Query custom object by specified fields with sorting and paginating. 
+
+        **Notes**:
+
+        * If a custom object contains fields or values that are greater than 1KB in length, you will
+        not be able to query on that field. For more information, see [Indexing Size Limit for Custom Objects and Fields](#!/guide/customfields-section-indexing-size-limit-for-custom-objects-and-fields).
+        * Currently, you cannot query or sort data stored inside an array or hash.
 
         For details about using the query parameters,
         see the [Search and Query guide](#!/guide/search_query).
-    url: objects/:class_name/query.json
+    url: objects/:classname/query.json
 
     parameters:
-      - name: class_name
+      - name: classname
         description: |
             Type of custom object. Specified as part of the URL path, not in the
             parameters.
@@ -38,6 +42,13 @@ methods:
         description: |
             Number of records to skip. Must be used together with `limit`.
         type: Number
+
+      - name: show_user_like
+        description: |
+            If set to **true**, each CustomObject in the response includes `"current_user_liked: true"`
+             if the current user has liked the object. If the current user has not liked the object, the 
+            `current_user_liked` field is not included in the response.
+        type: Boolean
 
       - name: where
         description: |
@@ -240,10 +251,10 @@ methods:
 
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
-                	if ([response.meta.methodName isEqualToString:@"queryCustomObjects"]) {
-                		NSArray *cars = [response.response objectForKey:@"car"];
-                		...
-                	}
+                    if ([response.meta.methodName isEqualToString:@"queryCustomObjects"]) {
+                        NSArray *cars = [response.response objectForKey:@"car"];
+                        ...
+                    }
                 }
 
       - platform: android
@@ -288,7 +299,7 @@ methods:
                       var meta = data.meta;
                       if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'queryCustomObjects') {
                         var cars = data.response.car;
-                      	...
+                        ...
                       }
                     }
                   }

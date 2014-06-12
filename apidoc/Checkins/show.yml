@@ -10,7 +10,7 @@ methods:
         description: ID of the checkin to show.
         type: String
         required: true
-
+        
       - name: response_json_depth
         description: |
             Nested object depth level counts in response json.
@@ -19,8 +19,12 @@ methods:
             some important data related to the returning objects such as object's owner or
             referencing objects.
 
-            Default is 3, valid range is 1 to 8.
-        type: Number
+      - name: show_user_like
+        description: |
+            If set to **true** the Checkin object in the response will include `"current_user_liked: true"`
+            if the current user has liked the object. If the user has not liked the object, the
+            `current_user_liked` field is not included in the response.
+        type: Boolean
 
     response-params:
       - name: checkins
@@ -49,9 +53,11 @@ methods:
 
       - platform: rest
         example: |
-            Example cURL request:
+            Example cURL request that passes `show_user_like=true` as a parameter; the Checkin object
+            returned in the JSON response contains `"current_user_liked": true`, indicating that the current user
+            liked the retrieved object.
 
-                $ curl -b cookies.txt -c cookies.txt https://api.cloud.appcelerator.com/v1/checkins/show.json?key=<YOUR APP APP KEY>&checkin_id=4d8bc645d0afbe0363000013
+                $ curl -b cookies.txt -c cookies.txt https://api.cloud.appcelerator.com/v1/checkins/show.json?key=<YOUR APP APP KEY>&checkin_id=4d8bc645d0afbe0363000013&show_user_like=true
 
             Example JSON response:
 
@@ -66,6 +72,7 @@ methods:
                       {
                         "id":"4d8bc645d0afbe0363000013",
                         "created_at":"2011-03-24T22:31:34+0000",
+                        "current_user_liked": true,
                         "updated_at":"2011-03-24T22:31:34+0000",
                         "place": {
                           "id":"4d8bc62ad0afbe0363000012",
@@ -105,22 +112,22 @@ methods:
                             "medium_640":"http://storage.appcelerator.com/gjvI579NDKJNuhBBj9HGWhbGDISHcCvL/photos/4d88448ed0afbe0e4e000003/photo_medium_640.jpg",
                             "large_1024":"http://storage.appcelerator.com/gjvI579NDKJNuhBBj9HGWhbGDISHcCvL/photos/4d88448ed0afbe0e4e000003/photo_large_1024.jpg",
                             "original":"http://storage.appcelerator.com/gjvI579NDKJNuhBBj9HGWhbGDISHcCvL/photos/4d88448ed0afbe0e4e000003/photo_original.jpg"
+                                      }
+                                    }
+                                  },
+                                  "photo": {
+                                    "id":"4d8bc645d0afbe0363000014",
+                                    "filename":"photo.jpg",
+                                    "size":584344,
+                                    "md5":"589b8ad43ed20bf8e622d719642bc939",
+                                    "created_at":"2011-03-24T22:31:33+0000",
+                                    "updated_at":"2011-03-24T22:31:33+0000",
+                                    "processed":false
+                                  }
+                                }
+                              ]
                             }
                           }
-                        },
-                        "photo": {
-                          "id":"4d8bc645d0afbe0363000014",
-                          "filename":"photo.jpg",
-                          "size":584344,
-                          "md5":"589b8ad43ed20bf8e622d719642bc939",
-                          "created_at":"2011-03-24T22:31:33+0000",
-                          "updated_at":"2011-03-24T22:31:33+0000",
-                          "processed":false
-                        }
-                      }
-                    ]
-                  }
-                }
 
       - platform: ios
         example: |
@@ -202,8 +209,8 @@ methods:
                     if(data.hasOwnProperty("meta")) {
                       var meta:Object = data.meta;
                       if(meta.status == "ok" && meta.code == 200 && meta.method_name == "showCheckins") {
-                      	var checkins:Array = data.response.checkins;
-                      	...
+                        var checkins:Array = data.response.checkins;
+                        ...
                       }
                     }
                   }

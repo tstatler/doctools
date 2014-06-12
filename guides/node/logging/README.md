@@ -50,5 +50,3 @@ And below is the corresponding `loglist` output.
 [PERF]  GET / 10072 ms
 [PERF]  GET / 10066 ms
 </pre>
-
-The times reported by the 

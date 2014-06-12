@@ -3,7 +3,7 @@ methods:
   - name: create
     summary: Create Like
     description: |
-        Add a like to an object. Currently, likes can only be associated with one of
+        Adds a "like" to an object. Currently, likes can only be associated with one of
         the following object types, and a user can only like an object once:
 
         *   {@link Posts}
@@ -16,12 +16,12 @@ methods:
         *   {@link Statuses}
         *   {@link Reviews}
 
-        Once an object above has one or more likes attached to it, it will return a
+        Once an object has one or more likes attached to it, it will return a
         total like count with the object:
 
             "likes_count": 2
 
-        Specify one and only one of the ID parameters to identify  the target object.
+        You should specify one, and only one, ACS object ID parameter to identify the target object.
 
     url: likes/create.json
     http-method: POST

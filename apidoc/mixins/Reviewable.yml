@@ -1,6 +1,6 @@
 name: Reviewable
 description: |
-    The set of fields that are added to objects that can be {@link Reviews reviewed}.
+    A set of fields that are added to objects that can be {@link Reviews reviewed}.
 
 private: true
 fields:

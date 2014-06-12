@@ -10,7 +10,7 @@ methods:
 
         Application Admin can update any Custom Object.
 
-    url: objects/:class_name/update.json
+    url: objects/:classname/update.json
     http-method: PUT
     login-required: true
 
@@ -19,6 +19,13 @@ methods:
       - name: id
         description: |
             The object ID of the custom object to update.
+        type: String
+        required: true
+
+      - name: classname
+        description: |
+            Type of custom object. Specified as part of the URL path, not in the
+            parameters.
         type: String
         required: true
 

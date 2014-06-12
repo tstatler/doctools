@@ -10,6 +10,10 @@ methods:
 
         Application admins can set the `to_ids` parameter to `everyone` to send to all devices
         subscribed to the identified channel.
+
+        The REST version of `notify` includes the push notification ID in its response.
+        See the REST example below.
+
     url: push_notification/notify.json
     http-method: POST
     login-required: true
@@ -121,10 +125,19 @@ methods:
 
                 where={"loc": { "$nearSphere" : { "$geometry" : { "type" : "Point" , "coordinates" : [-122.2708,37.8044] } , "$maxDistance" : 2000 }}}
 
-            For details about using the `where` parameter,
-            see the [Search and Query guide](#!/guide/search_query).
+            For details about using the `where` parameter, see the [Search and Query guide](#!/guide/search_query).
         type: Hash
 
+    response-parameters:
+      - name: push_notification
+        description: |
+            Information about the requested push notification:
+
+              * `id`: The ID of the requested push notification.
+              * `payload`: The notification payload.
+              * `channel`: The notification channel.
+
+        type: Hash
 
     examples:
       - platform: titanium
@@ -145,19 +158,26 @@ methods:
 
       - platform: rest
         example: |
-            Example cURL request:
+            Example cURL request. The JSON response object includes the ID of the push notification.
 
-                $ curl -b cookies.txt -c cookies.txt -F "channel=friend_request" -F "to_ids=123456,34567" -F "payload=test" https://api.cloud.appcelerator.com/v1/push_notification/notify.json?key=<YOUR APP APP KEY>
+                $ curl -b cookies.txt -c cookies.txt -F "channel=friend_request" -F "to_ids=5354525d5714f565d3001c1e" -F "payload=test" https://api.cloud.appcelerator.com/v1/push_notification/notify.json?key=<APP_KEY>
 
-            Example JSON response:
+                Example JSON response:
 
-                {
-                  "meta": {
-                    "status": "ok",
-                    "code": 200,
-                    "method_name": "Notify"
-                  }
-                }
+                    {
+                      "meta": {
+                        "code": 200,
+                        "status": "ok",
+                                    "method_name": "Notify"
+                      },
+                      "response": {
+                        "push_notification": {
+                          "id": "53690d3fe10fa4582a00e887",
+                          "payload": "test",
+                          "channel": "friend_request"
+                        }
+                      }
+                    }
 
       - platform: ios
         example: |
@@ -175,7 +195,7 @@ methods:
 
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
-                	// successfully subscribed
+                  // successfully subscribed
                 }
 
       - platform: android
@@ -220,7 +240,7 @@ methods:
                     if(data.meta) {
                       var meta = data.meta;
                       if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'Notify') {
-                      	...
+                        ...
                       }
                     }
                   }
@@ -246,7 +266,7 @@ methods:
                     if(data.hasOwnProperty("meta")) {
                       var meta:Object = data.meta;
                       if(meta.status == "ok" && meta.code == 200 && meta.method_name == "Notify") {
-                      	...
+                        ...
                       }
                     }
                   }

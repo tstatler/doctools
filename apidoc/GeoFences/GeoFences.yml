@@ -1,9 +1,9 @@
 name: GeoFences
 description: |
-    <p class="note">This feature is only available for Enterprise users, and the current user must
-    be an application admin to use this API.</p>
+    <p class="note">This feature requires an Appcelerator Platform subscription, and the current user must
+    be an application administrator to create, update or delete a geo-fence object.</p>
 
-    The GeoFences API lets you manage spatial objects with data.  Use this API to have the device
+    The GeoFences API lets you manage spatial objects with data. Use this API to have the device
     query the ACS server to retrieve data based on a location.
 
     To send a push notification based on the user's location, see the "Location-Based Push
@@ -13,12 +13,12 @@ description: |
 
     Datetime fields use the ISO 8601 format, for example, `YYYY-MM-DDTHH:mm:ss+ZZZZ`.
 
-    Coordinates are specified as arrays with the longitude as the first element and latitude as the
+    Geographic coordinates are specified as arrays with the longitude as the first element and latitude as the
     second element, that is, `[longitude,latitude]`.
 
     Distance is specified in radians. To calculate the distance in radians,
     divide the distance you want by the approximate circumference of the Earth in the same
-    units. For example, 10 miles is 10 / 3959 or 2 kilometers is 2 / 6371.
+    units. For example, 10 miles is 10 / 3959, or 2 kilometers is 2 / 6371.
 
     ## Getting Started
 

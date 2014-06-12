@@ -12,6 +12,7 @@ methods:
         type: String
         required: true
 
+
       - name: response_json_depth
         description: |
             Nested object depth level counts in response JSON.
@@ -23,6 +24,13 @@ methods:
 
             Default is 3, valid range is 1 to 8.
         type: Number
+
+      - name: show_user_like
+        description: | 
+            If set to **true** the Photo object in the response will include `"current_user_liked: true"`
+            if the current user has liked the object. If the user has not liked the object, the 
+            `current_user_liked` field is not included in the response.
+        type: Boolean
 
     response-parameters:
       - name: photos
@@ -106,7 +114,7 @@ methods:
 
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
-                	NSArray *photos = [response getObjectsOfType:[CCPhoto class]];
+                  NSArray *photos = [response getObjectsOfType:[CCPhoto class]];
                 }
 
       - platform: android
@@ -149,7 +157,7 @@ methods:
                       var meta = data.meta;
                       if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'showPhoto') {
                         var photos = data.response.photos;
-                      	...
+                        ...
                       }
                     }
                   }
@@ -173,8 +181,8 @@ methods:
                     if(data.hasOwnProperty("meta")) {
                       var meta:Object = data.meta;
                       if(meta.status == "ok" && meta.code == 200 && meta.method_name == "showPhoto") {
-                      	var photos:Array = data.response.photos;
-                      	...
+                        var photos:Array = data.response.photos;
+                        ...
                       }
                     }
                   }

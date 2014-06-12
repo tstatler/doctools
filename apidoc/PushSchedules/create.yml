@@ -4,11 +4,10 @@ methods:
     summary: create
     description: |
         Creates a scheduled push notification.  At minimum, you must specify the `start_time`,
-        and `payload` parameters.
+        and `payload` parameters. A push schedule can optionally define a location query so that
+        only devices in the specified geographic region will receive the push notification.
 
-        This feature is only available for Enterprise users.
-
-        The current user must be an application admin.
+        This feature is only available for Enterprise users, and the current user must be an application admin.
     url: push_schedule/create.json
     http-method: POST
     login-required: true
@@ -44,6 +43,27 @@ methods:
         type: Hash
         required: true
 
+      - name: where
+        description: |
+            A JSON-encoded object that defines a location query used to select the devices
+            that will receive the scheduled notification. Up to 1000 users can be returned by the query. To specify a location query, set the `loc` field to a
+            [MongoDB Geospatial Query](http://docs.mongodb.org/manual/reference/operator/query-geospatial/).
+            The following query searches for all users within 2 km of Oakland, CA, USA:
+
+                where={
+                  "loc": {
+                    "$nearSphere" : { 
+                      "$geometry" : { 
+                        "type" : "Point" , 
+                        "coordinates" : [-122.2708,37.8044] } , 
+                        "$maxDistance" : 2000 
+                      }
+                    }
+                  }
+
+            For details about using the `where` parameter, see the [Search and Query guide](#!/guide/search_query).
+        type: Hash
+
     response-parameters:
       - name: push_schedules
         description: |
@@ -76,12 +96,13 @@ methods:
                     }
                 });
 
-    
+
       - platform: rest
         example: |
-            The following cURL command schedules push notifications to be sent every day for a week:
+            The following example schedules a weekly push notification to be sent to devices that are located
+            within 10 miles of Appcelerator corporate headquarters:
 
-                curl -b cookies.txt -c cookies.txt -F 'schedule={"start_time":"2013-10-24", "name":"test", "push_notification":{"channel":"test","payload":"test schedule"}, "recurrence":{"interval":"daily", "end_time":"2013-10-31"}}' "https://api.cloud.appcelerator.com/v1/push_schedules/create.json?key=<APP_API_KEY>"
+                curl -b cookies.txt -c cookies.txt -F 'schedule={"start_time":"2016-01-01T00:00", "name":"test", "push_notification":{"channel":"test","payload":"test schedule"}, "recurrence":{"interval":"weekly", "end_time":"2016-01-08T00:00"}}' -F 'where={"loc":{"$geoWithin":{"$centerSphere":[[-122.0507049560547,37.38685989379883] , 0.00252589 ]}}}' "https://api.cloud.appcelerator.com/v1/push_schedules/create.json?key=<APP-KEY>
 
             Example JSON response:
 
@@ -94,16 +115,17 @@ methods:
                   "response": {
                     "push_schedules": [
                       {
-                        "id": "526ae82db93e7206700001e1",
+                        "id": "535ac45b5714f50a99002e1e",
                         "name": "test",
-                        "start_time": "2013-10-24",
+                        "start_time": "2016-01-01T00:00:00+0000",
                         "push_notification": {
                           "channel": "test",
-                          "payload": "test schedule"
+                          "payload": "test schedule",
+                          "geo_condition": "{\"$geoWithin\":{\"$centerSphere\":[[-122.0507049560547,37.38685989379883],0.00252589]}}"
                         },
                         "recurrence": {
-                          "interval": "daily",
-                          "end_time": "2013-10-31"
+                          "interval": "weekly",
+                          "end_time": "2016-01-08T00:00:00+0000"
                         }
                       }
                     ]
