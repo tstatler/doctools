@@ -320,6 +320,42 @@ easily do this by following the instructions above. Node.ACS also provides a
 utility CLI command that can help you to quickly generate a code stub of route
 and controller. See the [**acs add**](#!/guide/node_cli_add) command for more details.
 
+## Third-Party Tools
+
+The ACS servers include support for third-party tools, specifically ImageMagick and PhantomJS.
+
+To use these tools, add the [imagemagick](https://www.npmjs.org/package/imagemagick),
+[phantom](https://www.npmjs.org/package/phantom) and
+[phantomjs](https://www.npmjs.org/package/phantomjs) node modules as dependencies of the
+application:
+
+    {
+      "name": "MyNodeACSApp",
+      "main": "app.js",
+      "framework": "mvc",
+      "version": "0.1.0",
+      "description": "My first Node.ACS MVC App!",
+      "author": "sam@nodeacs.com",
+      "dependencies": {
+         "imagemagick" : "*",
+         "phantom" : "*",
+         "phantomjs" : "*"
+      },
+      "logfile" : "MyNodeACSApp.log",
+      "engines" : { "node": "0.10.22" }
+    }
+
+Once you have added these modules as depedencies, use `require()` to access it from JavaScript, then
+use the module references to make API calls:
+
+    var imagemagick = require('imagemagick');
+
+    imagemagick.identify('public/images/favicon.ico', function(err, features) {
+        if (err)
+            throw err;
+        console.log(features["image statistics"]);
+    });
+
 ## For More Information
 
   * See the [Express web site](http://expressjs.com) for guides and API reference

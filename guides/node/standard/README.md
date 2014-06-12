@@ -54,10 +54,42 @@ You must set the Node.js version to republish your application.
 
 ## Module Dependencies
 
-The application can import any 3rd-party modules that are supported by
+The application can import any third-party modules that are supported by
 standard node.js. Before publishing the app to the cloud, make sure
 all dependencies are listed in the `dependencies` field in the application's
 `package.json` file.
+
+## Third-Party Tools
+
+The ACS servers include support for third-party tools, specifically ImageMagick and PhantomJS.
+
+To use these tools, add the [imagemagick](https://www.npmjs.org/package/imagemagick),
+[phantom](https://www.npmjs.org/package/phantom) and
+[phantomjs](https://www.npmjs.org/package/phantomjs) node modules as dependencies of the
+application:
+
+    {
+      "name": "FooApp",
+      "version": "0.1.0",
+      "framework": "none",
+      "main": "app.js",
+      "dependencies": {
+         "imagemagick" : "*",
+         "phantom" : "*",
+         "phantomjs" : "*"
+      },
+    }
+
+Once you have added these modules as depedencies, use `require()` to access it from JavaScript, then
+use the module references to make API calls:
+
+    var imagemagick = require('imagemagick');
+
+    imagemagick.identify('favicon.ico', function(err, features) {
+        if (err)
+            throw err;
+        console.log(features["image statistics"]);
+    });
 
 ## Server Listening Port Limitation
 
