@@ -131,12 +131,12 @@ def parse_methods(members):
 			desc += strip_tags(u2a(api["shortDoc"][:-3])) + "\n"
 		else: 
 			desc += strip_tags(u2a(shorten_desc(api["doc"]))) + "\n"
-		desc += "     *\n"
+		desc += " *\n"
 
 		if "loginRequired" in api["meta"]:
 			if api["meta"]["loginRequired"]:
-				desc += '     * To use this method, **a user must be logged in before calling this method.**\n'
-				desc += "     *\n"
+				desc += ' * To use this method, **a user must be logged in before calling this method.**\n'
+				desc += " *\n"
 
 		desc += ' * For more details about the underlying REST method, see the\n'
 		desc += ' * [ACS API Docs](http://docs.appcelerator.com/cloud/latest/#!/api/' + owner + '-method-' + name + ').\n'
@@ -148,8 +148,8 @@ def parse_methods(members):
 		
 		desc += " * @param handler Callback to handle the server response. See the Callback section in APSClient."
 		if dict_has_non_empty_member(api, "response"):
-			desc += "\n     * The response data returns the following method-specific properties:<ul>\n"
-			desc += parse_params(api["response"]) + "     * </ul>"
+			desc += "\n * The response data returns the following method-specific properties:<ul>\n"
+			desc += parse_params(api["response"]) + " * </ul>"
 
 		new_members[tiname] = desc
 		
