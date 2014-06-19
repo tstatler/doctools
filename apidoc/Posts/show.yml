@@ -136,6 +136,37 @@ methods:
 
       - platform: android
         example: |
+            Example Android APS SDK call:
+
+                APSCloud.enable(this, 'APS_CLOUD_KEY');
+
+                HashMap<String, Object> data = new HashMap<String, Object>();
+                data.put("post_id", "4e33a5b7d9ca7246ba000003");
+
+                try {
+                    APSPosts.show(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                try {
+                                    Log.i("APSPosts", e.getResponseString());
+                                }
+                                catch (APSClientError err) {
+                                    Log.e("APSPosts", "ERROR: " + err.getMessage());
+                                }
+                            } else {
+                                Log.e("APSPosts", "ERROR: " + e.getMessage());
+                            }
+                        }
+                    });
+                } catch (APSClientError e) {
+                    Log.e("APSPosts", "ERROR: " + err.getMessage());
+                }
+
+
+      - platform: android-acssdk
+        example: |
             Example Android call:
 
                 ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key

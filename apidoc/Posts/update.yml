@@ -182,6 +182,37 @@ methods:
         example: |
             Example Android call:
 
+                APSCloud.enable(this, 'APS_CLOUD_KEY');
+
+                HashMap<String, Object> data = new HashMap<String, Object>();
+                data.put("post_id", "4e33a5b7d9ca7246ba000003");
+                data.put("title", "Updated Post Title");
+
+                try {
+                    APSPosts.update(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                try {
+                                    JSONObject post = e.getResponse().getJSONArray("posts").getJSONObject(0);
+                                    Log.i("APSPosts", posts.getString("title") + " " + posts.getString("content"));
+                                } catch (JSONException err) {
+                                    Log.e("APSPosts", "Exception thrown: " + err.toString());
+                                }
+                            } else {
+                                Log.e("APSPosts", "ERROR: " + e.getMessage());
+                            }
+                        }
+                    });
+                } catch (APSClientError e) {
+                    Log.e("APSPosts", "ERROR: " + err.getMessage());
+                }
+
+      - platform: android-acssdk
+        example: |
+            Example Android call:
+
                 ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
                 //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
 

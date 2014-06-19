@@ -163,7 +163,7 @@ methods:
                                     JSONArray users = e.getResponse().getJSONArray("users");
                                     for (int i = 0; i < users.length(); i++) {
                                         JSONObject user = users.getJSONObject(i);
-                                        Log.i("APSFriends", user.get("first_name") + " " + user.get("last_name"));
+                                        Log.i("APSFriends", user.getString("first_name") + " " + user.getString("last_name"));
                                     }
                                 } catch (JSONException err) {
                                     Log.e("APSFriends", "Exception thrown: " + err.toString());

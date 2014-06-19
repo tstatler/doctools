@@ -1142,7 +1142,7 @@ methods:
                                     } else {
                                         for (int i = 0; i < messages.length(); i++) {
                                             JSONObject message = messages.getJSONObject(i);
-                                            Log.i("APSMessages", message.get("subject"));
+                                            Log.i("APSMessages", message.getString("subject"));
                                         }
                                     }
                                 }
@@ -1366,7 +1366,7 @@ methods:
                                     } else {
                                         for (int i = 0; i < messages.length(); i++) {
                                             JSONObject message = messages.getJSONObject(i);
-                                            Log.i("APSMessages", message.get("subject"));
+                                            Log.i("APSMessages", message.getString("subject"));
                                         }
                                     }
                                 }
@@ -1662,7 +1662,7 @@ methods:
                                     } else {
                                         for (int i = 0; i < messages.length(); i++) {
                                             JSONObject message = messages.getJSONObject(i);
-                                            Log.i("APSMessages", message.get("subject"));
+                                            Log.i("APSMessages", message.getString("subject"));
                                         }
                                     }
                                 }
@@ -1923,7 +1923,7 @@ methods:
                                     } else {
                                         for (int i = 0; i < messages.length(); i++) {
                                             JSONObject message = messages.getJSONObject(i);
-                                            Log.i("APSMessages", message.get("subject"));
+                                            Log.i("APSMessages", message.getString("subject"));
                                         }
                                     }
                                 }
