@@ -116,6 +116,7 @@ The basic configuration file for a Node.ACS application.
       "dependencies": {
         "mongodb": "1.0.2"
       },
+      "npmRegistry": "http://registry.npmjs.org/",
       "logfile" : "MyNodeACSApp.log",
       "engines" : { "node": "0.10.22" }
     }
@@ -127,6 +128,7 @@ Important fields are summarized below (* indicates mandatory fields):
 * **main*** \-- the main entrance script file for Node.ACS to load to start the application
 * **framework*** \-- the "type" of app, if the value is "mvc", Node.ACS will run it as an app with the MVC framework.
 * **dependencies** \-- app dependencies, when an app starts, every modules declared here will be installed before starting the app
+* **npmRegistry** \-- the npm registry to use for installing dependencies.  By default, the official public npm registry is used (shown in the example).
 * **logfile** \-- log file's name, log file will be placed in "logs" folder
 * **engines** \-- contains key-value pairs of engine versions.  Use this field to specify the version
 of Node.js to run your application on. Use `node` as the key and the version or version range as the
