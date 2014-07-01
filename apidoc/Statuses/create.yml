@@ -13,6 +13,7 @@ methods:
       - name: message
         description: Status message.
         type: String
+        required: true
 
       - name: place_id
         description: ID of the place this status is associated with.

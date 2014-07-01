@@ -47,10 +47,6 @@ methods:
         description: Event duration, in seconds.
         type: Number
 
-      - name: ical
-        description: Event time and recurrance in iCalendar (RFC 5545) format.
-        type: String
-
       - name: recurring
         description: |
             Recurrance schedule. Can take the following values: "daily", "weekly", "monthly", or "yearly".

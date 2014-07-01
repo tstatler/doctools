@@ -90,7 +90,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/places/search.json?key=<YOUR APP APP KEY>&latitude;=37.743722&longitude;=-122.393159"
+                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/places/search.json?key=<YOUR_APP_KEY>&latitude=37.743722&longitude=-122.393159"
 
             Example JSON response:
 
