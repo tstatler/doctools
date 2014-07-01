@@ -11,8 +11,7 @@ methods:
     parameters:
       - name: user_ids
         description: |
-            Comma-separated list consisting of IDs of one or more users to add as
-            friends to the current user. A user cannot add himself or herself as a friend.
+            Comma-separated list consisting of IDs of one or more users to remove from the current user.
         required: true
 
     examples:
