@@ -3,7 +3,7 @@ methods:
   - name: remove
     summary: Remove Friends
     description: |
-        Removes a one or more friends from the user's friends list.
+        Removes one or more friends from the user's friends list.
     url: friends/remove.json
     http-method: DELETE
     login-required: true
