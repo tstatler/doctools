@@ -1,6 +1,65 @@
 # Node.ACS Release Notes
 
-## 18 Decemeber 2013 -- version 1.0.11
+## 12 June 2014 -- Community Server version 1.1.2
+
+This release of Node.ACS brings the following new server-side features and fixes:
+
+#### ImageMagick and PhantomJS support
+
+You can now use [ImageMagick](http://www.imagemagick.org/) and
+[PhantomJS](https://github.com/sgentle/phantomjs-node) libraries in your Node.ACS applications. For
+details, see [Third-Party Tools](/cloud/latest/#!/guide/node_mvc-section-third-party-tools) in the
+Node.ACS documentation.
+
+#### Start Node.ACS applications via package.json's "scripts.start" field
+
+If your application's package.json file does not specify a `main` field, Node.ACS will now look at
+the `scripts.start` field in package.json to determine the main module to launch. This feature is
+only available to [standard Node.js applications](/#!/guide/node_standard), not those that use the
+MVC framework.
+
+  * Download a [sample project](https://wiki.appcelerator.org/download/attachments/29004729/npm_start_example.zip) that uses this technique
+  * See the [NPM documentation](https://www.npmjs.org/doc/misc/npm-scripts.html) on the "scripts" package.json field.
+
+#### Private NPM registries
+
+Node.ACS applications can now install dependencies from private NPM registries. To use a prviate
+registry, add a `npmRegistry` field to your application's package.json file that specifies the
+registry's URL.
+
+    {
+      "name": "your-app",
+      "npmRegistry":  "http://npm.your-organization.org/",
+      ...
+    }
+
+## 28 February 2014 -- CLI version 1.0.14
+
+  * Node.ACS applications can now check the request header to see if HTTPS or HTTP protocol was used to make the request ([NODEJS-1215](https://jira.appcelerator.org/browse/NODEJS-1215)). The following code shows how to use the `x-forwarded-proto` HTTP request header to check the protocol being used:
+
+        if(req.headers['x-forwarded-proto'] && req.headers['x-forwarded-proto'] === "https,http") {
+            // Request made using HTTPS
+        }
+
+        if(req.headers['x-forwarded-proto'] && req.headers['x-forwarded-proto'] === "http") {
+            // Request made using HTTP
+        }
+
+
+## 1 February 2014 -- CLI version 1.0.13
+
+This update includes bug fixes and performance improvements.
+
+## 24 January 2014 -- CLI version 1.0.12
+
+  * WebSocket handling has been improved to provide more flexibility for developers who need access to Socket.io's `io` object.  The `io` object is now passed to the application's `start()` function
+as a third parameter, allowing developers to fully use Socket.io functionality in their Node.ACS apps. A new ["multiroom" sample application](https://github.com/appcelerator/node-acs/tree/master/nettle/examples/multiroom)  has added to the examples folder on GitHub that demonstrates this new functionality (refer to app.js and controllers/application.js).
+
+  * Node.ACS now supports multiple versions of Node.js. See the [publish CLI command](http://docs.appcelerator.com/cloud/latest/#!/guide/node_cli_publish) for more information.
+
+  * Socket.io now works on Node.JS 0.10.22.
+
+## 18 Decemeber 2013 -- CLI version 1.0.11
 
 Node.js has been upgraded to [Node.js v0.10.22](http://blog.nodejs.org/2013/11/12/node-v0-10-22-stable/) from v0.8.26. This version contains a fix for the ["infamous Walmart leak"](https://groups.google.com/forum/#!topic/nodejs/dVn_WcfT5qk), a [uvlib update](https://github.com/joyent/libuv/releases/tag/v0.10.19), and generally increased performance and stability. Developers are strongly encouraged to update their Node applications to be compatible with this version of Node.js.
 
@@ -19,16 +78,16 @@ To summarize: we strongly encourage you to upgrade and republish your applicatio
 For more information, see the "Node.js Engine" section in
 [Standard Node.js Applications](http://docs.appcelerator.com/cloud/latest/#!/guide/node_standard).
 
-## 6 December 2013 -- version 1.0.10
+## 6 December 2013 -- CLI version 1.0.10
 
   * Fixed an issue where an application could not be published due to node-tar not generating the
     correct headers for certain NPM modules.
 
-## 23 November 2013 -- version 1.0.9
+## 23 November 2013 -- CLI version 1.0.9
 
   * Fixed an issue where the CLI was not working on Windows systems.
 
-## 22 November 2013 -- version 1.0.8
+## 22 November 2013 -- CLI version 1.0.8
 
   * New Node.ACS library method to make generic REST API calls to ACS.  For more information, see
     [Using ACS APIs from Node](http://docs.appcelerator.com/cloud/latest/#!/guide/node_acs).
@@ -44,7 +103,7 @@ For more information, see the "Node.js Engine" section in
   * Fixed an issue where uploading a certificate containing a domain name with wildcard characters
     would fail.
 
-## 26 September 2013 -- version 1.0.7
+## 26 September 2013 -- CLI version 1.0.7
 
   * Fixed an issue where using the ACS CLI with Node.js v0.10.14 did not display
     the correct error output when testing locally.
@@ -57,15 +116,15 @@ For more information, see the "Node.js Engine" section in
 
   * Fixed an issue where a request to the sync server returned a truncated response.
 
-## 15 August 2013 -- version 1.0.6
+## 15 August 2013 -- CLI version 1.0.6
 
 This update includes bug fixes and performance improvements.
 
-## 1 August 2013 -- version 1.0.5
+## 1 August 2013 -- CLI version 1.0.5
 
 This update includes bug fixes and performance improvements.
 
-## 22 July 2013 -- version 1.0.4
+## 22 July 2013 -- CLI version 1.0.4
 
   * Updated "The app is being deployed" message to display the application name.
 
@@ -77,7 +136,7 @@ This update includes bug fixes and performance improvements.
     in the URL reported a 404 error. The CLI now reports the error as an invalid domain name.
     Do not include the protocol prefix when setting the CNAME.
 
-## 13 June 2013 -- version 1.0.3
+## 13 June 2013 -- CLI version 1.0.3
 
   * Fixed an issue to support proxies requiring authentication.
 
@@ -94,7 +153,7 @@ This update includes bug fixes and performance improvements.
     free memory would be reported lower than actual.
 
 
-## 2 May 2013 -- version 1.0.2
+## 2 May 2013 -- CLI version 1.0.2
 
 Version 1.0.2 fixes an issue where the **acs list** command included some incorrect
 information. 
@@ -157,7 +216,7 @@ environment. See the instructions in the next section.</p>
 next month. Any applications still running in the preview environment will stop working
 after that point. </p>
 
-## 28 Mar 2013 -- version 0.9.34
+## 28 Mar 2013 -- CLI version 0.9.34
 
 <ul>
 <li><p>Added new <b>acs usage</b> command to show a record of memory and CPU usage for a
@@ -185,7 +244,7 @@ indicating that the application is being deployed, instead of a generic
 message.</p></li>
 </ul>
 
-## 21 Mar 2013 -- version 0.9.33
+## 21 Mar 2013 -- CLI version 0.9.33
 
 <p>Updated Node.ACS CLI to version 0.9.33 to fix an issue in the previous version
 which prevented the CLI from running on Windows 7/8. If you are on Windows, upgrade 
