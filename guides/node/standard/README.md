@@ -59,6 +59,12 @@ standard node.js. Before publishing the app to the cloud, make sure
 all dependencies are listed in the `dependencies` field in the application's
 `package.json` file.
 
+If you want to use a different npm registry besides the official public npm registry to install
+dependencies, add the `npmRegistry` field to the `package.json` and set the value to the
+registry URL you want to use.  For example, the entry below uses a European npm mirror:
+
+    "npmRegistry" : "http://registry.npmjs.eu/"
+
 ## Third-Party Tools
 
 The ACS servers include support for third-party tools, specifically ImageMagick and PhantomJS.
