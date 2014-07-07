@@ -21,7 +21,10 @@ methods:
     parameters:
 
       - name: channel
-        description: Name of the channel.
+        description: |
+            Name of the channel.
+
+            The name of the push channel cannot start with a hash symbol ('#').
         type: String
         required: true
 

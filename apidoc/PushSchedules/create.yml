@@ -24,6 +24,7 @@ methods:
               * *push_notification* (Hash): Push notification to send (**required**).
               
                   * *channel* (String): Name of the channel to send the push notification to.
+                    The name of the push channel cannot start with a hash symbol ('#').
                   * *payload* (Hash): Payload to send to the device. Same format as {@link PushNotifications#notify} (**required**).
                   * *to_ids* (Array<String>/String): Array or comma-separated list of IDs to send push notifications to.
                   * *options* (Hash): Dictionary to specify additional options:
