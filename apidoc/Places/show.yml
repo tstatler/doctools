@@ -28,7 +28,13 @@ methods:
             If set to **true** the Place object in the response will include `"current_user_liked: true"`
             if the current user has liked the object. If the user has not liked the object, the 
             `current_user_liked` field is not included in the response.
-        type: Boolean        
+        type: Boolean    
+        
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean    
 
     response-parameters:
       - name: places
@@ -59,7 +65,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/places/show.json?key=<YOUR APP APP KEY>&place_id=4d6f13e96f70953608000012"
+                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/places/show.json?key=<YOUR APP APP KEY>&pretty_print=true&place_id=4d6f13e96f70953608000012"
 
             Example JSON response:
 

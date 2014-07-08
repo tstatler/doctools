@@ -121,6 +121,12 @@ methods:
             behalf of another user.
         type: String
 
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean        
+
     response-parameters:
       - name: events
         description: Single-element array containing the updated event object.
@@ -155,7 +161,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt -X PUT -F "event_id=4d870f8bd0afbe1074000017" -F "place_id=4d858ca9d0afbe014f000008" http://api.cloud.appcelerator.com/v1/events/update.json?key=<YOUR APP APP KEY>
+                $ curl -b cookies.txt -c cookies.txt -X PUT -F "event_id=4d870f8bd0afbe1074000017" -F "place_id=4d858ca9d0afbe014f000008" http://api.cloud.appcelerator.com/v1/events/update.json?key=<YOUR APP APP KEY>&pretty_print=true
 
             Example JSON response:
 

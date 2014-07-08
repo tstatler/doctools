@@ -36,6 +36,12 @@ methods:
         description: Number of results per page, default is 10.
         type: Number
 
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean        
+
       - name: limit
         description: |
             Instead of using `page` and `per_page` for pagination, you can use `limit` and
@@ -118,11 +124,9 @@ methods:
 
       - platform: rest
         example: |
-            Example cURL request:
+            Example cURL request. If each chat message has an [assigned geo location](#!/guide/customfields-section-geographic-coordinates-in-custom-fields), the following finds all chat messages among users Bob (id: 4ee05d69d9ca726b85000002), Alice (id: 4ee05d69d9ca726b85000003), and userJoe (id: 4ee05d69d9ca726b85000004) sent after 2011-11-17T22:53:48+0000, and within 5 miles of latitude 37.12 and longitude -122.23. Note that you need to convert miles to radians (5/3959 = 0.00126).
 
-                Example: If each chat message has a geo location assigned, now we are trying to find chat messages among user Bob(id:4ee05d69d9ca726b85000002) and user Alice(id:4ee05d69d9ca726b85000003) and userJoe (id:4ee05d69d9ca726b85000004) sent after 2011-11-17T22:53:48+0000 near latitude 37.12 and longitude -122.23 with max distance 5 miles(We need to convert 5 miles to radians by 5/3959 = 0.00126).
-
-                $ curl -c cookies.txt -b cookies.txt -X GET --data-urlencode 'participate_ids=4ee05d69d9ca726b85000002,4ee05d69d9ca726b85000003,4ee05d69d9ca726b85000004' --data-urlencode 'where={"created_at":{"$gte":"2011-11-17T22:53:48+0000"}, "coordinates":{"$nearSphere":[-122.23,37.12], "$maxDistance" : 0.00126}}' --data-urlencode 'order=created_at' "https://api.cloud.appcelerator.com/v1/chats/query.json?key=<YOUR APP APP KEY>"
+                $ curl -c cookies.txt -b cookies.txt -X GET --data-urlencode 'participate_ids=4ee05d69d9ca726b85000002,4ee05d69d9ca726b85000003,4ee05d69d9ca726b85000004' --data-urlencode 'where={"created_at":{"$gte":"2011-11-17T22:53:48+0000"}, "coordinates":{"$nearSphere":[-122.23,37.12], "$maxDistance" : 0.00126}}' --data-urlencode 'order=created_at' "https://api.cloud.appcelerator.com/v1/chats/query.json?key=<YOUR APP APP KEY>&pretty_print=true"
 
             Example JSON response:
 

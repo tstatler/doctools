@@ -12,6 +12,12 @@ methods:
             If specified, all push subscriptions associated with this device token are
             canceled. See the "Push Notifications" section in the
             [Android SDK guide](#!/guide/sdks/android) for more information.
+                    
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean            
 
     examples:
       - platform: titanium
@@ -31,7 +37,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt https://api.cloud.appcelerator.com/v1/users/logout.json?key=<YOUR APP APP KEY>
+                $ curl -b cookies.txt -c cookies.txt https://api.cloud.appcelerator.com/v1/users/logout.json?key=<YOUR APP APP KEY>&pretty_print=true
 
             Example JSON response:
 

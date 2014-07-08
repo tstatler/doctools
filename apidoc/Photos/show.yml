@@ -31,6 +31,12 @@ methods:
             if the current user has liked the object. If the user has not liked the object, the 
             `current_user_liked` field is not included in the response.
         type: Boolean
+        
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
 
     response-parameters:
       - name: photos
@@ -60,7 +66,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/photos/show.json?key=<YOUR APP APP KEY>&photo_id=4d8971236f7095514800000a"
+                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/photos/show.json?key=<YOUR APP APP KEY>&pretty_print=true&photo_id=4d8971236f7095514800000a"
 
             Example JSON response:
 

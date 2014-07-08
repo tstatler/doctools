@@ -28,6 +28,13 @@ methods:
             controlled by this ACL.
         type: String
 
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
+
+
       - name: public_read
         description: |
             Determines whether objects controlled by this ACS are publically readable.
@@ -80,7 +87,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b c.txt -c c.txt -F "name=access_photo_album" -F "reader_ids[]=4fcdab1f47b7b71933000003" -F "reader_ids[]=4fcdab1f47b7b71933000004" -F "reader_ids[]=4fcdab2047b7b71933000005" -F "writer_ids[]=4fcdab1f47b7b71933000003" https://api.cloud.appcelerator.com/v1/acls/create.json?key=<YOUR APP APP KEY>
+                $ curl -b c.txt -c c.txt -F "name=access_photo_album" -F "reader_ids[]=4fcdab1f47b7b71933000003" -F "reader_ids[]=4fcdab1f47b7b71933000004" -F "reader_ids[]=4fcdab2047b7b71933000005" -F "writer_ids[]=4fcdab1f47b7b71933000003" https://api.cloud.appcelerator.com/v1/acls/create.json?key=<YOUR APP APP KEY>&pretty_print=true
 
             Example JSON response:
 

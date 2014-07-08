@@ -56,6 +56,12 @@ methods:
         description: Review object to delete.
         type: String
         required: true
+        
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
 
     examples:
       - platform: titanium
@@ -78,7 +84,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt -X DELETE "https://api.cloud.appcelerator.com/v1/reviews/delete.json?key=<YOUR APP APP KEY>&post_id=4e33a817d9ca724745000003&review_id=4e33a817d9ca724745000006"
+                $ curl -b cookies.txt -c cookies.txt -X DELETE "https://api.cloud.appcelerator.com/v1/reviews/delete.json?key=<YOUR APP APP KEY>&pretty_print=true&post_id=4e33a817d9ca724745000003&review_id=4e33a817d9ca724745000006"
 
             Example JSON response:
 

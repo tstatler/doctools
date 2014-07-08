@@ -43,6 +43,12 @@ methods:
             Number of records to skip. Must be used together with `limit`.
         type: Number
 
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean        
+
       - name: show_user_like
         description: |
             If set to **true**, each CustomObject in the response includes `"current_user_liked: true"`
@@ -158,7 +164,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -c cookies.txt -b cookies.txt -X GET --data-urlencode 'where={"color":"blue","coordinates":{"$nearSphere":[-122.1,37.1], "$maxDistance" : 0.00126}}' --data-urlencode 'order=-purchased_at' "https://api.cloud.appcelerator.com/v1/objects/car/query.json?key=<YOUR APP APP KEY>"
+                $ curl -c cookies.txt -b cookies.txt -X GET --data-urlencode 'where={"color":"blue","coordinates":{"$nearSphere":[-122.1,37.1], "$maxDistance" : 0.00126}}' --data-urlencode 'order=-purchased_at' "https://api.cloud.appcelerator.com/v1/objects/car/query.json?key=<YOUR APP APP KEY>&pretty_print=true"
 
             Example JSON response:
 

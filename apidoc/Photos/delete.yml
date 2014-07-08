@@ -25,6 +25,12 @@ methods:
             The current login user must be an application admin to delete a Photo object on
             behalf of another user.
         type: String
+        
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
 
     examples:
       - platform: titanium
@@ -46,7 +52,7 @@ methods:
         example: |
             Example cURL request:
 
-                curl -b cookies.txt -c cookies.txt -X DELETE "https://api.cloud.appcelerator.com/v1/photos/delete.json?key=<YOUR APP APP KEY>&photo_id=4d8971236f7095514800000a"
+                curl -b cookies.txt -c cookies.txt -X DELETE "https://api.cloud.appcelerator.com/v1/photos/delete.json?key=<YOUR APP APP KEY>&pretty_print=true&photo_id=4d8971236f7095514800000a"
 
             Example JSON response:
 

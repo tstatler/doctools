@@ -36,6 +36,12 @@ methods:
         type: String
         required: true
 
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean        
+
       - name: user_id
         description: |
             User to delete the Custom object on behalf of. The user must be the creator of the object.
@@ -65,7 +71,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt -X DELETE "https://api.cloud.appcelerator.com/v1/objects/car/delete.json?key=<YOUR APP APP KEY>&id=4ec42e91d9ca72c507000010"
+                $ curl -b cookies.txt -c cookies.txt -X DELETE "https://api.cloud.appcelerator.com/v1/objects/car/delete.json?key=<YOUR APP APP KEY>&pretty_print=true&id=4ec42e91d9ca72c507000010"
 
             Example JSON response:
 

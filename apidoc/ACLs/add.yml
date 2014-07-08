@@ -25,6 +25,12 @@ methods:
             Either `name` or `id` must be specified.
         type: String
 
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
+
       - name: reader_ids
         description: |
             Comma separated list of IDs identifying users who can read objects
@@ -62,7 +68,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt -F "name=access_photo_album" -F "reader_ids[]=4fcdab1f47b7b71933000008" -F "writer_ids[]=4fcdab1f47b7b71933000009" https://api.cloud.appcelerator.com/v1/acls/add.json?key=<YOUR APP APP KEY>
+                $ curl -b cookies.txt -c cookies.txt -F "name=access_photo_album" -F "reader_ids[]=4fcdab1f47b7b71933000008" -F "writer_ids[]=4fcdab1f47b7b71933000009" https://api.cloud.appcelerator.com/v1/acls/add.json?key=<YOUR APP APP KEY>&pretty_print=true
 
             Example JSON response:
 

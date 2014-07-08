@@ -68,6 +68,12 @@ methods:
             The current login user must be an application admin to create a status on
             behalf of another user.
         type: String
+                
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
 
     response-parameters:
       - name: statuses
@@ -99,7 +105,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt -F "message=Having fun at the beach" -F "photo=@photo.jpg" https://api.cloud.appcelerator.com/v1/statuses/create.json?key=<YOUR APP APP KEY>
+                $ curl -b cookies.txt -c cookies.txt -F "message=Having fun at the beach" -F "photo=@photo.jpg" https://api.cloud.appcelerator.com/v1/statuses/create.json?key=<YOUR APP APP KEY>&pretty_print=true
 
             Example JSON response:
 

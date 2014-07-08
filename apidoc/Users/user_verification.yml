@@ -39,6 +39,12 @@ methods:
             Services to confirm the user internally from your web server:
 
                 GET https://api.cloud.appcelerator.com/v1/users/confirm_user.json?confirmation_token={{confirmation_token}}&key=<Your App Key>
+                        
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
     examples:
       - platform: titanium
         example: |
@@ -61,7 +67,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/users/resend_confirmation.json?key=<YOUR APP APP KEY>&email=foo@foo.com"
+                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/users/resend_confirmation.json?key=<YOUR APP APP KEY>&pretty_print=true&email=foo@foo.com"
 
             Example JSON response:
 

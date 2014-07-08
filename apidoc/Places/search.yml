@@ -54,6 +54,12 @@ methods:
       - name: q
         description: Space-separated list of keywords used to perform full text search on place name and tags.
         type: String
+        
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
 
     response-parameters:
       - name: places
