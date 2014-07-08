@@ -88,7 +88,7 @@ methods:
 
       - platform: rest
         example: |
-            Example cURL request that create new file object from a binary attachment:
+            Example cURL request that creates a new file object from a binary attachment:
 
                 $ curl -b cookies.txt -c cookies.txt -F "name=my_file" -F "file=@resume.pdf" http://api.cloud.appcelerator.com/v1/files/create.json?key=<YOUR APP APP KEY>
 
