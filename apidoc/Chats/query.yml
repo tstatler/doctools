@@ -124,7 +124,12 @@ methods:
 
       - platform: rest
         example: |
-            Example cURL request. If each chat message has an [assigned geo location](#!/guide/customfields-section-geographic-coordinates-in-custom-fields), the following finds all chat messages among users Bob (id: 4ee05d69d9ca726b85000002), Alice (id: 4ee05d69d9ca726b85000003), and userJoe (id: 4ee05d69d9ca726b85000004) sent after 2011-11-17T22:53:48+0000, and within 5 miles of latitude 37.12 and longitude -122.23. Note that you need to convert miles to radians (5/3959 = 0.00126).
+            Example cURL request. Assuming each chat message has an 
+            [assigned geo location](#!/guide/customfields-section-geographic-coordinates-in-custom-fields), 
+            the following finds all chat messages among users Bob (id: 4ee05d69d9ca726b85000002), 
+            Alice (id: 4ee05d69d9ca726b85000003), and userJoe (id: 4ee05d69d9ca726b85000004) sent 
+            after 2011-11-17T22:53:48+0000, and within 5 miles of latitude 37.12 and longitude -122.23. 
+            Note that you need to convert miles to radians (5/3959 = 0.00126).
 
                 $ curl -c cookies.txt -b cookies.txt -X GET --data-urlencode 'participate_ids=4ee05d69d9ca726b85000002,4ee05d69d9ca726b85000003,4ee05d69d9ca726b85000004' --data-urlencode 'where={"created_at":{"$gte":"2011-11-17T22:53:48+0000"}, "coordinates":{"$nearSphere":[-122.23,37.12], "$maxDistance" : 0.00126}}' --data-urlencode 'order=created_at' "https://api.cloud.appcelerator.com/v1/chats/query.json?key=<YOUR APP APP KEY>&pretty_print=true"
 
