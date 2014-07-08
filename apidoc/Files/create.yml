@@ -5,7 +5,7 @@ methods:
 ## Files: Create a File
 
     description: |
-        Stores a file in the Cloud using a local binary attachment or remote URL.
+        Creates a new file object with a binary attachment or contents of a URL.
         The size of the file can be up to 25 MB. The response includes a `processed` flag which indicates
         if the file has been stored reliably in the Appcelerator Cloud Services
         storage engine. This will initially be `false`. Once the file is available in
@@ -22,11 +22,11 @@ methods:
         type: String
 
       - name: file
-        description: The attached binary file. You must specify either `file` or `url`, but not both.
+        description: The attached binary file to upload to ACS. You can specify either `file` or `url`, but not both.
         type: FileUpload
 
       - name: url
-        description: File URL. You must specify either `file` or `url`, but not both.
+        description: URL of file to upload to ACS. You can specify either `file` or `url`, but not both.
         type: String
 
       - name: custom_fields

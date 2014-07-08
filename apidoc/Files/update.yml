@@ -3,7 +3,7 @@ methods:
   - name: update
     summary: Update a File
     description: |
-        Updates the file object with a binary attachment, or file located at a specified URL. When replacing the existing file with a
+        Updates an existing file object with a binary attachment, or contents of a URL. When replacing the existing file with a
         new one, the object's `processing` flag is set to `false`, and its `url` property will not be valid
         until the new file has been processed and uploaded to the Appcelerator Cloud
         Services storage cloud.
@@ -25,11 +25,11 @@ methods:
         type: String
 
       - name: file
-        description: The attached binary file to upload to ACS. You must specify either `file` or `url`, but not both.
+        description: The attached binary file to upload to ACS. You can specify either `file` or `url`, but not both.
         type: FileUpload
 
       - name: url
-        description: URL of file to to upload to ACS. You must specify either `file` or `url`, but not both.
+        description: URL of file to upload to ACS. You can specify either `file` or `url`, but not both.
         type: String
 
       - name: custom_fields
