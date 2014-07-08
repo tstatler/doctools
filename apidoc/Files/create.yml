@@ -5,8 +5,8 @@ methods:
 ## Files: Create a File
 
     description: |
-        Create a file using the given `file` binary attachment. The size of the file
-        can be up to 25 MB. The response includes a `processed` flag which indicates
+        Stores a file in the Cloud using a local binary attachment or remote URL.
+        The size of the file can be up to 25 MB. The response includes a `processed` flag which indicates
         if the file has been stored reliably in the Appcelerator Cloud Services
         storage engine. This will initially be `false`. Once the file is available in
         the storage engine, the `processed` flag will be `true`, and file `url` will
@@ -22,9 +22,12 @@ methods:
         type: String
 
       - name: file
-        description: The attached binary file.
+        description: The attached binary file. You must specify either `file` or `url`, but not both.
         type: FileUpload
-        required: true
+
+      - name: url
+        description: File URL. You must specify either `file` or `url`, but not both.
+        type: String
 
       - name: custom_fields
         description: User defined fields. See [Custom Data Fields](#!/guide/customfields).
@@ -85,7 +88,7 @@ methods:
 
       - platform: rest
         example: |
-            Example cURL request:
+            Example cURL request that create new file object from a binary attachment:
 
                 $ curl -b cookies.txt -c cookies.txt -F "name=my_file" -F "file=@resume.pdf" http://api.cloud.appcelerator.com/v1/files/create.json?key=<YOUR APP APP KEY>
 
@@ -120,6 +123,12 @@ methods:
                     ]
                   }
                 }
+
+            Example cURL request that creates a new file from a URL:
+
+                $ curl -b cookies.txt -c cookies.txt -F "name=my_file" -F "url=http://www.appcelerator.com/wp-content/uploads/blog-traditional-companies.png" http://api.cloud.appcelerator.com/v1/files/create.json?key=<YOUR APP APP KEY>&pretty_print=true
+
+            The JSON response is identical. 
 
       - platform: ios
         example: |
