@@ -128,7 +128,7 @@ methods:
                   }
                 }
 
-            Example cURL request that updates an existing file object with one from a remote URL:
+            Example cURL request that updates an existing file object with the contents of a remote URL:
 
                 curl -b cookies.txt -c cookies.txt -X PUT -F "url=http://www.appcelerator.com/wp-content/uploads/blog-traditional-companies.png" -F "name=new_file_name" -F "file_id=4f05446bc3666eb7ba000001" https://api.cloud.appcelerator.com/v1/files/update.json?key=<YOUR APP APP KEY>&pretty_print=true
             
