@@ -37,6 +37,12 @@ methods:
             Login user must be an admin to update a key-value on behalf of another user.
         type: String
 
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean        
+
     reponse-parameters:
       - name: keyvalues
         description: |
@@ -68,7 +74,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt -X PUT -F "name=welcome_message" -F "value=, take a look around" https://api.cloud.appcelerator.com/v1/keyvalues/append.json?key=<YOUR APP APP KEY>
+                $ curl -b cookies.txt -c cookies.txt -X PUT -F "name=welcome_message" -F "value=, take a look around" https://api.cloud.appcelerator.com/v1/keyvalues/append.json?key=<YOUR APP APP KEY>&pretty_print=true
 
             Example JSON response:
 

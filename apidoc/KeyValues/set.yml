@@ -50,6 +50,12 @@ methods:
             The current user must be an application admin to set a key-value pair on
             behalf of another user.
         type: String
+        
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
 
     examples:
       - platform: titanium
@@ -73,10 +79,10 @@ methods:
             Example cURL request:
 
                 If type is string
-                $ curl -b cookies.txt -c cookies.txt -X PUT -F "name=welcome_message" -F "value=Welcome to Appcelerator Cloud Services" https://api.cloud.appcelerator.com/v1/keyvalues/set.json?key=<YOUR APP APP KEY>
+                $ curl -b cookies.txt -c cookies.txt -X PUT -F "name=welcome_message" -F "value=Welcome to Appcelerator Cloud Services" https://api.cloud.appcelerator.com/v1/keyvalues/set.json?key=<YOUR APP APP KEY>&pretty_print=true
 
                 If type is binary (loading data from a file)
-                $ curl -b cookies.txt -c cookies.txt -X PUT -F "name=binary" -F "type=binary" -F "value=<photo.jpg" https://api.cloud.appcelerator.com/v1/keyvalues/set.json?key=<YOUR APP APP KEY>
+                $ curl -b cookies.txt -c cookies.txt -X PUT -F "name=binary" -F "type=binary" -F "value=<photo.jpg" https://api.cloud.appcelerator.com/v1/keyvalues/set.json?key=<YOUR APP APP KEY>&pretty_print=true
 
             Example JSON response:
 

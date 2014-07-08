@@ -66,6 +66,12 @@ methods:
             behalf of another user.
         type: String
 
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
+        
     response-parameters:
       - name: collections
         description: Single-element array containing the updated collection.
@@ -97,7 +103,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt -X PUT -F "cover_photo_id=4deece22d0afbe3ab4000002" -F "collection_id=4deb4496d0afbec69e000008" "https://api.cloud.appcelerator.com/v1/collections/update.json?key=<YOUR APP APP KEY>"
+                $ curl -b cookies.txt -c cookies.txt -X PUT -F "cover_photo_id=4deece22d0afbe3ab4000002" -F "collection_id=4deb4496d0afbec69e000008" "https://api.cloud.appcelerator.com/v1/collections/update.json?key=<YOUR APP APP KEY>&pretty_print=true"
 
             Example JSON response:
 

@@ -95,6 +95,12 @@ methods:
 
                 "photo_sync_sizes[]=preview"
 
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean                
+
     response-parameters:
       - name: photos
         description: |
@@ -126,7 +132,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt  -F "file=@photo.jpg" https://api.cloud.appcelerator.com/v1/photos/create.json?key=<YOUR APP APP KEY>
+                $ curl -b cookies.txt -c cookies.txt  -F "file=@photo.jpg" https://api.cloud.appcelerator.com/v1/photos/create.json?key=<YOUR APP APP KEY>&pretty_print=true
 
             Example JSON response:
 

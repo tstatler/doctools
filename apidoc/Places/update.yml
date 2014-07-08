@@ -109,6 +109,11 @@ methods:
             behalf of another user.
         type: String
 
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
 
     response-parameters:
       - name: places
@@ -140,7 +145,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt -X PUT -F "address=210 Market Street" -F "place_id=4d8910aed0afbe0e4e000006" https://api.cloud.appcelerator.com/v1/places/update.json?key=<YOUR APP APP KEY>
+                $ curl -b cookies.txt -c cookies.txt -X PUT -F "address=210 Market Street" -F "place_id=4d8910aed0afbe0e4e000006" https://api.cloud.appcelerator.com/v1/places/update.json?key=<YOUR APP APP KEY>&pretty_print=true
 
             Example JSON response:
 

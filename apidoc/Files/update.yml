@@ -56,6 +56,12 @@ methods:
             behalf of another user.
         type: String
 
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean        
+
     response-parameters:
       - name: files
         description: |
@@ -90,7 +96,7 @@ methods:
         example: |
             Example cURL request:
 
-                curl -b cookies.txt -c cookies.txt -X PUT -F "file=@newresume.pdf" -F "name=new_file_name" -F "file_id=4f05446bc3666eb7ba000001" https://api.cloud.appcelerator.com/v1/files/update.json?key=<YOUR APP APP KEY>
+                curl -b cookies.txt -c cookies.txt -X PUT -F "file=@newresume.pdf" -F "name=new_file_name" -F "file_id=4f05446bc3666eb7ba000001" https://api.cloud.appcelerator.com/v1/files/update.json?key=<YOUR APP APP KEY>&pretty_print=true
 
             Example JSON response:
 

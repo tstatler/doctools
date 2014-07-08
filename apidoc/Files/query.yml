@@ -74,6 +74,12 @@ methods:
             Default is 3, valid range is 1 to 8.
         type: Number
 
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean        
+
     response-parameters:
       - name: files
         description: |
@@ -109,11 +115,11 @@ methods:
             Example cURL request:
 
                 Example: Query files with name "Appcelerator Cloud Services"
-                $ curl -c cookies.txt -b cookies.txt -X GET --data-urlencode  'where={"name":"Appcelerator Cloud Services"}' "https://api.cloud.appcelerator.com/v1/files/query.json?key=<YOUR APP APP KEY>"
+                $ curl -c cookies.txt -b cookies.txt -X GET --data-urlencode  'where={"name":"Appcelerator Cloud Services"}' "https://api.cloud.appcelerator.com/v1/files/query.json?key=<YOUR APP APP KEY>&pretty_print=true"
 
             Example JSON response:
 
-                $ curl -b c.txt -c c.txt -X GET --data-urlencode  'where=["user_id":"4f0fe764d9ca72833d000002", "name":"my_file"] "https://localhost/v1/files/query.json?key=<YOUR APP APP KEY>&order=-created_at&per_page=3"
+                $ curl -b c.txt -c c.txt -X GET --data-urlencode  'where=["user_id":"4f0fe764d9ca72833d000002", "name":"my_file"] "https://localhost/v1/files/query.json?key=<YOUR APP APP KEY>&pretty_print=true&order=-created_at&per_page=3"
                 {
                   "meta": {
                     "code": 200,

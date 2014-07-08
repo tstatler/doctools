@@ -43,6 +43,12 @@ methods:
             Using `gcm` to specify Google Cloud Messaging still works.
         type: String
 
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean                    
+
     examples:
 
     examples:

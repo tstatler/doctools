@@ -64,6 +64,12 @@ methods:
             For details about using the `where` parameter, see the [Search and Query guide](#!/guide/search_query).
         type: Hash
 
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean        
+
     response-parameters:
       - name: push_schedules
         description: |

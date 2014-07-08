@@ -70,6 +70,12 @@ methods:
             The current login user must be an application admin to create an object on
             behalf of another user.
         type: String
+        
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
 
     reponse-parameters:
       - name: posts
@@ -103,7 +109,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt -F "photo=@photo.jpg" -F "content=Buzz at Appcelerator Cloud Services" -F "title=Today's News" https://api.cloud.appcelerator.com/v1/posts/create.json?key=<YOUR APP APP KEY>
+                $ curl -b cookies.txt -c cookies.txt -F "photo=@photo.jpg" -F "content=Buzz at Appcelerator Cloud Services" -F "title=Today's News" https://api.cloud.appcelerator.com/v1/posts/create.json?key=<YOUR APP APP KEY>&pretty_print=true
 
             Example JSON response:
 

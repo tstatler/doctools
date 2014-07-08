@@ -17,6 +17,12 @@ methods:
             friends to the current user.
         required: true
 
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean        
+
     examples:
       - platform: titanium
         example: |
@@ -37,7 +43,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt -X PUT -F "user_ids=4e02e022d0afbe41ef000002" "https://api.cloud.appcelerator.com/v1/friends/approve.json?key=<YOUR APP APP KEY>"
+                $ curl -b cookies.txt -c cookies.txt -X PUT -F "user_ids=4e02e022d0afbe41ef000002" "https://api.cloud.appcelerator.com/v1/friends/approve.json?key=<YOUR APP APP KEY>&pretty_print=true"
 
             Example JSON response:
 
