@@ -109,7 +109,7 @@ methods:
         example: |
             Example Android APS SDK call:
 
-                APSCloud.enable(this, 'APS_CLOUD_KEY');
+                APSServiceManager.getInstance().enable(this, 'APS_APP_KEY');
 
                 try {
                     APSClients.geolocate(null, new APSResponseHandler() {
@@ -118,7 +118,7 @@ methods:
                             if (e.getSuccess()) {
                                 try {
                                     Log.i("APSClients", e.getResponseString());
-                                } catch (APSClientError err1) {
+                                } catch (APSCloudException err1) {
                                     Log.e("APSClients", err1.toString());
                                 }
                             } else {
@@ -126,7 +126,7 @@ methods:
                             }
                         }
                     });
-                } catch (APSClientError err2) {
+                } catch (APSCloudException err2) {
                     Log.e("APSClients", err2.toString());
                 }
 

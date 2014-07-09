@@ -140,7 +140,7 @@ methods:
                             }
                         }
                     });
-                } catch (APSClientError e) {
+                } catch (APSCloudException e) {
                     Log.e("APSReviews", "Exception thrown: " + e.toString());
                 }
 

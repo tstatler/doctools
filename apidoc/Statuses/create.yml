@@ -155,7 +155,7 @@ methods:
         example: |
             Example Android APS SDK call:
 
-                APSCloud.enable(this, 'APS_CLOUD_KEY');
+                APSServiceManager.getInstance().enable(this, 'APS_APP_KEY');
                 final Activity currentActivity = this;
 
                 HashMap<String, Object> data = new HashMap<String, Object>();
@@ -186,7 +186,7 @@ methods:
 
                         }
                     });
-                } catch (APSClientError e) {
+                } catch (APSCloudException e) {
                     Log.e("APSStatuses", "Exception thrown: " + e.toString());
                 }
 

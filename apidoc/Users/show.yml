@@ -133,7 +133,7 @@ methods:
         example: |
             Example Android call:
 
-                APSCloud.enable(this, 'APS_CLOUD_KEY');
+                APSServiceManager.getInstance().enable(this, 'APS_APP_KEY');
                 final Activity currentActivity = this;
 
                 HashMap<String, Object> data = new HashMap<String, Object>();
@@ -152,7 +152,7 @@ methods:
                                         if (e.getSuccess()) {
                                             try {
                                                 Toast.makeText(currentActivity, e.getResponseString(), Toast.LENGTH_SHORT);
-                                            } catch (APSClientError err) {
+                                            } catch (APSCloudException err) {
                                                 Log.e("APSUsers", "Exception thrown: " + err.toString());
                                             }
                                         } else {
@@ -165,7 +165,7 @@ methods:
 
                         }
                     });
-                } catch (APSClientError e) {
+                } catch (APSCloudException e) {
                     Log.e("APSUsers", "Exception thrown: " + e.toString());
                 }
 

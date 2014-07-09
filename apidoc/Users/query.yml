@@ -201,7 +201,7 @@ methods:
                             }
                         }
                     });
-                } catch (APSClientError e1) {
+                } catch (APSCloudException e1) {
                     Log.e("APSUsers", "Exception thrown: " + e.toString());
                 }
 

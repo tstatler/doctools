@@ -188,7 +188,7 @@ methods:
         example: |
             Example Android APS SDK call:
 
-                APSCloud.enable(this, 'APS_CLOUD_KEY');
+                APSServiceManager.getInstance().enable(this, 'APS_CLOUD_KEY');
                 final Activity currentActivity = this;
 
                 Map<String, Object> data = new HashMap<String, Object>();
@@ -220,7 +220,7 @@ methods:
 
                         }
                     });
-                } catch (APSClientError e) {
+                } catch (APSCloudException e) {
                     Log.e("APSMessages", "Exception thrown: " + e.toString());
                 }
 
@@ -326,7 +326,7 @@ methods:
         example: |
             Example Android APS SDK call:
 
-                APSCloud.enable(this, 'APS_CLOUD_KEY');
+                APSServiceManager.getInstance().enable(this, 'APS_CLOUD_KEY');
                 final Activity currentActivity = this;
 
                 Map<String, Object> data = new HashMap<String, Object>();
@@ -357,7 +357,7 @@ methods:
 
                         }
                     });
-                } catch (APSClientError e) {
+                } catch (APSCloudException e) {
                     Log.e("APSMessages", "Exception thrown: " + e.toString());
                 }
 
@@ -499,7 +499,7 @@ methods:
         example: |
             Example Android call:
 
-                APSCloud.enable(this, 'APS_CLOUD_KEY');
+                APSServiceManager.getInstance().enable(this, 'APS_CLOUD_KEY');
                 final Activity currentActivity = this;
 
                 Map<String, Object> data = new HashMap<String, Object>();
@@ -526,7 +526,7 @@ methods:
 
                         }
                     });
-                } catch (APSClientError e) {
+                } catch (APSCloudException e) {
                     Log.e("APSMessages", "Exception thrown: " + e.toString());
                 }
             }
@@ -725,7 +725,7 @@ methods:
         example: |
             Example Android APS SDK call:
 
-                APSCloud.enable(this, 'APS_CLOUD_KEY');
+                APSServiceManager.getInstance().enable(this, 'APS_CLOUD_KEY');
                 final Activity currentActivity = this;
 
                 Map<String, Object> data = new HashMap<String, Object>();
@@ -757,7 +757,7 @@ methods:
 
                         }
                     });
-                } catch (APSClientError e) {
+                } catch (APSCloudException e) {
                     Log.e("APSMessages", "Exception thrown: " + e.toString());
                 }
 
@@ -942,7 +942,7 @@ methods:
       - platform: android
         example: |
             Example Android APS SDK call:
-                APSCloud.enable(this, 'APS_CLOUD_KEY');
+                APSServiceManager.getInstance().enable(this, 'APS_CLOUD_KEY');
                 final Activity currentActivity = this;
 
                 HashMap<String, Object> data = new HashMap<String, Object>();
@@ -975,7 +975,7 @@ methods:
 
                         }
                     });
-                } catch (APSClientError e) {
+                } catch (APSCloudException e) {
                     Log.e("APSMessages", "Exception thrown: " + e.toString());
                 }
 
@@ -1127,7 +1127,7 @@ methods:
         example: |
             Example Android APS SDK call:
 
-                APSCloud.enable(this, 'APS_CLOUD_KEY');
+                APSServiceManager.getInstance().enable(this, 'APS_CLOUD_KEY');
 
                 try {
                     APSMessages.showInbox(null, new APSResponseHandler() {
@@ -1154,7 +1154,7 @@ methods:
                             }
                         }
                     });
-                } catch (APSClientError e) {
+                } catch (APSCloudException e) {
                     Log.e("APSMessages", "Exception thrown: " + e.toString());
                 }
 
@@ -1351,7 +1351,7 @@ methods:
         example: |
             Example Android call:
 
-                APSCloud.enable(this, 'APS_CLOUD_KEY');
+                APSServiceManager.getInstance().enable(this, 'APS_CLOUD_KEY');
 
                 try {
                     APSMessages.showSent(null, new APSResponseHandler() {
@@ -1378,7 +1378,7 @@ methods:
                             }
                         }
                     });
-                } catch (APSClientError e) {
+                } catch (APSCloudException e) {
                     Log.e("APSMessages", "Exception thrown: " + e.toString());
                 }
 
@@ -1644,7 +1644,7 @@ methods:
         example: |
             Example Android APS SDK call:
 
-                APSCloud.enable(this, 'APS_CLOUD_KEY');
+                APSServiceManager.getInstance().enable(this, 'APS_CLOUD_KEY');
 
                 HashMap<String, Object> data = new HashMap<String, Object>();
                 data.put("thread_id", "4d85418dd0afbe013e000025");
@@ -1674,7 +1674,7 @@ methods:
                             }
                         }
                     });
-                } catch (APSClientError e) {
+                } catch (APSCloudException e) {
                     Log.e("APSMessages", "Exception thrown: " + e.toString());
                 }
 
@@ -1908,7 +1908,7 @@ methods:
         example: |
             Example Android call:
 
-                APSCloud.enable(this, 'APS_CLOUD_KEY');
+                APSServiceManager.getInstance().enable(this, 'APS_CLOUD_KEY');
 
                 try {
                     APSMessages.showThreads(null, new APSResponseHandler() {
@@ -1935,7 +1935,7 @@ methods:
                             }
                         }
                     });
-                } catch (APSClientError e) {
+                } catch (APSCloudException e) {
                     Log.e("APSMessages", "Exception thrown: " + e.toString());
                 }
 

@@ -132,7 +132,7 @@ methods:
         example: |
             Example Android APSI SDK call:
 
-                APSCloud.enable(this, 'APS_CLOUD_KEY');
+                APSServiceManager.getInstance().enable(this, 'APS_APP_KEY');
                 final Activity currentActivity = this;
 
                 // Create dictionary of parameters to be passed with the reques
@@ -165,7 +165,7 @@ methods:
 
                         }
                     });
-                } catch (APSClientError e) {
+                } catch (APSCloudException e) {
                     Log.e("APSKeyValues", "Exception thrown: " + e.toString());
                 }
 
