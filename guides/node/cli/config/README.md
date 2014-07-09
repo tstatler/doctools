@@ -1,19 +1,48 @@
-# config -- Configures the Cloud Servers for the Application</h2>
+# config -- Configures the application environment</h2>
 
 ## Description
 
 <p class="note">This command is only available for Appcelerator Platform users.
-By default, a Node.ACS application is limited to one cloud server. To increase the maximum number of cloud servers, contact <a href="http://support2.appcelerator.com">Appcelerator Support</a>.</p>
+By default, a Node.ACS application is limited to one cloud server.
+To increase the maximum number of cloud servers, contact <a href="http://support2.appcelerator.com">Appcelerator Support</a>.</p>
 
-The `config` command configures the number of cloud servers available to your application. 
+The `config` command configures environment variables and the number of cloud servers for the application to use.
 
-You can configure your application to automatically scale up (or down) the number of servers based on the number queued requests. 
+### Environment Variables
+
+To set environment variables, use the `--set <key>=<value>` parameter.  To set more than one
+variable at a time, comma separate the key-value pairs.
+
+You can access the environment variables from the Node.ACS application using the `process.env`
+namespace.  For example, if you set a variable called `foo`, use `process.env.foo` to access it in
+the application.
+
+To unset an environment variable, use the `--unset <key>` parameter.
+
+To check the current environment variables, use the `--env` parameter.
+
+You cannot use the following names for environment variables: "appid", "basedir", "name", "version",
+"dirname", "fullpath", "framework", "config", "serverId", "bodyParser", "customConfig", "HOME",
+"NODE_PATH", "USER", "TMPDIR", "PATH", "NODE", and "PWD".
+
+After changing an environment variable, you will be prompted to restart the application.
+
+### Auto-Scaling
+
+To customize the number of cloud servers the application can use, enable the auto-scaling
+feature to automatically scale up and down the number of cloud servers based on the number of queued requests.
 You specify the maximum number of queued requests that should occur before the application is scaled up. 
 You can also specify the maximum number of servers that should be used.
 
 ## Usage
 
-`$ acs config [--autoscale true|false] [--autoscaleup true|false] [--autoscaledown true|false] [--setsize N] [--maxsessionrate N] appname`
+**Environment variables:**
+
+`$acs config [--set <key>=<value>] [--unset <key>] [--env] [appname]`
+
+**Auto-scaling:**
+
+`$ acs config [--autoscale true|false] [--autoscaleup true|false] [--autoscaledown true|false] [--setsize N] [--maxsessionrate N] [appname]`
 
 **Login Required:** Yes (See [login](#!/guide/node_cli_login) command)
 
@@ -34,7 +63,8 @@ You can also specify the maximum number of servers that should be used.
     </tr>
     <tr>
         <td nowrap><code>--autoscale</code></td>
-        <td>Boolean (default is <code>false</code>). Enables or disables autoscaling. Must be set to <code>true</code> to use the <code>autoscaleup</code> and <code>autoscaledown</code> settings.</td>
+        <td>Boolean (default is <code>false</code>). Enables or disables autoscaling. Must be set to <code>true</code>
+            to use the <code>autoscaleup</code> and <code>autoscaledown</code> settings.</td>
     </tr>
     <tr>
         <td nowrap><code>--autoscaleup</code></td>
@@ -45,17 +75,40 @@ You can also specify the maximum number of servers that should be used.
         <td>Boolean (default is <code>false</code>). Enables or disables automatically scaling down the number of cloud servers based on the <code>maxqueuedrequests</code>  setting.</td>
     </tr>
     <tr>
+        <td nowrap><code>--env</code></td>
+        <td>Lists set environment variables.</td>
+    </tr>
+    <tr>
         <td nowrap><code>--maxqueuedrequests &lt;n&gt;</code></td>
-        <td>Specifies the maximum number of queued requests for autoscaling to occur. The number should be based on the response time of your application; the longer the response time is, the smaller this value should be. The default value is 50.</td>
+        <td>Specifies the maximum number of queued requests for autoscaling to occur.
+            The number should be based on the response time of your application;
+            the longer the response time is, the smaller this value should be. The default value is 50.</td>
+    </tr>
+    <tr>
+        <td nowrap><code>--set &lt;key&gt;=&lt;value&gt;</code></td>
+        <td><p>Sets an environment variable.</p>
+            <p>To set more than one variable, comma separate the key-value pairs.</p>
+            <p>To access the variable in the application, prefix the variable with the <code>process.env</code> namepsace.</p>
+        </td>
     </tr>
     <tr>
         <td nowrap><code>--setsize &lt;n&gt;</code></td>
-        <td>Sets the current number of cloud servers to use.</td>
-    </tr>    
+        <td>Sets the current number of cloud servers to use. 
+        <p><strong>Note:</strong> The current Node.ACS user must be an account administrator to change the number of cloud servers.
+           Contact <a href="http://support2.appcelerator.com">Appcelerator Support</a> for assistance.</p> </td>
+    </tr>
     <tr>
         <td nowrap><code>--maxsize &lt;n&gt;</code></td>
         <td>Sets the maximum number of cloud servers to use.</td>
     </tr>        
+    <tr>
+        <td nowrap><code>--maxsize &lt;n&gt;</code></td>
+        <td>Sets the maximum number of cloud servers the application can use.</td>
+    </tr>
+    <tr>
+        <td nowrap><code>--unset &lt;key&gt;</code></td>
+        <td>Unsets the specified environment variable.</td>
+    </tr>
     <tr>
         <td><code>-h</code>, <code>--help</code></td>
         <td>Displays help information of the command</td>
@@ -64,6 +117,13 @@ You can also specify the maximum number of servers that should be used.
 </table>
 
 ## Example
+
+The following example sets the `port` and `foo` environment variables, unsets the `foo` variable,
+then lists all set environment variables.
+
+    acs config --set port=8080,foo=abc
+    acs config --unset foo
+    acs config --env
 
 The following example enables autoscaling, using a maximum of five servers, when there are at least
 20 queued requests. The application is also configured to automatically scale down the number of servers
@@ -74,4 +134,3 @@ when the number of queued requests drops below 20.
     acs config --maxqueuedrequests 20 MyFirstApp
     acs config --autoscaleup true MyFirstApp
     acs config --autoscaledown true MyFirstApp
-
