@@ -35,6 +35,21 @@ In this case, `/app.js` is first file loaded and run by Node.ACS when the
 "run" command is executed to start the app locally, or when running the app in
 the cloud.
 
+If your application's `package.json` file does not specify a `main` field, Node.ACS will now look at
+the `scripts.start` field in `package.json` to determine the main module to launch.  Node.ACS will
+execute the start script using `npm start`. This feature is only available to standard Node.js applications,
+not those that use the MVC framework.
+
+You also need to set your application's port number using the [acs config command](#!/guide/node_cli_config)
+to set the `port` environment variable:
+
+    acs config --set port=8080
+
+Choose a port number that is not in use, such as 8080.  If the port is in use, the application will fail to deploy.
+
+See the [NPM documentation](https://www.npmjs.org/doc/misc/npm-scripts.html) on the "scripts" package.json field.
+
+
 ## Node.js Engine
 
 You can specify which version of Node.js to run your application on.  Use the `engines` field in
