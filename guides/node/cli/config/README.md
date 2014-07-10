@@ -42,7 +42,7 @@ You can also specify the maximum number of servers that should be used.
 
 **Auto-scaling:**
 
-`$ acs config [--autoscale true|false] [--autoscaleup true|false] [--autoscaledown true|false] [--setsize N] [--maxsessionrate N] [appname]`
+`$ acs config [--autoscale true|false] [--autoscaleup true|false] [--autoscaledown true|false] [--setsize N] [--setmaxsize N] [--maxqueuedrequests N] [appname]`
 
 **Login Required:** Yes (See [login](#!/guide/node_cli_login) command)
 
