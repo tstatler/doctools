@@ -165,9 +165,9 @@
                     },
                     {
                         "name": "node_cli_config",
-                        "title": "config -- Configures the Cloud servers for an Application",
+                        "title": "config -- Configures the Application Environment",
                         "url": "guides/node/cli/config",
-                        "description": "Configures the Cloud servers for an Application"
+                        "description": "Configures the Application Environment"
                     },
                     {
                         "name": "node_cli_crt",
