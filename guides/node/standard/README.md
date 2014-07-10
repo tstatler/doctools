@@ -40,10 +40,12 @@ the `scripts.start` field in `package.json` to determine the main module to laun
 execute the start script using `npm start`. This feature is only available to standard Node.js applications,
 not those that use the MVC framework.
 
-You also need to set your application's port number to 8080.  You can either add a `service.port` field to
-your `package.json` file or set the `port` environment variable:
+You also need to set your application's port number using the [acs config command](#!/guide/node_cli_config)
+to set the `port` environment variable:
 
     acs config --set port=8080
+
+Choose a port number that is not in use, such as 8080.  If the port is in use, the application will fail to deploy.
 
 See the [NPM documentation](https://www.npmjs.org/doc/misc/npm-scripts.html) on the "scripts" package.json field.
 
