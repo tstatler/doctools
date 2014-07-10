@@ -93,17 +93,13 @@ You can also specify the maximum number of servers that should be used.
     </tr>
     <tr>
         <td nowrap><code>--setsize &lt;n&gt;</code></td>
-        <td>Sets the current number of cloud servers to use. 
-        <p><strong>Note:</strong> The current Node.ACS user must be an account administrator to change the number of cloud servers.
-           Contact <a href="http://support2.appcelerator.com">Appcelerator Support</a> for assistance.</p> </td>
+        <td>Sets the current number of cloud servers to use.</td>
     </tr>
     <tr>
         <td nowrap><code>--maxsize &lt;n&gt;</code></td>
-        <td>Sets the maximum number of cloud servers to use.</td>
-    </tr>        
-    <tr>
-        <td nowrap><code>--maxsize &lt;n&gt;</code></td>
-        <td>Sets the maximum number of cloud servers the application can use.</td>
+        <td>Sets the maximum number of cloud servers to use.
+        <p><strong>Note:</strong> The current Node.ACS user must be an account administrator to set this value.
+           Contact <a href="http://support2.appcelerator.com">Appcelerator Support</a> for assistance.</p> </td>
     </tr>
     <tr>
         <td nowrap><code>--unset &lt;key&gt;</code></td>
