@@ -207,7 +207,7 @@ methods:
         example: |
             Example Android APS SDK call:
 
-                APSServiceManager.getInstance().enable(this, 'APS_APP_KEY');
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
 
                 try {
                     HashMap<String, Object> data = new HashMap<String, Object>();

@@ -216,6 +216,36 @@ methods:
 
       - platform: android
         example: |
+            Example Android APS SDK call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+
+                HashMap<String, Object> data = new HashMap<String, Object>();
+                JSONObject params = new JSONObject("{'name':'meetup','lnglat':{'$nearSphere':[-122.23,37.12], '$maxDistance' : 0.00126}}");
+                data.put("where", params);
+
+                try {
+                    APSEvents.queryOccurrences(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                try {
+                                    Log.i("APSEvents", e.getResponseString());
+                                } catch (APSCloudException e1) {
+                                       Log.e("APSEvents", e1.toString());
+                                }
+                            } else {
+                                Log.e("APSEvents", e.getMessage());
+                            }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSEvents", e.toString());
+                }
+
+
+      - platform: android-acssdk
+        example: |
             Example Android call:
 
                 ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key

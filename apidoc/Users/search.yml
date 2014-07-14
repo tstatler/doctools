@@ -116,7 +116,7 @@ methods:
         example: |
             Example Android APS SDK call:
 
-                APSServiceManager.getInstance().enable(this, 'APS_APP_KEY');
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
 
                 HashMap<String, Object> data = new HashMap<String, Object>();
                 data.put("q", "Peter,Paul,Mary");

@@ -73,7 +73,7 @@ methods:
         example: |
             Example Android APS SDK call:
 
-                APSServiceManager.getInstance().enable(this, 'APS_APP_KEY');
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
 
                 try {
 

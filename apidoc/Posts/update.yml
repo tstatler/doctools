@@ -182,7 +182,7 @@ methods:
         example: |
             Example Android call:
 
-                APSServiceManager.getInstance().enable(this, 'APS_APP_KEY');
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
 
                 HashMap<String, Object> data = new HashMap<String, Object>();
                 data.put("post_id", "4e33a5b7d9ca7246ba000003");
