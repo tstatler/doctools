@@ -61,7 +61,7 @@ methods:
                 data.put("id", "52aa2da0d7de142e0e000040");
 
                 try {
-                    APSUsers.remove(null, new APSResponseHandler() {
+                    APSGeofences.remove(null, new APSResponseHandler() {
 
                         @Override
                         public void onResponse(final APSResponse e) {
@@ -72,15 +72,15 @@ methods:
                                 .setIcon(android.R.drawable.ic_dialog_info)
                                 .show();
                             } else {
-                                Log.e("APSUsers", "ERROR: " + e.getMessage());
+                                Log.e("APSGeofences", "ERROR: " + e.getMessage());
                             }
                         }
 
                         @Override
                         public void onException(final APSCloudException e) {
-                            Log.e("APSUsers", "Exception throw: " + e.toString());
+                            Log.e("APSGeofences", "Exception throw: " + e.toString());
                         }
                     });
                 } catch (APSCloudException e) {
-                    Log.e("APSUsers", "Exception thrown: " + e.toString());
+                    Log.e("APSGeofences", "Exception thrown: " + e.toString());
                 }

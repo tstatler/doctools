@@ -274,7 +274,7 @@ methods:
                             if (e.getSuccess()) {
                                 try {
                                     JSONArray chat_groups = e.getResponse().getJSONArray("chat_groups");
-                                    if (users.length() <= 0) {
+                                    if (chat_groups.length() <= 0) {
                                         Log.i("APSChats", "No Results!");
                                     } else {
                                         // Do something with the chat groups

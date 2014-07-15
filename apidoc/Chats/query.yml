@@ -249,7 +249,7 @@ methods:
                                     if (chats.length() <= 0) {
                                         Log.i("APSChats", "No Results!");
                                     } else {
-                                        for (int i = 0; i < users.length(); i++) {
+                                        for (int i = 0; i < chats.length(); i++) {
                                             JSONObject chat = chat.getJSONObject(i);
                                             Log.i("APSChats", chat.getString("message"));
                                         }

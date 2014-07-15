@@ -140,7 +140,7 @@ methods:
                 data.put("where", params);
 
                 try {
-                    APSUsers.query(data, new APSResponseHandler() {
+                    APSGeofences.query(data, new APSResponseHandler() {
 
                         @Override
                         public void onResponse(final APSResponse e) {
@@ -148,26 +148,26 @@ methods:
                                 try {
                                     JSONArray geo_fences = e.getResponse().getJSONArray("geo_fences");
                                     if (geo_fences.length() <= 0) {
-                                        Log.i("APSUsers", "No Results!");
+                                        Log.i("APSGeofences", "No Results!");
                                     } else {
                                         for (int i = 0; i < users.length(); i++) {
                                             JSONObject geo_fence = geo_fences.getJSONObject(i);
-                                            Log.i("APSUsers", geofence.getJSONObject("payload").toString());
+                                            Log.i("APSGeofences", geofence.getJSONObject("payload").toString());
                                         }
                                     }
                                 } catch (JSONException err) {
-                                       Log.e("APSUsers", "Exception thrown: " + err.toString());
+                                       Log.e("APSGeofences", "Exception thrown: " + err.toString());
                                 }
                             } else {
-                                Log.e("APSUsers", "ERROR: " + e.getMessage());
+                                Log.e("APSGeofences", "ERROR: " + e.getMessage());
                             }
                         }
 
                         @Override
                         public void onException(APSCloudException e) {
-                            Log.e("APSUsers", "Exception throw: " + e.toString());
+                            Log.e("APSGeofences", "Exception throw: " + e.toString());
                         }
                     });
                 } catch (APSCloudException e) {
-                    Log.e("APSUsers", "Exception thrown: " + e.toString());
+                    Log.e("APSGeofences", "Exception thrown: " + e.toString());
                 }
