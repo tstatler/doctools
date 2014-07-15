@@ -71,6 +71,51 @@ methods:
       
     examples:
 
+      - platform: android
+        example: |
+            Example Android call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+
+                Map<String, Object> data = new HashMap<String, Object>();                
+                JSONObject schedule = new JSONObject();
+                schedule.put("name", "push schedule");
+                schedule.put("start_time", "2015-09-05T10:11");
+
+                JSONObject recurrence = new JSONObject();
+                recurrence.put("interval", "weekly");
+                recurrence.put("end_time", "2015-09-10T10:11");
+
+                JSONObject push_notification = new JSONObject();
+                push_notification.put("payload", "hello world");
+                push_notification.put("channel","channelOne")
+
+                schedule.put("recurrence", recurrence);
+                schedule.put("push_notification", push_notification);                
+
+                data.put("schedule", schedule);
+
+                try {
+                    APSPushSchedules.create(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                Log.i("APSPushSchedules", "Success!");
+                            } else {
+                                Log.e("APSPushSchedules", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSPushSchedules", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                  Log.e("APSPushSchedules", "Exception thrown: " + e.toString());
+                }
+
       - platform: titanium
         example: |
             Available for Release 3.2.0 and later.

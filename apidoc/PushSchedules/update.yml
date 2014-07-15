@@ -41,7 +41,7 @@ methods:
                  * *interval* (String): Set to either `daily`, `weeky` or `monthly`.
                  * *end_time* (Date): Datetime to end the push notifications in ISO 8601 format. 
                  Value must be greater than the current date and time, and the previous `end_time` must not have expired.
-    
+
         type: Hash
         required: true
 
