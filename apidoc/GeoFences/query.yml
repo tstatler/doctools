@@ -128,4 +128,46 @@ methods:
                     ]
                   }
                 }
-            
+
+      - platform: android
+        example: |
+            Example Android APS SDK call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+
+                HashMap<String,Object> data = new HashMap<String,Object>;
+                JSONObject params = new JSONObject("'loc': { '$nearSphere' : { '$geometry' : { 'type' : 'Point' , 'coordinates' : [-122.2708,37.8044] } , '$maxDistance' : 2000 }}}");
+                data.put("where", params);
+
+                try {
+                    APSUsers.query(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                try {
+                                    JSONArray geo_fences = e.getResponse().getJSONArray("geo_fences");
+                                    if (geo_fences.length() <= 0) {
+                                        Log.i("APSUsers", "No Results!");
+                                    } else {
+                                        for (int i = 0; i < users.length(); i++) {
+                                            JSONObject geo_fence = geo_fences.getJSONObject(i);
+                                            Log.i("APSUsers", geofence.getJSONObject("payload").toString());
+                                        }
+                                    }
+                                } catch (JSONException err) {
+                                       Log.e("APSUsers", "Exception thrown: " + err.toString());
+                                }
+                            } else {
+                                Log.e("APSUsers", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(APSCloudException e) {
+                            Log.e("APSUsers", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSUsers", "Exception thrown: " + e.toString());
+                }

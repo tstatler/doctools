@@ -246,7 +246,7 @@ methods:
                             if (e.getSuccess()) {
                                 try {
                                     JSONArray chats = e.getResponse().getJSONArray("chats");
-                                    if (users.length() <= 0) {
+                                    if (chats.length() <= 0) {
                                         Log.i("APSChats", "No Results!");
                                     } else {
                                         for (int i = 0; i < users.length(); i++) {
