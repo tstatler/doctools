@@ -145,6 +145,11 @@ methods:
                                 Log.e("APSUsers", "ERROR: " + e.getMessage());
                             }
                         }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSUsers", "Exception throw: " + e.toString());
+                        }
                     });
                 } catch (APSCloudException e) {
                     Log.e("APSUsers", "Exception thrown: " + e.toString());

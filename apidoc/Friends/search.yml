@@ -172,6 +172,11 @@ methods:
                                 Log.e("APSFriends", "ERROR: " + e.getMessage());
                             }
                         }
+
+                        @Override
+                        public void onException(APSCloudException e) {
+                            Log.e("APSFriends", "Exception thrown: " + e.toString());
+                        }
                     });
                 } catch (APSCloudException e) {
                     Log.e("APSFriends", "Exception thrown: " + e.toString());

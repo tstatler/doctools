@@ -208,6 +208,11 @@ methods:
                                 Log.e("APSStatuses", "ERROR: " + e.getMessage());
                             }
                         }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSStatuses", "Exception throw: " + e.toString());
+                        }
                     });
                 } catch (APSCloudException e) {
                     Log.e("APSStatuses", "Exception thrown: " + e.toString());

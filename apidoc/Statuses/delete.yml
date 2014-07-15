@@ -88,20 +88,16 @@ methods:
 
                         @Override
                         public void onResponse(final APSResponse e) {
-                            // The callback will be run on a background thread
-                            // Switch to the main thread before interacting with the UI
-                            if (currentActivity != null) {
-                                currentActivity.runOnUiThread(new Runnable() {
-                                    public void run() {
-                                        if (e.getSuccess()) {
-                                            Toast.makeText(currentActivity, "Removed!", Toast.LENGTH_SHORT);
-                                        } else {
-                                            Log.e("APSStatuses", "ERROR: " + e.getMessage());
-                                        }
-                                    }
-                                });
+                            if (e.getSuccess()) {
+                                Toast.makeText(currentActivity, "Removed!", Toast.LENGTH_SHORT);
+                            } else {
+                                Log.e("APSStatuses", "ERROR: " + e.getMessage());
                             }
+                        }
 
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSStatuses", "Exception throw: " + e.toString());
                         }
                     });
                 } catch (APSCloudException e) {

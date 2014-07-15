@@ -96,21 +96,20 @@ methods:
 
                         @Override
                         public void onResponse(final APSResponse e) {
-                            if (currentActivity != null) {
-                                currentActivity.runOnUiThread(new Runnable() {
-                                    public void run() {
-                                        if (e.getSuccess()) {
-                                        new AlertDialog.Builder(currentActivity)
-                                            .setTitle("Success!").setMessage("Removed!")
-                                            .setPositiveButton(android.R.string.ok, null)
-                                            .setIcon(android.R.drawable.ic_dialog_info)
-                                            .show();
-                                        } else {
-                                            Log.e("APSKeyValues", "ERROR: " + e.getMessage());
-                                        }
-                                    }
-                                });
+                            if (e.getSuccess()) {
+                                new AlertDialog.Builder(currentActivity)
+                                .setTitle("Success!").setMessage("Removed!")
+                                .setPositiveButton(android.R.string.ok, null)
+                                .setIcon(android.R.drawable.ic_dialog_info)
+                                .show();
+                            } else {
+                                Log.e("APSKeyValues", "ERROR: " + e.getMessage());
                             }
+                        }
+
+                        @Override
+                        public void onException(APSCloudException e) {
+                            Log.e("APSKeyValues", "Exception thrown: " + e.toString());
                         }
                     });
                 } catch (APSCloudException e) {

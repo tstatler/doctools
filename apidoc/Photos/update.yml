@@ -220,23 +220,19 @@ methods:
 
                         @Override
                         public void onResponse(final APSResponse e) {
-                            // The callback will be run on a background thread
-                            // Switch to the main thread before interacting with the UI
-                            if (currentActivity != null) {
-                                currentActivity.runOnUiThread(new Runnable() {
-                                    public void run() {
-                                        if (e.getSuccess()) {
-                                            new AlertDialog.Builder(currentActivity)
-                                            .setTitle("Success").setMessage("Uploaded!")
-                                            .setPositiveButton(android.R.string.ok, null)
-                                            .setIcon(android.R.drawable.ic_dialog_info)
-                                            .show();
-                                        } else {
-                                            Log.e("APSPhotos", "ERROR: " + e.getMessage());
-                                        }
-                                    }
-                                });
+                            if (e.getSuccess()) {
+                                new AlertDialog.Builder(currentActivity)
+                                .setTitle("Success").setMessage("Uploaded!")
+                                .setPositiveButton(android.R.string.ok, null)
+                                .setIcon(android.R.drawable.ic_dialog_info)
+                                .show();
+                            } else {
+                                Log.e("APSPhotos", "ERROR: " + e.getMessage());
                             }
+                        }
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSPhotos", "Exception throw: " + e.toString());
                         }
                     });
                 } catch (APSCloudException e) {

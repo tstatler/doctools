@@ -125,6 +125,11 @@ methods:
                                 Log.e("APSClients", "ERROR: " + e.getMessage());
                             }
                         }
+
+                        @Override
+                        public void onException(APSCloudException e) {
+                            Log.e("APSClients", e.toString());
+                        }
                     });
                 } catch (APSCloudException err2) {
                     Log.e("APSClients", err2.toString());

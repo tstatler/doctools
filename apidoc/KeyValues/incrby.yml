@@ -137,28 +137,25 @@ methods:
 
                         @Override
                         public void onResponse(final APSResponse e) {
-                            // The callback will be run on a background thread
-                            // Switch to the main thread before interacting with the UI
-                            if (currentActivity != null) {
-                                currentActivity.runOnUiThread(new Runnable() {
-                                    public void run() {
-                                        if (e.getSuccess()) {
-                                            try {
-                                                JSONObject keyvalues = e.getResponse().getJSONArray("keyvalues").getJSONObject(0);
-                                                new AlertDialog.Builder(currentActivity)
-                                                    .setTitle("Success!").setMessage("Incremented!")
-                                                    .setPositiveButton(android.R.string.ok, null)
-                                                    .setIcon(android.R.drawable.ic_dialog_info)
-                                                    .show();
-                                            } catch (JSONException err) {
-                                                Log.e("APSKeyValues", "Exception throw: " + err.toString())
-                                            }
-                                        } else {
-                                            Log.e("APSKeyValues", "ERROR: " + err.getMessage());
-                                        }
-                                    }
-                                });
+                            if (e.getSuccess()) {
+                                try {
+                                    JSONObject keyvalues = e.getResponse().getJSONArray("keyvalues").getJSONObject(0);
+                                    new AlertDialog.Builder(currentActivity)
+                                    .setTitle("Success!").setMessage("Incremented!")
+                                    .setPositiveButton(android.R.string.ok, null)
+                                    .setIcon(android.R.drawable.ic_dialog_info)
+                                    .show();
+                                } catch (JSONException err) {
+                                    Log.e("APSKeyValues", "Exception throw: " + err.toString())
+                                }
+                            } else {
+                                Log.e("APSKeyValues", "ERROR: " + err.getMessage());
                             }
+                        }
+
+                        @Override
+                        public void onException(APSCloudException e) {
+                            Log.e("APSKeyValues", "Exception thrown: " + e.toString());
                         }
                     });
                 } catch (APSCloudException e) {

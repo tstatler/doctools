@@ -134,6 +134,11 @@ methods:
                                 Log.e("APSKeyValues", "ERROR: " + e.getMessage());
                             }
                         }
+
+                        @Override
+                        public void onException(APSCloudException e) {
+                            Log.e("APSKeyValues", "Exception thrown: " + e.toString());
+                        }
                     });
                 } catch (APSCloudException e) {
                     Log.e("APSKeyValues", "Exception thrown: " + e.toString());

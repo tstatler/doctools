@@ -144,25 +144,20 @@ methods:
 
                         @Override
                         public void onResponse(final APSResponse e) {
-                            // The callback will be run on a background thread
-                            // Switch to the main thread before interacting with the UI
-                            if (currentActivity != null) {
-                                currentActivity.runOnUiThread(new Runnable() {
-                                    public void run() {
-                                        if (e.getSuccess()) {
-                                            try {
-                                                Toast.makeText(currentActivity, e.getResponseString(), Toast.LENGTH_SHORT);
-                                            } catch (APSCloudException err) {
-                                                Log.e("APSUsers", "Exception thrown: " + err.toString());
-                                            }
-                                        } else {
-                                            Log.e("APSUsers", "ERROR: " + e.getMessage());
-                                        }
-
-                                    }
-                                });
+                            if (e.getSuccess()) {
+                                try {
+                                    Toast.makeText(currentActivity, e.getResponseString(), Toast.LENGTH_SHORT);
+                                } catch (APSCloudException err) {
+                                    Log.e("APSUsers", "Exception thrown: " + err.toString());
+                                }
+                            } else {
+                                Log.e("APSUsers", "ERROR: " + e.getMessage());
                             }
+                        }
 
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSUsers", "Exception throw: " + e.toString());
                         }
                     });
                 } catch (APSCloudException e) {

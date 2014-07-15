@@ -147,6 +147,11 @@ methods:
                                 Log.e("APSPhotos", "ERROR: " + e.getMessage());
                             }
                         }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSPhotos", "Exception throw: " + e.toString());
+                        }
                     });
                 } catch (APSCloudException e1) {
                     Log.e("APSPhotos", "Exception thrown: " + e.toString());

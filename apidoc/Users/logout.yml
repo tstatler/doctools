@@ -71,19 +71,16 @@ methods:
 
                         @Override
                         public void onResponse(final APSResponse e) {
-                            // The callback will be run on a background thread
-                            // Switch to the main thread before interacting with the UI
-                            if (currentActivity != null) {
-                                currentActivity.runOnUiThread(new Runnable() {
-                                    public void run() {
-                                        if (e.getSuccess()) {
-                                            Toast.makeText(currentActivity, "Logged out!", Toast.LENGTH_SHORT);
-                                        } else {
-                                            Log.e("APSUsers", "ERROR: " + e.getMessage());
-                                        }
-                                    }
-                                });
+                            if (e.getSuccess()) {
+                                Toast.makeText(currentActivity, "Logged out!", Toast.LENGTH_SHORT);
+                            } else {
+                                Log.e("APSUsers", "ERROR: " + e.getMessage());
                             }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSUsers", "Exception throw: " + e.toString());
                         }
                     });
                 } catch (APSCloudException e) {

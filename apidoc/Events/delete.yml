@@ -98,6 +98,10 @@ methods:
                             }
                         }
 
+                        @Override
+                        public void onException(APSCloudException e) {
+                            Log.e("APSEvents", e.toString());
+                        }
                     });
                 } catch (APSClientError e) {
                     Log.e("APSEvents", e.toString());

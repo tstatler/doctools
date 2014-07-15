@@ -250,7 +250,11 @@ methods:
                             } else {
                                 Log.e("APSEvents", e.getMessage());
                             }
+                        }
 
+                        @Override
+                        public void onException(APSCloudException e) {
+                            Log.e("APSEvents", e.toString());
                         }
                     });
                 } catch (APSCloudException e) {

@@ -200,24 +200,20 @@ methods:
 
                         @Override
                         public void onResponse(final APSResponse e) {
-                            // The callback will be run on a background thread
-                            // Switch to the main thread before interacting with the UI
-                            if (currentActivity != null) {
-                                currentActivity.runOnUiThread(new Runnable() {
-                                    public void run() {
-                                        if (e.getSuccess()) {
-                                            new AlertDialog.Builder(currentActivity)
-                                            .setTitle("Success!").setMessage("Created!")
-                                            .setPositiveButton(android.R.string.ok, null)
-                                            .setIcon(android.R.drawable.ic_dialog_info)
-                                            .show();
-                                        } else {
-                                            Log.e("APSMessages", "ERROR: " + e.getMessage());
-                                        }
-                                    }
-                                });
+                            if (e.getSuccess()) {
+                                new AlertDialog.Builder(currentActivity)
+                                .setTitle("Success!").setMessage("Created!")
+                                .setPositiveButton(android.R.string.ok, null)
+                                .setIcon(android.R.drawable.ic_dialog_info)
+                                .show();
+                            } else {
+                                Log.e("APSMessages", "ERROR: " + e.getMessage());
                             }
+                        }
 
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSMessages", "Exception throw: " + e.toString());
                         }
                     });
                 } catch (APSCloudException e) {
@@ -337,24 +333,20 @@ methods:
 
                         @Override
                         public void onResponse(final APSResponse e) {
-                            // The callback will be run on a background thread
-                            // Switch to the main thread before interacting with the UI
-                            if (currentActivity != null) {
-                                currentActivity.runOnUiThread(new Runnable() {
-                                    public void run() {
-                                        if (e.getSuccess()) {
-                                            new AlertDialog.Builder(currentActivity)
-                                            .setTitle("Success!").setMessage("Removed!")
-                                            .setPositiveButton(android.R.string.ok, null)
-                                            .setIcon(android.R.drawable.ic_dialog_info)
-                                            .show();
-                                        } else {
-                                            Log.e("APSMessages", "ERROR: " + e.getMessage());
-                                        }
-                                    }
-                                });
+                            if (e.getSuccess()) {
+                                new AlertDialog.Builder(currentActivity)
+                                .setTitle("Success!").setMessage("Removed!")
+                                .setPositiveButton(android.R.string.ok, null)
+                                .setIcon(android.R.drawable.ic_dialog_info)
+                                .show();
+                            } else {
+                                Log.e("APSMessages", "ERROR: " + e.getMessage());
                             }
+                        }
 
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSLikes", "Exception throw: " + e.toString());
                         }
                     });
                 } catch (APSCloudException e) {
@@ -500,7 +492,6 @@ methods:
             Example Android call:
 
                 APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_CLOUD_KEY');
-                final Activity currentActivity = this;
 
                 Map<String, Object> data = new HashMap<String, Object>();
                 data.put("thread_id", "4d854389d0afbe013e000029");
@@ -510,20 +501,16 @@ methods:
 
                         @Override
                         public void onResponse(final APSResponse e) {
-                            // The callback will be run on a background thread
-                            // Switch to the main thread before interacting with the UI
-                            if (currentActivity != null) {
-                                currentActivity.runOnUiThread(new Runnable() {
-                                    public void run() {
-                                        if (e.getSuccess()) {
-                                            statusLabel.setText("Thread removed!");
-                                        } else {
-                                            Log.e("APSMessages", "ERROR: " + e.getMessage());
-                                        }
-                                    }
-                                });
+                            if (e.getSuccess()) {
+                                Log.i("APSMessages", "Thread removed!");
+                            } else {
+                                Log.e("APSMessages", "ERROR: " + e.getMessage());
                             }
+                        }
 
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSLikes", "Exception throw: " + e.toString());
                         }
                     });
                 } catch (APSCloudException e) {
@@ -737,24 +724,20 @@ methods:
 
                         @Override
                         public void onResponse(final APSResponse e) {
-                            // The callback will be run on a background thread
-                            // Switch to the main thread before interacting with the UI
-                            if (currentActivity != null) {
-                                currentActivity.runOnUiThread(new Runnable() {
-                                    public void run() {
-                                        if (e.getSuccess()) {
-                                            new AlertDialog.Builder(currentActivity)
-                                            .setTitle("Success!").setMessage("Replied!")
-                                            .setPositiveButton(android.R.string.ok, null)
-                                            .setIcon(android.R.drawable.ic_dialog_info)
-                                            .show();
-                                        } else {
-                                            Log.e("APSMessages", "ERROR: " + e.getMessage());
-                                        }
-                                    }
-                                });
+                            if (e.getSuccess()) {
+                                new AlertDialog.Builder(currentActivity)
+                                .setTitle("Success!").setMessage("Replied!")
+                                .setPositiveButton(android.R.string.ok, null)
+                                .setIcon(android.R.drawable.ic_dialog_info)
+                                .show();
+                            } else {
+                                Log.e("APSMessages", "ERROR: " + e.getMessage());
                             }
+                        }
 
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSLikes", "Exception throw: " + e.toString());
                         }
                     });
                 } catch (APSCloudException e) {
@@ -943,7 +926,6 @@ methods:
         example: |
             Example Android APS SDK call:
                 APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_CLOUD_KEY');
-                final Activity currentActivity = this;
 
                 HashMap<String, Object> data = new HashMap<String, Object>();
                 data.put("message_id", 'MESSAGE_ID');
@@ -953,26 +935,21 @@ methods:
 
                         @Override
                         public void onResponse(final APSResponse e) {
-                            // The callback will be run on a background thread
-                            // Switch to the main thread before interacting with the UI
-                            if (currentActivity != null) {
-                                currentActivity.runOnUiThread(new Runnable() {
-                                    public void run() {
-                                        if (e.getSuccess()) {
-                                            try {
-                                                  JSONArray messages = responseJSON.getJSONArray("messages");
-                                                  // Do stuff with messages...
-                                              } catch (JSONException err) {
-                                                Log.e("APSMessages", "Exception thrown: " + err.toString());
-                                            }
-                                        } else {
-                                            Log.e("APSMessages", "ERROR: " + e.getMessage());
-                                        }
-
-                                    }
-                                });
+                            if (e.getSuccess()) {
+                                try {
+                                    JSONArray messages = responseJSON.getJSONArray("messages");
+                                    // Do stuff with messages...
+                                } catch (JSONException err) {
+                                    Log.e("APSMessages", "Exception thrown: " + err.toString());
+                                }
+                            } else {
+                                Log.e("APSMessages", "ERROR: " + e.getMessage());
                             }
+                        }
 
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSLikes", "Exception throw: " + e.toString());
                         }
                     });
                 } catch (APSCloudException e) {
@@ -1152,6 +1129,11 @@ methods:
                             } else {
                                 Log.e("APSMessages", "ERROR: " + e.getMessage());
                             }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSLikes", "Exception throw: " + e.toString());
                         }
                     });
                 } catch (APSCloudException e) {
@@ -1376,6 +1358,11 @@ methods:
                             } else {
                                 Log.e("APSMessages", "ERROR: " + e.getMessage());
                             }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSLikes", "Exception throw: " + e.toString());
                         }
                     });
                 } catch (APSCloudException e) {
@@ -1673,6 +1660,11 @@ methods:
                                 Log.e("APSMessages", "ERROR: " + e.getMessage());
                             }
                         }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSLikes", "Exception throw: " + e.toString());
+                        }
                     });
                 } catch (APSCloudException e) {
                     Log.e("APSMessages", "Exception thrown: " + e.toString());
@@ -1933,6 +1925,11 @@ methods:
                             } else {
                                 Log.e("APSMessages", "ERROR: " + e.getMessage());
                             }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSLikes", "Exception throw: " + e.toString());
                         }
                     });
                 } catch (APSCloudException e) {

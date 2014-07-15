@@ -186,6 +186,11 @@ methods:
                                 Log.e("APSReviews", "ERROR: " + e.getMessage());
                             }
                          }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSReviews", "Exception throw: " + e.toString());
+                        }
                     });
                 } catch (APSCloudException e) {
                     Log.e("APSReviews", "Exception thrown: " + e.toString());
