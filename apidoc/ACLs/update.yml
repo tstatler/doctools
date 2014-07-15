@@ -132,6 +132,27 @@ methods:
 
       - platform: ios
         example: |
+            Example iOS APS SDK call:
+  
+                // Create dictionary of parameters to be passed with the request
+                NSDictionary *data = @{
+                  @"name": @"testACL",
+                  @"reader_ids": @"",
+                  @"writer_ids": @"",
+                  @"public_read": @YES,
+                  @"public_write": @YES
+                };
+  
+                [APSACLs update:data withBlock:^(APSResponse *e) {
+                  if (e.success) {
+                      [[[UIAlertView alloc] initWithTitle:@"Great" message:@"Success!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                  } else {
+                      [[[UIAlertView alloc] initWithTitle:@"Error" message:e.errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                  }
+                }];
+
+      - platform: ios-acssdk
+        example: |
             Example iOS call:
 
                 NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
