@@ -249,15 +249,11 @@ methods:
                         @Override
                         public void onResponse(final APSResponse e) {
                             if (e.getSuccess()) {
-                                try {
-                                    new AlertDialog.Builder(currentActivity)
-                                    .setTitle("Success!").setMessage("Chat sent!");
-                                    .setPositiveButton(android.R.string.ok, null)
-                                    .setIcon(android.R.drawable.ic_dialog_info)
-                                    .show();
-                                } catch (JSONException err) {
-                                    Log.e("APSChats", "Exception thrown: " + err.toString());
-                                }
+                                new AlertDialog.Builder(currentActivity)
+                                .setTitle("Success!").setMessage("Chat sent!")
+                                .setPositiveButton(android.R.string.ok, null)
+                                .setIcon(android.R.drawable.ic_dialog_info)
+                                .show();
                             } else {
                                 Log.e("APSChats", "ERROR: " + e.getMessage());
                             }

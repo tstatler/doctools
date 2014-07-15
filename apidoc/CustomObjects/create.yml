@@ -273,15 +273,11 @@ methods:
                         @Override
                         public void onResponse(final APSResponse e) {
                             if (e.getSuccess()) {
-                                try {
-                                    new AlertDialog.Builder(currentActivity)
-                                    .setTitle("Success!").setMessage("Created!"):
-                                    .setPositiveButton(android.R.string.ok, null)
-                                    .setIcon(android.R.drawable.ic_dialog_info)
-                                    .show();
-                                } catch (JSONException err) {
-                                    Log.e("APSObjects", "Exception thrown: " + err.toString());
-                                }
+                                new AlertDialog.Builder(currentActivity)
+                                .setTitle("Success!").setMessage("Created!"):
+                                .setPositiveButton(android.R.string.ok, null)
+                                .setIcon(android.R.drawable.ic_dialog_info)
+                                .show();
                             } else {
                                 Log.e("APSObjects", "ERROR: " + e.getMessage());
                             }
