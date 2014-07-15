@@ -246,7 +246,7 @@ methods:
                             if (e.getSuccess()) {
                                 try {
                                     JSONObject chat_groups = e.getResponse().getJSONArray("chat_groups");
-                                    // Do something the chat_groups array
+                                    // Do something with the chat_groups array
                                 } catch (JSONException err) {
                                     Log.e("APSChats", "Exception thrown: " + err.toString())
                                 }

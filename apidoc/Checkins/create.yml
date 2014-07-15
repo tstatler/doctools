@@ -199,7 +199,7 @@ methods:
                         public void onResponse(final APSResponse e) {
                             if (e.getSuccess()) {
                                 new AlertDialog.Builder(currentActivity)
-                                .setTitle("Success!").setMessage("Created!)
+                                .setTitle("Success!").setMessage("Created!")
                                 .setPositiveButton(android.R.string.ok, null)
                                 .setIcon(android.R.drawable.ic_dialog_info)
                                 .show();

@@ -239,7 +239,7 @@ methods:
                                 try {
                                     JSONArray events = e.getResponse().getJSONArray("events");
                                     for (int i = 0; i < events.length(); i++) {
-                                        Log.i("APSEvents", Oevents.getJSONObject(i).getString("name"));
+                                        Log.i("APSEvents", events.getJSONObject(i).getString("name"));
                                     }
                                     if (objectsList.size() <= 0) {
                                         Log.i("APSEvents","No Results!");

@@ -264,7 +264,7 @@ methods:
 
                 JSONObject fields = new JSONObject("{'color':'blue', 'make': 'nissan', 'purchased_at' : '2011-11-02 17:07:37 -0700', 'year' : 2005, 'used' : false, 'coordinates':[-122.1, 37.1]}");
                 HashMap<String, Object> data = new HashMap<String, Object>();
-                data.put("fields", field);
+                data.put("fields", fields);
                 data.put("classname", "cars");
 
                 try {

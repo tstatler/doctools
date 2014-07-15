@@ -276,7 +276,7 @@ methods:
                             if (e.getSuccess()) {
                                 try {
                                     JSONArray classname = e.getResponse().getJSONArray("classname");
-                                    if (users.length() <= 0) {
+                                    if (classname.length() <= 0) {
                                         Log.i("APSObjects", "No Results!");
                                     } else {
                                         // Do something with the classname array

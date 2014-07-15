@@ -171,7 +171,7 @@ methods:
                         public void onResponse(final APSResponse e) {
                             if (e.getSuccess()) {
                                 new AlertDialog.Builder(currentActivity)
-                                .setTitle("Success!").setMessage("Created ACL!)
+                                .setTitle("Success!").setMessage("Created ACL!")
                                 .setPositiveButton(android.R.string.ok, null)
                                 .setIcon(android.R.drawable.ic_dialog_info)
                                 .show();

@@ -277,7 +277,7 @@ methods:
                                     if (chat_groups.length() <= 0) {
                                         Log.i("APSChats", "No Results!");
                                     } else {
-                                        // Do something with the chat groups
+                                        // Do something with the chat_groups array
                                     }
                                 } catch (JSONException err) {
                                        Log.e("APSChats", "Exception thrown: " + err.toString());
