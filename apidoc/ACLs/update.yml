@@ -173,17 +173,17 @@ methods:
                                 .setIcon(android.R.drawable.ic_dialog_info)
                                 .show();
                             } else {
-                                Log.e("APSUsers", "ERROR: " + e.getMessage());
+                                Log.e("APSACLs", "ERROR: " + e.getMessage());
                             }
                         }
 
                         @Override
                         public void onException(final APSCloudException e) {
-                            Log.e("APSUsers", "Exception throw: " + e.toString());
+                            Log.e("APSACLs", "Exception throw: " + e.toString());
                         }
                     });
                 } catch (APSCloudException e) {
-                    Log.e("APSUsers", "Exception thrown: " + e.toString());
+                    Log.e("APSACLs", "Exception thrown: " + e.toString());
                 }`
 
       - platform: android-acssdk

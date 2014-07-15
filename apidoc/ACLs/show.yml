@@ -118,20 +118,20 @@ methods:
                                 try {
                                     Toast.makeText(currentActivity, e.getResponseString(), Toast.LENGTH_SHORT);
                                 } catch (APSCloudException err) {
-                                    Log.e("APSUsers", "Exception thrown: " + err.toString());
+                                    Log.e("APSACLs", "Exception thrown: " + err.toString());
                                 }
                             } else {
-                                Log.e("APSUsers", "ERROR: " + e.getMessage());
+                                Log.e("APSACLs", "ERROR: " + e.getMessage());
                             }
                         }
 
                         @Override
                         public void onException(APSCloudException e) {
-                            Log.e("APSUsers", "Exception throw: " + e.toString());
+                            Log.e("APSACLs", "Exception throw: " + e.toString());
                         }
                     });
                 } catch (APSCloudException e) {
-                    Log.e("APSUsers", "Exception thrown: " + e.toString());
+                    Log.e("APSACLs", "Exception thrown: " + e.toString());
                 }
 
       - platform: android-acssdk

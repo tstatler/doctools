@@ -173,6 +173,8 @@ methods:
         example: |
             Example Android APS SDK call:
 
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+
                 HashMap<String,Object> data = new HashMap<String,Object>;
                 JSONObject params = new JSONObject("{'first_name': 'joe', 'coordinates': {'$nearSphere': [-122.1,37.1], '$maxDistance': 0.00126}}");
                 data.put("where", params);
@@ -202,11 +204,11 @@ methods:
                         }
 
                         @Override
-                        public void onException(final APSCloudException e) {
+                        public void onException(APSCloudException e) {
                             Log.e("APSUsers", "Exception throw: " + e.toString());
                         }
                     });
-                } catch (APSCloudException e1) {
+                } catch (APSCloudException e) {
                     Log.e("APSUsers", "Exception thrown: " + e.toString());
                 }
 

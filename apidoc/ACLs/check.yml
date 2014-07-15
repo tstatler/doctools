@@ -127,9 +127,9 @@ methods:
                             if (e.getSuccess()) {
                                 try {
                                     JSONObject res = e.getResponse().getJSONObject("permission");
-                                    Log.i("APSPosts", "User permission: " + res.toString());
+                                    Log.i("APSACLs", "User permission: " + res.toString());
                                 } catch (JSONException err) {
-                                    Log.e("APSPosts", "Exception thrown: " + err.toString());
+                                    Log.e("APSACLs", "Exception thrown: " + err.toString());
                                 }
                             } else {
                                 Log.e("APSACLs", "ERROR: " + e.getMessage());
