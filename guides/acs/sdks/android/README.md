@@ -61,7 +61,6 @@ and then click **Create**. If the user is created successfully, the following di
     
 {@img verify_new_user.png}
 
-
 ## Enabling the Cloud service in a new Project
 
 Once you've [created an application in Dashboard](, downloaded the SDK, and obtained your application service
@@ -97,20 +96,37 @@ individual REST API method endpoints. For example, the `APSUsers.create()` metho
 endpoint. Alternatively, you can use the generic [APSCloud.sendRequest()](com/appcelerator/aps/APSCloud.html#sendRequest(java.lang.String, java.lang.String, java.util.Map, com.appcelerator.aps.APSResponseHandler)) method to make REST calls directly 
 against the Cloud APIs. For details on using the generic method, see [Making Generic REST API Calls](#).
 
+Response data is JSON-encoded.
+
+Each Cloud method must be enclosed in `try/catch` block that handles an exception of type `APSCloudException`.
+This type of exception occurs before any method calls over the network are initiated.
+
+    try {
+        APSPhotos.show(data, new APSResponseHandler() {                
+            @Override
+            public void onResponse(final APSResponse e) {
+                if (e.getSuccess()) {
+                    // Parse JSON response
+                } else {
+                    // Handle error
+                }
+            }
+        });
+    } catch (APSCloudException e) {
+        // Handle APSCloudExcpetion
+    }
 
 
-with either a generic method call or one of the APSObject classes, such as
-[APSUsers](http://docs.appcelerator.com/aps-sdk-apidoc/latest/android/com/appcelerator/cloud/objects/APSUsers.html) or
-[APSChats](http://docs.appcelerator.com/aps-sdk-apidoc/latest/android/com/appcelerator/cloud/objects/APSChats.html).
+Each method takes a `data` parameter, which is a `HashMap` containing the data to send with the request.
+Pass `null` if the method doesn't require any input.
 
-Methods that method includes a `handler` parameter that specifies the callback to handle the server response.
-The callback is passed an
-[APSResponse](http://docs.appcelerator.com/aps-sdk-apidoc/latest/android/org/appcelerator/aps/cloud/APSResponse.html)
-object that contains response metadata (such as success or failure) and the response payload. 
+The second parameter of each Cloud object method takes an instance of [APSResponseHandler](http://docs.appcelerator.com/aps-sdk-apidoc/latest/android/com/appcelerator/cloud/APSResponseHandler.html), which is an interface. The instance must override the following methods:
 
-Every method also includes an optional `progressHandler` parameter that specifies a callback to handle the
-progress of the request.  The callback is passed a float value indidicating the progress of the
-request as a percentage (0 to 100) and a boolean value to indicate if the request is uploading data or not.
+* An `onResponse()` method to handle the server's response. This method is passed an [APSResponse](http://docs.appcelerator.com/aps-sdk-apidoc/latest/android/com/appcelerator/cloud/APSResponse.html) object that contains the response data, as well as
+meta-data about the request.
+* An`onException()` handler that is invoked for any errors that occur during the API call.
+
+
 
 APSCloud methods execute the callback handlers in the background. To update the UI,
 the application needs to execute the code in the UI thread, which requires a reference to the
@@ -129,31 +145,28 @@ with the ACS username.
     data.put("password", "password");
 
     try {
-        APSUsers.login(data, new APSClient.APSResponseHandler() {
+        APSUsers.login(data, new APSResponseHandler() {
             @Override
             public void onResponse(final APSResponse e) {
                 if (e.getSuccess()) {
-                    // Need to store a reference of the main activity
-                    if (currentActivity != null) {
-                        currentActivity.runOnUiThread(new Runnable() {
-                            public void run(){
-                                try {
-                                    JSONObject res = e.getResponse();
-                                    // Response returns an array containing a single user
-                                    JSONArray payload = res.getJSONArray("users");
-                                    res = payload.getJSONObject(0);
-                                    loginTextView.setText(res.getString("username"));
-                                } catch (Exception e) {
-                                    Log.e("LOGIN", "Error parsing JSON object: " + e.toString());
-                                }
-                            }
-                        });
+                    try {
+                        JSONObject res = e.getResponse();
+                        // Response returns an array containing a single user
+                        JSONArray payload = res.getJSONArray("users");
+                        res = payload.getJSONObject(0);
+                        loginTextView.setText(res.getString("username"));
+                    } catch (Exception e) {
+                        Log.e("LOGIN", "Error parsing JSON object: " + e.toString());
                     }
                 }
                 else {
                     Log.e("LOGIN", e.getMessage());
                 }
                 
+            }
+            @Override
+            public void onException(APSCloudException e) {
+                // Handle exception that occured                
             }
         });
     } catch (APSClientError e) {
@@ -162,12 +175,20 @@ with the ACS username.
 
 ### APSFiles Create Call with Progress Handler
 
-The following example uploads a file (`/res/raw/reference.pdf`) to the ACS server. Since the method
-call requires that uploaded data be an instance of `java.io.File`, the application needs to copy the
-resource to a read-write directory before uploading it. Storing the file locally requires that the [WRITE_EXTERNAL_STORAGE](http://developer.android.com/reference/android/Manifest.permission.html#WRITE_EXTERNAL_STORAGE) permission be included in your AndroidManifest.xml file.
+For Cloud API methods that may involve uploading large files, such as `APSPhotos.create()` or `APSFiles.create()`, 
+there is an overloaded version that takes an optional `progressHandler` parameter. This parameter takes
+a [APSProgressHandler](http://docs.appcelerator.com/aps-sdk-apidoc/latest/android/com/appcelerator/cloud/APSProgressHandler.html)
+instance, which must provide an `onProgress` handler. This handler is periodically triggered as the file
+transfer continues, and is passed an integer between 0-100 indicating the current upload progress.
 
-The progress callback updates the progress bar, displaying the status of the upload. After the request
-successfully completes, the application displays a toast notification.
+The following example uploads a file from the device (`/res/raw/reference.pdf`) to the ACS storage server. 
+Since the method call requires that uploaded data be an instance of `java.io.File`, the application needs to copy the
+resource to a read-write directory before uploading it. Storing the file locally requires that the 
+[WRITE_EXTERNAL_STORAGE](http://developer.android.com/reference/android/Manifest.permission.html#WRITE_EXTERNAL_STORAGE) 
+permission be included in your AndroidManifest.xml file.
+
+The progress callback calls the `setProgress() ` method on a `ProgressBar` object., displaying the 
+status of the upload. After the request successfully completes, the application displays a toast notification.
 
     HashMap<String, Object> data = new HashMap<String, Object>();
     String filename = "reference.pdf";
