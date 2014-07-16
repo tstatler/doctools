@@ -140,9 +140,6 @@ methods:
         example: |
             Example iOS call:
 
-            Example iOS call:
-      
-                // Create dictionary of parameters to be passed with the request
                 NSDictionary *data = @{
                     @"message": @"Working hard at Appcelerator Cloud Services Office"
                 };
