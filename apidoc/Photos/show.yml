@@ -136,7 +136,7 @@ methods:
 
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
-                    `NSArray *photos = [response getObjectsOfType:[CCPhoto class]];
+                    NSArray *photos = [response getObjectsOfType:[CCPhoto class]];
                 }
 
       - platform: android

@@ -136,6 +136,31 @@ methods:
                     }
                 }];
 
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
+                NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:2];
+                [pramDict setObject:(CCPlace *)place.objectId forKey:@"place_id"];
+                [paramDict setObject:[NSNumber nubmerWithInt:1] forKey:@"page"]; // optional
+                [paramDict setObject:[NSNumber nubmerWithInt:10] forKey:@"per_page"]; // optional
+                CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"photos/search.json" paramDict:paramDict];
+                [request startAsynchronous];
+                [request release];
+
+            SDK Callback:
+
+                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
+                {
+                  if ([response.meta.method isEqualToString:@"searchPhotos"]) {
+                    NSArray *photos = [response getObjectsOfType:[CCPhoto class]];
+                    for (CCPhoto *photo in photos)
+                    {
+                      ...
+                    }
+                  }
+                }
+
       - platform: android
         example: |
             Example Android call:
