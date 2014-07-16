@@ -31,12 +31,12 @@ methods:
                 data.put("ids", 1);
 
                 try {
-                    APSPushSchedules.create(data, new APSResponseHandler() {
+                    APSPushSchedules.remove(data, new APSResponseHandler() {
 
                         @Override
                         public void onResponse(final APSResponse e) {
                             if (e.getSuccess()) {
-                                Log.i("APSPushSchedules", "Removed!");
+                              Log.i("APSPushSchedules", "Removed!");
                             } else {
                               Log.e("APSPushSchedules", "ERROR: " + e.getMessage());
                             }

@@ -35,7 +35,7 @@ methods:
         example: |
             This example unlinks an external Facebook account.
 
-                Cloud.SocialIntegrations.externalAccountLink({
+                Cloud.SocialIntegrations.externalAccountUnlink({
                     type: 'facebook',
                     id: facebookUserId
                 }, function (e) {
