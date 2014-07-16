@@ -101,7 +101,7 @@ methods:
 
                 NSDictionary *data = @{
                                          @"post_id" : savedPostId,
-                                         @"review_id" : @"savedReviewId"
+                                         @"review_id" : savedReviewId
                                       };
                 [APSReviews remove:data withBlock:^(APSResponse *e) {
                     if (e.success){
