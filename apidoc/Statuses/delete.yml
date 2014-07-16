@@ -65,7 +65,11 @@ methods:
         example: |
             Example iOS call:
 
-                [APSStatuses remove:nil withBlock:^(APSResponse *e) {
+                NSDictionary *data = @{
+                    @"status_id":@"3453452345deadbeef345"
+                };
+
+                [APSStatuses remove:data withBlock:^(APSResponse *e) {
                     if (e.success) {
                         [[[UIAlertView alloc] initWithTitle:@"Success" message:@"Removed!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
                     } else {

@@ -68,7 +68,7 @@ methods:
         example: |
             Example iOS call:
 
-                NSDictionary *data = @{@"photo_id": self.photoId};
+                NSDictionary *data = @{@"photo_id": @"4d8971236f7095514800000a"};
                 
                 [APSPhotos remove:data withBlock:^(APSResponse *e) {
                     if (e.success) {
