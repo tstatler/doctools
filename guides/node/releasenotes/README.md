@@ -14,7 +14,7 @@ applications or viewing aggregate application information.
 is not supported for applications that use the MVC framework.
 
 * Add support to specify a different npm registry for installing node modules. See the
-[Module Dependencies section](http://localhost/~bhatfield/cloud/latest/#!/guide/node_standard-section-module-dependencies)
+[Module Dependencies section](#!/guide/node_standard-section-module-dependencies)
 in *Standard Node Application*.
 
 * Add support to set and unset environment variables.  See the [config](#!/guide/node_cli_config)
