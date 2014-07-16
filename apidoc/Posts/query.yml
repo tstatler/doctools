@@ -194,7 +194,7 @@ methods:
                 NSDictionary *data = @{
                     @"where": @{
                         @"ratings_average":@{
-                            @"$gt":7.0
+                            @"$gt":@7.0
                         }
                     }
                 };
