@@ -109,21 +109,23 @@ methods:
         example: |
             Example iOS call:
 
-                NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
-                [paramDict setObject:@"foo@foo.com" forKey:@"login"];
-                [paramDict setObject:@"pass" forKey:@"password"];
-                CCRequest *request = [[[CCRequest alloc] initWithDelegate:self httpMethod:@"POST" baseUrl:@"users/login.json" paramDict:paramDict] autorelease];
-                [request startASynchronous];
+                NSDictionary *data = @{
+                   @"login": self.usernameField.text,
+                   @"password": self.passwordField.text
+                };
+                
+                [APSUsers login:data withBlock:^(APSResponse *e) {
+                    // The callback runs on a background thread, you must
+                    // switch to the main thread before interacting with the UI.
+                    if (e.success) {
+                        NSString *userId = [[[e.response objectForKey:@"users"] objectAtIndex:0] objectForKey:@"id"];
+                        NSString *msg = [NSString stringWithFormat:@"Logged in! You are now logged in as %@", userId];
+                        [[[UIAlertView alloc] initWithTitle:@"Success" message:msg delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error" message:e.message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    }
+                }];
 
-            SDK Callback:
-
-                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
-                {
-                	NSArray *users = [response getObjectsOfType:[CCUser class]];
-                	if ([users count] == 1) {
-                		NSLog(@"user %@ successfully logged in", user);
-                	}
-                }
 
       - platform: android
         example: |

@@ -221,26 +221,28 @@ methods:
       - platform: ios
         example: |
             Example iOS call:
-
-                NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
-                [paramDict setObject:@"foo@foo.com" forKey:@"email"];
-                [paramDict setObject:@"John" forKey:@"first_name"];
-                [paramDict setObject:@"Woo" forKey:@"last_name"];
-                [paramDict setObject:@"pass" forKey:@"password"];
-                [paramDict setObject:@"pass" forKey:@"password_confirmation"];
-                CCRequest *request = [[[CCRequest alloc] initWithDelegate:self httpMethod:@"POST" baseUrl:@"users/create.json" paramDict:paramDict] autorelease];
-                [request addPhotoUIImage:[UIImage imageNamed:@"john.jpg"] paramDict:nil];
-                [request startAsynchronous];
-
-            SDK Callback:
-
-                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
-                {
-                	NSArray *users = [response getObjectsOfType:[CCUser class]];
-                	if ([users count] == 1) {
-                		NSLog(@"Successfully registered user %@", user);
-                	}
-                }
+      
+                // Create dictionary of parameters to be passed with the request
+                NSDictionary *data = @{
+                    @"username": self.usernameField.text,
+                    @"password": self.passwordField.text,
+                    @"password_confirmation": self.passwordConfField.text,
+                    @"first_name": self.firstNameField.text,
+                    @"last_name": self.lastNameField.text,
+                    @"email": self.emailField.text
+                };
+                
+                [APSUsers create:data withBlock:^(APSResponse *e) {
+                    // The callback will be run on a background thread
+                    // Switch to the main thread before interacting with the UI
+                    if (e.success) {
+                        NSString *userId = [[[e.response objectForKey:@"users"] objectAtIndex:0] objectForKey:@"id"];
+                        NSString *msg = [NSString stringWithFormat:@"Created! You are now logged in as %@", userId];
+                        [[[UIAlertView alloc] initWithTitle:@"Success" message:msg delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error" message:e.message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    }
+                }];
 
       - platform: android
         example: |

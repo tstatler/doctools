@@ -151,7 +151,26 @@ methods:
         example: |
             Example iOS call:
 
-                If you want to change user name to Joe and update with a new photo, you can pass in the new user name and a new photo to the update request.
+                // Create dictionary of parameters to be passed with the request
+                NSDictionary *data = @{
+                    @"first_name": "Joe"
+                };
+                
+                [APSUsers update:data withBlock:^(APSResponse *e) {
+                    if (e.success) {
+                        [[[UIAlertView alloc] initWithTitle:@"Success" message:@"Updated!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error" message:e.message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios
+        example: |
+            Example iOS call:
+
+            If you want to change user name to Joe and update with a new photo, you can pass in
+            the new user name and a new photo to the update request.
+
                 NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:@"Joe", @"name", nil]
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"PUT" baseUrl:@"users/update.json" paramDict:paramDict];
                 [request addPhotoUIImage:(UIImage *)newUserImage paramDict:nil];

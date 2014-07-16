@@ -81,6 +81,22 @@ methods:
 
       - platform: ios
         example: |
+            Example iOS APS SDK call:
+
+                NSDictionary *data = @{
+                    @"email": self.emailField.text
+                };
+                
+                [APSUsers resendConfirmation:data withBlock:^(APSResponse *e) {
+                    if (e.success) {
+                        [[[UIAlertView alloc] initWithTitle:@"Success" message:@"Please check your email!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error" message:e.message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
             Example iOS call:
 
                 NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
@@ -96,6 +112,7 @@ methods:
                     NSLog(@"User verification email sent!");
                   }
                 }
+
 
       - platform: android
         example: |

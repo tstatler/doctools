@@ -154,6 +154,18 @@ methods:
 
       - platform: ios
         example: |
+            Example iOS APS SDK call:
+
+                [APSUsers query:nil withBlock:^(APSResponse *e) {
+                    if (e.success) {
+                        [[[UIAlertView alloc] initWithTitle:@"Success!" message:e.responseString delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error" message:e.message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
             Example iOS call:
 
                 CCWhere *where = [[[CCWhere alloc] init] autorelease];

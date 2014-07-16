@@ -192,23 +192,23 @@ methods:
         example: |
             Example iOS call:
 
-                NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
-                [paramDict setObject:(CCPhoto *)photo.objectId forKey:@"photo_id"];
-                CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"POST" baseUrl:@"photos/update.json" paramDict:paramDict];
-                [request addPhotoUIImage:newImage paramDict:nil];
-                [request startAsynchronous];
-                [request release];
-
-            SDK Callback:
-
-                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
-                {
-                	NSArray *photos = [response getObjectsOfType:[CCPhoto class]];
-                	for (CCPhoto *photo in photos)
-                	{
-                		...
-                	}
-                }
+                NSDictionary *data = @{
+                    @"photo_id": self.photoId,
+                    @"photo": self.photoData,
+                    @"tags": self.tagsField.text
+                };
+                
+                [APSPhotos update:data withBlock:^(APSResponse *e) {
+                    if (e.success) {
+                        [[[UIAlertView alloc] initWithTitle:@"Success" message:@"Uploaded!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];                        
+                        self.photoData = nil;
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error" message:e.message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    }
+                    self.updateButton.hidden = NO;
+                } progressBlock:^(float progress, BOOL upload) {
+                    self.progressBar.progress = progress;
+                }];
 
       - platform: android
         example: |

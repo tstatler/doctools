@@ -118,7 +118,22 @@ methods:
 
       - platform: ios
         example: |
-            Example iOS call:
+            Example iOS APS SDK call:
+          
+                NSDictionary *data = @{@"user_id": self.userId};
+                [APSUsers show:data withBlock:^(APSResponse *e) {
+                    if (e.success) {
+                        [[[UIAlertView alloc] initWithTitle:@"Success" message:e.responseString delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error" message:e.message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            In the following example the value of the APSResponse object's `responseString` property 
+            is displayed in a UITextView object. The callback block runs on a separate thread, so you 
+            must switch to the main thread before interacting with the UI.
 
                 NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:(CCUser *)user.objectId, @"user_id", nil];
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"users/show.json" paramDict:paramDict];
