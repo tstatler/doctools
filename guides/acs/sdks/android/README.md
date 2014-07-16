@@ -26,7 +26,10 @@ and then run the application.
 1. Login to [Appcelerator Dashboard](https://dashboard.appcelerator.com).
 2. From the Orgs menu, select the organization to associate with the application.
 3. Click the Apps menu and select **Add a Native App**.
-4. In the dialog that appears enter **APSCloudExampleApp**.
+4. In the dialog that appears
+    * Type **APSCloudExampleApp** (or other name) in the **Name** field.
+    * Select **Android** from the **Platform** menu.
+    * Select any cateogory from the **Category** menu.
 5. Click **Next** and then click the **Overview** tab.
 6. Click the **Services** tab, then click **Show Key** under **Cloud /  Performance /  Analytics**.
 7. Select **Development** from the Environment menu, then click the clipboard icon to copy the key
