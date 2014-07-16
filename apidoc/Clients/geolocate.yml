@@ -95,6 +95,25 @@ methods:
 
       - platform: ios
         example: |
+            Example iOS APS SDK call:
+
+                // Create dictionary of parameters to be passed with the request
+                NSDictionary *data = @{
+                      @"ip_address": clientIPAddress
+                };
+                
+                [APSClients geolocate:data withBlock:^(APSResponse *e) {
+                    if (e.success) {
+                        NSDictionary *loc = e.response[@"location"];
+                        NSString *message = [NSString stringWithFormat:@"lat: %@ lon: %@", loc[@"latitude"], loc[@"longitude"]];
+                        [[[UIAlertView alloc] initWithTitle:@"Success" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error" message:e.errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
             Example iOS call:
 
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:controller httpMethod:@"GET" baseUrl:@"clients/geolocate.json" paramDict:nil];

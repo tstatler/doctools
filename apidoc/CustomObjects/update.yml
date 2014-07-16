@@ -185,6 +185,30 @@ methods:
 
       - platform: ios
         example: |
+            Example iOS APS SDK call:
+
+                // Create dictionary of parameters to be passed with the request
+                NSDictionary *data = @{
+                      @"classname": @"cars",
+                      @"id": savedCarID,
+                      @"fields": @{
+                            @"color": @"purple",
+                            @"mileage": @10000
+                      }
+                };
+                
+                [APSObjects update:data withBlock:^(APSResponse *e) {
+                      if (e.success) {
+                          NSString *message = [NSString stringWithFormat:@"id: %@", ((NSArray *)e.response[@"cars"])[0][@"id"]];
+                          [[[UIAlertView alloc] initWithTitle:@"Success" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      } else {
+                          [[[UIAlertView alloc] initWithTitle:@"Error" message:e.errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      }
+                }];
+
+
+      - platform: ios-acssdk
+        example: |
             Example iOS call:
 
                 NSMutableDictionary *fieldsDict = [NSMutableDictionary dictionaryWithCapacity:4];

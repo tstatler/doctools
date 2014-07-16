@@ -136,19 +136,19 @@ methods:
   
                 // Create dictionary of parameters to be passed with the request
                 NSDictionary *data = @{
-                  @"name": @"testACL",
-                  @"reader_ids": @"",
-                  @"writer_ids": @"",
-                  @"public_read": @YES,
-                  @"public_write": @YES
+                    @"name": @"testACL",
+                    @"reader_ids": @"",
+                    @"writer_ids": @"",
+                    @"public_read": @YES,
+                    @"public_write": @YES
                 };
   
                 [APSACLs update:data withBlock:^(APSResponse *e) {
-                  if (e.success) {
-                      [[[UIAlertView alloc] initWithTitle:@"Great" message:@"Success!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-                  } else {
-                      [[[UIAlertView alloc] initWithTitle:@"Error" message:e.errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-                  }
+                    if (e.success) {
+                        [[[UIAlertView alloc] initWithTitle:@"Great" message:@"Success!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error" message:e.errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    }
                 }];
 
       - platform: ios-acssdk

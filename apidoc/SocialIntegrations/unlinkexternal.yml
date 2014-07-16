@@ -40,7 +40,7 @@ methods:
         example: |
             This example unlinks an external Facebook account.
 
-                Cloud.SocialIntegrations.externalAccountLink({
+                Cloud.SocialIntegrations.externalAccountUnlink({
                     type: 'facebook',
                     id: facebookUserId
                 }, function (e) {
@@ -96,6 +96,25 @@ methods:
             external_account_unlink call.
 
       - platform: ios
+        example: |
+            Example iOS APS SDK call:
+
+                // Create dictionary of parameters to be passed with the request
+                NSDictionary *data = @{
+                    @"type": @"facebook",
+                    @"id": facebookUserId
+                };
+                
+                [APSSocialIntegrations externalAccountUnlink:data withBlock:^(APSResponse *e) {
+                      if (e.success) {
+                          NSString *message = [NSString stringWithFormat:@"Unlinked %lu users", (unsigned long)((NSArray *) e.response[@"users"]).count ];
+                          [[[UIAlertView alloc] initWithTitle:@"Success" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      } else {
+                          [[[UIAlertView alloc] initWithTitle:@"Error" message:e.errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      }
+                }];
+
+      - platform: ios-acssdk
         example: |
             Example iOS call:
 

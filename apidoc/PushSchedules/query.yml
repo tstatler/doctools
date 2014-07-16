@@ -92,3 +92,16 @@ methods:
                     ]
                   }
                 }
+
+      - platform: ios
+        example: |
+            Example iOS APS SDK call:
+
+                [APSPushSchedules query:nil withBlock:^(APSResponse *e) {
+                      if (e.success) {
+                          NSString *message = [NSString stringWithFormat:@"Found %lu push_schedules", (unsigned long)((NSArray *) e.response[@"push_schedules"]).count ];
+                          [[[UIAlertView alloc] initWithTitle:@"Success" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      } else {
+                          [[[UIAlertView alloc] initWithTitle:@"Error" message:e.errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      }
+                }];

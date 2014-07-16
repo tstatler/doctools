@@ -46,6 +46,10 @@ methods:
                 
       - platform: ios
         example: |
+            This API is not supported in the iOS APS SDK.
+
+      - platform: ios-acssdk
+        example: |
             Example iOS call:
             
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"push_notification/reset_badge.json"];

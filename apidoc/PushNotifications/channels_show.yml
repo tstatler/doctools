@@ -98,6 +98,25 @@ methods:
 
       - platform: ios
         example: |
+            Example iOS APS SDK call:
+
+                // Create dictionary of parameters to be passed with the request
+                NSDictionary *data = @{
+                    @"name": @"test"
+                };
+                
+                [APSPushNotifications showChannels:data withBlock:^(APSResponse *e) {
+                    if (e.success) {
+                        NSDictionary *devices = e.response[@"devices"];
+                        NSString *message = [NSString stringWithFormat:@"iOS: %@ Android: %@", devices[@"ios_counts"], devices[@"android_counts"]];
+                        [[[UIAlertView alloc] initWithTitle:@"Success" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error" message:e.errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
             Example iOS call:
 
 

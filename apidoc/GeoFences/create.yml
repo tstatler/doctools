@@ -103,3 +103,30 @@ methods:
                   }
                 }
 
+      - platform: ios
+        example: |
+            Example iOS APS SDK call:
+
+                // Create dictionary of parameters to be passed with the request
+                NSDictionary *data = @{
+                    @"geo_fence": @{
+                        @"loc": @{
+                            @"coordinates": @[@-122.4167,@37.7833],
+                            @"radius": @"10/3959"
+                        },
+                        @"payload": @{
+                            @"alert":@"24-hour sale at our SF flagship store on 12/26!"
+                        },
+                        @"start_time": @"2014-03-08T00:00",
+                        @"end_time": @"2014-12-26T19:00"
+                    }
+                };
+                
+                [APSGeoFences create:data withBlock:^(APSResponse *e) {
+                      if (e.success) {
+                          [[[UIAlertView alloc] initWithTitle:@"Great" message:@"Success!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      } else {
+                          [[[UIAlertView alloc] initWithTitle:@"Error" message:e.errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      }
+                }];
+                

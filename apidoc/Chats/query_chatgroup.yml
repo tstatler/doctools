@@ -249,6 +249,24 @@ methods:
 
       - platform: ios
         example: |
+            Example iOS APS SDK call:
+
+                // Create dictionary of parameters to be passed with the request
+                NSDictionary *data = @{
+                      @"to_ids": @[@"4edef6f7d9ca7247b8000004", @"4edf0c20d9ca724a82000003"],
+                      @"message": @"Good morning"
+                };
+                
+                [APSChats create:data withBlock:^(APSResponse *e) {
+                      if (e.success) {
+                          [[[UIAlertView alloc] initWithTitle:@"Great" message:@"Success!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      } else {
+                          [[[UIAlertView alloc] initWithTitle:@"Error" message:e.errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      }
+                }];
+
+      - platform: ios-acssdk
+        example: |
             Example iOS call:
 
                 NSDictionary *paramDict = [[NSArray arrayWithObjects:@"4e02f5b8d0afbe43c1000002", nil], @"participate_ids", nil];

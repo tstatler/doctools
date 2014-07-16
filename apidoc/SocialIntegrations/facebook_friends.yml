@@ -76,6 +76,19 @@ methods:
 
       - platform: ios
         example: |
+            Example iOS APS SDK call:
+
+                [APSSocialIntegrations searchFacebookFriends:nil withBlock:^(APSResponse *e) {
+                      if (e.success) {
+                          NSString *message = [NSString stringWithFormat:@"Found %lu users", (unsigned long)((NSArray *) e.response[@"users"]).count ];
+                          [[[UIAlertView alloc] initWithTitle:@"Success" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      } else {
+                          [[[UIAlertView alloc] initWithTitle:@"Error" message:e.errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      }
+                }];
+
+      - platform: ios-acssdk
+        example: |
             Example iOS call:
 
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"social/facebook/search_friends.json" paramDict:nil];

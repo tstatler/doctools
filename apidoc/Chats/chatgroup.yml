@@ -76,7 +76,7 @@ methods:
 
                 Cloud.Chats.getChatGroups(function (e) {
                     if (e.success) {
-                        for (var i = 0; i < e.chats.length; i++) {
+                        for (var i = 0; i < e.chat_groups.length; i++) {
                             var group = e.chat_groups[i];
                             alert('Success:\n' +
                                 'id: ' + group.id + '\n' +
@@ -220,6 +220,19 @@ methods:
                 }
 
       - platform: ios
+        example: |
+            Example iOS APS SDK call:
+
+                [APSChats getChatGroups:nil withBlock:^(APSResponse *e) {
+                    if (e.success) {
+                        NSString *message = [NSString stringWithFormat:@"Found %lu groups", (unsigned long)((NSArray *) e.response[@"chat_groups"]).count ];
+                        [[[UIAlertView alloc] initWithTitle:@"Success" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error" message:e.errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
         example: |
             Example iOS call:
 

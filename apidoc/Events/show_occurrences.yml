@@ -141,6 +141,24 @@ methods:
 
       - platform: ios
         example: |
+            Example iOS APS SDK call:
+
+                // Create dictionary of parameters to be passed with the request
+                NSDictionary *data = @{
+                      @"place_id": savedPlaceId
+                };
+
+                [APSEvents showOccurrences:data withBlock:^(APSResponse *e) {
+                      if (e.success) {
+                          NSString *message = [NSString stringWithFormat:@"Found %lu event_occurrences", (unsigned long)((NSArray *)e.response[@"event_occurrences"]).count];
+                          [[[UIAlertView alloc] initWithTitle:@"Success" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      } else {
+                          [[[UIAlertView alloc] initWithTitle:@"Error" message:e.errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      }
+                }];
+
+      - platform: ios-acssdk
+        example: |
             Example iOS call:
 
                 NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:(CCEvent *)event.objectId, @"event_id", nil];
