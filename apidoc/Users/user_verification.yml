@@ -84,7 +84,7 @@ methods:
             Example iOS APS SDK call:
 
                 NSDictionary *data = @{
-                    @"email": self.emailField.text
+                    @"email": @"foo@foo.com"
                 };
                 
                 [APSUsers resendConfirmation:data withBlock:^(APSResponse *e) {
