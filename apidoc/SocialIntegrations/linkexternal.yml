@@ -175,6 +175,39 @@ methods:
         example: |
             Example Android call:
 
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("id", "109216395704353");
+                data.put("type", "facebook");
+                data.put("token", "lqcs6jedOtdrYfu3CaIVR0GWlCnV1l3JbY1i-gFxNNc.eyJpdiI6Ims2STNfRmMxbXFJamoxWFlUWjFrTkEifQ.RW77c5r7ggvTobyL0INb6qscnpoyrrFrrJ6K_IldoJBxcxLkwus8SsLFAJmwy05nLa71zBEqdkm2wJMIn31iUW2mxd37eQX9JRNrtSWcgRpuRDuzjhB7f0u3J4WJYASRnJkq-8l0hr9jiLIDajkJRg");
+
+                try {
+                    APSSocialIntegrations.externalAccountLink(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+
+                            if (e.getSuccess()) {
+                                Log.i("APSSocialIntegrations", "Success!");
+                            } else {
+                                Log.e("APSSocialIntegrations", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSSocialIntegrations", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSSocialIntegrations", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
+        example: |
+            Example Android call:
+
                 ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
                 //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
 

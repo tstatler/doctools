@@ -113,6 +113,37 @@ methods:
 
       - platform: android
         example: |
+            Example Android APS SDK call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+
+                try {
+                    APSClients.geolocate(null, new APSResponseHandler() {
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                try {
+                                    Log.i("APSClients", e.getResponseString());
+                                } catch (APSCloudException err1) {
+                                    Log.e("APSClients", err1.toString());
+                                }
+                            } else {
+                                Log.e("APSClients", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(APSCloudException e) {
+                            Log.e("APSClients", e.toString());
+                        }
+                    });
+                } catch (APSCloudException err2) {
+                    Log.e("APSClients", err2.toString());
+                }
+
+
+      - platform: android-acssdk
+        example: |
             Example Android call:
 
                 ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key

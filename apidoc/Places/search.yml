@@ -168,6 +168,48 @@ methods:
         example: |
             Example Android call:
 
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+
+                // Create dictionary of parameters to be passed with the request
+                HashMap<String, Object> data = new HashMap<String, Object>();
+                data.put("latitude", "37.3890223");
+                data.put("longitude", "-122.0502723");
+
+                try {
+                    APSPlaces.search(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                try {
+                                    JSONArray places = e.getResponse().getJSONArray("places");
+                                    for (int i = 0; i < places.length(); i++) {
+                                        Log.i("APSPlaces", places.getJSONObject(i).getString("name"));
+                                    }
+                                    if (objectsList.size() <= 0) {
+                                        objectsList.add("No Results!");
+                                    }
+                                } catch (JSONException e1) {
+                                    Log.e("APSPlaces", e.toString());
+                                }
+                            } else {
+                                Log.e("APSPlaces", e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(APSCloudException e) {
+                            Log.e("APSPlaces", e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSPlaces", e.toString());
+                }
+
+      - platform: android-acssdk
+        example: |
+            Example Android call:
+
                 ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
                 //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
 

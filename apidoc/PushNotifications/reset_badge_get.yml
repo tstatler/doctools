@@ -58,8 +58,12 @@ methods:
                 {
                 	// successfully call
                 }
-                
+
       - platform: android
+        example: |
+            This API is not supported in the APS SDK.
+
+      - platform: android-acssdk
         example: |
             Example Android call:
             
