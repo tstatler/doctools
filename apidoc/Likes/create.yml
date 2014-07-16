@@ -137,7 +137,7 @@ methods:
                     if (e.success){
                         NSArray *likes = e.response[@"likes"];
                         NSDictionary *like = likes[0];
-                        NSString *message =[NSString stringWithFormat:@"id : %@\n", like[@"id"]];
+                        NSString *message = [NSString stringWithFormat:@"id : %@\n", like[@"id"]];
 
                         [[[UIAlertView alloc] initWithTitle:@"Success" 
                                                     message:message

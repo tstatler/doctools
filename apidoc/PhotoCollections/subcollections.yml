@@ -162,6 +162,36 @@ methods:
         example: |
             Example iOS call:
 
+                NSDictionary *data = @{
+                                         @"page"         : @1,
+                                         @"per_page"     : @20,
+                                         @"collection_id": @"savedCollectionID"
+                                      };
+                [APSPhotoCollections showSubcollections:data withBlock:^(APSResponse *e) {
+                    if (e.success){
+                        NSArray *collections = e.response[@"collections"];
+                        for (NSDictionary *collection in collections) {
+                            NSString *message = [NSString stringWithFormat:@"id : %@\n Name : %@\nCount : %@\nUpdated at : %@\n",
+                                                    collection[@"id"],
+                                                    collection[@"name"],
+                                                    collection[@"count"],
+                                                    collection[@"updated_at"]];
+
+                            NSLog(@"%@", message);
+                        }
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:e.errorMessage
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
                 NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:3];
                 [paramDict setObject:(CCCollection *)collection.objectId forKey:@"collection_id"];
                 [paramDict setObject:[NSNumber nubmerWithInt:1] forKey:@"page"]; // optional
