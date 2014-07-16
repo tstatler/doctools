@@ -8,7 +8,8 @@ This release of Node.ACS brings the following new features and fixes:
 
 * Add support to associate Node.ACS applications with Appcelerator Dashboard organizations.  Add
 the `--org <ORGANIZATION_ID>` option when running `acs` commands, such as when creating new
-applications or viewing aggregate application information.
+applications or viewing aggregate application information. To use this functionality with
+Appcelerator Studio, you need to upgrade your Studio to version 3.3.0.
 
 * Add support to use Node cluster to fork child processes in standard Node.ACS applications.  This
 is not supported for applications that use the MVC framework.
