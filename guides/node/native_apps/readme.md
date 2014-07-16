@@ -38,7 +38,7 @@ If you are using [URLConnection](http://developer.android.com/reference/java/net
    	URLConnection method_nameConnection = method_nameURL.openConnection();
 	method_nameConnection.addRequestProperty("x-native-id", "<YOUR_APP_GUID>");
 
-If your application uses the Apache Stack (org.apache.http namespace), the [addHeader(java.lang.String, java.lang.String)](http://developer.android.com/reference/org/apache/http/message/AbstractHttpMessage.html#addHeader%28java.lang.String,%20java.lang.String%29) is available to all classes that extend [AbstractHttpMessage](http://developer.android.com/reference/org/apache/http/message/AbstractHttpMessage.html#addHeader%28java.lang.String,%20java.lang.String%29). The following example demonstrates adding the `x-native-id` header using this method:
+If your application uses the Apache Stack (org.apache.http namespace), the [addHeader(java.lang.String, java.lang.String)](http://developer.android.com/reference/org/apache/http/message/AbstractHttpMessage.html#addHeader%28java.lang.String,%20java.lang.String%29) is available to all classes that extend [AbstractHttpMessage](http://developer.android.com/reference/org/apache/http/message/AbstractHttpMessage.html). The following example demonstrates adding the `x-native-id` header using this method:
 
 	DefaultHttpClient httpclient = new DefaultHttpClient();
 	String url = "http://localhost:8080/method";
