@@ -306,6 +306,10 @@ The  [`APSPushNotification`](#) class lets your application subscribe, send and 
 To use this class, you also need  [`APSCloudPush`](com/appcelerator/aps/APSCloudPush.html) class, which provides the underlying services
 to handle incoming push notifications.
 
+Your application must call 
+[APSServiceManager.getInstance()](http://docs.appcelerator.com/aps-sdk-apidoc/latest/androidcom/appcelerator/aps/APSServiceManager.html#enable%28android.content.Context%2C%20java.lang.String%29) before calling any methods on `APSCloudPush`, 
+otherwise an exception will be thrown, but this should still be documented. 
+
 ### CloudPush sample application
 
 The SDK includes the `APSCloudPushExample` application that demonstrates use of the `APSPushNotification` 
