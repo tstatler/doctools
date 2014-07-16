@@ -153,7 +153,6 @@ methods:
                         for (var i = 0; i < e.reviews.length; i++) {
                             var review = e.reviews[i];
                             alert('id: ' + review.id + '\n' +
-                                'id: ' + review.id + '\n' +
                                 'rating: ' + review.rating + '\n' +
                                 'content: ' + review.content + '\n' +
                                 'updated_at: ' + review.updated_at);
@@ -220,6 +219,42 @@ methods:
                 }
 
       - platform: ios
+        example: |
+            Example iOS call:
+
+                NSDictionary *data = @{
+                                         @"page" : @1,
+                                         @"per_page" : @20,
+                                         @"where" : @{
+                                            @"$gt" : @5.0
+                                         }
+                                      };
+                [APSReviews query:data withBlock:^(APSResponse *e) {
+                    if (e.success){
+                        NSArray *reviews = e.response[@"reviews"];
+                        for (NSDictionary *review in reviews) {
+                          NSString *message =[NSString stringWithFormat:@"id : %@\n rating : %@\n content : %@\nUpdated at : %@\n",
+                                                  review[@"id"],
+                                                  review[@"rating"],
+                                                  review[@"content"],
+                                                  review[@"updated_at"]];
+
+                          [[[UIAlertView alloc] initWithTitle:@"Success" 
+                                                      message:message
+                                                     delegate:nil 
+                                            cancelButtonTitle:@"OK" 
+                                            otherButtonTitles:nil] show];
+                        }
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:e.errorMessage
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
         example: |
             Example iOS call:
 
