@@ -140,6 +140,12 @@
             "description": "Logging facilities in Node.ACS."
             },
             {
+            "name": "native_sdk",
+            "url": "guides/node/native_apps",
+            "title": "Correlating Native Applications with Node.ACS Services",
+            "description": "Correlating Native Applications with Node.ACS Services"              
+            },
+            {
                 "name": "node_cli",
                 "title": "Command-Line Interface",
                 "url": "guides/node/cli/commands",
