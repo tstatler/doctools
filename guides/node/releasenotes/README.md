@@ -17,13 +17,6 @@ Appcelerator Studio, you need to upgrade your Studio to version 3.3.0.
 * Add support to use Node cluster to fork child processes in standard Node.ACS applications.  This
 is not supported for applications that use the MVC framework.
 
-* Add support to specify a different npm registry for installing node modules. See the
-[Module Dependencies section](#!/guide/node_standard-section-module-dependencies)
-in *Standard Node Application*.
-
-* Add support to set and unset environment variables.  See the [config](#!/guide/node_cli_config)
-command.
-
 
 ### Bug fixes
 
