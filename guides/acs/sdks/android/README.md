@@ -136,15 +136,8 @@ the ACS server.
         Log(e.getErrorType(), e.getErrorCode());
     }
 
-### Monitoring Request Progress
 
-For Cloud API methods that involve uploading large files, such as `APSPhotos.create()` or `APSFiles.create()`, 
-there is an overloaded version that takes an optional `progressHandler` parameter. This parameter takes
-a [APSProgressHandler](http://docs.appcelerator.com/aps-sdk-apidoc/latest/android/com/appcelerator/cloud/APSProgressHandler.html)
-instance, which must provide an `onProgress` handler. This handler is periodically triggered as the file
-transfer continues, and is passed an integer between 0-100 indicating the current upload progress.
-
-### Example: APSUsers Login Call with Response Handler
+#### Example: APSUsers Login Call with Response Handler
 
 The following example logs in an existing ACS user by their username and password. After a successful 
 login, the application updates a TextView object with the user's ACS username.
@@ -182,7 +175,15 @@ login, the application updates a TextView object with the user's ACS username.
         Log.e("LOGIN", e.getErrorType());
     }
 
-### Example: APSFiles Create Call with Progress Handler
+### Monitoring Request Progress
+
+For Cloud API methods that involve uploading large files, such as `APSPhotos.create()` or `APSFiles.create()`, 
+there is an overloaded version that takes an optional `progressHandler` parameter. This parameter takes
+a [APSProgressHandler](http://docs.appcelerator.com/aps-sdk-apidoc/latest/android/com/appcelerator/cloud/APSProgressHandler.html)
+instance, which must provide an `onProgress` handler. This handler is periodically triggered as the file
+transfer continues, and is passed an integer between 0-100 indicating the current upload progress.
+
+#### Example: APSFiles Create Call with Progress Handler
 
 The following example uploads a file from the device (`/res/raw/reference.pdf`) to the ACS storage server. 
 Since the method call requires that uploaded data be an instance of `java.io.File`, the application needs to copy the
