@@ -26,6 +26,12 @@ methods:
             The current login user must be an application admin to delete a collection on
             behalf of another user.
         type: String
+        
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
 
     examples:
       - platform: titanium
@@ -47,7 +53,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt -X DELETE "https://api.cloud.appcelerator.com/v1/collections/delete.json?key=<YOUR APP APP KEY>&collection_id=4e013938d0afbe3896000009"
+                $ curl -b cookies.txt -c cookies.txt -X DELETE "https://api.cloud.appcelerator.com/v1/collections/delete.json?key=<YOUR APP APP KEY>&pretty_print=true&collection_id=4e013938d0afbe3896000009"
 
             Example JSON response:
 

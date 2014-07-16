@@ -77,6 +77,12 @@ methods:
 
             Default is 3, valid range is 1 to 8.
         type: Number
+                
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
 
     response-parameters:
       - name: users
@@ -116,7 +122,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -c cookies.txt -b cookies.txt -X GET --data-urlencode 'where={"first_name":"joe","coordinates":{"$nearSphere":[-122.1,37.1], "$maxDistance" : 0.00126}}' --data-urlencode 'order=created_at' "https://api.cloud.appcelerator.com/v1/users/query.json?key=<YOUR APP APP KEY>"
+                $ curl -c cookies.txt -b cookies.txt -X GET --data-urlencode 'where={"first_name":"joe","coordinates":{"$nearSphere":[-122.1,37.1], "$maxDistance" : 0.00126}}' --data-urlencode 'order=created_at' "https://api.cloud.appcelerator.com/v1/users/query.json?key=<YOUR APP APP KEY>&pretty_print=true"
 
             Example JSON response:
 

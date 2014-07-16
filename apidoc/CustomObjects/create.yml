@@ -3,16 +3,16 @@ methods:
   - name: create
     summary: Create Custom Object
     description: |
-        Create a custom object of type class_name.
+        Create a custom object of type `classname`.
 
-        The class_name of the object is part of the URL. You don't have to define
-        class_name ahead of time. It will be created on the fly
-    url: objects/:class_name/create.json
+        The `classname` of the object is part of the URL. You do not have to define
+        `classname` ahead of time. It will be created on the fly
+    url: objects/:classname/create.json
     http-method: POST
     login-required: true
 
     parameters:
-      - name: class_name
+      - name: classname
         description: |
             Type of custom object. Specified as part of the URL path, not in the
             parameters.
@@ -40,6 +40,11 @@ methods:
         type: Hash
         required: true
 
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
 
       - name: tags
         description: |
@@ -125,7 +130,7 @@ methods:
         example: |
             Example cURL request that creates a "car" object with custom coordinates:
 
-                $ curl -b cookies.txt -c cookies.txt -F "fields={\"color\":\"blue\", \"make\": \"nissan\", \"purchased_at\" : \"2011-11-02 17:07:37 -0700\", \"year\" : 2005, \"used\" : false, \"coordinates\":[-122.1, 37.1]}"  https://api.cloud.appcelerator.com/v1/objects/car/create.json?key=<YOUR APP APP KEY>
+                $ curl -b cookies.txt -c cookies.txt -F "fields={\"color\":\"blue\", \"make\": \"nissan\", \"purchased_at\" : \"2011-11-02 17:07:37 -0700\", \"year\" : 2005, \"used\" : false, \"coordinates\":[-122.1, 37.1]}"  https://api.cloud.appcelerator.com/v1/objects/car/create.json?key=<YOUR APP APP KEY>&pretty_print=true
 
                     Example JSON response:
 

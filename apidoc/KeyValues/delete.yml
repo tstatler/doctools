@@ -30,6 +30,12 @@ methods:
             Login user must be an admin to delete a key-value on behalf of another user.
         type: String
 
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
+        
     examples:
       - platform: titanium
         example: |
@@ -51,7 +57,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt --request DELETE "http://api.cloud.appcelerator.com/v1/keyvalues/delete.json?key=<YOUR APP APP KEY>&name=welcome_message"
+                $ curl -b cookies.txt -c cookies.txt --request DELETE "http://api.cloud.appcelerator.com/v1/keyvalues/delete.json?key=<YOUR APP APP KEY>&pretty_print=true&name=welcome_message"
 
             Example JSON response:
 

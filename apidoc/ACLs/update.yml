@@ -14,6 +14,13 @@ methods:
     login-required: true
 
     parameters:
+      - name: id
+        description: |
+            ID of the ACL oject.
+
+            Either `name` or `id` must be specified.
+        type: String
+
       - name: name
         description: |
             Name of the ACL object.
@@ -21,12 +28,11 @@ methods:
             Either `name` or `id` must be specified.
         type: String
 
-      - name: id
-        description: |
-            ID of the ACL oject.
-
-            Either `name` or `id` must be specified.
-        type: String
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean        
 
       - name: reader_ids
         description: |
@@ -99,7 +105,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b c.txt -c c.txt -X PUT -F "name=access_photo_album" -F "public_read=true" -F "public_write=true" https://api.cloud.appcelerator.com/v1/acls/update.json?key=<YOUR APP APP KEY>
+                $ curl -b c.txt -c c.txt -X PUT -F "name=access_photo_album" -F "public_read=true" -F "public_write=true" https://api.cloud.appcelerator.com/v1/acls/update.json?key=<YOUR APP APP KEY>&pretty_print=true
 
             Example JSON response:
 

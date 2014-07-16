@@ -17,7 +17,10 @@ methods:
     parameters:
 
       - name: channel
-        description: Name of the channel.
+        description: |
+            Name of the channel.
+
+            The name of the push channel cannot start with a hash symbol ('#').
         type: String
         required: true
 
@@ -118,6 +121,11 @@ methods:
             see the [Search and Query guide](#!/guide/search_query).
         type: Hash
 
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean        
 
     examples:
       - platform: titanium

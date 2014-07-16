@@ -3,7 +3,7 @@ methods:
   - name: remove
     summary: Remove Friends
     description: |
-        Removes a one or more friends from the user's friends list.
+        Removes one or more friends from the user's friends list.
     url: friends/remove.json
     http-method: DELETE
     login-required: true
@@ -11,9 +11,14 @@ methods:
     parameters:
       - name: user_ids
         description: |
-            Comma-separated list consisting of IDs of one or more users to add as
-            friends to the current user. A user cannot add himself or herself as a friend.
+            Comma-separated list consisting of IDs of one or more users to remove from the current user.
         required: true
+
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean        
 
     examples:
       - platform: titanium
@@ -35,7 +40,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt -X DELETE -F "user_ids=4e02e027d0afbe41ef000003" "https://api.cloud.appcelerator.com/v1/friends/remove.json?key=<YOUR APP APP KEY>"
+                $ curl -b cookies.txt -c cookies.txt -X DELETE -F "user_ids=4e02e027d0afbe41ef000003" "https://api.cloud.appcelerator.com/v1/friends/remove.json?key=<YOUR APP APP KEY>&pretty_print=true"
 
             Example JSON response:
 

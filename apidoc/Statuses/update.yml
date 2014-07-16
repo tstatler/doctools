@@ -72,6 +72,12 @@ methods:
             The current login user must be an application admin to update a status on
             behalf of another user.
         type: String
+                
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
 
     response-parameters:
       - name: statuses
@@ -102,7 +108,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt -X PUT -F "message=Having a blast at the beach" -F "status_id=4d6e86ed6f70950c89000004" https://api.cloud.appcelerator.com/v1/statuses/update.json?key=<YOUR APP APP KEY>
+                $ curl -b cookies.txt -c cookies.txt -X PUT -F "message=Having a blast at the beach" -F "status_id=4d6e86ed6f70950c89000004" https://api.cloud.appcelerator.com/v1/statuses/update.json?key=<YOUR APP APP KEY>&pretty_print=true
 
             Example JSON response:
 

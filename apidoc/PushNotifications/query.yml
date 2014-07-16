@@ -14,7 +14,10 @@ methods:
         required: true
 
       - name: channel
-        description: Name of the push notification channel.
+        description: |
+            Name of the push notification channel.
+
+            The name of the push channel cannot start with a hash symbol ('#').
         type: String
 
       - name: device_token
@@ -38,6 +41,12 @@ methods:
       - name: per_page
         description: Number of results per page, default is 10.
         type: Number
+        
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
 
     response-parameters:
       - name: subscriptions
@@ -76,7 +85,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/push_notification/query.json?key=<YOUR APP APP KEY>&user_id=4f5905b5d2951316a9000020"
+                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/push_notification/query.json?key=<YOUR APP APP KEY>&pretty_print=true&user_id=4f5905b5d2951316a9000020"
 
             Example JSON response:
 

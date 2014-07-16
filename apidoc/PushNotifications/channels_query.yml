@@ -26,6 +26,12 @@ methods:
       - name: per_page
         description: Number of results per page, default is 10.
         type: Number
+        
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
 
     response-parameters:
       - name: push_channels

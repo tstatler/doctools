@@ -16,7 +16,10 @@ methods:
     parameters:
 
       - name: channel
-        description: Push notification channel to subscribe to.
+        description: |
+            Push notification channel to subscribe to.
+
+            The name of the push channel cannot start with a hash symbol ('#').
         type: String
         required: true
 
@@ -32,6 +35,12 @@ methods:
             Only application admins can subscribe to push notifications on behalf of other
             users.
         type: String
+
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean            
 
     examples:
       - platform: titanium
@@ -54,7 +63,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt -F "type=ios" -F "channel=friend_request" -F "device_token=f7702d77b34ed94869f664e7a297ccc173bec93a2b815css6asd28461a0358db" https://api.cloud.appcelerator.com/v1/push_notification/subscribe.json?key=<YOUR APP APP KEY>
+                $ curl -b cookies.txt -c cookies.txt -F "type=ios" -F "channel=friend_request" -F "device_token=f7702d77b34ed94869f664e7a297ccc173bec93a2b815css6asd28461a0358db" https://api.cloud.appcelerator.com/v1/push_notification/subscribe.json?key=<YOUR APP APP KEY>&pretty_print=true
 
             Example JSON response:
 

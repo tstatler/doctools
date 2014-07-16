@@ -116,6 +116,7 @@ The basic configuration file for a Node.ACS application.
       "dependencies": {
         "mongodb": "1.0.2"
       },
+      "npmRegistry": "http://registry.npmjs.org/",
       "logfile" : "MyNodeACSApp.log",
       "engines" : { "node": "0.10.22" }
     }
@@ -127,6 +128,7 @@ Important fields are summarized below (* indicates mandatory fields):
 * **main*** \-- the main entrance script file for Node.ACS to load to start the application
 * **framework*** \-- the "type" of app, if the value is "mvc", Node.ACS will run it as an app with the MVC framework.
 * **dependencies** \-- app dependencies, when an app starts, every modules declared here will be installed before starting the app
+* **npmRegistry** \-- the npm registry to use for installing dependencies.  By default, the official public npm registry is used (shown in the example).
 * **logfile** \-- log file's name, log file will be placed in "logs" folder
 * **engines** \-- contains key-value pairs of engine versions.  Use this field to specify the version
 of Node.js to run your application on. Use `node` as the key and the version or version range as the
@@ -319,6 +321,42 @@ routing and handler (controller). With the Node.ACS MVC framework, you can
 easily do this by following the instructions above. Node.ACS also provides a
 utility CLI command that can help you to quickly generate a code stub of route
 and controller. See the [**acs add**](#!/guide/node_cli_add) command for more details.
+
+## Third-Party Tools
+
+The ACS servers include support for third-party tools, specifically ImageMagick and PhantomJS.
+
+To use these tools, add the [imagemagick](https://www.npmjs.org/package/imagemagick),
+[phantom](https://www.npmjs.org/package/phantom) and
+[phantomjs](https://www.npmjs.org/package/phantomjs) node modules as dependencies of the
+application:
+
+    {
+      "name": "MyNodeACSApp",
+      "main": "app.js",
+      "framework": "mvc",
+      "version": "0.1.0",
+      "description": "My first Node.ACS MVC App!",
+      "author": "sam@nodeacs.com",
+      "dependencies": {
+         "imagemagick" : "*",
+         "phantom" : "*",
+         "phantomjs" : "*"
+      },
+      "logfile" : "MyNodeACSApp.log",
+      "engines" : { "node": "0.10.22" }
+    }
+
+Once you have added these modules as depedencies, use `require()` to access it from JavaScript, then
+use the module references to make API calls:
+
+    var imagemagick = require('imagemagick');
+
+    imagemagick.identify('public/images/favicon.ico', function(err, features) {
+        if (err)
+            throw err;
+        console.log(features["image statistics"]);
+    });
 
 ## For More Information
 

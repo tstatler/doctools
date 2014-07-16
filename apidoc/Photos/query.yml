@@ -84,6 +84,12 @@ methods:
 
             Default is 3, valid range is 1 to 8.
         type: Number
+        
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
 
     response-parameters:
       - name: photos
@@ -126,7 +132,7 @@ methods:
             Example cURL request:
 
                 Example: If your app assigns a geo location to each photo, query photos with tag "Appcelerator Cloud Services" near latitude 37.12, longitude -122.23 within 5 miles
-                $ curl -c cookies.txt -b cookies.txt -X GET --data-urlencode 'where={"tags_array":"Appcelerator Cloud Services","coordinates":{"$nearSphere":[-122.23,37.12], "$maxDistance" : 0.00126}}' "https://api.cloud.appcelerator.com/v1/photos/query.json?key=<YOUR APP APP KEY>"
+                $ curl -c cookies.txt -b cookies.txt -X GET --data-urlencode 'where={"tags_array":"Appcelerator Cloud Services","coordinates":{"$nearSphere":[-122.23,37.12], "$maxDistance" : 0.00126}}' "https://api.cloud.appcelerator.com/v1/photos/query.json?key=<YOUR APP APP KEY>&pretty_print=true"
 
             Example JSON response:
 

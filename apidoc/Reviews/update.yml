@@ -92,6 +92,12 @@ methods:
             An ACL can be specified using `acl_name` or `acl_id`. The two parameters are
             mutually exclusive.
         type: String
+        
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
 
     response-parameters:
       - name: reviews
@@ -126,7 +132,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt -X PUT -F "post_id=4e33a9f5d9ca724769000003" -F "review_id=4e33a9f5d9ca724769000006" -F "rating=10" -F "content=Very very good" https://api.cloud.appcelerator.com/v1/reviews/update.json?key=<YOUR APP APP KEY>
+                $ curl -b cookies.txt -c cookies.txt -X PUT -F "post_id=4e33a9f5d9ca724769000003" -F "review_id=4e33a9f5d9ca724769000006" -F "rating=10" -F "content=Very very good" https://api.cloud.appcelerator.com/v1/reviews/update.json?key=<YOUR APP APP KEY>&pretty_print=true
 
             Example JSON response:
 

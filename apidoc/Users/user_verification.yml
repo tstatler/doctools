@@ -28,17 +28,23 @@ methods:
             pass the template name. Your email template must contain the following URL to
             allow users to be redirected to Appcelerator Cloud Services email verification page:
 
-                https://cloud.appcelerator.com/users/confirmation?key={{key}}&confirmation;_token={{confirmation_token}}
+                https://cloud.appcelerator.com/users/confirmation?key={{key}}&confirmation_token={{confirmation_token}}
 
             If you have your own website that talks to Appcelerator Cloud Services backend
             and wish to use custom URL, you must provide a URL with the following format:
 
-                https://[your_url.com]/[your_method]?key={{key}}&confirmation;_token={{confirmation_token}}
+                https://[your_url.com]/[your_method]?key={{key}}&confirmation_token={{confirmation_token}}
 
             When a user visits the above URL, you make a call to Appcelerator Cloud
             Services to confirm the user internally from your web server:
 
-                GET https://api.cloud.appcelerator.com/v1/users/confirm_user.json?confirmation_token={{confirmation_token}}&key;=<Your App Key>
+                GET https://api.cloud.appcelerator.com/v1/users/confirm_user.json?confirmation_token={{confirmation_token}}&key=<Your App Key>
+                        
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
     examples:
       - platform: titanium
         example: |
@@ -61,7 +67,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/users/resend_confirmation.json?key=<YOUR APP APP KEY>&email=foo@foo.com"
+                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/users/resend_confirmation.json?key=<YOUR APP APP KEY>&pretty_print=true&email=foo@foo.com"
 
             Example JSON response:
 

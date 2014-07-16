@@ -58,6 +58,12 @@ methods:
             If `where` is not specified, `query` returns all objects.
         type: Hash
 
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean        
+
     response-parameters:
       - name: geo_fences
         description: List of geo-fence objects matching the query parameters.

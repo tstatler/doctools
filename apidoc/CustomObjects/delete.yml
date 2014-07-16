@@ -8,12 +8,12 @@ methods:
 
         An application admin can delete any custom object.
 
-    url: objects/:class_name/delete.json
+    url: objects/:classname/delete.json
     http-method: DELETE
     login-required: true
 
     parameters:
-      - name: class_name
+      - name: classname
         description: |
             Type of custom object. Specified as part of the URL path, not in the
             parameters.
@@ -26,6 +26,7 @@ methods:
 
             You must specify either `id` or `ids`.
         type: String
+        required: true
 
       - name: ids
         description:
@@ -33,6 +34,13 @@ methods:
 
             You must specify either `id` or `ids`.
         type: String
+        required: true
+
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean        
 
       - name: user_id
         description: |
@@ -63,7 +71,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt -X DELETE "https://api.cloud.appcelerator.com/v1/objects/car/delete.json?key=<YOUR APP APP KEY>&id=4ec42e91d9ca72c507000010"
+                $ curl -b cookies.txt -c cookies.txt -X DELETE "https://api.cloud.appcelerator.com/v1/objects/car/delete.json?key=<YOUR APP APP KEY>&pretty_print=true&id=4ec42e91d9ca72c507000010"
 
             Example JSON response:
 

@@ -35,7 +35,13 @@ methods:
             * If you use Google as your SMTP server, the email will always be sent using the email account 
             you used to configure the SMTP service. 
             * Some SMTP service provider require the sender's email address to be present.
-        type: String            
+        type: String      
+
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean              
 
     examples:
       - platform: titanium
@@ -58,7 +64,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt -F "recipients=joe@company.com" -F "template=welcome" https://api.cloud.appcelerator.com/v1/custom_mailer/email_from_template.json?key=<YOUR APP APP KEY>
+                $ curl -b cookies.txt -c cookies.txt -F "recipients=joe@company.com" -F "template=welcome" https://api.cloud.appcelerator.com/v1/custom_mailer/email_from_template.json?key=<YOUR APP APP KEY>&pretty_print=true
 
             Example JSON response:
 

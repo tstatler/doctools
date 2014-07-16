@@ -11,9 +11,18 @@ methods:
     parameters:
 
       - name: name
-        description: Name of the push channel.
+        description: |
+            Name of the push channel.
+
+            The name of the push channel cannot start with a hash symbol ('#').
         type: String
         required: true
+        
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
 
     response-parameters:
       - name: devices
@@ -47,7 +56,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt -X GET --data-urlencode "name=chat" "https://api.cloud.appcelerator.com/v1/push_notification/channels/show.json?key=<YOUR APP APP KEY>"
+                $ curl -b cookies.txt -c cookies.txt -X GET --data-urlencode "name=chat" "https://api.cloud.appcelerator.com/v1/push_notification/channels/show.json?key=<YOUR APP APP KEY>&pretty_print=true"
 
             Example JSON response:
 

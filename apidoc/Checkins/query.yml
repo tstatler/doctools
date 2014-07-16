@@ -72,6 +72,12 @@ methods:
             Default is 3, valid range is 1 to 8.
         type: Number
 
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean        
+
     response-parameters:
       - name: checkins
         description: List of checkins matching the query parameters.
@@ -111,7 +117,7 @@ methods:
             includes a single Checkins object that contains `"current_user_liked":"true"`, 
             indicating that the current user has liked this object.
 
-                $ curl -c cookies.txt -b cookies.txt -X GET --data-urlencode 'where={"coordinates":{"$nearSphere":[-122.23,37.12], "$maxDistance" : 0.00126}}' "https://api.cloud.appcelerator.com/v1/checkins/query.json?key=<YOUR APP APP KEY>&show_user_like=true"
+                $ curl -c cookies.txt -b cookies.txt -X GET --data-urlencode 'where={"coordinates":{"$nearSphere":[-122.23,37.12], "$maxDistance" : 0.00126}}' "https://api.cloud.appcelerator.com/v1/checkins/query.json?key=<YOUR APP APP KEY>&pretty_print=true&show_user_like=true"
 
             Example JSON response:
 

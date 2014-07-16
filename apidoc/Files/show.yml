@@ -23,6 +23,7 @@ methods:
             Default is 3, valid range is 1 to 8.
         type: Number
 
+
     response-parameters:
       - name: files
         description: |
@@ -31,6 +32,12 @@ methods:
             Note that the file URL may not be available if the file hasn't finished
             processing.
         type: Array<Files>
+
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean                
 
     examples:
       - platform: titanium
@@ -56,7 +63,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/files/show.json?key=<YOUR APP APP KEY>&file_id=4f05446bc3666eb7ba000001"
+                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/files/show.json?key=<YOUR APP APP KEY>&pretty_print=true&file_id=4f05446bc3666eb7ba000001"
 
             Example JSON response:
 

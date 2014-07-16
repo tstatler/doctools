@@ -26,7 +26,10 @@ methods:
         required: true
 
       - name: channel
-        description: Name of the channel.
+        description: |
+            Name of the channel.
+
+            The name of the push channel cannot start with a hash symbol ('#').
         type: String
         required: true
 
@@ -39,6 +42,12 @@ methods:
 
             Using `gcm` to specify Google Cloud Messaging still works.
         type: String
+
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean                    
 
     examples:
 

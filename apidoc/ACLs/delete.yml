@@ -13,6 +13,13 @@ methods:
     login-required: true
 
     parameters:
+      - name: id
+        description: |
+            ID of the ACL oject to delete.
+
+            Either `name` or `id` must be specified.
+        type: String
+
       - name: name
         description: |
             Name of the ACL object to delete.
@@ -20,12 +27,11 @@ methods:
             Either `name` or `id` must be specified.
         type: String
 
-      - name: id
-        description: |
-            ID of the ACL oject to delete.
-
-            Either `name` or `id` must be specified.
-        type: String
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean        
 
       - name: user_id
         description: |
@@ -55,7 +61,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt -X DELETE -F "name=access_photo_album" "https://api.cloud.appcelerator.com/v1/acls/delete.json?key=<YOUR APP APP KEY>"
+                $ curl -b cookies.txt -c cookies.txt -X DELETE -F "name=access_photo_album" "https://api.cloud.appcelerator.com/v1/acls/delete.json?key=<YOUR APP APP KEY>&pretty_print=true"
 
             Example JSON response:
 

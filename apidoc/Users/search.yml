@@ -35,6 +35,13 @@ methods:
             referencing objects.
 
             Default is 3, valid range is 1 to 8.
+
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
+        
     examples:
       - platform: titanium
         example: |
@@ -62,7 +69,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt https://api.cloud.appcelerator.com/v1/users/search.json?key=<YOUR APP APP KEY>
+                $ curl -b cookies.txt -c cookies.txt https://api.cloud.appcelerator.com/v1/users/search.json?key=<YOUR APP APP KEY>&pretty_print=true
 
             Example JSON response:
 

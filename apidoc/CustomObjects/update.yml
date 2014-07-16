@@ -10,7 +10,7 @@ methods:
 
         Application Admin can update any Custom Object.
 
-    url: objects/:class_name/update.json
+    url: objects/:classname/update.json
     http-method: PUT
     login-required: true
 
@@ -19,6 +19,13 @@ methods:
       - name: id
         description: |
             The object ID of the custom object to update.
+        type: String
+        required: true
+
+      - name: classname
+        description: |
+            Type of custom object. Specified as part of the URL path, not in the
+            parameters.
         type: String
         required: true
 
@@ -94,6 +101,13 @@ methods:
             behalf of another user.
         type: String
 
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
+        
+
     response-parameters:
       - name: classname
         description: |
@@ -134,7 +148,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt -X PUT --data-urlencode 'fields={"color":"purple", "purchased_at":null, "mileage":10000}' "https://api.cloud.appcelerator.com/v1/objects/car/update.json?key=<YOUR APP APP KEY>&id=4ec42de1d9ca72c50700000d"
+                $ curl -b cookies.txt -c cookies.txt -X PUT --data-urlencode 'fields={"color":"purple", "purchased_at":null, "mileage":10000}' "https://api.cloud.appcelerator.com/v1/objects/car/update.json?key=<YOUR APP APP KEY>&pretty_print=true&id=4ec42de1d9ca72c50700000d"
 
             Example JSON response:
 

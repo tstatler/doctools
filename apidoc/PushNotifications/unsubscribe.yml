@@ -17,7 +17,10 @@ methods:
     parameters:
 
       - name: channel
-        description: Name of the push notification channel.
+        description: | 
+            Name of the push notification channel.
+
+            The name of the push channel cannot start with a hash symbol ('#').
         type: String
 
       - name: device_token
@@ -30,6 +33,12 @@ methods:
             User ID to unsubscribe from push notifications.
 
             Only application admins can unsubscribe another user from push notifications.
+
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean                        
 
     examples:
       - platform: titanium

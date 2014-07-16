@@ -79,6 +79,12 @@ methods:
 
             The current login user must be the application admin, in order to send a
             message on behalf of another user.
+        
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
 
     response-parameters:
       - name: messages
@@ -112,7 +118,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt -F "to_ids=4d71445b6f70951043000006,4d7184f06f70951043000012" -F "subject=Sunday Afternoon" -F "body=Howabout going to the Academy of Sciences?" https://api.cloud.appcelerator.com/v1/messages/create.json?key=<YOUR APP APP KEY>
+                $ curl -b cookies.txt -c cookies.txt -F "to_ids=4d71445b6f70951043000006,4d7184f06f70951043000012" -F "subject=Sunday Afternoon" -F "body=Howabout going to the Academy of Sciences?" https://api.cloud.appcelerator.com/v1/messages/create.json?key=<YOUR APP APP KEY>&pretty_print=true
 
             Example JSON response:
 
@@ -288,7 +294,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt -X DELETE "https://api.cloud.appcelerator.com/v1/messages/delete.json?key=<YOUR APP APP KEY>&message_id=4d854389d0afbe013e000029"
+                $ curl -b cookies.txt -c cookies.txt -X DELETE "https://api.cloud.appcelerator.com/v1/messages/delete.json?key=<YOUR APP APP KEY>&pretty_print=true&message_id=4d854389d0afbe013e000029"
 
             Example JSON response:
 
@@ -457,7 +463,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt -X DELETE "https://api.cloud.appcelerator.com/v1/messages/delete/thread.json?key=<YOUR APP APP KEY>&thread_id=4d854389d0afbe013e000029"
+                $ curl -b cookies.txt -c cookies.txt -X DELETE "https://api.cloud.appcelerator.com/v1/messages/delete/thread.json?key=<YOUR APP APP KEY>&pretty_print=true&thread_id=4d854389d0afbe013e000029"
 
             Example JSON response:
 
@@ -633,7 +639,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt -F "body=Academy of sciences sounds great!" -F "message_id=4d85418dd0afbe013e000025" https://api.cloud.appcelerator.com/v1/messages/reply.json?key=<YOUR APP APP KEY>
+                $ curl -b cookies.txt -c cookies.txt -F "body=Academy of sciences sounds great!" -F "message_id=4d85418dd0afbe013e000025" https://api.cloud.appcelerator.com/v1/messages/reply.json?key=<YOUR APP APP KEY>&pretty_print=true
 
             Example JSON response:
 
@@ -1029,7 +1035,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt https://api.cloud.appcelerator.com/v1/messages/show/inbox.json?key=<YOUR APP APP KEY>
+                $ curl -b cookies.txt -c cookies.txt https://api.cloud.appcelerator.com/v1/messages/show/inbox.json?key=<YOUR APP APP KEY>&pretty_print=true
 
             Example JSON response:
 
@@ -1257,7 +1263,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt https://api.cloud.appcelerator.com/v1/messages/show/sent.json?key=<YOUR APP APP KEY>
+                $ curl -b cookies.txt -c cookies.txt https://api.cloud.appcelerator.com/v1/messages/show/sent.json?key=<YOUR APP APP KEY>&pretty_print=true
 
             Example JSON response:
 
@@ -1491,7 +1497,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/messages/show/thread.json?key=<YOUR APP APP KEY>&thread_id=4d85418dd0afbe013e000025"
+                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/messages/show/thread.json?key=<YOUR APP APP KEY>&pretty_print=true&thread_id=4d85418dd0afbe013e000025"
 
             Example JSON response:
 
@@ -1793,7 +1799,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt https://api.cloud.appcelerator.com/v1/messages/show/threads.json?key=<YOUR APP APP KEY>
+                $ curl -b cookies.txt -c cookies.txt https://api.cloud.appcelerator.com/v1/messages/show/threads.json?key=<YOUR APP APP KEY>&pretty_print=true
 
             Example JSON response:
 

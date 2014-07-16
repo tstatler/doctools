@@ -122,6 +122,12 @@ methods:
             Default is 3, valid range is 1 to 8.
         type: Number
 
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean        
+
     examples:
       - platform: titanium
         example: |
@@ -149,7 +155,7 @@ methods:
             Example cURL request:
 
                 Example: query events with name "meetup" near latitude 37.12, longitude -122.23 within 5 miles
-                $ curl -c cookies.txt -b cookies.txt -X GET --data-urlencode  'where={"name":"meetup","lnglat":{"$nearSphere":[-122.23,37.12], "$maxDistance" : 0.00126}}' "https://api.cloud.appcelerator.com/v1/events/query.json?key=<YOUR APP APP KEY>"
+                $ curl -c cookies.txt -b cookies.txt -X GET --data-urlencode  'where={"name":"meetup","lnglat":{"$nearSphere":[-122.23,37.12], "$maxDistance" : 0.00126}}' "https://api.cloud.appcelerator.com/v1/events/query.json?key=<YOUR APP APP KEY>&pretty_print=true"
 
             Example JSON response:
 

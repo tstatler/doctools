@@ -23,6 +23,12 @@ methods:
         description: |
             Alternate IP address to lookup instead of using the device's own address.
 
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean                    
+
     response-parameters:
       - name: ip_address
         description: Device IP address.
@@ -64,7 +70,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/clients/geolocate.json?key=<YOUR APP APP KEY>"
+                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/clients/geolocate.json?key=<YOUR APP APP KEY>&pretty_print=true"
 
             Example JSON response:
 

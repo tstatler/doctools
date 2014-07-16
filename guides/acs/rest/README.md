@@ -77,9 +77,11 @@ Pass the `session_id` value to the `_session_id` parameter in the URL, for examp
 With the cURL command, use the `-b` and `-c` options to read and write cookies to store your session
 ID. Many of the REST examples in the documentation use these options.
 
-User login sessions expire after they have been unused for a period of time.
-By default, the expiration period is six months. You can configure the user session 
-expiration period in the application management console.
+User login sessions expire after they have been unused for six months.
+If the application saves and uses a persistent reference to the user login session, and the
+user session expires, any ACS call that requires a user login will return a 404 error.
+Your application needs to handle an invalid user session error, such as prompting the user
+to log in.
 
 ## Testing with cURL and wget
 

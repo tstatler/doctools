@@ -28,6 +28,12 @@ methods:
             as the second element (`[longitude,latitude]`).
         type: Array<Number>
 
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean                    
+
     examples:
       - platform: titanium
         example: |

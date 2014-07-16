@@ -12,13 +12,22 @@ methods:
     parameters:
 
       - name: channel
-        description: Name of the push notification channel.
+        description: |
+            Name of the push notification channel.
+
+            The name of the push channel cannot start with a hash symbol ('#').
         type: String
 
       - name: device_token
         description: Android or iOS device token.
         type: String
         required: true
+
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean            
 
     examples:
 
