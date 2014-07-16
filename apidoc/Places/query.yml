@@ -178,6 +178,40 @@ methods:
         example: |
             Example iOS call:
 
+                NSDictionary *data = @{
+                                         @"page"   : @1,
+                                         @"per_page"  : @20,
+                                         @"where": {
+                                                    @"lnglat": {
+                                                        @"$nearSphere": @[@-122.23, @37.12],
+                                                        @"$maxDistance": @0.00126
+                                                    }
+                                                }
+                                      };
+                [APSPlaces query:data withBlock:^(APSResponse *e) {
+                    if (e.success){
+                        NSArray *places = e.response[@"places"];
+                        for (NSDictionary * place in places) {
+                            NSString *message = [NSString stringWithFormat:@"id : %@\n Name : %@\nUpdated at : %@\n",
+                                                    place[@"id"],
+                                                    place[@"name"],
+                                                    place[@"updated_at"]];
+
+                            NSLog(@"%@", message);
+                        }
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:e.errorMessage
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
                 CCWhere *where = [[[CCWhere alloc] init] autorelease];
                 [where fieldName:@"lnglat" nearLat:37.12 nearLng:-122.23x maxDistanceMi:5.0];
                 [where fieldName:@"name" equalTo:@"Appcelerator Cloud Services"];

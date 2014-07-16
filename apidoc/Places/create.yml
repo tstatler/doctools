@@ -187,6 +187,39 @@ methods:
         example: |
             Example iOS call:
 
+                NSDictionary *data = @{
+                                         @"name"   : @"Party Pictures",
+                                         @"state"  : @"California",
+                                         @"website": @"http://www.appcelerator.com"
+                                      };
+                [APSPlaces create:data withBlock:^(APSResponse *e) {
+                    if (e.success){
+                        NSArray *places = e.response[@"places"];
+                        NSDictionary *place = places[0];
+                        NSString *message = [NSString stringWithFormat:@"id : %@\n Name : %@\nUpdated at : %@\n",
+                                                place[@"id"],
+                                                place[@"name"],
+                                                place[@"updated_at"]];
+
+                        [[[UIAlertView alloc] initWithTitle:@"Success" 
+                                                    message:message
+                                                   delegate:nil 
+                                          cancelButtonTitle:@"OK" 
+                                          otherButtonTitles:nil] show];
+
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:e.errorMessage
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
                 NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
                 [paramDict setObject:@"Appcelerator Cloud Services" forKey:@"name"];
                 [paramDict setObject:@"58 South Park Ave" forKey:@"address"];
