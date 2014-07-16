@@ -152,7 +152,7 @@ methods:
                                          @"latitude"   : latitude,
                                          @"longitude"  : longitude
                                       };
-                [APSPlaces query:data withBlock:^(APSResponse *e) {
+                [APSPlaces search:data withBlock:^(APSResponse *e) {
                     if (e.success){
                         NSArray *places = e.response[@"places"];
                         for (NSDictionary * place in places) {
