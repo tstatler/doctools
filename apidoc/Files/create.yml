@@ -140,6 +140,47 @@ methods:
         example: |
             Example iOS call:
 
+                NSError* error = nil;
+                NSData *fileData = [NSData dataWithContentsOfFile:@"Test.txt"
+                                              options:0
+                                                error: &error];
+                if (fileData == nil) {
+                  // handle error
+                  NSLog(@"Failed to read file, error %@", error);
+                  return;
+                }
+                NSDictionary *data = @{
+                                         @"name" : @"Test.txt",
+                                         @"file" : fileData
+                                      };
+                [APSFiles create:data withBlock:^(APSResponse *e) {
+                    if (e.success){
+                      NSArray *files = e.response[@"files"];
+                      NSDictionary *file = files[0];
+                      NSString *message =[NSString stringWithFormat:@"id : %@\n Name : %@\nUpdated at : %@\n",
+                                              file[@"id"],
+                                              file[@"name"],
+                                              file[@"updated_at"]];
+
+
+                      [[[UIAlertView alloc] initWithTitle:@"Success" 
+                                                  message:message
+                                                 delegate:nil 
+                                        cancelButtonTitle:@"OK" 
+                                        otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:e.errorMessage
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
                 NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
                 [paramDict setObject:@"my_file" forKey:@"name"];
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"POST" baseUrl:@"files/create.json" paramDict:paramDict];

@@ -72,6 +72,30 @@ methods:
       - platform: ios
         example: |
             Example iOS call:
+                NSDictionary *data = @{
+                                         @"name" : @"welcome_message"
+                                      };
+                [APSKeyValues delete:data withBlock:^(APSResponse *e) {
+                    if (e.success){
+                        [[[UIAlertView alloc] initWithTitle:@"Success" 
+                                                    message:nil
+                                                   delegate:nil 
+                                          cancelButtonTitle:@"OK" 
+                                          otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:e.errorMessage
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil] show];
+                    }
+                }];
+
+
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
 
                 NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:@"score", @"name", nil];
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"DELETE" baseUrl:@"keyvalues/delete.json"  paramDict:paramDict];

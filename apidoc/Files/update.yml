@@ -144,6 +144,38 @@ methods:
         example: |
             Example iOS call:
 
+                NSDictionary *data = @{
+                                         @"file_id" : @"savedFileId",
+                                         @"name"    : @"Notice"
+                                      };
+                [APSFiles update:data withBlock:^(APSResponse *e) {
+                    if (e.success){
+                      NSArray *files = e.response[@"files"];
+                      NSDictionary *file = files[0];
+                      NSString *message =[NSString stringWithFormat:@"id : %@\n Name : %@\nUpdated at : %@\n",
+                                              file[@"id"],
+                                              file[@"name"],
+                                              file[@"updated_at"]];
+
+                      [[[UIAlertView alloc] initWithTitle:@"Success" 
+                                                  message:message
+                                                 delegate:nil 
+                                        cancelButtonTitle:@"OK" 
+                                        otherButtonTitles:nil] show];
+
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:e.errorMessage
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
                 NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
                 [paramDict setObject:@"my_new_file" forKey:@"name"];
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"PUT" baseUrl:@"files/update.json" paramDict:paramDict];

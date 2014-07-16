@@ -102,6 +102,34 @@ methods:
       - platform: ios
         example: |
             Example iOS call:
+                NSDictionary *data = @{
+                                         @"name" : @"welcome_message"
+                                      };
+                [APSKeyValues get:data withBlock:^(APSResponse *e) {
+                    if (e.success){
+                        NSArray *keyvalues = e.response[@"keyvalues"];
+                        NSDictionary *keyValue = keyvalues[0];
+                        NSString *message =[NSString stringWithFormat:@"Name : %@\nValue: %@\n", 
+                                                          keyValue[@"name"], 
+                                                          keyValue[@"value"]];
+
+                        [[[UIAlertView alloc] initWithTitle:@"Success" 
+                                                    message:message
+                                                   delegate:nil 
+                                          cancelButtonTitle:@"OK" 
+                                          otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:e.errorMessage
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
 
                 NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:@"score", @"name", nil];
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"keyvalues/get.json" paramDict:nil];
