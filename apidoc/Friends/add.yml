@@ -72,6 +72,28 @@ methods:
       - platform: ios
         example: |
             Example iOS call:
+                NSDictionary *data = @{
+                                         @"user_ids" : @"userid1, userid2"
+                                      };
+                [APSFriends append:data withBlock:^(APSResponse *e) {
+                    if (e.success){
+                        [[[UIAlertView alloc] initWithTitle:@"Success" 
+                                                    message:@"Friend(s) Addeed"
+                                                   delegate:nil 
+                                          cancelButtonTitle:@"OK" 
+                                          otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:e.errorMessage
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
 
                 NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
                 NSArray *user_ids = [NSArray arrayWithObjects:@"124", @"345", nil];

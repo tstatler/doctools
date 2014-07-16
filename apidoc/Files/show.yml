@@ -102,6 +102,37 @@ methods:
         example: |
             Example iOS call:
 
+                NSDictionary *data = @{
+                                         @"file_id" : @"savedFileId"
+                                      };
+                [APSFiles show:data withBlock:^(APSResponse *e) {
+                    if (e.success){
+                      NSArray *files = e.response[@"files"];
+                      NSDictionary *file = files[0];
+                      NSString *message =[NSString stringWithFormat:@"id : %@\n Name : %@\nUpdated at : %@\n",
+                                              file[@"id"],
+                                              file[@"name"],
+                                              file[@"updated_at"]];
+
+                      [[[UIAlertView alloc] initWithTitle:@"Success" 
+                                                  message:message
+                                                 delegate:nil 
+                                        cancelButtonTitle:@"OK" 
+                                        otherButtonTitles:nil] show];
+                      
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:e.errorMessage
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
                 NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:(CCFile *)file.objectId, @"file_id", nil]
                 request = [[[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"files/show.json" paramDict:paramDict] autorelease];
                 [request startAsynchronous];

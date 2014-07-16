@@ -97,6 +97,37 @@ methods:
       - platform: ios
         example: |
             Example iOS call:
+                NSDictionary *data = @{
+                                         @"name" : @"welcome_message",
+                                         @"value": @"Welcome to Appcelerator Cloud Services"
+                                      };
+
+                [APSKeyValues set:data withBlock:^(APSResponse *e) {
+                    if (e.success){
+                        NSArray *keyvalues = e.response[@"keyvalues"];
+                        NSDictionary *keyValue = keyvalues[0];                        
+                        NSString *message =[NSString stringWithFormat:@"Name : %@\nValue: %@\n", 
+                                                          keyValue[@"name"], 
+                                                          keyValue[@"value"]];
+              
+                        [[[UIAlertView alloc] initWithTitle:@"Success" 
+                                                    message:message
+                                                   delegate:nil 
+                                          cancelButtonTitle:@"OK" 
+                                          otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:e.errorMessage
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil] show];
+                    }
+                }];
+
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
 
                 NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
                 [paramDict setObject:@"welcome_message" forKey:@"name"];

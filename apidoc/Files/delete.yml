@@ -69,6 +69,30 @@ methods:
         example: |
             Example iOS call:
 
+                NSDictionary *data = @{
+                                         @"file_id" : @"savedFileId"
+                                      };
+                [APSFiles remove:data withBlock:^(APSResponse *e) {
+                    if (e.success){
+                      [[[UIAlertView alloc] initWithTitle:@"Success" 
+                                                  message:@"File Removed"
+                                                 delegate:nil 
+                                        cancelButtonTitle:@"OK" 
+                                        otherButtonTitles:nil] show];
+                      
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:e.errorMessage
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
                 NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:(CCFile *)file.objectId, @"file_id", nil];
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"DELETE" baseUrl:@"files/delete.json" paramDict:paramDict];
                 [request startAsynchronous];

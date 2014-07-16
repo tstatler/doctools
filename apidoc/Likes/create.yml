@@ -132,6 +132,30 @@ methods:
       - platform: ios
         example: |
             Example iOS call:
+                NSDictionary *data = @{@"post_id":@"savedPostId"};
+                [APSLikes create:data withBlock:^(APSResponse *e) {
+                    if (e.success){
+                        NSArray *likes = e.response[@"likes"];
+                        NSDictionary *like = likes[0];
+                        NSString *message =[NSString stringWithFormat:@"id : %@\n", like[@"id"]];
+
+                        [[[UIAlertView alloc] initWithTitle:@"Success" 
+                                                    message:message
+                                                   delegate:nil 
+                                          cancelButtonTitle:@"OK" 
+                                          otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:e.errorMessage
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
 
                 NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
                 [paramDict setObject:@"4e33a817d9ca724745000003" forKey:@"post_id"];

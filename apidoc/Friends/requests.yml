@@ -101,6 +101,35 @@ methods:
       - platform: ios
         example: |
             Example iOS call:
+                [APSFriends requests:nil withBlock:^(APSResponse *e) {
+                    if (e.success){
+                        NSArray *friendRequests = e.response[@"friend_requests"];
+
+                        for (NSDictionary *friendRequest in friendRequests) {
+                          NSString *message =[NSString stringWithFormat:@"id : %@\n First Name : %@\nLast Name : %@\n",
+                                                  friendRequest[@"id"],
+                                                  friendRequest[@"first_name"],
+                                                  friendRequest[@"last_name"]];
+
+
+                          [[[UIAlertView alloc] initWithTitle:@"Success" 
+                                                      message:message
+                                                     delegate:nil 
+                                            cancelButtonTitle:@"OK" 
+                                            otherButtonTitles:nil] show];
+                        }
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:e.errorMessage
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
 
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"friends/requests.json" paramDict:nil];
                 [request startAsynchronous];

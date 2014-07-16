@@ -159,6 +159,38 @@ methods:
         example: |
             Example iOS call:
 
+                NSDictionary *data = @{
+                                         @"page"    : @1,
+                                         @"per_page": @20
+                                      };
+                [APSFiles query:data withBlock:^(APSResponse *e) {
+                    if (e.success){
+                      NSArray *files = e.response[@"files"];
+                      for (NSDictionary *file in files) {
+                        NSString *message =[NSString stringWithFormat:@"id : %@\n Name : %@\nUpdated at : %@\n",
+                                                file[@"id"],
+                                                file[@"name"],
+                                                file[@"updated_at"]];
+
+                        [[[UIAlertView alloc] initWithTitle:@"Success" 
+                                                    message:message
+                                                   delegate:nil 
+                                          cancelButtonTitle:@"OK" 
+                                          otherButtonTitles:nil] show];
+                      }
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:e.errorMessage
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
                 CCWhere *where = [[[CCWhere alloc] init] autorelease];
                 [where fieldName:@"name" equalTo:@"test_file"];
                 NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:where, @"where", nil]

@@ -170,6 +170,41 @@ methods:
         example: |
             Example iOS call:
 
+                // Create dictionary of parameters to be passed with the request
+                NSDictionary *data = @{
+                    @"to_ids" : @"USER_ID1, USER_ID2, USER_ID3",
+                    @"body"   : @"Hello World",
+                    @"subject": @"Test Message"
+                };
+                [APSMessages create:data withBlock:^(APSResponse *e) {
+                    if (e.success){
+                        NSArray *messages = e.response[@"messages"];
+                        NSDictionary *currentMessage = messages[0];
+                        NSString *message =[NSString stringWithFormat:@"id : %@\n Subject : %@\nBody : %@\nUpdated At :%@",
+                                                currentMessage[@"id"],
+                                                currentMessage[@"subject"],
+                                                currentMessage[@"body"],
+                                                currentMessage[@"updated_at"]];
+
+                        [[[UIAlertView alloc] initWithTitle:@"Success" 
+                                                    message:message
+                                                   delegate:nil 
+                                          cancelButtonTitle:@"OK" 
+                                          otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:e.errorMessage
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil] show];
+                    }
+
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
                 NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
                 NSDictionary *to_ids = [NSArray arrayWithObjects:user1.objectId, user2.objectId, nil];
                 [paramDict setObject:to_ids forKey:@"to_ids"];
@@ -271,6 +306,28 @@ methods:
                 }
 
       - platform: ios
+        example: |
+            Example iOS call:
+                // Create dictionary of parameters to be passed with the request
+                NSDictionary *data = @{@"message_id" : @"message_Identifier"};
+                [APSMessages remove:data withBlock:^(APSResponse *e) {
+                    if (e.success){
+                        [[[UIAlertView alloc] initWithTitle:@"Success" 
+                                                    message:@"Message Removed"
+                                                   delegate:nil 
+                                          cancelButtonTitle:@"OK" 
+                                          otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:e.errorMessage
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil] show];
+                    }
+
+                }];
+
+      - platform: ios-acssdk
         example: |
             Example iOS call:
 
@@ -405,6 +462,28 @@ methods:
                 }
 
       - platform: ios
+        example: |
+            Example iOS call:
+                // Create dictionary of parameters to be passed with the request
+                NSDictionary *data = @{@"thread_id" : @"thread_Identifier"};
+                [APSMessages removeThread:data withBlock:^(APSResponse *e) {
+                    if (e.success){
+                        [[[UIAlertView alloc] initWithTitle:@"Success" 
+                                                    message:@"Message Removed"
+                                                   delegate:nil 
+                                          cancelButtonTitle:@"OK" 
+                                          otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:e.errorMessage
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil] show];
+                    }
+
+                }];
+
+      - platform: ios-acssdk
         example: |
             Example iOS call:
 
@@ -587,6 +666,39 @@ methods:
                 }
 
       - platform: ios
+        example: |
+            Example iOS call:
+                // Create dictionary of parameters to be passed with the request
+                NSDictionary *data = @{
+                    @"message_id" : @"Message_Identifier",
+                    @"body"       : @"Welcome"
+                };
+                [APSMessages remove:data withBlock:^(APSResponse *e) {
+                    if (e.success){
+                        NSArray *messages = e.response[@"messages"];
+                        NSDictionary *currentMessage = messages[0];
+                        NSString *message =[NSString stringWithFormat:@"id : %@\n Subject : %@\nBody : %@\nUpdated At :%@",
+                                                currentMessage[@"id"],
+                                                currentMessage[@"subject"],
+                                                currentMessage[@"body"],
+                                                currentMessage[@"updated_at"]];
+                  
+                        [[[UIAlertView alloc] initWithTitle:@"Success" 
+                                                    message:message
+                                                   delegate:nil 
+                                          cancelButtonTitle:@"OK" 
+                                          otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:e.errorMessage
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil] show];
+                    }
+
+                }];
+
+      - platform: ios-acssdk
         example: |
             Example iOS call:
 
@@ -778,6 +890,39 @@ methods:
       - platform: ios
         example: |
             Example iOS call:
+                
+                // Create dictionary of parameters to be passed with the request
+                NSDictionary *data = @{
+                    @"message_id" : @"Message_Identifier",
+                };
+                [APSMessages show:data withBlock:^(APSResponse *e) {
+                    if (e.success){
+                        NSArray *messages = e.response[@"messages"];
+                        NSDictionary *currentMessage = messages[0];
+                        NSString *message =[NSString stringWithFormat:@"id : %@\n Subject : %@\nBody : %@\nUpdated At :%@",
+                                                currentMessage[@"id"],
+                                                currentMessage[@"subject"],
+                                                currentMessage[@"body"],
+                                                currentMessage[@"updated_at"]];
+                  
+                        [[[UIAlertView alloc] initWithTitle:@"Success" 
+                                                    message:message
+                                                   delegate:nil 
+                                          cancelButtonTitle:@"OK" 
+                                          otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:e.errorMessage
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil] show];
+                    }
+
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
 
                 NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:(CCMessage*)message.objectId, @"message_id", nil];
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"messages/show.json" paramDict:paramDict];
@@ -917,6 +1062,35 @@ methods:
                 }
 
       - platform: ios
+        example: |
+            Example iOS call:
+                
+                [APSMessages showInbox:nil withBlock:^(APSResponse *e) {
+                    if (e.success){
+                        NSArray *messages = e.response[@"messages"];
+                        for (NSDictionary *currentMessage in messages) {
+                            NSString *message =[NSString stringWithFormat:@"id : %@\n Subject : %@\nBody : %@\nUpdated At :%@",
+                                                currentMessage[@"id"],
+                                                currentMessage[@"subject"],
+                                                currentMessage[@"body"],
+                                                currentMessage[@"updated_at"]];
+                  
+                            [[[UIAlertView alloc] initWithTitle:@"Success" 
+                                                        message:message
+                                                       delegate:nil 
+                                              cancelButtonTitle:@"OK" 
+                                              otherButtonTitles:nil] show];
+                        }
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:e.errorMessage
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
         example: |
             Example iOS call:
 
@@ -1105,6 +1279,35 @@ methods:
                 }
 
       - platform: ios
+        example: |
+            Example iOS call:
+                
+                [APSMessages showSent:nil withBlock:^(APSResponse *e) {
+                    if (e.success){
+                        NSArray *messages = e.response[@"messages"];
+                        for (NSDictionary *currentMessage in messages) {
+                            NSString *message =[NSString stringWithFormat:@"id : %@\n Subject : %@\nBody : %@\nUpdated At :%@",
+                                                currentMessage[@"id"],
+                                                currentMessage[@"subject"],
+                                                currentMessage[@"body"],
+                                                currentMessage[@"updated_at"]];
+                  
+                            [[[UIAlertView alloc] initWithTitle:@"Success" 
+                                                        message:message
+                                                       delegate:nil 
+                                              cancelButtonTitle:@"OK" 
+                                              otherButtonTitles:nil] show];
+                        }
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:e.errorMessage
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
         example: |
             Example iOS call:
 
@@ -1365,6 +1568,35 @@ methods:
       - platform: ios
         example: |
             Example iOS call:
+                NSDictionary *data = @{@"thread_id":@"savedThreadId"};
+                [APSMessages showThread:data withBlock:^(APSResponse *e) {
+                    if (e.success){
+                        NSArray *messages = e.response[@"messages"];
+                        for (NSDictionary *currentMessage in messages) {
+                            NSString *message =[NSString stringWithFormat:@"id : %@\n Subject : %@\nBody : %@\nUpdated At :%@",
+                                                currentMessage[@"id"],
+                                                currentMessage[@"subject"],
+                                                currentMessage[@"body"],
+                                                currentMessage[@"updated_at"]];
+                  
+                            [[[UIAlertView alloc] initWithTitle:@"Success" 
+                                                        message:message
+                                                       delegate:nil 
+                                              cancelButtonTitle:@"OK" 
+                                              otherButtonTitles:nil] show];
+                        }
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:e.errorMessage
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
 
                 // search for current user's checkins
                 NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:3];
@@ -1590,6 +1822,35 @@ methods:
                 }
 
       - platform: ios
+        example: |
+            Example iOS call:
+                
+                [APSMessages showThreads:nil withBlock:^(APSResponse *e) {
+                    if (e.success){
+                        NSArray *messages = e.response[@"messages"];
+                        for (NSDictionary *currentMessage in messages) {
+                            NSString *message =[NSString stringWithFormat:@"id : %@\n Subject : %@\nBody : %@\nUpdated At :%@",
+                                                currentMessage[@"id"],
+                                                currentMessage[@"subject"],
+                                                currentMessage[@"body"],
+                                                currentMessage[@"updated_at"]];
+                  
+                            [[[UIAlertView alloc] initWithTitle:@"Success" 
+                                                        message:message
+                                                       delegate:nil 
+                                              cancelButtonTitle:@"OK" 
+                                              otherButtonTitles:nil] show];
+                        }
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:e.errorMessage
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
         example: |
             Example iOS call:
 
