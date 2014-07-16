@@ -189,6 +189,40 @@ methods:
         example: |
             Example iOS call:
 
+                NSDictionary *data = @{
+                                         @"post_id" : savedPostId,
+                                         @"review_id" : savedReviewId,
+                                         @"rating" : @100,
+                                         @"content" : @"Very good!"
+                                      };
+                [APSReviews update:data withBlock:^(APSResponse *e) {
+                    if (e.success){
+                      NSArray *reviews = e.response[@"reviews"];
+                      NSDictionary *review = reviews[0];
+                      NSString *message =[NSString stringWithFormat:@"id : %@\n rating : %@\n content : %@\nUpdated at : %@\n",
+                                              review[@"id"],
+                                              review[@"rating"],
+                                              review[@"content"],
+                                              review[@"updated_at"]];
+
+                      [[[UIAlertView alloc] initWithTitle:@"Success" 
+                                                  message:message
+                                                 delegate:nil 
+                                        cancelButtonTitle:@"OK" 
+                                        otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:e.errorMessage
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
                 NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:(CCPost *)post.objectId, @"post_id", (CCReview *)review.objectId, @"review_id", @"100", @"rating", nil];
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"reviews/update.json" paramDict:paramDict];
                 [request startAsynchronous];
