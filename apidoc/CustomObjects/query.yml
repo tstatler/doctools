@@ -241,6 +241,29 @@ methods:
 
       - platform: ios
         example: |
+            Example iOS APS SDK call:
+
+                // Create dictionary of parameters to be passed with the request
+                NSDictionary *data = @{
+                      @"classname": @"cars",
+                      @"page": @1,
+                      @"per_page": @10,
+                      @"where": @{
+                            @"color": @"blue"
+                      }
+                };
+                
+                [APSObjects query:data withBlock:^(APSResponse *e) {
+                      if (e.success) {
+                          NSString *message = [NSString stringWithFormat:@"Found %lu cars", (unsigned long)((NSArray *)e.response[@"cars"]).count];
+                          [[[UIAlertView alloc] initWithTitle:@"Success" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      } else {
+                          [[[UIAlertView alloc] initWithTitle:@"Error" message:e.errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      }
+                }];
+
+      - platform: ios-acssdk
+        example: |
             Example iOS call:
 
                 CCWhere *where = [[[CCWhere alloc] init] autorelease];

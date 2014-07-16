@@ -134,6 +134,34 @@ methods:
                     ]
                   }
                 }
+            
+      - platform: ios
+        example: |
+            Example iOS APS SDK call:
+
+                // Create dictionary of parameters to be passed with the request
+                NSDictionary *data = @{
+                    @"where": @{
+                        @"loc": @{
+                            @"$nearSphere": @{
+                                @"$geometry": @{ 
+                                    @"type": @"Point", 
+                                    @"coordinates": @[@-122.2708, @37.8044] 
+                                },
+                                @"$maxDistance" : @2000
+                            }
+                        }
+                    }
+                };
+                
+                [APSGeoFences query:data withBlock:^(APSResponse *e) {
+                      if (e.success) {
+                          NSString *message = [NSString stringWithFormat:@"Found %lu geo_fences", (unsigned long)((NSArray *) e.response[@"geo_fences"]).count ];
+                          [[[UIAlertView alloc] initWithTitle:@"Success" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      } else {
+                          [[[UIAlertView alloc] initWithTitle:@"Error" message:e.errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      }
+                }];
 
       - platform: android
         example: |

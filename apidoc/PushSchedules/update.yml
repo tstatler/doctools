@@ -126,4 +126,29 @@ methods:
                   }
                 }
 
+      - platform: ios
+        example: |
+            Example iOS APS SDK call:
 
+                // Create dictionary of parameters to be passed with the request
+                NSDictionary *data = @{
+                    @"schedule": @{
+                        @"start_time": @"2015-09-10T10:11",
+                        @"recurrence": @{
+                            @"interval": @"weekly",
+                            @"end_time": @"2015-09-10T10:11"
+                        },
+                        @"push_notification": @{
+                            @"payload": @"hello world",
+                            @"channel": @"channelTwo"
+                        }
+                    }
+                };
+                
+                [APSPushSchedules update:data withBlock:^(APSResponse *e) {
+                      if (e.success) {
+                          [[[UIAlertView alloc] initWithTitle:@"Great" message:@"Success!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      } else {
+                          [[[UIAlertView alloc] initWithTitle:@"Error" message:e.errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      }
+                }];

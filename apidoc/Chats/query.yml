@@ -217,6 +217,29 @@ methods:
 
       - platform: ios
         example: |
+            Example iOS APS SDK call:
+
+                // Create dictionary of parameters to be passed with the request
+                NSDictionary *data = @{
+                    @"participate_ids": @[@"4edef6f7d9ca7247b8000004", @"4edf0c20d9ca724a82000003"],
+                    @"where": @{
+                        @"updated_at": @{
+                            @"$gt": @"2013-12-26T19:00:00+0000"
+                        }
+                    }
+                };
+
+                [APSChats query:data withBlock:^(APSResponse *e) {
+                    if (e.success) {
+                        NSString *message = [NSString stringWithFormat:@"Found %lu groups", (unsigned long)((NSArray *) e.response[@"chats"]).count ];
+                        [[[UIAlertView alloc] initWithTitle:@"Success!" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error" message:e.errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
             Example iOS call:
 
                 CCWhere *where = [[[CCWhere alloc] init] autorelease];
