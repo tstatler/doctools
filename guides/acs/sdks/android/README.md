@@ -326,7 +326,7 @@ otherwise an exception will be thrown.
 The SDK includes the `APSCloudPushExample` application that demonstrates use of the `APSPushNotifications` 
 and `APSCloudPush` APIs. To run the sample application, you'll first need to create an Android application
 in Dashboard (or use an existing application), and configure its push notification
-settings to include a GCM sender ID and application key. For more information, see [Configuring push services for Android devices](/platform/latest/#!/guide/Configuring_push_services-section-37551713_Configuringpushservices-ConfiguringpushservicesforAndroiddevices). 
+settings to include a GCM sender ID and application key. For more information, see [Configuring push services for Android devices](http://docs.appcelerator.com/platform/latest/#!/guide/Configuring_push_services-section-37551713_Configuringpushservices-ConfiguringpushservicesforAndroiddevices). 
 `APSCloudPush` requires Google Play services, so you'll also need to add that library to your project's
 `libs/` folder. 
 
