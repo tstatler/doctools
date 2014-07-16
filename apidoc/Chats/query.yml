@@ -230,6 +230,49 @@ methods:
 
       - platform: android
         example: |
+            Example Android APS SDK call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+
+                HashMap<String,Object> data = new HashMap<String,Object>;
+                data.put("participate_ids", "4ee05d69d9ca726b85000002,4ee05d69d9ca726b85000003,4ee05d69d9ca726b85000004");
+                data.put("order", "created_at");
+
+                try {
+                    APSChats.query(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                try {
+                                    JSONArray chats = e.getResponse().getJSONArray("chats");
+                                    if (chats.length() <= 0) {
+                                        Log.i("APSChats", "No Results!");
+                                    } else {
+                                        for (int i = 0; i < chats.length(); i++) {
+                                            JSONObject chat = chat.getJSONObject(i);
+                                            Log.i("APSChats", chat.getString("message"));
+                                        }
+                                    }
+                                } catch (JSONException err) {
+                                       Log.e("APSChats", "Exception thrown: " + err.toString());
+                                }
+                            } else {
+                                Log.e("APSChats", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(APSCloudException e) {
+                            Log.e("APSChats", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSChats", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
+        example: |
             Example Android call:
 
                 ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key

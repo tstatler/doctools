@@ -204,7 +204,6 @@ methods:
                                     if (objectsList.size() <= 0) {
                                         Log.i("APSEvents", "No Results!");
                                     }
-                                    // Load listView rows
                                 } catch (JSONException e1) {
                                     Log.e("APSEvents", e1.toString());
                                 }

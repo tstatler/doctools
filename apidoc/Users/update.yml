@@ -200,7 +200,7 @@ methods:
                     });
                 } catch (APSCloudException e) {
                     Log.e("APSUsers", "Exception thrown: " + e.toString());
-                }`
+                }
 
       - platform: android-acssdk
         example: |
