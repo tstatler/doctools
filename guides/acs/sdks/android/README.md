@@ -5,15 +5,16 @@ application to access Appcelerator Cloud Services (ACS).
 
 ## Getting the SDK ##
 
-To download the SDK, you visit [Appcelerator Dashboard](https://dashboard.appcelerator.com) and [create
-a new Android application](http://docs.appcelerator.com/platform/latest/#!/guide/Managing_Native_Applications_in_Dashboard) to generate the required application keys and allocate server resources. For detailed steps for creating a new native application in Dashboard and enabling Platform services in your application, 
-see [Managing Native Applications in Dashboard](http://docs.appcelerator.com/platform/latest/#!/guide/Managing_Native_Applications_in_Dashboard).
+To download and start using the SDK, you first need to [create new Android application](http://docs.appcelerator.com/platform/latest/#!/guide/Managing_Native_Applications_in_Dashboard). This generates the required service keys and server resources to support your application.
+See [Managing Native Applications in Dashboard](http://docs.appcelerator.com/platform/latest/#!/guide/Managing_Native_Applications_in_Dashboard)
+for details on creating a new native application.
 
 ## Running the APSCloudExample Application ##
 
-The SDK includes an Android sample project that demonstrates basic use of each of the APS Cloud APIs. 
-To run the sample you first need to create a new application in Dashboard, and copy the generated 
-application key into the sample application's main Activity class.
+The SDK includes an Android sample project that demonstrates basic use of each of the Cloud APIs. 
+To run the sample you first need to create a new application in Dashboard to obtain the necessary 
+service application. You will then copy this key into the imported sample project's main Activity 
+and then run the application.
 
 **To create the APSCloudExample application in Dashboard:**
 
@@ -249,17 +250,16 @@ status of the upload. After the request successfully completes, the application 
         }
     }
 
-### Making Generic REST APIs Method Calls 
+## Making Generic REST APIs Method Calls 
 
-The APSClient class's `sendRequest()` method lets you easily make REST API calls directly against
-ACS, rather than using the specialized classes, such as `APSUsers`. In general, use the
-specialized classes as they are easier to work with. However, it may be useful or
-necessary to make REST calls directly in some cases. For instance, if new REST APIs are deployed to
-the APS Cloud backend, you can immediately start using that API without having to wait for an update
-to the APS SDK.
+The [`APSCloud.sendRequest()`](http://docs.appcelerator.com/aps-sdk-apidoc/latest/android/com/appcelerator/aps/APSCloud.html#sendRequest%28java.lang.String%2C%20java.lang.String%2C%20java.util.Map%2C%20com.appcelerator.aps.APSResponseHandler%29) method lets you easily make REST API calls directly against
+ACS, rather than using the specialized classes (like `APSUsers`). In general, you
+should use the specialized classes as they provide an easier API. However, if new REST methods
+are deployed to the APS Cloud backend, this approach lets you immediately start 
+using those methods without waiting for an update to the SDK.
 
-To make a generic request, get a reference to the APSClient object's `sharedClient` property and call
-its `sendRequest()` method. For each call, you must specify the following:
+To make a generic request, you call `APSCloud.getInstance()` to get a reference to the shared APSCloud
+object and call its `sendRequest()` method. For each call, you must specify the following:
 
   * REST API method endpoint (relative to `baseURL`). Method endpoints are listed in the REST API documentation.
   * The HTTP method to use.
@@ -274,13 +274,12 @@ pass the `sendRequest()` method the following information:
 
 The following uses the `sendRequest()` API to create a new Post object.
 
-    APSClient client = APSClient.sharedClient();
     HashMap<String, Object> data = new HashMap<String, Object>();
     data.put("title", "What's up?");
     data.put("content", "The sun, the cloud, space...");
 
     try {
-        client.sendRequest("posts/create.json", "POST", data, new APSClient.APSResponseHandler() {
+        APSCloud.getInstance().sendRequest("posts/create.json", "POST", data, new APSClient.APSResponseHandler() {
             public void onResponse(final APSResponse e) {
                 if (e.getSuccess()) {
                     try {
