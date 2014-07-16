@@ -164,7 +164,7 @@ methods:
                     }
                 }];
 
-      - platform: ios
+      - platform: ios-acssdk
         example: |
             Example iOS call:
 

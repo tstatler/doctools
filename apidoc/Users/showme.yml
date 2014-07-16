@@ -105,6 +105,24 @@ methods:
                     }
                 }];
 
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
+                CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"users/show/me.json" paramDict:nil];
+                [request startAsynchronous];
+                [request release];
+
+            SDK Callback:
+
+                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
+                {
+                	NSArray *users = [response getObjectsOfType:[CCUser class]];
+                	if ([users count] == 1) {
+                		NSLog(@"Current user is %@", user);
+                	}
+                }
+
       - platform: android
         example: |
             Example Android call:

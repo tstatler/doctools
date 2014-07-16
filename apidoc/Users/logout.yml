@@ -51,22 +51,31 @@ methods:
 
       - platform: ios
         example: |
-            Example iOS call that logs the user out and sets the text of a UILabel with "Logged out" 
-            or an error message, if the request fails. Because callback blocks run on a separate thread, 
-            you must switch to the main thread before setting the text on the UILabel, as shown below.
+            Example iOS APS SDK call:
 
                 [APSUsers logout:nil withBlock:^(APSResponse *e) {
                     if (e.success) {
-                        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                            self.label.text = @"Logged out!";
-                        }];
+                        [[[UIAlertView alloc] initWithTitle:@"Success" message:@"Logged out!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
                     } else {
-                        [Utils handleErrorInResponse:e];
-                        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                            self.label.text = e.message;
-                        }];
+                        [[[UIAlertView alloc] initWithTitle:@"Error" message:e.message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
                     }
                 }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
+                CCRequest *request = [[[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"users/logout.json" paramDict:nil] autorelease];
+                [request startAsynchronous];
+
+            SDK Callback:
+
+                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
+                {
+                	if ([response.meta.method isEqualToString:@"logoutUser"]) {
+                		NSLog(@"user logged out!");
+                	}
+                }
 
       - platform: android
         example: |

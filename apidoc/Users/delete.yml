@@ -59,6 +59,23 @@ methods:
                     }
                 }];
 
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
+                CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"DELETE" baseUrl:@"users/delete.json" httpMethod:@"DELETE" paramDict:nil];
+                [request startAsynchronous];
+                [request release];
+
+            SDK Callback:
+
+                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
+                {
+                	if ([response.meta.method isEqualToString:@"deleteUser"]) {
+                		NSLog(@"user deleted!");
+                	}
+                }
+
       - platform: android
         example: |
             Example Android call:

@@ -131,9 +131,7 @@ methods:
 
       - platform: ios-acssdk
         example: |
-            In the following example the value of the APSResponse object's `responseString` property 
-            is displayed in a UITextView object. The callback block runs on a separate thread, so you 
-            must switch to the main thread before interacting with the UI.
+            Example iOS call:
 
                 NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:(CCUser *)user.objectId, @"user_id", nil];
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"users/show.json" paramDict:paramDict];
