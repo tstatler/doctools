@@ -273,7 +273,7 @@ methods:
                 APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
 
                 try {
-                    APSChats.query(null, new APSResponseHandler() {
+                    APSChats.queryChatGroups(null, new APSResponseHandler() {
 
                         @Override
                         public void onResponse(final APSResponse e) {

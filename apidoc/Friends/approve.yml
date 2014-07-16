@@ -81,9 +81,12 @@ methods:
 
                 APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
 
+                HashMap<String, Object> data = new HashMap<String, Object>();
+                data.put("user_ids", "4d6e77386f70950c89000001,5f6e77386f70950c890efew01");
+
                 try {
 
-                    APSFriends.requests(null, new APSResponseHandler() {
+                    APSFriends.approve(null, new APSResponseHandler() {
 
                         @Override
                         public void onResponse(final APSResponse e) {

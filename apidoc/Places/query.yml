@@ -207,7 +207,7 @@ methods:
                 data.put("where", params);
 
                 try {
-                    APSPlaces.query(null, new APSResponseHandler() {
+                    APSPlaces.query(data, new APSResponseHandler() {
 
                         @Override
                         public void onResponse(final APSResponse e) {

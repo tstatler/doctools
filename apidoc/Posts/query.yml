@@ -220,7 +220,7 @@ methods:
                     JSONObject params = new JSONObject("{'ratings_average': {'$gt': 7.0}}");
                     data.put("where", params);
 
-                    APSPosts.query(null, new APSResponseHandler() {
+                    APSPosts.query(data, new APSResponseHandler() {
 
                         @Override
                         public void onResponse(final APSResponse e) {
