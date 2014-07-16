@@ -114,7 +114,7 @@ whose value is, naturally, the ID of the photo to show.
 
 ### Handling Responses
 
-The second parameter of each method call is an instance of [APSResponseHandler](http://docs.appcelerator.com/aps-sdk-apidoc/latest/android/com/appcelerator/cloud/APSResponseHandler.html), an interface that has the following signature:
+The second parameter of each method call is an instance of [APSResponseHandler](http://docs.appcelerator.com/aps-sdk-apidoc/latest/android/com/appcelerator/aps/APSResponseHandler.html), an interface that has the following signature:
 
     public interface APSResponseHandler {
         void onResponse(final APSResponse e);
@@ -125,7 +125,7 @@ The instance you specify must override the `onResponse` and `onException` method
 invoked upon completion of a Cloud API call, and the `onException` handler is invoked if there is 
 an exception while communicating with the ACS server.
 
-The [APSResponse](http://docs.appcelerator.com/aps-sdk-apidoc/latest/android/com/appcelerator/cloud/APSResponse.html) object provides getter methods to access information about the response. For instance,
+The [APSResponse](http://docs.appcelerator.com/aps-sdk-apidoc/latest/android/com/appcelerator/aps/APSResponse.html) object provides getter methods to access information about the response. For instance,
 the `getSuccess()` method returns a boolean indicating if the method call was successful or not; 
 the `getResponse()` method returns a JSON-encoded object with the results of the method call.
 
@@ -192,7 +192,7 @@ login, the application updates a TextView object with the user's ACS username.
 
 For Cloud API methods that involve uploading large files, such as `APSPhotos.create()` or `APSFiles.create()`, 
 there is an overloaded version that takes an optional `progressHandler` parameter. This parameter takes
-a [APSProgressHandler](http://docs.appcelerator.com/aps-sdk-apidoc/latest/android/com/appcelerator/cloud/APSProgressHandler.html)
+a [APSProgressHandler](http://docs.appcelerator.com/aps-sdk-apidoc/latest/android/com/appcelerator/aps/APSProgressHandler.html)
 instance, which must provide an `onProgress` handler. This handler is periodically triggered as the file
 transfer continues, and is passed an integer between 0-100 indicating the current upload progress.
 
