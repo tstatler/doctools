@@ -1,558 +1,407 @@
-# Getting Started: Using the iOS SDK
+# Appcelerator Platform Services SDK for iOS -- Appcelerator Cloud Services
 
+The Appcelerator Platform Services (APS) SDK for iOS provides APIs for your native iOS
+application to access Appcelerator Cloud Services (ACS). 
 
-## Download the SDK
+## Getting the SDK ##
 
-Grab the ACS iOS SDK from <https://github.com/appcelerator/acs-ios-sdk>. See the
-[DemoApp](https://github.com/appcelerator/acs-ios-sdk/tree/master/samples/DemoApp) sample project for
-an example of storing and retrieving data with the SDK.
+To download and start using the SDK, you first need to create new iOS application in [Dashboard](https://dashboard.appcelerator.com).
+See [Managing Native Applications in Dashboard](http://docs.appcelerator.com/platform/latest/#!/guide/Managing_Native_Applications_in_Dashboard)
+for details on creating a new native application. After you create an application, a service
+key is generated that associates your application with all the Platform services. Dashboard also provides 
+full instructions for enabling all Platform Services in your application. This guide will deal specifically
+with enabling and using Appcelerator Cloud Services in an iOS application.
 
-## Adding ACS to your XCode Project
+{@img dashboard.png}
 
-1.  Create a ACS app from the [My Apps page](https://my.appcelerator.com/apps). Then in
-    XCode, create an iOS project and add the following folders from `acs-ios-sdk/src/` to your project:
+## Running the APSCloudExample Application ##
 
-        ACSClient
-        ASIHTTPRequest
-        FBConnect
+The SDK ZIP file includes an iOS sample project that demonstrates basic use of each of the Cloud APIs. 
+To run the sample you first need to create a new application in Dashboard to obtain the necessary 
+service application. You will then copy this key into the imported sample project's main Activity 
+and then run the application.
 
-    {@img addfiles.png}
+**To create the APSCloudExample application in Dashboard:**
 
-    You can choose to use your own copy of `ASIHTTPRequest` (v1.8 or above) and
-    `FBConnect` from facebook-ios-sdk (updated on or after Jan 31, 2011). The only
-    change we made to the `ASIHTTPRequest` in our copy is in `ASIHttpRequest.m`:
+1. Login to [Appcelerator Dashboard](https://dashboard.appcelerator.com).
+2. From the Orgs menu, select the organization to associate with the application.
+3. Click the Apps menu and select **Add a Native App**.
+4. In the dialog that appears
+  * Type **APSCloudExampleApp** (or other name) in the **Name** field.
+  * Select **Android** from the **Platform** menu.
+  * Select any cateogory from the **Category** menu.
+5. Click **Next** and then click the **Overview** tab.
+6. Click the **Services** tab, then click **Show Key** under **Cloud /  Performance /  Analytics**.
+7. Select **Development** from the Environment menu, then click the clipboard icon to copy the key
+to your clipboard.
 
-        - (void)readResponseHeaders
-        {
-          ...
-          if ([self responseStatusCode] == 401) {
-            // Commented out by ACS
-            // [self setAuthenticationNeeded:ASIHTTPAuthenticationNeeded];
-          } else if ([self responseStatusCode] == 407) {
-            [self setAuthenticationNeeded:ASIProxyAuthenticationNeeded];
-          }
-          ...
+Next, you'll import the APSCloudExample project into Eclipse, copy the key from your clipboard
+into the application's main activity, and run the application.
+
+**To import the completed APSCloudExample project:**
+
+1. In ADT, select **File > Import > General > Existing Code into Workspace**, then click **Next**.
+2. Click Browse and navigate to the **appcelerator-sdk-android-1.0/examples/APSCloudExample** folder, and click Open.
+3. Click Finish.
+4. Open **src/main/java/com/appcelerator/apscloudexample/MainActivity.java**.
+5. Locate the following line of code and replace **<< YOUR APP KEY >>** with the application key you 
+copied to your clipboard previously.
+
+        String appKey = "<< YOUR APP KEY >>";
+
+6. Run the application on an Android device or emulator.
+
+Once the application is running, try the following:
+
+* Create a new user by selecting **Users > Create User**. Enter a username, password and password confirmation
+and then click **Create**. If the user is created successfully, the following dialog is shown: 
+
+{@img new_user_success.png}
+
+* View the newly created user in Dashboard:
+    1. Open [Dashboard](https://dashboard.appcelerator.com) and select your application from the Apps menu.
+    2. Select **Cloud > Manage Data**, then click **Users** in the Manage Data Object table. You
+    should see the user you created listed in the Users table.
+    
+{@img verify_new_user.png}
+
+## Enabling Cloud services in a new Project
+
+Once you've [created an application in Dashboard](http://docs.appcelerator.com/platform/latest/#!/guide/Managing_Native_Applications_in_Dashboard), 
+downloaded the SDK and obtained your application service key, there are few steps to enable Cloud service in your Android project.
+
+**To enable the Cloud service in your project**:
+
+1. Copy **appcelerator-sdk-android-1.0.0.jar** to your project's libs folder.
+2. Add the following permission to your project's AndroidManifest.xml file:
+
+        <uses-permission android:name="android.permission.INTERNET"/>`    
+3. Import the APSServiceManager class into the project's main Activity: 
+
+        import com.appcelerator.aps.APSServiceManager;
+4. Call `APSServiceManager.getInstance().enable()`, passing it the application context and the application 
+key provided by Dashboard:
+
+        APSServiceManager.getInstance().enable(getApplicationContext(), "<<YOUR APP KEY>>");
+At this point, your application can begin making API calls.
+
+## Making API Calls and Handling Responses
+
+The [com.appcelerator.aps](http://docs.appcelerator.com/aps-sdk-apidoc/latest/android/index.html?com/appcelerator/aps/package-summary.html) package contains a collection of classes whose methods map to 
+individual REST API method endpoints. For example, the `APSUsers.create()` method corresponds to the
+[`/users/create.json`](http://docs.appcelerator.com/cloud/latest/#!/api/Users-method-create) method
+endpoint.
+
+Alternatively, you can use the generic [APSCloud.sendRequest()](http://docs.appcelerator.com/aps-sdk-apidoc/latest/android/com/appcelerator/aps/APSCloud.html#sendRequest%28java.lang.String%2C%20java.lang.String%2C%20java.util.Map%2C%20com.appcelerator.aps.APSResponseHandler%29) method to make REST calls directly 
+against the Cloud APIs. For more information, see [Making Generic REST API Calls](#!/guide/android-section-making-generic-rest-apis-method-calls).
+
+**Note**: All Cloud API calls must be made on the UI (main) thread, and callbacks are executed 
+on the UI thread.
+
+### Building Request Parameters
+
+The first parameter of each Cloud API method is a `HashMap` object that contains the of 
+parameters to send with the request. For example, the `APSPhotos.show()` method takes `photo_id` parameter
+whose value is, naturally, the ID of the photo to show. 
+
+    // Create dictionary of parameters to be passed with the request
+    HashMap<String, Object> data = new HashMap<String, Object>();
+    data.put("photo_id", photoId);
+
+    APSPhotos.show(data, new APSResponseHandler() { 
+         ... 
+    });
+
+### Handling Responses
+
+The second parameter of each method call is an instance of [APSResponseHandler](http://docs.appcelerator.com/aps-sdk-apidoc/latest/android/com/appcelerator/cloud/APSResponseHandler.html), an interface that has the following signature:
+
+    public interface APSResponseHandler {
+        void onResponse(final APSResponse e);
+        void onException(final APSCloudException e);
+    }
+
+The instance you specify must override the `onResponse` and `onException` methods. The `onResponse` method is
+invoked upon completion of a Cloud API call, and the `onException` handler is invoked if there is 
+an exception while communicating with the ACS server.
+
+The [APSResponse](http://docs.appcelerator.com/aps-sdk-apidoc/latest/android/com/appcelerator/cloud/APSResponse.html) object provides getter methods to access information about the response. For instance,
+the `getSuccess()` method returns a boolean indicating if the method call was successful or not; 
+the `getResponse()` method returns a JSON-encoded object with the results of the method call.
+
+    @Override
+    public void onResponse(final APSResponse e) {
+        if (e.getSuccess()) {
+            // Read JSON response
+            JSONObject res = e.getResponse();
+        } else {
+            // Log error message:
+            Log.e("LOGIN", e.getMessage());            
         }
+    }
 
-    The ACS API server returns HTTP response code `401` in a number
-    of different error situations. However, `ASIHttpRequest` interprets all `401`
-    responses as Authentication Needed. This can be confusing if you want to
-    show users the exact error that has occurred. For instance: Invalid user
-    email/password, invalid oauth token. We commented out the above line to let
-    the server error message to pass through.
+The `onException()` handler is invoked for any exceptions that occur during communication with
+the ACS server.
 
-    If you are using your own version of `ASIHttpRequest`, you can choose to do the
-    same to let server authentication error message pass through.
-
-2.  Add the following frameworks to your project:
-
-        libz.1.2.3.dylib
-        SystemConfiguration.framework
-        MobileCoreService.framework
-        CoreLocation.framework
-        CFNetwork.framework
-        YAJL.framework
-        AssetsLibrary.framework
-
-    There are two copies of `YAJL.framework` under `acs-ios-sdk/src/`:
-
-        acs-ios-sdk/src/YAJL.framework
-        acs-ios-sdk/src/ARMv7s-YAJL-framework
-
-    We suggest that you add `ARMv7s-YAJL-framework` to your project, which is the newest
-    version of the YAJL framework, for ARMv7s. If you get any errors when using
-    `ARMv7s-YAJL-framework`, please switch to the older version YAJL framework
-    (`acs-ios-sdk/src/YAJL.framework`). The older version of the YAJL framework
-    is also availabe from the following github repo:
-
-    <https://github.com/gabriel/yajl-objc>
-
-3.  Under Other Linker Flags in your target, add:
-
-        -ObjC -all_load
-
-4.  In your code, include the ACS header:
-
-        #import "ACSClient.h"
-
-Now you're ready to go!
+    @Override
+    public void onException(APSCloudException e) {
+        // Handle exception
+        Log(e.getErrorType(), e.getErrorCode());
+    }
 
 
-## Initialization & Authorization
+#### Example: APSUsers Login Call with Response Handler
 
-If you choose to use oauth consumer key/secret to authenticate your app with
-ACS, in your `AppDelegate.m`, define:
+The following example logs in an existing ACS user by their username and password. After a successful 
+login, the application updates a TextView object with the user's ACS username.
 
-    #define ACSCLIENT_OAUTH_CONSUMER_KEY @"your consumer key here"
-    #define ACSCLIENT_OAUTH_CONSUMER_SECRET @"your consumer secret here"
+    HashMap<String, Object> data = new HashMap<String, Object>();
+    data.put("login", "username");
+    data.put("password", "password");
 
-and initialize ACS with the key/secret:
+    try {
+        APSUsers.login(data, new APSResponseHandler() {
+            @Override
+            public void onResponse(final APSResponse e) {
+                if (e.getSuccess()) {
+                    try {
+                        JSONObject res = e.getResponse();
+                        // Response returns an array containing a single user
+                        JSONArray payload = res.getJSONArray("users");
+                        res = payload.getJSONObject(0);
+                        loginTextView.setText(res.getString("username"));
+                    } catch (Exception e) {
+                        Log.e("LOGIN", "Error parsing JSON object: " + e.toString());
+                    }
+                }
+                else {
+                    Log.e("LOGIN", e.getMessage());
+                }
+                
+            }
+            @Override
+            public void onException(APSCloudException e) {
+                // Handle exception that occured                
+            }
+        });
+    } catch (APSClientError e) {
+        Log.e("LOGIN", e.getErrorType());
+    }
 
-    [ACSClient initializeWithOauthConsumerKey:ACSCLIENT_OAUTH_CONSUMER_KEY consumerSecret:ACSCLIENT_OAUTH_CONSUMER_SECRET customAppIds:nil];
+### Monitoring Request Progress
 
-Or, if you choose to use app key to authenticate your app, in your `AppDelegate.m`, define:
+For Cloud API methods that involve uploading large files, such as `APSPhotos.create()` or `APSFiles.create()`, 
+there is an overloaded version that takes an optional `progressHandler` parameter. This parameter takes
+a [APSProgressHandler](http://docs.appcelerator.com/aps-sdk-apidoc/latest/android/com/appcelerator/cloud/APSProgressHandler.html)
+instance, which must provide an `onProgress` handler. This handler is periodically triggered as the file
+transfer continues, and is passed an integer between 0-100 indicating the current upload progress.
 
-    #define ACSCLIENT_APP_KEY @"your app key here"
+#### Example: APSFiles Create Call with Progress Handler
 
-and initialize ACS with the app key:
+The following example uploads a file from the device (`/res/raw/reference.pdf`) to the ACS storage server. 
+Since the method call requires that uploaded data be an instance of `java.io.File`, the application needs to copy the
+resource to a read-write directory before uploading it. Storing the file locally requires that the 
+[WRITE_EXTERNAL_STORAGE](http://developer.android.com/reference/android/Manifest.permission.html#WRITE_EXTERNAL_STORAGE) 
+permission be included in your AndroidManifest.xml file.
 
-    [ACSClient initializeWithAppKey:ACSCLIENT_APP_KEY customAppIds:nil];
+The progress callback calls the `setProgress() ` method on a `ProgressBar` object, displaying the 
+status of the upload. After the request successfully completes, the application displays a toast notification.
 
-Once ACS is initialized, you can access it by calling:
+    HashMap<String, Object> data = new HashMap<String, Object>();
+    String filename = "reference.pdf";
 
-    [ACSClient defaultACSClient]
+    // Need to copy the resource to a read-write directory to upload it 
+    if (!createExternalStoragePrivateFile(R.raw.reference, filename)) return;
 
-## Facebook Integration
+    File file = new File(currentActivity.getExternalFilesDir(null), filename);
+    data.put("file", file);
+    data.put("name", "Reference Manual");
 
-1.  Create a new [Facebook App](https://developers.facebook.com/apps) if you
-    don't have one yet.
+    try {
+        APSFiles.create(data, new APSClient.APSResponseHandler() {
+            @Override
+            public void onResponse(final APSResponse e) {
+                if (e.getSuccess()) {
+                    APSCloud.log("PUSH", "Successfully subscribed to push!");
+                    progressBar.setVisibility(View.GONE);
+                    Toast.makeText(currentActivity, "File uploaded!", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Log.e("UPLOAD", e.getMessage());
+                }
+            }
+        },
+        new APSClient.APSProgressHandler() {
+            @Override
+            public void onProgress(final int percentProgress, final boolean upload) {
+                if (currentActivity != null) {
+                    progressBar.setProgress(percentProgress);
+            }
+        });
+    } catch (APSClientError e) {
+        Log.e("UPLOAD", e.getMessage());
+    }
 
-2.  Obtain the Facebook App ID from Facebook.
-    You can get the Facebook App ID from Facebook, you will use it later in your
-    project.
+    // Helper function to copy a resource to external storage, modified from:
+    // http://developer.android.com/reference/android/content/Context.html#getExternalFilesDir(java.lang.String)
 
-3.  Add the Facebook framework to your Xcode project.
-    The ACS iOS SDK currently uses the Facebook SDK version 3.1, which only
-    provides a framework. To use this framework, you must add it to your Xcode
-    project:
-
-    1.  In Xcode with your project open, and your target selected go to the **Build Phases**
-        tab and expand the **Link Binary With Libraries** item.
-
-    2.  Click the **Add** button (+) located at the bottom of the
-        **Link Binary With Libraries** section.
-
-    3.  In the **Choose frameworks and libraries to add:** click **Add Other**.
-
-    4.  Select the folder: `acs-ios-sdk/src/FacebookSDK.framework`.
-
-4.  Add additional iOS frameworks. Some additional frameworks must be linked in
-    your Xcode project.
-
-    1.  In Xcode with your project open, and your target selected go to the **Build
-        Phases** tab and expand the **Link Binary With Libraries** item.
-
-    2.  Click the **Add** button (+) located at the bottom of the **Link Binary With
-        Libraries** section.
-
-    3.  Select `Accounts.framework`, `AdSupport.framework`, and `Social.framework` and
-        click the **Add** button.
-
-5.  Add the SQLite dynamic linked library to your Xcode project.
-
-    1.  In Xcode with your project open, and your project selected go to the **Build
-        Settings** tab and expand the **Linking** item
-
-    2.  Add the flag `-lsqlite3.0` to the **Other Linker Flags** item.
-
-6.  Add two Facebook bundles to your project.
-
-    Drag the following two files to your project navigator pane to add them to your project:
-
-        acs-ios-sdk/src/FacebookSDK.framework/Resources/FacebookSDKResources.bundle
-        acs-ios-sdk/src/FacebookSDK.framework/Resources/FBUserSettingsViewResources.bundle
-
-7.  Add the Facebook SDK Header files to your project.
-
-    Drag the following folder to your project navigator pane to add it to your project:
-
-        acs-ios-sdk/src/FBConnect
-
-8.  Add the Facebook ID to your app's `Info.plist` file under `URL types`.
-
-    {@img facebook_ios_setting.png}
-
-9.  Add the following code to your `AppDelegate.m` file:
-
-        // pre 4.2
-        - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
-        {
-        	return [[[ACSClient defaultACSClient] getFacebook] handleOpenURL:url];
+    public static boolean createExternalStoragePrivateFile(int inputResource, String filename) {
+        File file = new File(currentActivity.getExternalFilesDir(null), filename);
+        try {
+            InputStream is = currentActivity.getResources().openRawResource(inputResource);
+            OutputStream os = new FileOutputStream(file);
+            byte[] data = new byte[is.available()];
+            is.read(data);
+            os.write(data);
+            is.close();
+            os.close();
+            return true;
+        } catch (IOException e) {
+            Log.w("ExternalStorage", "Error writing " + file, e);
+            return false;
         }
-
-        // 4.2+
-        - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
-          sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-        	return [[[ACSClient defaultACSClient] getFacebook] handleOpenURL:url];
-        }
-
-## Push Notification
-
-To enable Apple Push Notification service for your application, create an
-Apple Push Notification certificate and upload the certificate to the ACS server.
-
-Note that Apple push notifications do **not** work on simulators.
-
-For information about iOS push notifications, see
-[iOS Developer Library: Local and Push Notification Programming Guide](http://developer.apple.com/library/ios/#documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/Introduction.html).
-
-### Create and Upload a Push Notification Certificate
-
-To create an Apple Push Notification certificate, you need to first create an Explicit App ID.  The
-App ID is used to identify where to send the push notification, which is tied to the certificate
-when you create it.  After you create the certificate, export the certificate to PKCS #12 format and
-upload it to the ACS server. This certificate allows the ACS server to communicate with the Apple
-Push Notification server to send push notifications to iOS devices.
-
-#### Register an App ID
-
-  1. Log in to the [Apple Developer Member Center](https://developer.apple.com/membercenter/) as the Team Agent or Admin.
-  2. Click the link under **Certificates, Identifiers & Profiles**.
-  3. Click **Identifiers**, then click the plus sign (**+**) button near the top-right corner.
-  4. Enter a description, which cannot include special characters (including most punctuation).
-  5. Select the App ID Prefix to use.
-  6. For the App ID Suffix, choose **Explicit App ID** and enter your Bundle ID. For Titanium
-     applications, this is your Application ID from the `tiapp.xml` file.
-  7. Under App Services, check the **Push Notifications** checkbox to enable push notifications for
-     this App ID.
-  8. Click **Continue**, **Submit**, then **Done**.
-
-Note: You cannot use a **Wildcard App ID** for an application with push notifications.
-
-#### Generate an Apple Push Notification Certificate
-
-These directions cover how to generate an Apple Push Notification certificate for both testing
-(Development) and production (Distribution).  Only step #4 differs based on which certificate you
-create.
-
-  1. Log in to the [Apple Developer Member Center](https://developer.apple.com/membercenter/) as the Team Agent or Admin.
-  2. Click the link under **Certificates, Identifiers & Profiles**.
-  3. Click **Certificates**, then click the plus sign (**+**) button near the top-right corner.
-  4. For testing, select **Apple Push Notification service SSL (Sandbox)** and for production,
-     select **Apple Push Notification service SSL (Production)**, then click **Continue**.
-  5. Select the App ID that you created previously from the drop-down list, then click **Continue**.
-  6. Follow the directions to create a Certificate Signing Request (CSR). Click **Continue**.
-  7. Upload your CSR and click **Generate**.
-  8. You will be returned to the Certificates page with the status listed as Pending. Wait a moment then
-     refresh the page in your browser.
-  9. Even though you are logged in as the Team Agent or Admin, you may need to approve your certificate.
-     Click **Approve**.
- 10. Download the certificate (.cer) file to your computer.
- 11. Double-click the file to install it into your keychain.
-
-#### Export the Certificate
-
-  1. Open your Keychain.  Select **Applications** > **Utitlies** > **Keychain Access**.
-  2. Under Categories on the left side, click **My Certificates**.
-  3. Right-click the certificate you installed previously and select **Export**.
-  4. In the **File Format** drop-down, select **Personal Information Exchange (.p12)**.
-  5. Click **Save**.
-  6. You are prompted to enter a password for the file. Enter a password, then click **Save**.
-
-Keychain exports your certificate as a PKCS #12 file that you upload to ACS to enable Apple Push Notification for your application.
-
-#### Configure the ACS web console ####
-
-You use the Dashboard (Enterprise applications) or My App (Community applications) to upload your PKCS #12 (.p12) file to ACS and enable Apple Push Notification with your application.
-
-**To configure your app for push notifications (Enterprise developers):**
-
- 1. Open [Dashboard](https://dashboard.appcelerator.com).
- 2. Select your application from the drop-down list of applications.
- 3. Select the **Cloud** tab.
- 4. Select **Settings & Configuration** from the left-hand navigation.
- 5. Select the **iOS Push** tab.
- 6. Click **Choose File** in the Push Certificate field.
- 7. Locate the PKCS #12 file your exported previously and click **Choose**.
- 8. Enter the certificate's password in the Certificate Password box field.
-   {@img ios_cert_enterprise.png}
- 9. Click **Save Changes**.
-
- **To configure your app for push notifications (Community developers):**
-
-1. Open [My Apps](https://cloud.appcelerator.com/apps).
-2. Find your application in the list of apps and click the **Manage ACS** link.
-3. In the **Apple iOS Push Certificates** section, click **Choose File**.
-4. Locate the PKCS #12 file your exported previously and click **Choose**.
-5. Enter the certificate's password in the Certificate Password box field. (A password is required despite the placeholder text indicating it's optional.)
-      {@img ios_cert_community.png}
-6. Click **Save Changes**.
-
-
-### Create a Provisioning Profile
-
-You need to create a provisioning profile to embed in your application.  This verifies the
-integrity of the application based on the information within the profile,
-such as the App ID and certificate you created previously.
-
-These directions cover how to generate a provisioning profile for Development, Ad Hoc, In House and App Store distribution.
-If you are distributing as a member of the iOS Developer Enterprise Program, you will have the
-**In House** distribution option instead of the **App Store** option.
-Only steps #4 and #7 differ based on which profile you create.
-
-  1. Log in to the [Apple Developer Member Center](https://developer.apple.com/membercenter/) as the Team Agent or Admin.
-  2. Click the link under **Certificates, Identifiers & Profiles**.
-  3. Click **Provision Profiles**, then click the plus sign (**+**) button near the top-right corner.
-  4. For testing, select **iOS App Development**, and for production, select either **App Store** to distribute to the
-     App Store, **Ad Hoc** to distribute to a limited number of devices or **In House** for in house
-     distribution to your company's employees, then click **Continue**.
-  5. Select the App ID you created previously from the drop-down list, then click **Continue**.
-  6. Select a certificate, then click **Continue**.
-  7. For development and ad hoc distributions, select the devices you want to be able to run the app on, then click
-     **Continue**.
-  8. Enter a name for your provisioning profile. You should use a word like "dev", "distribution" or "ad hoc" in
-     the name so that it is clear later what this profile is for. Click **Generate**.
-  9. Click **Download** to save your provisioning profile file (.mobileprovision) to your computer, then
-     click **Done**.
- 10. Double-click the provisioning profile file to install it to Xcode.
-
-### Update your code to register for push notifications
-
-In yourAppDelegate.m, add the following code after initializing ACS
-in method didFinishLaunchingWithOptions:
-
-    - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-    {
-    	// Initialize the ACSClient with Facebook App Id if you set one
-    	[ACSClient initializeWithOauthConsumerKey:ACSCLIENT_OAUTH_CONSUMER_KEY consumerSecret:ACSCLIENT_OAUTH_CONSUMER_SECRET customAppIds:[NSDictionary dictionaryWithObject:facebookAppId forKey:@"Facebook"]];
-
-    	...
-
-    	[[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge)];
-
-    	// Code below is optional if you want to handle the notification after the app is launched by push notification
-    	if (launchOptions != nil)
-    	{
-    		NSDictionary* dictionary = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
-    		if (dictionary != nil)
-    		{
-    			NSLog(@"Launched from push notification: %@", dictionary);
-    			...
-    		}
-    	}
-
-        return YES;
     }
 
-Also add the following code to `yourAppDelegate.m` to receive a device token to
-pass to ACS:
+## Making Generic REST APIs Method Calls 
 
-    - (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
-    {
-    	NSString* newToken = [deviceToken description];
-    	newToken = [newToken stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
-    	newToken = [newToken stringByReplacingOccurrencesOfString:@" " withString:@""];
+The [`APSCloud.sendRequest()`](http://docs.appcelerator.com/aps-sdk-apidoc/latest/android/com/appcelerator/aps/APSCloud.html#sendRequest%28java.lang.String%2C%20java.lang.String%2C%20java.util.Map%2C%20com.appcelerator.aps.APSResponseHandler%29) method lets you easily make REST API calls directly against
+ACS, rather than using the specialized classes (like `APSUsers`). In general, you
+should use the specialized classes as they provide an easier API. However, if new REST methods
+are deployed to the APS Cloud backend, this approach lets you immediately start 
+using those methods without waiting for an update to the SDK.
 
-    	NSLog(@"My token is: %@", newToken);
+To make a generic request, you call `APSCloud.getInstance()` to get a reference to the shared APSCloud
+object and call its `sendRequest()` method. For each call, you must specify the following:
 
-    	// Add to ACS
-    	[[ACSClient defaultACSClient] setDeviceToken:newToken];
+  * REST API method endpoint relative to "api.cloud.appcelerator.com/v1". Method endpoints are listed in the corresponding entries in the 
+  [REST API documentation](http://docs.appcelerator.com/cloud/latest/#!/api).
+  * The HTTP method to use.
+  * Data to send with the request.
+
+For example, to [create a post](http://docs.appcelerator.com/cloud/latest/#!/api/Posts-method-create),
+pass the `sendRequest()` method the following information:
+
+  * REST API method endpoint: `posts/create.json`
+  * The HTTP method to use: `POST`
+  * Data to send with the request: at minimum, you must specify the `content` property.
+
+The following uses the `sendRequest()` API to create a new Post object.
+
+    HashMap<String, Object> data = new HashMap<String, Object>();
+    data.put("title", "What's up?");
+    data.put("content", "The sun, the cloud, space...");
+
+    try {
+        APSCloud.getInstance().sendRequest("posts/create.json", "POST", data, new APSClient.APSResponseHandler() {
+            public void onResponse(final APSResponse e) {
+                if (e.getSuccess()) {
+                    try {
+                        JSONObject res = e.getResponse();
+                        JSONArray payload = res.getJSONArray("posts");
+                        res = payload.getJSONObject(0);
+                        latestPost.setText(res.getString("title"));
+                    } catch (Exception err) {
+                        Log.e("REST", "JSON Error: " + err.getMessage());
+                    }
+                }
+                else {
+                    Log.e("REST", e.getMessage());
+                }
+            }
+        });
+    } catch (APSClientError e) {
+        Log.e("REST", "Error: " + e.getMessage());
     }
 
-Then refer to the {@link PushNotifications} API reference to
-see how to subscribe and send push notifications. You can also log on to your
-ACS App Console to send push notifications to all your
-subscribed clients.
-
-## ACS Model Classes
-
-The SDK defines a list of object model classes that correspond to the server
-objects under `ACS/Models`. They are all subclasses of `CCObject`
-or `CCObjectWithPhoto`.
-
-## Making API Calls
-
-The ACS iOS SDK provides the `CCRequest` class with delegate
-callbacks to make synchronous or asynchronous REST calls to the ACS
-server easier. `CCRequest` is a subclass of the `ASIHttpRequest` class.
-(For more information on `ASIHTTPRequest`, see the
-[`ASIHTTPRequest` web site](http://allseeing-i.com/ASIHTTPRequest/).)
-
-To instantiate a `CCRequest` object:
-
-    // Use HTTPS by default
-    -(id)initWithDelegate:(id)requestDelegate httpMethod:(NSString *)httpMethod baseUrl:(NSString *)baseUrl paramDict:(NSDictionary *)paramDict;
-
-    or
-
-    // Use HTTP. set protocol to @"http"
-    -(id)initWithDelegate:(id)requestDelegate httpProtocol:(NSString *)protocol httpMethod:(NSString *)httpMethod baseUrl:(NSString *)baseUrl paramDict:(NSDictionary *)paramDict;
-
-### `delegate`
-
-If you want to perform an asynchronous call, pass in the delegate object that
-implements the `CCRequestDelegate` methods `didSucceed` and `didFailWithError`:
-
-    -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response;
-
-    -(void)ccrequest:(CCRequest *)request didFailWithError:(NSError *)error;
-
-If you want to perform a synchronous REST call, you can pass in `nil` to the
-`delegate` parameter.
-
-### `baseUrl`
-
-If the request url is:
-
-    http://api.cloud.appcelerator.com/v1/users/create.json
-
-Then the baseUrl is:
-
-    @"users/create.json"
-
-### `httpMethod`
-
-The possible values are `@"GET"`, `@"POST"`, `@"PUT:` or `@"DELETE"`
-
-### `paramDict`
-
-It is a NSDictionary of parameters and values that will be passed to the
-baseUrl.
-
-### Example
-
-Register a new user:
-
-    NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:5];
-    [paramDict setObject:@"email@email.com" forKey:@"email"];
-    [paramDict setObject:@"John" forKey:@"first_name"];
-    [paramDict setObject:@"Woo" forKey:@"last_name"];
-    [paramDict setObject:@"pass" forKey:@"password"];
-    [paramDict setObject:@"pass" forKey:@"password_confirmation"];
-    CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"POST" baseUrl:@"users/create.json" paramDict:paramDict];
-    [request startAsynchronous]; // for asynchronous call and use ASIHttp's shared operation queue
-
-To make an asynchronous request and use your own operation queue, replace the last line
-with:
-
-    [myOperationQueue addOperation:request]; // for asynchronous call and use my own operation queue
-
-Or to make a synchronous call, replace the `startAsynchronous` call with the following
-line:
-
-    CCResponse *response = [request startSynchronousRequest]; // for synchronous call
-
-## Asynchronous call
-
-It is recommended to run all the REST calls asynchronously for better user
-experience. If you want to be able to identify the request in the callback,
-you can add custom `userInfo` to the `CCRequest` object for your own record.
-
-    NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:@"custom", @"type", nil];
-    [request setUserInfo:userInfo];
-
-## Handling Server Responses
-
-The `CCResponse` object defined in `ACS/Network/CCResponse.h` contains the
-response sent back from the ACS server. It has the following
-objects:
-
-*   `response.meta` contains the response metadata.
-*   `response.response` is an `NSDictionary` representation of the raw JSON response.
-
-For example, if the REST call is expected to return an array of {@link Users}, your
-handler code might look like this:
-
-    -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
-    {
-    	NSArray *results = [response getObjectsOfType:[CCUser class]];
-    	for (CCUser *user in results) {
-    		NSLog(@"user is %@", user)
-    	}
-    }
-
-The `getObjectsOfType` method is used to extract a list of objects from the response.
-Refer to `ACS/Models` for a list of supported class names.
-
-## Photo Uploads
-
-To upload a photo, after you have instantiated a `CCRequest` object, you can use
-one of the following two methods:
-
-    // For uploading directly from photo album using ALAssetLibrary
-    [request addPhotoALAsset:(ALAsset *)alasset paramDict:(NSDictionary *)paramDict];
-
-    or
-
-    // For uploading an UIImage
-    [request addPhotoUIImage:(UIImage *)image paramDict:(NSDictionary *)paramDict];
-
-If you have more than one photo to send, you can call any of the above
-methods with a new image. Currently only photo update allows multiple photos
-upload.
-
-`paramDict` is optional, if you want the SDK to resize the original photo or
-lower the image quality for faster uploads, you set the following key/values
-in the paramDict:
-
-    [params setObject:[NSNumber numberWithInt:800] forKey:@"max_size"]; // maximum pixels allowed
-    [params setObject:[NSNumber numberWithDouble:0.5] forKey:@"jpeg_compression"]; // (0 < jpeg compression <= 1), 1 is the highest quality.
-
-You can also choose to upload a photo synchronously. See [Photo Uploads and Resizing](#!/guide/photosizes)
-for more information.
-
-## Photo Downloads
-
-`CCPhoto` class contains URLs of different sizes of a photo. By default,
-photos are uploaded asynchronously and each photo comes with a boolean
-`processed` attribute to indicate whether the background processing has
-finished. If you want to access the actual photo, you need to download it from
-the given URL and if the URL is not available, you have to try again until the
-`processed` is NO.
-
-    CCPhoto *photo;
-    [photo getImage:(PhotoSize)photoSize];
-
-It returns the `UIImage` of the photo requested if it has already been
-downloaded, otherwise it returns `nil` and kicks off the download in the
-background. If the photo size is not available (if you request an incorrect
-size or the requested size hasn't been processed yet), no background download
-will be kicked off. In order to get the notification when a download has
-completed, you need to register to listen to the following notification in
-your view:
-
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleDownloaded:) name:@"DownloadFinished" object:[ACSClient defaultACSClient]];
-
-When the notification is delivered, the userInfo contains the requesting
-CCPhoto object under key name `object`, and the size of the photo requested
-under key name `size`. Then you can get the actual image by calling:
-
-    CCPhoto *photo;
-    [photo getImage:(NSString *)photoSize;
-
-If you created a photo using default sizes, the photo sizes are:
-
-      @"square_75",
-      @"thumb_100",
-      @"small_240",
-      @"medium_500",
-      @"medium_640",
-      @"large_1024",
-      @"original"
-
-If you created a photo using custom sizes, the photo sizes are the name of your custom sizes.
-For details on custom sizes, see [Photo Uploads and Resizing](#!/guide/photosizes).
-
-## Troubleshooting & Common Errors
-
-If you hit the following runtime error:
-
-    -[NSConcreteMutableData yajl_JSON]: unrecognized selector sent to instance 0x4d87400
-
-Solution: Make sure you have included the YAJL framework. Click on your
-project's target, select **Other Linker Flags** and add:
-
-    -ObjC -all_load
-
-
-In Xcode 4, make sure to add the above flags to all the fields under **Other
-Linker Flags**:
-
-{@img linkers_ios.png}
-
-## Enable and Disable Runtime Logging
-
-To enable or disable runtime logging, set the `loggingEnabled` variable in
-`ACSClient.m`:
-
-    -(void)initCommon:(NSDictionary *)customAppIds
-    {
-        //other code
-
-    	//true, enable log
-    	//false, disable log
-        self.loggingEnabled = true;
-
-        // other code
-    }
-
+## Working with Push Notifications
+
+The  [`APSPushNotifications`](http://docs.appcelerator.com/aps-sdk-apidoc/latest/android/com/appcelerator/aps/APSPushNotifications.html) 
+class lets your application subscribe, send and receive push notifications. 
+To use this class, you also need  [`APSCloudPush`](http://docs.appcelerator.com/aps-sdk-apidoc/latest/android/com/appcelerator/aps/APSCloudPush.html) class, which provides the underlying services
+to handle incoming push notifications.
+
+Your application must call 
+[`APSServiceManager.getInstance()`](http://docs.appcelerator.com/aps-sdk-apidoc/latest/android/com/appcelerator/aps/APSServiceManager.html#getInstance%28%29) before calling any methods on `APSCloudPush`, 
+otherwise an exception will be thrown. 
+
+### CloudPush sample application
+
+The SDK includes the `APSCloudPushExample` application that demonstrates use of the `APSPushNotifications` 
+and `APSCloudPush` APIs. To run the sample application, you'll first need to create an Android application
+in Dashboard (or use an existing application), and configure its push notification
+settings to include a GCM sender ID and application key. For more information, see [Configuring push services for Android devices](http://docs.appcelerator.com/platform/latest/#!/guide/Configuring_push_services-section-37551713_Configuringpushservices-ConfiguringpushservicesforAndroiddevices). 
+`APSCloudPush` requires Google Play services, so you'll also need to add that library to your project's
+`libs/` folder. 
+
+**To import and run the APSCloudPushExample application**:
+
+1. In ADT, select **File > Import > General > Existing Projects into Workspace** and click **Browse**.
+2. Navigate to the **appcelerator-sdk-android-1.0.0/examples/APSCloudPushExample** folder and click **Open**.
+3. Click **Finish** to import the project.
+4. Add the Google Play services to your project (see [Android Project Requirements](#!/guide/android-section-android-project-requirements-for-using-apscloudpush) for instructions).
+4. In MainActivity.java, locate the following line and replace **<< YOUR APP KEY >>** with the application
+key generated by Dashboard (see [instructions](http://docs.appcelerator.com/platform/redirects/aps_key.html)):
+
+        String appKey = "<< YOUR APP KEY >>";
+5. Run the application in an Android device or emulator.
+
+### Android Project Requirements for using APSCloudPush
+
+Once you have [configured your GCM settings in Dashboard](/platform/latest/#!/guide/Configuring_push_services-section-37551713_Configuringpushservices-ConfiguringpushservicesforAndroiddevices) there are some required configuration changes to 
+your Android project to use `APSCloudPush`.
+
+**Add Google Play services** &mdash; `APSCloudPush` requires that Google Play services be included in your application.
+
+1. [Download](https://developer.android.com/sdk/installing/adding-packages.html) Google Play Services. 
+2. Create a folder in the root of the application named **libs/**, if one does not already exist.
+3. Add the **google-play-services.jar** to the **libs/** folder. (This file can be located in 
+$ANDROID_SDK/extras/google/google_play_services/libproject/google-play-services_lib/libs.) If you are
+using Android Developer Tools/Eclipse, also make sure the google-play-services.jar is exported from the Java Build Path.
+
+
+**AndroidManifest changes** &mdash; The following changes be added to your project's AndroidManifest.xml to use `APSCloudPush`. Replace 
+each occurence of *"YOURAPPSPACKAGENAME"* with the actual package name of your application.
+
+* Inside the `<manifest/>` element:
+
+        <uses-permission android:name="android.permission.INTERNET"/>
+        <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+        <uses-permission android:name="android.permission.WAKE_LOCK"/>
+        <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
+        <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+        <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+        <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+        <uses-permission android:name="android.permission.VIBRATE"/>
+        <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+                 android:maxSdkVersion="18" />
+        <permission android:name="YOURAPPSPACKAGENAME.permission.C2D_MESSAGE"
+                    android:protectionLevel="signature"/>
+        <uses-permission android:name="YOURAPPSPACKAGENAME.permission.C2D_MESSAGE"/>
+
+* Inside the `<application/>` element:
+
+        <receiver android:name="com.appcelerator.aps.IntentReceiver"/>
+        <receiver
+                android:name="com.appcelerator.aps.GCMReceiver"
+                android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
+                <category android:name="YOURAPPSPACKAGENAME"/>
+            </intent-filter>
+        </receiver>
+        <receiver android:name="com.appcelerator.aps.PushBroadcastReceiver"
+                android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+                <action android:name="com.appcelerator.aps.intent.DEL_GROUPED_MSG" />
+                <category android:name="YOURAPPSPACKAGENAME" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name="com.appcelerator.aps.PushBroadcastReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_ADDED"/>
+                <action android:name="android.intent.action.PACKAGE_REPLACED"/>
+                <data android:scheme="package" android:path="YOURAPPSPACKAGENAME" />
+            </intent-filter>
+        </receiver>
