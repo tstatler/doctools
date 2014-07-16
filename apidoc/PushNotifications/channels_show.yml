@@ -78,6 +78,47 @@ methods:
         example: |
             Example Android call:
 
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("name", "chat");
+
+                try {
+                    APSPushNotifications.showChannels(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+
+                            if (e.getSuccess()) {
+                                try {
+                                    JSONArray devices = e.getResponse().getJSONArray("devices");
+                                    if (devices.length() <= 0) {
+                                        Log.i("APSPushNotifications", "No Results!");
+                                    } else {
+                                        for (int i = 0; i < devices.length(); i++) {
+                                            Log.i("APSPushNotifications", devices.getJSONObject(i).toString());
+                                        }
+                                    }
+                                } catch (JSONException err) {
+                                    Log.e("APSPushNotifications", "Exception thrown: " + err.toString());
+                                }
+                            } else {
+                                Log.e("APSPushNotifications", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSPushNotifications", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSPushNotifications", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
+        example: |
+            Example Android call:
+
                 ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
                 //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
 
@@ -92,7 +133,7 @@ methods:
                 if("ok".equals(meta.getStatus())
                     && meta.getCode() == 200
                     && "showPushChannels".equals(meta.getMethod())) {
-                  JSONArray devices = responseJSON.getJSONArray("devices);
+                  JSONArray devices = responseJSON.getJSONArray("devices");
                   ...
                 }
 

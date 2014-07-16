@@ -184,20 +184,65 @@ methods:
       - platform: android
         example: |
             Example Android call:
-            
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+
+                try {
+                    HashMap<String, Object> data = new HashMap<String, Object>;
+                    JSONObject params = new JSONObject("{created_at': {'$lt': '2011-03-02T19:05:33+0000'}}");
+                    data.put("where", params);
+
+                    APSStatuses.query(null, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                try {
+                                    JSONArray statuses = e.getResponse().getJSONArray("statuses");
+                                    if (statuses.length(); <= 0) {
+                                        Log.i("APSStatuses", "No Results!");
+                                    } else {
+                                        for (int i = 0; i < statuses.length(); i++) {
+                                            JSONObject status = statuses.getJSONObject(i);
+                                            Log.i("APSStatuses", status.getString("message"));
+                                        }
+                                    }
+                                } catch (JSONException err) {
+                                    Log.e("APSStatuses", "Exception thrown: " + err.toString());
+                                }
+                            } else {
+                                Log.e("APSStatuses", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSStatuses", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSStatuses", "Exception thrown: " + e.toString());
+                } catch (APSCloudException e) {
+                    Log.e("APSStatuses", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
+        example: |
+            Example Android call:
+
                 Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
                 //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
                 Map<String, Object> data = new HashMap<String, Object>();
-                data.put("where", "{'rating': {'$gt': 7.0}, 'created_at': {'$lt': '2011-03-02T19:05:33+0000'}");
+                data.put("where", "{'created_at': {'$lt': '2011-03-02T19:05:33+0000'}}");
                 CCResponse response = sdk.sendRequest("statuses/query.json", CCRequestMethod.GET, data);
-                
+
             SDK Callback:
-            
+
                 JSONObject responseJSON = response.getResponseData();
                 CCMeta meta = response.getMeta();
-                if("ok".equals(meta.getStatus()) 
-                    && meta.getCode() == 200 
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
                     && "queryStatuses".equals(meta.getMethod())) {
                   JSONArray statuses = responseJSON.getJSONArray("statuses");
                   ...

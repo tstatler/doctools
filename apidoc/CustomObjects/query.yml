@@ -288,6 +288,47 @@ methods:
 
       - platform: android
         example: |
+            Example Android APS SDK call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+
+                HashMap<String,Object> data = new HashMap<String,Object>;
+                JSONObject params = new JSONObject("{'color': 'blue'}");
+                data.put("where", params);
+                data.put("classname", "cars");
+
+                try {
+                    APSObjects.query(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                try {
+                                    JSONArray classname = e.getResponse().getJSONArray("classname");
+                                    if (classname.length() <= 0) {
+                                        Log.i("APSObjects", "No Results!");
+                                    } else {
+                                        // Do something with the classname array
+                                    }
+                                } catch (JSONException err) {
+                                       Log.e("APSObjects", "Exception thrown: " + err.toString());
+                                }
+                            } else {
+                                Log.e("APSObjects", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(APSCloudException e) {
+                            Log.e("APSObjects", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSObjects", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
+        example: |
             Example Android call:
 
                 ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key

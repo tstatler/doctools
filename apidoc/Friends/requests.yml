@@ -101,6 +101,35 @@ methods:
       - platform: ios
         example: |
             Example iOS call:
+                [APSFriends requests:nil withBlock:^(APSResponse *e) {
+                    if (e.success){
+                        NSArray *friendRequests = e.response[@"friend_requests"];
+
+                        for (NSDictionary *friendRequest in friendRequests) {
+                          NSString *message =[NSString stringWithFormat:@"id : %@\n First Name : %@\nLast Name : %@\n",
+                                                  friendRequest[@"id"],
+                                                  friendRequest[@"first_name"],
+                                                  friendRequest[@"last_name"]];
+
+
+                          [[[UIAlertView alloc] initWithTitle:@"Success" 
+                                                      message:message
+                                                     delegate:nil 
+                                            cancelButtonTitle:@"OK" 
+                                            otherButtonTitles:nil] show];
+                        }
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:e.errorMessage
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
 
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"friends/requests.json" paramDict:nil];
                 [request startAsynchronous];
@@ -118,6 +147,47 @@ methods:
                 }
 
       - platform: android
+        example: |
+            Example Android call:
+
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+
+                try {
+                    APSFriends.requests(null, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                try {
+                                    JSONArray friendRequests = e.getResponse().getJSONArray("friend_requests");
+                                    if (friendRequests.length() <= 0) {
+                                        Log.i("APSFriends", "No Results!");
+                                    } else {
+                                        for (int i = 0; i < friendRequests.length(); i++) {
+                                            JSONObject users = friendRequests.getJSONObject(i);
+                                            JSONObject user = users.getJSONObject("user");
+                                            Log.i("APSFriends", user.getString("first_name") + " " + user.getString("last_name"));
+                                        }
+                                    }
+                                } catch (JSONException err) {
+                                    Log.e("APSFriends", "Exception thrown: " + err.toString());
+                                }
+                            } else {
+                                Log.e("APSFriends", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(APSCloudException e) {
+                            Log.e("APSFriends", "Exception thrown: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e1) {
+                    Log.e("APSFriends", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
         example: |
             Example Android call:
 

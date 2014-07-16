@@ -254,6 +254,38 @@ methods:
 
       - platform: android
         example: |
+            Example Android APS SDK call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+
+                try {
+                    APSChats.getChatGroups(null, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                try {
+                                    JSONObject chat_groups = e.getResponse().getJSONArray("chat_groups");
+                                    // Do something with the chat_groups array
+                                } catch (JSONException err) {
+                                    Log.e("APSChats", "Exception thrown: " + err.toString())
+                                }
+                            } else {
+                                Log.e("APSChats", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(APSCloudException e) {
+                            Log.e("APSChats", "Exception thrown: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSChats", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
+        example: |
             Example Android call:
 
                 ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key

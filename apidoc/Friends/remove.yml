@@ -55,6 +55,28 @@ methods:
       - platform: ios
         example: |
             Example iOS call:
+                NSDictionary *data = @{
+                                         @"user_ids" : @"userid1, userid2"
+                                      };
+                [APSKeyValues remove:data withBlock:^(APSResponse *e) {
+                    if (e.success){
+                        [[[UIAlertView alloc] initWithTitle:@"Success" 
+                                                    message:@"Friend(s) Removed"
+                                                   delegate:nil 
+                                          cancelButtonTitle:@"OK" 
+                                          otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:e.errorMessage
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
 
                 NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
                 NSArray *user_ids = [NSArray arrayWithObjects:@"124", @"345", nil];
@@ -67,12 +89,50 @@ methods:
 
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
-                	if ([response.meta.method isEqualToString:@"removeFriends"]) {
-                		NSLog(@"friends removed!");
-                	}
+                    if ([response.meta.method isEqualToString:@"removeFriends"]) {
+                        NSLog(@"friends removed!");
+                    }
                 }
 
+
       - platform: android
+        example: |
+            Example Android APS SDK call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+                final Activity currentActivity = this;
+
+                HashMap<String, Object> data = new HashMap<String, Object>();
+                data.put("user_ids", "4d6e77386f70950c89000001,5f6e77386f70950c890efew01");
+
+                try {
+
+                    APSFriends.remove(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                new AlertDialog.Builder(currentActivity)
+                                .setTitle("Success").setMessage("Friend(s) removed!")
+                                .setPositiveButton(android.R.string.ok, null)
+                                .setIcon(android.R.drawable.ic_dialog_info)
+                                .show();
+                            } else {
+                                Log.e("APSFriends", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(APSCloudException e) {
+                            Log.e("APSFriends", "Exception thrown: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSFriends", "Exception thrown: " + e.toString());
+                }
+
+
+      - platform: android-acssdk
         example: |
             Example Android call:
 

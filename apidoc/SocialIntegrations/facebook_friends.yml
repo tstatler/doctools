@@ -108,6 +108,46 @@ methods:
         example: |
             Example Android call:
 
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+
+                try {
+                    APSSocialIntegrations.searchFacebookFriends(null, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+
+                            if (e.getSuccess()) {
+                                try {
+                                    JSONArray users = e.getResponse().getJSONArray("users");
+                                    if (users.length() <= 0) {
+                                        Log.i("APSSocialIntegrations", "No Results!");
+                                    } else {
+                                        for (int i = 0; i < users.length(); i++) {
+                                            JSONObject user = users.getJSONObject(i);
+                                            Log.i("APSSocialIntegrations", user.getString("first_name") + " " + user.getString("last_name"));
+                                        }
+                                    }
+                                } catch (JSONException err) {
+                                    Log.e("APSSocialIntegrations", "Exception thrown: " + err.toString());
+                                }
+                            } else {
+                                Log.e("APSSocialIntegrations", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSSocialIntegrations", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSSocialIntegrations", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
+        example: |
+            Example Android call:
+
                 ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
                 //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
 

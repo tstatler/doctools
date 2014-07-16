@@ -121,6 +121,49 @@ methods:
 
       - platform: android
         example: |
+            Example Android APS SDK call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+
+                HashMap<String, Object> data = new HashMap<String, Object>();
+                data.put("q", "Peter,Paul,Mary");
+
+                try {
+                    APSUsers.search(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+
+                            if (e.getSuccess()) {
+                                try {
+                                    JSONArray users = e.getResponse().getJSONArray("users");
+                                    if (users.length() <= 0) {
+                                        Log.i("APSUsers", "No Results!");
+                                    } else {
+                                        for (int i = 0; i < users.length(); i++) {
+                                            JSONObject user = users.getJSONObject(i);
+                                            Log.i("APSUsers", user.getString("first_name") + " " + user.getString("last_name"));
+                                        }
+                                    }
+                                } catch (JSONException err) {
+                                    Log.e("APSUsers", "Exception thrown: " + err.toString());
+                                }
+                            } else {
+                                Log.e("APSUsers", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSUsers", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSUsers", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
+        example: |
             Example Android call:
 
                 ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key

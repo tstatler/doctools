@@ -108,6 +108,36 @@ methods:
       - platform: ios
         example: |
             Example iOS call:
+                NSDictionary *data = @{
+                                         @"name" : @"score",
+                                         @"value": @1
+                                      };
+
+                [APSKeyValues increment:data withBlock:^(APSResponse *e) {
+                    if (e.success){
+                        NSArray *keyvalues = e.response[@"keyvalues"];
+                        NSDictionary *keyValue = keyvalues[0];                        
+                        NSString *message =[NSString stringWithFormat:@"Name : %@\nValue: %@\n", 
+                                                          keyValue[@"name"], 
+                                                          keyValue[@"value"]];
+              
+                        [[[UIAlertView alloc] initWithTitle:@"Success" 
+                                                    message:message
+                                                   delegate:nil 
+                                          cancelButtonTitle:@"OK" 
+                                          otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:e.errorMessage
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
 
                 NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
                 [paramDict setObject:@"score" forKey:@"name"];
@@ -128,6 +158,47 @@ methods:
                 }
 
       - platform: android
+        example: |
+            Example Android APS SDK call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+                final Activity currentActivity = this;
+
+                HashMap<String, Object> data = new HashMap<String, Object>();
+                data.put("name", "score");
+                data.put("value", "1");
+
+                try {
+                    APSKeyValues.increment(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                try {
+                                    JSONObject keyvalues = e.getResponse().getJSONArray("keyvalues").getJSONObject(0);
+                                    new AlertDialog.Builder(currentActivity)
+                                    .setTitle("Success!").setMessage("Incremented!")
+                                    .setPositiveButton(android.R.string.ok, null)
+                                    .setIcon(android.R.drawable.ic_dialog_info)
+                                    .show();
+                                } catch (JSONException err) {
+                                    Log.e("APSKeyValues", "Exception throw: " + err.toString())
+                                }
+                            } else {
+                                Log.e("APSKeyValues", "ERROR: " + err.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(APSCloudException e) {
+                            Log.e("APSKeyValues", "Exception thrown: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSKeyValues", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
         example: |
             Example Android call:
 

@@ -115,6 +115,38 @@ methods:
         example: |
             Example Android call:
 
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+                final Activity currentActivity = this;
+
+                try {
+                    APSUsers.showMe(null, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                try {
+                                    Toast.makeText(currentActivity, e.getResponseString(), Toast.LENGTH_SHORT);
+                                } catch (APSCloudException err) {
+                                    Log.e("APSUsers", "Exception thrown: " + err.toString());
+                                }
+                            } else {
+                                Log.e("APSUsers", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSUsers", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSUsers", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
+        example: |
+            Example Android call:
+
                 ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
                 //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
 

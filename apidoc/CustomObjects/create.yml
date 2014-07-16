@@ -285,6 +285,43 @@ methods:
 
       - platform: android
         example: |
+            Example Android APS SDK call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+                final Activity currentActivity = this;
+
+                JSONObject fields = new JSONObject("{'color':'blue', 'make': 'nissan', 'purchased_at' : '2011-11-02 17:07:37 -0700', 'year' : 2005, 'used' : false, 'coordinates':[-122.1, 37.1]}");
+                HashMap<String, Object> data = new HashMap<String, Object>();
+                data.put("fields", fields);
+                data.put("classname", "cars");
+
+                try {
+                    APSObjects.create(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                new AlertDialog.Builder(currentActivity)
+                                .setTitle("Success!").setMessage("Created!"):
+                                .setPositiveButton(android.R.string.ok, null)
+                                .setIcon(android.R.drawable.ic_dialog_info)
+                                .show();
+                            } else {
+                                Log.e("APSObjects", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSObjects", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSObjects", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
+        example: |
             Example Android call:
 
                 ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key

@@ -249,6 +249,42 @@ methods:
 
       - platform: android
         example: |
+            Example Android APS SDK call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+                final static Activity currentActivity = this;
+
+                HashMap<String, Object> data = new HashMap<String, Object>();
+                data.put("event_id", "4d870f8bd0afbe1074000017");
+                data.put("place_id", "4d7e62d6d0afbe04170000a4");
+
+                try {
+                    APSEvents.update(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                new AlertDialog.Builder(currentActivity)
+                                .setTitle("Success").setMessage("Updated!")
+                                .setPositiveButton(android.R.string.ok, null)
+                                .setIcon(android.R.drawable.ic_dialog_info)
+                                .show();
+                            } else {
+                                Log.e("APSEvents", e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(APSCloudException e) {
+                            Log.e("APSEvents", e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSEvents", e.toString());
+                }
+
+      - platform: android-acssdk
+        example: |
             Example Android call:
 
                 ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key

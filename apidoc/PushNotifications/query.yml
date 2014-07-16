@@ -139,6 +139,47 @@ methods:
         example: |
             Example Android call:
 
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("user_id", "4f5905b5d2951316a9000020");
+
+                try {
+                    APSPushNotifications.query(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+
+                            if (e.getSuccess()) {
+                                try {
+                                    JSONArray subscriptions = e.getResponse().getJSONArray("subscriptions");
+                                    if (subscriptions.length() <= 0) {
+                                        Log.i("APSPushNotifications", "No Results!");
+                                    } else {
+                                        for (int i = 0; i < subscriptions.length(); i++) {
+                                            Log.i("APSPushNotifications", subscriptions.getJSONObject(i).toString());
+                                        }
+                                    }
+                                } catch (JSONException err) {
+                                    Log.e("APSPushNotifications", "Exception thrown: " + err.toString());
+                                }
+                            } else {
+                                Log.e("APSPushNotifications", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSPushNotifications", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSPushNotifications", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
+        example: |
+            Example Android call:
+
                 ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
                 //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
 

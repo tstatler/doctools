@@ -41,6 +41,44 @@ methods:
       
     examples:
 
+      - platform: android
+        example: |
+            Example Android call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+
+                try {
+                    APSPushSchedules.query(null, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                try {
+                                    JSONArray schedules = e.getResponse().getJSONArray("push_schedules");
+                                    if (schedules.length() <= 0) {
+                                        Log.i("APSPushSchedules", "No Results!");
+                                    } else {
+                                        for (int i = 0; i < schedules.length(); i++) {
+                                            Log.i("APSPushSchedules", schedules.getJSONObject(i).toString());
+                                        }
+                                    }
+                                } catch (JSONException err) {
+                                    Log.e("APSPushSchedules", "Exception thrown: " + err.toString());
+                                }
+                            } else {
+                                Log.e("APSPushSchedules", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSPushSchedules", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                  Log.e("APSPushSchedules", "Exception thrown: " + e.toString());
+                }
+
       - platform: titanium
         example: |
             Available on Release 3.2.0 and later.
@@ -55,7 +93,7 @@ methods:
                         Ti.API.error('Error: ' + ((e.error && e.message) || JSON.stringify(e)));
                     }
                 });
-    
+
       - platform: rest
         example: |
             Example cURL request:

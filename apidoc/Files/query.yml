@@ -159,6 +159,38 @@ methods:
         example: |
             Example iOS call:
 
+                NSDictionary *data = @{
+                                         @"page"    : @1,
+                                         @"per_page": @20
+                                      };
+                [APSFiles query:data withBlock:^(APSResponse *e) {
+                    if (e.success){
+                      NSArray *files = e.response[@"files"];
+                      for (NSDictionary *file in files) {
+                        NSString *message =[NSString stringWithFormat:@"id : %@\n Name : %@\nUpdated at : %@\n",
+                                                file[@"id"],
+                                                file[@"name"],
+                                                file[@"updated_at"]];
+
+                        [[[UIAlertView alloc] initWithTitle:@"Success" 
+                                                    message:message
+                                                   delegate:nil 
+                                          cancelButtonTitle:@"OK" 
+                                          otherButtonTitles:nil] show];
+                      }
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:e.errorMessage
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
                 CCWhere *where = [[[CCWhere alloc] init] autorelease];
                 [where fieldName:@"name" equalTo:@"test_file"];
                 NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:where, @"where", nil]
@@ -179,6 +211,49 @@ methods:
                 }
 
       - platform: android
+        example: |
+            Example Android call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+
+                HashMap<String,Object> data = new HashMap<String,Object>;
+                JSONObject params = new JSONObject("{'name': 'Appcelerator Cloud Services'}");
+                data.put("where", params);
+
+                try {
+                    APSFiles.query(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                try {
+                                    JSONArray files = e.getResponse().getJSONArray("files");
+                                    if (files.length() <= 0) {
+                                        Log.i("APSFiles", "No Results!");
+                                    } else {
+                                        for (int i = 0; i < files.length(); i++) {
+                                            JSONObject file = files.getJSONObject(i);
+                                            Log.i("APSFiles", "File name: " + file.getString("name"));
+                                        }
+                                    }
+                                } catch (JSONException err) {
+                                       Log.e("APSFiles", "Exception thrown: " + err.toString());
+                                }
+                            } else {
+                                Log.e("APSFiles", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(APSCloudException e) {
+                            Log.e("APSFiles", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSFiles", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
         example: |
             Example Android call:
 

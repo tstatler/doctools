@@ -226,6 +226,38 @@ methods:
         example: |
             Example Android call:
 
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("channel", "friend_request");
+                data.put("to_ids", "123456,34567");
+                data.put("payload", "Push Notification Test");
+
+                try {
+                    APSPushNotifications.notify(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+
+                            if (e.getSuccess()) {
+                                Log.i("APSPushNotifications", "Notified!");
+                            } else {
+                                Log.e("APSPushNotifications", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSPushNotifications", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSPushNotifications", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
+        example: |
+            Example Android call:
+
                 ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
                 //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
 

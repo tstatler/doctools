@@ -78,7 +78,7 @@ methods:
             single line (`false`). Default is `false`.
         type: Boolean        
 
-    response-params:
+    response-parameters:
       - name: checkins
         description: List of checkins matching the query parameters.
         type: Array<Checkins>
@@ -229,6 +229,46 @@ methods:
                 }
 
       - platform: android
+        example: |
+            Example Android APS SDK call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+
+                HashMap<String,Object> data = new HashMap<String,Object>;
+                JSONObject params = new JSONObject("{'coordinates': {'$nearSphere': [-122.1,37.1], '$maxDistance': 0.00126}}");
+                data.put("where", params);
+
+                try {
+                    APSCheckins.query(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                try {
+                                    JSONArray checkins = e.getResponse().getJSONArray("checkins");
+                                    if (checkins.length() <= 0) {
+                                        Log.i("APSCheckins", "No Results!");
+                                    } else {
+                                        // Do something with the checkins array
+                                    }
+                                } catch (JSONException err) {
+                                       Log.e("APSCheckins", "Exception thrown: " + err.toString());
+                                }
+                            } else {
+                                Log.e("APSCheckins", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(APSCloudException e) {
+                            Log.e("APSCheckins", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSCheckins", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
         example: |
             Example Android call:
 

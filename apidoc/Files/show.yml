@@ -102,6 +102,37 @@ methods:
         example: |
             Example iOS call:
 
+                NSDictionary *data = @{
+                                         @"file_id" : @"savedFileId"
+                                      };
+                [APSFiles show:data withBlock:^(APSResponse *e) {
+                    if (e.success){
+                      NSArray *files = e.response[@"files"];
+                      NSDictionary *file = files[0];
+                      NSString *message =[NSString stringWithFormat:@"id : %@\n Name : %@\nUpdated at : %@\n",
+                                              file[@"id"],
+                                              file[@"name"],
+                                              file[@"updated_at"]];
+
+                      [[[UIAlertView alloc] initWithTitle:@"Success" 
+                                                  message:message
+                                                 delegate:nil 
+                                        cancelButtonTitle:@"OK" 
+                                        otherButtonTitles:nil] show];
+                      
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:e.errorMessage
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
                 NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:(CCFile *)file.objectId, @"file_id", nil]
                 request = [[[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"files/show.json" paramDict:paramDict] autorelease];
                 [request startAsynchronous];
@@ -120,6 +151,41 @@ methods:
                 }
 
       - platform: android
+        example: |
+            Example Android APS SDK call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+                final Activity currentActivity = this;
+
+                HashMap<String, Object> data = new HashMap<String, Object>();
+                data.put("file_id", "4f05446bc3666eb7ba000001");
+
+                try {
+                    APSFiles.show(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                try {
+                                    Toast.makeText(currentActivity, e.getResponseString(), Toast.LENGTH_SHORT);
+                                } catch (APSCloudException err) {
+                                    Log.e("APSFiles", "Exception thrown: " + err.toString());
+                                }
+                            } else {
+                                Log.e("APSFiles", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSFiles", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSFiles", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
         example: |
             Example Android call:
 
