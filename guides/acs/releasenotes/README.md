@@ -23,7 +23,7 @@ data.  JSON pretty print is disabled by default.
 * Fixed an issue where using the `expire_after_seconds` field with the PushNotifications
 `notify_token` method would return an error.
 
-* Fixed an issue with the ACS web console where SMTP settings were not saved when switch Test mode off.
+* Fixed an issue with the ACS web console where SMTP settings were not saved when switching Test mode off.
 
 * Fixed an issue where updating a relation object for a Places object was not being updated.
 
