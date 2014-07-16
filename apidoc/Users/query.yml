@@ -158,7 +158,8 @@ methods:
 
                 [APSUsers query:nil withBlock:^(APSResponse *e) {
                     if (e.success) {
-                        [[[UIAlertView alloc] initWithTitle:@"Success!" message:e.responseString delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                        NSString *message = [NSString stringWithFormat:@"Found %lu statuses", (unsigned long)((NSArray *)e.response[@"statuses"]).count ];
+                        [[[UIAlertView alloc] initWithTitle:@"Success!" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
                     } else {
                         [[[UIAlertView alloc] initWithTitle:@"Error" message:e.message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
                     }

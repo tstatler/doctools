@@ -105,21 +105,39 @@ methods:
 
       - platform: ios
         example: |
-
             Example iOS call:
 
-                NSDictionary *data = @{@"photo_id": self.photoId};
+                NSDictionary *data = @{@"photo_id": @"4d8971236f7095514800000a"};
                 
                 [APSPhotos show:data withBlock:^(APSResponse *e) {
                     if (e.success) {
-                        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                            // Remove the backslashes from URLs in the JSON
-                            self.textView.text = [e.responseString stringByReplacingOccurrencesOfString:@"\\" withString:@""];
-                        }];
-                    } else {
+                        NSArray *photos = e.response[@"photos"];
+                        NSDictionary *photo = photos[0];
+                        NSString *message = [NSString stringWithFormat:@"filename: %@", photo[@"filename"]];
                         [[[UIAlertView alloc] initWithTitle:@"Error" message:e.message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];                        
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error" message:e.message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
                     }
                 }];
+
+      - platform: ios-acssdk
+        example: |
+            Refer to the "Photo Downloads" section of the [iOS SDK guide](#!/guide/ios) to see how
+            to retrieve the actual image from a CCPhoto object.
+
+            Example iOS call:
+
+                NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:(CCPhoto *)photo.objectId, @"photo_id", nil];
+                CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"photos/show.json" paramDict:paramDict];
+                [request startAsynchronous];
+                [request release];
+
+            SDK Callback:
+
+                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
+                {
+                    `NSArray *photos = [response getObjectsOfType:[CCPhoto class]];
+                }
 
       - platform: android
         example: |

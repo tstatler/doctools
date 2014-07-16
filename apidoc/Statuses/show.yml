@@ -87,10 +87,17 @@ methods:
                   }
                 }
 
+      - platform: ios
+        example: |
+            Example iOS call:
+
                 NSDictionary *data = @{@"status_id": @"4d6e88886f70950c89000005"};
                 [APSUsers show:data withBlock:^(APSResponse *e) {
                     if (e.success) {
-                        [[[UIAlertView alloc] initWithTitle:@"Success" message:e.responseString delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                        NSArray *statuses = e.response[@"statuses"];
+                        NSDictionary *status = statuses[0];
+                        NSString *message = [NSString stringWithFormat:@"message: %@", user[@"message"]];
+                        [[[UIAlertView alloc] initWithTitle:@"Success" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
                     } else {
                         [[[UIAlertView alloc] initWithTitle:@"Error" message:e.message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
                     }

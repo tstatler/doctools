@@ -179,10 +179,17 @@ methods:
         example: |
             Example iOS APS SDK call:
 
-                [APSPhotos query:nil withBlock:^(APSResponse *e) {
+                NSDictionary *data = @{
+                    @"where": @{
+                        @"tags_array":@"Appcelerator Cloud Services"
+                    }
+                };
+
+                [APSPhotos query:data withBlock:^(APSResponse *e) {
                     if (e.success) {
-                        self.photos = [e.response objectForKey:@"photos"];
-                        [self.tableView reloadData];
+                        NSString *message = [NSString stringWithFormat:@"Found %lu photos", (unsigned long)((NSArray *)e.response[@"photos"]).count ];
+                        [[[UIAlertView alloc] initWithTitle:@"Success!" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+
                     } else {
                         [[[UIAlertView alloc] initWithTitle:@"Error" message:e.message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];                        
                     }

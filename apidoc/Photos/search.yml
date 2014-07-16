@@ -127,11 +127,10 @@ methods:
         example: |
             Example iOS call:
 
-                NSDictionary *data = @{@"user_id":userId};
-                [APSPhotos search:data withBlock:^(APSResponse *e) {
+                [APSPhotos search:nil withBlock:^(APSResponse *e) {
                     if (e.success) {
-                        self.photos = [e.response objectForKey:@"photos"];
-                        [self.tableView reloadData];
+                        NSString *message = [NSString stringWithFormat:@"Found %lu photos", (unsigned long)((NSArray *)e.response[@"photos"]).count ];
+                        [[[UIAlertView alloc] initWithTitle:@"Success!" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
                     } else {
                         [[[UIAlertView alloc] initWithTitle:@"Error" message:e.message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];                        
                     }

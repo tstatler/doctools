@@ -72,14 +72,29 @@ methods:
                 
                 [APSPhotos remove:data withBlock:^(APSResponse *e) {
                     if (e.success) {
-                        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                            self.statusLabel.text = @"Removed!";
-                        }];
+                        [[[UIAlertView alloc] initWithTitle:@"Success" message:@"Photo deleted!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
                     } else {
-                        [[[UIAlertView alloc] initWithTitle:@"Error" message:e.message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];                        
+                        [[[UIAlertView alloc] initWithTitle:@"Error" message:e.message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
                     }
-                    self.button.hidden = NO;
                 }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
+                NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:(CCPhoto *)photo.objectId, @"photo_id", nil];
+                CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"DELETE" baseUrl:@"photos/delete.json" paramDict:paramDict];
+                [request startAsynchronous];
+                [request release];
+
+            SDK Callback:
+
+                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
+                {
+                    if ([response.meta.method isEqualToString:@"deletePhoto"]) {
+                        NSLog(@"photo deleted!");
+                    }
+                }
 
       - platform: android
         example: |

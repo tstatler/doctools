@@ -99,7 +99,10 @@ methods:
 
                 [APSUsers showMe:nil withBlock:^(APSResponse *e) {
                     if (e.success) {
-                        [[[UIAlertView alloc] initWithTitle:@"Success" message:e.responseString delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                        NSArray *users = e.response[@"users"];
+                        NSDictionary *user = files[0];
+                        NSString *message = [NSString stringWithFormat:@"I am %@ %@", user[@"first_name"], user[@"last_name"]];
+                        [[[UIAlertView alloc] initWithTitle:@"Success" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
                     } else {
                         [[[UIAlertView alloc] initWithTitle:@"Error" message:e.message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
                     }

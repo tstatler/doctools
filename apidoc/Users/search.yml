@@ -104,6 +104,7 @@ methods:
                 
                 [APSUsers search:data withBlock:^(APSResponse *e) {
                     if (e.success) {
+                        NSString *message = [NSString stringWithFormat:@"Found %lu users", (unsigned long)((NSArray *)e.response[@"users"]).count ];
                         [[[UIAlertView alloc] initWithTitle:@"Success" message:e.responseString delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
                     } else {
                         [[[UIAlertView alloc] initWithTitle:@"Error" message:e.message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];

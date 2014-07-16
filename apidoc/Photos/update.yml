@@ -192,23 +192,48 @@ methods:
         example: |
             Example iOS call:
 
+                NSError* error = nil;
+                NSData *fileData = [NSData dataWithContentsOfFile:@"profile2.png" options:0 error:&error];
+                if (fileData == nil) {
+                    // handle error
+                    NSLog(@"Failed to read file, error %@", error);
+                    return;
+                }
+
                 NSDictionary *data = @{
-                    @"photo_id": self.photoId,
-                    @"photo": self.photoData,
-                    @"tags": self.tagsField.text
+                    @"photo_id": @"4d7e62d6d0afbe04170000a4",
+                    @"photo": fileData
                 };
-                
+
                 [APSPhotos update:data withBlock:^(APSResponse *e) {
                     if (e.success) {
-                        [[[UIAlertView alloc] initWithTitle:@"Success" message:@"Uploaded!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];                        
-                        self.photoData = nil;
+                        [[[UIAlertView alloc] initWithTitle:@"Success" message:@"Updated!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
                     } else {
                         [[[UIAlertView alloc] initWithTitle:@"Error" message:e.message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
                     }
-                    self.updateButton.hidden = NO;
-                } progressBlock:^(float progress, BOOL upload) {
-                    self.progressBar.progress = progress;
                 }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
+                NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
+                [paramDict setObject:(CCPhoto *)photo.objectId forKey:@"photo_id"];
+                CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"POST" baseUrl:@"photos/update.json" paramDict:paramDict];
+                [request addPhotoUIImage:newImage paramDict:nil];
+                [request startAsynchronous];
+                [request release];
+
+            SDK Callback:
+
+                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
+                {
+                    NSArray *photos = [response getObjectsOfType:[CCPhoto class]];
+                    for (CCPhoto *photo in photos)
+                    {
+                        ...
+                    }
+                }
 
       - platform: android
         example: |
