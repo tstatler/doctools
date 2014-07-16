@@ -1,5 +1,32 @@
 # Node.ACS Release Notes
 
+## 17 July 2014 -- CLI version 1.0.15 / Server version 1.1.3
+
+This release of Node.ACS brings the following new features and fixes:
+
+### New features
+
+* Add support to associate Node.ACS applications with Appcelerator Dashboard organizations.  Add
+the `--org <ORGANIZATION_ID>` option when running `acs` commands, such as when creating new
+applications or viewing aggregate application information.
+
+* Add support to use Node cluster to fork child processes in standard Node.ACS applications.  This
+is not supported for applications that use the MVC framework.
+
+* Add support to specify a different npm registry for installing node modules. See the
+[Module Dependencies section](http://localhost/~bhatfield/cloud/latest/#!/guide/node_standard-section-module-dependencies)
+in *Standard Node Application*.
+
+* Add support to set and unset environment variables.  See the [config](#!/guide/node_cli_config)
+command.
+
+
+### Bug fixes
+
+* Fixed an issue when displaying error messages.
+
+* Fixed an issue where the application could not create files in the `/tmp` directory.
+
 ## 12 June 2014 -- Community Server version 1.1.2
 
 This release of Node.ACS brings the following new server-side features and fixes:

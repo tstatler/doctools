@@ -4,9 +4,9 @@
 
 The 1.1.3 release of Appcelerator Cloud Services includes the following fixes and features:
 
-## New features
+### New features
 
-* Add ability to query all objects a user liked. See the [Likes.query](#!/api/Likes-method-query) method.
+* Add ability to query for all ACS objects a user liked. See the [Likes.query](#!/api/Likes-method-query) method.
 
 * Add ability to create a Files object by using a URL to access the file to upload.  See the
 [Files.create](#!/api/Files-method-create) method.
@@ -14,16 +14,16 @@ The 1.1.3 release of Appcelerator Cloud Services includes the following fixes an
 * Add `pretty_json` field to all method requests to enable or disable prettifying JSON response
 data.  JSON pretty print is disabled by default.
 
-## Bug fixes
+### Bug fixes 
 
 * Fixed an issue with sending ACS request from Titanium Mobile Web applications.
 
 * Fixed an issue where tags were not being stored for Events objects.
 
 * Fixed an issue where using the `expire_after_seconds` field with the PushNotifications
-`notify_token` method would return a response error.
+`notify_token` method would return an error.
 
-* Fixed an issue with the ACS web console where SMPT settings were not saved when switch Test mode off.
+* Fixed an issue with the ACS web console where SMTP settings were not saved when switch Test mode off.
 
 * Fixed an issue where updating a relation object for a Places object was not being updated.
 
@@ -31,8 +31,8 @@ data.  JSON pretty print is disabled by default.
 
 * Fixed an issue on the Cloud Dashboard where the Storage statistic was not being displayed.
 
-* Fixed an issue on the Cloud Dashboard when editing a Statuses object, the Places object to
-associate with the Statuses object was not updated.
+* Fixed an issue on the Cloud Dashboard when editing a Statuses object. The Places object
+associated with the Statuses object was not updated.
 
 
 ## ACS Release 1.1.2 
