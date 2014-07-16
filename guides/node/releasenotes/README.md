@@ -2,6 +2,9 @@
 
 ## 17 July 2014 -- CLI version 1.0.15 / Server version 1.1.3
 
+To use Node.ACS CLI 1.0.15 with Appcelerator Studio, you must upgrade Appcelerator Studio to version
+3.3.0.
+
 This release of Node.ACS brings the following new features and fixes:
 
 ### New features
