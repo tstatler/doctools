@@ -86,7 +86,7 @@ methods:
 
                 try {
 
-                    APSFriends.approve(null, new APSResponseHandler() {
+                    APSFriends.approve(data, new APSResponseHandler() {
 
                         @Override
                         public void onResponse(final APSResponse e) {
