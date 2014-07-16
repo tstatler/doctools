@@ -68,6 +68,20 @@ methods:
         example: |
             Example iOS call:
 
+                NSDictionary *data = @{@"photo_id": @"4d8971236f7095514800000a"};
+                
+                [APSPhotos remove:data withBlock:^(APSResponse *e) {
+                    if (e.success) {
+                        [[[UIAlertView alloc] initWithTitle:@"Success" message:@"Photo deleted!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error" message:e.message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
                 NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:(CCPhoto *)photo.objectId, @"photo_id", nil];
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"DELETE" baseUrl:@"photos/delete.json" paramDict:paramDict];
                 [request startAsynchronous];
@@ -77,9 +91,9 @@ methods:
 
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
-                	if ([response.meta.method isEqualToString:@"deletePhoto"]) {
-                		NSLog(@"photo deleted!");
-                	}
+                    if ([response.meta.method isEqualToString:@"deletePhoto"]) {
+                        NSLog(@"photo deleted!");
+                    }
                 }
 
       - platform: android

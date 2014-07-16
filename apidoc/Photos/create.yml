@@ -159,6 +159,32 @@ methods:
 
       - platform: ios
         example: |
+            Example iOS call:
+
+                NSError* error = nil;
+                NSData *fileData = [NSData dataWithContentsOfFile:@"profile.png" options:0 error: &error];
+                if (fileData == nil) {
+                    // handle error
+                    NSLog(@"Failed to read file, error %@", error);
+                    return;
+                }
+
+                // Put photo data in a dictionary:
+                NSDictionary *data = @{
+                    @"photo": fileData,
+                    @"collection_name": @"profile_photos"
+                };
+
+                [APSPhotos create:data withBlock:^(APSResponse *e) {
+                    if (e.success) {
+                        [[[UIAlertView alloc] initWithTitle:@"Success" message:@"Uploaded!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];                        
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error" message:e.message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];                        
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
             Refer to the "Photo Downloads" section of the [iOS SDK guide](#!/guide/ios) to see how
             to retrieve the actual image from a CCPhoto object.
 
@@ -175,11 +201,11 @@ methods:
 
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
-                	NSArray *photos = [response getObjectsOfType:[CCPhoto class]];
-                	for (CCPhoto *photo in photos)
-                	{
-                		...
-                	}
+                    NSArray *photos = [response getObjectsOfType:[CCPhoto class]];
+                    for (CCPhoto *photo in photos)
+                    {
+                        ...
+                    }
                 }
 
       - platform: android

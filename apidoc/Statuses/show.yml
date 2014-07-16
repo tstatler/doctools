@@ -91,6 +91,23 @@ methods:
         example: |
             Example iOS call:
 
+                NSDictionary *data = @{@"status_id": @"4d6e88886f70950c89000005"};
+                [APSUsers show:data withBlock:^(APSResponse *e) {
+                    if (e.success) {
+                        NSArray *statuses = e.response[@"statuses"];
+                        NSDictionary *status = statuses[0];
+                        NSString *message = [NSString stringWithFormat:@"message: %@", user[@"message"]];
+                        [[[UIAlertView alloc] initWithTitle:@"Success" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error" message:e.message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    }
+                }];
+
+
+      - platform: ios-apssdk
+        example: |
+            Example iOS call:
+
                 // show a status
                 NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
                 [paramDict setObject:@"4d6e88886f70950c89000005" forKey:@"status_id"];

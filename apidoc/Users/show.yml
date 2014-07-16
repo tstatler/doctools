@@ -118,6 +118,22 @@ methods:
 
       - platform: ios
         example: |
+            Example iOS APS SDK call:
+          
+                NSDictionary *data = @{@"user_id": @"4d6e77386f70950c89000001"};
+                [APSUsers show:data withBlock:^(APSResponse *e) {
+                    if (e.success) {
+                        NSArray *users = e.response[@"users"];
+                        NSDictionary *user = files[0];
+                        NSString *message = [NSString stringWithFormat:@"username: %@", user[@"username"]];
+                        [[[UIAlertView alloc] initWithTitle:@"Success" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error" message:e.message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
             Example iOS call:
 
                 NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:(CCUser *)user.objectId, @"user_id", nil];

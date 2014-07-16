@@ -158,6 +158,25 @@ methods:
         example: |
             Example iOS call:
 
+                // Create dictionary of parameters to be passed with the request
+                NSDictionary *data = @{
+                    @"title": @"Appcelerator Cloud Services buzz",
+                    @"content": @"More users joined Appcelerator Cloud Services"
+                };
+
+                [APSPosts create:data withBlock:^(APSResponse *e) {
+                    if (e.success) {
+                        [[[UIAlertView alloc] initWithTitle:@"Success" message:@"Created post!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error" message:e.message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    }
+                }];
+
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
                 NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
                 [paramDict setObject:@"Appcelerator Cloud Services buzz" forKey:@"title"];
                 [paramDict setObject:@"More users joined Appcelerator Cloud Services" forKey:@"content"];

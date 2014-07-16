@@ -128,6 +128,22 @@ methods:
         example: |
             Example iOS call:
 
+                NSDictionary *data = @{@"status_id": @"4e33a5b7d9ca7246ba000003"};
+                [APSPosts show:data withBlock:^(APSResponse *e) {
+                    if (e.success) {
+                        NSArray *posts = e.response[@"posts"];
+                        NSDictionary *post = posts[0];
+                        NSString *message = [NSString stringWithFormat:@"message: %@", post[@"content"]];
+                        [[[UIAlertView alloc] initWithTitle:@"Success" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error" message:e.message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
                 NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:(CCPost *)post.objectId, @"post_id", nil];
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:self baseUrl:@"posts/show.json" httpMethod:@"GET" paramDict:paramDict];
                 [request startAsynchronous];

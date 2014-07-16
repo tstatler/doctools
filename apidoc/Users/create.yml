@@ -221,6 +221,29 @@ methods:
       - platform: ios
         example: |
             Example iOS call:
+      
+                // Create dictionary of parameters to be passed with the request
+                NSDictionary *data = @{
+                    @"email": @"foo@foo.com",
+                    @"password": @"pass",
+                    @"password_confirmation": @"pass",
+                    @"first_name": @"John",
+                    @"last_name": @"Woo",
+                };
+                
+                [APSUsers create:data withBlock:^(APSResponse *e) {
+                    if (e.success) {
+                        NSString *userId = [[[e.response objectForKey:@"users"] objectAtIndex:0] objectForKey:@"id"];
+                        NSString *msg = [NSString stringWithFormat:@"Created! You are now logged in as %@", userId];
+                        [[[UIAlertView alloc] initWithTitle:@"Success" message:msg delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error" message:e.message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
 
                 NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
                 [paramDict setObject:@"foo@foo.com" forKey:@"email"];

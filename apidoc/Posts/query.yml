@@ -186,7 +186,29 @@ methods:
                   }
                 }
 
+
       - platform: ios
+        example: |
+            Example iOS APS SDK call:
+
+                NSDictionary *data = @{
+                    @"where": @{
+                        @"ratings_average":@{
+                            @"$gt":@7.0
+                        }
+                    }
+                };
+
+                [APSPosts query:data withBlock:^(APSResponse *e) {
+                    if (e.success) {
+                        NSString *message = [NSString stringWithFormat:@"Found %lu posts", (unsigned long)((NSArray *)e.response[@"posts"]).count ];
+                        [[[UIAlertView alloc] initWithTitle:@"Success!" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error" message:e.message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
         example: |
             Example iOS call:
 

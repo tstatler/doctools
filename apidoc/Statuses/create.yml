@@ -140,6 +140,23 @@ methods:
         example: |
             Example iOS call:
 
+                NSDictionary *data = @{
+                    @"message": @"Working hard at Appcelerator Cloud Services Office"
+                };
+                
+                [APSStatuses create:data withBlock:^(APSResponse *e) {
+                    if (e.success) {
+                        [[[UIAlertView alloc] initWithTitle:@"Success" message:@"Status posted!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error" message:e.message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    }
+                }];
+
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
                 NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
                 [paramDict setObject:@"Working hard at Appcelerator Cloud Services Office" forKey:@"message"];
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"POST" baseUrl:@"statuses/create.json" paramDict:paramDict];
