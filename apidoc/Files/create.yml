@@ -157,7 +157,7 @@ methods:
                     if (e.success){
                       NSArray *files = e.response[@"files"];
                       NSDictionary *file = files[0];
-                      NSString *message =[NSString stringWithFormat:@"id : %@\n Name : %@\nUpdated at : %@\n",
+                      NSString *message = [NSString stringWithFormat:@"id : %@\n Name : %@\nUpdated at : %@\n",
                                               file[@"id"],
                                               file[@"name"],
                                               file[@"updated_at"]];

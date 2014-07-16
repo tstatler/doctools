@@ -120,6 +120,38 @@ methods:
         example: |
             Example iOS call:
 
+                NSDictionary *data = @{
+                                         @"user_id"    : @"savedUserID"
+                                      };
+                [APSPhotoCollections search:data withBlock:^(APSResponse *e) {
+                    if (e.success){
+                        NSArray *collections = e.response[@"collections"];
+                        for (NSDictionary *collection in collection) {
+                            NSString *message = [NSString stringWithFormat:@"id : %@\n Name : %@\nCount: %@\nUpdated at : %@\n",
+                                                  collection[@"id"],
+                                                  collection[@"name"],
+                                                  collection[@"count"],
+                                                  collection[@"updated_at"]];
+
+                            [[[UIAlertView alloc] initWithTitle:@"Success" 
+                                                        message:message
+                                                       delegate:nil 
+                                              cancelButtonTitle:@"OK" 
+                                              otherButtonTitles:nil] show];
+                        }
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:e.errorMessage
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
                 NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:3];
                 [paramDict setObject:[NSNumber nubmerWithInt:1] forKey:@"page"]; // optional
                 [paramDict setObject:[NSNumber nubmerWithInt:10] forKey:@"per_page"]; // optional

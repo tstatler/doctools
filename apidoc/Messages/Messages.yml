@@ -180,7 +180,7 @@ methods:
                     if (e.success){
                         NSArray *messages = e.response[@"messages"];
                         NSDictionary *currentMessage = messages[0];
-                        NSString *message =[NSString stringWithFormat:@"id : %@\n Subject : %@\nBody : %@\nUpdated At :%@",
+                        NSString *message = [NSString stringWithFormat:@"id : %@\n Subject : %@\nBody : %@\nUpdated At :%@",
                                                 currentMessage[@"id"],
                                                 currentMessage[@"subject"],
                                                 currentMessage[@"body"],
@@ -677,7 +677,7 @@ methods:
                     if (e.success){
                         NSArray *messages = e.response[@"messages"];
                         NSDictionary *currentMessage = messages[0];
-                        NSString *message =[NSString stringWithFormat:@"id : %@\n Subject : %@\nBody : %@\nUpdated At :%@",
+                        NSString *message = [NSString stringWithFormat:@"id : %@\n Subject : %@\nBody : %@\nUpdated At :%@",
                                                 currentMessage[@"id"],
                                                 currentMessage[@"subject"],
                                                 currentMessage[@"body"],
@@ -899,7 +899,7 @@ methods:
                     if (e.success){
                         NSArray *messages = e.response[@"messages"];
                         NSDictionary *currentMessage = messages[0];
-                        NSString *message =[NSString stringWithFormat:@"id : %@\n Subject : %@\nBody : %@\nUpdated At :%@",
+                        NSString *message = [NSString stringWithFormat:@"id : %@\n Subject : %@\nBody : %@\nUpdated At :%@",
                                                 currentMessage[@"id"],
                                                 currentMessage[@"subject"],
                                                 currentMessage[@"body"],
@@ -1069,7 +1069,7 @@ methods:
                     if (e.success){
                         NSArray *messages = e.response[@"messages"];
                         for (NSDictionary *currentMessage in messages) {
-                            NSString *message =[NSString stringWithFormat:@"id : %@\n Subject : %@\nBody : %@\nUpdated At :%@",
+                            NSString *message = [NSString stringWithFormat:@"id : %@\n Subject : %@\nBody : %@\nUpdated At :%@",
                                                 currentMessage[@"id"],
                                                 currentMessage[@"subject"],
                                                 currentMessage[@"body"],
@@ -1286,7 +1286,7 @@ methods:
                     if (e.success){
                         NSArray *messages = e.response[@"messages"];
                         for (NSDictionary *currentMessage in messages) {
-                            NSString *message =[NSString stringWithFormat:@"id : %@\n Subject : %@\nBody : %@\nUpdated At :%@",
+                            NSString *message = [NSString stringWithFormat:@"id : %@\n Subject : %@\nBody : %@\nUpdated At :%@",
                                                 currentMessage[@"id"],
                                                 currentMessage[@"subject"],
                                                 currentMessage[@"body"],
@@ -1573,7 +1573,7 @@ methods:
                     if (e.success){
                         NSArray *messages = e.response[@"messages"];
                         for (NSDictionary *currentMessage in messages) {
-                            NSString *message =[NSString stringWithFormat:@"id : %@\n Subject : %@\nBody : %@\nUpdated At :%@",
+                            NSString *message = [NSString stringWithFormat:@"id : %@\n Subject : %@\nBody : %@\nUpdated At :%@",
                                                 currentMessage[@"id"],
                                                 currentMessage[@"subject"],
                                                 currentMessage[@"body"],
@@ -1829,7 +1829,7 @@ methods:
                     if (e.success){
                         NSArray *messages = e.response[@"messages"];
                         for (NSDictionary *currentMessage in messages) {
-                            NSString *message =[NSString stringWithFormat:@"id : %@\n Subject : %@\nBody : %@\nUpdated At :%@",
+                            NSString *message = [NSString stringWithFormat:@"id : %@\n Subject : %@\nBody : %@\nUpdated At :%@",
                                                 currentMessage[@"id"],
                                                 currentMessage[@"subject"],
                                                 currentMessage[@"body"],

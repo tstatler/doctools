@@ -58,7 +58,7 @@ methods:
                 NSDictionary *data = @{
                                          @"user_ids" : @"userid1, userid2"
                                       };
-                [APSKeyValues remove:data withBlock:^(APSResponse *e) {
+                [APSFriends remove:data withBlock:^(APSResponse *e) {
                     if (e.success){
                         [[[UIAlertView alloc] initWithTitle:@"Success" 
                                                     message:@"Friend(s) Removed"

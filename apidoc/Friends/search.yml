@@ -136,7 +136,7 @@ methods:
                     if (e.success){
                       NSArray *friendRequests = e.response[@"friend_requests"];
                       for (NSDictionary *friendRequest in friendRequests) {
-                        NSString *message =[NSString stringWithFormat:@"id : %@\n First Name : %@\nLast Name : %@\n",
+                        NSString *message = [NSString stringWithFormat:@"id : %@\n First Name : %@\nLast Name : %@\n",
                                                 friendRequest[@"id"],
                                                 friendRequest[@"first_name"],
                                                 friendRequest[@"last_name"]];

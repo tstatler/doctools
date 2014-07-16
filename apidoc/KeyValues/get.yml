@@ -109,7 +109,7 @@ methods:
                     if (e.success){
                         NSArray *keyvalues = e.response[@"keyvalues"];
                         NSDictionary *keyValue = keyvalues[0];
-                        NSString *message =[NSString stringWithFormat:@"Name : %@\nValue: %@\n", 
+                        NSString *message = [NSString stringWithFormat:@"Name : %@\nValue: %@\n", 
                                                           keyValue[@"name"], 
                                                           keyValue[@"value"]];
 

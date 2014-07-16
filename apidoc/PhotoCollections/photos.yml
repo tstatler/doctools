@@ -123,6 +123,44 @@ methods:
         example: |
             Example iOS call:
 
+                NSDictionary *data = @{
+                                         @"page"         : @1,
+                                         @"per_page"     : @20,
+                                         @"collection_id": @"savedCollectionID"
+                                      };
+                [APSPhotoCollections showPhotos:data withBlock:^(APSResponse *e) {
+                    if (e.success){
+                      NSArray *photos = e.response[@"photos"];
+                      if ([photos count] == 0) {
+                        // handle No photos
+                          [[[UIAlertView alloc] initWithTitle:@"Success"
+                                                      message:@"No Photos"
+                                                     delegate:nil
+                                            cancelButtonTitle:@"OK"
+                                            otherButtonTitles:nil] show];
+                          return;
+                      }
+
+                      for (NSDictionary *photo in photos) {
+                          NSString *message = [NSString stringWithFormat:@"id : %@\n Name : %@\nUpdated at : %@\n",
+                                                  photo[@"id"],
+                                                  photo[@"name"],
+                                                  photo[@"updated_at"]];
+                          NSLog(@"%@", message);
+                      }
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:e.errorMessage
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
                 NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:3];
                 [paramDict setObject:(CCCollection *)collection.objectId forKey:@"collection_id"];
                 [paramDict setObject:[NSNumber nubmerWithInt:1] forKey:@"page"]; // optional

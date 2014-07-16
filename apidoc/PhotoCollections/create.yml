@@ -138,6 +138,38 @@ methods:
         example: |
             Example iOS call:
 
+                NSDictionary *data = @{
+                                         @"name" : @"Party Pictures"
+                                      };
+                [APSPhotoCollections create:data withBlock:^(APSResponse *e) {
+                    if (e.success){
+                        NSArray *collections = e.response[@"collections"];
+                        NSDictionary *collection = collections[0];
+                        NSString *message = [NSString stringWithFormat:@"id : %@\n Name : %@\nCount: %@\nUpdated at : %@\n",
+                                                collection[@"id"],
+                                                collection[@"name"],
+                                                collection[@"count"],
+                                                collection[@"updated_at"]];
+
+                        [[[UIAlertView alloc] initWithTitle:@"Success" 
+                                                    message:message
+                                                   delegate:nil 
+                                          cancelButtonTitle:@"OK" 
+                                          otherButtonTitles:nil] show];
+
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:e.errorMessage
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
                 NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
                 [paramDict setObject:@"My Photo Album" forKey:@"name"];
                 CCRequest *request = [[[CCRequest alloc] initWithDelegate:self httpMethod:@"POST" baseUrl:@"collections/create.json" paramDict:paramDict] autorelease];
