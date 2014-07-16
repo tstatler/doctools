@@ -148,6 +148,34 @@ methods:
         example: |
             Example iOS call:
 
+                NSDictionary *data = @{
+                                         @"latitude"   : latitude,
+                                         @"longitude"  : longitude
+                                      };
+                [APSPlaces search:data withBlock:^(APSResponse *e) {
+                    if (e.success){
+                        NSArray *places = e.response[@"places"];
+                        for (NSDictionary * place in places) {
+                            NSString *message = [NSString stringWithFormat:@"id : %@\n Name : %@\nUpdated at : %@\n",
+                                                    place[@"id"],
+                                                    place[@"name"],
+                                                    place[@"updated_at"]];
+
+                            NSLog(@"%@", message);
+                        }
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:e.errorMessage
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
                 // search for current user's checkins
                 NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:3];
                 [paramDict setObject:@"appcelerator"  forKey:@"q"]; // optional

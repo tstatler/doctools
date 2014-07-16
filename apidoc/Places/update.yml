@@ -179,6 +179,38 @@ methods:
         example: |
             Example iOS call:
 
+                NSDictionary *data = @{
+                                         @"place_id" : @"savedPlaceID",
+                                         @"city"     : @"Mountain View"
+                                      };
+                [APSPlaces update:data withBlock:^(APSResponse *e) {
+                    if (e.success){
+                        NSArray *places = e.response[@"places"];
+                        NSDictionary *place = places[0];
+                        NSString *message = [NSString stringWithFormat:@"id : %@\n Name : %@\nUpdated at : %@\n",
+                                                place[@"id"],
+                                                place[@"name"],
+                                                place[@"updated_at"]];
+
+                        [[[UIAlertView alloc] initWithTitle:@"Success" 
+                                                    message:message
+                                                   delegate:nil 
+                                          cancelButtonTitle:@"OK" 
+                                          otherButtonTitles:nil] show];
+
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:e.errorMessage
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
                 NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:(CCPlace *)place.objectId, @"place_id", @"Appcelerator Cloud Services", @"name", nil];
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"PUT" baseUrl:@"places/update.json" paramDict:paramDict];
                 [request addPhotoUIImage:(UIImage *)newPlaceImage paramDict:nil];
