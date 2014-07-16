@@ -126,7 +126,7 @@ methods:
                     @"user_id": userId
                 };
                 
-                [APSPushSchedules query:data withBlock:^(APSResponse *e) {
+                [APSPushNotifications query:data withBlock:^(APSResponse *e) {
                       if (e.success) {
                           NSString *message = [NSString stringWithFormat:@"Found %lu subscriptions", (unsigned long)((NSArray *) e.response[@"subscriptions"]).count ];
                           [[[UIAlertView alloc] initWithTitle:@"Success" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];

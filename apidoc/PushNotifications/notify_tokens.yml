@@ -173,7 +173,7 @@ methods:
                     @"payload": @"Welcome to push notifications"
                 };
                 
-                [APSPushSchedules notifyTokens:data withBlock:^(APSResponse *e) {
+                [APSPushNotifications notifyTokens:data withBlock:^(APSResponse *e) {
                       if (e.success) {
                           [[[UIAlertView alloc] initWithTitle:@"Great" message:@"Success!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
                       } else {
