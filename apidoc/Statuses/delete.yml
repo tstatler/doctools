@@ -65,6 +65,18 @@ methods:
         example: |
             Example iOS call:
 
+                [APSStatuses remove:nil withBlock:^(APSResponse *e) {
+                    if (e.success) {
+                        [[[UIAlertView alloc] initWithTitle:@"Success" message:@"Removed!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error" message:e.message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
                 NSMutableDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:(CCStatus *)status.objectId, @"status_id", nil];
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"DELETE" baseUrl:@"statuses/delete.json" paramDict:paramDict];
                 [request startAsynchronous];

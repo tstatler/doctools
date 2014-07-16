@@ -141,6 +141,24 @@ methods:
 
       - platform: ios
         example: |
+            Example iOS APS SDK call:
+
+                NSDictionary *data = @{
+                    @"status_id": @"4d6e86ed6f70950c89000004",
+                    @"message":@"Hardly working at Appcelerator Cloud Services Office"
+                };
+                
+                [APSStatuses update:data withBlock:^(APSResponse *e) {
+                    if (e.success) {
+                        [[[UIAlertView alloc] initWithTitle:@"Success" message:@"Updated!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error" message:e.message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    }
+                }];
+
+
+      - platform: ios-acssdk
+        example: |
             Example iOS call:
 
                 NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:2];

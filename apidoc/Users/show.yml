@@ -120,7 +120,7 @@ methods:
         example: |
             Example iOS APS SDK call:
           
-                NSDictionary *data = @{@"user_id": self.userId};
+                NSDictionary *data = @{@"user_id": @"4d6e77386f70950c89000001"};
                 [APSUsers show:data withBlock:^(APSResponse *e) {
                     if (e.success) {
                         [[[UIAlertView alloc] initWithTitle:@"Success" message:e.responseString delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];

@@ -158,8 +158,30 @@ methods:
                     ]
                   }
                 }
-                
+
       - platform: ios
+        example: |
+            Example iOS APS SDK call:
+
+                NSDictionary *data = @{
+                    @"where": @{
+                        @"create_at":@{
+                            @"$lt":"2011-03-02T19:05:33+0000"
+                        }
+                    }
+                };
+
+                [APSStatuses query:data withBlock:^(APSResponse *e) {
+                    if (e.success) {
+                        NSString *message = [NSString stringWithFormat:@"Found %lu statuses", (unsigned long)((NSArray *)e.response[@"statuses"]).count ];
+                        [[[UIAlertView alloc] initWithTitle:@"Success!" message:e.responseString delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error" message:e.message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    }
+                }];
+
+
+      - platform: ios-acssdk
         example: |
             Example iOS call:
             
