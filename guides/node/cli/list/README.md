@@ -13,9 +13,9 @@ If you've created applications that are not assigned to any organization, they a
 
 The following fields are displayed for each application:
 
-* **Created by** &mdash; Email of user that created application.
+* **Created by** &mdash; Email of user that created application. (Only shown for Appcelerator Platform users.)
 * **URL** &mdash; URL of application.
-* **Created at**  &mdash; Date the application was created. (Only shown for Appcelerator Platform users.)
+* **Created at**  &mdash; Date the application was created.
 * **Node Version**  &mdash; Node version used to run the application (see [Node.js Engine](#!/guide/node_standard-section-node-js-engine))
 * **Maximum allowed number of servers**  &mdash; By default, this is set to **1**. Contact Appcelerator Support to increase this value.
 * **Desired number of servers**  &mdash; Number of servers specified by the `--setsize` parameter of the 
