@@ -10,7 +10,7 @@ Check server system resource usage within a specific period. The server in cloud
 
 **Login Required:** Yes (See [login](#!/guide/node_cli_login) command)
 
-## Required Parameters
+## Parameters
 
 <table class="doc_content_table">
     <tbody>
@@ -22,47 +22,43 @@ Check server system resource usage within a specific period. The server in cloud
         <td>appname</td>
         <td>The name of the app to retrieve and show system resource usage for. If omitted, the command needs to be run in application's root directory, or specify the application's directory with '-d' option.</td>
     </tr>
-    </tbody>
-</table>
-
-## Optional Parameters
-
-<table class="doc_content_table">
-    <tbody>
     <tr>
-        <th>Name</th>
-        <th>Description</th>
-    </tr>
-    <tr>
-        <td nowrap>--server_id &lt;serverid&gt;</td>
+        <td nowrap><code>--server_id<code> <em>serverid</em></td>
         <td>Id of the server which the logs from. An app may be deployed to multiple servers in cloud.</td>
     </tr>
     <tr>
-        <td nowrap>--show_serverid</td>
+        <td nowrap><code>--show_serverid</code></td>
         <td>Show server ID in logs</td>
     </tr>
     <tr>
-        <td nowrap>--start_date &lt;start_date&gt;</td>
+        <td nowrap><code>--start_date</code> <em>start_date</em></td>
         <td>Starting date for retrieving usage logs</td>
     </tr>
     <tr>
-        <td>--end_date &lt;end_date&gt;</td>
+        <td><code>--end_date</code> <em>end_date</em></td>
         <td>Ending date for retrieving usage logs</td>
     </tr>
     <tr>
-        <td nowrap>--page_number &lt;page_number&gt;</td>
+        <td nowrap><code>--page_number</code> <em>page_number</em></td>
         <td>Page of usage log output to display, where 1 is the most recent</td>
     </tr>
     <tr>
-        <td>--per_page &lt;per_page&gt;</td>
+        <td><code>--per_page</code> <em>per_page</em></td>
         <td>Number of usage logs per page. Default: 100</td>
     </tr>
     <tr>
-        <td>--more</td>
+        <td><code>--more</code></td>
         <td>Display the next page of log messages.</td>
     </tr>
     <tr>
-        <td>-h, --help</td>
+        <td><code>--org <em>orgID</em></code></td>
+        <td>The ID of the organization the application belongs to.  This parameter is required
+        if the target application has the same name as an application in another organization 
+        you belong to.
+         </td>
+    </tr>    
+    <tr>
+        <td><code>-h</code>, --help</td>
         <td>Show help information of the command</td>
     </tr>
     </tbody>

@@ -31,7 +31,7 @@ $ acs unpublish [ <em>appname</em> |\--dir <em>app_dir</em>] [\--ver <em>version
     </tbody>
 </table> -->
 
-## Optional Parameters
+## Parameters
 
 <table class="doc-table">
     <tbody>
@@ -49,6 +49,13 @@ $ acs unpublish [ <em>appname</em> |\--dir <em>app_dir</em>] [\--ver <em>version
             <td><code>--ver <em>version</em></code></td>
             <td>Unpublishes the version of the application specified by <em>version</em>. 
             If not specified, the currently deployed version is unpublished.</td>
+        </tr>
+        <tr>
+            <td><code>--org <em>orgID</em></code></td>
+            <td>The ID of the organization the application belongs to.  This parameter is required
+            if the target application has the same name as an application in another organization 
+            you belong to.
+             </td>
         </tr>
     </tbody>
 </table>
@@ -68,5 +75,11 @@ The following un-publishes version 0.3.0 of the ChatApp application located in t
     
     App ChatApp version 0.3.0 is now marked for unpublication.
 
+The following uses the `--org` parameter to un-publish the active version of the ChatApp application 
+that belongs to the organization with the ID of **12345**. 
 
+    $ cd myprojects/chatapp
+    $ acs unpublish  --org 12345
+    
+    App ChatApp version 0.3.0 is now marked for unpublication.
 

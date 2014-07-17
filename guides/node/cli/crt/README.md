@@ -42,7 +42,7 @@ acs crt [options] [<i>appname</i>]
 </pre>
 
 
-## Required Parameters
+## Parameters
 
 <table class="doc-table">
     <tbody>
@@ -54,18 +54,6 @@ acs crt [options] [<i>appname</i>]
             <td><i>appname</i></td>
             <td>The name of the app to associate with the SSL certificate. If omitted, the command needs to be run from the application's root directory, or specify the application's directory with the <code>-d</code> option.</td>
         </tr>
-    </tbody>
-</table>
-
-
-## Optional Parameters
-
-<table class="doc-table">
-    <tbody>
-        <tr>
-            <th>Name</th>
-            <th>Description</th>
-        </tr>
         <tr>
             <td><code>--add <i>PEM-file</i></code></td>
             <td> Adds the SSL certificate contained by the specified PEM file.</td>
@@ -73,7 +61,13 @@ acs crt [options] [<i>appname</i>]
         <tr>
             <td><code>--remove</code></td>
             <td> Removes the SSL certificate of the associated application, if one exists.</td>
+        </tr>        
+        <tr>
+            <td><code>--org <em>orgID</em></code></td>
+            <td>The ID of the organization the application belongs to. This parameter only is required if the target application has the same name as an application in another organization you belong to.
+             </td>
         </tr>
+
     </tbody>
 </table>
 

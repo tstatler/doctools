@@ -106,6 +106,11 @@ You can also specify the maximum number of servers that should be used.
         <td>Unsets the specified environment variable.</td>
     </tr>
     <tr>
+        <td><code>--org <em>orgID</em></code></td>
+        <td>The ID of the organization the application belongs to. This parameter only is required if the target application has the same name as an application in another organization you belong to.
+         </td>
+    </tr>
+    <tr>
         <td><code>-h</code>, <code>--help</code></td>
         <td>Displays help information of the command</td>
     </tr>

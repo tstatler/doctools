@@ -23,7 +23,7 @@ CNAME, specify a path for each to route a client to the correct application.
 
 **Login Required:** Yes (See [login](#!/guide/node_cli_login) command)
 
-## Required Parameters
+## Parameters
 
 <table class="doc-table">
     <tbody>
@@ -53,19 +53,13 @@ CNAME, specify a path for each to route a client to the correct application.
             </td>
         </tr>
         <tr>
-            <td>--remove</td>
+            <td><code>--remove</code></td>
             <td>Remove CNAME binding from the application.</td>
         </tr>
-    </tbody>
-</table>
-
-## Optional Parameters
-
-<table class="doc-table">
-    <tbody>
         <tr>
-            <th>Name</th>
-            <th>Description</th>
+            <td><code>--org <em>orgID</em></code></td>
+            <td>The ID of the organization the application belongs to. This parameter only is required if the target application has the same name as an application in another organization you belong to.
+             </td>
         </tr>
         <tr>
             <td>-d <i>app_directory</i></td>

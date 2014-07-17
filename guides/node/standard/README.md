@@ -20,7 +20,7 @@ To:
 
     "framework": "none",
 
-(For details on the MVC framework, see [Node.ACS MVC Framework](#!/guide/mvc).)
+(For details on the MVC framework, see [Node.ACS MVC Framework](#!/guide/node_mvc).)
 
 ## Starting Point
 

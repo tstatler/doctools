@@ -10,7 +10,7 @@ Command for logging in to Node.ACS using your Appcelerator Network account crede
 
 `$ acs login` [ _username_ ] [ _password_ ]
 
-## Optional Parameters
+## Parameters
 
 <table class="doc-table">
     <tbody>

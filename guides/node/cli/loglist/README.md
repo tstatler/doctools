@@ -3,8 +3,8 @@
 
 ## Description
 
-List application's log within a specific period. By default, a maximum of 100
-log messages will be returned at a time. Each log record contains the following fields:
+Lists the application's log within a specific period. By default, a maximum of 100
+log messages are returned at a time. Each log record contains the following fields:
 
 * Date and time
 * IP of server that handled the request
@@ -12,9 +12,11 @@ log messages will be returned at a time. Each log record contains the following 
 * The execution time of the request in milliseconds
 
 Note that these fields are only reported for Node.ACS applications that use the
- [Node.ACS MVC framework](http://docs.appcelerator.com/cloud/latest/#!/guide/node_mvc).
+ [Node.ACS MVC framework](#!/guide/node_mvc).
 
 Note that `acs loglist` may not get the latest logs from server immediately. You may need to wait a few seconds. 
+
+For an overview of Node.ACS logging utilities see [Logging Utilities](#!/guide/node_logging-section-logging-utilities).
 
 ## Usage
 
@@ -22,7 +24,7 @@ Note that `acs loglist` may not get the latest logs from server immediately. You
 
 **Login Required:** Yes (See [login](#!/guide/node_cli_login) command)
 
-## Required Parameters
+## Parameters
 
 <table class="doc-table">
     <tbody> 
@@ -34,17 +36,6 @@ Note that `acs loglist` may not get the latest logs from server immediately. You
             <td>appname</td>
             <td>The name of the app to retrieve and show runtime logs for. If omitted, you must run the command in the application's root directory,
                  or specify the application's directory with '-d' option.</td>
-        </tr>
-    </tbody>
-</table>
-        
-## Optional Parameters
-            
-<table class="doc-table">
-    <tbody>
-        <tr>
-            <th>Name</th>
-            <th>Description</th>
         </tr>
         <tr>
             <td nowrap>--server_id <i>serverid</i></td>
@@ -69,6 +60,11 @@ Note that `acs loglist` may not get the latest logs from server immediately. You
         <tr>
             <td nowrap>--more</td>
             <td>Display the next page of log messages.</td>
+        </tr>
+        <tr>
+            <td><code>--org <em>orgID</em></code></td>
+            <td>The ID of the organization the application belongs to. This parameter only is required if the target application has the same name as an application in another organization you belong to.
+             </td>
         </tr>
         <tr>
             <td>-h, --help</td>

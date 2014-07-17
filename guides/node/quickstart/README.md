@@ -10,6 +10,7 @@ developers to create apps and services. With Node.ACS, you can:
   * Host your existing Node.js application or service in the Appcelerator Cloud
   * Create Node.ACS apps directly from Titanium Studio
   * Develop a Node.ACS service for your Titanium apps using the same development language (JavaScript)
+  * Node.ACS application 
 
 This quickstart will guide you through the process of creating a simple Chat
 Room Node.ACS app using the built-in [MVC framework](#!/guide/node_mvc). It is a
