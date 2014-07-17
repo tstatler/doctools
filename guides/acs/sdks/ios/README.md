@@ -26,7 +26,7 @@ and then run the application.
 1. Login to [Appcelerator Dashboard](https://dashboard.appcelerator.com).
 2. From the Orgs menu, select the organization to associate with the application.
 3. Click the Apps menu and select **Add a Native App**.
-4. In the dialog that appears:
+4. In the New Native Application dialog, do the following:
     * Enter **APSCloudExampleApp** (or other name) in the **Name** field.
     * Select **iOS** from the **Platform** menu.
     * Select any category from the **Category** menu.
@@ -36,16 +36,14 @@ and then run the application.
 7. Select **Development** from the Environment menu, then click the clipboard icon to copy the key to your clipboard.
 {@img copy_key.png}
 
-Next, you'll import the APSCloudExample project into Eclipse, copy the key from your clipboard
-into the application's main activity, and run the application.
+Next, you'll import the APSCloudExample project into Xcode, copy the key from your clipboard into the application's main activity, and run the application.
 
 **To import the completed APSCloudExample project:**
 
-1. In ADT, select **File > Import > General > Existing Code into Workspace**, then click **Next**.
-2. Click Browse and navigate to the **appcelerator-sdk-android-1.0/examples/APSCloudExample** folder, and click Open.
-3. Click Finish.
-4. Open **AppDelegate.m**, locate the following line of code and replace **<< YOUR APP KEY >>** with the application key you 
-copied to your clipboard previously.
+1. In Xcode, open the **appcelerator-sdk-ios-1.0/examples/APSCloudExample.xcodeproj**.
+3. Open **AppDelegate.m** and locate the following line of code.
+4. Replace **<< YOUR APP KEY >>** with the application key you copied to your clipboard previously.
+To learn where to find your application key, see [View Application Information](http://docs.appcelerator.com/platform/redirects/aps_key.html).ƒ
 
         String appKey = "<< YOUR APP KEY >>";
 
@@ -96,7 +94,7 @@ individual REST API method endpoints. For example, the [\[APSUsers create\]](htt
 endpoint.
 
 Alternatively, you can use the generic [\[APSCloud sendRequest\]](http://docs.appcelerator.com/aps-sdk-apidoc/latest/ios/Classes/APSCloud.html#//api/name/sendRequest:method:data:handler:) method to make REST calls directly 
-against the Cloud APIs. For more information, see [Making Generic REST API Calls](#!/guide/android-section-making-generic-rest-apis-method-calls).
+against the Cloud APIs. For more information, see [Making Generic REST API Calls](#!/guide/ios-section-making-generic-rest-apis-method-calls).
 
 ### Building Request Parameters
 
