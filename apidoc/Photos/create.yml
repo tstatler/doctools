@@ -95,6 +95,12 @@ methods:
 
                 "photo_sync_sizes[]=preview"
 
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean                
+
     response-parameters:
       - name: photos
         description: |
@@ -126,7 +132,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt  -F "file=@photo.jpg" https://api.cloud.appcelerator.com/v1/photos/create.json?key=<YOUR APP APP KEY>
+                $ curl -b cookies.txt -c cookies.txt  -F "file=@photo.jpg" https://api.cloud.appcelerator.com/v1/photos/create.json?key=<YOUR APP APP KEY>&pretty_print=true
 
             Example JSON response:
 
@@ -153,6 +159,32 @@ methods:
 
       - platform: ios
         example: |
+            Example iOS call:
+
+                NSError* error = nil;
+                NSData *fileData = [NSData dataWithContentsOfFile:@"profile.png" options:0 error: &error];
+                if (fileData == nil) {
+                    // handle error
+                    NSLog(@"Failed to read file, error %@", error);
+                    return;
+                }
+
+                // Put photo data in a dictionary:
+                NSDictionary *data = @{
+                    @"photo": fileData,
+                    @"collection_name": @"profile_photos"
+                };
+
+                [APSPhotos create:data withBlock:^(APSResponse *e) {
+                    if (e.success) {
+                        [[[UIAlertView alloc] initWithTitle:@"Success" message:@"Uploaded!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];                        
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error" message:e.message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];                        
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
             Refer to the "Photo Downloads" section of the [iOS SDK guide](#!/guide/ios) to see how
             to retrieve the actual image from a CCPhoto object.
 
@@ -169,14 +201,49 @@ methods:
 
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
-                	NSArray *photos = [response getObjectsOfType:[CCPhoto class]];
-                	for (CCPhoto *photo in photos)
-                	{
-                		...
-                	}
+                    NSArray *photos = [response getObjectsOfType:[CCPhoto class]];
+                    for (CCPhoto *photo in photos)
+                    {
+                        ...
+                    }
                 }
 
       - platform: android
+        example: |
+            Example Android APS SDK call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+                final Activity currentActivity = this;
+
+                HashMap<String, Object> data = new HashMap<String, Object>();
+                data.put("photo", new File("/photos/profile.gif"));
+
+                try {
+                    APSPhotos.create(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                new AlertDialog.Builder(currentActivity)
+                                .setTitle("Success").setMessage("Uploaded!")
+                                .setPositiveButton(android.R.string.ok, null)
+                                .setIcon(android.R.drawable.ic_dialog_info)
+                                .show();
+                            } else {
+                                Log.e("APSPhotos", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSPhotos", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSPhotos", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
         example: |
             Example Android call:
 

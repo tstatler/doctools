@@ -7,7 +7,8 @@ Shows a list of applications owned by the current user. By default, data is list
 You can specify an application name to only show details for that application. The information returned
 by this command also includes error messages, if any, related to the application's deployment and execution. 
 
-Application are grouped by the Appcelerator Platform [organization](#!/guide/node_orgs) that they belong to (see [Examples](#!/guide/node_cli_list-section-examples)). 
+For Appcelerator Platform users,
+applications are grouped by the Appcelerator Platform [organization](#!/guide/node_orgs) that they belong to (see [Examples](#!/guide/node_cli_list-section-examples)). 
 If you've created applications that are not assigned to any organization, they are included in a group named "Not Assigned".
 
 The following fields are displayed for each application:
@@ -40,14 +41,11 @@ The following fields are displayed for each application:
         </tr>
         <tr>
             <td>--mine</td>
-            <td>Only list apps created by the current user.</td>
+            <td>Only list apps created by the current user. Only available for Appcelerator Platform users.</td>
         </tr>
         <tr>
             <td><code>--org <em>orgID</em></code></td>
-            <td>The ID of the organization the application belongs to. This parameter is required
-            if the target application has the same name as an application in another organization 
-            you belong to.
-             </td>
+            <td>Lists applications of the specified organization ID. Only available for Appcelerator Platform users with Node.ACS access.</td>
         </tr>
         <tr>
             <td><i>appname</i></td>
@@ -62,7 +60,9 @@ The following fields are displayed for each application:
 
 ## Examples
 
-In the following example the current user owns two applications that belong to the "Appcelerator, Inc" 
+The following example only applies for Appcelerator Platform users.
+
+In this example the current user owns two applications that belong to the "Appcelerator, Inc" 
 organization, one that belongs to the "Acme, Inc" organization, and one that isn't assigned to any
 organization. The organization ID is shown in parentheses next to the organization name; for applications
 not assigned to an organization, the ID of the current user is shown in parentheses.

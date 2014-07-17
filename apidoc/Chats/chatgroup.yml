@@ -38,16 +38,22 @@ methods:
 
       - name: response_json_depth
         description: |
-            Nested object depth level counts in response json.
-            In order to reduce server API calls from an applicaton, the response json may
-            include not just the objects that are being queried/searched, but also with
-            some important data related to the returning objects such as object's owner or
-            referencing objects.
+            Nested object depth level counts in JSON response.
+            To reduce server API calls the JSON response may
+            include, in addition to the objects returned by the query, other important data related 
+            to the returned objects, such as object's owner or referencing objects.
 
             Default is 3, valid range is 1 to 8.
         type: Number
 
-    response-paramters:
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
+        
+
+    response-parameters:
       - name: chat_groups
         description: |
             List of chat groups. Each chat group entry has the following fields:
@@ -70,7 +76,7 @@ methods:
 
                 Cloud.Chats.getChatGroups(function (e) {
                     if (e.success) {
-                        for (var i = 0; i < e.chats.length; i++) {
+                        for (var i = 0; i < e.chat_groups.length; i++) {
                             var group = e.chat_groups[i];
                             alert('Success:\n' +
                                 'id: ' + group.id + '\n' +
@@ -88,7 +94,7 @@ methods:
             Example cURL request:
 
                 Get a list of chat groups the current user belongs to, sorted by groups with most recent activity first.
-                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/chats/get_chat_groups.json?order=-updated_at&key=<YOUR APP APP KEY>"
+                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/chats/get_chat_groups.json?order=-updated_at&key=<YOUR APP APP KEY>&pretty_print=true"
 
             Example JSON response:
 
@@ -215,6 +221,19 @@ methods:
 
       - platform: ios
         example: |
+            Example iOS APS SDK call:
+
+                [APSChats getChatGroups:nil withBlock:^(APSResponse *e) {
+                    if (e.success) {
+                        NSString *message = [NSString stringWithFormat:@"Found %lu groups", (unsigned long)((NSArray *) e.response[@"chat_groups"]).count ];
+                        [[[UIAlertView alloc] initWithTitle:@"Success" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error" message:e.errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
             Example iOS call:
 
                 NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:3];
@@ -234,6 +253,38 @@ methods:
                 }
 
       - platform: android
+        example: |
+            Example Android APS SDK call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+
+                try {
+                    APSChats.getChatGroups(null, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                try {
+                                    JSONObject chat_groups = e.getResponse().getJSONArray("chat_groups");
+                                    // Do something with the chat_groups array
+                                } catch (JSONException err) {
+                                    Log.e("APSChats", "Exception thrown: " + err.toString())
+                                }
+                            } else {
+                                Log.e("APSChats", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(APSCloudException e) {
+                            Log.e("APSChats", "Exception thrown: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSChats", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
         example: |
             Example Android call:
 

@@ -62,6 +62,13 @@ methods:
             Selects the object fields to display. Do not use this parameter with `unsel`.
         type: Hash
 
+      - name: show_user_like
+        description: |
+            If set to **true**, each Post object in the response includes `"current_user_liked: true"`
+             if the current user has liked the object. If the user has not liked the object, the 
+            `current_user_liked` field is not included in the response.
+        type: Boolean    
+
       - name: unsel
         description: |
             Selects the object fields NOT to display. Do not use this parameter with `sel`.
@@ -78,6 +85,12 @@ methods:
 
             Default is 3, valid range is 1 to 8.
         type: Number
+        
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
 
     response-parameters:
       - name: posts
@@ -118,7 +131,7 @@ methods:
             Example cURL request:
 
                 Example: If your app assigns a geo location to each post, query posts with average rating greater than 7 near latitude 37.12, longitude -122.23 within 5 miles
-                $ curl -c cookies.txt -b cookies.txt -X GET --data-urlencode  'where={"ratings_average":{"$gt":7.0},"coordinates":{"$nearSphere":[-122.23,37.12], "$maxDistance" : 0.00126}}' "https://api.cloud.appcelerator.com/v1/posts/query.json?key=<YOUR APP APP KEY>"
+                $ curl -c cookies.txt -b cookies.txt -X GET --data-urlencode  'where={"ratings_average":{"$gt":7.0},"coordinates":{"$nearSphere":[-122.23,37.12], "$maxDistance" : 0.00126}}' "https://api.cloud.appcelerator.com/v1/posts/query.json?key=<YOUR APP APP KEY>&pretty_print=true"
 
             Example JSON response:
 
@@ -142,10 +155,10 @@ methods:
                         "content": "Post Body",
                         "reviews_count": 10,
                         "ratings_average": 7.5,
-                		"ratings_count" : 10,
+                        "ratings_count" : 10,
                         "ratings_summary": {
-                			"10": 5,
-                			"5" : 5
+                            "10": 5,
+                            "5" : 5
                         },
                         "user": {
                           "id": "4e33a251d9ca724676000002",
@@ -173,7 +186,29 @@ methods:
                   }
                 }
 
+
       - platform: ios
+        example: |
+            Example iOS APS SDK call:
+
+                NSDictionary *data = @{
+                    @"where": @{
+                        @"ratings_average":@{
+                            @"$gt":@7.0
+                        }
+                    }
+                };
+
+                [APSPosts query:data withBlock:^(APSResponse *e) {
+                    if (e.success) {
+                        NSString *message = [NSString stringWithFormat:@"Found %lu posts", (unsigned long)((NSArray *)e.response[@"posts"]).count ];
+                        [[[UIAlertView alloc] initWithTitle:@"Success!" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error" message:e.message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
         example: |
             Example iOS call:
 
@@ -188,15 +223,61 @@ methods:
 
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
-                	if ([response.meta.methodName isEqualToString:@"queryPosts"]) {
-                		NSArray *posts = [response getObjectsOfType:[CCPost class]];
-                		for (CCPost *post in posts) {
-                			...
-                		}
-                	}
+                  if ([response.meta.methodName isEqualToString:@"queryPosts"]) {
+                    NSArray *posts = [response getObjectsOfType:[CCPost class]];
+                    for (CCPost *post in posts) {
+                      ...
+                    }
+                  }
                 }
 
       - platform: android
+        example: |
+            Example Android APS SDK call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+
+                try {
+                    HashMap<String, Object> data = new HashMap<String, Object>();
+                    JSONObject params = new JSONObject("{'ratings_average': {'$gt': 7.0}}");
+                    data.put("where", params);
+
+                    APSPosts.query(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                try {
+                                    JSONArray posts = e.getResponse().getJSONArray("posts");
+                                    if (posts.length() <= 0) {
+                                        Log.i("APSPosts", "No Results!");
+                                    } else {
+                                        for (int i = 0; i < posts.length(); i++) {
+                                            JSONObject review = posts.getJSONObject(i);
+                                            Log.i("APSPosts", posts.getString("title") + ":" + posts.getString("content"));
+                                        }
+                                    }
+                                } catch (JSONException err) {
+                                    Log.e("APSPosts", "Exception thrown: " + err.toString());
+                                }
+                            } else {
+                                Log.e("APSPosts", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSPosts", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSPosts", "ERROR: " + e.getMessage());
+                } catch (JSONException e) {
+                    Log.e("APSPosts", "Exception thrown: " + e.toString());
+                }
+
+
+      - platform: android-acssdk
         example: |
             Example Android call:
 
@@ -236,7 +317,7 @@ methods:
                       var meta = data.meta;
                       if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'queryPosts') {
                         var posts = data.response.posts;
-                      	...
+                        ...
                       }
                     }
                   }

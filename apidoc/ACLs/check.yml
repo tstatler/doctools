@@ -32,6 +32,12 @@ methods:
             Either `name` or `id` must be specified.
         type: String
 
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
+
       - name: user_id
         description: User ID of the user to check.
         type: String
@@ -70,7 +76,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/acls/check.json?key=<YOUR APP APP KEY>&name=access_photo_album&user_id=4fcdd3c547b7b71c0b000004"
+                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/acls/check.json?key=<YOUR APP APP KEY>&pretty_print=true&name=access_photo_album&user_id=4fcdd3c547b7b71c0b000004"
 
             Example JSON response:
 
@@ -90,6 +96,24 @@ methods:
 
       - platform: ios
         example: |
+            Example iOS APS SDK call:
+
+                // Create dictionary of parameters to be passed with the request
+                NSDictionary *data = @{
+                    @"name": @"testACL",
+                    @"user_id": @"4fcdd3c547b7b71c0b000004"
+                };
+
+                [APSACLs checkUser:data withBlock:^(APSResponse *e) {
+                    if (e.success) {
+                        [[[UIAlertView alloc] initWithTitle:@"Great" message:@"Success!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error" message:e.errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
             Example iOS call:
 
                 NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
@@ -108,6 +132,44 @@ methods:
                 }
 
       - platform: android
+        example: |
+            Example Android APS SDK call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+                final Activity currentActivity = this;
+
+                HashMap<String, Object> data = new HashMap<String, Object>();
+                data.put("name", "access_photo_album");
+                data.put("user_id", "4fcdd3c547b7b71c0b000004");
+
+                try {
+                    APSACLs.checkUser(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+
+                            if (e.getSuccess()) {
+                                try {
+                                    JSONObject res = e.getResponse().getJSONObject("permission");
+                                    Log.i("APSACLs", "User permission: " + res.toString());
+                                } catch (JSONException err) {
+                                    Log.e("APSACLs", "Exception thrown: " + err.toString());
+                                }
+                            } else {
+                                Log.e("APSACLs", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSACLs", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSACLs", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
         example: |
             Example Android call:
 

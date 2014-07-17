@@ -34,6 +34,12 @@ methods:
             user's store.
         type: String
 
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean        
+
     reponse-parameters:
       - name: keyvalues
         description: |
@@ -66,7 +72,7 @@ methods:
         example: |
             Example cURL request (String data)
 
-                curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/keyvalues/get.json?key=<YOUR APP APP KEY>&name=welcome_message"
+                curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/keyvalues/get.json?key=<YOUR APP APP KEY>&pretty_print=true&name=welcome_message"
 
             Example JSON response:
 
@@ -91,9 +97,37 @@ methods:
 
             Example cURL request (binary data)
 
-                curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/keyvalues/get.json?key=<YOUR APP APP KEY>&name=myimage" > image.jpg
+                curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/keyvalues/get.json?key=<YOUR APP APP KEY>&pretty_print=true&name=myimage" > image.jpg
 
       - platform: ios
+        example: |
+            Example iOS call:
+                NSDictionary *data = @{
+                                         @"name" : @"welcome_message"
+                                      };
+                [APSKeyValues get:data withBlock:^(APSResponse *e) {
+                    if (e.success){
+                        NSArray *keyvalues = e.response[@"keyvalues"];
+                        NSDictionary *keyValue = keyvalues[0];
+                        NSString *message = [NSString stringWithFormat:@"Name : %@\nValue: %@\n", 
+                                                          keyValue[@"name"], 
+                                                          keyValue[@"value"]];
+
+                        [[[UIAlertView alloc] initWithTitle:@"Success" 
+                                                    message:message
+                                                   delegate:nil 
+                                          cancelButtonTitle:@"OK" 
+                                          otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:e.errorMessage
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
         example: |
             Example iOS call:
 
@@ -111,6 +145,41 @@ methods:
                 }
 
       - platform: android
+        example: |
+            Example Android call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+
+                HashMap<String, Object> data = new HashMap<String, Object>();
+                data.put("name", "welcome_message");
+
+                try {
+                    APSKeyValues.get(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                try {
+                                    JSONObject keyvalues = e.getResponse().getJSONArray("keyvalues").getJSONObject(0);
+                                } catch (JSONException err) {
+                                    Log.e("APSKeyValues", "Exception thrown: " + err.toString())
+                                }
+                            } else {
+                                Log.e("APSKeyValues", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(APSCloudException e) {
+                            Log.e("APSKeyValues", "Exception thrown: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSKeyValues", "Exception thrown: " + e.toString());
+                }
+
+
+      - platform: android-acssdk
         example: |
             Example Android call:
 

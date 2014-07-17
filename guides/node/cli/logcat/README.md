@@ -4,7 +4,9 @@
 ## Description
 
 Retrieves and displays a published application's runtime logs continuously from
-Node.ACS. It lets you see in real-time what's happening with an application running in the cloud.  By default, runtime logs are retrieved every 5 seconds, and you can configure this interval with the `--interval` parameter. 
+Node.ACS. It lets you see in real-time what's happening with an application running in the cloud.
+By default, runtime logs are retrieved every five seconds, and you can configure this interval with the
+`--interval` parameter. The interval cannot be smaler than five seconds.
 
 For an overview of Node.ACS logging utilities see [Logging Utilities](#!/guide/node_logging-section-logging-utilities).
 

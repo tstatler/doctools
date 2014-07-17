@@ -5,7 +5,7 @@
 
 Adds a new route or service to an existing application. The _name_ parameter specifies the new the 
 route's name, as well as the name of the handler function. For example, running `acs add myservice` 
-is equivalent to manually adding the following route and handle to your Node.ACS project's config.json and services.js file, respectively:
+is equivalent to manually adding the following route and handler to your Node.ACS project's config.json and services.js file, respectively:
 
 **config.json**:
 
@@ -52,7 +52,7 @@ application's directory with '-d' option.
             <td>Show help information for this command.</td>
         </tr>
     </tbody>
-</table
+</table>
 
 ## Example
     

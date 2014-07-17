@@ -99,6 +99,13 @@ methods:
             Selects the object fields to display. Do not use this parameter with `unsel`.
         type: Hash
 
+      - name: show_user_like
+        description: |
+            If set to **true**, each Event in the response includes `"current_user_liked: true"`
+             if the current user has liked the object. If the current user has not liked the object, the 
+            `current_user_liked` field is not included in the response.
+        type: Boolean
+
       - name: unsel
         description: |
             Selects the object fields NOT to display. Do not use this parameter with `sel`.
@@ -114,6 +121,12 @@ methods:
 
             Default is 3, valid range is 1 to 8.
         type: Number
+
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean        
 
     examples:
       - platform: titanium
@@ -142,7 +155,7 @@ methods:
             Example cURL request:
 
                 Example: query events with name "meetup" near latitude 37.12, longitude -122.23 within 5 miles
-                $ curl -c cookies.txt -b cookies.txt -X GET --data-urlencode  'where={"name":"meetup","lnglat":{"$nearSphere":[-122.23,37.12], "$maxDistance" : 0.00126}}' "https://api.cloud.appcelerator.com/v1/events/query.json?key=<YOUR APP APP KEY>"
+                $ curl -c cookies.txt -b cookies.txt -X GET --data-urlencode  'where={"name":"meetup","lnglat":{"$nearSphere":[-122.23,37.12], "$maxDistance" : 0.00126}}' "https://api.cloud.appcelerator.com/v1/events/query.json?key=<YOUR APP APP KEY>&pretty_print=true"
 
             Example JSON response:
 
@@ -191,6 +204,19 @@ methods:
 
       - platform: ios
         example: |
+            Example iOS APS SDK call:
+
+                [APSEvents query:nil withBlock:^(APSResponse *e) {
+                      if (e.success) {
+                          NSString *message = [NSString stringWithFormat:@"Found %lu events", (unsigned long)((NSArray *)e.response[@"events"]).count];
+                          [[[UIAlertView alloc] initWithTitle:@"Success" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      } else {
+                          [[[UIAlertView alloc] initWithTitle:@"Error" message:e.errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      }
+                }];
+
+      - platform: ios-acssdk
+        example: |
             Example iOS call:
 
                 CCWhere *where = [[[CCWhere alloc] init] autorelease];
@@ -204,15 +230,57 @@ methods:
 
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
-                	if ([response.meta.methodName isEqualToString:@"queryEvents"]) {
-                		NSArray *events = [response getObjectsOfType:[CCEvent class]];
-                		for (CCEvent *event in events) {
-                			...
-                		}
-                	}
+                  if ([response.meta.methodName isEqualToString:@"queryEvents"]) {
+                    NSArray *events = [response getObjectsOfType:[CCEvent class]];
+                    for (CCEvent *event in events) {
+                      ...
+                    }
+                  }
                 }
 
       - platform: android
+        example: |
+            Example Android APS SDK call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+
+                HashMap<String,Object> data = new HashMap<String,Object>;
+                JSONObject params = new JSONObject("{'name':'meetup','lnglat':{'$nearSphere':[-122.23,37.12], '$maxDistance' : 0.00126}}");
+                data.put("where", params);
+
+                try {
+                    APSEvents.query(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+
+                            if (e.getSuccess()) {
+                                try {
+                                    JSONArray events = e.getResponse().getJSONArray("events");
+                                    for (int i = 0; i < events.length(); i++) {
+                                        Log.i("APSEvents", events.getJSONObject(i).getString("name"));
+                                    }
+                                    if (objectsList.size() <= 0) {
+                                        Log.i("APSEvents","No Results!");
+                                    }
+                                } catch (JSONException e1) {
+                                    Log.e("APSEvents", e1.toString());
+                                }
+                            } else {
+                                Log.e("APSEvents", e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(APSCloudException e) {
+                            Log.e("APSEvents", e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSEvents", e.toString());
+                }
+
+      - platform: android-acssdk
         example: |
             Example Android call:
 
@@ -252,7 +320,7 @@ methods:
                       var meta = data.meta;
                       if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'queryEvents') {
                         var events = data.response.events;
-                      	...
+                        ...
                       }
                     }
                   }
@@ -276,8 +344,8 @@ methods:
                     if(data.hasOwnProperty("meta")) {
                       var meta:Object = data.meta;
                       if(meta.status == "ok" && meta.code == 200 && meta.method_name == "queryEvents") {
-                      	var events:Array = data.response.events;
-                      	...
+                        var events:Array = data.response.events;
+                        ...
                       }
                     }
                   }

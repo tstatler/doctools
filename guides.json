@@ -146,6 +146,12 @@
             "description": "Describes Platform organization support for Node.ACS applications."
             },
             {
+            "name": "native_sdk",
+            "url": "guides/node/native_apps",
+            "title": "Correlating Native Applications with Node.ACS Services",
+            "description": "Correlating Native Applications with Node.ACS Services"              
+            },
+            {
                 "name": "node_cli",
                 "title": "Command-Line Interface",
                 "url": "guides/node/cli/commands",
@@ -171,9 +177,9 @@
                     },
                     {
                         "name": "node_cli_config",
-                        "title": "config -- Configures the Cloud servers for an Application",
+                        "title": "config -- Configures the Application Environment",
                         "url": "guides/node/cli/config",
-                        "description": "Configures the Cloud servers for an Application"
+                        "description": "Configures the Application Environment"
                     },
                     {
                         "name": "node_cli_crt",
@@ -257,7 +263,7 @@
             },
             {
                 "name": "node_studio",
-                "title": "Studio",
+                "title": "Creating Node.ACS projects in Studio",
                 "url": "guides/node/studio/index",
                 "description": "Studio guides for Node.ACS projects",
                 "items" : [

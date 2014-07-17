@@ -35,6 +35,21 @@ In this case, `/app.js` is first file loaded and run by Node.ACS when the
 "run" command is executed to start the app locally, or when running the app in
 the cloud.
 
+If your application's `package.json` file does not specify a `main` field, Node.ACS will now look at
+the `scripts.start` field in `package.json` to determine the main module to launch.  Node.ACS will
+execute the start script using `npm start`. This feature is only available to standard Node.js applications,
+not those that use the MVC framework.
+
+You also need to set your application's port number using the [acs config command](#!/guide/node_cli_config)
+to set the `port` environment variable:
+
+    acs config --set port=8080
+
+Choose a port number that is not in use, such as 8080.  If the port is in use, the application will fail to deploy.
+
+See the [NPM documentation](https://www.npmjs.org/doc/misc/npm-scripts.html) on the "scripts" package.json field.
+
+
 ## Node.js Engine
 
 You can specify which version of Node.js to run your application on.  Use the `engines` field in
@@ -54,10 +69,48 @@ You must set the Node.js version to republish your application.
 
 ## Module Dependencies
 
-The application can import any 3rd-party modules that are supported by
+The application can import any third-party modules that are supported by
 standard node.js. Before publishing the app to the cloud, make sure
 all dependencies are listed in the `dependencies` field in the application's
 `package.json` file.
+
+If you want to use a different npm registry besides the official public npm registry to install
+dependencies, add the `npmRegistry` field to the `package.json` and set the value to the
+registry URL you want to use.  For example, the entry below uses a European npm mirror:
+
+    "npmRegistry" : "http://registry.npmjs.eu/"
+
+## Third-Party Tools
+
+The ACS servers include support for third-party tools, specifically ImageMagick and PhantomJS.
+
+To use these tools, add the [imagemagick](https://www.npmjs.org/package/imagemagick),
+[phantom](https://www.npmjs.org/package/phantom) and
+[phantomjs](https://www.npmjs.org/package/phantomjs) node modules as dependencies of the
+application:
+
+    {
+      "name": "FooApp",
+      "version": "0.1.0",
+      "framework": "none",
+      "main": "app.js",
+      "dependencies": {
+         "imagemagick" : "*",
+         "phantom" : "*",
+         "phantomjs" : "*"
+      },
+    }
+
+Once you have added these modules as depedencies, use `require()` to access it from JavaScript, then
+use the module references to make API calls:
+
+    var imagemagick = require('imagemagick');
+
+    imagemagick.identify('favicon.ico', function(err, features) {
+        if (err)
+            throw err;
+        console.log(features["image statistics"]);
+    });
 
 ## Server Listening Port Limitation
 

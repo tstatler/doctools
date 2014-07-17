@@ -3,10 +3,10 @@
 
 ## Description
 
-Publishes and runs an application on the Node.ACS cloud. You can publish up to three versions of
+Publishes and runs an application on the Node.ACS cloud. Community users can publish up to three versions of
 your Node application, and choose the active and deployed version from the available published
-versions. This command also lists all currently published versions and the currently deployed
-version.
+versions. Appcelerator Platform users can publish up to ten versions of your Node application.
+This command also lists all currently published versions and the currently deployed version.
 
 You must run this command from the application's root directory, or specify the application's
 directory with the **--dir** or **-d** option.
@@ -24,10 +24,10 @@ new`](http://docs.appcelerator.com/cloud/latest/#!/guide/node_cli_new)  command 
 You use the `--list_versions` option to list an application's currently published versions, and the
 currently deployed version, if any:
 
-```
-> acs publish --list_versions
-Published versions: 0.1.0, 0.2.0. The version is deployed currently: 0.2.0.`
-```
+    ```
+    > acs publish --list_versions
+    Published versions: 0.1.0, 0.2.0. The version is deployed currently: 0.2.0.`
+    ```
 
 If no version is currently deployed, the output will specify that (see examples below).
 
@@ -35,10 +35,10 @@ To change the currently deployed and active version, add the `--set_active_versi
 by the version to deploy. For example, the following deploys version 0.3.0 of the specified
 application:
 
-```
-> acs publish --set_active_version 0.3.0
-Published versions: 0.1.0, 0.2.0., 0.3.0 The version is deployed currently: 0.3.0.`
-```
+    ```
+    > acs publish --set_active_version 0.3.0
+    Published versions: 0.1.0, 0.2.0., 0.3.0 The version is deployed currently: 0.3.0.`
+    ```
 
 When you publish a new version of an application it becomes the deployed and active application. By
 default, you cannot republish a version of an application that was previously published. Use the

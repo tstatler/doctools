@@ -28,6 +28,12 @@ methods:
             The current login user must be an application admin to delete a Place object on
             behalf of another user.
         type: String
+        
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
 
     examples:
       - platform: titanium
@@ -49,7 +55,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt -X DELETE "https://api.cloud.appcelerator.com/v1/places/delete.json?key=<YOUR APP APP KEY>&place_id=4d51d4186f70952d4c000006"
+                $ curl -b cookies.txt -c cookies.txt -X DELETE "https://api.cloud.appcelerator.com/v1/places/delete.json?key=<YOUR APP APP KEY>&pretty_print=true&place_id=4d51d4186f70952d4c000006"
 
             Example JSON response:
 
@@ -62,6 +68,30 @@ methods:
                 }
 
       - platform: ios
+        example: |
+            Example iOS call:
+
+                NSDictionary *data = @{
+                                         @"place_id"   : @"savedPlaceID"
+                                      };
+                [APSPlaces remove:data withBlock:^(APSResponse *e) {
+                    if (e.success){
+                        [[[UIAlertView alloc] initWithTitle:@"Success" 
+                                                    message:nil
+                                                   delegate:nil 
+                                          cancelButtonTitle:@"OK" 
+                                          otherButtonTitles:nil] show];
+
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:e.errorMessage
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
         example: |
             Example iOS call:
 
@@ -80,6 +110,36 @@ methods:
                 }
 
       - platform: android
+        example: |
+            Example Android APS SDK call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+
+                HashMap<String, Object> data = new HashMap<String, Object>();
+                data.put("place_id", "4d8910aed0afbe0e4e000006");
+
+                try {
+                    APSPlaces.remove(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                Log.i("Removed!");
+                            } else {
+                                Log.e("APSPlaces", e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(APSCloudException e) {
+                            Log.e("APSPlaces", e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSPlaces", e.toString());
+                }
+
+      - platform: android-acssdk
         example: |
             Example Android call:
 

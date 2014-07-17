@@ -11,9 +11,18 @@ methods:
     parameters:
 
       - name: name
-        description: Name of the push channel.
+        description: |
+            Name of the push channel.
+
+            The name of the push channel cannot start with a hash symbol ('#').
         type: String
         required: true
+        
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
 
     response-parameters:
       - name: devices
@@ -47,7 +56,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt -X GET --data-urlencode "name=chat" "https://api.cloud.appcelerator.com/v1/push_notification/channels/show.json?key=<YOUR APP APP KEY>"
+                $ curl -b cookies.txt -c cookies.txt -X GET --data-urlencode "name=chat" "https://api.cloud.appcelerator.com/v1/push_notification/channels/show.json?key=<YOUR APP APP KEY>&pretty_print=true"
 
             Example JSON response:
 
@@ -69,6 +78,47 @@ methods:
         example: |
             Example Android call:
 
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("name", "chat");
+
+                try {
+                    APSPushNotifications.showChannels(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+
+                            if (e.getSuccess()) {
+                                try {
+                                    JSONArray devices = e.getResponse().getJSONArray("devices");
+                                    if (devices.length() <= 0) {
+                                        Log.i("APSPushNotifications", "No Results!");
+                                    } else {
+                                        for (int i = 0; i < devices.length(); i++) {
+                                            Log.i("APSPushNotifications", devices.getJSONObject(i).toString());
+                                        }
+                                    }
+                                } catch (JSONException err) {
+                                    Log.e("APSPushNotifications", "Exception thrown: " + err.toString());
+                                }
+                            } else {
+                                Log.e("APSPushNotifications", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSPushNotifications", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSPushNotifications", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
+        example: |
+            Example Android call:
+
                 ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
                 //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
 
@@ -83,11 +133,30 @@ methods:
                 if("ok".equals(meta.getStatus())
                     && meta.getCode() == 200
                     && "showPushChannels".equals(meta.getMethod())) {
-                  JSONArray devices = responseJSON.getJSONArray("devices);
+                  JSONArray devices = responseJSON.getJSONArray("devices");
                   ...
                 }
 
       - platform: ios
+        example: |
+            Example iOS APS SDK call:
+
+                // Create dictionary of parameters to be passed with the request
+                NSDictionary *data = @{
+                    @"name": @"test"
+                };
+                
+                [APSPushNotifications showChannels:data withBlock:^(APSResponse *e) {
+                    if (e.success) {
+                        NSDictionary *devices = e.response[@"devices"];
+                        NSString *message = [NSString stringWithFormat:@"iOS: %@ Android: %@", devices[@"ios_counts"], devices[@"android_counts"]];
+                        [[[UIAlertView alloc] initWithTitle:@"Success" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error" message:e.errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
         example: |
             Example iOS call:
 

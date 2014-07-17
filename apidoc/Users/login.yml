@@ -10,9 +10,11 @@ methods:
 
         To log a user out, see {@link Users#logout logout}.
 
-        User login sessions expire after they have been unused for a period of time.
-        By default, the expiration period is six months. You can configure the user session
-        expiration period in the application management console.
+        User login sessions expire after they have been unused for six months.
+        If the application saves and uses a persistent reference to the user login session, and the
+        user session expires, any ACS call that requires a user login will return a 404 error.
+        Your application needs to handle an invalid user session error, such as prompting the user
+        to log in.
     url: users/login.json
     http-method: post
 
@@ -24,6 +26,12 @@ methods:
       - name: password
         description: User's password.
         type: String
+                
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
 
     examples:
       - platform: titanium
@@ -51,7 +59,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt -F "login=mgoff@appcelerator.com" -F "password=food" https://api.cloud.appcelerator.com/v1/users/login.json?key=<YOUR APP APP KEY>
+                $ curl -b cookies.txt -c cookies.txt -F "login=mgoff@appcelerator.com" -F "password=food" https://api.cloud.appcelerator.com/v1/users/login.json?key=<YOUR APP APP KEY>&pretty_print=true
 
             Example JSON response:
 
@@ -101,6 +109,27 @@ methods:
         example: |
             Example iOS call:
 
+                NSDictionary *data = @{
+                   @"login":@"foo@foo.com",
+                   @"password":"@password"
+                };
+                
+                [APSUsers login:data withBlock:^(APSResponse *e) {
+                    if (e.success) {
+                        NSString *userId = [[[e.response objectForKey:@"users"] objectAtIndex:0] objectForKey:@"id"];
+                        NSString *msg = [NSString stringWithFormat:@"Logged in! You are now logged in as %@", userId];
+                        [[[UIAlertView alloc] initWithTitle:@"Success" message:msg delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error" message:e.message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    }
+                }];
+
+
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
                 NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
                 [paramDict setObject:@"foo@foo.com" forKey:@"login"];
                 [paramDict setObject:@"pass" forKey:@"password"];
@@ -117,7 +146,49 @@ methods:
                 	}
                 }
 
+
       - platform: android
+        example: |
+            Example Android call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+                final Activity currentActivity = this;
+
+                HashMap<String, Object> data = new HashMap<String, Object>();
+                data.put("login", "test@appcelerator.com");
+                data.put("password", "test_password");
+
+                try {
+                    APSUsers.login(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                try {
+                                    String userId = e.getResponse().getJSONArray("users").getJSONObject(0).getString("id");
+                                    new AlertDialog.Builder(currentActivity)
+                                    .setTitle("Success!").setMessage("Logged in! You are now logged in as " + userId)
+                                    .setPositiveButton(android.R.string.ok, null)
+                                    .setIcon(android.R.drawable.ic_dialog_info)
+                                    .show();
+                                } catch (JSONException err) {
+                                    Log.e("APSUsers", "Exception thrown: " + err.toString());
+                                }
+                            } else {
+                                Log.e("APSUsers", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSUsers", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSUsers", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
         example: |
             Example Android call:
 

@@ -3,7 +3,7 @@ methods:
   - name: create
     summary: Create Like
     description: |
-        Add a like to an object. Currently, likes can only be associated with one of
+        Adds a "like" to an object. Currently, likes can only be associated with one of
         the following object types, and a user can only like an object once:
 
         *   {@link Posts}
@@ -16,12 +16,12 @@ methods:
         *   {@link Statuses}
         *   {@link Reviews}
 
-        Once an object above has one or more likes attached to it, it will return a
+        Once an object has one or more likes attached to it, it will return a
         total like count with the object:
 
             "likes_count": 2
 
-        Specify one and only one of the ID parameters to identify  the target object.
+        You should specify one, and only one, ACS object ID parameter to identify the target object.
 
     url: likes/create.json
     http-method: POST
@@ -64,6 +64,12 @@ methods:
       - name: custom_object_id
         description: Custom object to like.
         type: String
+        
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
 
     response-parameters:
       - name: likes
@@ -93,7 +99,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt -F "post_id=4e33a817d9ca724745000003" https://api.cloud.appcelerator.com/v1/likes/create.json?key=<YOUR APP APP KEY>
+                $ curl -b cookies.txt -c cookies.txt -F "post_id=4e33a817d9ca724745000003" https://api.cloud.appcelerator.com/v1/likes/create.json?key=<YOUR APP APP KEY>&pretty_print=true
 
             Example JSON response:
 
@@ -126,6 +132,30 @@ methods:
       - platform: ios
         example: |
             Example iOS call:
+                NSDictionary *data = @{@"post_id":@"savedPostId"};
+                [APSLikes create:data withBlock:^(APSResponse *e) {
+                    if (e.success){
+                        NSArray *likes = e.response[@"likes"];
+                        NSDictionary *like = likes[0];
+                        NSString *message = [NSString stringWithFormat:@"id : %@\n", like[@"id"]];
+
+                        [[[UIAlertView alloc] initWithTitle:@"Success" 
+                                                    message:message
+                                                   delegate:nil 
+                                          cancelButtonTitle:@"OK" 
+                                          otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:e.errorMessage
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
 
                 NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
                 [paramDict setObject:@"4e33a817d9ca724745000003" forKey:@"post_id"];
@@ -146,6 +176,41 @@ methods:
                 }
 
       - platform: android
+        example: |
+            Example Android call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+                final Activity currentActivity = this;
+
+                HashMap<String, Object> data = new HashMap<String, Object>();
+                data.put("post_id", "4e33a817d9ca724745000003");
+
+                try {
+                    APSLikes.create(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                new AlertDialog.Builder(currentActivity)
+                                .setTitle("Success!").setMessage("Created!")
+                                .setPositiveButton(android.R.string.ok, null)
+                                .setIcon(android.R.drawable.ic_dialog_info)
+                                .show();
+                            } else {
+                                Log.e("APSLikes", "ERROR: " + e.message());
+                            }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSLikes", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSLikes", "Exception throw: " + e.toString());
+                }
+
+      - platform: android-acssdk
         example: |
             Example Android call:
 

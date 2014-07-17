@@ -33,6 +33,12 @@ methods:
 
             Default is 3, valid range is 1 to 8.
         type: Number
+        
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
 
     response-parameters:
       - name: collections
@@ -70,7 +76,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/collections/show/subcollections.json?key=<YOUR APP APP KEY>&collection_id=4e004df9d0afbe2f18000010"
+                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/collections/show/subcollections.json?key=<YOUR APP APP KEY>&pretty_print=true&collection_id=4e004df9d0afbe2f18000010"
 
             Example JSON response:
 
@@ -156,6 +162,36 @@ methods:
         example: |
             Example iOS call:
 
+                NSDictionary *data = @{
+                                         @"page"         : @1,
+                                         @"per_page"     : @20,
+                                         @"collection_id": @"savedCollectionID"
+                                      };
+                [APSPhotoCollections showSubcollections:data withBlock:^(APSResponse *e) {
+                    if (e.success){
+                        NSArray *collections = e.response[@"collections"];
+                        for (NSDictionary *collection in collections) {
+                            NSString *message = [NSString stringWithFormat:@"id : %@\n Name : %@\nCount : %@\nUpdated at : %@\n",
+                                                    collection[@"id"],
+                                                    collection[@"name"],
+                                                    collection[@"count"],
+                                                    collection[@"updated_at"]];
+
+                            NSLog(@"%@", message);
+                        }
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:e.errorMessage
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
                 NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:3];
                 [paramDict setObject:(CCCollection *)collection.objectId forKey:@"collection_id"];
                 [paramDict setObject:[NSNumber nubmerWithInt:1] forKey:@"page"]; // optional
@@ -175,6 +211,50 @@ methods:
                 }
 
       - platform: android
+        example: |
+            Example Android APS SDK call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+                final Activity currentActivity = this;
+
+                HashMap<String, Object> data = new HashMap<String, Object>();
+                data.put("collection_id", "4e013938d0afbe3896000009");
+
+                try {
+                    APSPhotoCollections.showSubcollections(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                try {
+                                    JSONArray collections = e.getResponse().getJSONArray("collections");
+                                    if (collectionss.length() <= 0) {
+                                        Log.i("APSPhotoCollections", "No Results!");
+                                    } else {
+                                        for (int i = 0; i < collections.length(); i++) {
+                                            JSONObject collection = collections.getJSONObject(i);
+                                            Log.i("APSPhotoCollections", collection.getString("name"));
+                                        }
+                                    }
+                                } catch (JSONException err) {
+                                       Log.e("APSPhotoCollections", "Exception thrown: " + err.toString());
+                                }
+
+                            } else {
+                                Log.e("APSPhotoCollections", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSPhotoCollections", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSPhotoCollections", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
         example: |
             Example Android call:
 

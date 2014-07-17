@@ -3,12 +3,12 @@ methods:
   - name: update
     summary: Update a File
     description: |
-        Updates the file object. When replacing the existing file attachment with a
-        new one, `processing` will be set to `false`, the `url` will not be valid
+        Updates an existing file object with a binary attachment, or contents of a URL. When replacing the existing file with a
+        new one, the object's `processing` flag is set to `false`, and its `url` property will not be valid
         until the new file has been processed and uploaded to the Appcelerator Cloud
         Services storage cloud.
 
-        Application Admin can update any File object.
+        Application administrators can update any File object.
 
     url: files/update.json
     http-method: PUT
@@ -18,14 +18,19 @@ methods:
       - name: file_id
         description: ID of the file to update.
         type: String
+        required: true
 
       - name: name
         description: File name.
         type: String
 
       - name: file
-        description: The attached binary file.
+        description: The attached binary file to upload to ACS. You can specify either `file` or `url`, but not both.
         type: FileUpload
+
+      - name: url
+        description: URL of file to upload to ACS. You can specify either `file` or `url`, but not both.
+        type: String
 
       - name: custom_fields
         description: User defined fields. See [Custom Data Fields](#!/guide/customfields).
@@ -54,6 +59,12 @@ methods:
             The current user must be an application admin to update a File object on
             behalf of another user.
         type: String
+
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean        
 
     response-parameters:
       - name: files
@@ -87,9 +98,9 @@ methods:
 
       - platform: rest
         example: |
-            Example cURL request:
+            Example cURL request that updates an existing file object with a new binary attachment:
 
-                curl -b cookies.txt -c cookies.txt -X PUT -F "file=@newresume.pdf" -F "name=new_file_name" -F "file_id=4f05446bc3666eb7ba000001" https://api.cloud.appcelerator.com/v1/files/update.json?key=<YOUR APP APP KEY>
+                curl -b cookies.txt -c cookies.txt -X PUT -F "file=@newresume.pdf" -F "name=new_file_name" -F "file_id=4f05446bc3666eb7ba000001" https://api.cloud.appcelerator.com/v1/files/update.json?key=<YOUR APP APP KEY>&pretty_print=true
 
             Example JSON response:
 
@@ -123,7 +134,45 @@ methods:
                   }
                 }
 
+            Example cURL request that updates an existing file object with the contents of a remote URL:
+
+                curl -b cookies.txt -c cookies.txt -X PUT -F "url=http://www.appcelerator.com/wp-content/uploads/blog-traditional-companies.png" -F "name=new_file_name" -F "file_id=4f05446bc3666eb7ba000001" https://api.cloud.appcelerator.com/v1/files/update.json?key=<YOUR APP APP KEY>&pretty_print=true
+            
+            The JSON response is identical.                
+
       - platform: ios
+        example: |
+            Example iOS call:
+
+                NSDictionary *data = @{
+                                         @"file_id" : @"savedFileId",
+                                         @"name"    : @"Notice"
+                                      };
+                [APSFiles update:data withBlock:^(APSResponse *e) {
+                    if (e.success){
+                      NSArray *files = e.response[@"files"];
+                      NSDictionary *file = files[0];
+                      NSString *message = [NSString stringWithFormat:@"id : %@\n Name : %@\nUpdated at : %@\n",
+                                              file[@"id"],
+                                              file[@"name"],
+                                              file[@"updated_at"]];
+
+                      [[[UIAlertView alloc] initWithTitle:@"Success" 
+                                                  message:message
+                                                 delegate:nil 
+                                        cancelButtonTitle:@"OK" 
+                                        otherButtonTitles:nil] show];
+
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:e.errorMessage
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
         example: |
             Example iOS call:
 
@@ -148,6 +197,43 @@ methods:
                 }
 
       - platform: android
+        example: |
+            Example Android APS SDK call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+                final Activity currentActivity = this;
+
+                HashMap<String, Object> data = new HashMap<String, Object>();
+                data.put("file_id", "4f05446bc3666eb7ba000001");
+                data.put("name", "new_file_name");
+                data.put("file", new File("/photos/profile.gif"));
+
+                try {
+                    APSFiles.update(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                new AlertDialog.Builder(currentActivity)
+                                .setTitle("Success").setMessage("Updated!")
+                                .setPositiveButton(android.R.string.ok, null)
+                                .setIcon(android.R.drawable.ic_dialog_info)
+                                .show();
+                            } else {
+                                Log.e("APSFiles", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSFiles", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSFiles", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
         example: |
             Example Android call:
 

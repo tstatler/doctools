@@ -54,6 +54,12 @@ methods:
       - name: q
         description: Space-separated list of keywords used to perform full text search on place name and tags.
         type: String
+        
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
 
     response-parameters:
       - name: places
@@ -90,7 +96,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/places/search.json?key=<YOUR APP APP KEY>&latitude;=37.743722&longitude;=-122.393159"
+                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/places/search.json?key=<YOUR_APP_KEY>&latitude=37.743722&longitude=-122.393159"
 
             Example JSON response:
 
@@ -142,6 +148,34 @@ methods:
         example: |
             Example iOS call:
 
+                NSDictionary *data = @{
+                                         @"latitude"   : latitude,
+                                         @"longitude"  : longitude
+                                      };
+                [APSPlaces search:data withBlock:^(APSResponse *e) {
+                    if (e.success){
+                        NSArray *places = e.response[@"places"];
+                        for (NSDictionary * place in places) {
+                            NSString *message = [NSString stringWithFormat:@"id : %@\n Name : %@\nUpdated at : %@\n",
+                                                    place[@"id"],
+                                                    place[@"name"],
+                                                    place[@"updated_at"]];
+
+                            NSLog(@"%@", message);
+                        }
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:e.errorMessage
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
                 // search for current user's checkins
                 NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:3];
                 [paramDict setObject:@"appcelerator"  forKey:@"q"]; // optional
@@ -159,6 +193,48 @@ methods:
                 }
 
       - platform: android
+        example: |
+            Example Android call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+
+                // Create dictionary of parameters to be passed with the request
+                HashMap<String, Object> data = new HashMap<String, Object>();
+                data.put("latitude", "37.3890223");
+                data.put("longitude", "-122.0502723");
+
+                try {
+                    APSPlaces.search(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                try {
+                                    JSONArray places = e.getResponse().getJSONArray("places");
+                                    for (int i = 0; i < places.length(); i++) {
+                                        Log.i("APSPlaces", places.getJSONObject(i).getString("name"));
+                                    }
+                                    if (objectsList.size() <= 0) {
+                                        objectsList.add("No Results!");
+                                    }
+                                } catch (JSONException e1) {
+                                    Log.e("APSPlaces", e.toString());
+                                }
+                            } else {
+                                Log.e("APSPlaces", e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(APSCloudException e) {
+                            Log.e("APSPlaces", e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSPlaces", e.toString());
+                }
+
+      - platform: android-acssdk
         example: |
             Example Android call:
 

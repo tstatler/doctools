@@ -5,8 +5,8 @@ methods:
 ## Files: Create a File
 
     description: |
-        Create a file using the given `file` binary attachment. The size of the file
-        can be up to 25 MB. The response includes a `processed` flag which indicates
+        Creates a new file object with a binary attachment or contents of a URL.
+        The size of the file can be up to 25 MB. The response includes a `processed` flag which indicates
         if the file has been stored reliably in the Appcelerator Cloud Services
         storage engine. This will initially be `false`. Once the file is available in
         the storage engine, the `processed` flag will be `true`, and file `url` will
@@ -22,8 +22,12 @@ methods:
         type: String
 
       - name: file
-        description: The attached binary file.
+        description: The attached binary file to upload to ACS. You can specify either `file` or `url`, but not both.
         type: FileUpload
+
+      - name: url
+        description: URL of file to upload to ACS. You can specify either `file` or `url`, but not both.
+        type: String
 
       - name: custom_fields
         description: User defined fields. See [Custom Data Fields](#!/guide/customfields).
@@ -52,6 +56,12 @@ methods:
             The current login user must be an application admin to create a file on
             behalf of another user.
         type: String
+
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean        
 
     response-parameters:
       - name: files
@@ -84,9 +94,9 @@ methods:
 
       - platform: rest
         example: |
-            Example cURL request:
+            Example cURL request that creates a new file object from a binary attachment:
 
-                $ curl -b cookies.txt -c cookies.txt -F "name=my_file" -F "file=@resume.pdf" http://api.cloud.appcelerator.com/v1/files/create.json?key=<YOUR APP APP KEY>
+                $ curl -b cookies.txt -c cookies.txt -F "name=my_file" -F "file=@resume.pdf" http://api.cloud.appcelerator.com/v1/files/create.json?key=<YOUR APP APP KEY>&pretty_print=true
 
             Example JSON response:
 
@@ -120,7 +130,54 @@ methods:
                   }
                 }
 
+            Example cURL request that creates a new file from a URL:
+
+                $ curl -b cookies.txt -c cookies.txt -F "name=my_file" -F "url=http://www.appcelerator.com/wp-content/uploads/blog-traditional-companies.png" http://api.cloud.appcelerator.com/v1/files/create.json?key=<YOUR APP APP KEY>&pretty_print=true
+
+            The JSON response is identical. 
+
       - platform: ios
+        example: |
+            Example iOS call:
+
+                NSError* error = nil;
+                NSData *fileData = [NSData dataWithContentsOfFile:@"Test.txt"
+                                              options:0
+                                                error: &error];
+                if (fileData == nil) {
+                  // handle error
+                  NSLog(@"Failed to read file, error %@", error);
+                  return;
+                }
+                NSDictionary *data = @{
+                                         @"name" : @"Test.txt",
+                                         @"file" : fileData
+                                      };
+                [APSFiles create:data withBlock:^(APSResponse *e) {
+                    if (e.success){
+                      NSArray *files = e.response[@"files"];
+                      NSDictionary *file = files[0];
+                      NSString *message = [NSString stringWithFormat:@"id : %@\n Name : %@\nUpdated at : %@\n",
+                                              file[@"id"],
+                                              file[@"name"],
+                                              file[@"updated_at"]];
+
+
+                      [[[UIAlertView alloc] initWithTitle:@"Success" 
+                                                  message:message
+                                                 delegate:nil 
+                                        cancelButtonTitle:@"OK" 
+                                        otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:e.errorMessage
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
         example: |
             Example iOS call:
 
@@ -145,6 +202,42 @@ methods:
                 }
 
       - platform: android
+        example: |
+            Example Android APS SDK call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+                final Activity currentActivity = this;
+
+                HashMap<String, Object> data = new HashMap<String, Object>();
+                data.put("name", "my_file");
+                data.put("photo", new File("/photos/profile.gif"));
+
+                try {
+                    APSFiles.create(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                new AlertDialog.Builder(currentActivity)
+                                .setTitle("Success!").setMessage("File Uploaded!")
+                                .setPositiveButton(android.R.string.ok, null)
+                                .setIcon(android.R.drawable.ic_dialog_info)
+                                .show();
+                            } else {
+                                Log.e("APSFiles", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSFiles", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSFiles", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
         example: |
             Example Android call:
 

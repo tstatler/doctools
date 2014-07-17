@@ -1,5 +1,73 @@
 # ACS Release Notes
 
+## ACS Release 1.1.3 - 17 July 2014
+
+The 1.1.3 release of Appcelerator Cloud Services includes the following fixes and features:
+
+### New features
+
+* Add ability to query for all ACS objects a user liked. See the [Likes.query](#!/api/Likes-method-query) method.
+
+* Add ability to create a Files object by using a URL to access the file to upload.  See the
+[Files.create](#!/api/Files-method-create) method.
+
+* Add `pretty_json` field to all method requests to enable or disable prettifying JSON response
+data.  JSON pretty print is disabled by default.
+
+### Bug fixes 
+
+* Fixed an issue with sending ACS request from Titanium Mobile Web applications.
+
+* Fixed an issue where tags were not being stored for Events objects.
+
+* Fixed an issue where using the `expire_after_seconds` field with the PushNotifications
+`notify_token` method would return an error.
+
+* Fixed an issue with the ACS web console where SMTP settings were not saved when switching Test mode off.
+
+* Fixed an issue where updating a relation object for a Places object was not being updated.
+
+* Fixed an issue where the application fails to unregister from push notifications when the application is uninstalled.
+
+* Fixed an issue on the Cloud Dashboard where the Storage statistic was not being displayed.
+
+* Fixed an issue on the Cloud Dashboard when editing a Statuses object. The Places object
+associated with the Statuses object was not updated.
+
+
+## ACS Release 1.1.2 
+
+This version was skipped.
+
+
+## ACS Release 1.1.1 - 16 May 2014
+
+The 1.1.1 release of Appcelerator Cloud Services includes the following fixes and features:
+
+### New features ###
+
+* When calling an ACS object's `query` or `show` methods you can include a new parameter called 
+`show_user_like`. If the current user has liked the object being queried or shown, the JSON response 
+contains `"current_user_liked":true`. See the {@link Checkins#method-query Checkins.query}
+and {@link Checkins#method-show Checkins.show} REST API examples for examples.
+
+* ACS now uses `yajl-ruby` to generate JSON responses. YAJL is faster than the previous `Hash.to_json`
+implementation.
+
+* ACS now supports SSL uploads for File and Photo objects.
+
+### Bug fixes ###
+
+* Fixed an Android issue with UTF-8 encoded characters not being displayed properly in push notifications. 
+
+* Fixed an issue where an application administrator was unable to check ACLs for a regular user.
+
+## 07 March 2014
+
+  * ACS now supports sending push notifications to devices located within a geographic region you specify.
+  For more information, see "Location-Based Push Notifications" in the [PushNotification](/cloud/latest/#!/api/PushNotifications) 
+  API reference.
+
 ## 11 January 2013
 
   * The namespace used by the ACS SDKs for [Android](#!/guide/android) and [iOS](#!/guide/ios)

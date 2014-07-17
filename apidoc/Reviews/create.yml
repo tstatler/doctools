@@ -67,7 +67,7 @@ methods:
         type: String
 
       - name: rating
-        description: Rating to be associated with review. You can use 1 to represent like.
+        description: Rating to be associated with review. You can use "1" to represent one {@link Likes Like}.
         type: String
 
       - name: allow_duplicate
@@ -109,6 +109,12 @@ methods:
             The current login user must be an application admin to create an object on
             behalf of another user.
         type: String
+        
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
 
     response-parameters:
       - name: reviews
@@ -142,7 +148,7 @@ methods:
         example: |
            Creates a new Review for the specified Post object.
 
-                $ curl -b cookies.txt -c cookies.txt -F "post_id=4e33a817d9ca724745000003" -F "rating=8" -F "content=Good"  https://api.cloud.appcelerator.com/v1/reviews/create.json?key=<YOUR APP APP KEY>
+                $ curl -b cookies.txt -c cookies.txt -F "post_id=4e33a817d9ca724745000003" -F "rating=8" -F "content=Good"  https://api.cloud.appcelerator.com/v1/reviews/create.json?key=<YOUR APP APP KEY>&pretty_print=true
 
 
                 {
@@ -198,6 +204,39 @@ methods:
         example: |
             Example iOS call:
 
+                NSDictionary *data = @{
+                                         @"post_id" : savedPostId,
+                                         @"rating" : @1,
+                                         @"content" : @"Good"
+                                      };
+                [APSReviews create:data withBlock:^(APSResponse *e) {
+                    if (e.success){
+                      NSArray *reviews = e.response[@"reviews"];
+                      NSDictionary *review = reviews[0];
+                      NSString *message =[NSString stringWithFormat:@"id : %@\n rating : %@\n content : %@\nUpdated at : %@\n",
+                                              review[@"id"],
+                                              review[@"rating"],
+                                              review[@"content"],
+                                              review[@"updated_at"]];
+
+                      [[[UIAlertView alloc] initWithTitle:@"Success" 
+                                                  message:message
+                                                 delegate:nil 
+                                        cancelButtonTitle:@"OK" 
+                                        otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:e.errorMessage
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
                 NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
                 [paramDict setObject:@"4e33a817d9ca724745000003" forKey:@"post_id"];
                 [paramDict setObject:@"1" forKey:@"rating"];
@@ -217,6 +256,43 @@ methods:
                 }
 
       - platform: android
+        example: |
+            Example Android APS SDK call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+                final Activity currentActivity = this;
+
+                HashMap<String, Object> data = new HashMap<String, Object>();
+                data.put("post_id", "4e33a817d9ca724745000003");
+                data.put("rating", "1");
+                data.put("content", "Good");
+
+                try {
+                    APSReviews.create(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                new AlertDialog.Builder(currentActivity)
+                                .setTitle("Success").setMessage("Created!")
+                                .setPositiveButton(android.R.string.ok, null)
+                                .setIcon(android.R.drawable.ic_dialog_info)
+                                .show();
+                            } else {
+                                Log.e("APSReviews", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSReviews", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSReviews", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
         example: |
             Example Android call:
 

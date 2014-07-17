@@ -31,8 +31,9 @@ The local application directory is not deleted by default. Use the
         <tr>
             <td><code>--force</code></td>
             <td>Remove local application directory. The application must be specified using 
-                the _appname_ argument or **-d** option which specifies the target application directory, 
-                or the command is running in application's root directory.</td>
+                **-d** option which specifies the target application directory
+                or the command is running in application's root directory.
+            </td>
         </tr>
         <tr>
             <td><code>--org <em>orgID</em></code></td>

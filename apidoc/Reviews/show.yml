@@ -3,7 +3,7 @@ methods:
   - name: show
     summary: Show a review
     description: |
-        Shows the review with the given `id`.
+        Shows the review with the given `id`. 
 
     url: reviews/show.json
     parameters:
@@ -31,18 +31,25 @@ methods:
         description: Checkin object associated with this review.
         type: String
 
-      - name: review_object_id
-        description: Review object associated with this review.
-        type: String
-
       - name: custom_object_id
         description: Custom object associated with this review.
         type: String
+
+      - name: show_user_like
+        description: | 
+            If set to **true** the Review object in the response will include `"current_user_liked: true"`
+            if the current user has liked the object. If the user has not liked the object, the 
+            `current_user_liked` field is not included in the response.
+        type: Boolean              
 
       - name: review_id
         description: Review object to show.
         type: String
         required: true
+
+      - name: review_object_id
+        description: Review object associated with this review.
+        type: String
 
       - name: response_json_depth
         description: |
@@ -55,6 +62,12 @@ methods:
 
             Default is 3, valid range is 1 to 8.
         type: Number
+        
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
 
     response-parameters:
       - name: reviews
@@ -87,10 +100,9 @@ methods:
         example: |
             Shows the specified review.
 
-                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/reviews/show.json?key=<YOUR APP APP KEY>&post_id=4e33a9f5d9ca724769000003&review_id=4e33a9f5d9ca724769000006"
+                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/reviews/show.json?key=<YOUR APP APP KEY>&pretty_print=true&post_id=4e33a9f5d9ca724769000003&review_id=4e33a9f5d9ca724769000006"
 
             Example JSON response:
-
 
                 {
                   "meta": {
@@ -145,6 +157,38 @@ methods:
         example: |
             Example iOS call:
 
+                NSDictionary *data = @{
+                                         @"post_id" : savedPostId,
+                                         @"review_id" : savedReviewId
+                                      };
+                [APSReviews show:data withBlock:^(APSResponse *e) {
+                    if (e.success){
+                      NSArray *reviews = e.response[@"reviews"];
+                      NSDictionary *review = reviews[0];
+                      NSString *message =[NSString stringWithFormat:@"id : %@\n rating : %@\n content : %@\nUpdated at : %@\n",
+                                              review[@"id"],
+                                              review[@"rating"],
+                                              review[@"content"],
+                                              review[@"updated_at"]];
+
+                      [[[UIAlertView alloc] initWithTitle:@"Success" 
+                                                  message:message
+                                                 delegate:nil 
+                                        cancelButtonTitle:@"OK" 
+                                        otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:e.errorMessage
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
                 NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:(CCPost *)post.objectId, @"post_id", nil];
                 NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:(CCReview *)review.objectId, @"review_id", nil];
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"reviews/show.json" paramDict:paramDict];
@@ -155,10 +199,41 @@ methods:
 
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
-                	NSArray *reviews = [response getObjectsOfType:[CCReview class]];
+                  NSArray *reviews = [response getObjectsOfType:[CCReview class]];
                 }
 
       - platform: android
+        example: |
+            Example Android call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+
+                HashMap<String, Object> data = new HashMap<String, Object>();
+                data.put("post_id", "4e33a817d9ca724745000003");
+                data.put("review_id", "4e33a9f5d9ca724769000006");
+
+                try {
+                    APSReviews.show(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                Log.i("APSReviews", e.getResponseString());
+                            } else {
+                                Log.e("APSReviews", "ERROR: " + e.getMessage());
+                            }
+                         }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSReviews", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSReviews", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
         example: |
             Example Android call:
 
@@ -200,7 +275,7 @@ methods:
                       var meta = data.meta;
                       if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'showReview') {
                         var reviews = data.response.reviews;
-                      	...
+                        ...
                       }
                     }
                   }
@@ -225,8 +300,8 @@ methods:
                     if(data.hasOwnProperty("meta")) {
                       var meta:Object = data.meta;
                       if(meta.status == "ok" && meta.code == 200 && meta.method_name == "showReview") {
-                      	var reviews:Array = data.response.reviews;
-                      	...
+                        var reviews:Array = data.response.reviews;
+                        ...
                       }
                     }
                   }

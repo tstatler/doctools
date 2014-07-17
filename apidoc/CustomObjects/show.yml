@@ -5,11 +5,11 @@ methods:
     description: |
         Show a custom object's info.
 
-    url: objects/:class_name/show.json
+    url: objects/:classname/show.json
 
     parameters:
 
-      - name: class_name
+      - name: classname
         description: |
             Type of custom object. Specified as part of the URL path, not in the
             parameters.
@@ -22,6 +22,7 @@ methods:
 
             You must specify either `id` or `ids`.
         type: String
+        required: true
 
       - name: ids
         description:
@@ -29,6 +30,7 @@ methods:
 
             You must specify either `id` or `ids`.
         type: String
+        required: true
 
       - name: response_json_depth
         description: |
@@ -41,6 +43,18 @@ methods:
             Default is 3, valid range is 1 to 8.
         type: Number
 
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean        
+
+      - name: show_user_like
+        description: | 
+            If set to **true** the CustomObject in the response will include `"current_user_liked: true"`
+            if the current user has liked the object. If the user has not liked the object, the
+            `current_user_liked` field is not included in the response.
+        type: Boolean
 
     response-parameters:
       - name: classname
@@ -79,7 +93,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt -X GET --data-urlencode 'ids=4ec42e91d9ca72c507000010,4ec42de1d9ca72c50700000d'  "https://api.cloud.appcelerator.com/v1/objects/car/show.json?key=<YOUR APP APP KEY>"
+                $ curl -b cookies.txt -c cookies.txt -X GET --data-urlencode 'ids=4ec42e91d9ca72c507000010,4ec42de1d9ca72c50700000d'  "https://api.cloud.appcelerator.com/v1/objects/car/show.json?key=<YOUR APP APP KEY>&pretty_print=true"
 
             Example JSON response:
 
@@ -129,6 +143,25 @@ methods:
 
       - platform: ios
         example: |
+            Example iOS APS SDK call:
+
+                // Create dictionary of parameters to be passed with the request
+                NSDictionary *data = @{
+                      @"classname": @"cars",
+                      @"ids": @[car1ID, car2ID]
+                };
+                
+                [APSObjects show:data withBlock:^(APSResponse *e) {
+                      if (e.success) {
+                          NSString *message = [NSString stringWithFormat:@"Show %lu cars", (unsigned long)((NSArray *)e.response[@"cars"]).count];
+                          [[[UIAlertView alloc] initWithTitle:@"Success" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      } else {
+                          [[[UIAlertView alloc] initWithTitle:@"Error" message:e.errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      }
+                }];
+
+      - platform: ios-acssdk
+        example: |
             Example iOS call:
 
                 NSDictionary *paramDict = [NSDictionary dictionaryWithObject:car.objectId forKey:@"id", nil];
@@ -139,13 +172,49 @@ methods:
 
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
-                	if ([response.meta.methodName isEqualToString:@"showObjects"]) {
-                		NSArray *cars = [response.response objectForKey:@"car"];
-                		...
-                	}
+                  if ([response.meta.methodName isEqualToString:@"showObjects"]) {
+                    NSArray *cars = [response.response objectForKey:@"car"];
+                    ...
+                  }
                 }
 
       - platform: android
+        example: |
+            Example Android APS SDK call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+                final Activity currentActivity = this;
+
+                HashMap<String, Object> data = new HashMap<String, Object>();
+                data.put("ids", "4ec42e91d9ca72c507000010,4ec42de1d9ca72c50700000d");
+                data.put("classname", "cars");
+
+                try {
+                    APSObjects.show(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                try {
+                                    Toast.makeText(currentActivity, e.getResponseString(), Toast.LENGTH_SHORT);
+                                } catch (APSCloudException err) {
+                                    Log.e("APSObjects", "Exception thrown: " + err.toString());
+                                }
+                            } else {
+                                Log.e("APSObjects", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSObjects", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSObjects", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
         example: |
             Example Android call:
 
@@ -185,7 +254,7 @@ methods:
                       var meta = data.meta;
                       if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'showObjects') {
                         var cars = data.response.car;
-                      	...
+                        ...
                       }
                     }
                   }

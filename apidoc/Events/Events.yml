@@ -1,6 +1,6 @@
 name: Events
 description: |
-    Events Tangram provides API to create and manage single or recurring events.
+    The Events API provides methods to create and manage events. Events can be one-time or recurring.
 fields:
   - name: id
     description: Generated unique ID for this event.
@@ -27,12 +27,12 @@ fields:
     type: Date
 
   - name: ical
-    description: Event time and recurrance in iCalendar (RFC 5545) format.
+    description: Event time and recurrence in iCalendar (RFC 5545) format.
     type: String
 
   - name: recurring
     description: |
-        Recurrance schedule. Can take the following values: "daily", "weekly", "monthly", or "yearly".
+        Recurrence schedule. Can take the following values: "daily", "weekly", "monthly", or "yearly".
     type: String
 
   - name: recurring_count
@@ -40,7 +40,7 @@ fields:
     type: Number
 
   - name: recurring_until
-    description: Date of last recurrance. 
+    description: Date of last recurrence. 
     type: Date
 
   - name: details

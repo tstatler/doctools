@@ -62,6 +62,13 @@ methods:
             Selects the object fields to display. Do not use this parameter with `unsel`.
         type: Hash
 
+      - name: show_user_like
+        description: |
+            If set to **true**, each Photo object in the response includes `"current_user_liked: true"`
+             if the current user has liked the object. If the user has not liked the object, the 
+            `current_user_liked` field is not included in the response.
+        type: Boolean        
+
       - name: unsel
         description: |
             Selects the object fields NOT to display. Do not use this parameter with `sel`.
@@ -77,6 +84,12 @@ methods:
 
             Default is 3, valid range is 1 to 8.
         type: Number
+        
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
 
     response-parameters:
       - name: photos
@@ -119,7 +132,7 @@ methods:
             Example cURL request:
 
                 Example: If your app assigns a geo location to each photo, query photos with tag "Appcelerator Cloud Services" near latitude 37.12, longitude -122.23 within 5 miles
-                $ curl -c cookies.txt -b cookies.txt -X GET --data-urlencode 'where={"tags_array":"Appcelerator Cloud Services","coordinates":{"$nearSphere":[-122.23,37.12], "$maxDistance" : 0.00126}}' "https://api.cloud.appcelerator.com/v1/photos/query.json?key=<YOUR APP APP KEY>"
+                $ curl -c cookies.txt -b cookies.txt -X GET --data-urlencode 'where={"tags_array":"Appcelerator Cloud Services","coordinates":{"$nearSphere":[-122.23,37.12], "$maxDistance" : 0.00126}}' "https://api.cloud.appcelerator.com/v1/photos/query.json?key=<YOUR APP APP KEY>&pretty_print=true"
 
             Example JSON response:
 
@@ -164,6 +177,26 @@ methods:
 
       - platform: ios
         example: |
+            Example iOS APS SDK call:
+
+                NSDictionary *data = @{
+                    @"where": @{
+                        @"tags_array":@"Appcelerator Cloud Services"
+                    }
+                };
+
+                [APSPhotos query:data withBlock:^(APSResponse *e) {
+                    if (e.success) {
+                        NSString *message = [NSString stringWithFormat:@"Found %lu photos", (unsigned long)((NSArray *)e.response[@"photos"]).count ];
+                        [[[UIAlertView alloc] initWithTitle:@"Success!" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error" message:e.message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];                        
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
             Example iOS call:
 
                 CCWhere *where = [[[CCWhere alloc] init] autorelease];
@@ -177,15 +210,61 @@ methods:
 
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
-                	if ([response.meta.methodName isEqualToString:@"queryPhotos"]) {
-                		NSArray *photos = [response getObjectsOfType:[CCPhoto class]];
-                		for (CCPhoto *photo in photos) {
-                			...
-                		}
-                	}
+                  if ([response.meta.methodName isEqualToString:@"queryPhotos"]) {
+                    NSArray *photos = [response getObjectsOfType:[CCPhoto class]];
+                    for (CCPhoto *photo in photos) {
+                      ...
+                    }
+                  }
                 }
 
       - platform: android
+        example: |
+            Example Android APS SDK call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+
+                try {
+                    HashMap<String, Object> data = new HashMap<String, Object>();
+                    JSONObject params = new JSONObject("{'tags_array': 'Appcelerator Cloud Services','coordinates': {'$nearSphere': [-122.23,37.12], '$maxDistance': 0.126}}");
+                    data.put("where", params);
+
+                    APSPhotos.query(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                try {
+                                    JSONArray photos = e.getResponse().getJSONArray("photos");
+                                    if (photos.length() <= 0) {
+                                        Log.i("APSPhotos", "No results!");
+                                    } else {
+                                        for (int i = 0; i < photos.length(); i++) {
+                                            JSONObject photo = photos.getJSONObject(i);
+                                            Log.i("APSPhotos", photo.getString("filename"));
+                                        }
+                                    }
+                                } catch (JSONException err) {
+                                    Log.e("APSPhotos", "Exception thrown: " + err.toString());
+                                }
+                            } else {
+                                Log.e("APSPhotos", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSPhotos", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSPhotos", "Exception thrown: " + e.toString());
+                } catch (JSONException e) {
+                    Log.e("APSPhotos", "Exception thrown: " + e.toString());
+                }
+
+
+      - platform: android-acssdk
         example: |
             Example Android call:
 
@@ -225,7 +304,7 @@ methods:
                       var meta = data.meta;
                       if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'queryPhotos') {
                         var photos = data.response.photos;
-                      	...
+                        ...
                       }
                     }
                   }

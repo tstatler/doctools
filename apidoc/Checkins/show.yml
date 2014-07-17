@@ -10,7 +10,7 @@ methods:
         description: ID of the checkin to show.
         type: String
         required: true
-
+        
       - name: response_json_depth
         description: |
             Nested object depth level counts in response json.
@@ -19,10 +19,20 @@ methods:
             some important data related to the returning objects such as object's owner or
             referencing objects.
 
-            Default is 3, valid range is 1 to 8.
-        type: Number
+      - name: show_user_like
+        description: |
+            If set to **true** the Checkin object in the response will include `"current_user_liked: true"`
+            if the current user has liked the object. If the user has not liked the object, the
+            `current_user_liked` field is not included in the response.
+        type: Boolean
 
-    response-params:
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean                
+
+    response-parameters:
       - name: checkins
         description: Single element array containing the identified checkin.
         type: Array<Checkins>
@@ -49,9 +59,11 @@ methods:
 
       - platform: rest
         example: |
-            Example cURL request:
+            Example cURL request that passes `show_user_like=true` as a parameter; the Checkin object
+            returned in the JSON response contains `"current_user_liked": true`, indicating that the current user
+            liked the retrieved object.
 
-                $ curl -b cookies.txt -c cookies.txt https://api.cloud.appcelerator.com/v1/checkins/show.json?key=<YOUR APP APP KEY>&checkin_id=4d8bc645d0afbe0363000013
+                $ curl -b cookies.txt -c cookies.txt https://api.cloud.appcelerator.com/v1/checkins/show.json?key=<YOUR APP APP KEY>&pretty_print=true&checkin_id=4d8bc645d0afbe0363000013&show_user_like=true
 
             Example JSON response:
 
@@ -66,6 +78,7 @@ methods:
                       {
                         "id":"4d8bc645d0afbe0363000013",
                         "created_at":"2011-03-24T22:31:34+0000",
+                        "current_user_liked": true,
                         "updated_at":"2011-03-24T22:31:34+0000",
                         "place": {
                           "id":"4d8bc62ad0afbe0363000012",
@@ -105,24 +118,42 @@ methods:
                             "medium_640":"http://storage.appcelerator.com/gjvI579NDKJNuhBBj9HGWhbGDISHcCvL/photos/4d88448ed0afbe0e4e000003/photo_medium_640.jpg",
                             "large_1024":"http://storage.appcelerator.com/gjvI579NDKJNuhBBj9HGWhbGDISHcCvL/photos/4d88448ed0afbe0e4e000003/photo_large_1024.jpg",
                             "original":"http://storage.appcelerator.com/gjvI579NDKJNuhBBj9HGWhbGDISHcCvL/photos/4d88448ed0afbe0e4e000003/photo_original.jpg"
+                                      }
+                                    }
+                                  },
+                                  "photo": {
+                                    "id":"4d8bc645d0afbe0363000014",
+                                    "filename":"photo.jpg",
+                                    "size":584344,
+                                    "md5":"589b8ad43ed20bf8e622d719642bc939",
+                                    "created_at":"2011-03-24T22:31:33+0000",
+                                    "updated_at":"2011-03-24T22:31:33+0000",
+                                    "processed":false
+                                  }
+                                }
+                              ]
                             }
                           }
-                        },
-                        "photo": {
-                          "id":"4d8bc645d0afbe0363000014",
-                          "filename":"photo.jpg",
-                          "size":584344,
-                          "md5":"589b8ad43ed20bf8e622d719642bc939",
-                          "created_at":"2011-03-24T22:31:33+0000",
-                          "updated_at":"2011-03-24T22:31:33+0000",
-                          "processed":false
-                        }
-                      }
-                    ]
-                  }
-                }
 
       - platform: ios
+        example: |
+            Example iOS APS SDK call:
+
+                // Create dictionary of parameters to be passed with the request
+                NSDictionary *data = @{
+                      @"checkin_id": myCheckinId
+                };
+                
+                [APSCheckins show:data withBlock:^(APSResponse *e) {
+                      if (e.success) {
+                          NSString *message = [NSString stringWithFormat:@"Show checkin %@", ((NSArray *) e.response[@"checkins"])[0][@"id"] ];
+                          [[[UIAlertView alloc] initWithTitle:@"Success" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      } else {
+                          [[[UIAlertView alloc] initWithTitle:@"Error" message:e.errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      }
+                }];
+
+      - platform: ios-acssdk
         example: |
             Example iOS call:
 
@@ -139,6 +170,41 @@ methods:
                 }
 
       - platform: android
+        example: |
+            Example Android APS SDK call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+                final Activity currentActivity = this;
+
+                HashMap<String, Object> data = new HashMap<String, Object>();
+                data.put("checkin_id", "4d713b4f6f70951043000001");
+
+                try {
+                    APSCheckins.show(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                try {
+                                    Toast.makeText(currentActivity, e.getResponseString(), Toast.LENGTH_SHORT);
+                                } catch (APSCloudException err) {
+                                    Log.e("APSCheckins", "Exception thrown: " + err.toString());
+                                }
+                            } else {
+                                Log.e("APSCheckins", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSCheckins", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSCheckins", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
         example: |
             Example Android call:
 
@@ -202,8 +268,8 @@ methods:
                     if(data.hasOwnProperty("meta")) {
                       var meta:Object = data.meta;
                       if(meta.status == "ok" && meta.code == 200 && meta.method_name == "showCheckins") {
-                      	var checkins:Array = data.response.checkins;
-                      	...
+                        var checkins:Array = data.response.checkins;
+                        ...
                       }
                     }
                   }

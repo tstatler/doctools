@@ -23,6 +23,19 @@ methods:
             Default is 3, valid range is 1 to 8.
         type: Number
 
+      - name: show_user_like
+        description: | 
+            If set to **true** the Place object in the response will include `"current_user_liked: true"`
+            if the current user has liked the object. If the user has not liked the object, the 
+            `current_user_liked` field is not included in the response.
+        type: Boolean    
+        
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean    
+
     response-parameters:
       - name: places
         description: Single-element array containing the identified place object.
@@ -52,7 +65,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/places/show.json?key=<YOUR APP APP KEY>&place_id=4d6f13e96f70953608000012"
+                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/places/show.json?key=<YOUR APP APP KEY>&pretty_print=true&place_id=4d6f13e96f70953608000012"
 
             Example JSON response:
 
@@ -85,6 +98,37 @@ methods:
         example: |
             Example iOS call:
 
+                NSDictionary *data = @{
+                                         @"place_id"   : @"savedPlaceID"
+                                      };
+                [APSPlaces show:data withBlock:^(APSResponse *e) {
+                    if (e.success){
+                        NSArray *places = e.response[@"places"];
+                        NSDictionary *place = places[0];
+                        NSString *message = [NSString stringWithFormat:@"id : %@\n Name : %@\nUpdated at : %@\n",
+                                                place[@"id"],
+                                                place[@"name"],
+                                                place[@"updated_at"]];
+
+                        [[[UIAlertView alloc] initWithTitle:@"Success" 
+                                                    message:message
+                                                   delegate:nil 
+                                          cancelButtonTitle:@"OK" 
+                                          otherButtonTitles:nil] show];
+
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:e.errorMessage
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
                 NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:(CCPlace *)place.objectId, @"place_id", nil];
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"places/show.json" paramDict:nil];
                 [request startAsynchronous];
@@ -94,10 +138,47 @@ methods:
 
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
-                	NSArray *places = [response getObjectsOfType:[CCPlace class]];
+                  NSArray *places = [response getObjectsOfType:[CCPlace class]];
                 }
 
       - platform: android
+        example: |
+            Example Android APS SDK call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+
+                // Create dictionary of parameters to be passed with the request
+                HashMap<String, Object> data = new HashMap<String, Object>();
+                data.put("place_id", 4d6f13e96f70953608000012);
+
+                try {
+                    APSPlaces.show(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+
+                            if (e.getSuccess()) {
+                                try {
+                                    Log.i("APSPlaces", e.getResponseString());
+                                } catch (APSCloudException e1) {
+                                    Log.e("APSPlaces", e.toString());
+                                }
+                            } else {
+                                Log.e("APSPlaces", e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(APSCloudException e) {
+                            Log.e("APSPlaces", e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSPlaces", e.toString());
+                }
+
+
+      - platform: android-acssdk
         example: |
             Example Android call:
 
@@ -137,7 +218,7 @@ methods:
                       var meta = data.meta;
                       if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'showPlace') {
                         var places = data.response.places;
-                      	...
+                        ...
                       }
                     }
                   }
@@ -161,8 +242,8 @@ methods:
                     if(data.hasOwnProperty("meta")) {
                       var meta:Object = data.meta;
                       if(meta.status == "ok" && meta.code == 200 && meta.method_name == "showPlace") {
-                      	var places:Array = data.response.places;
-                      	...
+                        var places:Array = data.response.places;
+                        ...
                       }
                     }
                   }

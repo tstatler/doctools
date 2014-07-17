@@ -48,6 +48,12 @@ methods:
             An ACL can be specified using `acl_name` or `acl_id`. The two parameters are
             mutually exclusive.
         type: String
+                
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
 
     response-parameters:
       - name: users
@@ -80,7 +86,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt -F "id=109216395704353" -F type="facebook" -F "token=lqcs6jedOtdrYfu3CaIVR0GWlCnV1l3JbY1i-gFxNNc.eyJpdiI6Ims2STNfRmMxbXFJamoxWFlUWjFrTkEifQ.RW77c5r7ggvTobyL0INb6qscnpoyrrFrrJ6K_IldoJBxcxLkwus8SsLFAJmwy05nLa71zBEqdkm2wJMIn31iUW2mxd37eQX9JRNrtSWcgRpuRDuzjhB7f0u3J4WJYASRnJkq-8l0hr9jiLIDajkJRg" https://api.cloud.appcelerator.com/v1/users/external_account_login.json?key=<YOUR APP APP KEY>
+                $ curl -b cookies.txt -c cookies.txt -F "id=109216395704353" -F type="facebook" -F "token=lqcs6jedOtdrYfu3CaIVR0GWlCnV1l3JbY1i-gFxNNc.eyJpdiI6Ims2STNfRmMxbXFJamoxWFlUWjFrTkEifQ.RW77c5r7ggvTobyL0INb6qscnpoyrrFrrJ6K_IldoJBxcxLkwus8SsLFAJmwy05nLa71zBEqdkm2wJMIn31iUW2mxd37eQX9JRNrtSWcgRpuRDuzjhB7f0u3J4WJYASRnJkq-8l0hr9jiLIDajkJRg" https://api.cloud.appcelerator.com/v1/users/external_account_login.json?key=<YOUR APP APP KEY>&pretty_print=true
 
             Example JSON response:
 
@@ -160,6 +166,25 @@ methods:
 
       - platform: ios
         example: |
+            Example iOS APS SDK call:
+
+                // Create dictionary of parameters to be passed with the request
+                NSDictionary *data = @{
+                    @"type": @"facebook",
+                    @"token": accessToken
+                };
+                
+                [APSSocialIntegrations externalAccountLogin:data withBlock:^(APSResponse *e) {
+                      if (e.success) {
+                          NSString *message = [NSString stringWithFormat:@"Loggedin %lu users", (unsigned long)((NSArray *) e.response[@"users"]).count ];
+                          [[[UIAlertView alloc] initWithTitle:@"Success" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      } else {
+                          [[[UIAlertView alloc] initWithTitle:@"Error" message:e.errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      }
+                }];
+
+      - platform: ios-acssdk
+        example: |
             Example iOS call:
 
                 NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
@@ -181,6 +206,48 @@ methods:
                 }
 
       - platform: android
+        example: |
+            Example Android call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+                final Activity currentActivity = this;
+
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("id", "109216395704353");
+                data.put("type", "facebook");
+                data.put("token", "lqcs6jedOtdrYfu3CaIVR0GWlCnV1l3JbY1i-gFxNNc.eyJpdiI6Ims2STNfRmMxbXFJamoxWFlUWjFrTkEifQ.RW77c5r7ggvTobyL0INb6qscnpoyrrFrrJ6K_IldoJBxcxLkwus8SsLFAJmwy05nLa71zBEqdkm2wJMIn31iUW2mxd37eQX9JRNrtSWcgRpuRDuzjhB7f0u3J4WJYASRnJkq-8l0hr9jiLIDajkJRg");
+
+                try {
+                    APSSocialIntegrations.externalAccountLogin(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                try {
+                                    String userId = e.getResponse().getJSONArray("users").getJSONObject(0).getString("id");
+                                    new AlertDialog.Builder(currentActivity)
+                                    .setTitle("Success!").setMessage("Logged in! You are now logged in as " + userId)
+                                    .setPositiveButton(android.R.string.ok, null)
+                                    .setIcon(android.R.drawable.ic_dialog_info)
+                                    .show();
+                                } catch (JSONException err) {
+                                    Log.e("APSSocialIntegrations", "Exception thrown: " + err.toString());
+                                }
+                            } else {
+                                Log.e("APSSocialIntegrations", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSSocialIntegrations", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSSocialIntegrations", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
         example: |
             Example Android call:
 

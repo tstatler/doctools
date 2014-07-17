@@ -1,6 +1,6 @@
 name: Statuses
 description: |
-    Create Twitter-like status messages.
+    The Statuses object lets your application create and manage Twitter-like status messages.
 fields:
   - name: id
     description: Generated unique ID for this status.

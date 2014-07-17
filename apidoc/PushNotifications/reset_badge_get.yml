@@ -15,6 +15,14 @@ methods:
     url: push_notification/reset_badge.json
     http-method: GET
 
+    parameters:
+    
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean    
+
     examples:
       - platform: titanium
         example: |
@@ -38,6 +46,10 @@ methods:
                 
       - platform: ios
         example: |
+            This API is not supported in the iOS APS SDK.
+
+      - platform: ios-acssdk
+        example: |
             Example iOS call:
             
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"push_notification/reset_badge.json"];
@@ -50,8 +62,12 @@ methods:
                 {
                 	// successfully call
                 }
-                
+
       - platform: android
+        example: |
+            This API is not supported in the APS SDK.
+
+      - platform: android-acssdk
         example: |
             Example Android call:
             

@@ -13,6 +13,7 @@ methods:
       - name: message
         description: Status message.
         type: String
+        required: true
 
       - name: place_id
         description: ID of the place this status is associated with.
@@ -67,6 +68,12 @@ methods:
             The current login user must be an application admin to create a status on
             behalf of another user.
         type: String
+                
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
 
     response-parameters:
       - name: statuses
@@ -98,7 +105,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt -F "message=Having fun at the beach" -F "photo=@photo.jpg" https://api.cloud.appcelerator.com/v1/statuses/create.json?key=<YOUR APP APP KEY>
+                $ curl -b cookies.txt -c cookies.txt -F "message=Having fun at the beach" -F "photo=@photo.jpg" https://api.cloud.appcelerator.com/v1/statuses/create.json?key=<YOUR APP APP KEY>&pretty_print=true
 
             Example JSON response:
 
@@ -133,6 +140,23 @@ methods:
         example: |
             Example iOS call:
 
+                NSDictionary *data = @{
+                    @"message": @"Working hard at Appcelerator Cloud Services Office"
+                };
+                
+                [APSStatuses create:data withBlock:^(APSResponse *e) {
+                    if (e.success) {
+                        [[[UIAlertView alloc] initWithTitle:@"Success" message:@"Status posted!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error" message:e.message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    }
+                }];
+
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
                 NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
                 [paramDict setObject:@"Working hard at Appcelerator Cloud Services Office" forKey:@"message"];
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"POST" baseUrl:@"statuses/create.json" paramDict:paramDict];
@@ -152,6 +176,41 @@ methods:
                 }
 
       - platform: android
+        example: |
+            Example Android APS SDK call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+                final Activity currentActivity = this;
+
+                HashMap<String, Object> data = new HashMap<String, Object>();
+                data.put("message", "new status!");
+
+                try {
+                    APSStatuses.create(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                new AlertDialog.Builder(currentActivity)
+                                .setTitle("Success").setMessage("Created!")
+                                .setPositiveButton(android.R.string.ok, null)
+                                .setIcon(android.R.drawable.ic_dialog_info)
+                                .show();
+                            } else {
+                                Log.e("APSStatuses", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSStatuses", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSStatuses", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
         example: |
             Example Android call:
 

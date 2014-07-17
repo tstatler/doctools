@@ -47,7 +47,7 @@ Here is a list of available commands and brief description for each of them:
         </tr>
         <tr>
             <td><a href="#!/guide/node_cli_config"><b>config</b></a></td>
-            <td>Configures cloud servers for the application</td>
+            <td>Configures the application</td>
         </tr>
         <tr>
             <td><a href="#!/guide/node_cli_crt"><b>crt</b></a></td>

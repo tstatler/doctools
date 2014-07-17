@@ -1,7 +1,7 @@
 name: Checkins
 description: |
-    The Checkins API provides methods to create and manage checkins to a place or an
-    event.
+    The Checkins API provides methods to create and manage checkins to a {@link Places Place} or an
+    {@link Events Event}.
 fields: 
   - name: id
     description: Generated unique ID for this checkin.

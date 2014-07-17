@@ -1,4 +1,6 @@
 name: SocialIntegrations
 description: |
-    Link or login using external social network account such as Facebook, LinkedIn,
-    Twitter and etc.
+
+    The SocialIntegrations object lets users link their existing ACS accounts to their social network accounts
+    (Facebook or Twitter, for example) and login to ACS using their social network account credentials. You 
+    can also search for a user's Facebook friends who have installed the same application and linked their Facebook account to ACS.

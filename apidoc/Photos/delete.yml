@@ -25,6 +25,12 @@ methods:
             The current login user must be an application admin to delete a Photo object on
             behalf of another user.
         type: String
+        
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
 
     examples:
       - platform: titanium
@@ -46,7 +52,7 @@ methods:
         example: |
             Example cURL request:
 
-                curl -b cookies.txt -c cookies.txt -X DELETE "https://api.cloud.appcelerator.com/v1/photos/delete.json?key=<YOUR APP APP KEY>&photo_id=4d8971236f7095514800000a"
+                curl -b cookies.txt -c cookies.txt -X DELETE "https://api.cloud.appcelerator.com/v1/photos/delete.json?key=<YOUR APP APP KEY>&pretty_print=true&photo_id=4d8971236f7095514800000a"
 
             Example JSON response:
 
@@ -62,6 +68,20 @@ methods:
         example: |
             Example iOS call:
 
+                NSDictionary *data = @{@"photo_id": @"4d8971236f7095514800000a"};
+                
+                [APSPhotos remove:data withBlock:^(APSResponse *e) {
+                    if (e.success) {
+                        [[[UIAlertView alloc] initWithTitle:@"Success" message:@"Photo deleted!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error" message:e.message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
                 NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:(CCPhoto *)photo.objectId, @"photo_id", nil];
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"DELETE" baseUrl:@"photos/delete.json" paramDict:paramDict];
                 [request startAsynchronous];
@@ -71,12 +91,40 @@ methods:
 
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
-                	if ([response.meta.method isEqualToString:@"deletePhoto"]) {
-                		NSLog(@"photo deleted!");
-                	}
+                    if ([response.meta.method isEqualToString:@"deletePhoto"]) {
+                        NSLog(@"photo deleted!");
+                    }
                 }
 
       - platform: android
+        example: |
+            Example Android APS SDK call:
+
+                HashMap<String, Object> data = new HashMap<String, Object>();
+                data.put("photo_id", "4d8971236f7095514800000a");
+
+                try {
+                    APSPhotos.remove(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                Toast.makeText(currentActivity, "Photo removed!", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Log.e("APSPhotos", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSPhotos", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSPhotos", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
         example: |
             Example Android call:
 

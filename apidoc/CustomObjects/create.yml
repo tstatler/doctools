@@ -3,16 +3,16 @@ methods:
   - name: create
     summary: Create Custom Object
     description: |
-        Create a custom object of type class_name.
+        Create a custom object of type `classname`.
 
-        The class_name of the object is part of the URL. You don't have to define
-        class_name ahead of time. It will be created on the fly
-    url: objects/:class_name/create.json
+        The `classname` of the object is part of the URL. You do not have to define
+        `classname` ahead of time. It will be created on the fly
+    url: objects/:classname/create.json
     http-method: POST
     login-required: true
 
     parameters:
-      - name: class_name
+      - name: classname
         description: |
             Type of custom object. Specified as part of the URL path, not in the
             parameters.
@@ -40,6 +40,11 @@ methods:
         type: Hash
         required: true
 
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
 
       - name: tags
         description: |
@@ -123,41 +128,39 @@ methods:
 
       - platform: rest
         example: |
-            Example cURL request:
+            Example cURL request that creates a "car" object with custom coordinates:
 
-                Create a car object with custom coordinates
+                $ curl -b cookies.txt -c cookies.txt -F "fields={\"color\":\"blue\", \"make\": \"nissan\", \"purchased_at\" : \"2011-11-02 17:07:37 -0700\", \"year\" : 2005, \"used\" : false, \"coordinates\":[-122.1, 37.1]}"  https://api.cloud.appcelerator.com/v1/objects/car/create.json?key=<YOUR APP APP KEY>&pretty_print=true
 
-                $ curl -b cookies.txt -c cookies.txt -F "fields={\"color\":\"blue\", \"make\": \"nissan\", \"purchased_at\" : \"2011-11-02 17:07:37 -0700\", \"year\" : 2005, \"used\" : false, \"coordinates\":[-122.1, 37.1]}"  https://api.cloud.appcelerator.com/v1/objects/car/create.json?key=<YOUR APP APP KEY>
+                    Example JSON response:
 
-            Example JSON response:
-
-                {
-                  "meta": {
-                    "code": 200,
-                    "status": "ok",
-                    "method_name": "createObject"
-                  },
-                  "response": {
-                    "car": [
-                      {
-                        "color": "blue",
-                        "make": "nissan",
-                        "purchased_at": "2011-11-03T00:07:37+0000",
-                        "year": 2005,
-                        "used": false,
-                        "coordinates": [
-                          [
-                            -122.1,
-                            37.1
-                          ]
-                        ],
-                        "id": "4ec42de1d9ca72c50700000d",
-                        "created_at": "2011-11-16T21:40:49+0000",
-                        "updated_at": "2011-11-16T21:40:49+0000"
-                      }
-                    ]
-                  }
-                }
+                        {
+                          "meta": {
+                            "code": 200,
+                            "status": "ok",
+                            "method_name": "createObject"
+                          },
+                          "response": {
+                            "car": [
+                              {
+                                "color": "blue",
+                                "make": "nissan",
+                                "purchased_at": "2011-11-03T00:07:37+0000",
+                                "year": 2005,
+                                "used": false,
+                                "coordinates": [
+                                  [
+                                    -122.1,
+                                    37.1
+                                  ]
+                                ],
+                                "id": "4ec42de1d9ca72c50700000d",
+                                "created_at": "2011-11-16T21:40:49+0000",
+                                "updated_at": "2011-11-16T21:40:49+0000"
+                              }
+                            ]
+                          }
+                        }
 
             In iOS, you can simply create a NSDictionary to represent a custom object's
             fields. Here is the mapping of data types in iOS:
@@ -232,6 +235,29 @@ methods:
 
       - platform: ios
         example: |
+            Example iOS APS SDK call:
+
+                // Create dictionary of parameters to be passed with the request
+                NSDictionary *data = @{
+                      @"classname": @"cars",
+                      @"fields": @{
+                            @"make": @"nissan",
+                            @"color": @"blue",
+                            @"year": @2005
+                      }
+                };
+                
+                [APSObjects create:data withBlock:^(APSResponse *e) {
+                      if (e.success) {
+                          NSString *message = [NSString stringWithFormat:@"id: %@", ((NSArray *)e.response[@"cars"])[0][@"id"]];
+                          [[[UIAlertView alloc] initWithTitle:@"Success" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      } else {
+                          [[[UIAlertView alloc] initWithTitle:@"Error" message:e.errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      }
+                }];
+
+      - platform: ios-acssdk
+        example: |
             Example iOS call:
 
                 NSMutableDictionary *fieldsDict = [NSMutableDictionary dictionaryWithCapacity:4];
@@ -258,6 +284,43 @@ methods:
                 }
 
       - platform: android
+        example: |
+            Example Android APS SDK call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+                final Activity currentActivity = this;
+
+                JSONObject fields = new JSONObject("{'color':'blue', 'make': 'nissan', 'purchased_at' : '2011-11-02 17:07:37 -0700', 'year' : 2005, 'used' : false, 'coordinates':[-122.1, 37.1]}");
+                HashMap<String, Object> data = new HashMap<String, Object>();
+                data.put("fields", fields);
+                data.put("classname", "cars");
+
+                try {
+                    APSObjects.create(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                new AlertDialog.Builder(currentActivity)
+                                .setTitle("Success!").setMessage("Created!"):
+                                .setPositiveButton(android.R.string.ok, null)
+                                .setIcon(android.R.drawable.ic_dialog_info)
+                                .show();
+                            } else {
+                                Log.e("APSObjects", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSObjects", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSObjects", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
         example: |
             Example Android call:
 

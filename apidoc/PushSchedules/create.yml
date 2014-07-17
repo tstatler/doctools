@@ -24,6 +24,7 @@ methods:
               * *push_notification* (Hash): Push notification to send (**required**).
               
                   * *channel* (String): Name of the channel to send the push notification to.
+                    The name of the push channel cannot start with a hash symbol ('#').
                   * *payload* (Hash): Payload to send to the device. Same format as {@link PushNotifications#notify} (**required**).
                   * *to_ids* (Array<String>/String): Array or comma-separated list of IDs to send push notifications to.
                   * *options* (Hash): Dictionary to specify additional options:
@@ -61,7 +62,13 @@ methods:
                   }
 
             For details about using the `where` parameter, see the [Search and Query guide](#!/guide/search_query).
-        type: Hash        
+        type: Hash
+
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean        
 
     response-parameters:
       - name: push_schedules
@@ -70,6 +77,51 @@ methods:
         type: Array<PushSchedules>
       
     examples:
+
+      - platform: android
+        example: |
+            Example Android call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+
+                Map<String, Object> data = new HashMap<String, Object>();                
+                JSONObject schedule = new JSONObject();
+                schedule.put("name", "push schedule");
+                schedule.put("start_time", "2015-09-05T10:11");
+
+                JSONObject recurrence = new JSONObject();
+                recurrence.put("interval", "weekly");
+                recurrence.put("end_time", "2015-09-10T10:11");
+
+                JSONObject push_notification = new JSONObject();
+                push_notification.put("payload", "hello world");
+                push_notification.put("channel","channelOne")
+
+                schedule.put("recurrence", recurrence);
+                schedule.put("push_notification", push_notification);                
+
+                data.put("schedule", schedule);
+
+                try {
+                    APSPushSchedules.create(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                Log.i("APSPushSchedules", "Success!");
+                            } else {
+                                Log.e("APSPushSchedules", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSPushSchedules", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                  Log.e("APSPushSchedules", "Exception thrown: " + e.toString());
+                }
 
       - platform: titanium
         example: |
@@ -84,8 +136,9 @@ methods:
                             end_time: '2015-09-10T10:11'
                         },
                         push_notification: {
-                        payload: 'hello world',
-                        channel: 'channelOne'
+                            payload: 'hello world',
+                            channel: 'channelOne'
+                        }
                     }
                 }, function(e) {
                     if (e.success) {
@@ -130,3 +183,30 @@ methods:
                     ]
                   }
                 }
+
+      - platform: ios
+        example: |
+            Example iOS APS SDK call:
+
+                // Create dictionary of parameters to be passed with the request
+                NSDictionary *data = @{
+                    @"schedule": @{
+                        @"start_time": @"2015-09-10T10:11",
+                        @"recurrence": @{
+                            @"interval": @"weekly",
+                            @"end_time": @"2015-09-10T10:11"
+                        },
+                        @"push_notification": @{
+                            @"payload": @"hello world",
+                            @"channel": @"channelOne"
+                        }
+                    }
+                };
+                
+                [APSPushSchedules create:data withBlock:^(APSResponse *e) {
+                      if (e.success) {
+                          [[[UIAlertView alloc] initWithTitle:@"Great" message:@"Success!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      } else {
+                          [[[UIAlertView alloc] initWithTitle:@"Error" message:e.errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      }
+                }];

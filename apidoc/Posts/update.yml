@@ -82,6 +82,12 @@ methods:
             The current login user must be an application admin to update a Post object on
             behalf of another user.
         type: String
+        
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
 
     response-parameters:
       - name: posts
@@ -114,7 +120,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt -X PUT -F "post_id=4e33a5b7d9ca7246ba000003" -F "title=Updated Post Title" https://api.cloud.appcelerator.com/v1/posts/update.json?key=<YOUR APP APP KEY>
+                $ curl -b cookies.txt -c cookies.txt -X PUT -F "post_id=4e33a5b7d9ca7246ba000003" -F "title=Updated Post Title" https://api.cloud.appcelerator.com/v1/posts/update.json?key=<YOUR APP APP KEY>&pretty_print=true
 
             Example JSON response:
 
@@ -163,6 +169,24 @@ methods:
 
       - platform: ios
         example: |
+            Example iOS APS SDK call:
+
+                NSDictionary *data = @{
+                    @"post_id": @"4e33a5b7d9ca7246ba000003",
+                    @"title":@"Updated Post Title"
+                };
+
+                [APSPosts update:data withBlock:^(APSResponse *e) {
+                    if (e.success) {
+                        [[[UIAlertView alloc] initWithTitle:@"Success" message:@"Updated!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error" message:e.message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    }
+                }];
+
+
+      - platform: ios-acssdk
+        example: |
             Example iOS call:
 
                 NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:(CCPost *)post.objectId, @"post_id", @"Updated Post Title", @"title", nil]
@@ -179,6 +203,42 @@ methods:
                 }
 
       - platform: android
+        example: |
+            Example Android call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+
+                HashMap<String, Object> data = new HashMap<String, Object>();
+                data.put("post_id", "4e33a5b7d9ca7246ba000003");
+                data.put("title", "Updated Post Title");
+
+                try {
+                    APSPosts.update(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                try {
+                                    JSONObject post = e.getResponse().getJSONArray("posts").getJSONObject(0);
+                                    Log.i("APSPosts", posts.getString("title") + " " + posts.getString("content"));
+                                } catch (JSONException err) {
+                                    Log.e("APSPosts", "Exception thrown: " + err.toString());
+                                }
+                            } else {
+                                Log.e("APSPosts", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSPosts", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSPosts", "ERROR: " + err.getMessage());
+                }
+
+      - platform: android-acssdk
         example: |
             Example Android call:
 

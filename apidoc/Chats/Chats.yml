@@ -1,14 +1,16 @@
 name: Chats
 description: |
 
-    The Chat object provides an API to send chat messages from one user to another user
-    or a group of users. If you have configured push notification in your app, you
-    can send optional push notifications to the recipients' devices as well.
+    The Chats API provides methods for sending chat messages from one user to another user,
+    or to a group of users called a _chat group_.
 
     Chat groups are formed implicitly when users send chat messages. For example, if 
-    user A sends a message to users B and C, an chat group is formed with users A, B, and
+    user A sends a message to users B and C, a chat group is formed with users A, B, and
     C. If user C subsequently sends a message to user B, a second chat group is formed with users B
     and C as members.
+
+    If you have configured push notifications for your application, you can optionally 
+    specify to a send push notifications to message recipients' devices as well.
     
 fields:
   - name: id

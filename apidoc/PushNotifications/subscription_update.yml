@@ -28,6 +28,12 @@ methods:
             as the second element (`[longitude,latitude]`).
         type: Array<Number>
 
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean                    
+
     examples:
       - platform: titanium
         example: |
@@ -51,7 +57,7 @@ methods:
                             }
                         });
                     }
-                });            
+                });
 
       - platform: rest
         example: |
@@ -70,6 +76,24 @@ methods:
                 }
 
       - platform: ios
+        example: |
+            Example iOS APS SDK call:
+
+                // Create dictionary of parameters to be passed with the request
+                NSDictionary *data = @{
+                    @"device_token": deviceToken,
+                    @"loc": @[longitude, latitude]
+                };
+
+                [APSPushNotifications updateSubscription:data withBlock:^(APSResponse *e) {
+                      if (e.success) {
+                          [[[UIAlertView alloc] initWithTitle:@"Great" message:@"Success!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      } else {
+                          [[[UIAlertView alloc] initWithTitle:@"Error" message:e.errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      }
+                }];
+
+      - platform: ios-acssdk
         example: |
             Example iOS call:
 
@@ -94,21 +118,51 @@ methods:
                     }
                 }
 
-
       - platform: android
         example: |
             Example Android call:
-            
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("loc", [-122.23,37.12]);
+                data.put("device_token", "<DEVICE_TOKEN>");
+
+                try {
+                    APSPushNotifications.updateSubscription(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+
+                            if (e.getSuccess()) {
+                                Log.i("APSPushNotifications", "Subscription Updated!");
+                            } else {
+                                Log.e("APSPushNotifications", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSPushNotifications", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSPushNotifications", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
+        example: |
+            Example Android call:
+
                 ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
                 //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
                 Map<String, Object> data = new HashMap<String, Object>();
                 data.put("loc", [-122.23,37.12]);
                 data.put("device_token", "<DEVICE_TOKEN>");
                 CCResponse response = sdk.sendRequest("push_notifications/subscription/update.json", CCRequestMethod.PUT, data);
-                
+
             SDK Callback:
-            
+
                 JSONObject responseJSON = response.getResponseData();
                 CCMeta meta = response.getMeta();
                 if("ok".equals(meta.getStatus()) 
@@ -116,4 +170,3 @@ methods:
                     && "UpdateSubscription".equals(meta.getMethod())) {
                   ...
                 }
-            

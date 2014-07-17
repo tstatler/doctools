@@ -20,6 +20,12 @@ methods:
 
             Default is 3, valid range is 1 to 8.
         type: Number
+                
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
 
     examples:
       - platform: titanium
@@ -43,7 +49,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt  https://api.cloud.appcelerator.com/v1/users/show/me.json?key=<YOUR APP APP KEY>
+                $ curl -b cookies.txt -c cookies.txt  https://api.cloud.appcelerator.com/v1/users/show/me.json?key=<YOUR APP APP KEY>&pretty_print=true
 
             Example JSON response:
 
@@ -91,6 +97,21 @@ methods:
         example: |
             Example iOS call:
 
+                [APSUsers showMe:nil withBlock:^(APSResponse *e) {
+                    if (e.success) {
+                        NSArray *users = e.response[@"users"];
+                        NSDictionary *user = files[0];
+                        NSString *message = [NSString stringWithFormat:@"I am %@ %@", user[@"first_name"], user[@"last_name"]];
+                        [[[UIAlertView alloc] initWithTitle:@"Success" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error" message:e.message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"users/show/me.json" paramDict:nil];
                 [request startAsynchronous];
                 [request release];
@@ -106,6 +127,38 @@ methods:
                 }
 
       - platform: android
+        example: |
+            Example Android call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+                final Activity currentActivity = this;
+
+                try {
+                    APSUsers.showMe(null, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                try {
+                                    Toast.makeText(currentActivity, e.getResponseString(), Toast.LENGTH_SHORT);
+                                } catch (APSCloudException err) {
+                                    Log.e("APSUsers", "Exception thrown: " + err.toString());
+                                }
+                            } else {
+                                Log.e("APSUsers", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSUsers", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSUsers", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
         example: |
             Example Android call:
 

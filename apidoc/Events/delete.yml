@@ -26,6 +26,12 @@ methods:
             behalf of another user.
         type: String
 
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean        
+
     examples:
       - platform: titanium
         example: |
@@ -46,7 +52,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt -X DELETE "https://api.cloud.appcelerator.com/v1/events/delete.json?key=<YOUR APP APP KEY>&event_id=4d86d26ed0afbe107400000f"
+                $ curl -b cookies.txt -c cookies.txt -X DELETE "https://api.cloud.appcelerator.com/v1/events/delete.json?key=<YOUR APP APP KEY>&pretty_print=true&event_id=4d86d26ed0afbe107400000f"
 
             Example JSON response:
 
@@ -59,6 +65,23 @@ methods:
                 }
 
       - platform: ios
+        example: |
+            Example iOS APS SDK call:
+
+                // Create dictionary of parameters to be passed with the request
+                NSDictionary *data = @{
+                      @"event_id": savedEventId
+                };
+                
+                [APSEvents remove:data withBlock:^(APSResponse *e) {
+                      if (e.success) {
+                          [[[UIAlertView alloc] initWithTitle:@"Great" message:@"Success!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      } else {
+                          [[[UIAlertView alloc] initWithTitle:@"Error" message:e.errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      }
+                }];
+
+      - platform: ios-acssdk
         example: |
             Example iOS call:
 
@@ -76,7 +99,39 @@ methods:
                 	}
                 }
 
+
       - platform: android
+        example: |
+            Example Android APS SDK call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+
+                HashMap<String, Object> data = new HashMap<String, Object>();
+                data.put("event_id", "4d7e62d6d0afbe04170000a4");
+
+                try {
+                    APSEvents.remove(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                Log.i("APSEvents", "Removed!");
+                            } else {
+                                Log.e("APSEvents", e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(APSCloudException e) {
+                            Log.e("APSEvents", e.toString());
+                        }
+                    });
+                } catch (APSClientError e) {
+                    Log.e("APSEvents", e.toString());
+                }
+
+
+      - platform: android-acssdk
         example: |
             Example Android call:
 

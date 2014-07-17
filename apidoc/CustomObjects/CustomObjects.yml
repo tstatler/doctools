@@ -1,13 +1,15 @@
 name: CustomObjects
 description: |
-    Custom Objects lets you define your own object types that can be integrated with
-    existing ACS objects. Each Custom Object can have a default primary photo and
-    reviews/comments/likes.
+    The CustomObjects API lets you define your own object types that can be integrated with
+    existing ACS objects. Each CustomObject can have a default primary photo and
+    have associated reviews, comments, and likes.
 
-    To distinguish different typs of custom ACS objects, you use a unique URL for each class 
-    of objects. The URL for a custom object method has the format:
+    To distinguish different types of custom ACS objects, you use a unique URL for each class 
+    of custom object. The URL for a custom object method has the following format:
 
-        https://api.cloud.appcelerator.com/v1/objects/:class_name/<method>.json
+    <!-- Note: Using HTML to have more control over formatting of the URL string.  -->
+
+    <code class="prettyprint">https://api.cloud.appcelerator.com/v1/objects/<em>classname</em>/<em>method</em>.json</code>
 
     For example, if your application uses `cars` and `drivers` objects, you would use
     different URLs to create them:
@@ -16,7 +18,7 @@ description: |
 
         https://api.cloud.appcelerator.com/v1/objects/drivers/create.json
 
-    When custom objects are returned in a response, the class_name is used as a property
+    When custom objects are returned in a response, the `classname` is used as a property
     name. For example, if you query a list of custom `cars` objects, the response would 
     include a `cars` array:
 
@@ -40,7 +42,7 @@ description: |
 
     Supported data types for custom object fields are:
 
-    <table class="doc_content_table">
+    <table class="doc-table">
     <tr><th>Type</th><th>Example</th>
     <tr>
     <td>String&nbsp;&nbsp;&nbsp;&nbsp;</td>
@@ -59,15 +61,15 @@ description: |
     Fields can also include more complex data types such as Array and Hash. Hash and Array can be nested inside each other. 
     Currently, data stored inside an Array or Hash is not queryable.
 
-    <table class="doc_content_table">
+    <table class="doc-table">
             <tr><th>Type</th><th>Example</th>
             <tr>
                 <td>Hash&nbsp;&nbsp;</td>
-                <td>{"age":23,"scores":{"math":90, "physics":100}, "my_favorite_colors":["blue","red"]}</td>
+                <td><code>{"age":23,"scores":{"math":90, "physics":100}, "my_favorite_colors":["blue","red"]}</code></td>
             </tr>
             <tr>
                 <td>Array&nbsp;&nbsp;</td>
-                <td>["nissan", "honda"] or [2006, 2008], [{"age":28}, {"color":"blue"}]</td>
+                <td><code>["nissan", "honda", "toyota"]</code> or <code>[2006, 2008], [{"age":28}, {"color":"blue"}]</code></td>
             </tr>
     </table>
 

@@ -1,6 +1,6 @@
 name: Places
 description: |
-    Provides APIs to create and manage places. A place can be specified using an address or
+    The Places API provides methods to create and manage places. A place can be specified using a street address or
     geographic coordinates.
 
 mixin: Reviewable

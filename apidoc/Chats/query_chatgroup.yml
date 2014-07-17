@@ -41,6 +41,12 @@ methods:
         description: Number of results per page, default is 10.
         type: Number
 
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean        
+
       - name: limit
         description: |
             Instead of using `page` and `per_page` for pagination, you can use `limit` and
@@ -116,7 +122,7 @@ methods:
         example: |
             Gets a list of chat groups the specified user belongs to.
 
-                $ curl -b cookies.txt -c cookies.txt -X GET --data-urlencode "participate_id=4ee04f4cd9ca72680d000002" "https://api.cloud.appcelerator.com/v1/chats/query_chat_groups.json?key=<YOUR APP APP KEY>"
+                $ curl -b cookies.txt -c cookies.txt -X GET --data-urlencode "participate_id=4ee04f4cd9ca72680d000002" "https://api.cloud.appcelerator.com/v1/chats/query_chat_groups.json?key=<YOUR APP APP KEY>&pretty_print=true"
 
             Example JSON response:
 
@@ -243,6 +249,24 @@ methods:
 
       - platform: ios
         example: |
+            Example iOS APS SDK call:
+
+                // Create dictionary of parameters to be passed with the request
+                NSDictionary *data = @{
+                      @"to_ids": @[@"4edef6f7d9ca7247b8000004", @"4edf0c20d9ca724a82000003"],
+                      @"message": @"Good morning"
+                };
+                
+                [APSChats create:data withBlock:^(APSResponse *e) {
+                      if (e.success) {
+                          [[[UIAlertView alloc] initWithTitle:@"Great" message:@"Success!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      } else {
+                          [[[UIAlertView alloc] initWithTitle:@"Error" message:e.errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      }
+                }];
+
+      - platform: ios-acssdk
+        example: |
             Example iOS call:
 
                 NSDictionary *paramDict = [[NSArray arrayWithObjects:@"4e02f5b8d0afbe43c1000002", nil], @"participate_ids", nil];
@@ -261,6 +285,42 @@ methods:
                 }
 
       - platform: android
+        example: |
+            Example Android APS SDK call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+
+                try {
+                    APSChats.queryChatGroups(null, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                try {
+                                    JSONArray chat_groups = e.getResponse().getJSONArray("chat_groups");
+                                    if (chat_groups.length() <= 0) {
+                                        Log.i("APSChats", "No Results!");
+                                    } else {
+                                        // Do something with the chat_groups array
+                                    }
+                                } catch (JSONException err) {
+                                       Log.e("APSChats", "Exception thrown: " + err.toString());
+                                }
+                            } else {
+                                Log.e("APSChats", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(APSCloudException e) {
+                            Log.e("APSChats", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSChats", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
         example: |
             Example Android call:
 

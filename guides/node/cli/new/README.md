@@ -40,6 +40,10 @@ they are prompted to choose an organization. See [Examples](#!/guide/node_cli_ne
             <a href="/cloud/latest/#!/guide/node_mvc">MVC framework</a>.</td>
         </tr>
         <tr>
+            <td><code>--org <em>orgID</em></code></td>
+            <td>The ID of the organization to associate the application with. Only available for Appcelerator Platform users with Node.ACS access.</td> 
+        </tr>
+        <tr>
             <td><code>-h</code>, <code>--help</code></td>
             <td>Show help information for the command.</td>
         </tr>

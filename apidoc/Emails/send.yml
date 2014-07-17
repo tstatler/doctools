@@ -7,6 +7,10 @@ methods:
         configured your project's SMTP settings yet, please goto your App Settings and configure
         and test your SMTP setting. You also need to create at least one email
         template. The email template body supports HTML formatted text.
+
+        Before you can send email you must first configure your SMTP
+        server settings on the Cloud > Settings & Configuration tab in [Appcelerator Dashboard](https://dashboard.appcelerator.com)
+        or the Settings tab in [My Apps](https://my.appcelerator.com/apps).
     url: custom_mailer/email_from_template.json
     http-method: POST
 
@@ -31,7 +35,13 @@ methods:
             * If you use Google as your SMTP server, the email will always be sent using the email account 
             you used to configure the SMTP service. 
             * Some SMTP service provider require the sender's email address to be present.
-        type: String            
+        type: String      
+
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean              
 
     examples:
       - platform: titanium
@@ -54,7 +64,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt -F "recipients=joe@company.com" -F "template=welcome" https://api.cloud.appcelerator.com/v1/custom_mailer/email_from_template.json?key=<YOUR APP APP KEY>
+                $ curl -b cookies.txt -c cookies.txt -F "recipients=joe@company.com" -F "template=welcome" https://api.cloud.appcelerator.com/v1/custom_mailer/email_from_template.json?key=<YOUR APP APP KEY>&pretty_print=true
 
             Example JSON response:
 
@@ -68,6 +78,24 @@ methods:
 
       - platform: ios
         example: |
+            Example iOS APS SDK call:
+
+                // Create dictionary of parameters to be passed with the request
+                NSDictionary *data = @{
+                      @"template": @"welcome",
+                      @"recipients": @"joe@company.com"
+                };
+                
+                [APSEmails send:data withBlock:^(APSResponse *e) {
+                      if (e.success) {
+                          [[[UIAlertView alloc] initWithTitle:@"Great" message:@"Success!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      } else {
+                          [[[UIAlertView alloc] initWithTitle:@"Error" message:e.errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      }
+                }];
+
+      - platform: ios-acssdk
+        example: |
             Example iOS call:
 
                 NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:@"welcome", @"template", @"joe@company.com", @"recipients", nil ];
@@ -78,12 +106,50 @@ methods:
 
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
-                	if ([response.meta.method isEqualToString:@"emailFromTemplate"]) {
-                		NSLog(@"Email from template sent!");
-                	}
+                    if ([response.meta.method isEqualToString:@"emailFromTemplate"]) {
+                        NSLog(@"Email from template sent!");
+                    }
                 }
 
+
       - platform: android
+        example: |
+            Example Android APS SDK call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+                final Activity currentActivity = this;
+
+                HashMap<String, Object> data = new HashMap<String, Object>();
+                data.put("recipients", "joe@company.com");
+                data.put("template", "welcome");
+
+                try {
+                    APSEmails.send(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                new AlertDialog.Builder(currentActivity)
+                                .setTitle("Alert").setMessage("Sent!")
+                                .setPositiveButton(android.R.string.ok, null)
+                                .setIcon(android.R.drawable.ic_dialog_info)
+                                .show();
+                            } else {
+                                Log.e("APSEmail", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSEmails", "Exception thrown: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSEmails", "Exception thrown: " + e.toString());
+                }
+
+
+      - platform: android-acssdk
         example: |
             Example Android call:
 
@@ -123,7 +189,7 @@ methods:
                     if(data.meta) {
                       var meta = data.meta;
                       if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'emailFromTemplate') {
-                      	...
+                        ...
                       }
                     }
                   }

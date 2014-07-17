@@ -22,7 +22,7 @@ application's directory with **-d** or **--dir** options.
         </tr>
         <tr>
             <td><code>-p</code>, <code>--port</code> <em>Port</em></td>
-            <td>Start the application on a specific port. If omitted, port '8080' is be used.  
+            <td>Start the application on a specific port. If omitted, port '8080' is used.  
                 This option only takes effect for applications using the [Node.ACS MVC framework](#!/guide/node_mvc).</td>
         </tr>
         <tr>

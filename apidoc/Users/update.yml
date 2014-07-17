@@ -80,6 +80,12 @@ methods:
             An ACL can be specified using `acl_name` or `acl_id`. The two parameters are
             mutually exclusive.
         type: String
+                
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
 
     response-parameters:
       - name: users
@@ -116,7 +122,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt -X PUT -d "email=mike@appcelerator.com" https://api.cloud.appcelerator.com/v1/users/update.json?key=<YOUR APP APP KEY>
+                $ curl -b cookies.txt -c cookies.txt -X PUT -d "email=mike@appcelerator.com" https://api.cloud.appcelerator.com/v1/users/update.json?key=<YOUR APP APP KEY>&pretty_print=true
 
             Example JSON response:
 
@@ -145,7 +151,26 @@ methods:
         example: |
             Example iOS call:
 
-                If you want to change user name to Joe and update with a new photo, you can pass in the new user name and a new photo to the update request.
+                // Create dictionary of parameters to be passed with the request
+                NSDictionary *data = @{
+                    @"first_name": @"Joe"
+                };
+                
+                [APSUsers update:data withBlock:^(APSResponse *e) {
+                    if (e.success) {
+                        [[[UIAlertView alloc] initWithTitle:@"Success" message:@"Updated!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error" message:e.message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
+            If you want to change user name to Joe and update with a new photo, you can pass in
+            the new user name and a new photo to the update request.
+
                 NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:@"Joe", @"name", nil]
                 CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"PUT" baseUrl:@"users/update.json" paramDict:paramDict];
                 [request addPhotoUIImage:(UIImage *)newUserImage paramDict:nil];
@@ -163,6 +188,46 @@ methods:
                 }
 
       - platform: android
+        example: |
+            Example Android APS SDK call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+                final Activity currentActivity = this;
+
+                HashMap<String, Object> data = new HashMap<String, Object>();
+                data.put("email", "test@appcelerator.com");
+                data.put("first_name", "test_firstname");
+                data.put("last_name", "test_lastname");
+                data.put("password", "test_password");
+                data.put("password_confirmation", "test_password");
+                data.put("photo", new File("/photos/profile.gif"));
+
+                try {
+                    APSUsers.update(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                new AlertDialog.Builder(currentActivity)
+                                .setTitle("Success").setMessage("Updated!")
+                                .setPositiveButton(android.R.string.ok, null)
+                                .setIcon(android.R.drawable.ic_dialog_info)
+                                .show();
+                            } else {
+                                Log.e("APSUsers", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSUsers", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSUsers", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
         example: |
             Example Android call:
 

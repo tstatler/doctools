@@ -12,6 +12,12 @@ methods:
             If specified, all push subscriptions associated with this device token are
             canceled. See the "Push Notifications" section in the
             [Android SDK guide](#!/guide/sdks/android) for more information.
+                    
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean            
 
     examples:
       - platform: titanium
@@ -31,7 +37,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt https://api.cloud.appcelerator.com/v1/users/logout.json?key=<YOUR APP APP KEY>
+                $ curl -b cookies.txt -c cookies.txt https://api.cloud.appcelerator.com/v1/users/logout.json?key=<YOUR APP APP KEY>&pretty_print=true
 
             Example JSON response:
 
@@ -44,6 +50,18 @@ methods:
                 }
 
       - platform: ios
+        example: |
+            Example iOS APS SDK call:
+
+                [APSUsers logout:nil withBlock:^(APSResponse *e) {
+                    if (e.success) {
+                        [[[UIAlertView alloc] initWithTitle:@"Success" message:@"Logged out!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error" message:e.message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
         example: |
             Example iOS call:
 
@@ -60,6 +78,34 @@ methods:
                 }
 
       - platform: android
+        example: |
+            Example Android call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+                final Activity currentActivity = this;
+
+                try {
+                    APSUsers.logout(null, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                Toast.makeText(currentActivity, "Logged out!", Toast.LENGTH_SHORT);
+                            } else {
+                                Log.e("APSUsers", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSUsers", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSUsers", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
         example: |
             Example Android call:
 

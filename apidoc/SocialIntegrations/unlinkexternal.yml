@@ -23,6 +23,11 @@ methods:
         type: String
         required: True
 
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
 
     response-parameters:
       - name: users
@@ -35,7 +40,7 @@ methods:
         example: |
             This example unlinks an external Facebook account.
 
-                Cloud.SocialIntegrations.externalAccountLink({
+                Cloud.SocialIntegrations.externalAccountUnlink({
                     type: 'facebook',
                     id: facebookUserId
                 }, function (e) {
@@ -55,7 +60,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt -X DELETE "https://api.cloud.appcelerator.com/v1/users/external_account_unlink.json?key=<YOUR APP APP KEY>&id;=1234567&type=facebook"
+                $ curl -b cookies.txt -c cookies.txt -X DELETE "https://api.cloud.appcelerator.com/v1/users/external_account_unlink.json?key=<YOUR APP APP KEY>&pretty_print=true&id=1234567&type=facebook"
 
             Example JSON response:
 
@@ -92,6 +97,25 @@ methods:
 
       - platform: ios
         example: |
+            Example iOS APS SDK call:
+
+                // Create dictionary of parameters to be passed with the request
+                NSDictionary *data = @{
+                    @"type": @"facebook",
+                    @"id": facebookUserId
+                };
+                
+                [APSSocialIntegrations externalAccountUnlink:data withBlock:^(APSResponse *e) {
+                      if (e.success) {
+                          NSString *message = [NSString stringWithFormat:@"Unlinked %lu users", (unsigned long)((NSArray *) e.response[@"users"]).count ];
+                          [[[UIAlertView alloc] initWithTitle:@"Success" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      } else {
+                          [[[UIAlertView alloc] initWithTitle:@"Error" message:e.errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      }
+                }];
+
+      - platform: ios-acssdk
+        example: |
             Example iOS call:
 
                 NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
@@ -114,10 +138,41 @@ methods:
         example: |
             Example Android call:
 
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("id", "109216395704353");
+                data.put("type", "facebook");
+
+                try {
+                    APSSocialIntegrations.externalAccountUnlink(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                Log.i("APSSocialIntegrations", "Success!");
+                            } else {
+                                Log.e("APSSocialIntegrations", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSSocialIntegrations", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSSocialIntegrations", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
+        example: |
+            Example Android call:
+
                 ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
                 //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
 
-                data = new HashMap<String, Object>();
+                Map<String, Object> data = new HashMap<String, Object>();
                 data.put("id", "109216395704353");
                 data.put("type", "facebook");
                 CCResponse response = sdk.sendRequest("social/facebook/unlink.json", CCRequestMethod.DELETE, data);

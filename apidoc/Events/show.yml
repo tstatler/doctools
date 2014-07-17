@@ -30,6 +30,19 @@ methods:
             Default is 3, valid range is 1 to 8.
         type: Number
 
+      - name: show_user_like
+        description: | 
+            If set to **true** the Event object in the response will include `"current_user_liked: true"`
+            if the current user has liked the object. If the user has not liked the object, the 
+            `current_user_liked` field is not included in the response.
+        type: Boolean                
+
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
+
     response-parameters:
       - name: events
         description: List of events.
@@ -59,7 +72,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/events/show.json?key=<YOUR APP APP KEY>&event_id=4d870f8bd0afbe1074000017"
+                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/events/show.json?key=<YOUR APP APP KEY>&pretty_print=true&event_id=4d870f8bd0afbe1074000017"
 
             Example JSON response:
 
@@ -111,6 +124,24 @@ methods:
 
       - platform: ios
         example: |
+            Example iOS APS SDK call:
+
+                // Create dictionary of parameters to be passed with the request
+                NSDictionary *data = @{
+                      @"place_id": savedPlaceId
+                };
+
+                [APSEvents show:data withBlock:^(APSResponse *e) {
+                      if (e.success) {
+                          NSString *message = [NSString stringWithFormat:@"Found %lu events", (unsigned long)((NSArray *)e.response[@"events"]).count];
+                          [[[UIAlertView alloc] initWithTitle:@"Success" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      } else {
+                          [[[UIAlertView alloc] initWithTitle:@"Error" message:e.errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      }
+                }];
+
+      - platform: ios-acssdk
+        example: |
             Example iOS call:
 
                 NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:(CCEvent *)event.objectId, @"event_id", nil];
@@ -122,12 +153,47 @@ methods:
 
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
-                	if ([response.meta.method isEqualToString:@"showEvents"]) {
-                		NSArray *events = [response getObjectsOfType:[CCEvent class]];
-                	}
+                  if ([response.meta.method isEqualToString:@"showEvents"]) {
+                    NSArray *events = [response getObjectsOfType:[CCEvent class]];
+                  }
                 }
 
       - platform: android
+        example: |
+            Example Android APS SDK call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+
+                HashMap<String, Object> data = new HashMap<String, Object>();
+                data.put("event_id", "4d870f8bd0afbe1074000017");
+
+                try {
+                    APSEvents.show(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+
+                            if (e.getSuccess()) {
+                                try {
+                                    Log.i("APSEvents", e.getResponseString());
+                                } catch (APSCloudException e1) {
+                                    Log.e("APSEvents", e1.toString());
+                                }
+                            } else {
+                                Log.e("APSEvents", e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(APSCloudException e) {
+                            Log.e("APSEvents", e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSEvents", e.toString());
+                }
+
+      - platform: android-acssdk
         example: |
             Example Android call:
 
@@ -167,7 +233,7 @@ methods:
                       var meta = data.meta;
                       if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'showEvents') {
                         var events = data.response.events;
-                      	...
+                        ...
                       }
                     }
                   }
@@ -191,8 +257,8 @@ methods:
                     if(data.hasOwnProperty("meta")) {
                       var meta:Object = data.meta;
                       if(meta.status == "ok" && meta.code == 200 && meta.method_name == "showEvents") {
-                      	var events:Array = data.response.events;
-                      	...
+                        var events:Array = data.response.events;
+                        ...
                       }
                     }
                   }

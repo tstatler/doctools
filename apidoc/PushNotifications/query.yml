@@ -14,7 +14,10 @@ methods:
         required: true
 
       - name: channel
-        description: Name of the push notification channel.
+        description: |
+            Name of the push notification channel.
+
+            The name of the push channel cannot start with a hash symbol ('#').
         type: String
 
       - name: device_token
@@ -38,6 +41,12 @@ methods:
       - name: per_page
         description: Number of results per page, default is 10.
         type: Number
+        
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
 
     response-parameters:
       - name: subscriptions
@@ -76,7 +85,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/push_notification/query.json?key=<YOUR APP APP KEY>&user_id=4f5905b5d2951316a9000020"
+                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/push_notification/query.json?key=<YOUR APP APP KEY>&pretty_print=true&user_id=4f5905b5d2951316a9000020"
 
             Example JSON response:
 
@@ -108,7 +117,66 @@ methods:
                   }
                 }
 
+      - platform: ios
+        example: |
+            Example iOS APS SDK call:
+
+                // Create dictionary of parameters to be passed with the request
+                NSDictionary *data = @{
+                    @"user_id": userId
+                };
+                
+                [APSPushNotifications query:data withBlock:^(APSResponse *e) {
+                      if (e.success) {
+                          NSString *message = [NSString stringWithFormat:@"Found %lu subscriptions", (unsigned long)((NSArray *) e.response[@"subscriptions"]).count ];
+                          [[[UIAlertView alloc] initWithTitle:@"Success" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      } else {
+                          [[[UIAlertView alloc] initWithTitle:@"Error" message:e.errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      }
+                }];
+
       - platform: android
+        example: |
+            Example Android call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("user_id", "4f5905b5d2951316a9000020");
+
+                try {
+                    APSPushNotifications.query(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+
+                            if (e.getSuccess()) {
+                                try {
+                                    JSONArray subscriptions = e.getResponse().getJSONArray("subscriptions");
+                                    if (subscriptions.length() <= 0) {
+                                        Log.i("APSPushNotifications", "No Results!");
+                                    } else {
+                                        for (int i = 0; i < subscriptions.length(); i++) {
+                                            Log.i("APSPushNotifications", subscriptions.getJSONObject(i).toString());
+                                        }
+                                    }
+                                } catch (JSONException err) {
+                                    Log.e("APSPushNotifications", "Exception thrown: " + err.toString());
+                                }
+                            } else {
+                                Log.e("APSPushNotifications", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSPushNotifications", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSPushNotifications", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
         example: |
             Example Android call:
 

@@ -1,15 +1,13 @@
 name: PushSchedules
 description: |
-    <p class="note">This feature is only available for Enterprise users, and the current user must
-    be an application admin to use this API.</p>
+    <p class="note">This feature requires an Appcelerator Platform subscription, and the current user must
+    be an application admin to use the API.</p>
 
-    The Push Schedule API lets you send scheduled push notifications to your users who are on iOS and
-    Android Devices. You can also send a scheduled push notification to all users from the Appcelerator
-    Dashboard.
+    The PushSchedules API lets you schedule push notifications to be delivered to your application users
+     on a recurring or one-time basis.
 
-    You may create up to 100 scheduled push notifications for your application.
-
-    Datetime fields use the ISO 8601 format, for example, `YYYY-MM-DDTHH:mm:ss+ZZZZ`.
+      * You may create up to 100 scheduled push notifications for your application.
+      * Datetime fields use the ISO 8601 format, for example, `YYYY-MM-DDTHH:mm:ss+ZZZZ`.
 
     For information on setting up push notifications, see {@link PushNotifications}.
 
@@ -23,7 +21,7 @@ fields:
     type: Date
 
   - name: name
-    description: Arbitray name for the scheduled push notification.
+    description: Arbitrary name for the scheduled push notification.
     type: String
 
   - name: push_notification
@@ -31,6 +29,7 @@ fields:
         Push notification to send for scheduled pushes.
 
           * *channel* (String): Name of the channel to send the push notification to.
+            The name of the push channel cannot start with a hash symbol ('#').
           * *payload* (Hash): Payload to send to the device. Same format as {@link PushNotifications#notify}.
           * *to_ids* (Array<String>/String): Array or comma-separated list of IDs to send push notifications to.
           * *options* (Hash): Dictionary of additional options
@@ -45,7 +44,7 @@ fields:
     description: |
         Schedules the recurrence of the push notification.
 
-          * *interval* (Number/String): Value in minutes to repeat the notification or `daily`, `weeky` or `monthly`.
+          * *interval* (Number/String): Value in minutes to repeat the notification or `daily`, `weekly` or `monthly`.
           * *end_time* (Date): Datetime to end the push notifications in ISO 8601 format. Must occur after `start_time`.
     type: Hash
     

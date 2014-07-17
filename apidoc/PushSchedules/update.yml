@@ -18,31 +18,30 @@ methods:
     login-required: true
     admin-required: true
 
-    parameters: 
+    parameters:
 
       - name: schedule
         description: |
             Push notification to schedule.
 
-              * *name* (String): Arbitrary name to give to the scheduled push notification.
-              * *push_notification* (Hash): Push notification to send (**required**).
-              
-                  * *channel* (String): Name of the channel to send the push notification to.
-                  * *payload* (Hash): Payload to send to the device. Same format as {@link PushNotifications#notify} (**required**).
-                  * *to_ids* (Array<String>/String): Array or comma-separated list of IDs to send push notifications to.
-                  * *options* (Hash): Dictionary to specify additional options:
-                      * *expire_after_seconds* (Number): Expiration time in seconds of when to stop
-                        sending the push notification based on the start date. For example, if the push
-                        notification is scheduled to be sent in a week and the expiration time is for a
-                        day.  The push expires in eight days and will not be sent if the user's device
-                        has been off before the send day and after the end of the expiration period.
-         
-              * *recurrence* (Hash): Schedules the recurrence of the push notification.
+            * *name* (String): Arbitrary name to give to the scheduled push notification.
+            * *push_notification* (Hash): Push notification to send (**required**).
+  
+            * *channel* (String): Name of the channel to send the push notification to.
+            * *payload* (Hash): Payload to send to the device. Same format as {@link PushNotifications#notify} (**required**).
+            * *to_ids* (Array<String>/String): Array or comma-separated list of IDs to send push notifications to.
+            * *options* (Hash): Dictionary to specify additional options:
+              * *expire_after_seconds* (Number): Expiration time in seconds of when to stop
+            sending the push notification based on the start date. For example, if the push
+            notification is scheduled to be sent in a week and the expiration time is for a
+            day.  The push expires in eight days and will not be sent if the user's device
+            has been off before the send day and after the end of the expiration period.
+            * *recurrence* (Hash): Schedules the recurrence of the push notification.
 
-                   * *interval* (String): Set to either `daily`, `weeky` or `monthly`.
-                   * *end_time* (Date): Datetime to end the push notifications in ISO 8601 format. 
-                   Value must be greater than the current date and time, and the previous `end_time` must not have expired.
-    
+                 * *interval* (String): Set to either `daily`, `weeky` or `monthly`.
+                 * *end_time* (Date): Datetime to end the push notifications in ISO 8601 format. 
+                 Value must be greater than the current date and time, and the previous `end_time` must not have expired.
+
         type: Hash
         required: true
 
@@ -54,7 +53,7 @@ methods:
 
       - name: where
         description: |
-          
+
             A JSON-encoded object that defines a location query used to select the devices
             that will receive the scheduled notification. Up to 1000 users can be returned by the query. To specify a location query, set the `loc` field to a
             [MongoDB Geospatial Query](http://docs.mongodb.org/manual/reference/operator/query-geospatial/).
@@ -73,7 +72,13 @@ methods:
 
             For an example of using this parameter, see the REST examples in the PushSchedules {@link PushSchedules#create} method.
             For details about using the `where` parameter, see the [Search and Query guide](#!/guide/search_query).
-        type: Hash        
+        type: Hash
+        
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean     
 
 
     response-parameters:
@@ -121,4 +126,29 @@ methods:
                   }
                 }
 
+      - platform: ios
+        example: |
+            Example iOS APS SDK call:
 
+                // Create dictionary of parameters to be passed with the request
+                NSDictionary *data = @{
+                    @"schedule": @{
+                        @"start_time": @"2015-09-10T10:11",
+                        @"recurrence": @{
+                            @"interval": @"weekly",
+                            @"end_time": @"2015-09-10T10:11"
+                        },
+                        @"push_notification": @{
+                            @"payload": @"hello world",
+                            @"channel": @"channelTwo"
+                        }
+                    }
+                };
+                
+                [APSPushSchedules update:data withBlock:^(APSResponse *e) {
+                      if (e.success) {
+                          [[[UIAlertView alloc] initWithTitle:@"Great" message:@"Success!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      } else {
+                          [[[UIAlertView alloc] initWithTitle:@"Error" message:e.errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      }
+                }];

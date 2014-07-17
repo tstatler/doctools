@@ -28,6 +28,13 @@ methods:
             controlled by this ACL.
         type: String
 
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
+
+
       - name: public_read
         description: |
             Determines whether objects controlled by this ACS are publically readable.
@@ -80,7 +87,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b c.txt -c c.txt -F "name=access_photo_album" -F "reader_ids[]=4fcdab1f47b7b71933000003" -F "reader_ids[]=4fcdab1f47b7b71933000004" -F "reader_ids[]=4fcdab2047b7b71933000005" -F "writer_ids[]=4fcdab1f47b7b71933000003" https://api.cloud.appcelerator.com/v1/acls/create.json?key=<YOUR APP APP KEY>
+                $ curl -b c.txt -c c.txt -F "name=access_photo_album" -F "reader_ids[]=4fcdab1f47b7b71933000003" -F "reader_ids[]=4fcdab1f47b7b71933000004" -F "reader_ids[]=4fcdab2047b7b71933000005" -F "writer_ids[]=4fcdab1f47b7b71933000003" https://api.cloud.appcelerator.com/v1/acls/create.json?key=<YOUR APP APP KEY>&pretty_print=true
 
             Example JSON response:
 
@@ -129,6 +136,25 @@ methods:
 
       - platform: ios
         example: |
+            Example iOS APS SDK call:
+
+                // Create dictionary of parameters to be passed with the request
+                NSDictionary *data = @{
+                    @"name": @"testACL",
+                    @"reader_ids": @"4fcdab1f47b7b71933000003",
+                    @"reader_ids": @"4fcdab1f47b7b71933000003"
+                };
+
+                [APSACLs create:data withBlock:^(APSResponse *e) {
+                    if (e.success) {
+                        [[[UIAlertView alloc] initWithTitle:@"Great" message:@"Success!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error" message:e.errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
             Example iOS call:
 
                 NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
@@ -153,6 +179,43 @@ methods:
                 }
 
       - platform: android
+        example: |
+            Example Android call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+                final Activity currentActivity = this;
+
+                HashMap<String, Object> data = new HashMap<String, Object>();
+                data.put("name", "access_photo_album");
+                data.put("reader_ids", "4fcdab1f47b7b71933000003,4fcdab1f47b7b71933000004,4fcdab1f47b7b71933000005");
+                data.put("writer_ids", "4fcdab1f47b7b71933000003");
+
+                try {
+                    APSACLs.create(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                new AlertDialog.Builder(currentActivity)
+                                .setTitle("Success!").setMessage("Created ACL!")
+                                .setPositiveButton(android.R.string.ok, null)
+                                .setIcon(android.R.drawable.ic_dialog_info)
+                                .show();
+                            } else {
+                                Log.e("APSACLs", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSACLs", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSACLs", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acsdk
         example: |
             Example Android call:
 

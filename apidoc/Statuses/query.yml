@@ -60,6 +60,13 @@ methods:
             Selects the object fields to display. Do not use this parameter with `unsel`.
         type: Hash
 
+      - name: show_user_like
+        description: |
+            If set to **true**, each Status object in the response includes `"current_user_liked: true"`
+             if the current user has liked the object. If the user has not liked the object, the 
+            `current_user_liked` field is not included in the response.
+        type: Boolean    
+
       - name: unsel
         description: |
             Selects the object fields NOT to display. Do not use this parameter with `sel`.
@@ -76,6 +83,12 @@ methods:
 
             Default is 3, valid range is 1 to 8.
         type: Number
+                
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
 
     response-parameters:
       - name: statuses
@@ -111,7 +124,7 @@ methods:
             Example cURL request:
             
                 Example: Query statuses created earlier than "2011-03-02T19:05:33+0000"
-                $ curl -c cookies.txt -b cookies.txt -X GET --data-urlencode  'where={"rating":{"$gt":7.0},"created_at":{"$lt":"2011-03-02T19:05:33+0000"}}' "https://api.cloud.appcelerator.com/v1/statuses/query.json?key=<YOUR APP APP KEY>"
+                $ curl -c cookies.txt -b cookies.txt -X GET --data-urlencode  'where={"rating":{"$gt":7.0},"created_at":{"$lt":"2011-03-02T19:05:33+0000"}}' "https://api.cloud.appcelerator.com/v1/statuses/query.json?key=<YOUR APP APP KEY>&pretty_print=true"
                 
             Example JSON response:
             
@@ -133,20 +146,42 @@ methods:
                         "created_at":"2011-03-02T18:05:33+0000",
                         "updated_at":"2011-03-02T18:05:33+0000",
                         "photo": {
-                	        "id":"4dcf261cd0afbe1833000002",
-                	        "filename":"photo.jpg",
-                	        "size":584344,
-                	        "md5":"589b8ad43ed20bf8e622d719642bc939",
-                	        "created_at":"2011-05-15T01:02:20+0000",
-                	        "updated_at":"2011-05-15T01:02:20+0000",
-                	        "processed":false
+                          "id":"4dcf261cd0afbe1833000002",
+                          "filename":"photo.jpg",
+                          "size":584344,
+                          "md5":"589b8ad43ed20bf8e622d719642bc939",
+                          "created_at":"2011-05-15T01:02:20+0000",
+                          "updated_at":"2011-05-15T01:02:20+0000",
+                          "processed":false
                         }
                       }
                     ]
                   }
                 }
-                
+
       - platform: ios
+        example: |
+            Example iOS APS SDK call:
+
+                NSDictionary *data = @{
+                    @"where": @{
+                        @"create_at":@{
+                            @"$lt":@"2011-03-02T19:05:33+0000"
+                        }
+                    }
+                };
+
+                [APSStatuses query:data withBlock:^(APSResponse *e) {
+                    if (e.success) {
+                        NSString *message = [NSString stringWithFormat:@"Found %lu statuses", (unsigned long)((NSArray *)e.response[@"statuses"]).count ];
+                        [[[UIAlertView alloc] initWithTitle:@"Success!" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error" message:e.message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    }
+                }];
+
+
+      - platform: ios-acssdk
         example: |
             Example iOS call:
             
@@ -160,31 +195,76 @@ methods:
             
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
-                	if ([response.meta.methodName isEqualToString:@"queryStatuses"]) {
-                		NSArray *statuses = [response getObjectsOfType:[CCStatus class]];
-                		for (CCStatus *status in statuses) {
-                			...
-                		}
-                	}
+                  if ([response.meta.methodName isEqualToString:@"queryStatuses"]) {
+                    NSArray *statuses = [response getObjectsOfType:[CCStatus class]];
+                    for (CCStatus *status in statuses) {
+                      ...
+                    }
+                  }
                 }
                 
       - platform: android
         example: |
             Example Android call:
-            
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+
+                try {
+                    HashMap<String, Object> data = new HashMap<String, Object>;
+                    JSONObject params = new JSONObject("{created_at': {'$lt': '2011-03-02T19:05:33+0000'}}");
+                    data.put("where", params);
+
+                    APSStatuses.query(null, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                try {
+                                    JSONArray statuses = e.getResponse().getJSONArray("statuses");
+                                    if (statuses.length(); <= 0) {
+                                        Log.i("APSStatuses", "No Results!");
+                                    } else {
+                                        for (int i = 0; i < statuses.length(); i++) {
+                                            JSONObject status = statuses.getJSONObject(i);
+                                            Log.i("APSStatuses", status.getString("message"));
+                                        }
+                                    }
+                                } catch (JSONException err) {
+                                    Log.e("APSStatuses", "Exception thrown: " + err.toString());
+                                }
+                            } else {
+                                Log.e("APSStatuses", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSStatuses", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSStatuses", "Exception thrown: " + e.toString());
+                } catch (APSCloudException e) {
+                    Log.e("APSStatuses", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
+        example: |
+            Example Android call:
+
                 Cocoafish sdk = new Cocoafish("<YOUR APP APP KEY>"); // app key
                 //Cocoafish sdk = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
-                
+
                 Map<String, Object> data = new HashMap<String, Object>();
-                data.put("where", "{'rating': {'$gt': 7.0}, 'created_at': {'$lt': '2011-03-02T19:05:33+0000'}");
+                data.put("where", "{'created_at': {'$lt': '2011-03-02T19:05:33+0000'}}");
                 CCResponse response = sdk.sendRequest("statuses/query.json", CCRequestMethod.GET, data);
-                
+
             SDK Callback:
-            
+
                 JSONObject responseJSON = response.getResponseData();
                 CCMeta meta = response.getMeta();
-                if("ok".equals(meta.getStatus()) 
-                    && meta.getCode() == 200 
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
                     && "queryStatuses".equals(meta.getMethod())) {
                   JSONArray statuses = responseJSON.getJSONArray("statuses");
                   ...
@@ -208,7 +288,7 @@ methods:
                       var meta = data.meta;
                       if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'queryStatuses') {
                         var statuses = data.response.statuses;
-                      	...
+                        ...
                       }
                     }
                   }

@@ -48,7 +48,6 @@ Downloads the currently deployed and active version of the application named **t
     $ acs download testapp
     ACS: Appcelerator Cloud Services Command-Line Interface, version 1.0.12
     Copyright (c) 2012-2014, Appcelerator, Inc. All Rights Reserved.
-    Admin Hostname: http://localhost
     App name: testapp Version: 0.2.0
     – Request sent, awaiting response...
     – Length: 13825281 (13502K)
@@ -67,11 +66,10 @@ Downloads version **0.2.0** of **testapp** to the current working directory:
     ########################### 38%
 
 Downloads version **0.1.0** of **testapp** to the the **`acs`** folder:
-    
+
     $ acs download --ver 0.1.0 --path ./acs testapp
     ACS: Appcelerator Cloud Services Command-Line Interface, version 1.0.12
     Copyright (c) 2012-2014, Appcelerator, Inc. All Rights Reserved.
-    Admin Hostname: http://localhost
     App name: testapp Version: 0.1.0
     – Request sent, awaiting response...
     – Length: 13825281 (13502K)
@@ -83,7 +81,6 @@ Attempts to download a non-existent application:
     $ acs download does_not_exist
     ACS: Appcelerator Cloud Services Command-Line Interface, version 1.0.12
     Copyright (c) 2012-2014, Appcelerator, Inc. All Rights Reserved.
-    Admin Hostname: http://localhost
     [ERROR] App not found! 
 
 Downloads the application named **testapp** that belongs to the organization with the ID of **12345**:
@@ -91,5 +88,4 @@ Downloads the application named **testapp** that belongs to the organization wit
     $ acs download testapp --org 12345
     ACS: Appcelerator Cloud Services Command-Line Interface, version 1.0.12
     Copyright (c) 2012-2014, Appcelerator, Inc. All Rights Reserved.
-    Admin Hostname: http://localhost
     [ERROR] App not found!     

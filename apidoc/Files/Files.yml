@@ -1,6 +1,6 @@
 name: Files
 description: |
-    The File object lets you manage large files (up to 25M).
+    The Files API lets you store files up to 25MB in the ACS cloud.
 fields:
   - name: id
     description: Generated ID for this object.

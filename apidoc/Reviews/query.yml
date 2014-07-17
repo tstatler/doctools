@@ -100,6 +100,13 @@ methods:
             Selects the object fields to display. Do not use this parameter with `unsel`.
         type: Hash
 
+      - name: show_user_like
+        description: |
+            If set to **true**, each Review object in the response includes `"current_user_liked: true"`
+             if the current user has liked the object. If the user has not liked the object, the 
+            `current_user_liked` field is not included in the response.
+        type: Boolean    
+
       - name: unsel
         description: |
             Selects the object fields NOT to display. Do not use this parameter with `sel`.
@@ -116,6 +123,12 @@ methods:
 
             Default is 3, valid range is 1 to 8.
         type: Number
+        
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
 
     response-parameters:
       - name: reviews
@@ -140,7 +153,6 @@ methods:
                         for (var i = 0; i < e.reviews.length; i++) {
                             var review = e.reviews[i];
                             alert('id: ' + review.id + '\n' +
-                                'id: ' + review.id + '\n' +
                                 'rating: ' + review.rating + '\n' +
                                 'content: ' + review.content + '\n' +
                                 'updated_at: ' + review.updated_at);
@@ -155,7 +167,7 @@ methods:
         example: |
             Queries for reviews with a rating greater than 7.
 
-                $ curl -c cookies.txt -b cookies.txt -X GET --data-urlencode 'where={"rating":{"$gt":7.0}}' "https://api.cloud.appcelerator.com/v1/reviews/query.json?key=<YOUR APP APP KEY>"
+                $ curl -c cookies.txt -b cookies.txt -X GET --data-urlencode 'where={"rating":{"$gt":7.0}}' "https://api.cloud.appcelerator.com/v1/reviews/query.json?key=<YOUR APP APP KEY>&pretty_print=true"
 
                 {
                   "meta": {
@@ -210,6 +222,42 @@ methods:
         example: |
             Example iOS call:
 
+                NSDictionary *data = @{
+                                         @"page" : @1,
+                                         @"per_page" : @20,
+                                         @"where" : @{
+                                            @"$gt" : @5.0
+                                         }
+                                      };
+                [APSReviews query:data withBlock:^(APSResponse *e) {
+                    if (e.success){
+                        NSArray *reviews = e.response[@"reviews"];
+                        for (NSDictionary *review in reviews) {
+                          NSString *message =[NSString stringWithFormat:@"id : %@\n rating : %@\n content : %@\nUpdated at : %@\n",
+                                                  review[@"id"],
+                                                  review[@"rating"],
+                                                  review[@"content"],
+                                                  review[@"updated_at"]];
+
+                          [[[UIAlertView alloc] initWithTitle:@"Success" 
+                                                      message:message
+                                                     delegate:nil 
+                                            cancelButtonTitle:@"OK" 
+                                            otherButtonTitles:nil] show];
+                        }
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:e.errorMessage
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
                 CCWhere *where = [[[CCWhere alloc] init] autorelease];
                 [where fieldName:@"coordinates" nearLat:37.12 nearLng:-122.23 maxDistanceMi:5.0];
                 [where fieldName:@"rating" greaterThan:[NSNumber numberWithInt:7]];
@@ -221,15 +269,60 @@ methods:
 
                 -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
                 {
-                	if ([response.meta.methodName isEqualToString:@"queryReviews"]) {
-                		NSArray *reviews = [response getObjectsOfType:[CCReview class]];
-                		for (CCReview *review in reviews) {
-                			...
-                		}
-                	}
+                  if ([response.meta.methodName isEqualToString:@"queryReviews"]) {
+                    NSArray *reviews = [response getObjectsOfType:[CCReview class]];
+                    for (CCReview *review in reviews) {
+                      ...
+                    }
+                  }
                 }
 
       - platform: android
+        example: |
+            Example Android APS SDK call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+
+                try {
+                    HashMap<String, Object> data = new HashMap<String, Object>();
+                    JSONObject params = new JSONObject("{'rating': {'$gt': 7.0}}");
+                    data.put("where", params);
+
+                    APSReviews.query(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                try {
+                                    JSONArray reviews = e.getResponse().getJSONArray("reviews");
+                                    if (reviews.length() <= 0) {
+                                        Log.i("APSReviews", "No Results!");
+                                    } else {
+                                        for (int i = 0; i < reviews.length(); i++) {
+                                            JSONObject review = reviews.getJSONObject(i);
+                                            Log.i("APSReviews", review.getString("rating") + ":" + review.getString("content"));
+                                        }
+                                    }
+                                } catch (JSONException err) {
+                                    Log.e("APSReviews", "Exception thrown: " + err.toString());
+                                }
+                            } else {
+                                Log.e("APSReviews", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSReviews", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSReviews", "Exception thrown: " + e.toString());
+                } catch (JSONException e) {
+                    Log.e("APSReviews", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
         example: |
             Example Android call:
 
@@ -272,7 +365,7 @@ methods:
                       var meta = data.meta;
                       if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'queryReviews') {
                         var reviews = data.response.reviews;
-                      	...
+                        ...
                       }
                     }
                   }

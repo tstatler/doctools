@@ -18,8 +18,44 @@ methods:
       - name: ids
         description: Array of push schedule IDs to delete.
         type: Array<String>
+        
+      - name: pretty_print
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
 
     examples:
+
+      - platform: android
+        example: |
+            Example Android call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+
+                Map<String, Object> data = new HashMap<String, Object>();                              
+                data.put("ids", 1);
+
+                try {
+                    APSPushSchedules.remove(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                              Log.i("APSPushSchedules", "Removed!");
+                            } else {
+                              Log.e("APSPushSchedules", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSPushSchedules", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                  Log.e("APSPushSchedules", "Exception thrown: " + e.toString());
+                }
 
       - platform: titanium
         example: |
@@ -50,3 +86,20 @@ methods:
                     "status": "ok",
                     "method_name": "deletePushSchedules"
                 }
+
+      - platform: ios
+        example: |
+            Example iOS APS SDK call:
+
+                // Create dictionary of parameters to be passed with the request
+                NSDictionary *data = @{
+                    @"ids": savedPushId
+                };
+                
+                [APSPushSchedules remove:data withBlock:^(APSResponse *e) {
+                      if (e.success) {
+                          [[[UIAlertView alloc] initWithTitle:@"Great" message:@"Success!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      } else {
+                          [[[UIAlertView alloc] initWithTitle:@"Error" message:e.errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      }
+                }];
