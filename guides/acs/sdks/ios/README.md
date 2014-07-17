@@ -1,558 +1,248 @@
-# Getting Started: Using the iOS SDK
+# Appcelerator Platform Services SDK for iOS -- Appcelerator Cloud Services
 
+The Appcelerator Platform Services (APS) SDK for iOS provides APIs for your native iOS
+application to access Appcelerator Cloud Services (ACS). 
 
-## Download the SDK
+## Getting the SDK ##
 
-Grab the ACS iOS SDK from <https://github.com/appcelerator/acs-ios-sdk>. See the
-[DemoApp](https://github.com/appcelerator/acs-ios-sdk/tree/master/samples/DemoApp) sample project for
-an example of storing and retrieving data with the SDK.
+To download and start using the SDK, you first need to create new iOS application in [Dashboard](https://dashboard.appcelerator.com).
+See [Managing Native Applications in Dashboard](http://docs.appcelerator.com/platform/latest/#!/guide/Managing_Native_Applications_in_Dashboard)
+for details on creating a new native application. After you create an application, a service
+key is generated that associates your application with all the Platform services. Dashboard also provides 
+full instructions for enabling all Platform Services in your application. This guide will deal specifically
+with enabling and using Appcelerator Cloud Services in an iOS application.
 
-## Adding ACS to your XCode Project
+{@img instrux.png}
 
-1.  Create a ACS app from the [My Apps page](https://my.appcelerator.com/apps). Then in
-    XCode, create an iOS project and add the following folders from `acs-ios-sdk/src/` to your project:
+## Running the APSCloudExample Application ##
 
-        ACSClient
-        ASIHTTPRequest
-        FBConnect
+The SDK ZIP file includes an iOS sample project that demonstrates basic use of each of the Cloud APIs. 
+To run the sample you first need to create a new application in Dashboard to obtain the necessary 
+service application. You will then copy this key into the imported sample project's main Activity 
+and then run the application.
 
-    {@img addfiles.png}
+**To create the APSCloudExample application in Dashboard:**
 
-    You can choose to use your own copy of `ASIHTTPRequest` (v1.8 or above) and
-    `FBConnect` from facebook-ios-sdk (updated on or after Jan 31, 2011). The only
-    change we made to the `ASIHTTPRequest` in our copy is in `ASIHttpRequest.m`:
+1. Login to [Appcelerator Dashboard](https://dashboard.appcelerator.com).
+2. From the Orgs menu, select the organization to associate with the application.
+3. Click the Apps menu and select **Add a Native App**.
+4. In the New Native Application dialog, do the following:
+    * Enter **APSCloudExampleApp** (or other name) in the **Name** field.
+    * Select **iOS** from the **Platform** menu.
+    * Select any category from the **Category** menu.
+    {@img create_app.png}
+5. Click **Next** and then click the **Overview** tab.
+6. Click the **Services** tab, then click **Show Key** under **Cloud /  Performance /  Analytics**.
+7. Select **Development** from the Environment menu, then click the clipboard icon to copy the key to your clipboard.
+{@img copy_key.png}
 
-        - (void)readResponseHeaders
-        {
-          ...
-          if ([self responseStatusCode] == 401) {
-            // Commented out by ACS
-            // [self setAuthenticationNeeded:ASIHTTPAuthenticationNeeded];
-          } else if ([self responseStatusCode] == 407) {
-            [self setAuthenticationNeeded:ASIProxyAuthenticationNeeded];
-          }
-          ...
+Next, you'll import the APSCloudExample project into Xcode, copy the key from your clipboard into the 
+application's main activity, and run the application.
+
+**To import the completed APSCloudExample project:**
+
+1. In Xcode, open the **appcelerator-sdk-ios-1.0/examples/APSCloudExample.xcodeproj**.
+3. Open **AppDelegate.m** and locate the following line of code.
+4. Replace **<< YOUR APP KEY >>** with the application key you copied to your clipboard previously.
+To learn where to find your application key, see [View Application Information](http://docs.appcelerator.com/platform/redirects/aps_key.html).
+
+        String appKey = "<< YOUR APP KEY >>";
+
+6. Run the application on an iOS device or simulator.
+
+Once the application is running, try the following:
+
+* Create a new user by selecting **Users > Create User**. Enter a username, password and password confirmation
+and then click **Create**. If the user is created successfully, the following dialog is shown: 
+{@img new_user_success.png}
+
+* View the newly created user in Dashboard:
+    1. Open [Dashboard](https://dashboard.appcelerator.com) and select your application from the Apps menu.
+    2. Select **Cloud > Manage Data**, then click **Users** in the Manage Data Object table. You
+    should see the user you created listed in the Users table.
+    {@img verify_new_user.png}
+
+## Enabling Cloud services in a new Project
+
+Once you've [created an application in Dashboard](http://docs.appcelerator.com/platform/latest/#!/guide/Managing_Native_Applications_in_Dashboard), 
+downloaded the SDK, and obtained your application service key, there are few steps to enable Cloud service in your iOS project.
+
+**To enable the Cloud service in an existing Xcode project**:
+
+1. Drag the **Appcelerator.framework** folder from the **appcelerator-sdk-ios-1.0.0/** folder into 
+your project's Frameworks folder, making sure **_Copy items into destination group's folder_** is checked, and click Finish.
+2. On your project's **_Build Phases_** tab, expand the **_Link Binary With Libraries_** section and add 
+the **libsqlite3.dylib** and **libz.dylib** frameworks.
+4. On your project's **Build Settings** tab, click **All** in the top-left corner, then expand the **_Linking_** section.
+6. In the **_Other Linker Flags_** field, enter **-ObjC**.
+{@img otherlinker.png}
+5. Import Appcelerator.h into your application delegate:
+
+        #import <Appcelerator/Appcelerator.h>
+
+6. Lastly, initialize Platform services by calling replacing **<< YOUR APP KEY >>** with the service key 
+generated by Dashboard when you created your application. (See 
+[View Application Information](http://docs.appcelerator.com/platform/redirects/aps_key.html) for how to
+locate your application key.)
+
+        [[APSServiceManager sharedInstance] enableWithAppKey:@"<<YOUR APP KEY>>"];
+
+At this point, your application can begin making API calls.
+
+## Making API Calls and Handling Responses
+
+The iOS framework includes a collection of classes whose methods map to 
+individual REST API method endpoints. For example, the [\[APSUsers create\]](http://docs.appcelerator.com/aps-sdk-apidoc/latest/ios/Classes/APSUsers.html#//api/name/create:withBlock:) method corresponds to the
+[`/users/create.json`](http://docs.appcelerator.com/cloud/latest/#!/api/Users-method-create) method
+endpoint.
+
+Alternatively, you can use the generic [\[APSCloud sendRequest\]](http://docs.appcelerator.com/aps-sdk-apidoc/latest/ios/Classes/APSCloud.html#//api/name/sendRequest:method:data:handler:) method to make REST calls directly 
+against the Cloud APIs. For more information, see [Making Generic REST API Calls](#!/guide/ios-section-making-generic-rest-apis-method-calls).
+
+### Building Request Parameters
+
+The first parameter of each Cloud API method is a `NSDictionary` object that contains the of 
+parameters to send with the request. For example, the [\[APSPhotos show\]](http://docs.appcelerator.com/aps-sdk-apidoc/latest/ios/Classes/APSPhotos.html#//api/name/show:withBlock:) method takes a `photo_id` parameter
+whose value is, naturally, the ID of the photo to show. 
+
+    // Create dictionary of parameters to be passed with the request
+    NSDictionary *data = @{@"photo_id": self.photoId};
+    [APSPhotos show:data withBlock:^(APSResponse *e) {
+        // Handle response
+    }];
+
+### Handling Responses
+
+The second parameter of each method call is a block that is passed an [APSResponse](http://docs.appcelerator.com/aps-sdk-apidoc/latest/ios/Classes/APSResponse.html) 
+whose properties contain information about the response. For instance,
+the `success` property contains a boolean indicating if the method call was successful or not; 
+the `response` property returns a JSON-encoded object with the results of the method call.
+
+    NSDictionary *data = @{@"photo_id": self.photoId};
+    [APSPhotos show:data withBlock:^(APSResponse *e) {
+        // The block will be called on the thread the request was started on
+        if (e.success) {
+            // Remove the backslashes from URLs in the JSON
+            self.textView.text = [e.responseString stringByReplacingOccurrencesOfString:@"\\" withString:@""];
+        } else {
+            [Utils handleErrorInResponse:e];
         }
+    }];
 
-    The ACS API server returns HTTP response code `401` in a number
-    of different error situations. However, `ASIHttpRequest` interprets all `401`
-    responses as Authentication Needed. This can be confusing if you want to
-    show users the exact error that has occurred. For instance: Invalid user
-    email/password, invalid oauth token. We commented out the above line to let
-    the server error message to pass through.
+Note that the block will be called on the thread that the request was started on.
 
-    If you are using your own version of `ASIHttpRequest`, you can choose to do the
-    same to let server authentication error message pass through.
+#### Example: APSUsers Login Call with Response Handler
 
-2.  Add the following frameworks to your project:
+The following example logs in an existing ACS user by their username and password. After a successful 
+login, the application displays an alert indicating a successful login.
 
-        libz.1.2.3.dylib
-        SystemConfiguration.framework
-        MobileCoreService.framework
-        CoreLocation.framework
-        CFNetwork.framework
-        YAJL.framework
-        AssetsLibrary.framework
-
-    There are two copies of `YAJL.framework` under `acs-ios-sdk/src/`:
-
-        acs-ios-sdk/src/YAJL.framework
-        acs-ios-sdk/src/ARMv7s-YAJL-framework
-
-    We suggest that you add `ARMv7s-YAJL-framework` to your project, which is the newest
-    version of the YAJL framework, for ARMv7s. If you get any errors when using
-    `ARMv7s-YAJL-framework`, please switch to the older version YAJL framework
-    (`acs-ios-sdk/src/YAJL.framework`). The older version of the YAJL framework
-    is also availabe from the following github repo:
-
-    <https://github.com/gabriel/yajl-objc>
-
-3.  Under Other Linker Flags in your target, add:
-
-        -ObjC -all_load
-
-4.  In your code, include the ACS header:
-
-        #import "ACSClient.h"
-
-Now you're ready to go!
-
-
-## Initialization & Authorization
-
-If you choose to use oauth consumer key/secret to authenticate your app with
-ACS, in your `AppDelegate.m`, define:
-
-    #define ACSCLIENT_OAUTH_CONSUMER_KEY @"your consumer key here"
-    #define ACSCLIENT_OAUTH_CONSUMER_SECRET @"your consumer secret here"
-
-and initialize ACS with the key/secret:
-
-    [ACSClient initializeWithOauthConsumerKey:ACSCLIENT_OAUTH_CONSUMER_KEY consumerSecret:ACSCLIENT_OAUTH_CONSUMER_SECRET customAppIds:nil];
-
-Or, if you choose to use app key to authenticate your app, in your `AppDelegate.m`, define:
-
-    #define ACSCLIENT_APP_KEY @"your app key here"
-
-and initialize ACS with the app key:
-
-    [ACSClient initializeWithAppKey:ACSCLIENT_APP_KEY customAppIds:nil];
-
-Once ACS is initialized, you can access it by calling:
-
-    [ACSClient defaultACSClient]
-
-## Facebook Integration
-
-1.  Create a new [Facebook App](https://developers.facebook.com/apps) if you
-    don't have one yet.
-
-2.  Obtain the Facebook App ID from Facebook.
-    You can get the Facebook App ID from Facebook, you will use it later in your
-    project.
-
-3.  Add the Facebook framework to your Xcode project.
-    The ACS iOS SDK currently uses the Facebook SDK version 3.1, which only
-    provides a framework. To use this framework, you must add it to your Xcode
-    project:
-
-    1.  In Xcode with your project open, and your target selected go to the **Build Phases**
-        tab and expand the **Link Binary With Libraries** item.
-
-    2.  Click the **Add** button (+) located at the bottom of the
-        **Link Binary With Libraries** section.
-
-    3.  In the **Choose frameworks and libraries to add:** click **Add Other**.
-
-    4.  Select the folder: `acs-ios-sdk/src/FacebookSDK.framework`.
-
-4.  Add additional iOS frameworks. Some additional frameworks must be linked in
-    your Xcode project.
-
-    1.  In Xcode with your project open, and your target selected go to the **Build
-        Phases** tab and expand the **Link Binary With Libraries** item.
-
-    2.  Click the **Add** button (+) located at the bottom of the **Link Binary With
-        Libraries** section.
-
-    3.  Select `Accounts.framework`, `AdSupport.framework`, and `Social.framework` and
-        click the **Add** button.
-
-5.  Add the SQLite dynamic linked library to your Xcode project.
-
-    1.  In Xcode with your project open, and your project selected go to the **Build
-        Settings** tab and expand the **Linking** item
-
-    2.  Add the flag `-lsqlite3.0` to the **Other Linker Flags** item.
-
-6.  Add two Facebook bundles to your project.
-
-    Drag the following two files to your project navigator pane to add them to your project:
-
-        acs-ios-sdk/src/FacebookSDK.framework/Resources/FacebookSDKResources.bundle
-        acs-ios-sdk/src/FacebookSDK.framework/Resources/FBUserSettingsViewResources.bundle
-
-7.  Add the Facebook SDK Header files to your project.
-
-    Drag the following folder to your project navigator pane to add it to your project:
-
-        acs-ios-sdk/src/FBConnect
-
-8.  Add the Facebook ID to your app's `Info.plist` file under `URL types`.
-
-    {@img facebook_ios_setting.png}
-
-9.  Add the following code to your `AppDelegate.m` file:
-
-        // pre 4.2
-        - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
-        {
-        	return [[[ACSClient defaultACSClient] getFacebook] handleOpenURL:url];
+    // Create dictionary of parameters to be passed with the request
+    NSDictionary *data = @{
+       @"login": self.usernameField.text,
+       @"password": self.passwordField.text
+    };
+    
+    [APSUsers login:data withBlock:^(APSResponse *e) {
+        // The block will be called on the thread the request was started on
+        if (e.success) {
+            NSString *userId = [[[e.response objectForKey:@"users"] objectAtIndex:0] objectForKey:@"id"];
+            NSString *msg = [NSString stringWithFormat:@"Logged in! You are now logged in as %@", userId];
+            [[[UIAlertView alloc] initWithTitle:@"Success" message:msg delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        } else {
+            [Utils handleErrorInResponse:e];
         }
+    }];
 
-        // 4.2+
-        - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
-          sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-        	return [[[ACSClient defaultACSClient] getFacebook] handleOpenURL:url];
+### Monitoring Request Progress
+
+For Cloud API methods that involve uploading large files, such as [\[APSPhotos create\]](http://docs.appcelerator.com/aps-sdk-apidoc/latest/ios/Classes/APSPhotos.html#//api/name/create:withBlock:progressBlock:) or [APSFiles create], 
+there is an overloaded version that takes an additional `progressBlock` parameter. This parameter
+is a code block that is periodically invoked and passed a float value indicating the progress of the request, 
+and a boolean indicating if the request is for an upload (YES) or download (NO).
+
+#### Example: APSPhotos Create Call with Progress Handler
+
+The following example creates a new Photo object from a binary photo attachment. The `progressBlock` 
+code block sets the `progress` property on a `ProgressBar` object, displaying the 
+    status of the upload.
+
+    NSDictionary *data = @{
+        @"photo": self.photoData,
+        @"photo_sync_sizes[]": @"small_240"
+    };
+    [APSPhotos create:data withBlock:^(APSResponse *e) {
+        // The block will be called on the thread the request was started on
+        if (e.success) {
+            [[[UIAlertView alloc] initWithTitle:@"Success" message:@"Uploaded!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+            self.photoData = nil;
+        } else {
+            [Utils handleErrorInResponse:e];
         }
-
-## Push Notification
-
-To enable Apple Push Notification service for your application, create an
-Apple Push Notification certificate and upload the certificate to the ACS server.
-
-Note that Apple push notifications do **not** work on simulators.
-
-For information about iOS push notifications, see
-[iOS Developer Library: Local and Push Notification Programming Guide](http://developer.apple.com/library/ios/#documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/Introduction.html).
-
-### Create and Upload a Push Notification Certificate
-
-To create an Apple Push Notification certificate, you need to first create an Explicit App ID.  The
-App ID is used to identify where to send the push notification, which is tied to the certificate
-when you create it.  After you create the certificate, export the certificate to PKCS #12 format and
-upload it to the ACS server. This certificate allows the ACS server to communicate with the Apple
-Push Notification server to send push notifications to iOS devices.
-
-#### Register an App ID
-
-  1. Log in to the [Apple Developer Member Center](https://developer.apple.com/membercenter/) as the Team Agent or Admin.
-  2. Click the link under **Certificates, Identifiers & Profiles**.
-  3. Click **Identifiers**, then click the plus sign (**+**) button near the top-right corner.
-  4. Enter a description, which cannot include special characters (including most punctuation).
-  5. Select the App ID Prefix to use.
-  6. For the App ID Suffix, choose **Explicit App ID** and enter your Bundle ID. For Titanium
-     applications, this is your Application ID from the `tiapp.xml` file.
-  7. Under App Services, check the **Push Notifications** checkbox to enable push notifications for
-     this App ID.
-  8. Click **Continue**, **Submit**, then **Done**.
-
-Note: You cannot use a **Wildcard App ID** for an application with push notifications.
-
-#### Generate an Apple Push Notification Certificate
-
-These directions cover how to generate an Apple Push Notification certificate for both testing
-(Development) and production (Distribution).  Only step #4 differs based on which certificate you
-create.
-
-  1. Log in to the [Apple Developer Member Center](https://developer.apple.com/membercenter/) as the Team Agent or Admin.
-  2. Click the link under **Certificates, Identifiers & Profiles**.
-  3. Click **Certificates**, then click the plus sign (**+**) button near the top-right corner.
-  4. For testing, select **Apple Push Notification service SSL (Sandbox)** and for production,
-     select **Apple Push Notification service SSL (Production)**, then click **Continue**.
-  5. Select the App ID that you created previously from the drop-down list, then click **Continue**.
-  6. Follow the directions to create a Certificate Signing Request (CSR). Click **Continue**.
-  7. Upload your CSR and click **Generate**.
-  8. You will be returned to the Certificates page with the status listed as Pending. Wait a moment then
-     refresh the page in your browser.
-  9. Even though you are logged in as the Team Agent or Admin, you may need to approve your certificate.
-     Click **Approve**.
- 10. Download the certificate (.cer) file to your computer.
- 11. Double-click the file to install it into your keychain.
-
-#### Export the Certificate
-
-  1. Open your Keychain.  Select **Applications** > **Utitlies** > **Keychain Access**.
-  2. Under Categories on the left side, click **My Certificates**.
-  3. Right-click the certificate you installed previously and select **Export**.
-  4. In the **File Format** drop-down, select **Personal Information Exchange (.p12)**.
-  5. Click **Save**.
-  6. You are prompted to enter a password for the file. Enter a password, then click **Save**.
-
-Keychain exports your certificate as a PKCS #12 file that you upload to ACS to enable Apple Push Notification for your application.
-
-#### Configure the ACS web console ####
-
-You use the Dashboard (Enterprise applications) or My App (Community applications) to upload your PKCS #12 (.p12) file to ACS and enable Apple Push Notification with your application.
-
-**To configure your app for push notifications (Enterprise developers):**
-
- 1. Open [Dashboard](https://dashboard.appcelerator.com).
- 2. Select your application from the drop-down list of applications.
- 3. Select the **Cloud** tab.
- 4. Select **Settings & Configuration** from the left-hand navigation.
- 5. Select the **iOS Push** tab.
- 6. Click **Choose File** in the Push Certificate field.
- 7. Locate the PKCS #12 file your exported previously and click **Choose**.
- 8. Enter the certificate's password in the Certificate Password box field.
-   {@img ios_cert_enterprise.png}
- 9. Click **Save Changes**.
-
- **To configure your app for push notifications (Community developers):**
-
-1. Open [My Apps](https://cloud.appcelerator.com/apps).
-2. Find your application in the list of apps and click the **Manage ACS** link.
-3. In the **Apple iOS Push Certificates** section, click **Choose File**.
-4. Locate the PKCS #12 file your exported previously and click **Choose**.
-5. Enter the certificate's password in the Certificate Password box field. (A password is required despite the placeholder text indicating it's optional.)
-      {@img ios_cert_community.png}
-6. Click **Save Changes**.
-
-
-### Create a Provisioning Profile
-
-You need to create a provisioning profile to embed in your application.  This verifies the
-integrity of the application based on the information within the profile,
-such as the App ID and certificate you created previously.
-
-These directions cover how to generate a provisioning profile for Development, Ad Hoc, In House and App Store distribution.
-If you are distributing as a member of the iOS Developer Enterprise Program, you will have the
-**In House** distribution option instead of the **App Store** option.
-Only steps #4 and #7 differ based on which profile you create.
-
-  1. Log in to the [Apple Developer Member Center](https://developer.apple.com/membercenter/) as the Team Agent or Admin.
-  2. Click the link under **Certificates, Identifiers & Profiles**.
-  3. Click **Provision Profiles**, then click the plus sign (**+**) button near the top-right corner.
-  4. For testing, select **iOS App Development**, and for production, select either **App Store** to distribute to the
-     App Store, **Ad Hoc** to distribute to a limited number of devices or **In House** for in house
-     distribution to your company's employees, then click **Continue**.
-  5. Select the App ID you created previously from the drop-down list, then click **Continue**.
-  6. Select a certificate, then click **Continue**.
-  7. For development and ad hoc distributions, select the devices you want to be able to run the app on, then click
-     **Continue**.
-  8. Enter a name for your provisioning profile. You should use a word like "dev", "distribution" or "ad hoc" in
-     the name so that it is clear later what this profile is for. Click **Generate**.
-  9. Click **Download** to save your provisioning profile file (.mobileprovision) to your computer, then
-     click **Done**.
- 10. Double-click the provisioning profile file to install it to Xcode.
-
-### Update your code to register for push notifications
-
-In yourAppDelegate.m, add the following code after initializing ACS
-in method didFinishLaunchingWithOptions:
-
-    - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-    {
-    	// Initialize the ACSClient with Facebook App Id if you set one
-    	[ACSClient initializeWithOauthConsumerKey:ACSCLIENT_OAUTH_CONSUMER_KEY consumerSecret:ACSCLIENT_OAUTH_CONSUMER_SECRET customAppIds:[NSDictionary dictionaryWithObject:facebookAppId forKey:@"Facebook"]];
-
-    	...
-
-    	[[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge)];
-
-    	// Code below is optional if you want to handle the notification after the app is launched by push notification
-    	if (launchOptions != nil)
-    	{
-    		NSDictionary* dictionary = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
-    		if (dictionary != nil)
-    		{
-    			NSLog(@"Launched from push notification: %@", dictionary);
-    			...
-    		}
-    	}
-
-        return YES;
-    }
-
-Also add the following code to `yourAppDelegate.m` to receive a device token to
-pass to ACS:
-
-    - (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
-    {
-    	NSString* newToken = [deviceToken description];
-    	newToken = [newToken stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
-    	newToken = [newToken stringByReplacingOccurrencesOfString:@" " withString:@""];
-
-    	NSLog(@"My token is: %@", newToken);
-
-    	// Add to ACS
-    	[[ACSClient defaultACSClient] setDeviceToken:newToken];
-    }
-
-Then refer to the {@link PushNotifications} API reference to
-see how to subscribe and send push notifications. You can also log on to your
-ACS App Console to send push notifications to all your
-subscribed clients.
-
-## ACS Model Classes
-
-The SDK defines a list of object model classes that correspond to the server
-objects under `ACS/Models`. They are all subclasses of `CCObject`
-or `CCObjectWithPhoto`.
-
-## Making API Calls
-
-The ACS iOS SDK provides the `CCRequest` class with delegate
-callbacks to make synchronous or asynchronous REST calls to the ACS
-server easier. `CCRequest` is a subclass of the `ASIHttpRequest` class.
-(For more information on `ASIHTTPRequest`, see the
-[`ASIHTTPRequest` web site](http://allseeing-i.com/ASIHTTPRequest/).)
-
-To instantiate a `CCRequest` object:
-
-    // Use HTTPS by default
-    -(id)initWithDelegate:(id)requestDelegate httpMethod:(NSString *)httpMethod baseUrl:(NSString *)baseUrl paramDict:(NSDictionary *)paramDict;
-
-    or
-
-    // Use HTTP. set protocol to @"http"
-    -(id)initWithDelegate:(id)requestDelegate httpProtocol:(NSString *)protocol httpMethod:(NSString *)httpMethod baseUrl:(NSString *)baseUrl paramDict:(NSDictionary *)paramDict;
-
-### `delegate`
-
-If you want to perform an asynchronous call, pass in the delegate object that
-implements the `CCRequestDelegate` methods `didSucceed` and `didFailWithError`:
-
-    -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response;
-
-    -(void)ccrequest:(CCRequest *)request didFailWithError:(NSError *)error;
-
-If you want to perform a synchronous REST call, you can pass in `nil` to the
-`delegate` parameter.
-
-### `baseUrl`
-
-If the request url is:
-
-    http://api.cloud.appcelerator.com/v1/users/create.json
-
-Then the baseUrl is:
-
-    @"users/create.json"
-
-### `httpMethod`
-
-The possible values are `@"GET"`, `@"POST"`, `@"PUT:` or `@"DELETE"`
-
-### `paramDict`
-
-It is a NSDictionary of parameters and values that will be passed to the
-baseUrl.
-
-### Example
-
-Register a new user:
-
-    NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:5];
-    [paramDict setObject:@"email@email.com" forKey:@"email"];
-    [paramDict setObject:@"John" forKey:@"first_name"];
-    [paramDict setObject:@"Woo" forKey:@"last_name"];
-    [paramDict setObject:@"pass" forKey:@"password"];
-    [paramDict setObject:@"pass" forKey:@"password_confirmation"];
-    CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"POST" baseUrl:@"users/create.json" paramDict:paramDict];
-    [request startAsynchronous]; // for asynchronous call and use ASIHttp's shared operation queue
-
-To make an asynchronous request and use your own operation queue, replace the last line
-with:
-
-    [myOperationQueue addOperation:request]; // for asynchronous call and use my own operation queue
-
-Or to make a synchronous call, replace the `startAsynchronous` call with the following
-line:
-
-    CCResponse *response = [request startSynchronousRequest]; // for synchronous call
-
-## Asynchronous call
-
-It is recommended to run all the REST calls asynchronously for better user
-experience. If you want to be able to identify the request in the callback,
-you can add custom `userInfo` to the `CCRequest` object for your own record.
-
-    NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:@"custom", @"type", nil];
-    [request setUserInfo:userInfo];
-
-## Handling Server Responses
-
-The `CCResponse` object defined in `ACS/Network/CCResponse.h` contains the
-response sent back from the ACS server. It has the following
-objects:
-
-*   `response.meta` contains the response metadata.
-*   `response.response` is an `NSDictionary` representation of the raw JSON response.
-
-For example, if the REST call is expected to return an array of {@link Users}, your
-handler code might look like this:
-
-    -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
-    {
-    	NSArray *results = [response getObjectsOfType:[CCUser class]];
-    	for (CCUser *user in results) {
-    		NSLog(@"user is %@", user)
-    	}
-    }
-
-The `getObjectsOfType` method is used to extract a list of objects from the response.
-Refer to `ACS/Models` for a list of supported class names.
-
-## Photo Uploads
-
-To upload a photo, after you have instantiated a `CCRequest` object, you can use
-one of the following two methods:
-
-    // For uploading directly from photo album using ALAssetLibrary
-    [request addPhotoALAsset:(ALAsset *)alasset paramDict:(NSDictionary *)paramDict];
-
-    or
-
-    // For uploading an UIImage
-    [request addPhotoUIImage:(UIImage *)image paramDict:(NSDictionary *)paramDict];
-
-If you have more than one photo to send, you can call any of the above
-methods with a new image. Currently only photo update allows multiple photos
-upload.
-
-`paramDict` is optional, if you want the SDK to resize the original photo or
-lower the image quality for faster uploads, you set the following key/values
-in the paramDict:
-
-    [params setObject:[NSNumber numberWithInt:800] forKey:@"max_size"]; // maximum pixels allowed
-    [params setObject:[NSNumber numberWithDouble:0.5] forKey:@"jpeg_compression"]; // (0 < jpeg compression <= 1), 1 is the highest quality.
-
-You can also choose to upload a photo synchronously. See [Photo Uploads and Resizing](#!/guide/photosizes)
-for more information.
-
-## Photo Downloads
-
-`CCPhoto` class contains URLs of different sizes of a photo. By default,
-photos are uploaded asynchronously and each photo comes with a boolean
-`processed` attribute to indicate whether the background processing has
-finished. If you want to access the actual photo, you need to download it from
-the given URL and if the URL is not available, you have to try again until the
-`processed` is NO.
-
-    CCPhoto *photo;
-    [photo getImage:(PhotoSize)photoSize];
-
-It returns the `UIImage` of the photo requested if it has already been
-downloaded, otherwise it returns `nil` and kicks off the download in the
-background. If the photo size is not available (if you request an incorrect
-size or the requested size hasn't been processed yet), no background download
-will be kicked off. In order to get the notification when a download has
-completed, you need to register to listen to the following notification in
-your view:
-
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleDownloaded:) name:@"DownloadFinished" object:[ACSClient defaultACSClient]];
-
-When the notification is delivered, the userInfo contains the requesting
-CCPhoto object under key name `object`, and the size of the photo requested
-under key name `size`. Then you can get the actual image by calling:
-
-    CCPhoto *photo;
-    [photo getImage:(NSString *)photoSize;
-
-If you created a photo using default sizes, the photo sizes are:
-
-      @"square_75",
-      @"thumb_100",
-      @"small_240",
-      @"medium_500",
-      @"medium_640",
-      @"large_1024",
-      @"original"
-
-If you created a photo using custom sizes, the photo sizes are the name of your custom sizes.
-For details on custom sizes, see [Photo Uploads and Resizing](#!/guide/photosizes).
-
-## Troubleshooting & Common Errors
-
-If you hit the following runtime error:
-
-    -[NSConcreteMutableData yajl_JSON]: unrecognized selector sent to instance 0x4d87400
-
-Solution: Make sure you have included the YAJL framework. Click on your
-project's target, select **Other Linker Flags** and add:
-
-    -ObjC -all_load
-
-
-In Xcode 4, make sure to add the above flags to all the fields under **Other
-Linker Flags**:
-
-{@img linkers_ios.png}
-
-## Enable and Disable Runtime Logging
-
-To enable or disable runtime logging, set the `loggingEnabled` variable in
-`ACSClient.m`:
-
-    -(void)initCommon:(NSDictionary *)customAppIds
-    {
-        //other code
-
-    	//true, enable log
-    	//false, disable log
-        self.loggingEnabled = true;
-
-        // other code
-    }
-
+        self.createButton.hidden = NO;
+    } progressBlock:^(float progress, BOOL upload) {
+        // The block will be called on the thread the request was started on
+        self.progressBar.progress = progress;
+    }];
+
+## Making Generic REST APIs Method Calls
+
+The [\[APSCloud sendRequest\]](http://docs.appcelerator.com/aps-sdk-apidoc/latest/ios/Classes/APSCloud.html#//api/name/sendRequest:method:data:handler:) 
+method lets you easily make REST API calls directly against ACS, rather than using the specialized classes. In general, you
+should use the specialized classes as they provide an easier API. However, if new REST methods
+are deployed to the APS Cloud backend, this approach lets you immediately start using those methods 
+without waiting for an update to the SDK.
+
+To make a generic request, you call [\[APSCloud sharedInstance\]](http://docs.appcelerator.com/aps-sdk-apidoc/latest/ios/Classes/APSCloud.html#//api/name/sharedInstance) to get a reference to the shared APSCloud
+object, and then call its [sendRequest](http://docs.appcelerator.com/aps-sdk-apidoc/latest/ios/Classes/APSCloud.html#//api/name/sendRequest:method:data:handler:) method. For each call, you must specify the following:
+
+  * REST API method endpoint relative to "api.cloud.appcelerator.com/v1". Method endpoints are listed in the corresponding entries in the 
+  [REST API documentation](http://docs.appcelerator.com/cloud/latest/#!/api).
+  * The HTTP method to use.
+  * Data to send with the request.
+
+For example, to [create a post](http://docs.appcelerator.com/cloud/latest/#!/api/Posts-method-create),
+pass the `sendRequest()` method the following information:
+
+  * REST API method endpoint: `posts/create.json`
+  * The HTTP method to use: `POST`
+  * Data to send with the request: at minimum, you must specify the `content` property.
+
+The following example calls [users/login.json](http://docs.appcelerator.com/cloud/latest/#!/api/Users-method-login) 
+REST method directly and logs the result to the console.
+
+    NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys:
+                                        @"jalter", @"login",
+                                        @"pass", @"password",
+                                        nil];
+    [[APSCloud sharedInstance] sendRequest:@"users/login.json" method:@"POST" data:datahandler:^(APSResponse *e) {
+        NSLog(@"SUCCESS: %hhd", e.success);
+        NSLog(@"ERROR: %hhd", e.error);
+        NSLog(@"MESSAGE: %@", e.message);
+    }];
+
+## Working with Push Notifications
+
+The  [`APSPushNotifications`](http://docs.appcelerator.com/aps-sdk-apidoc/latest/ios/Classes/APSPushNotifications.html) 
+class lets your application subscribe, send and receive push notifications. To use this class,
+you must first do the following:
+
+* [Configure push notification services](http://docs.appcelerator.com/platform/latest/#!/guide/Configuring_push_services-section-37551713_Configuringpushservices-ConfiguringpushservicesforiOSdevices) for your application.
+* [Register your application](https://developer.apple.com/library/ios/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/Chapters/IPhoneOSClientImp.html#//apple_ref/doc/uid/TP40008194-CH103-SW2) to obtain the necessary device token.
+
+Once push services have been configured, and you've obtained a device token by registering your application
+to receive remote notifications, you can start calling methods of the `APSPushNotifications` class. For
+example, in the following example the user is subscribed to receive notifications from the channel
+named "friend_channel".
+
+    // Create dictionary of parameters to be passed with the request
+    NSDictionary *subscribeData = @{
+                @"device_token": @"<DEVICE_TOKEN_STRING",
+                @"channel": @"friend_channel"
+                };
+    [APSPushNotifications subscribeToken:subscribeData withBlock:^(APSResponse *e) {
+        if (e.success) {
+            // Subscribed to channel
+        } else {
+            // Error subscribing to channel
+        }
+    }];
