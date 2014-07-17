@@ -14,7 +14,7 @@ directory with the **--dir** or **-d** option.
 
 ### About publishing application versions ###
 
-You can publish up to three different versions of your application to the Node.ACS cloud. Only one
+You can publish up to multiple versions of your application to the Node.ACS cloud. Only one
 version may be deployed and active at a time. The application version number is determined by the
 `version` field of your application's package.json file.
 

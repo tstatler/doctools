@@ -74,11 +74,6 @@ CNAME, specify a path for each to route a client to the correct application.
 
 ## Example
 
-<<<<<<< HEAD
-    $ acs cname --set my.nodeacs.com
-    
-    Set CNAME succeed. App will be available at: my.nodeacs.com
-=======
 The following example allows the application to be accessed from `my.nodeacs.com`:
 
     acs cname --set my.nodeacs.com
@@ -90,4 +85,3 @@ the BrandNewApp application to be accessed from `my.node.acs.com/v2`:
     acs cname --path v1 LegacyApp
     acs cname --set my.nodeacs.com BrandNewApp
     acs cname --path v2 BrandNewApp
->>>>>>> f6631eb75fffb90f7260a691f8c2ee140734eb28
