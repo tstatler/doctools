@@ -17,7 +17,7 @@ methods:
         description: ID of the checkin to delete.
         type: String
 
-      - name: pretty_print
+      - name: pretty_json
         description: | 
             Determines if the JSON response is formatted for readability (`true`), or displayed on a
             single line (`false`). Default is `false`.
@@ -51,7 +51,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt -X DELETE http://api.cloud.appcelerator.com/v1/checkins/delete.json?key=<YOUR APP APP KEY>&pretty_print=true&checkin_id=4d8bc645d0afbe0363000013
+                $ curl -b cookies.txt -c cookies.txt -X DELETE http://api.cloud.appcelerator.com/v1/checkins/delete.json?key=<YOUR APP APP KEY>&pretty_json=true&checkin_id=4d8bc645d0afbe0363000013
 
             Example JSON response:
 

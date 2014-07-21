@@ -50,7 +50,7 @@ methods:
         description: Custom object to delete "like" from.
         type: String
         
-      - name: pretty_print
+      - name: pretty_json
         description: | 
             Determines if the JSON response is formatted for readability (`true`), or displayed on a
             single line (`false`). Default is `false`.
@@ -78,7 +78,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt -X DELETE "https://api.cloud.appcelerator.com/v1/likes/delete.json?key=<YOUR APP APP KEY>&pretty_print=true&post_id=4e33a817d9ca724745000003"
+                $ curl -b cookies.txt -c cookies.txt -X DELETE "https://api.cloud.appcelerator.com/v1/likes/delete.json?key=<YOUR APP APP KEY>&pretty_json=true&post_id=4e33a817d9ca724745000003"
 
             Example JSON response:
 

@@ -33,7 +33,7 @@ methods:
             processing.
         type: Array<Files>
 
-      - name: pretty_print
+      - name: pretty_json
         description: | 
             Determines if the JSON response is formatted for readability (`true`), or displayed on a
             single line (`false`). Default is `false`.
@@ -63,7 +63,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/files/show.json?key=<YOUR APP APP KEY>&pretty_print=true&file_id=4f05446bc3666eb7ba000001"
+                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/files/show.json?key=<YOUR APP APP KEY>&pretty_json=true&file_id=4f05446bc3666eb7ba000001"
 
             Example JSON response:
 

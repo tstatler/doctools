@@ -55,7 +55,7 @@ methods:
         description: Space-separated list of keywords used to perform full text search on place name and tags.
         type: String
         
-      - name: pretty_print
+      - name: pretty_json
         description: | 
             Determines if the JSON response is formatted for readability (`true`), or displayed on a
             single line (`false`). Default is `false`.
@@ -96,7 +96,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/places/search.json?key=<YOUR_APP_KEY>&latitude=37.743722&longitude=-122.393159"
+                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/places/search.json?key=<YOUR_APP_KEY>&latitude=37.743722&longitude=-122.393159&pretty_json=true"
 
             Example JSON response:
 

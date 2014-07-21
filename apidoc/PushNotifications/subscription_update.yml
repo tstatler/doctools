@@ -28,7 +28,7 @@ methods:
             as the second element (`[longitude,latitude]`).
         type: Array<Number>
 
-      - name: pretty_print
+      - name: pretty_json
         description: | 
             Determines if the JSON response is formatted for readability (`true`), or displayed on a
             single line (`false`). Default is `false`.
@@ -63,7 +63,7 @@ methods:
         example: |
             The following example updates the device's location to Mountain View, CA, USA:
 
-                $ curl -b cookies.txt -c cookies.txt -X PUT -F "device_token=<DEVICE_TOKEN>" -F "loc=[-122.0507049560547,37.38685989379883]" "http://api.cloud.appcelerator.com/v1/push_notification/subscription/update.json?key=<API_KEY>"
+                $ curl -b cookies.txt -c cookies.txt -X PUT -F "device_token=<DEVICE_TOKEN>" -F "loc=[-122.0507049560547,37.38685989379883]" "http://api.cloud.appcelerator.com/v1/push_notification/subscription/update.json?key=<API_KEY>&pretty_json=true"
 
             Example cURL response:
 

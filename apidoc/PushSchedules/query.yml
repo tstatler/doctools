@@ -27,7 +27,7 @@ methods:
         description: Number of results per page, default is 10.
         type: Number
         
-      - name: pretty_print
+      - name: pretty_json
         description: | 
             Determines if the JSON response is formatted for readability (`true`), or displayed on a
             single line (`false`). Default is `false`.
@@ -98,7 +98,7 @@ methods:
         example: |
             Example cURL request:
 
-                curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/push_schedules/query.json?key=<APP_API_KEY>"
+                curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/push_schedules/query.json?key=<APP_API_KEY>&pretty_json=true"
 
             Example JSON response:
 

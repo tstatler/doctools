@@ -23,7 +23,7 @@ methods:
         type: String
         required: true
 
-      - name: pretty_print
+      - name: pretty_json
         description: | 
             Determines if the JSON response is formatted for readability (`true`), or displayed on a
             single line (`false`). Default is `false`.
@@ -52,7 +52,7 @@ methods:
         example: |
             Example cURL request:
 
-                curl -X DELETE -F "channel=<channel>" -F "device_token=<token>" "https://api.cloud.appcelerator.com/v1/push_notification/unsubsribe_token.json?key=<key>"
+                curl -X DELETE -F "channel=<channel>" -F "device_token=<token>" "https://api.cloud.appcelerator.com/v1/push_notification/unsubsribe_token.json?key=<key>&pretty_json=true"
 
             Example JSON response:
 

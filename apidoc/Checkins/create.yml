@@ -48,7 +48,7 @@ methods:
             ID of an existing photo to attach as the primary photo for the checkin.
         type: String
 
-      - name: pretty_print
+      - name: pretty_json
         description: | 
             Determines if the JSON response is formatted for readability (`true`), or displayed on a
             single line (`false`). Default is `false`.
@@ -117,7 +117,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt -F "message=Try the grilled steak burrito" -F "place_id=4d6f13e96f70953608000012" -F "photo=@photo.jpg" https://api.cloud.appcelerator.com/v1/checkins/create.json?key=<YOUR APP APP KEY>&pretty_print=true
+                $ curl -b cookies.txt -c cookies.txt -F "message=Try the grilled steak burrito" -F "place_id=4d6f13e96f70953608000012" -F "photo=@photo.jpg" https://api.cloud.appcelerator.com/v1/checkins/create.json?key=<YOUR APP APP KEY>&pretty_json=true
 
             Example JSON response:
 

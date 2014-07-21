@@ -108,7 +108,7 @@ methods:
             behalf of another user.
         type: String
         
-      - name: pretty_print
+      - name: pretty_json
         description: | 
             Determines if the JSON response is formatted for readability (`true`), or displayed on a
             single line (`false`). Default is `false`.
@@ -145,7 +145,7 @@ methods:
         example: |
             Example cURL request:
 
-                curl -b cookies.txt -c cookies.txt  -X PUT -F "photo=@photo.jpg" -F "photo_id=4d7e62d6d0afbe04170000a4" https://api.cloud.appcelerator.com/v1/photos/update.json?key=<YOUR APP APP KEY>&pretty_print=true
+                curl -b cookies.txt -c cookies.txt  -X PUT -F "photo=@photo.jpg" -F "photo_id=4d7e62d6d0afbe04170000a4" https://api.cloud.appcelerator.com/v1/photos/update.json?key=<YOUR APP APP KEY>&pretty_json=true
 
             Example JSON response:
 

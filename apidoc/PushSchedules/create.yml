@@ -64,7 +64,7 @@ methods:
             For details about using the `where` parameter, see the [Search and Query guide](#!/guide/search_query).
         type: Hash
 
-      - name: pretty_print
+      - name: pretty_json
         description: | 
             Determines if the JSON response is formatted for readability (`true`), or displayed on a
             single line (`false`). Default is `false`.
@@ -154,7 +154,7 @@ methods:
             The following example schedules a weekly push notification to be sent to devices that are located
             within 10 miles of Appcelerator corporate headquarters:
 
-                curl -b cookies.txt -c cookies.txt -F 'schedule={"start_time":"2016-01-01T00:00", "name":"test", "push_notification":{"channel":"test","payload":"test schedule"}, "recurrence":{"interval":"weekly", "end_time":"2016-01-08T00:00"}}' -F 'where={"loc":{"$geoWithin":{"$centerSphere":[[-122.0507049560547,37.38685989379883] , 0.00252589 ]}}}' "https://api.cloud.appcelerator.com/v1/push_schedules/create.json?key=<APP-KEY>
+                curl -b cookies.txt -c cookies.txt -F 'schedule={"start_time":"2016-01-01T00:00", "name":"test", "push_notification":{"channel":"test","payload":"test schedule"}, "recurrence":{"interval":"weekly", "end_time":"2016-01-08T00:00"}}' -F 'where={"loc":{"$geoWithin":{"$centerSphere":[[-122.0507049560547,37.38685989379883] , 0.00252589 ]}}}' "https://api.cloud.appcelerator.com/v1/push_schedules/create.json?key=<APP-KEY>&pretty_json=true"
 
             Example JSON response:
 

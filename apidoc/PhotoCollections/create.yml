@@ -63,7 +63,7 @@ methods:
             behalf of another user.
         type: String
         
-      - name: pretty_print
+      - name: pretty_json
         description: | 
             Determines if the JSON response is formatted for readability (`true`), or displayed on a
             single line (`false`). Default is `false`.
@@ -99,7 +99,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt -F "name=Office Fun" "https://api.cloud.appcelerator.com/v1/collections/create.json?key=<YOUR APP APP KEY>&pretty_print=true"
+                $ curl -b cookies.txt -c cookies.txt -F "name=Office Fun" "https://api.cloud.appcelerator.com/v1/collections/create.json?key=<YOUR APP APP KEY>&pretty_json=true"
 
             Example JSON response:
 

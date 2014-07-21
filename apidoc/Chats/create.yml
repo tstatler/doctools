@@ -103,7 +103,7 @@ methods:
 
             Default is 3.
 
-      - name: pretty_print
+      - name: pretty_json
         description: | 
             Determines if the JSON response is formatted for readability (`true`), or displayed on a
             single line (`false`). Default is `false`.
@@ -141,7 +141,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt -F "message=What's up?" -F "photo=@photo.jpg" -F "to_ids=4ee05d69d9ca726b85000003,4ee05d69d9ca726b85000004" "http://api.cloud.appcelerator.com/v1/chats/create.json?key=<YOUR APP APP KEY>&pretty_print=true"
+                $ curl -b cookies.txt -c cookies.txt -F "message=What's up?" -F "photo=@photo.jpg" -F "to_ids=4ee05d69d9ca726b85000003,4ee05d69d9ca726b85000004" "http://api.cloud.appcelerator.com/v1/chats/create.json?key=<YOUR APP APP KEY>&pretty_json=true"
 
             Example JSON response:
 

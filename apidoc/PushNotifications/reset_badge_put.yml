@@ -41,7 +41,7 @@ methods:
         example: |
             Example cURL request:
             
-                $ curl -b cookies.txt -c cookies.txt -X PUT -F "device_token=<device_token>" "https://api.cloud.appcelerator.com/v1/push_notification/reset_badge.json?key=<API_KEY>"
+                $ curl -b cookies.txt -c cookies.txt -X PUT -F "device_token=<device_token>" "https://api.cloud.appcelerator.com/v1/push_notification/reset_badge.json?key=<API_KEY>&pretty_json=true"
 
             Example JSON response:
             

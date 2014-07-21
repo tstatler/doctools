@@ -34,7 +34,7 @@ methods:
             validated  by the Appcelerator Cloud Services server.
         required: True
         
-      - name: pretty_print
+      - name: pretty_json
         description: | 
             Determines if the JSON response is formatted for readability (`true`), or displayed on a
             single line (`false`). Default is `false`.
@@ -71,7 +71,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt -F "id=12345678" -F "type=facebook" -F "token=lqcs6jedOtdrYfu3CaIVR0GWlCnV1l3JbY1i-gFxNNc.eyJpdiI6Ims2STNfRmMxbXFJamoxWFlUWjFrTkEifQ.RW77c5r7ggvTobyL0INb6qscnpoyrrFrrJ6K_IldoJBxcxLkwus8SsLFAJmwy05nLa71zBEqdkm2wJMIn31iUW2mxd37eQX9JRNrtSWcgRpuRDuzjhB7f0u3J4WJYASRnJkq-8l0hr9jiLIDajkJRg" https://api.cloud.appcelerator.com/v1/users/external_account_link.json?key=<YOUR APP APP KEY>&pretty_print=true
+                $ curl -b cookies.txt -c cookies.txt -F "id=12345678" -F "type=facebook" -F "token=lqcs6jedOtdrYfu3CaIVR0GWlCnV1l3JbY1i-gFxNNc.eyJpdiI6Ims2STNfRmMxbXFJamoxWFlUWjFrTkEifQ.RW77c5r7ggvTobyL0INb6qscnpoyrrFrrJ6K_IldoJBxcxLkwus8SsLFAJmwy05nLa71zBEqdkm2wJMIn31iUW2mxd37eQX9JRNrtSWcgRpuRDuzjhB7f0u3J4WJYASRnJkq-8l0hr9jiLIDajkJRg" https://api.cloud.appcelerator.com/v1/users/external_account_link.json?key=<YOUR APP APP KEY>&pretty_json=true
 
             Example JSON response:
 

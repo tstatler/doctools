@@ -14,7 +14,7 @@ methods:
             Comma-separated list consisting of IDs of one or more users to remove from the current user.
         required: true
 
-      - name: pretty_print
+      - name: pretty_json
         description: | 
             Determines if the JSON response is formatted for readability (`true`), or displayed on a
             single line (`false`). Default is `false`.
@@ -40,7 +40,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt -X DELETE -F "user_ids=4e02e027d0afbe41ef000003" "https://api.cloud.appcelerator.com/v1/friends/remove.json?key=<YOUR APP APP KEY>&pretty_print=true"
+                $ curl -b cookies.txt -c cookies.txt -X DELETE -F "user_ids=4e02e027d0afbe41ef000003" "https://api.cloud.appcelerator.com/v1/friends/remove.json?key=<YOUR APP APP KEY>&pretty_json=true"
 
             Example JSON response:
 

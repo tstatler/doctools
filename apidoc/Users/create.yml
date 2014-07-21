@@ -128,7 +128,7 @@ methods:
                  GET https://api.cloud.appcelerator.com/v1/users/confirm_user.json?confirmation_token={{confirmation_token}}&key=<Your App Key>
         type: String
 
-      - name: pretty_print
+      - name: pretty_json
         description: | 
             Determines if the JSON response is formatted for readability (`true`), or displayed on a
             single line (`false`). Default is `false`.
@@ -168,7 +168,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt -X POST --data-urlencode "email=john.smith@company.com" --data-urlencode "role=teacher" --data-urlencode "first_name=John" --data-urlencode "last_name=Smith" --data-urlencode "password=pass" --data-urlencode "password_confirmation=pass" --data-urlencode 'custom_fields={"age":28, "favorite_color":"blue"}' "https://api.cloud.appcelerator.com/v1/users/create.json?key=<YOUR APP APP KEY>&pretty_print=true"
+                $ curl -b cookies.txt -c cookies.txt -X POST --data-urlencode "email=john.smith@company.com" --data-urlencode "role=teacher" --data-urlencode "first_name=John" --data-urlencode "last_name=Smith" --data-urlencode "password=pass" --data-urlencode "password_confirmation=pass" --data-urlencode 'custom_fields={"age":28, "favorite_color":"blue"}' "https://api.cloud.appcelerator.com/v1/users/create.json?key=<YOUR APP APP KEY>&pretty_json=true"
 
             Example JSON response:
 

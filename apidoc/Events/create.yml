@@ -122,7 +122,7 @@ methods:
             behalf of another user.
         type: String
 
-      - name: pretty_print
+      - name: pretty_json
         description: | 
             Determines if the JSON response is formatted for readability (`true`), or displayed on a
             single line (`false`). Default is `false`.
@@ -161,7 +161,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt -F "name=Appcelerator Meetup Group" -F "photo=@photo.jpg" -F "place_id=4d7e62d6d0afbe04170000a4" -F "start_time=2011-03-22T20:59:50+0000" -F "duration=3600" https://api.cloud.appcelerator.com/v1/events/create.json?key=<YOUR APP APP KEY>&pretty_print=true
+                $ curl -b cookies.txt -c cookies.txt -F "name=Appcelerator Meetup Group" -F "photo=@photo.jpg" -F "place_id=4d7e62d6d0afbe04170000a4" -F "start_time=2011-03-22T20:59:50+0000" -F "duration=3600" https://api.cloud.appcelerator.com/v1/events/create.json?key=<YOUR APP APP KEY>&pretty_json=true
 
             Example JSON response:
 

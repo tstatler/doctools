@@ -24,7 +24,7 @@ methods:
             behalf of another user.
         type: String
         
-      - name: pretty_print
+      - name: pretty_json
         description: | 
             Determines if the JSON response is formatted for readability (`true`), or displayed on a
             single line (`false`). Default is `false`.
@@ -50,7 +50,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt -X DELETE "https://api.cloud.appcelerator.com/v1/posts/delete.json?key=<YOUR APP APP KEY>&pretty_print=true&post_id=4d86d26ed0afbe107400000f"
+                $ curl -b cookies.txt -c cookies.txt -X DELETE "https://api.cloud.appcelerator.com/v1/posts/delete.json?key=<YOUR APP APP KEY>&pretty_json=true&post_id=4d86d26ed0afbe107400000f"
 
             Example JSON response:
 
