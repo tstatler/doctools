@@ -74,7 +74,7 @@ methods:
             For details about using the `where` parameter, see the [Search and Query guide](#!/guide/search_query).
         type: Hash
         
-      - name: pretty_print
+      - name: pretty_json
         description: | 
             Determines if the JSON response is formatted for readability (`true`), or displayed on a
             single line (`false`). Default is `false`.
@@ -97,7 +97,7 @@ methods:
         example: |
             The following cURL command updates just the `payload` of the scheduled push notification.
 
-                curl -X PUT -b cookies.txt -c cookies.txt -F "id=<PUSH_NOTIFICTION_ID>" -F 'schedule={"start_time":"2016-12-25T00:00", "name":"test", "push_notification":{"channel":"test","payload":"test schedule"}, "recurrence":{"interval":"daily", "end_time":"2017-03-25T00:00"}}' "https://api.cloud.appcelerator.com/v1/push_schedules/update.json?key=g5d7G8agFnzjOJ5kV2qjhIaKp9Hi4EXW"
+                curl -X PUT -b cookies.txt -c cookies.txt -F "id=<PUSH_NOTIFICTION_ID>" -F 'schedule={"start_time":"2016-12-25T00:00", "name":"test", "push_notification":{"channel":"test","payload":"test schedule"}, "recurrence":{"interval":"daily", "end_time":"2017-03-25T00:00"}}' "https://api.cloud.appcelerator.com/v1/push_schedules/update.json?key=g5d7G8agFnzjOJ5kV2qjhIaKp9Hi4EXW&pretty_json=true"
 
             Example JSON response:
 

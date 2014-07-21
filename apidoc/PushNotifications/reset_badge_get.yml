@@ -17,7 +17,7 @@ methods:
 
     parameters:
     
-      - name: pretty_print
+      - name: pretty_json
         description: | 
             Determines if the JSON response is formatted for readability (`true`), or displayed on a
             single line (`false`). Default is `false`.
@@ -32,7 +32,7 @@ methods:
         example: |
             Example cURL request:
             
-                $ curl -b cookies.txt -c cookies.txt -X GET "https://api.cloud.appcelerator.com/v1/push_notification/reset_badge.json?key=<API_KEY>"
+                $ curl -b cookies.txt -c cookies.txt -X GET "https://api.cloud.appcelerator.com/v1/push_notification/reset_badge.json?key=<API_KEY>&pretty_json=true"
 
             Example JSON response:
             

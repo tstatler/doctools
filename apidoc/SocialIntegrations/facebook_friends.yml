@@ -8,7 +8,7 @@ methods:
     login-required: true
 
     parameters:        
-      - name: pretty_print
+      - name: pretty_json
         description: | 
             Determines if the JSON response is formatted for readability (`true`), or displayed on a
             single line (`false`). Default is `false`.
@@ -45,7 +45,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt https://api.cloud.appcelerator.com/v1/social/facebook/search_friends.json?key=<YOUR APP APP KEY>&pretty_print=true
+                $ curl -b cookies.txt -c cookies.txt https://api.cloud.appcelerator.com/v1/social/facebook/search_friends.json?key=<YOUR APP APP KEY>&pretty_json=true
 
             Example JSON response:
 

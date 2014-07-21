@@ -128,7 +128,7 @@ methods:
             For details about using the `where` parameter, see the [Search and Query guide](#!/guide/search_query).
         type: Hash
         
-      - name: pretty_print
+      - name: pretty_json
         description: | 
             Determines if the JSON response is formatted for readability (`true`), or displayed on a
             single line (`false`). Default is `false`.
@@ -166,7 +166,7 @@ methods:
         example: |
             Example cURL request. The JSON response object includes the ID of the push notification.
 
-                $ curl -b cookies.txt -c cookies.txt -F "channel=friend_request" -F "to_ids=5354525d5714f565d3001c1e" -F "payload=test" https://api.cloud.appcelerator.com/v1/push_notification/notify.json?key=<APP_KEY>
+                $ curl -b cookies.txt -c cookies.txt -F "channel=friend_request" -F "to_ids=5354525d5714f565d3001c1e" -F "payload=test" https://api.cloud.appcelerator.com/v1/push_notification/notify.json?key=<APP_KEY>&pretty_json=true
 
                 Example JSON response:
 

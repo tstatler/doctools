@@ -121,7 +121,7 @@ methods:
             see the [Search and Query guide](#!/guide/search_query).
         type: Hash
 
-      - name: pretty_print
+      - name: pretty_json
         description: | 
             Determines if the JSON response is formatted for readability (`true`), or displayed on a
             single line (`false`). Default is `false`.
@@ -150,7 +150,7 @@ methods:
         example: |
             Example cURL request:
 
-                curl -X POST -F "channel=<channel>" -F "to_tokens=<token list>" -F "payload=<payload>" "https://api.cloud.appcelerator.com/v1/push_notification/notify_tokens.json?key=<key>"
+                curl -X POST -F "channel=<channel>" -F "to_tokens=<token list>" -F "payload=<payload>" "https://api.cloud.appcelerator.com/v1/push_notification/notify_tokens.json?key=<key>&pretty_json=true"
 
             Example JSON response:
 

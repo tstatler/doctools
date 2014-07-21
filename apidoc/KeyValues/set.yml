@@ -51,7 +51,7 @@ methods:
             behalf of another user.
         type: String
         
-      - name: pretty_print
+      - name: pretty_json
         description: | 
             Determines if the JSON response is formatted for readability (`true`), or displayed on a
             single line (`false`). Default is `false`.
@@ -79,10 +79,10 @@ methods:
             Example cURL request:
 
                 If type is string
-                $ curl -b cookies.txt -c cookies.txt -X PUT -F "name=welcome_message" -F "value=Welcome to Appcelerator Cloud Services" https://api.cloud.appcelerator.com/v1/keyvalues/set.json?key=<YOUR APP APP KEY>&pretty_print=true
+                $ curl -b cookies.txt -c cookies.txt -X PUT -F "name=welcome_message" -F "value=Welcome to Appcelerator Cloud Services" https://api.cloud.appcelerator.com/v1/keyvalues/set.json?key=<YOUR APP APP KEY>&pretty_json=true
 
                 If type is binary (loading data from a file)
-                $ curl -b cookies.txt -c cookies.txt -X PUT -F "name=binary" -F "type=binary" -F "value=<photo.jpg" https://api.cloud.appcelerator.com/v1/keyvalues/set.json?key=<YOUR APP APP KEY>&pretty_print=true
+                $ curl -b cookies.txt -c cookies.txt -X PUT -F "name=binary" -F "type=binary" -F "value=<photo.jpg" https://api.cloud.appcelerator.com/v1/keyvalues/set.json?key=<YOUR APP APP KEY>&pretty_json=true
 
             Example JSON response:
 

@@ -43,7 +43,7 @@ methods:
             Using `gcm` to specify Google Cloud Messaging still works.
         type: String
 
-      - name: pretty_print
+      - name: pretty_json
         description: | 
             Determines if the JSON response is formatted for readability (`true`), or displayed on a
             single line (`false`). Default is `false`.
@@ -75,7 +75,7 @@ methods:
         example: |
             Example cURL request:
 
-                curl -i -X POST -F "type=ios" -F "device_token=<token>" -F "channel="friend_request" "http://api.cloud.appcelerator.com/v1/push_notification/subscribe_token.json?key=<app key>"
+                curl -i -X POST -F "type=ios" -F "device_token=<token>" -F "channel="friend_request" "http://api.cloud.appcelerator.com/v1/push_notification/subscribe_token.json?key=<app key>&pretty_json=true"
 
             Example JSON response:
 

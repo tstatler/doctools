@@ -59,7 +59,7 @@ methods:
             Default is 3, valid range is 1 to 8.
         type: Number
 
-      - name: pretty_print
+      - name: pretty_json
         description: | 
             Determines if the JSON response is formatted for readability (`true`), or displayed on a
             single line (`false`). Default is `false`.
@@ -97,7 +97,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/friends/search.json?user_id=4e02e022d0afbe41ef000002&q=alice%40gal.com&key=<YOUR APP APP KEY>&pretty_print=true"
+                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/friends/search.json?user_id=4e02e022d0afbe41ef000002&q=alice%40gal.com&key=<YOUR APP APP KEY>&pretty_json=true"
 
             Example JSON response:
 

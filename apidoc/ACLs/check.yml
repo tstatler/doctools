@@ -32,7 +32,7 @@ methods:
             Either `name` or `id` must be specified.
         type: String
 
-      - name: pretty_print
+      - name: pretty_json
         description: | 
             Determines if the JSON response is formatted for readability (`true`), or displayed on a
             single line (`false`). Default is `false`.
@@ -76,7 +76,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/acls/check.json?key=<YOUR APP APP KEY>&pretty_print=true&name=access_photo_album&user_id=4fcdd3c547b7b71c0b000004"
+                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/acls/check.json?key=<YOUR APP APP KEY>&pretty_json=true&name=access_photo_album&user_id=4fcdd3c547b7b71c0b000004"
 
             Example JSON response:
 

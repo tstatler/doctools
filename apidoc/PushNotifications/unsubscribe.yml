@@ -34,7 +34,7 @@ methods:
 
             Only application admins can unsubscribe another user from push notifications.
 
-      - name: pretty_print
+      - name: pretty_json
         description: | 
             Determines if the JSON response is formatted for readability (`true`), or displayed on a
             single line (`false`). Default is `false`.
@@ -61,7 +61,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt -X DELETE "https://api.cloud.appcelerator.com/v1/push_notification/unsubscribe.json?key=<YOUR API APP KEY>&channel=friend_request&device_token=f7702d77b34ed94869f664e7a297ccc173bec93a2b815css6asd28461a0358db"
+                $ curl -b cookies.txt -c cookies.txt -X DELETE "https://api.cloud.appcelerator.com/v1/push_notification/unsubscribe.json?key=<YOUR API APP KEY>&channel=friend_request&device_token=f7702d77b34ed94869f664e7a297ccc173bec93a2b815css6asd28461a0358db&pretty_json=true"
 
             Example JSON response:
 

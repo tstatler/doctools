@@ -26,7 +26,7 @@ methods:
             `current_user_liked` field is not included in the response.
         type: Boolean
 
-      - name: pretty_print
+      - name: pretty_json
         description: | 
             Determines if the JSON response is formatted for readability (`true`), or displayed on a
             single line (`false`). Default is `false`.
@@ -63,7 +63,7 @@ methods:
             returned in the JSON response contains `"current_user_liked": true`, indicating that the current user
             liked the retrieved object.
 
-                $ curl -b cookies.txt -c cookies.txt https://api.cloud.appcelerator.com/v1/checkins/show.json?key=<YOUR APP APP KEY>&pretty_print=true&checkin_id=4d8bc645d0afbe0363000013&show_user_like=true
+                $ curl -b cookies.txt -c cookies.txt https://api.cloud.appcelerator.com/v1/checkins/show.json?key=<YOUR APP APP KEY>&pretty_json=true&checkin_id=4d8bc645d0afbe0363000013&show_user_like=true
 
             Example JSON response:
 

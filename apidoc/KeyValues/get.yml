@@ -34,7 +34,7 @@ methods:
             user's store.
         type: String
 
-      - name: pretty_print
+      - name: pretty_json
         description: | 
             Determines if the JSON response is formatted for readability (`true`), or displayed on a
             single line (`false`). Default is `false`.
@@ -72,7 +72,7 @@ methods:
         example: |
             Example cURL request (String data)
 
-                curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/keyvalues/get.json?key=<YOUR APP APP KEY>&pretty_print=true&name=welcome_message"
+                curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/keyvalues/get.json?key=<YOUR APP APP KEY>&pretty_json=true&name=welcome_message"
 
             Example JSON response:
 
@@ -97,7 +97,7 @@ methods:
 
             Example cURL request (binary data)
 
-                curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/keyvalues/get.json?key=<YOUR APP APP KEY>&pretty_print=true&name=myimage" > image.jpg
+                curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/keyvalues/get.json?key=<YOUR APP APP KEY>&pretty_json=true&name=myimage" > image.jpg
 
       - platform: ios
         example: |
