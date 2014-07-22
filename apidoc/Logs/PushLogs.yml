@@ -1,0 +1,42 @@
+name: PushLogs
+description: |
+    The data type for each objectreturned by a {@link Logs#querypushlogs} query.
+
+fields:
+  - name: _id
+    description: Log item ID.
+    type: String
+
+  - name: payload
+    description: Notification payload.
+    type: String
+
+  - name: to_ids
+    description: Array of User IDs that push notification was delivered to.
+    type: Array
+
+  - name: channel
+    description: Name of the channel to which the push notification was delivered.
+    type: String 
+
+  - name: app_id
+    description: <TODO>
+    type: String
+
+  - name: push_schedule_id
+    description: | 
+          ID of the {@PushSchedules} used to create the push notification (only present if the push notification
+          was created by a PushSchedule).
+
+  - name: scheduled_at
+    description: | Date that push notification was scheduled (only present if the push notification
+            was created by a schedule.)
+    type: Date
+
+  - name: created_at
+    description: | Date that push notification was created.
+    type: Date
+
+  - name: updated_at
+    description: | Date that push notification was updated.
+    type: Date

@@ -1,0 +1,239 @@
+name: Logs
+methods:
+  - name: querypushlogs
+    summary: Query ACS push notification logs.
+
+    description: |
+        Performs a custom query of ACS push notification logs with sorting and pagination.
+
+        To run this command, the user must {@link Users#login logged-in} as an application admin.
+
+        Notification logs are purged after three months.
+
+    url: logs/querypushlogs.json
+    http-method: GET
+    login-required: true
+    admin-required: true
+
+    response-parameters:
+      - name: PushLogs
+        description: List of PushLogs matching the query.
+        type: Array<PushLogs>
+
+    examples:
+      - platform: titanium
+        example: |
+            This method is not available in the Titanium.Cloud module.
+
+      - platform: rest
+        example: |        
+            Example cURL request:
+
+                $ curl -b cookies.txt -c cookies.txt -X GET "http://api.cloud.appcelerator.com/v1/logs/querypushlogs.json?key=<API_KEY>&pretty_json=true"
+
+            Example JSON response:
+
+                {
+                  "meta": {
+                    "code": 200,
+                    "status": "ok",
+                    "method_name": "queryPushLogs",
+                    "more": false
+                  },
+                  "response": {
+                    "push_logs": [
+                      {
+                        "_id": "539b589fc8499a086d000200",
+                        "app_id": "527032812a30cf5d96000003",
+                        "created_at": "2014-06-13T20:01:35.297Z",
+                        "expire_after_seconds": null,
+                        "geo_condition": null,
+                        "locked_at": "2014-06-13T20:01:36.833Z",
+                        "payload": "{\"alert\":\"hello\",\"sound\":\"none\",\"vibrate\":false}",
+                        "to_ids": null,
+                        "updated_at": "2014-06-13T20:01:35.297Z",
+                        "user_id": null,
+                        "version": null
+                      },
+                      {
+                        "_id": "53581c34d8d8f2b28a000098",
+                        "channel": "test",
+                        "payload": "test schedule",
+                        "geo_condition": "{\"$geoWithin\":{\"$centerSphere\":[[-122.0507049560547,37.38685989379883],0.00252589]}}",
+                        "app_id": "527032812a30cf5d96000003",
+                        "push_schedule_id": "53581c34d8d8f2b28a000097",
+                        "scheduled_at": "2014-10-24T00:00:00.000Z",
+                        "created_at": "2014-04-23T20:01:56.409Z",
+                        "updated_at": "2014-04-23T20:01:56.409Z"
+                      },
+                      {
+                        "_id": "53581a8ed8d8f2b28a000096",
+                        "channel": "test",
+                        "payload": "test schedule",
+                        "app_id": "527032812a30cf5d96000003",
+                        "push_schedule_id": "53581a8ed8d8f2b28a000095",
+                        "scheduled_at": "2014-10-24T00:00:00.000Z",
+                        "created_at": "2014-04-23T19:54:54.163Z",
+                        "updated_at": "2014-04-23T19:54:54.163Z"
+                      }
+                    ]
+                  }
+                }
+
+      - platform: ios
+        example: |
+            Example iOS call:
+
+                NSDictionary *data = @{
+                                         @"name" : @"Party Pictures"
+                                      };
+                [APSPhotoCollections create:data withBlock:^(APSResponse *e) {
+                    if (e.success){
+                        NSArray *collections = e.response[@"collections"];
+                        NSDictionary *collection = collections[0];
+                        NSString *message = [NSString stringWithFormat:@"id : %@\n Name : %@\nCount: %@\nUpdated at : %@\n",
+                                                collection[@"id"],
+                                                collection[@"name"],
+                                                collection[@"count"],
+                                                collection[@"updated_at"]];
+
+                        [[[UIAlertView alloc] initWithTitle:@"Success" 
+                                                    message:message
+                                                   delegate:nil 
+                                          cancelButtonTitle:@"OK" 
+                                          otherButtonTitles:nil] show];
+
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:e.errorMessage
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
+                NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
+                [paramDict setObject:@"My Photo Album" forKey:@"name"];
+                CCRequest *request = [[[CCRequest alloc] initWithDelegate:self httpMethod:@"POST" baseUrl:@"collections/create.json" paramDict:paramDict] autorelease];
+                [request startAsynchronous];
+
+            SDK Callback:
+
+                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
+                {
+                    NSArray *collections = [response getObjectsOfType:[CCCollection class]];
+                    for (CCCollection *collection in collections)
+                    {
+                        ...
+                    }
+                }
+
+      - platform: android
+        example: |
+            Example Android APS SDK call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+                final Activity currentActivity = this;
+
+                HashMap<String, Object> data = new HashMap<String, Object>();
+                data.put("name", "Office Fun");
+
+                try {
+                    APSPhotoCollections.create(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                new AlertDialog.Builder(currentActivity)
+                                .setTitle("Success!").setMessage("Created!")
+                                .setPositiveButton(android.R.string.ok, null)
+                                .setIcon(android.R.drawable.ic_dialog_info)
+                                .show();
+                            } else {
+                                Log.e("APSPhotoCollections", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSPhotoCollections", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSPhotoCollections", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
+        example: |
+            Example Android call:
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("name", "Office Fun");
+                CCResponse response = sdk.sendRequest("collections/create.json", CCRequestMethod.POST, data);
+
+            SDK Callback:
+
+                JSONObject responseJSON = response.getResponseData();
+                CCMeta meta = response.getMeta();
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
+                    && "createCollection".equals(meta.getMethod())) {
+                  JSONArray collections = responseJSON.getJSONArray("collections");
+                  ...
+                }
+
+      - platform: javascript
+        example: |
+            Example Javascript call:
+
+                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+                var data = {
+                  name: 'Office Fun'
+                };
+                sdk.sendRequest('collections/create.json', 'POST', data, callback);
+
+            SDK Callback:
+
+                function callback(data) {
+                  if(data) {
+                    if(data.meta) {
+                      var meta = data.meta;
+                      if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'createCollection') {
+                        var collections = data.response.collections;
+                        ...
+                      }
+                    }
+                  }
+                }
+
+      - platform: actionscript
+        example: |
+            Example Actionscript call:
+
+                var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
+                var data:Object = new Object();
+                data.name = "Office Fun";
+                sdk.sendRequest("collections/create.json", URLRequestMethod.POST, data, false, callback);
+
+            SDK Callback:
+
+                function callback(data:Object):void {
+                  if(data) {
+                    if(data.hasOwnProperty("meta")) {
+                      var meta:Object = data.meta;
+                      if(meta.status == "ok" && meta.code == 200 && meta.method_name == "createCollection") {
+                        var collections:Array = data.response.collections;
+                        ...
+                      }
+                    }
+                  }
+                }

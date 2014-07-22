@@ -1,0 +1,20 @@
+name: Logs
+methods:
+  - name: querypushlogdetails
+    summary: Query details about a push notification log item.
+
+    description: |
+        Performs a custom query of push notification log details. To get details for a specific push 
+        notification, include a `where={"push_id": "<PUSHLOG_ID"}`. 
+
+    url: logs/querypushlogdetails.json
+    http-method: GET
+    login-required: true
+    admin-required: true
+
+    response-parameters:
+      - name: PushLogDetails
+        description: List of PushLogDetails matching the query.
+        type: Array<PushLogDetails>
+
+    example: sdfsdf

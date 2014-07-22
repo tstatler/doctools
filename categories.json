@@ -47,7 +47,10 @@
                  "classes": [
                     "Clients",
                     "GeoFences",
-                    "Likes"
+                    "Likes",
+                    "Logs",
+                    "PushLogs",
+                    "PushLogDetails"
                  ]
              }
           ]
