@@ -4,11 +4,15 @@ methods:
     summary: Query ACS push notification logs.
 
     description: |
-        Performs a custom query of ACS push notification logs with sorting and pagination.
+        Performs a custom query of ACS push notification logs with sorting and pagination. Returns
+        a list of PushLogs objects that matched the query parameters.
 
         To run this command, the user must {@link Users#login logged-in} as an application admin.
 
         Notification logs are purged after three months.
+
+        Use the value of PushLogs#_id in a {@link Logs#querypushlogdetails} query to get additional 
+        details about the notification.
 
     url: logs/querypushlogs.json
     http-method: GET

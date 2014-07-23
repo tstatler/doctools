@@ -2,19 +2,157 @@ name: Logs
 methods:
   - name: querypushlogdetails
     summary: Query details about a push notification log item.
-
     description: |
-        Performs a custom query of push notification log details. To get details for a specific push 
-        notification, include a `where={"push_id": "<PUSHLOG_ID"}`. 
+        Performs a custom query of push notification log details for a specific log item returned from 
+        a previous call to {@link Logs#querypushlogs}.
 
     url: logs/querypushlogdetails.json
     http-method: GET
     login-required: true
     admin-required: true
 
+    parameters:
+      - name: where
+        description: | Where clause whose value is JSON object consisting of the field name "push_id" 
+                and the ID of the push notification log item to query for, for example:
+
+                    where={"push_id":"<PUSHLOG_ID>"}
+
+        type: String
+        required: true
+
     response-parameters:
       - name: PushLogDetails
         description: List of PushLogDetails matching the query.
         type: Array<PushLogDetails>
 
-    example: sdfsdf
+    examples:
+      - platform: titanium
+        example: |
+            This method is not available in the Titanium.Cloud module.
+
+      - platform: rest
+        example: |        
+            Example cURL request that queries push log details for the push notification log item 
+            with the ID "53c98055e4b03fa5a90c2942":
+
+                $ curl -b cookies.txt -c cookies.txt -d 'where={"push_id":"53c98055e4b03fa5a90c2942"}' -X GET "http://api.cloud.appcelerator.com/v1/logs/querypushlogdetails.json?key=<APP_KEY>&pretty_json=true"
+
+            Example JSON response:
+
+                {
+                  "meta": {
+                    "code": 200,
+                    "status": "ok",
+                    "method_name": "queryPushLogDetails",
+                    "more": false
+                  },
+                  "response": {
+                    "push_log_details": [
+                      {
+                        "_id": "53c98055e4b03fa5a90c2942",
+                        "android_types": [
+                          {
+                            "GCM": 2
+                          }
+                        ],
+                        "app_id": "52b392a7f00ed00b1b000194",
+                        "channel": "#broadcast",
+                        "created_at": "2014-07-18T20:15:17.562Z",
+                        "device_count": 2,
+                        "locked_at": "2014-07-18T20:15:43.555Z",
+                        "pem_sent_at": "2014-07-18T20:15:43.863Z",
+                        "push_id": "53c980549d8b700fc70008e6",
+                        "send_status": 1,
+                        "types": [
+                          {
+                            "android": 2
+                          }
+                        ],
+                        "updated_at": "2014-07-18T20:15:16.579Z"
+                      }
+                    ]
+                  }
+                }
+
+      - platform: ios
+        example: |
+            This method is not available in the iOS native SDK module.
+
+      - platform: ios-acssdk
+        example: |
+
+
+      - platform: android
+        example: |
+
+      - platform: android-acssdk
+        example: |
+            Example Android call:
+
+                ACSClient sdk = new ACSClient("`YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("name", "Office Fun");
+                CCResponse response = sdk.sendRequest("collections/create.json", CCRequestMethod.POST, data);
+
+            SDK Callback:
+
+                JSONObject responseJSON = response.getResponseData();
+                CCMeta meta = response.getMeta();
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
+                    && "createCollection".equals(meta.getMethod())) {
+                  JSONArray collections = responseJSON.getJSONArray("collections");
+                  ...
+                }
+
+      - platform: javascript
+        example: |
+            Example Javascript call:
+
+                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+                var data = {
+                  name: 'Office Fun'
+                };
+                sdk.sendRequest('collections/create.json', 'POST', data, callback);
+
+            SDK Callback:
+
+                function callback(data) {
+                  if(data) {
+                    if(data.meta) {
+                      var meta = data.meta;
+                      if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'createCollection') {
+                        var collections = data.response.collections;
+                        ...
+                      }
+                    }
+                  }
+                }
+
+      - platform: actionscript
+        example: |
+            Example Actionscript call:
+
+                var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
+                var data:Object = new Object();
+                data.name = "Office Fun";
+                sdk.sendRequest("collections/create.json", URLRequestMethod.POST, data, false, callback);
+
+            SDK Callback:
+
+                function callback(data:Object):void {
+                  if(data) {
+                    if(data.hasOwnProperty("meta")) {
+                      var meta:Object = data.meta;
+                      if(meta.status == "ok" && meta.code == 200 && meta.method_name == "createCollection") {
+                        var collections:Array = data.response.collections;
+                        ...
+                      }
+                    }
+                  }
+                }

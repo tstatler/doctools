@@ -1,3 +1,0 @@
-name: PushLogDetails
-description: |
-    The Logs API provides methods for getting details about a particular push notification log item.

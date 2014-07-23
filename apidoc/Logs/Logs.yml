@@ -1,3 +1,3 @@
 name: Logs
 description: |
-    Methods for querying ACS log files.
+    The `/logs` URL namespace contaions methods for querying ACS push notification log files.
