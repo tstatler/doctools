@@ -3,6 +3,7 @@ description: |
     The data type for objects returned by {@link Logs#querypushlogs}. To get details about a specific 
     notifiction log item, call {@link Logs#querypushlogdetails} passing it the value of 
     PushLogs#_id. 
+pseudo: true    
 
 fields:
   - name: _id
@@ -27,7 +28,7 @@ fields:
 
   - name: push_schedule_id
     description: | 
-          ID of the {@PushSchedules} used to create the push notification (only present if the push notification
+          ID of the {@link PushSchedules} used to create the push notification (only present if the push notification
           was created by a PushSchedule).
 
   - name: scheduled_at

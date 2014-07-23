@@ -1,6 +1,7 @@
 name: PushLogDetails
 description: |
     The data type of objects returned by {@link Logs#querypushlogdetails}.
+pseudo: true    
 
 fields:
   - name: id
@@ -8,12 +9,12 @@ fields:
     type: String
 
   - name: android_types
-    description: | List of Android push notification object types, and the number of notifications
-     delivered using each type. Possible key names are the following: 
+    description: | List of Android push notification object types, and the number of notifications 
+          delivered using each type. Possible key names are the following: 
 
-      * GCM: Google Cloud Messaging service for Android
-      * MQTT:  MQ Telemetry Transport
-     type: Array<Hash>
+          * GCM: Google Cloud Messaging service for Android
+          * MQTT:  MQ Telemetry Transport
+    type: Array<Hash>
 
   - name: app_id
     description: <TODO>

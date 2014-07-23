@@ -35,7 +35,7 @@ methods:
         example: |        
             Example cURL request that queries push log details for the push notification log item 
             with the ID "53c98055e4b03fa5a90c2942", which was returned in a previous call to 
-            {@Logs#querypushlogs}.
+            {@link Logs#querypushlogs}.
 
                 $ curl -b cookies.txt -c cookies.txt -d 'where={"push_id":"53c98055e4b03fa5a90c2942"}' -X GET "http://api.cloud.appcelerator.com/v1/logs/querypushlogdetails.json?key=<APP_KEY>&pretty_json=true"
 
