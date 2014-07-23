@@ -1,8 +1,8 @@
 name: PushLogs
 description: |
     The data type for objects returned by {@link Logs#querypushlogs}. To get details about a specific 
-    notifiction log item returned by this method, pass the value of PushLogs#_id from the response
-    to {@link Logs#querypushlogdetails}.
+    notifiction log item, call {@link Logs#querypushlogdetails} passing it the value of 
+    PushLogs#_id. 
 
 fields:
   - name: _id
