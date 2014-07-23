@@ -25,8 +25,9 @@ The [NSMutableURLRequest](https://developer.apple.com/library/mac/documentation/
 For example, the following uses the `addValue` method to add the `x-native-id` header to a request object:
 
 	NSURL *url = [NSURL URLWithString:@"http://localhost:8080/method"];
-	NSMutableURLRequest* request = [[[NSMutableURLRequest alloc] initWithURL:url];
+	NSMutableURLRequest* request = [[NSMutableURLRequest alloc] initWithURL:url];
 	[request addValue:@"YOUR_APP_GUID" forHTTPHeaderField:@"x-native-id"];
+	[[NSURLConnection alloc] initWithRequest:request delegate:self];
 
 If you are using the CFNetwork framework, you can use the [`CFHTTPMessageSetHeaderFieldValue`](https://developer.apple.com/library/prerelease/mac/documentation/CoreFoundation/Reference/CFMessageRef/index.html#//apple_ref/c/func/CFHTTPMessageSetHeaderFieldValue) method of the [CFHTTPMessage](https://developer.apple.com/library/mac/documentation/CoreFoundation/Reference/CFMessageRef/Reference/reference.html) class. For an example, see the code listing in [Creating a CFHTTP Request](https://developer.apple.com/library/mac/documentation/Networking/Conceptual/CFNetwork/CFHTTPTasks/CFHTTPTasks.html#//apple_ref/doc/uid/TP30001132-CH5-SW1) in the CFNetwork Programming Guide.
 
@@ -44,3 +45,17 @@ If your application uses the Apache Stack (org.apache.http namespace), the [addH
 	String url = "http://localhost:8080/method";
 	HttpPost httpPost = new HttpPost(url);
 	httpPost.addHeader("x-native-id" , "<YOUR_APP_GUID>");
+	httpclient.execute(httpPost);
+
+## Example project
+
+To create a Node.ACS service to use in a native iOS or Android application, you use the ACS command-line
+tool. If you don't have the `acs` CLI installed on your system, you can install it using the `npm` utility:
+
+	sudo npm install -g acs
+
+
+
+
+
+
