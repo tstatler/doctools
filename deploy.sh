@@ -163,7 +163,7 @@ if [ $include_modules ]; then
                  $APPC_MODULES/ti.coremotion/apidoc $TI_MODULES/urlSession/apidoc"
 
     if [ $addon_guidesdir ]; then
-        module_dirs+=" $DOCTOOLS/modules $APPC_MODULES/ti.geofence/apidoc"
+        module_dirs+=" $DOCTOOLS/modules $APPC_MODULES/ti.geofence/apidoc $APPC_MODULES/appcelerator.https/apidoc"
     fi
 fi
 
@@ -190,6 +190,21 @@ cp $VIDEO_LIST $PROCESSED_VIDEO_LIST
 if [ $production_build ] ; then
     (cd ${JSDUCK}; rake compress)
     TEMPLATE=${JSDUCK}/${PROD_TEMPLATE}
+
+    ## Generate Solr content
+    echo "Generating Solr content for indexing..."
+    $TI_DOCS/docgen.py -f solr -o ./build $module_dirs
+    mkdir -p $outdir/../data/solr
+    cp ./build/api_solr.json $outdir/../data/solr/.
+    if [ $include_alloy ]; then
+        echo "Generating Solr content for Alloy..."
+        bash $DOCTOOLS/jsduck2json/alloy2json.sh solr
+        cp ./dist/solr_api.json $outdir/../data/solr/alloy_api.json
+    fi
+    if [ -z $addon_guidesdir ]; then
+        sed -i '' 's/\"type\": \"platform\"/\"type\": \"titanium\"/g' $outdir/../data/solr/*.json
+        sed -i '' 's/\-platform\"/\-titanium\"/g' $outdir/../data/solr/*.json
+    fi
 else
     compass compile ${JSDUCK}/template/resources/sass
     TEMPLATE=${JSDUCK}/${DEBUG_TEMPLATE}
