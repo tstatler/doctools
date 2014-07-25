@@ -1,0 +1,101 @@
+name: Logs
+methods:
+  - name: querypushlogdetails
+    summary: Query details about a specific push notification log item.
+    description: |
+        Performs a custom query for details about a specific ACS push notification log item specified
+        in the query's `where` clause. Returns a {@link PushLogDetails} object for the specified log item.
+
+    url: logs/querypushlogdetails.json
+    http-method: GET
+    login-required: true
+    admin-required: true
+
+    parameters:
+      - name: where
+        description: | Where clause whose value is JSON object consisting of the field name "push_id" 
+                and the ID of the push notification log item to query for, for example:
+
+                    where={"push_id":"<PUSHLOG_ID>"}
+
+        type: String
+        required: true
+
+    response-parameters:
+      - name: PushLogDetails
+        description: Single-element array of {@link PushLogDetails} that matched the query.
+        type: Array<PushLogDetails>
+
+    examples:
+      - platform: titanium
+        example: |
+            Use the [Titanium.Cloud.sendRequest()](http://docs.appcelerator.com/titanium/latest/#!/api/Titanium.Cloud-method-sendRequest) 
+            method to invoke this REST API directly.
+
+      - platform: rest
+        example: |        
+            Example cURL request that queries push log details for the push notification log item 
+            with the ID "53c98055e4b03fa5a90c2942", which was returned in a previous call to 
+            {@link Logs#querypushlogs}.
+
+                $ curl -b cookies.txt -c cookies.txt -d 'where={"push_id":"53c98055e4b03fa5a90c2942"}' -X GET "http://api.cloud.appcelerator.com/v1/logs/querypushlogdetails.json?key=<APP_KEY>&pretty_json=true"
+
+            Example JSON response:
+
+                {
+                  "meta": {
+                    "code": 200,
+                    "status": "ok",
+                    "method_name": "queryPushLogDetails",
+                    "more": false
+                  },
+                  "response": {
+                    "push_log_details": [
+                      {
+                        "_id": "53c98055e4b03fa5a90c2942",
+                        "android_types": [
+                          {
+                            "GCM": 2
+                          }
+                        ],
+                        "app_id": "52b392a7f00ed00b1b000194",
+                        "channel": "#broadcast",
+                        "created_at": "2014-07-18T20:15:17.562Z",
+                        "device_count": 2,
+                        "locked_at": "2014-07-18T20:15:43.555Z",
+                        "pem_sent_at": "2014-07-18T20:15:43.863Z",
+                        "push_id": "53c980549d8b700fc70008e6",
+                        "send_status": 1,
+                        "types": [
+                          {
+                            "android": 2
+                          }
+                        ],
+                        "updated_at": "2014-07-18T20:15:16.579Z"
+                      }
+                    ]
+                  }
+                }
+
+      - platform: ios
+        example: |
+            Use the \[[APSCloud sendRequest](http://docs.appcelerator.com/aps-sdk-apidoc/latest/ios/Classes/APSCloud.html#//api/name/sendRequest:method:data:handler:)\]
+            method to invoke this REST API directly.
+
+      - platform: ios-acssdk
+        example: |
+
+
+      - platform: android
+        example: |
+            Use the [APSCloud.sendRequest()](http://docs.appcelerator.com/aps-sdk-apidoc/latest/android/com/appcelerator/aps/APSCloud.html#sendRequest%28java.lang.String, java.lang.String, java.util.Map, com.appcelerator.aps.APSResponseHandler%29)
+            method to invoke this REST API directly.
+
+      - platform: android-acssdk
+        example: |
+
+      - platform: javascript
+        example: |
+
+      - platform: actionscript
+        example: |

@@ -1,0 +1,121 @@
+name: Logs
+methods:
+  - name: querypushlogs
+    summary: Query ACS push notification logs.
+
+    description: |
+        Performs a custom query of ACS push notification logs with sorting and pagination. Returns
+        a list of {@link PushLogs} objects that matched the query parameters.
+
+        To get additional details about a specific PushLogs item, pass the value of PushLogs#_id to
+        a {@link Logs#querypushlogdetails} query.
+
+    url: logs/querypushlogs.json
+    http-method: GET
+    login-required: true
+    admin-required: true
+
+    response-parameters:
+      - name: PushLogs
+        description: List of PushLogs matching the query.
+        type: Array<PushLogs>
+
+    examples:
+      - platform: titanium
+        example: |
+            Use the [Titanium.Cloud.sendRequest()](http://docs.appcelerator.com/titanium/latest/#!/api/Titanium.Cloud-method-sendRequest) 
+            method to invoke this REST API directly.
+
+      - platform: rest
+        example: |        
+            Example cURL request:
+
+                $ curl -b cookies.txt -c cookies.txt -X GET "http://api.cloud.appcelerator.com/v1/logs/querypushlogs.json?key=<API_KEY>&pretty_json=true"
+
+            Example JSON response:
+
+                {
+                  "meta": {
+                    "code": 200,
+                    "status": "ok",
+                    "method_name": "queryPushLogs",
+                    "more": false
+                  },
+                  "response": {
+                    "push_logs": [
+                      {
+                        "_id": "539b589fc8499a086d000200",
+                        "app_id": "527032812a30cf5d96000003",
+                        "created_at": "2014-06-13T20:01:35.297Z",
+                        "expire_after_seconds": null,
+                        "geo_condition": null,
+                        "locked_at": "2014-06-13T20:01:36.833Z",
+                        "payload": "{\"alert\":\"hello\",\"sound\":\"none\",\"vibrate\":false}",
+                        "to_ids": null,
+                        "updated_at": "2014-06-13T20:01:35.297Z",
+                        "user_id": null,
+                        "version": null
+                      },
+                      {
+                        "_id": "53581c34d8d8f2b28a000098",
+                        "channel": "test",
+                        "payload": "test schedule",
+                        "geo_condition": "{\"$geoWithin\":{\"$centerSphere\":[[-122.0507049560547,37.38685989379883],0.00252589]}}",
+                        "app_id": "527032812a30cf5d96000003",
+                        "push_schedule_id": "53581c34d8d8f2b28a000097",
+                        "scheduled_at": "2014-10-24T00:00:00.000Z",
+                        "created_at": "2014-04-23T20:01:56.409Z",
+                        "updated_at": "2014-04-23T20:01:56.409Z"
+                      },
+                      {
+                        "_id": "53581a8ed8d8f2b28a000096",
+                        "channel": "test",
+                        "payload": "test schedule",
+                        "app_id": "527032812a30cf5d96000003",
+                        "push_schedule_id": "53581a8ed8d8f2b28a000095",
+                        "scheduled_at": "2014-10-24T00:00:00.000Z",
+                        "created_at": "2014-04-23T19:54:54.163Z",
+                        "updated_at": "2014-04-23T19:54:54.163Z"
+                      }
+                    ]
+                  }
+                }
+
+      - platform: ios
+        example: |
+            Use the \[[APSCloud sendRequest](http://docs.appcelerator.com/aps-sdk-apidoc/latest/ios/Classes/APSCloud.html#//api/name/sendRequest:method:data:handler:)\]
+            method to invoke this REST API directly.
+            
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
+                NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
+                [paramDict setObject:@"My Photo Album" forKey:@"name"];
+                CCRequest *request = [[[CCRequest alloc] initWithDelegate:self httpMethod:@"POST" baseUrl:@"collections/create.json" paramDict:paramDict] autorelease];
+                [request startAsynchronous];
+
+            SDK Callback:
+
+                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
+                {
+                    NSArray *collections = [response getObjectsOfType:[CCCollection class]];
+                    for (CCCollection *collection in collections)
+                    {
+                        ...
+                    }
+                }
+
+      - platform: android
+        example: |
+            Use the [APSCloud.sendRequest()](http://docs.appcelerator.com/aps-sdk-apidoc/latest/android/com/appcelerator/aps/APSCloud.html#sendRequest%28java.lang.String, java.lang.String, java.util.Map, com.appcelerator.aps.APSResponseHandler%29)
+            method to invoke this REST API directly.
+
+      - platform: android-acssdk
+        example: |
+
+      - platform: javascript
+        example: |
+
+      - platform: actionscript
+        example: |
