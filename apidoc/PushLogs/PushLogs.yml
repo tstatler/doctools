@@ -30,6 +30,7 @@ fields:
     description: | 
           ID of the {@link PushSchedules} used to create the push notification (only present if the push notification
           was created by a PushSchedule).
+    type: String
 
   - name: scheduled_at
     description: | Date that push notification was scheduled (only present if the push notification
