@@ -41,6 +41,7 @@ ruby ${JSDUCK}/bin/jsduck --rest --export full --meta-tags $DOCTOOLS/meta --pret
 ## Remove warning messages
 sed -i '' 's/Warning: Skipping tag summary//g' ${DOCTOOLS}/build/cloud.json
 sed -i '' 's/Warning: Skipping tag base-url//g' ${DOCTOOLS}/build/cloud.json
+sed -i '' 's/Warning: Skipping tag pseudo//g' ${DOCTOOLS}/build/cloud.json
 
 python ${DOCTOOLS}/jsduck2json/${SCRIPT} ${DOCTOOLS}/build/cloud.json ${OUTPUT}
 echo "Done! File generated at: $OUTPUT"

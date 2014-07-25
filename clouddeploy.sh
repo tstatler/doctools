@@ -80,15 +80,31 @@ if [ ! "$DOCTOOLS" ]; then
     fi
 fi
 
+rm -rf $OUT_DIR
+mkdir -p $OUT_DIR
+
 if [ $production_build ] ; then
+    echo "Updating cloud_docs repo..."
+    cd $CLOUD_DOCS
+    git checkout master
+    git pull upstream master
+
+    echo "Updating jsduck repo..."
+    cd $JSDUCK
+    git checkout master
+    git pull upstream master
+
+    cd $DOCTOOLS
+    echo "Generating Solr content for indexing..."
+    bash jsduck2json/cloud2json.sh
+    mkdir -p $OUT_DIR/../data/solr
+    cp ./dist/api.json $OUT_DIR/../data/solr/api_solr.json
+
     (cd ${JSDUCK}; rake compress)
     TEMPLATE=${JSDUCK}/${PROD_TEMPLATE}
 else
     compass compile ${JSDUCK}/template/resources/sass
     TEMPLATE=${JSDUCK}/${DEBUG_TEMPLATE}
 fi
-
-rm -rf $OUT_DIR
-mkdir -p $OUT_DIR
 
 ruby ${JSDUCK}/bin/jsduck --template ${TEMPLATE} --output ${OUT_DIR} $seo --config jsduck_cloud.config
