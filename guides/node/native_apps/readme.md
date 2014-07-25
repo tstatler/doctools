@@ -121,26 +121,35 @@ Or, on Android:
 ## Viewing Custom Services in Dashboard
 
 Once your native application has made a Node.ACS service request, you can use Dashboard to view the association
-between the application and the service. Specifically, you can see which custom services are being used
-by a specific native application, as well as  
+between the application and the service. You can see which custom services are being used
+by a specific native application, get memory usage and CPU load data for each service, as well as view 
+logs and metrics for individual service calls, such as response time, container ID, and IP addresses of connecting clients.
 
 **To view the custom services being used by an application in Dashboard**: 
 
 1. Select the application from the Dashboard apps menu.
-2. Select Cloud > Custom Services to view a table of custom Node.ACS services used by the application:
-	{@img services_used_by_app.png} 
-3. Click a service name in the table to view its details, including:
- 	* Service name, URL and status (running or stopped)
- 	* Number of API calls made to the service for the selected time period
- 	* Number of containers in which the service is running
- 	* CPU load and memory usage
-	* List of applications using the service 
+2. Select Cloud > Custom Services to view a table of custom Node.ACS services used by the application. 
+	Each row in the table contains the following fields:
+	
+	* Status &mdash; Either running (green) or stopped (red).
+	* Service name
+	* Service URL
+	* Date service was created
+	* Date service was last published
+
+	{@img services_used_by_app.png}
+3. Click a service name in the table to view the following additional data for the selected time period:
+
+ 	* Total API made to the service, and a time series graph of the number of API calls 
+ 	* Total CPU load and memory usage for all containers, and the same data for each container (server)
+	* Number of containers in which the service is running and their container IDs.
 
 	{@img connected_apps.png} 
-4. Click the **Logs** tab to view details for individual HTTP service calls, including:
+
+4. Click the **Logs** tab to view details for individual service calls, including:
 	* Service endpoint URL
 	* Response time
-	* IP address of calling client
+	* IP address of connecting client
 	* Container ID
-	* Date and time of call
+	* Date and time of service call
 	{@img service_logs.png}
