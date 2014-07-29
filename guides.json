@@ -140,7 +140,6 @@
             "description": "Logging facilities in Node.ACS."
             },
             {
-<<<<<<< HEAD
             "name": "node_orgs",
             "title": "Node.ACS Organization Support",
             "url": "guides/node/organizations",
@@ -151,12 +150,12 @@
             "url": "guides/node/native_apps",
             "title": "Correlating Native Applications with Node.ACS Services",
             "description": "Correlating Native Applications with Node.ACS Services"              
-=======
+            },
+            {
             "name": "node_clustering",
             "title": "Using Node Cluster",
             "url": "guides/node/clustering",
             "description": "Clustering in Node.ACS applications"
->>>>>>> TIDOC-1612
             },
             {
                 "name": "node_cli",
