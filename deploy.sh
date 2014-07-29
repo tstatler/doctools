@@ -175,7 +175,7 @@ if [ $addon_guidesdir ]; then
     ## Workaround for new Confluence plug-in
     cp -r $guidesdir/attachments_* ./build/merged_guides/.
     cp -r $guidesdir/images_* ./build/merged_guides/.
-    #cp -r $addon_guidesdir/attachments_* ./build/merged_guides/.
+    cp -r $addon_guidesdir/attachments_* ./build/merged_guides/.
     cp -r $addon_guidesdir/images_* ./build/merged_guides/.
 
     guidesdir="./build/merged_guides"
