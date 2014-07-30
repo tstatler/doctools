@@ -21,9 +21,9 @@ To unset an environment variable, use the `--unset <key>` parameter.
 
 To check the current environment variables, use the `--env` parameter.
 
-You cannot use the following names for environment variables: "appid", "basedir", "name", "version",
-"dirname", "fullpath", "framework", "config", "serverId", "bodyParser", "customConfig", "HOME",
-"NODE_PATH", "USER", "TMPDIR", "PATH", "NODE", and "PWD".
+You cannot use the following names for environment variables: "appid", "basedir", "bodyParser", "config",
+"customConfig", "dirname", "framework", "fullpath", "name", "serverId", "port", "version",
+"HOME", "NODE", "NODE_PATH", "PATH", "PWD", "PORT", "TMPDIR", and "USER".
 
 After changing an environment variable, you will be prompted to restart the application.
 
@@ -119,12 +119,12 @@ You can also specify the maximum number of servers that should be used.
 
 ## Example
 
-The following example sets the `port` and `foo` environment variables, unsets the `foo` variable,
-then lists all set environment variables.
+The following example sets the `foo` environment variables, lists all set environment variables,
+then unsets the `foo` variable,
 
-    acs config --set port=8080,foo=abc
-    acs config --unset foo
+    acs config --set foo=abc
     acs config --env
+    acs config --unset foo
 
 The following example enables autoscaling, using a maximum of five servers, when there are at least
 20 queued requests. The application is also configured to automatically scale down the number of servers
