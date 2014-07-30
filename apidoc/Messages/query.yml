@@ -1,0 +1,156 @@
+name: Messages
+methods:
+  - name: query
+    summary: Performs a custom query of Messages.
+    description: |
+        Performs a custom query of Messages. Currently you can not query or sort data stored inside 
+        an array or hash in custom fields.
+
+        For details about using the query parameters,
+        see the [Search and Query guide](#!/guide/search_query).
+    url: acls/query.json
+    parameters:
+      - name: page
+        description: Request page number, default is 1.
+        type: Number
+
+      - name: per_page
+        description: Number of results per page, default is 10.
+        type: Number
+
+      - name: pretty_json
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean        
+
+      - name: limit
+        description: |
+            Instead of using `page` and `per_page` for pagination, you can use `limit` and
+            `skip` to do your own pagination. `limit` is the maximum number of records to
+            fetch. `limit` cannot be greater than 1000.
+        type: Number
+
+      - name: skip
+        description: |
+            Number of records to skip. Must be used together with `limit`.
+        type: Number
+
+      - name: where
+        description: |
+            Constraint values for fields. `where` should be encoded JSON.
+
+            You can query any of the standard values for an ACL object, as well as any
+            custom fields that contain simple values, such as String, Number or Boolean
+            values.
+
+            If `where` is not specified, `query` returns all objects.
+        type: Hash
+
+      - name: order
+        description: |
+            Sort results by one or more fields.
+        type: String
+
+      - name: sel
+        description: |
+            Selects the object fields to display. Do not use this parameter with `unsel`.
+        type: Hash
+
+      - name: unsel
+        description: |
+            Selects the object fields NOT to display. Do not use this parameter with `sel`.
+        type: Hash
+
+      - name: response_json_depth
+        description: |
+            Nested object depth level counts in response json.
+            In order to reduce server API calls from an applicaton, the response json may
+            include not just the objects that are being queried/searched, but also with
+            some important data related to the returning objects such as object's owner or
+            referencing objects.
+
+            Default is 3, valid range is 1 to 8.
+        type: Number
+
+    response-parameters:
+      - name: messages
+        description: |
+            List of messages objects matching the query.
+        type: Array<Messages>
+
+    examples:
+      - platform: titanium
+        example: |
+            Use the [Titanium.Cloud.sendRequest()](http://docs.appcelerator.com/titanium/latest/#!/api/Titanium.Cloud-method-sendRequest) 
+            method to invoke this REST API directly.
+
+      - platform: rest
+        example: |
+            Example cURL request that returns all message that have the subject "Sunday Afternoon":
+
+                $ curl -b cookies.txt -c cookies.txt -X GET --data-urlencode 'where={"subject":"Sunday Afternoon"}' "https://api.cloud.appcelerator.com/v1/messages/query.json?key=ZqVHVJ2N6qiqVquGs39yE0e0Ucg5YGWs&pretty_json=true"
+
+            Example JSON response:
+
+                {
+                  "meta": {
+                    "code": 200,
+                    "status": "ok",
+                    "method_name": "queryMessages",
+                    "page": 1,
+                    "per_page": 10,
+                    "total_pages": 1,
+                    "total_results": 6
+                  },
+                  "response": {
+                    "messages": [
+                      {
+                        "id": "53d8390588971f081c0012ef",
+                        "from_id": "53d7c9d188971f0824001269",
+                        "to_ids": [
+                          "53d8372e88971f0824001463",
+                          "53d8377388971f0824001465"
+                        ],
+                        "thread_id": "53d8390588971f081c0012ee",
+                        "subthread_id": "53d8390588971f081c0012ed",
+                        "status": "unread",
+                        "subject": "Sunday Afternoon",
+                        "body": "Wanna catch a movie later?"
+                      },
+                      {
+                        "id": "53d8390588971f081c0012ee",
+                        "from_id": "53d7c9d188971f0824001269",
+                        "to_ids": [
+                          "53d8372e88971f0824001463",
+                          "53d8377388971f0824001465"
+                        ],
+                        "thread_id": "53d8390588971f081c0012ee",
+                        "subthread_id": "53d8390588971f081c0012ed",
+                        "status": "sent",
+                        "subject": "Sunday Afternoon",
+                        "body": "Howabout going to the Academy of Sciences?"
+                      }
+                    ]
+                  }
+                }
+
+      - platform: ios
+        example: |
+            Use the \[[APSCloud sendRequest](http://docs.appcelerator.com/aps-sdk-apidoc/latest/ios/Classes/APSCloud.html#//api/name/sendRequest:method:data:handler:)\]
+            method to invoke this REST API directly.
+
+      - platform: ios-acssdk
+        example: |
+
+      - platform: android
+        example: |
+            Use the [APSCloud.sendRequest()](http://docs.appcelerator.com/aps-sdk-apidoc/latest/android/com/appcelerator/aps/APSCloud.html#sendRequest%28java.lang.String, java.lang.String, java.util.Map, com.appcelerator.aps.APSResponseHandler%29)
+            method to invoke this REST API directly.
+
+      - platform: android-acssdk
+        example: |
+
+      - platform: javascript
+        example: |
+       
