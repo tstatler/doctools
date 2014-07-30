@@ -87,7 +87,7 @@ the `scripts` field.
 
 **Required.**
 
-Use the `name` field to specify the name of app. An app's name must be unique across all apps of a
+Use the `name` field to specify the name of the application. An app's name must be unique across all apps of a
 user or organization. It will be used to ID the app when publishing/unpublishing to the cloud, or setup
 the app through CLI commands.
 
