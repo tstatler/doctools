@@ -128,6 +128,18 @@
             "description": "Using standard Node applications in Node.ACS."
             },
             {
+            "name": "node_config",
+            "title": "Application Configuration",
+            "url": "guides/node/config",
+            "description": "Use the package.json file to configure application settings."
+            },
+            {
+            "name": "node_limitations",
+            "title": "Application Limitations",
+            "url": "guides/node/limitations",
+            "description": "Known limitations for Node.ACS applications."
+            },
+            {
             "name": "node_acs",
             "title": "Using ACS APIs from Node",
             "url": "guides/node/acs",
