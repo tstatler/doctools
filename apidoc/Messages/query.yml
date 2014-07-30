@@ -89,7 +89,7 @@ methods:
         example: |
             Example cURL request that returns all messages that have the subject "Sunday Afternoon":
 
-                $ curl -b cookies.txt -c cookies.txt -X GET --data-urlencode 'where={"subject":"Sunday Afternoon"}' "https://api.cloud.appcelerator.com/v1/messages/query.json?key=ZqVHVJ2N6qiqVquGs39yE0e0Ucg5YGWs&pretty_json=true"
+                $ curl -b cookies.txt -c cookies.txt -X GET --data-urlencode 'where={"subject":"Sunday Afternoon"}' "https://api.cloud.appcelerator.com/v1/messages/query.json?key=<YOUR_APP_KEY>&pretty_json=true"
 
             Example JSON response:
 
