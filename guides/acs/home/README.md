@@ -1,37 +1,53 @@
 # ACS Guides Overview
 
+<div class="x-component thumb-list x-component-default" id="guides_thumblist" tabindex="-1">
+<dl class="">
 
+	<a href="#!/guide/acs_quickstart">
+	<dd ext:url="#!/guide/acs_quickstart" id="ext-gen1293" class=""><div class="thumb"><img src="resources/images/icon-lg.png"></div><div><h4>Getting Started with ACS</h4><p>This introduction to Appcelerator Cloud Services explains how you can get started.</p></div></dd>		
+	</a>
 
-<div class="welcome-page">
-	<div class="row">
-		<div class="one-third-pane">
-			<h3>REST APIs and SDKs</h3>
-			<p>You can work directly with the ACS <a href="/cloud/latest/#!/guide/rest">REST APIs</a> or, for easier integration in your application use the higher-level APIs provided by the <a target="_top" href="/cloud/latest/#!/guide/titanium">Titanium</a>, <a target="_top" href="/cloud/latest/#!/guide/ios">iOS</a>, or <a target="_top" href="/cloud/latest/#!/guide/android" >Android</a> SDKs.</p>
-		</div>
-		<div class="one-third-pane">
-			<h3>Managing Application Data</h3>
-            <p>You use <a href="https://dashboard.appcelerator.com">Appcelerator Dashboard</a> to
-            manage ACS data created by your application, such as <a href="/platform/latest/#!/guide/Managing_Users">Users</a>, <a href="/platform/latest/#!/guide/Managing_Photos">Photos</a> or <a href="http://docs.appcelerator.com/platform/latest/#!/guide/Managing_Places">Places</a>.</p>
-		</div>
-	</div>
-	<div class="row">
-		<div class="one-third-pane">
-			<h3>ACS REST APIs</h3>
-			<p>ACS exposes its services via a REST API accessible from any client device for creating, querying, updating, and deleting ACS objects. Each SDK provides pre-built objects and methods for using these APIs. You 
-			can also easily make generic REST calls using the sendRequest() method  </p>
-			<ul>
-				<li>The <a href="/cloud/latest/#!/api">REST API Reference</a> is the main "source of truth"
-				for all ACS APIs.</li>
-				<li><a href="/cloud/latest/#!/guide/rest" target="_top">Using the REST API</a></li>			
-			</ul>
-		</div>
-		<div class="one-third-pane">
-			<h3>SDK Updates</h3>
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni deleniti dicta, ipsam. Laboriosam voluptatum aspernatur voluptas delectus maxime accusamus nobis cum praesentium quod doloremque. Quo voluptatem dolorum nulla, saepe et.</p>
-		</div>
-		<div class="one-third-pane">
-			<h3>Blah blah blah</h3>		
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Placeat ratione doloremque eos, id quaerat, repellat in dolores nisi eveniet hic aut maxime, temporibus sapiente non veniam recusandae commodi? Similique, obcaecati?</p>
-		</div>
-	</div>
+	<a href="#!/guide/rest">
+	<dd ext:url="#!/guide/rest" id="ext-gen1347" class=""><div class="thumb"><img src="resources/images/icon-lg.png"></div><div><h4>Using the REST API</h4><p>Basics of the ACS REST API.</p></div></dd>
+	</a>
+
+	<a href="#!/guide/acs_authentication">
+	<dd ext:url="#!/guide/acs_authentication"><div class="thumb"><img src="resources/images/icon-lg.png"></div><div><h4>Authentication</h4><p>Authenticating your application with ACS.</p></div></dd>
+	</a>
+
+	<a href="#!/guide/sdks">
+	<dd><div class="thumb"><img src="resources/images/icon-lg.png"></div><div><h4>SDKs</h4><p>Using ACS in a Titanium, iOS, or Android application.</p></div></dd>
+	</a>
+
+	<a href="#!/guide/customfields">
+	<dd ext:url="#!/guide/customfields" id="ext-gen1295" class=""><div class="thumb"><img src="resources/images/icon-lg.png"></div><div><h4>Custom Objects and Fields</h4><p>Using custom fields and custom objects.</p></div></dd>
+	</a>
+
+	<a href="#!/guide/relationalfields">
+	<dd ext:url="#!/guide/relationalfields"><div class="thumb"><img src="resources/images/icon-lg.png"></div><div><h4>Relational Fields</h4><p>Linking objects with relational fields.</p></div></dd>
+	</a>
+
+	<a href="#!/guide/search_query">
+	<dd ext:url="#!/guide/search_query" id="ext-gen1296" class=""><div class="thumb"><img src="resources/images/icon-lg.png"></div><div><h4>Search and Query Operations</h4><p>Searching for ACS objects.</p></div></dd>
+	</a>
+
+	
+	<a href="#!/guide/photosizes"><dd ext:url="#!/guide/photosizes" id="ext-gen1346" class=""><div class="thumb"><img src="resources/images/icon-lg.png"></div><div><h4>Photo Uploading &amp; Resizing</h4><p>How to upload and resize photos.</p></div></dd></a>
+
+	
+	<a href="#!/guide/geo"><dd ext:url="#!/guide/geo" id="ext-gen1345" class=""><div class="thumb"><img src="resources/images/icon-lg.png"></div><div><h4>Geographic Coordinates</h4><p>How ACS handles geographic coordinates.</p></div></dd></a>
+
+	<a href="#!/guide/admin_access"><dd ext:url="#!/guide/admin_access"><div class="thumb"><img src="resources/images/icon-lg.png"></div><div><h4>Admin Access</h4><p>Describes admin-only API methods for batch-deleting objects and dropping custom object collections.</p></div></dd></a>
+
+	<a href="#!/guide/atomic_increment"><dd ext:url="#!/guide/atomic_increment" id="ext-gen1344" class=""><div class="thumb"><img src="resources/images/icon-lg.png"></div><div><h4>Atomic Increment Operator</h4><p>Using the MongoDB $inc operator.</p></div></dd></a>
+
+	<a href="#!/guide/troubleshooting"><dd ext:url="#!/guide/troubleshooting"><div class="thumb"><img src="resources/images/icon-lg.png"></div><div><h4>Troubleshooting</h4><p>Troubleshooting guide.</p></div></dd></a>
+
+	<a href="#!/guide/acs_releasenotes"><dd ext:url="#!/guide/acs_releasenotes" id="ext-gen1349" class=""><div class="thumb"><img src="resources/images/icon-lg.png"></div><div><h4>ACS Release Notes</h4><p>Changes in the latest releases.</p></div></dd></a>
+
+	<div style="clear:left"></div>
+
+	</dl>
+
 </div>
+

@@ -1,197 +1,34 @@
-## Node.ACS
+# Node.ACS Guides Overview
 
-<style type="text/css">
+<div class="x-component thumb-list x-component-default" id="guides_thumblist" tabindex="-1">
 
-.welcome-page {
-	width: 900px;
-	margin-left: auto;
-	margin-right: auto;
-	font-family: 'Helvetica Neue',Tahoma,Arial,sans-serif;
-	font-size: 13px;
-	line-height: 18px;
+<dl>
 
-}
+<a href="#!/guide/node_quickstart"><dd ext:url="#!/guide/node_quickstart" id="ext-gen1323" class=""><div class="thumb"><img src="resources/images/icon-lg.png"></div><div><h4>Node.ACS Quickstart</h4><p>Getting started with Node.ACS.</p></div></dd></a>
 
-.welcome-page .welcome-block {
-	padding-top: 20px;
-}
+<a href="#!/guide/node_mvc"><dd ext:url="#!/guide/node_mvc"><div class="thumb"><img src="resources/images/icon-lg.png"></div><div><h4>Node.ACS MVC Framework</h4><p>Using the Node.ACS MVC Framework.</p></div></dd></a>
 
-.welcome-page .welcome_splash {
-	padding: 0px;
-	float: right;
-}
+<a href="#!/guide/node_standard"><dd ext:url="#!/guide/node_standard"><div class="thumb"><img src="resources/images/icon-lg.png"></div><div><h4>Standard Node Applications</h4><p>Using standard Node applications in Node.ACS.</p></div></dd></a>
 
-.welcome-page .welcome-block .inner-container {
-	padding: 50px 10px 20px 10px;
-}
+<a href="#!/guide/node_acs"><dd ext:url="#!/guide/node_acs"><div class="thumb"><img src="resources/images/icon-lg.png"></div><div><h4>Using ACS APIs from Node</h4><p>Using ACS applications from your Node application.</p></div></dd></a>
 
-.welcome-page .welcome-block .inner-container:before,
-.welcome-page .welcome-block .inner-container:after {
-	display: table;
-	content: "";
-	zoom: 1;
-	*display: inline;
-}
+<a href="#!/guide/node_logging"><dd ext:url="#!/guide/node_logging"><div class="thumb"><img src="resources/images/icon-lg.png"></div><div><h4>Logging</h4><p>Logging facilities in Node.ACS.</p></div></dd></a>
 
-.welcome-page .welcome-block .inner-container:after {
-	clear: both;
-}
+<a href="#!/guide/node_orgs"><dd ext:url="#!/guide/node_orgs"><div class="thumb"><img src="resources/images/icon-lg.png"></div><div><h4>Node.ACS Organization Support</h4><p>Describes Platform organization support for Node.ACS applications.</p></div></dd></a>
 
-.welcome-page .welcome-block .inner-container h1{
-	font-size: 28px !important;
-	font-weight: normal;
-	line-height: 36px;
-	color: black !important;
-}
+<a href="#!/guide/native_sdk"><dd ext:url="#!/guide/native_sdk"><div class="thumb"><img src="resources/images/icon-lg.png"></div><div><h4>Correlating Native Applications with Node.ACS Services</h4><p>Correlating Native Applications with Node.ACS Services</p></div></dd></a>
 
-.welcome-page .welcome-block .inner-container p {
-	color: #666666 !important;
-	font-size: 16px;
-	line-height: 22px;
-}
+<a href="#!/guide/node_cli_accesslog"><dd ext:url="#!/guide/node_cli_accesslog"><div class="thumb"><img src="resources/images/icon-lg.png"></div><div><h4>Command-Line Interface</h4><p>List an Application's Access Log</p></div></dd></a>
 
-.welcome-page .welcome-block .inner-container img {
-	padding: 0 10px;
-}
+<a href="#!/guide/node_cli_accesslog"><dd ext:url="#!/guide/node_studio_standalone"><div class="thumb"><img src="resources/images/icon-lg.png"></div><div><h4>Creating Node.ACS projects in Studio</h4><p>Managing Standalone projects with Studio</p></div></dd></a>
 
-.welcome-page .row {
-	width: 100%;
-	zoom: 1;
-	padding-top: 10px;
-}
+<a href="#!/guide/node_samples_mongodb"><dd ext:url="#!/guide/node_samples_mongodb"><div class="thumb"><img src="resources/images/icon-lg.png"></div><div><h4>Node.ACS Sample Code</h4><p>Accessing a MongoDB Database from Node.ACS</p></div></dd></a>
 
-.welcome-page .row:before, .welcome-page .row:after {
-	display: table;
-	content: "";
-	zoom: 1;
-	*display: inline;
-}
+<a href="#!/guide/node_releasenotes"><dd ext:url="#!/guide/node_releasenotes"><div class="thumb"><img src="resources/images/icon-lg.png"></div><div><h4>Node.ACS Release Notes</h4><p>Changes in the latest releases.</p></div></dd></a>
 
-.welcome-page .row:after {
-	clear: both;
-}
+<a href="#!/guide/node_troubleshooting"><dd ext:url="#!/guide/node_troubleshooting"><div class="thumb"><img src="resources/images/icon-lg.png"></div><div><h4>Troubleshooting</h4><p>Troubleshooting deployment and runtime exceptions</p></div></dd></a>
 
-.welcome-page .half-pane {
-	float: left;
-	width: 48%;
-}
+<div style="clear:left"></div>
+</dl>
 
-.welcome-page .one-third-pane {
-	float: left;
-	width: 30%;
-	padding: 0 10px;
-}
-
-.welcome-page h2 {
-	color: #9b1c1f;
-	font-size: 18px;
-	font-weight: bold;
-	margin-bottom: 5px;
-}
-
-.welcome-page p {
-	color: #666666;
-	margin-top: 5px;
-}
-
-.welcome-page a {
-	color: #5d87a1;
-	text-decoration: none;
-}
-.welcome-page a:hover, .welcome-page a:visited {
-	color: #5D87A1;
-}
-.welcome-page ul {
-	margin-top: 5px;
-}
-
-.welcome-page li {
-	margin-top: 2px;
-}
-
-.welcome-page .update-date {
-	font-weight: bold;
-	margin-top: 7px;
-	margin-bottom: -4px;
-	color: black;
-}
-
-.welcome-page table {
-	width: 100%;
-}
-.welcome-page thead {
-	background-color: #f0f1f1;
-}
-.welcome-page thead th{
-	font-weight: bold;
-	font-size: 13px;
-	padding:0 10px 2px 10px;
-}
-.welcome-page tbody td{
-	padding:0 10px 2px 10px;
-	font-size: 13px;
-	color: #666666;
-	vertical-align: top;
-}
-
-.welcome-page .arrow-link {
-	background-image: url(arrow-link.png);
-	background-repeat: no-repeat;
-	background-position: 100% 3px;
-	padding-right: 13px;
-}
-
-</style>
-<div class="welcome-page">
-	<div class="row welcome-block">
-		<div class="inner-container">
-			<img class="welcome_splash" src="acs-overview-services.png" alt="">
-			<div class="half-pane welcome-text">
-				<h1>Appcelerator Cloud Services</h1>
-			    <p>Appcelerator Cloud Services provide a wide array of automatically scaled network features and data objects for your app.</p>
-			    <p>Node.ACS lets you add custom Node.js services, hosted in the Appcelerator cloud.</p> 
-			</div>
-		</div>
-	</div>
-	<div class="row">
-		<div class="one-third-pane">
-			<h2>What's New</h2>
-			<ul>
-				<li><a target="_top"
-                href="/cloud/latest/#!/guide/node_releasenotes"
-                class="arrow-link">Node.ACS 1.0.15 Release Notes</a></li>               
-				<li><a target="_top"
-                href="/cloud/latest/#!/guide/acs_releasenotes"
-                class="arrow-link">ACS 1.1.3 Release Notes</a></li>               
-			</ul>
-		</div>
-		<div class="one-third-pane">
-			<h2>Get Started</h2>
-			<ul>
-				<li><a target="_top" href="/cloud/latest/#!/guide/acs_quickstart">ACS Quick Start Guide</a></li>
-				<li><a target="_top" href="/cloud/latest/#!/guide/node_quickstart">Node.ACS Quick Start Guide</a></li>
-				<li><a target="_top" href="/cloud/latest/#!/api" >ACS API Reference</a></li>
-			</ul>
-		</div>
-		<div class="one-third-pane">
-			<h2>Titanium</h2>
-            <p>For Titanium SDK, Titanium Studio and Alloy docs, see 
-			<a target="_top" href="/titanium/latest/" class="arrow-link">the Titanium
-            Documentation site.</a></p>
-		</div>
-	</div>
-	<div class="row">
-		<div class="one-third-pane">
-			<h2>Something else...</h2>
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit nulla sed, ipsam, mollitia iure obcaecati nostrum rerum impedit pariatur enim illum, minima corporis necessitatibus placeat molestias quibusdam vero numquam officia.</p>
-		</div>
-		<div class="one-third-pane">
-			<h2>SDK Updates</h2>
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni deleniti dicta, ipsam. Laboriosam voluptatum aspernatur voluptas delectus maxime accusamus nobis cum praesentium quod doloremque. Quo voluptatem dolorum nulla, saepe et.</p>
-		</div>
-		<div class="one-third-pane">
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Placeat ratione doloremque eos, id quaerat, repellat in dolores nisi eveniet hic aut maxime, temporibus sapiente non veniam recusandae commodi? Similique, obcaecati?</p>
-		</div>
-	</div>
 </div>
-
