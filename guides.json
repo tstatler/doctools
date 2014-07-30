@@ -2,7 +2,7 @@
       {
           "name": "acs_guides",
           "title": "ACS Guides",
-          "url": "guides/acs/quickstart",
+          "url": "guides/acs/home",
           "items": [
               {
                   "name": "acs_quickstart",
@@ -107,7 +107,7 @@
       {
          "name": "node",
          "title": "Node.ACS Guides",
-         "url": "guides/node/quickstart",
+         "url": "guides/node/home",
          "items": [
             {
             "name": "node_quickstart",
