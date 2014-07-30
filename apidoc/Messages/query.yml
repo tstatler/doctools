@@ -8,7 +8,7 @@ methods:
 
         For details about using the query parameters,
         see the [Search and Query guide](#!/guide/search_query).
-    url: acls/query.json
+    url: messages/query.json
     parameters:
       - name: page
         description: Request page number, default is 1.
@@ -87,7 +87,7 @@ methods:
 
       - platform: rest
         example: |
-            Example cURL request that returns all message that have the subject "Sunday Afternoon":
+            Example cURL request that returns all messages that have the subject "Sunday Afternoon":
 
                 $ curl -b cookies.txt -c cookies.txt -X GET --data-urlencode 'where={"subject":"Sunday Afternoon"}' "https://api.cloud.appcelerator.com/v1/messages/query.json?key=ZqVHVJ2N6qiqVquGs39yE0e0Ucg5YGWs&pretty_json=true"
 

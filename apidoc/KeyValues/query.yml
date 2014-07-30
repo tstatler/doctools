@@ -8,7 +8,7 @@ methods:
 
         For details about using the query parameters,
         see the [Search and Query guide](#!/guide/search_query).
-    url: acls/query.json
+    url: keyvalues/query.json
     parameters:
       - name: page
         description: Request page number, default is 1.
