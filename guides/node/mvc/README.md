@@ -15,6 +15,9 @@ up before starting the Express and socket.io servers. Applications can add their
 own `start` and `stop` functions to set up server settings before
 starting the server and to release resources before stopping the server. 
 
+See [Application Limitations](#!/guide/node_limitations) for a list of known application
+limitations.
+
 ## Application Startup and Shutdown
 
 This section describes what Node.ACS does when starting or stopping your
@@ -104,7 +107,7 @@ contains the following files/directories:
 
 ### package.json
 
-The basic configuration file for a Node.ACS application.
+The basic configuration file for a Node.ACS application. For more details, see [Application Configuration](#!/guide/node_config).
     
     {
       "name": "MyNodeACSApp",
@@ -117,7 +120,6 @@ The basic configuration file for a Node.ACS application.
         "mongodb": "1.0.2"
       },
       "npmRegistry": "http://registry.npmjs.org/",
-      "logfile" : "MyNodeACSApp.log",
       "engines" : { "node": "0.10.22" }
     }
     
@@ -129,10 +131,8 @@ Important fields are summarized below (* indicates mandatory fields):
 * **framework*** \-- the "type" of app, if the value is "mvc", Node.ACS will run it as an app with the MVC framework.
 * **dependencies** \-- app dependencies, when an app starts, every modules declared here will be installed before starting the app
 * **npmRegistry** \-- the npm registry to use for installing dependencies.  By default, the official public npm registry is used (shown in the example).
-* **logfile** \-- log file's name, log file will be placed in "logs" folder
 * **engines** \-- contains key-value pairs of engine versions.  Use this field to specify the version
-of Node.js to run your application on. Use `node` as the key and the version or version range as the
-value.  For more details, see the "Node.js Engine" section in [Standard Node.js Applications](#!/guide/node_standard).
+of Node.js to run your application on. Use `node` as the key and the version or version range as the value.
 
 ### app.js
 

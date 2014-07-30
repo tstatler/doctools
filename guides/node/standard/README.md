@@ -6,6 +6,8 @@ application that can be started and run with the **node** command can be run sea
 Node.ACS application. However, there are some things that you need to bear in
 mind when working with Node.ACS.
 
+See [Application Limitations](#!/guide/node_limitations) for a list of known application limitations.
+
 ## Application Settings (package.json)
 
 By default, when you create a new Node.ACS application, it
@@ -20,7 +22,7 @@ To:
 
     "framework": "none",
 
-(For details on the MVC framework, see [Node.ACS MVC Framework](#!/guide/node_mvc).)
+For details on the MVC framework, see [Node.ACS MVC Framework](#!/guide/node_mvc).
 
 ## Starting Point
 
@@ -40,45 +42,7 @@ the `scripts.start` field in `package.json` to determine the main module to laun
 execute the start script using `npm start`. This feature is only available to standard Node.js applications,
 not those that use the MVC framework.
 
-You also need to set your application's port number using the [acs config command](#!/guide/node_cli_config)
-to set the `port` environment variable:
-
-    acs config --set port=8080
-
-Choose a port number that is not in use, such as 8080.  If the port is in use, the application will fail to deploy.
-
 See the [NPM documentation](https://www.npmjs.org/doc/misc/npm-scripts.html) on the "scripts" package.json field.
-
-
-## Node.js Engine
-
-You can specify which version of Node.js to run your application on.  Use the `engines` field in
-`package.json` to specify engine versions.  To specify the Node.js version, set the `node` key in
-the `engines` dictionary to either a version or [version range](https://github.com/isaacs/node-semver)
-of Node.js to use. For example, to specify to use version 0.10.22 or greater:
-
-    "engines" : { "node": ">=0.10.22" }
-
-If this field is undefined when you publish your application, the latest supported Node.js version is
-used.  The current supported version is 0.10.22.
-
-If this field is undefined when you republish your application and the latest supported Node.js version
-changed on the ACS servers, you will receive an error message when trying to publish your application.
-You must set the Node.js version to republish your application.
-
-
-## Module Dependencies
-
-The application can import any third-party modules that are supported by
-standard node.js. Before publishing the app to the cloud, make sure
-all dependencies are listed in the `dependencies` field in the application's
-`package.json` file.
-
-If you want to use a different npm registry besides the official public npm registry to install
-dependencies, add the `npmRegistry` field to the `package.json` and set the value to the
-registry URL you want to use.  For example, the entry below uses a European npm mirror:
-
-    "npmRegistry" : "http://registry.npmjs.eu/"
 
 ## Third-Party Tools
 
@@ -112,11 +76,6 @@ use the module references to make API calls:
         console.log(features["image statistics"]);
     });
 
-## Server Listening Port Limitation
-
-Currently, Node.ACS only supports applications opening one server listening
-port, there cannot be more than one TCP/HTTP server started in one
-application.
 
 ## Migrating Existing Node.js Applications to Node.ACS
 
