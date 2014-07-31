@@ -303,11 +303,47 @@ Prior to Titanium 3.1, use [Titanium.Facebook](http://docs.appcelerator.com//tit
 
 For more examples, see the [ACS API documentation](#!/api).
 
-The Titanium.Cloud module also includes a sample application demonstrating
-each of the ACS request types. You can find this in the modules folder under
-the Titanium SDK folder. For example:
+## Importing and running the Ti.Cloud Sample application
 
-    /Library/Application Support/Titanium/modules/commonjs/ti.cloud/<version>/example
+The Titanium.Cloud module also includes a sample application that demonstrates each of the ACS request 
+types.
+
+**To import and run the Ti.Cloud sample application**:
+
+1. In Studio, select File > New > Mobile App Project.
+2. Select the Classic application type with the Default Project template. {@img classic.png}
+2. In the New Mobile App Project dialog, enter values for the **Project Name** and **App ID** fields, and check
+the option to **Enable Appcelerator Platform Services** (in Titanium Studio check the option 
+to **Cloud-enable this application**). {@img enableservices.png}
+3. Click **Finish**.
+4. From your desktop, navigate to the following folder, where `<latest_version>` is the folder containing
+the latest SDK version:
+
+    * **Mac**: `~Library/Application Support/Titanium/modules/commonjs/ti.cloud/<latest_version>/example`
+    * **Windows 7**: `%ProgramData%\Titanium\modules\commonjs\ti.cloud\<latest_version>\example`
+    * **Windows 8**: `%AppData%\Titanium\modules\commonjs\ti.cloud\<latest_version>\example`
+    * **Linux**: `~/titaniumsdk/modules/commonjs/ti.cloud/<latest_version>\example`
+
+5. Select all the folders and files in the **example** folder and drag them to your project's **Resources** folder. {@img dragfiles.png} 
+
+    * If prompted, select the option to **Copy Files and Folders** and click **OK**. 
+    * Click **Yes to All** when asked if you want to overwrite files.
+
+7. Open the project's tiapp.xml file and, in the Modules section, add the **facebook** 
+and **ti.cloudpush** modules. {@img modules.png}
+8. Save tiapp.xml and run the project on the desired device or emulator/simulator.
+
+Once the application is running, try the following:
+
+* Create a new user by selecting **Users > Create User**. Enter a username, password and password 
+confirmation, first name, and last name, then click **Create**. If the user is created successfully, the following dialog is shown: 
+{@img new_user_success.png}
+
+* View the newly created user in Dashboard:
+    1. Open [Dashboard](https://dashboard.appcelerator.com) and select your application from the Apps menu.
+    2. Select **Cloud > Manage Data**, then click **Users** in the Manage Data Object table. You
+    should see the user you created listed in the Users table.
+    {@img verify_new_user.png}
 
 ## References
 
