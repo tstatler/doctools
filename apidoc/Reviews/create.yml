@@ -61,6 +61,10 @@ methods:
         description: Custom object to review.
         type: String
 
+      - name: status_id
+        description: Status object to review.
+        type: String
+
       - name: content
         description: |
             Review or comment text.
