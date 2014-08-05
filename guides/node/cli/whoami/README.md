@@ -1,9 +1,9 @@
 
-# whoami -- Shows the current logged in user
+# whoami -- Shows the current logged-in user
 
 ## Description
 
-Shows the current logged in user. If you are an Appcelerator Platform user, this command shows the
+Shows the current logged-in user. If you are an Appcelerator Platform user, this command shows the
 organizations you belong to.
 
 ## Usage
@@ -35,7 +35,7 @@ organizations you belong to.
 
 ## Example
 
-The following example displays output for the current logged in user if they do not belong
+The following example displays information about the currently logged-in user if they do not belong
 to an organization.
 
     $ acs whoami
@@ -47,7 +47,7 @@ to an organization.
     lastname     Doh
 
 
-The following example displays output for the current logged in user if they belong to an
+The following example displays information about the current logged-in user if they belong to an
 organization.
     
     $ acs whoami

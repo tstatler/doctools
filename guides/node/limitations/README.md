@@ -17,5 +17,6 @@ Currently, Node.ACS only supports applications opening one server listening
 port. There cannot be more than one TCP/HTTP server started in one
 application.
 
-To access the port number provided to the application, use the `process.env.PORT` variable in your
+If you are using an [external script](#!/guide/node_config-section-scripts) to start your application,
+you access the port number provided to the application by using the `process.env.PORT` variable in your
 JavaScript code.
