@@ -35,6 +35,10 @@ methods:
         description: Custom object associated with this review.
         type: String
 
+      - name: status_id
+        description: Status object associated with this review.
+        type: String
+
       - name: show_user_like
         description: | 
             If set to **true** the Review object in the response will include `"current_user_liked: true"`

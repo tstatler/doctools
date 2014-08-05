@@ -60,8 +60,13 @@ methods:
         description: Limit query to reviews on the identified Custom object.
         type: String
 
+      - name: status_id
+        description: Limit query to reviews on the identified Status object.
+        type: String
+
       - name: owner_id
         description: Limit query results to reviews submitted by the identified  user.
+        type: String
 
       - name: page
         description: Request page number, default is 1.

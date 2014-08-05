@@ -52,6 +52,10 @@ methods:
         description: Custom object associated with this review.
         type: String
 
+      - name: status_id
+        description: Status object associated with this review.
+        type: String
+
       - name: review_id
         description: Review object to delete.
         type: String
