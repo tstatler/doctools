@@ -15,7 +15,8 @@ application.  You can bind multiple CNAMEs to an application. Use the `--set <do
 to bind up to five additional CNAMEs to the application.
 
 If you need to remove a CNAME, use the `--remove` parameter.  For applications with multiple CNAMEs,
-you will be prompted to select which CNAME to remove.
+you will be prompted to select which CNAME to remove.  You may optionally pass the domain name to
+remove with the `--remove` paramter.
 
 To route an application based on a path with the domain name, use the `--path <path_name>` parameter to set a path for the
 application after setting a CNAME.  For example, if you want to bind two applications to the same
@@ -58,9 +59,10 @@ CNAME, specify a path for each to route a client to the correct application.
             </td>
         </tr>
         <tr>
-            <td><code>--remove</code></td>
+            <td><code>--remove [<i>domain_name</i>]</code></td>
             <td>Remove CNAME binding from the application. If the application has more than one
-                CNAME, you will be prompted to select the CNAME to remove.</td>
+                CNAME, you will be prompted to select the CNAME to remove or you can optionally specify the
+                domain to remove.</td>
         </tr>
         <tr>
             <td><code>--org <em>orgID</em></code></td>
