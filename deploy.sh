@@ -173,10 +173,16 @@ if [ $addon_guidesdir ]; then
     python ./guides_merger.py --input "${guidesdir}/toc.xml" --addon "${addon_guidesdir}/toc.xml"  --output "./build/merged_guides"
 
     ## Workaround for new Confluence plug-in
-    cp -r $guidesdir/attachments_* ./build/merged_guides/.
-    cp -r $guidesdir/images_* ./build/merged_guides/.
+    #cp -r $guidesdir/attachments_* ./build/merged_guides/.
+    #cp -r $guidesdir/images_* ./build/merged_guides/.
+
+    ## Attachments
     cp -r $addon_guidesdir/attachments_* ./build/merged_guides/.
     cp -r $addon_guidesdir/images_* ./build/merged_guides/.
+
+    ## Images
+    cp -r $guidesdir/images ./build/merged_guides/.
+    cp -r $addon_guidesdir/images ./build/merged_guides/.
 
     guidesdir="./build/merged_guides"
 fi
@@ -218,10 +224,10 @@ cp -r "$guidesdir/images/icons" "$outdir/resources/images/."
 ## Copy resources
 ## Workaround for new Confluence plugin
 cp -r $guidesdir/attachments_* $outdir/.
-cp -r $guidesdir/images_* $outdir/.
+#cp -r $guidesdir/images_* $outdir/.
 
 cp -r $guidesdir/css/common.css "$outdir/resources/css/common.css"
-#cp -r $guidesdir/images "$outdir/images"
+cp -r $guidesdir/images "$outdir/images"
 #cp -r $guidesdir/attachments "$outdir/attachments"
 
 cp ./resources/mock_video.png $outdir/resources/images/mock_video.png
