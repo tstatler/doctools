@@ -63,8 +63,8 @@ if [ ! -d "${TI_ROOT}/appc_modules" ]; then
 fi
 
 repo_update jsduck $JSDUCK_DIR origin master appcelerator
-repo_update titanium_mobile $TI_DIR origin 3_3_X appcelerator
-repo_update alloy $ALLOY_DIR origin 1_4_X appcelerator
+repo_update titanium_mobile $TI_DIR origin master appcelerator
+repo_update alloy $ALLOY_DIR origin master appcelerator
 repo_update titanium_modules $MOD_DIR origin master appcelerator
 repo_update ti.coremotion $CORE_MOTION_DIR origin master appcelerator-modules
 repo_update ti.facebook $FB_DIR origin master appcelerator-modules
