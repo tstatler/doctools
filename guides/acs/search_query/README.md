@@ -257,26 +257,41 @@ For example, if you want to return all fields except `first_name`:
 
 ## Search API Overview
 
-Each Appcelerator Cloud Services predefined object provides a search API that 
-takes a parameter `q` for search keywords. It will perform a case insensitive full text
-search of the given keywords on a list of predefined fields. 
+Several ACS objects provides a search API that performs a case-insensitive, full-text
+search of the given keywords on a list of predefined fields. Please refer to individual object's API
+documentation for a list of searchable fields. For instance, the {@link Places#search} method will search 
+within {@link Places#name} and {@link Places#tags}.
 
-Please refer to the individual predefined object's API document for a list of searchable
-fields. 
+The Search API is fixed in terms of the searchable fields; use the [query](#!/guide/search_query-section-query-api-overview) 
+API to perform more flexible searches.
 
-For example, if you want to search places with "Seafood", it will
-match all places with keyword "seafood" in place's name or tags. 
+### Search API Parameters
 
-Search API is prefixed, if you wish to perform your own custom search, please use query API.
+The following parameters are available for search operations:
+
+  * `page`
+  * `per_page`
+  * `q`
+
+#### page
+
+Request page number starting from 1. Default is 1. 
+
+#### per_page
+
+Number of results per page. Default is 10.
+
+#### q
+
+The keyword or phrase to search for.
 
 ### Search API Availability
 
 Search methods are available for the following pre-built ACS objects, as well as for custom fields.
 
-* {@link Events}
-* {@link Events}
-* {@link Friends}
-* {@link PhotoCollections}
-* {@link Photos}
-* {@link Places}
-* {@link Users}
+* {@link Events#search Events}
+* {@link Friends#search Friends}
+* {@link PhotoCollections#search PhotoCollections}
+* {@link Photos#search Photos}
+* {@link Places#search Places}
+* {@link Users#search Users}
