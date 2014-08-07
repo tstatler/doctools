@@ -80,18 +80,11 @@ other suitable file), include the `require()` statement as shown here:
 
 ## Authenticating your Application
 
-Your app must prove that it is allowed to talk to ACS. This keeps your data
-secure by preventing anyone from making requests to ACS that impersonate your
-app. There are several methods for authenticating with ACS:
-
-  * 3-Legged OAuth 
-
-  * 2-Legged OAuth 
+Your application must prove that it is allowed to talk to ACS. This keeps your data secure by preventing
+anyone from making requests to ACS that impersonate your app. There are several methods for authenticating with ACS:
 
   * API key 
-
-3-Legged OAuth, in which the username and password are not stored by the
-application, is the preferred method in most cases. 
+  * 2-Legged OAuth 
 
 For 2-legged OAuth or API key authentication, use the `Users.create` and `Users.login`
 methods:
@@ -107,67 +100,8 @@ methods:
         }
     });
 
-For 3-legged OAuth, use the `Users.secureCreate` and `Users.secureLogin` methods:
-
-    Cloud.Users.secureLogin({
-        title : "Log in to NiftyApp",
-    }, function(e) {
-        if (!e.success) {
-            Ti.API.info("Error: + ((e.error && e.message) || JSON.stringify(e)));
-        } else {
-            Ti.API.info('Success. accessToken = ' + Cloud.accessToken);
-        }
-    });
-
-These methods differ from the `login` and `create` methods in several important ways:
-
-*   The user's login and password information is passed into the method. Instead, 
-    the method displays a modal dialog, prompting the user to log in. The user's password
-    is not available to the application.
-
-*   The only thing that can be specified in the parameter dictionary is the title of the 
-    modal dialog, as shown in the sample above.
-
-*   The user's information is not returned in the response object. If you need information 
-    about the logged-in user, call the {@link Users#show_me} method.
-
-*   After a successful login, the OAuth access token is available in `Cloud.accessToken`. 
-    If desired, you can persist this value in a secure method and restore it when the application
-    restarts. For example:
-
-        // Method for storing token is application-specific
-        var token = getMyStoredAccessToken();
-        if (token) {
-            // restore access token
-            Cloud.accessToken = token;
-            // make more Cloud API calls.
-            doMyCloudStuff();
-        } else {
-            // need to log in.
-            Cloud.Users.secureLogin({
-                title : "Log in to NiftyApp",
-            }, function(e) {
-                if (e.success) {
-                    setMyStoredAccessToken(Cloud.accessToken, Cloud.expiresIn);
-                    doMyCloudStuff();
-                } else {
-                    // handle error 
-                }
-            });
-        }
-
-    The `Cloud.expiresIn` property specifies the validity period of the token, in seconds.
-    If you record the time when the `secureLogin` or `secureCreate` call returns, you can use this information.
-    to determine whether the access token is still valid.
-
-See the [Titanium.Cloud
-Module Reference](http://docs.appcelerator.com/titanium/latest/#!/api/Titanium.Cloud) for 
-details on using each of the mechanisms in Titanium. 
 
 For more information, see [Authentication](#!/guide/acs/authentication).
-
-Each of the authentication methods requires a key or other data identifying
-your ACS application.
 
 ## Push Notifications
 
@@ -223,23 +157,6 @@ Create a user
             // oops, something went wrong
         }
     });
-
-Create a user using 3-legged OAuth
-
-    // ACS app must be configured to use 3-legged OAuth
-    Cloud.Users.secureCreate({
-        title: 'Sign Up Here'
-    }, function (e) {
-        if (e.success) {
-            alert('Success:\n' +
-                'accessToken: ' + e.access_token + '\n' +
-                'expiresIn: ' + e.expires_in);
-        } else {
-            alert('Error:\n' +
-                ((e.error && e.message) || JSON.stringify(e)));
-        }
-    });
-
 
 Post a photo to a photo collection. To post a photo to a collection, you need to create the collection first using 
 {@link PhotoCollections#create}.

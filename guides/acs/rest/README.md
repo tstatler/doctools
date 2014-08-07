@@ -30,8 +30,7 @@ API responses are returned as JSON objects. In most cases, the response JSON inc
 
 ## Authentication
 
-All API calls must contain a valid App Key, 3-Legged OAuth Access Token, or
-2-Legged OAuth signature and request header in order for the ACS
+All API calls must contain a valid App Key  or 2-Legged OAuth signature and request header for the ACS
 server to process and respond to them. See the [authentication page](#!/guide/acs_authentication) 
 for more information.
 
