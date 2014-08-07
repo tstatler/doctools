@@ -1,18 +1,46 @@
 # Authentication
 
-## App Key over SSL
+To keep your application data secure from unauthorized access, your application must prove that it 
+is allowed to communicate with ACS in each HTTP request. There are two ways your application can do this:
 
-Your app must prove that it is allowed to talk to ACS. This keeps your data secure by preventing anyone from making requests to ACS that impersonate your app. The easiest way to authenticate API requests to ACS is to supply an ACS app key with each request as a URL parameter:
+* Application key over SSL
+* 2-Legged OAuth
+
+To authenticate user access to individual ACS data objects within your application, such as {@link Photos}
+or {@link Files}, you can use access control lists (ACLs). See {@link ACLs Access Control Lists} for more information.
+
+## Application Key over SSL
+
+The easiest way to authenticate API requests to ACS is to supply an ACS app key with each request 
+as a URL parameter, for example:
 
 <pre class="prettyprint">GET https://api.cloud.appcelerator.com/v1/places/search.json?<b>key=<span class="display_key">&lt;YOUR_APP_KEY&gt;</span></b></pre>
 
-ACS defaults to App key over SSL for better security. 
+ACS defaults to using application key over SSL.
+
+**To locate your application key in Dashboard**:
+
+1. Open [Dashboard](https://dashboard.appcelerator.com) in your browser and select your application
+from the App menu.
+2. From the left-hand navigation, select **Cloud > Configuration**.
+3. On the **Keys** tab, click **Show** next to the **App Key** label to show your app key.
+{@img appkey.png}
+
+Community users obtain their application key from the [My Apps](https://my.appcelerator.com/apps) page.
 
 ## 2-Legged OAuth
 
-If for some reason SSL is not available, ACS also provides secure authentication via 2-Legged OAuth. This is a process by which a key and secret are used to sign each request made by your app. When the ACS server receives your request, the secret is used along with the data sent in the request to calculate another signature. If sent signature and calculated signature match, the request will be processed.
+If SSL is not available to the client application, ACS also provides secure authentication via 2-Legged OAuth. 
+In this process, an authentication key and secret are used to sign each request made 
+by your application to ACS. When the ACS server receives the request, the secret and the data 
+sent in the request are used to calculate another signature. If the received and calculated signatures match, 
+the request is processed.
 
-Here is an example of an OAuth HTTP header added to an API request:
+Over a non-SSL connection, OAuth is more secure than the application key approach, as 
+the secret used to generate the signature is known only by the app and the ACS server; it is never 
+sent over the network.
+
+Below is an example of an OAuth HTTP header:
 
 <pre class="prettyprint">
 Authorization: OAuth oauth_consumer_key="0685bd9184jfhq22",
@@ -23,22 +51,32 @@ Authorization: OAuth oauth_consumer_key="0685bd9184jfhq22",
         oauth_nonce="4572616e48616d6d65724c61686176",
         oauth_version="1.0"
 </pre>
+ 
+**To locate your OAuth consumer key and secret in Dashboard**:
 
-This authentication method is the safer over HTTP that the API key method, since the secret used to generate the
-signature is known only by the app and the ACS server. It is never sent over the network.
-The OAuth consumer key and secret for an app can be found by going to the 
-[My Apps page](https://my.appcelerator.com/apps) (for community users) or the 
-[Appcelerator Dashboard](https://dashboard.appcelerator.com) (for enterprise users).
+1. Open [Dashboard](https://dashboard.appcelerator.com) and select your application
+from the App menu.
+2. From the left-hand navigation, select **Cloud > Configuration**.
+3. On the **Keys** tab, click **Show** next to the **OAuth Consumer Key** and **OAuth Secret** labels.
+{@img oauthkeysecret.png}
 
-The following is an example of making a 2-Legged OAuth request using Ruby:
+Community users obtain their OAuth consumer key and secret from the [My Apps](https://my.appcelerator.com/apps)
+web console.
+
+### OAuth example
+
+Most OAuth libraries that support standard (3-Legged) OAuth&mdash;such as those used by Facebook, Twitter, 
+and others&mdash;also supports 2-legged OAuth. The following is an example of making a 2-Legged 
+OAuth request using Ruby. Provide your ACS OAuth consumer key and secret for the `consumer_key` and
+`consumer_secret` fields. Use an empty string ("") as both the Access Token and Secret.
 
 <pre class="prettyprint">
 require 'rubygems'
 require 'oauth'
 
 # make the consumer out of your secret and key
-consumer_key = "OlosyCTFQpI7foZVFnynFCJvW60Tnqbr"
-consumer_secret = "5mP2yiOKSHOQkvrFMmgUJS9zd0OtTZIe"
+consumer_key = "<ACS OAuth Consumer Key>"
+consumer_secret = "<ACS OAuth Secret>"
 consumer = OAuth::Consumer.new(consumer_key, consumer_secret, :site => "http://api.cloud.appcelerator.com")
 
 # make the access token from your consumer
@@ -50,68 +88,6 @@ response = access_token.get("/v1/places/search.json")
 # show the response
 puts response.body
 </pre>
-
-Almost any OAuth library that supports 3-Legged OAuth (used by Facebook, Twitter, Foursquare, and others) can also support 2-legged OAuth. Provide your ACS OAuth key and secret as the consumer key and secret. Use an empty string ("") as both the Access Token and Secret.
-
-## 3-Legged OAuth
-
-<p>Since there is the possibility that mobile apps could reveal its secret ACS also supports OAuth 2.0 implicit authorization flow.
-(OAuth 2.0 implicit authorization flow is suitable for clients incapable of maintaining their client credentials confidential such as client applications residing
-  in a user-agent, typically implemented in a browser using a scripting language such as JavaScript, or native applications.)
-Using implicit authorization flow a mobile app receives the access token as the result of the authorization request. The mobile app can then use the
-access token to make API calls on behalf of the user.</p>
-
-The steps for enabling 3-Legged OAuth are slightly different depending on whether you are
-using the community portal, _my.appcelerator.com_, or the enterprise dashboard,
-_dashboard.appcelerator.com_.
-
-To enable 3-Legged OAuth (community users):
-
-1.  Open the <a href="https://my.appcelerator.com/apps">My Apps page</a> 
-2.  Find the application in the application list and click **Manage ACS**. 
-3.  Select the **Settings** tab.
-
-    {@img app_setting_as.png}
-
-4.  Select **Authorization Server** for **User Authentication Scheme** and specify the expiration time for access tokens (defaults to 1 hour).
-5.  Click **Save App Secure Identity Server Changes**.
-
-To enable 3-Legged OAuth (enterprise users):
-
-1.  Open the [Appcelerator Dashboard](https://dashboard.appcelerator.com).
-2.  Select the application from the application list and click the **Cloud** tab.
-3.  Click **Settings & Configuration**.
-4.  Select **Authorization Server** for **User Authentication Scheme** and specify the expiration time for access tokens (defaults to 1 hour).
-5.  Click **Save Changes**.
-
-<p>With 3-Legged OAuth, user log-in and sign-up will be done on Authorization Server. According to OAuth 2.0 implicit authorization flow only OAuth key
-is needed. However, as iOS and Android applications are safer than javascript applications OAuth secret can still be provided for them.</p>
-
-<p>Here is an example of an request sent to Authorization Server for signing-in:</p>
-
-<pre class="prettyprint">
-http://secure-identity.cloud.appcelerator.com/oauth/authorize?client_id=VGJSVgFHs7FaOcgcvMWMAGe6bwNpHBfq&response_type=token&redirect_uri=acsconnect://success
-</pre>
-
-<p>Here is an example of an request sent to Authorization Server for signing-up:</p>
-
-<pre class="prettyprint">
-http://secure-identity.cloud.appcelerator.com/users/sign_up?client_id=VGJSVgFHs7FaOcgcvMWMAGe6bwNpHBfq&redirect_uri=acsconnect://success
-</pre>
-
-<p>The existing logout API can still be used to log an user out. Here is an example of an request sent to API server for signing-out:</p>
-
-<pre class="prettyprint">
-http://api.cloud.appcelerator.com/v1/users/logout.json?oauth_consumer_key=VGJSVgFHs7FaOcgcvMWMAGe6bwNpHBfq&access_token=eMdbgRgmsUwUnljJSrlkCOuZnKNVCdsRp9EVFCzp
-</pre>
-
-<p>The Titanium and Android SDKs now support this authorization flow. For details please refer to the corresponding pages.</p>
-
-<ul>
-<li>
-<a href="#!/guide/titanium">Titanium SDK</a></li>
-<li><a href="#!/guide/android">Android SDK</a></li>
-</ul>
 
 ## Access Control Lists (ACLs)
 
