@@ -1,4 +1,4 @@
-# Query and Search APIs 
+# Search and Query APIs 
 
 Appcelerator Cloud Services provides APIs for querying and searching ACS objects. 
 The query APIs allow you to perform custom database-style searches, while search APIs perform a full text search using the ACS search engine.
@@ -22,6 +22,9 @@ The following ACS object provide query methods: {@link ACLs#query ACLs}, {@link 
 {@link Posts#query Posts}, {@link PushNotifications#query PushNotifications},
 {@link PushSchedules#query PushSchedules}, {@link Reviews#query Reviews}, {@link Statuses#query Statuses},
  and {@link Users#query Users}.
+
+For security reasons, when querying for {@link Users} the {@link Users#email email} field is not returned
+in the User object unless you have [admin access](#!/guide/admin_access).
 
 ### Query parameters
 

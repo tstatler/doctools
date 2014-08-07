@@ -55,7 +55,7 @@ methods:
             Instead of using `page` and `per_page` for pagination, you can use `limit` and
             `skip` to do your own pagination. `limit` is the maximum number of records to
             fetch.
-            The specified value must be greater than 0 and no greater then 1000, or an HTTP 400 (Bad Request) 
+            The specified value must be greater than 0 and no greater than 1000, or an HTTP 400 (Bad Request) 
             error will be returned.            
         type: Number
 
