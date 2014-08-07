@@ -1,70 +1,77 @@
-# Search and Query
+# Query and Search APIs 
 
-Appcelerator Cloud Services provides both search and query APIs for all
-predefined objects. The difference is that search is predefined full text
-search using Appcelerator Cloud Services search engine, query is for advanced
-custom DB style search.
+Appcelerator Cloud Services provides APIs for querying and searching ACS objects. 
+The query APIs allow you to perform custom database-style searches, while search APIs perform a full text search using the ACS search engine.
 
-## Email Field
+## Query API Overview
 
-For security, when retrieving results for users, the email field is not returned in the User
-object unless you have admin access.
+The query API provides an interface for applying database-style query constraints on predefined objects 
+and [custom fields](#!/guide/customfields). You can control pagination of queries, using either `page`
+and `per_page` query parameters, or `skip` and `limit` for custom pagination. You can also control
+the sort order of query results, and specify the fields you want to include (or exclude) from results.
 
-## Search Overview
+When no query parameters are provided, all objects of the specified type are returned with default pagination. 
 
-Each Appcelerator Cloud Services predefined object provides a search API. It
-takes a parameter q for keywords. It will perform a case insensitive full text
-search of the given keywords on a list of predefined fields. Please refer to
-the individual predefined object's API document for a list of searchable
-fields. For example, if you want to search places with "Seafood", it will
-match all places with keyword "seafood" in place's name or tags. Search API is
-prefixed, if you wish to perform your own custom search, please use query API.
+### Query API Availability
 
-## Query Overview
+The following ACS object provide query methods: {@link ACLs#query ACLs}, {@link Chats#query Chats}, 
+{@link Checkins#query Checkins}, {@link CustomObjects#query CustomObjects}, {@link Events#query Events}, 
+{@link Files#query Files}, {@link GeoFences#query GeoFences}, 
+{@link KeyValues#query KeyValues}, {@link Likes#query Likes}, {@link Logs}, 
+{@link Messages#query Messages}, {@link Photos#query Photos}, {@link Places#query Places}, 
+{@link Posts#query Posts}, {@link PushNotifications#query PushNotifications},
+{@link PushSchedules#query PushSchedules}, {@link Reviews#query Reviews}, {@link Statuses#query Statuses},
+ and {@link Users#query Users}.
 
-Query provides an interface to apply DB query constrains on predefined fields
-as well as [custom fields](#!/guide/customfields). When no parameters are
-provided, query will simply return all objects with default pagination. The
-following is a list of parameters supported:
+### Query parameters
 
-  * page
-  * per_page
-  * skip and limit
-  * where
-  * geo query
-  * order
-  * sel
-  * unsel
+The following parameters are available for query operations:
 
-### page
+  * `page`
+  * `per_page`
+  * `limit` and `skip`
+  * `where`
+  * `order`
+  * `sel`
+  * `unsel`
 
-Request page number starting from 1. Default is 1
+#### page
 
-### per_page
+Request page number starting from 1. Default is 1. 
 
-Number of results per page. Default is 10
+You can't use `skip` and `limit` together with `page` and `per_page` in the same query.
 
-### skip and limit
+#### per_page
 
-Instead of using `page` and `per_page` for pagination, you can use `limit` and
-`skip` to do your own pagination, `limit` is the number of records you want to
-fetch, it cannot be greater than 1000. `skip` must be used together with
-`limit` to skip a number of records.
+Number of results per page. Default is 10.
 
-### where
+You can't use `skip` and `limit` together with `page` and `per_page` in the same query.
 
-Constrains values for fields. `where` should be encoded JSON. Each value in the search query needs
+#### limit and skip
+
+Instead of using `page` and `per_page` you can use `limit` and `skip` to do your own pagination. 
+
+* `limit` -- The number of records to fetch. The value must be greater than 0, and no greater then 
+1000, or an HTTP 400 (Bad Request) error will be returned.
+* `skip` -- The number of records to skip. This parameter must be used together with `limit`. The value
+must **not** be less than 0 or an HTTP 400 error will be returned.
+
+You can't use `skip` and `limit` together with `page` and `per_page` in the same query.
+
+#### where
+
+Constrains values for fields. The value should be encoded JSON. Each value in the search query needs
 to be less that 1024 bytes.  If the value is larger than 1024 bytes, the query does not return any
 results.
 
-For each type of object,
-there is a set of predefined fields that can be queried using the `where` operator. (See the 
-individual `query` methods for details.) 
+Each type of ACS object has a set of predefined fields that can be queried with the `where` operator. 
+See each object's individual `query` method for details. 
 
-In addition, you can query the custom fields on any object. Note, however, that you can only query
-simple values, such as Strings, Dates, Numbers, or Booleans. If a custom field takes an array or object as a
-value, you can't query any of the values stored inside the array or object.  For more information,
-see the "Data Types" section in the [Custom Object and Data Fields guide](#!/guide/customfields).
+In addition, you can query the [custom fields](#!/guide/customfields) on any object. Note, however, 
+that you can only query simple values, such as Strings, Dates, Numbers, or Booleans. 
+If a custom field takes an array or object as a value, you can't query any of the values stored inside the array or object.  
+
+For more information, see [Supported Data Types](#!/guide/customfields-section-supported-data-types).
 
 Currently, ACS does not support case insensitive query. To perform case insensitive query 
 on a field, save an additional normalized copy of the original field and perform the query on the
@@ -200,7 +207,7 @@ distance of 5 miles (convert 5 miles to radians, 5/3959 = 0.00126)
 
     where={"first_name":"joe", "coordinates":{"$nearSphere":[-122.1,37.1], "$maxDistance" : 0.00126}}
     
-### order
+#### order
 
 Sort results by one or more fields. In general, you can sort based on any predefined field that you can query using
 the `where` operator, as well as on custom fields. Any exceptions to this rule are noted in API reference for the 
@@ -212,7 +219,7 @@ order:
     
     order=first_name,-created_at
 
-### sel
+#### sel
 
 Selects which fields to return from the query. Do not use this parameter if you are using the
 `unsel` parameter.
@@ -230,7 +237,7 @@ For example, if you want to only return the `first_name` field:
 
     sel={"all":["first_name"]}
 
-### unsel
+#### unsel
 
 Selects which fields to not return from the query. Do not use this parameter if you are using the
 `sel` parameter.
@@ -248,16 +255,28 @@ For example, if you want to return all fields except `first_name`:
 
     unsel={"all":["first_name"]}
 
-## Availability
+## Search API Overview
 
-The following Appcelerator Cloud Services objects allow you to perform query:
+Each Appcelerator Cloud Services predefined object provides a search API that 
+takes a parameter `q` for search keywords. It will perform a case insensitive full text
+search of the given keywords on a list of predefined fields. 
 
-  * {@link Chats}
-  * {@link Checkins}
-  * {@link Events}
-  * {@link Photos}
-  * {@link Places}
-  * {@link Posts}
-  * {@link Reviews}
-  * {@link Statuses}
-  * {@link Users}
+Please refer to the individual predefined object's API document for a list of searchable
+fields. 
+
+For example, if you want to search places with "Seafood", it will
+match all places with keyword "seafood" in place's name or tags. 
+
+Search API is prefixed, if you wish to perform your own custom search, please use query API.
+
+### Search API Availability
+
+Search methods are available for the following pre-built ACS objects, as well as for custom fields.
+
+* {@link Events}
+* {@link Events}
+* {@link Friends}
+* {@link PhotoCollections}
+* {@link Photos}
+* {@link Places}
+* {@link Users}

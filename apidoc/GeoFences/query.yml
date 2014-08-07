@@ -7,6 +7,9 @@ methods:
 
         Available only for Enterprise users.
 
+        You can paginate query results using `skip` and `limit` parameters, or `page` and `per_page`, 
+        but not both in the same query.        
+
         For details about using the query parameters,
         see the [Search and Query guide](#!/guide/search_query).
 
@@ -25,7 +28,8 @@ methods:
         description: |
             Instead of using `page` and `per_page` for pagination, you can use `limit` and
             `skip` to do your own pagination. `limit` is the maximum number of records to
-            fetch. `limit` cannot be greater than 1000.
+            fetch. The specified value must be greater than 0 and no greater then 1000, or an HTTP 400 (Bad Request) 
+            error will be returned.            
         type: Number
 
       - name: response_json_depth
@@ -42,6 +46,7 @@ methods:
       - name: skip
         description: |
             Number of records to skip. Must be used together with `limit`.
+            The specified value must not be less than 0 or an HTTP 400 error will be returned.            
         type: Number
 
       - name: where
