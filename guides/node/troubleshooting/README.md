@@ -1,7 +1,12 @@
+# Node.ACS Troubleshooting Guide
 
-This document summarizes the kinds of exceptions you may encounter in a Node.ACS application, and how to check the errors using the [`acs list`](#!/guide/node_cli_list) and [`acs loglist`](#!/guide/node_cli_loglist) CLI commands.
+This document summarizes the kinds of exceptions you may encounter when deploying or running a 
+Node.ACS application, or when installing or upgrading the `acs` NPM package on your system.
 
-Note that `acs loglist` may not get the latest logs from the server immediately. You may need to wait a few seconds. 
+The [`acs list`](#!/guide/node_cli_list) and [`acs loglist`](#!/guide/node_cli_loglist) CLI commands
+are used to troubleshoot deployment or runtime issues. Note that `acs loglist` may not immediately
+retrieve the latest logs from the server; you may need to wait a few seconds and try running the command
+again. 
 
 ## Exceptions thrown upon deployment
 
@@ -317,3 +322,32 @@ list` doesn't indicate any problem.
     -- Servers: 
     No. 1 ID: 52b81468754c4184e58e8789 Status: Deployed    
 
+## Installation errors
+
+This section describes issues you may encounter when installing or upgrading Node.ACS using NPM.
+
+### Error: ENOENT, no such file or directory
+
+Node.ACS installation fails with the following error:
+
+    ...
+    fs.js:427
+      return binding.open(pathModule._makeLong(path), stringToFlags(flags), mode);
+                     ^
+    Error: ENOENT, no such file or directory '/usr/local/lib/node_modules/acs/bin/acsx'
+        at Object.fs.openSync (fs.js:427:18)
+        at Object.fs.readFileSync (fs.js:284:15)
+        at Object.<anonymous> (/usr/local/lib/node_modules/acs/scripts/config.js:21:19)
+        at Module._compile (module.js:456:26)
+        at Object.Module._extensions..js (module.js:474:10)
+        at Module.load (module.js:356:32)
+        at Function.Module._load (module.js:312:12)
+        at Function.Module.runMain (module.js:497:10)
+        at startup (node.js:119:16)
+        at node.js:902:3 
+
+To resolve, try deleting your `~/.npm` folder and cleaning the NPM cache, then re-installing:
+
+    rm -rf ~/.npm
+    npm cache clear
+    sudo npm -g install acs
