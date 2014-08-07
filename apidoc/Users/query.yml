@@ -8,8 +8,14 @@ methods:
         sort data based on the values of any custom fields, if the values are simple JSON
         values.
 
+        For security reasons, when querying for {@link Users} the {@link Users#email email} field is not returned
+        in each Users object unless you have [admin access](#!/guide/admin_access).
+
         Currently you **cannot** sort or query based on data stored inside array or hash
         objects in custom fields.
+
+        You can paginate query results using `skip` and `limit` parameters, or `page` and `per_page`, 
+        but not both in the same query.
 
         For details about using the query parameters,
         see the [Search and Query guide](#!/guide/search_query).
@@ -30,12 +36,16 @@ methods:
         description: |
             Instead of using `page` and `per_page` for pagination, you can use `limit` and
             `skip` to do your own pagination. `limit` is the maximum number of records to
-            fetch. `limit` cannot be greater than 1000.
+            fetch.
+            The specified value must be greater than 0 and no greater than 1000, or an HTTP 400 (Bad Request) 
+            error will be returned.            
         type: Number
 
       - name: skip
         description: |
             Number of records to skip. Must be used together with `limit`.
+            The specified value must not be less than 0 or an HTTP 400 error will be returned.
+            
         type: Number
 
       - name: where

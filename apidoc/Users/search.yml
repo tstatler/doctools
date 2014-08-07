@@ -7,7 +7,9 @@ methods:
         relevancy.
 
         Optionally, `q` can be given to perform full text search on user's first name,
-        last name, email address, username and tags.
+        last name, email address, username and tags. For security reasons, when searching for {@link Users}
+        the {@link Users#email email} field is not returned in each Users object unless you have 
+        [admin access](#!/guide/admin_access).
 
         For advanced custom search, see {@link Users#query query}.
     url: users/search.json `

@@ -36,18 +36,6 @@ methods:
         description: Number of results per page, default is 10.
         type: Number
 
-      - name: limit
-        description: |
-            Instead of using `page` and `per_page` for pagination, you can use `limit` and
-            `skip` to do your own pagination. `limit` is the maximum number of records to
-            fetch. `limit` cannot be greater than 1000.
-        type: Number
-
-      - name: skip
-        description: |
-            Number of records to skip. Must be used together with `limit`.
-        type: Number
-
       - name: response_json_depth
         description: |
             Nested object depth level counts in response json.
