@@ -1,7 +1,21 @@
 name: Emails
 description: |
-    The Emails API lets you send custom emails to your users. Before you can send email you must first configure your SMTP
-    server settings on the Cloud > Settings & Configuration tab in [Appcelerator Dashboard](https://dashboard.appcelerator.com)
-    or the Settings tab in [My Apps](https://my.appcelerator.com/apps).
-    
+    The {@link Emails#email_from_template} method lets you send customized emails to your users. Before
+    you can use this method, you must first do the following:
 
+    * Configure your [SMTP server settings](http://docs.appcelerator.com/platform/latest/#!/guide/Configuring_Cloud_Services-section-39683049_ConfiguringCloudServices-SMTP)
+    in [Dashboard](https://dashboard.appcelerator.com).
+    * Create at least one email template, which may contain HTML-formatted text. See 
+    [Managing Email Templates](http://docs.appcelerator.com/platform/latest/#!/guide/Managing_Email_Templates)
+    for details on creating an email template. 
+
+    When you call {@link Emails#email_from_template}, you specify the name of the template to use and the email recipient(s).
+
+    ** Using placeholder fields**
+
+    The template's subject and body can contain placeholder fields delineated by double curly brackets
+    (`{{}}`). You include a parameter for each placeholder field in the method call specifying
+    the value to insert. For example, if your email template's subject field contains **Hi `{{first_name}}`!**.
+    you would include a parameter named `first_name`, as shown below:
+
+        curl -F "recipients=joe@company.com" -F "template=welcome" -F "first_name=Joe" https://api.cloud.appcelerator.com/v1/custom_mailer/email_from_template.json?key=<YOUR APP APP KEY>
