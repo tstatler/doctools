@@ -3,14 +3,8 @@ methods:
   - name: email_from_template
     summary: Send Emails
     description: |
-        Sends an email to a list of email addresses from your App. If you haven't
-        configured your project's SMTP settings yet, please goto your App Settings and configure
-        and test your SMTP setting. You also need to create at least one email
-        template. The email template body supports HTML formatted text.
+        Sends an email to a list of email addresses from your application. 
 
-        Before you can send email you must first configure your SMTP
-        server settings on the Cloud > Settings & Configuration tab in [Appcelerator Dashboard](https://dashboard.appcelerator.com)
-        or the Settings tab in [My Apps](https://my.appcelerator.com/apps).
     url: custom_mailer/email_from_template.json
     http-method: POST
 
@@ -30,8 +24,7 @@ methods:
         description: |
             The sender's email address. 
 
-            <p><strong>Notes:</strong></p>
-
+            Notes:
             * If you use Google as your SMTP server, the email will always be sent using the email account 
             you used to configure the SMTP service. 
             * Some SMTP service provider require the sender's email address to be present.
