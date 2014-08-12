@@ -8,8 +8,8 @@ server.
 ### New CLI features and bug fixes
 
 * If you are not currently logged-in when running an `acs` CLI command you are 
-now prompted for the host, username and password. The requested command is automatically executed 
-upon successful login, for example:
+now prompted for the host, username and password, and the original command is automatically executed 
+upon successful login. For example:
 
           $ acs list
 
@@ -24,7 +24,7 @@ upon successful login, for example:
           App name: foobarApp
           ...
 
-* ACS CLI error and warning messages have been improved for readability and general usefulness.
+* CLI error and warning messages have been improved for readability and general usefulness.
 * [`acs whoami`](http://localhost:8888/cloud/latest/#!/guide/node_cli_whoami) no longer returns 
 `undefined` for ACS username.
 
@@ -32,16 +32,17 @@ upon successful login, for example:
 
 * A Node.ACS application's server listening port is now provided as a default environment variable
 named `process.env.PORT`; it's no longer necessary to specify the port in your application's package.json file. 
-For example:
+For example, the following code creates a new server and begins listening on the provided port:
 
         http.createServer(function (req, res) {
           res.writeHead(200, {'Content-Type': 'text/plain'});
           res.end('Welcome to Node.ACS!');
         }).listen(process.env.PORT);
 
-* The Node.ACS `logger` class utility is now available again.
 * In standard (non-MVC) Node.ACS applications, it's no longer necessary to include `"framework": "none"` in your
 application's package.json file; this behavior is now assumed for standard apps.
+* The Node.ACS `logger` class utility is available again after a brief hiatus.
+
 
 ## 17 July 2014 -- CLI version 1.0.15 / Server version 1.1.3
 
