@@ -25,7 +25,7 @@ as long the `username` field is not empty.
  where a non-admin user was able to send a geo-based notification without specifying 
  either `to_ids` or `friends` fields.
 * Fixed an issue where creating a new [`Review`](http://docs.appcelerator.com/cloud/latest/#!/api/Reviews-method-create)
- for a Photo object the reviewed photo the primary photo for the new Review.
+ for a Photo object made the reviewed photo the primary photo for the new Review.
 * The push notification logs in the [My Apps](https://my.appcelerator.com/apps) web console now shows the correct push count for Android and IOS
 devices.
 
