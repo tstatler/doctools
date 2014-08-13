@@ -9,7 +9,7 @@ now only returns chat groups that the current user belongs to, as expected.
 * [`subscribe_token`](http://docs.appcelerator.com/cloud/latest/#!/api/PushNotifications-method-subscribe_token) 
 now properly increases the subscribed device count, as displayed in Dashboard or My Apps.
 * Queries now properly limit the number of results specified by the query 
-[`limit` parameter](http://docs.appcelerator.com/cloud/latest/#!/guide/search_query-section-skip-and-limit).
+[`limit`](http://docs.appcelerator.com/cloud/latest/#!/guide/search_query-section-skip-and-limit) parameter.
 * Fixed an issue where valid .p12 certificates were being disabled when ACS could not make a successful 
 connection to Apple Push Notification Service (APNS).
 * Fixed an issue where calling [`keyvalues.incrby`](http://docs.appcelerator.com/cloud/latest/#!/api/KeyValues-method-incrby)
@@ -21,10 +21,10 @@ the My Apps web console.
 * An ACS user's `first_name` or `last_name` fields can now be set to an empty string, as expected, 
 as long the `username` field is not empty. 
 * Fixed an issue when assigning binary data to a Keyvalue object.
-* Fixed an issue with [push_notification/notify.json](http://docs.appcelerator.com/cloud/latest/#!/api/PushNotifications-method-notify)
+* Fixed an issue with [`push_notification/notify.json`](http://docs.appcelerator.com/cloud/latest/#!/api/PushNotifications-method-notify)
  where a non-admin user was able to send a geo-based notification without specifying 
  either `to_ids` or `friends` fields.
-* Fixed an issue where creating a new [Review](http://docs.appcelerator.com/cloud/latest/#!/api/Reviews-method-create)
+* Fixed an issue where creating a new [`Review`](http://docs.appcelerator.com/cloud/latest/#!/api/Reviews-method-create)
  for a Photo object made it the primary photo for the new Review.
 * The push notification logs in the [My Apps](https://my.appcelerator.com/apps) web console now shows the correct push count for Android and IOS
 devices.
