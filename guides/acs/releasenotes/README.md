@@ -16,9 +16,8 @@ connection to Apple Push Notification Service (APNS).
 or [`keyvalues.append`](http://docs.appcelerator.com/cloud/latest/#!/api/KeyValues-method-append) 
 as an application admin on behalf of another user (by specifying the `user_id` parameter) would create a 
 new keyvalue belonging to the admin, rather than updating the one belonging to the specified user.
-* Fixed a server exception caused by calling [push_notification/channels/query.json](http://docs.appcelerator.com/cloud/latest/#!/api/PushNotifications-method-channels_query)
-with a `user_id` parameter.
-* Fixed an unexpected error with the data export feature of the My Apps web console.
+* Fixed an unexpected error ("Export currently in progress") when exporting application data from 
+the My Apps web console.
 * An ACS user's `first_name` or `last_name` fields can now be set to an empty string, as expected, 
 as long the `username` field is not empty. 
 * Fixed an issue when assigning binary data to a Keyvalue object.
