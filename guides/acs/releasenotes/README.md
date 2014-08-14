@@ -1,6 +1,6 @@
 # ACS Release Notes
 
-## ACS Release 1.1.4 - 12 August 2014
+## ACS Release 1.1.4 - 14 August 2014
 
 The 1.1.4 release of Appcelerator Cloud Services includes the following updates and bug fixes:
 
