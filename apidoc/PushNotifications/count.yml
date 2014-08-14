@@ -2,7 +2,7 @@ name: PushNotifications
 methods:
   - name: count
     summary: Retrieves the total number of devices subscribed to push notifications.
-    description: Retrieves the total number of devices subscribed to notifications.
+    description: Retrieves the total number of devices subscribed to push notifications.
 
     url: push_notification/count.json
     http-method: GET
