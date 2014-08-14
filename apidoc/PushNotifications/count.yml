@@ -14,8 +14,8 @@ methods:
             A dictionary with two fields:
 
               * `count` (Number): Total number of devices subscribed to push notifications.
-              * `subscriptions`: (Hash): Dictionary with two fields, `android` and `ios`, with the
-                value indicating the total number of Android and iOS devices subscribed to push
+              * `subscriptions`: (Hash): Dictionary with two fields, `android` and `ios`, whose
+                values indicate the total number of Android and iOS devices subscribed to push
                 notifications, respectively.
         type: Hash
 
