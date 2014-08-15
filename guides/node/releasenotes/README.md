@@ -1,5 +1,53 @@
 # Node.ACS Release Notes
 
+## 14 August 2014 -- CLI version 1.0.16 / Server Release 1.1.4
+
+This release of Node.ACS includes version 1.0.16 of the Node.ACS CLI and version 1.1.4 of the Node.ACS
+server.
+
+### New CLI Features and Bug Fixes
+
+* You can now bind multiple CNAMEs (alternate domain names) to a Node.ACS application. See the
+[CLI documentation](http://docs.appcelerator.com/cloud/latest/#!/guide/node_cli_cname) for more 
+information.
+* If you run a CLI command while not logged in, you are now automatically prompted for your ACS credentials, 
+and the original command is executed upon successful login, for example:
+
+          $ acs list
+
+          Login required!
+          host (http://admin.cloudapp-enterprise.appcelerator.com): 
+          username: your-user-name
+          password: ********
+          Welcome back, your-user-name! You are now logged in.
+
+          ============ 
+
+          App name: foobarApp
+          ...
+
+* CLI error and warning messages have been improved for readability and general usefulness.
+* The [`acs whoami`](http://docs.appcelerator.com/cloud/latest/#!/guide/node_cli_whoami) command now 
+returns the list of organizations the current user belong to, if any (Platform users, only), as well 
+as the current user's email and username.
+
+### New Server Features and Bug Fixes
+
+* A Node.ACS application's server listening port is now provided as a default environment variable
+named `process.env.PORT`; it's no longer necessary to specify the port in your application's package.json file. 
+For example, the following code creates a new server and begins listening on the provided port:
+
+        http.createServer(function (req, res) {
+          res.writeHead(200, {'Content-Type': 'text/plain'});
+          res.end('Welcome to Node.ACS!');
+        }).listen(process.env.PORT);
+
+* In standard (non-MVC) Node.ACS applications, it's no longer necessary to include `"framework": "none"` in your
+application's package.json file; this behavior is now assumed for standard apps.
+* Fixed an issue where the the ACS `logger` utiltity was not available when running Node.ACS applications
+locally (via the `acs run` command) .
+
+
 ## 17 July 2014 -- CLI version 1.0.15 / Server version 1.1.3
 
 To use Node.ACS CLI 1.0.15 with Appcelerator Studio, you must upgrade Appcelerator Studio to version

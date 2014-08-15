@@ -1,5 +1,61 @@
 # ACS Release Notes
 
+## ACS Release 1.1.4 - 14 August 2014
+
+The 1.1.4 release of Appcelerator Cloud Services includes the following updates and bug fixes:
+
+### New Features
+
+* Added a new `count` API to that returns the total number of objects of the specified type. This API
+is available to the following ACS types: {@link ACLs}, {@link Chats}, {@link Checkins}, {@link PhotoCollections}, 
+{@link Emails}, {@link Events}, {@link Files}, {@link GeoFences}, {@link KeyValues}, {@link Messages}, 
+{@link CustomObjects}, {@link Photos}, {@link Places}, {@link Posts}, {@link PushNotifications}, {@link Reviews}, 
+{@link Statuses}, and {@link Users}.
+
+For example, the following shows an example `cURL` request and response for the number of Photos:
+
+    $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/photos/count.json?key=<YOUR_APP_KEY>&pretty_json=true"
+
+Example response:
+
+    {
+      "meta": {
+        "code": 200,
+        "status": "ok",
+      },
+      "response": {
+        "photos": 10.0
+      }
+    }
+
+
+### Bug Fixes
+
+* [`get_chat_groups`](http://docs.appcelerator.com/cloud/latest/#!/api/Chats-method-get_chat_groups) 
+now only returns chat groups that the current user belongs to, as expected.
+* [`subscribe_token`](http://docs.appcelerator.com/cloud/latest/#!/api/PushNotifications-method-subscribe_token) 
+now properly increases the subscribed device count, as displayed in Dashboard or My Apps.
+* Queries now properly limit the number of results specified by the query 
+[`limit`](http://docs.appcelerator.com/cloud/latest/#!/guide/search_query-section-skip-and-limit) parameter.
+* Fixed an issue where valid .p12 certificates were being disabled when ACS could not make a successful 
+connection to Apple Push Notification Service (APNS).
+* Fixed an issue where calling [`keyvalues.incrby`](http://docs.appcelerator.com/cloud/latest/#!/api/KeyValues-method-incrby)
+or [`keyvalues.append`](http://docs.appcelerator.com/cloud/latest/#!/api/KeyValues-method-append) 
+as an application admin on behalf of another user (by specifying the `user_id` parameter) would create a 
+new keyvalue belonging to the admin, rather than updating the one belonging to the specified user.
+* Fixed an unexpected error ("Export currently in progress") when exporting application data from 
+the My Apps web console.
+* An ACS user's `first_name` or `last_name` fields can now be set to an empty string, as expected, 
+as long the `username` field is not empty. 
+* Fixed an issue when assigning binary data to a Keyvalue object.
+* Fixed an issue with [`push_notification/notify.json`](http://docs.appcelerator.com/cloud/latest/#!/api/PushNotifications-method-notify)
+ where a non-admin user was able to send a geo-based notification without specifying 
+ either `to_ids` or `friends` fields.
+* Fixed an issue where creating a new [`Review`](http://docs.appcelerator.com/cloud/latest/#!/api/Reviews-method-create)
+ for a Photo object made the reviewed photo the primary photo for the new Review.
+* The push notification logs in the [My Apps](https://my.appcelerator.com/apps) web console now shows the correct push count for Android and IOS
+devices.
+
 ## ACS Release 1.1.3 - 17 July 2014
 
 The 1.1.3 release of Appcelerator Cloud Services includes the following fixes and features:
