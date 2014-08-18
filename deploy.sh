@@ -177,8 +177,8 @@ if [ $addon_guidesdir ]; then
     #cp -r $guidesdir/images_* ./build/merged_guides/.
 
     ## Attachments
+    cp -r $guidesdir/attachments_* ./build/merged_guides/.
     cp -r $addon_guidesdir/attachments_* ./build/merged_guides/.
-    cp -r $addon_guidesdir/images_* ./build/merged_guides/.
 
     ## Images
     cp -r $guidesdir/images ./build/merged_guides/.
