@@ -11,44 +11,37 @@ To manage your application and it's data&mdash;for example, to create or edit {@
 ([Platform](http://www.appcelerator.com/platform/appcelerator-platform/) users) 
 or the [My Apps](https://my.appcelerator.com/apps) web console (community developers).
 
-This guide explains the basic steps you need to take to enable and use ACS in your application, whether
-you are using the Titanium SDK, or the Platform Services SDK for iOS or Android.
+This guide explains the basic steps you need to take to enable and use ACS in your application in your Titanium application, or native iOS or Android application.
 
-## Step 1: Enable Platform or Cloud Services in a Titanium, Android, or iOS project
+## Step 1: Enable Platform or Cloud Services
 
-### Titanium SDK
+### Enabling Platform or Cloud Services in an Appcelerator or Titanium Studio
 
-To access ACS services in your Titanium application, you use the 
-[Titanium.Cloud](http://docs.appcelerator.com/titanium/latest/#!/api/Titanium.Cloud) module, 
-which is included with the Titanium SDK. To include the module in your application, and create the server-side 
-resources to support your application, you just need to enable Appcelerator Services in your application's
-tiapp.xml file (in Appcelerator Studio), or enable Cloud Services (in Titanium Studio).
+You use the [Titanium.Cloud](http://docs.appcelerator.com/titanium/latest/#!/api/Titanium.Cloud) module, 
+which is included with the Titanium SDK. To include the module in your application, and automatically create a corresponding Cloud application on ACS, you just need to enable Appcelerator Services in your Studio project's
+tiapp.xml file. The specific steps depend on whether you are using Appcelerator Studio (available to Platform subscribers) or Titanium Studio.
 
 **To enable Platform Services in Appcelerator Studio**:
 
-* When creating a new project, click **Enable Appcelerator Platform Services** in the new Project dialog.
+* When creating a new project, in the new Mobile App Project dialog, select the organization the application belongs to, and click **Enable Appcelerator Platform Services**. {@img studio-enable-new.png}
 * For an existing project, open the project's tiapp.xml file and click **Enable Services** 
-in the Appcelerator Services section.
+in the Appcelerator Services section. {@img studio-enable-existing.png}
 
 **To enable Cloud Services in Titanium Studio**:
 
 * If you are creating a new project, click **Cloud-enable this Application** in the new Project dialog.
-* For an existing project Titanium project, open your project's tiapp.xml file and click **Enable...** 
-in the Cloud Services section.
+* For an existing project Titanium project, open your project's tiapp.xml file and click **Enable...** in the Cloud Services section to generate the required application keys. You will also need to manually add the application keys to your tiapp.xml file. See [Adding an Existing ACS application to a Titanium project](http://docs.appcelerator.com/cloud/latest/#!/guide/titanium-section-adding-an-existing-acs-application-to-a-titanium-project).
 
-Enabling Platform or Cloud Services does the following:
+Enabling Platform/Cloud Services has the following affects:
 
 * Creates a new ACS Cloud application that you can [manage](#manage) using Appcelerator Dashboard
 or My Apps.
-* Adds the `ti.cloud` module to your tiapp.xml (in Appcelerator Studio, modules for the Test and Performance 
-services are also added).
+* Adds the `ti.cloud` module to your tiapp.xml; for Appcelerator Studio, modules are also added for the Test and Performance services.
 * Adds application keys to tiapp.xml used to [authenticate](#!/guide/acs_authentication) your application when making ACS method calls.
-Two keys are generatedm one for production use and one for development. The `ti.cloud` module passes
-the correct key with each ACS method call.
 
 Next, you can [import](#ticloud) the `ti.cloud` module and start making ACS method calls. 
 
-### Platform Services SDK for iOS and Android
+### Enable Platform Services SDK for a native iOS or Android application
 
 The Platform Services SDKs provide your native iOS and Android applications with easy access to ACS APIs
 . These SDKs are only available to users with an [Appcelerator Platform](http://www.appcelerator.com/platform) subscription.
@@ -62,7 +55,7 @@ outline the process for enabling Platform Services in a native application:
 3. Configure your existing [Android](http://docs.appcelerator.com/cloud/latest/#!/guide/android-section-enabling-cloud-services-in-a-new-project) or [iOS](http://docs.appcelerator.com/cloud/latest/#!/guide/ios-section-enabling-cloud-services-in-a-new-project)
 to use the SDK.
 
-For details on these steps, see the [Android SDK](#!/guide/android) and [iOS SDK](#!/guide/ios) guides.
+For details on these steps, see the [Android SDK for ACS](#!/guide/android) and [iOS SDK for ACS](#!/guide/ios) guides.
 
 ## Step 2. Use the Appcelerator Cloud Services API in Your App 
 
@@ -74,16 +67,16 @@ and a function callback that's invoked when the method call completes, successfu
 
 For example, the following code defines a simple Alloy application that defines a function named 
 `createUser()` that calls the [Cloud.Users.create](http://docs.appcelerator.com/titanium/latest/#!/api/Titanium.Cloud.Users-method-create)
-method. The method is passed the values entered in [TextField](#) objects defined in the XML view:
+method.
 
 	// app/controllers/index.js
 	var Cloud = require("ti.cloud");
 
 	function createUser(e) {
 		Cloud.Users.create({
-			username : $.user.value,
-			password : $.pass.value,
-			password_confirmation : $.pass_confirm.value
+			username : "user1",
+			password : "pass1",
+			password_confirmation : "pass1"
 		}, function(e) {
 			if (e.success) {
 				alert(e.users[0].username + " is logged in.");
@@ -92,22 +85,10 @@ method. The method is passed the values entered in [TextField](#) objects define
 			}
 		});
 	}
-	$.index.open();
-
-	// app/views/index.xml
-	<Alloy>
-		<NavigationWindow>
-			<Window  class="container" layout="vertical">
-				<TextField id="user" value="tim"></TextField>
-				<TextField id="pass" value="pass"></TextField>
-				<TextField id="pass_confirm" value="pass"></TextField>
-				<Button onClick="doLogin">Login</Button>
-			</Window>
-		</NavigationWindow>
-	</Alloy>
 
 For more examples, see the following:
-* [Titanium SDK](#!/guide/titanium) guide
+
+* [Titanium SDK for ACS](#!/guide/titanium) guide.
 * [Titanium.Cloud](http://docs.appcelerator.com/titanium/latest/#!/api/Titanium.Cloud) module API reference.
 
 ### Calling Cloud Services from an iOS Application
@@ -160,9 +141,9 @@ You can then being using the object methods provided by the SDK, such as [APSUse
 * [Android SDK Guide](#!/guide/android)
 * [Appcelerator Platform Services API Reference for Android](http://docs.appcelerator.com/aps-sdk-apidoc/latest/android/) 
 
-## Step 4. Manage Your App <a name="manage"></a>
+## Step 4. Manage Your Application <a name="manage"></a>
 
-You use a web administration interface to manage your application's data, including users and other objects.
+You use a web administration interface to manage your application's data, including users and other objects. Platform subscribers can refer to the [Managing ACS Data Objects](http://docs.appcelerator.com/platform/latest/#!/guide/Managing_ACS_data_objects) for details on managing specific ACS data types.
 
 **Platform users**:
 
@@ -170,10 +151,15 @@ You use a web administration interface to manage your application's data, includ
 2. Choose an application from the App menu.
 3. From the right-side navigation, select **Cloud > Manage Data**.
 
-See [Managing ACS Data Objects](http://docs.appcelerator.com/platform/latest/#!/guide/Managing_ACS_data_objects) for more information.
+To quickly access the Cloud management page from Appcelerator Studio, click the Details link in the Appcelerator Services section of your project's tiapp.xml file. {@img quicklinks.png}
 
 **Community users**:
 
 1.  In a browser, open [My Apps](https://my.appcelerator.com/apps).
 2.  Locate your application and click **Manage ACS**.
 
+<style>
+	#toc: {
+		max-width: 300px
+	}
+</style>
