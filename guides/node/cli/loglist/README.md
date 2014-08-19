@@ -16,6 +16,10 @@ Note that these fields are only reported for Node.ACS applications that use the
 
 Note that `acs loglist` may not get the latest logs from server immediately. You may need to wait a few seconds. 
 
+Only output written by the application's root process is included in the log
+file; output written by [child processes](#!/guide/node_clustering) forked by the application's root
+process are not included in the log.
+
 For an overview of Node.ACS logging utilities see [Logging Utilities](#!/guide/node_logging-section-logging-utilities).
 
 ## Usage
