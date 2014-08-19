@@ -104,7 +104,7 @@ strings, in ascending order of log detail:
 
 The current log level determines which [log method](#!/guide/node_logging-section-logging-methods) output is included in the log output. 
 For example, if you set the log level to `"WARN"`, only messages logged by
-`logger.fatal()`, `logger.error()`, or `logger./warn()` methods will be included in the log:
+`logger.fatal()`, `logger.error()`, or `logger.warn()` methods will be included in the log:
 
 	logger.setLevel('WARN');
 	logger.warn("WARNING..."); 	// Included in log
@@ -125,7 +125,7 @@ The default log level is `"DEBUG"`, if not specified.
 
 To log a message, call one of the following methods, passing it the string to output. The [logging level](#!/guide/node_logging-section-specifying-application-log-level) must be set to an appropriate level.
 
-* `logger.fatal(<message>)` &mdash; Output only when log level is set to `"FATAL"`, or `"ALL"`.
+* `logger.fatal(<message>)` &mdash; Output only when log level is set to `"FATAL"` or `"ALL"`.
 * `logger.error(<message>)` &mdash; Output only when log level is set to `"FATAL"`, `"ERROR"`, or `"ALL"`.
 * `logger.warn(<message>)` &mdash; Output only when log level is set to `"FATAL"`, `"ERROR"`, `"WARN"`, or `"ALL"`. 
 * `logger.info(<message>)` &mdash; Output only when log level is set to `"FATAL"`, `"ERROR"`, `"WARN"`, `"INFO"`, or `"ALL"` 
