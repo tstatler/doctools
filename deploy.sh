@@ -84,7 +84,6 @@ shift $((OPTIND-1))
 while [ "$1" ]; do
     if [ "$1" == "prod" ]; then
         production_build="production"
-        seo="--seo"
         no_thumbnails=""
     elif [ "$1" == "debug" ]; then
         debug_build="debug"
