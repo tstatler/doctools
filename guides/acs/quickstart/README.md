@@ -11,7 +11,7 @@ To manage your application and it's data&mdash;for example, to create or edit {@
 ([Platform](http://www.appcelerator.com/platform/appcelerator-platform/) users) 
 or the [My Apps](https://my.appcelerator.com/apps) web console (community developers).
 
-This guide explains the basic steps you need to take to enable and use ACS in your application in your Titanium application, or native iOS or Android application.
+This guide explains the basic steps to enable and use ACS in your Titanium application, native iOS application, or native Android application.
 
 ## Step 1: Enable Platform or Cloud Services
 
@@ -34,7 +34,7 @@ in the Appcelerator Services section. {@img studio-enable-existing.png}
 
 Enabling Platform/Cloud Services has the following affects:
 
-* Creates a new ACS Cloud application that you can [manage](#!/guide/acs_quickstart-section-step-4-manage-your-application-) using Appcelerator Dashboard
+* Creates a new ACS Cloud application that you can [manage](#!/guide/acs_quickstart-section-step-3-manage-your-application-) using Appcelerator Dashboard
 or My Apps.
 * Adds the `ti.cloud` module to your tiapp.xml; for Appcelerator Studio, modules are also added for the Test and Performance services.
 * Adds application keys to tiapp.xml used to [authenticate](#!/guide/acs_authentication) your application when making ACS method calls.
