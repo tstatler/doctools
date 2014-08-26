@@ -80,36 +80,35 @@ methods:
 
                 {
                   "meta": {
-                    "status":"ok",
-                    "code":200,
-                    "method_name":"showUsers"
+                    "code": 200,
+                    "status": "ok",
+                    "method_name": "showUsers"
                   },
                   "response": {
                     "users": [
                       {
-                        "id":"4d6e77386f70950c89000001",
-                        "first_name":"Michael",
-                        "last_name":"Goff",
-                        "created_at":"2011-03-02T16:58:32+0000",
-                        "updated_at":"2011-03-02T17:18:44+0000",
-                        "photo": {
-                          "id":"4dcf0cefd0afbe017a000061",
-                          "filename":"photo.jpg",
-                          "size":584344,
-                          "md5":"589b8ad43ed20bf8e622d719642bc939",
-                          "created_at":"2011-05-14T23:14:55+0000",
-                          "updated_at":"2011-05-14T23:15:05+0000",
-                          "processed":true,
-                          "content_type":"image/jpeg",
-                          "urls": {
-                            "square_75":"http://storage.appcelerator.com/4dc5d024d0afbe0aec000011/photos/4dcf0cefd0afbe017a000061/photo_square_75.jpg",
-                            "thumb_100":"http://storage.appcelerator.com/4dc5d024d0afbe0aec000011/photos/4dcf0cefd0afbe017a000061/photo_thumb_100.jpg",
-                            "small_240":"http://storage.appcelerator.com/4dc5d024d0afbe0aec000011/photos/4dcf0cefd0afbe017a000061/photo_small_240.jpg",
-                            "medium_500":"http://storage.appcelerator.com/4dc5d024d0afbe0aec000011/photos/4dcf0cefd0afbe017a000061/photo_medium_500.jpg",
-                            "medium_640":"http://storage.appcelerator.com/4dc5d024d0afbe0aec000011/photos/4dcf0cefd0afbe017a000061/photo_medium_640.jpg",
-                            "large_1024":"http://storage.appcelerator.com/4dc5d024d0afbe0aec000011/photos/4dcf0cefd0afbe017a000061/photo_large_1024.jpg",
-                            "original":"http://storage.appcelerator.com/4dc5d024d0afbe0aec000011/photos/4dcf0cefd0afbe017a000061/photo_original.jpg"
+                        "id": "53fbb057c3aafa087a000400",
+                        "first_name": "Victor",
+                        "last_name": "Stone",
+                        "created_at": "2014-08-25T21:53:27+0000",
+                        "updated_at": "2014-08-26T18:43:22+0000",
+                        "external_accounts": [
+
+                        ],
+                        "confirmed_at": "2014-08-25T21:53:27+0000",
+                        "username": "cyborg",
+                        "admin": "false",
+                        "stats": {
+                          "photos": {
+                            "total_count": 0
+                          },
+                          "storage": {
+                            "used": 0
                           }
+                        },
+                        "friend_counts": {
+                          "requests": 1,
+                          "friends": 0
                         }
                       }
                     ]

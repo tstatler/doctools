@@ -12,7 +12,7 @@ methods:
         [admin access](#!/guide/admin_access).
 
         For advanced custom search, see {@link Users#query query}.
-    url: users/search.json `
+    url: users/search.json
 
     parameters:
       - name: page
@@ -88,11 +88,29 @@ methods:
                   "response": {
                     "users": [
                       {
-                            "id":"4d981fa16f70956e6c000009",
-                            "first_name":"John",
-                            "last_name":"Smith",
-                            "created_at":"2011-04-03T07:20:01+0000",
-                            "updated_at":"2011-04-03T07:20:01+0000"
+                        "id": "53fbb057c3aafa087a000400",
+                        "first_name": "Roy",
+                        "last_name": "Harper",
+                        "created_at": "2014-08-25T21:53:27+0000",
+                        "updated_at": "2014-08-26T18:43:22+0000",
+                        "external_accounts": [
+
+                        ],
+                        "confirmed_at": "2014-08-25T21:53:27+0000",
+                        "username": "speedy",
+                        "admin": "false",
+                        "stats": {
+                          "photos": {
+                            "total_count": 0
+                          },
+                          "storage": {
+                            "used": 0
+                          }
+                        },
+                        "friend_counts": {
+                          "requests": 1,
+                          "friends": 0
+                        }
                       }
                     ]
                   }

@@ -42,6 +42,10 @@ fields:
     description: User's role.
     type: String
 
+  - name: admin
+    description: Set to true if the user is an application admin.
+    type: Boolean
+
   - name: external_accounts
     description: |
         List of external accounts associated with this user. Each account is represented
@@ -68,4 +72,12 @@ fields:
     description: Last update time for this user object.
     type: Date
 
+  - name: friend_counts
+    description: |
+        Dictionary describing the number of friends the user has.  Possible keys returned are:
 
+          * `requests`: number of pending friend requests.
+          * `friends`: number of friends if two-way friendship is enabled.
+          * `following`: number of friends being followed by the user if one-way friendship is enabled.
+          * `follows`: number of friends following the user if one-way friend is enabled.
+    type: Hash
