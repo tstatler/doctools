@@ -1,76 +1,167 @@
 # Getting Started: QuickStart Guide
 
-## Step 1. Register Your App with Appcelerator Cloud Services
+Appcelerator Cloud Services provides a set of REST APIs for for creating, managing, and
+accessing different types of data in your application, such as
+{@link Users}, {@link Places}, and {@link Photos} over HTTP or HTTPS. You can integrate ACS into 
+your application using the [Titanium](#!/guide/titanium), [iOS](#!/guide/ios) or [Android](#!/guide/android) SDKs, or by calling the
+[REST APIs](#!/guide/rest) directly.
 
-Using the Appcelerator Cloud Services API to store and retrieve data for your
-app is easy. 
+To manage your application and it's data&mdash;for example, to create or edit {@link Users} or manage 
+{@link Photos}&mdash;you use [Appcelerator Dashboard](https://dashboard.appcelerator.com) 
+([Platform](http://www.appcelerator.com/platform/appcelerator-platform/) users) 
+or the [My Apps](https://my.appcelerator.com/apps) web console (community developers).
 
-If you are using the community versions of Studio, you can add ACS 
-to an existing Titanium app by opening the `tiapp.xml` file and enabling
-cloud services. In Titanium Studio:
+This guide explains the basic steps to enable and use ACS in your Titanium application, native iOS application, or native Android application.
 
-*   Click **Enable Cloud Services**.
+## Step 1: Enable Platform or Cloud Services
 
-In Appcelerator Studio:
+### Enabling Platform or Cloud Services in an Appcelerator or Titanium Studio
 
-*   In the **Appcelerator Services** section, click **Enable**.
+You use the [Titanium.Cloud](http://docs.appcelerator.com/titanium/latest/#!/api/Titanium.Cloud) module, 
+which is included with the Titanium SDK. To include the module in your application, and automatically create a corresponding Cloud application on ACS, you just need to enable Appcelerator Services in your Studio project's
+tiapp.xml file. The specific steps depend on whether you are using Appcelerator Studio (available to Platform subscribers) or Titanium Studio.
 
-Enabling cloud services in Studio creates a new Cloud application and adds its URL and
-credentials to the Titanium project.
+**To enable Platform Services in Appcelerator Studio**:
 
-First, create a cloud app on the [My Apps page](https://my.appcelerator.com/apps). 
-Click **Create a New Cloud App** and specify the app
-name and description. A unique OAuth Consumer Key, OAuth Secret, and App Key
-will be automatically generated and assigned to the app. 
+* When creating a new project, in the new Mobile App Project dialog, select the organization the application belongs to, and click **Enable Appcelerator Platform Services**. {@img studio-enable-new.png}
+* For an existing project, open the project's tiapp.xml file and click **Enable Services** 
+in the Appcelerator Services section. {@img studio-enable-existing.png}
 
-## Step 2. Use the Appcelerator Cloud Services API in Your App
+**To enable Cloud Services in Titanium Studio**:
 
-Appcelerator Cloud Services provides methods for creating, managing, and
-accessing different types of data in your app, such as
-{@link Users}, {@link Places}, and {@link Photos} over HTTP or HTTPS. 
+* If you are creating a new project, click **Cloud-enable this Application** in the new Project dialog.
+* For an existing project Titanium project, open your project's tiapp.xml file and click **Enable...** in the Cloud Services section to generate the required application keys. You will also need to manually add the application keys to your tiapp.xml file. See [Adding an Existing ACS application to a Titanium project](http://docs.appcelerator.com/cloud/latest/#!/guide/titanium-section-adding-an-existing-acs-application-to-a-titanium-project).
 
-You can integrate ACS into your application using the REST API, the Titanium SDK, 
-or the ACS native iOS and Android SDKs.
+Enabling Platform/Cloud Services has the following affects:
 
-Check out the [REST API](#!/guide/rest), 
-[Titanium SDK](#!/guide/titanium), [iOS SDK](#!/guide/ios),
-and [Android SDK](#!/guide/android) documentation to help you get
-started.  
-  
-The [iOS SDK]( https://github.com/cocoafish/cocoafish-ios-sdk) comes with a
-sample app. Open `samples/DemoApp/Demo.xcodeproj` in XCode, fill in your App
-key DemoDelegate.m, then build and run the demo app. This gives you a basic
-checkin app showing the place you added in the previous step.
+* Creates a new ACS Cloud application that you can [manage](#!/guide/acs_quickstart-section-step-3-manage-your-application-) using Appcelerator Dashboard
+or My Apps.
+* Adds the `ti.cloud` module to your tiapp.xml; for Appcelerator Studio, modules are also added for the Test and Performance services.
+* Adds application keys to tiapp.xml used to [authenticate](#!/guide/acs_authentication) your application when making ACS method calls.
 
-## Step 3. Authentication
+Next, you can the import the [ti.cloud](http://docs.appcelerator.com/titanium/latest/#!/api/Titanium.Cloud) module and [start making ACS method calls](#!/guide/acs_quickstart-section-calling-cloud-services-from-a-titanium-application-). 
 
-Your app must prove that it is allowed to talk to Appcelerator Cloud Services.
-This keeps your data secure by preventing anyone from making requests to
-Appcelerator Cloud Services that impersonate your app. The App Key must be
-used in all API calls made from your app to Appcelerator Cloud Services. See
-[Authentication](#!/guide/acs_authentication) for more details about adding and using
-authentication in your app.
+### Enable Platform Services SDK for a native iOS or Android application
 
-## Step 4. Manage Your App
+The Platform Services SDKs provide your native iOS and Android applications with easy access to ACS APIs
+. These SDKs are only available to users with an [Appcelerator Platform](http://www.appcelerator.com/platform) subscription.
 
-You can use the web administration interface to add data to ACS, as well as manage users and objects.
+The following steps, covered in detail in the [Android SDK](#!/guide/android) and [iOS SDK](#!/guide/ios) guides, 
+outline the process for enabling Platform Services in a native application:
 
-Community users can manage their ACS applications using _my.appcelerator.com_:
+1. In [Appcelerator Dashboard](https://dashboard.appcelerator.com), create a new Native Application for iOS or Android. {@img native.png} 
+2. Download the Android or iOS SDK and obtain your application service key. You will paste this key 
+	into the code of your iOS or Android project. {@img download.png}
+3. Configure your existing [Android](http://docs.appcelerator.com/cloud/latest/#!/guide/android-section-enabling-cloud-services-in-a-new-project) or [iOS](http://docs.appcelerator.com/cloud/latest/#!/guide/ios-section-enabling-cloud-services-in-a-new-project)
+to use the SDK.
 
-1.  In a browser, open the My Apps page:
+For details on these steps, see the [Android SDK for ACS](#!/guide/android) and [iOS SDK for ACS](#!/guide/ios) guides.
 
-    [_my.appcelerator.com/apps_](https://my.appcelerator.com/apps)
+Next, you can start making ACS method calls in your [iOS](#!/guide/acs_quickstart-section-calling-cloud-services-from-an-ios-application) or [Android](#!/guide/acs_quickstart-section-calling-cloud-services-from-an-android-application) . 
 
+## Step 2. Use the Appcelerator Cloud Services API in Your App 
+
+### Calling Cloud Services from a Titanium Application <a name="ticloud"></a>
+
+To use the ACS APIs in your Titanium application, you import the `ti.cloud` module and then begin calling
+its methods. Each method takes two parameters: an object containing parameters to pass, and a 
+function callback that's invoked when the method call completes, successfully or otherwise.
+
+For example, the following code defines a simple Alloy application that defines a function named 
+`createUser()` that calls the [Cloud.Users.create](http://docs.appcelerator.com/titanium/latest/#!/api/Titanium.Cloud.Users-method-create)
+method.
+
+	// app/controllers/index.js
+	var Cloud = require("ti.cloud");
+
+	function createUser(e) {
+		Cloud.Users.create({
+			username : "user1",
+			password : "pass1",
+			password_confirmation : "pass1"
+		}, function(e) {
+			if (e.success) {
+				alert(e.users[0].username + " is logged in.");
+			} else {
+				alert("Error: " + e.message);
+			}
+		});
+	}
+
+For more examples, see the following:
+
+* [Titanium SDK for ACS](#!/guide/titanium) guide.
+* [Titanium.Cloud](http://docs.appcelerator.com/titanium/latest/#!/api/Titanium.Cloud) module API reference.
+
+### Calling Cloud Services from an iOS Application
+
+Enabling Cloud Services in your iOS application, minimally, involves the following:
+
+* Importing the `Appcelerator/Appcelerator.h` header file 
+* Calling the [enableWithAppKey](http://docs.appcelerator.com/aps-sdk-apidoc/latest/ios/Classes/APSServiceManager.html#//api/name/enableWithAppKey:) method of the [APSServiceManager](http://docs.appcelerator.com/aps-sdk-apidoc/latest/ios/Classes/APSServiceManager.html) class,
+passing it the service key generated by Dashboard. 
+
+These steps are  typically done at start-up in the application delegate's `didFinishLaunchingWithOptions`
+method:
+
+	#import <Appcelerator/Appcelerator.h>
+
+	@implementation AppDelegate
+	- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+	{
+	    NSString *appKey = @"<< YOUR APP KEY >>";
+	    [[APSServiceManager sharedInstance] enableWithAppKey:appKey];
+	}
+
+You can then begin using the object methods provided by the SDK, such as [\[APSUsers create:withBlock\]](http://docs.appcelerator.com/aps-sdk-apidoc/latest/ios/Classes/APSUsers.html#//api/name/create:withBlock:). For more code examples, see the following:
+
+* [iOS SDK Guide](#!/guide/ios)
+* [Appcelerator Platform Services API Reference for iOS](http://docs.appcelerator.com/aps-sdk-apidoc/latest/ios/) 
+
+### Calling Cloud Services from an Android Application
+
+Enabling Cloud Services in your Android application, minimally, involves the following:
+
+* Importing the `com.appcelerator.aps.APSServiceManager` class. 
+* Calling the [enable()](http://docs.appcelerator.com/aps-sdk-apidoc/latest/android/com/appcelerator/aps/APSServiceManager.html#enable(android.content.Context%2C%20java.lang.String) method of the [APSServiceManager](http://docs.appcelerator.com/aps-sdk-apidoc/latest/android/com/appcelerator/aps/APSServiceManager.html) class,
+passing it the service key generated by Dashboard. 
+
+These steps are typically done at start-up in the main activity:
+
+	import com.appcelerator.aps.APSServiceManager;
+
+	public class MainActivity extends Activity {
+		try {
+			APSServiceManager.getInstance().enable(getApplicationContext(), "<< YOUR APP KEY >>");
+		} catch (RuntimeException e) {
+			// Handle exception
+		}
+	}
+
+You can then begin using the object methods provided by the SDK, such as [APSUsers.create()](http://docs.appcelerator.com/aps-sdk-apidoc/latest/android/com/appcelerator/aps/APSUsers.html#create(java.util.Map%2C%20com.appcelerator.aps.APSResponseHandler). For more code examples, see the following:
+
+* [Android SDK Guide](#!/guide/android)
+* [Appcelerator Platform Services API Reference for Android](http://docs.appcelerator.com/aps-sdk-apidoc/latest/android/) 
+
+## Step 3. Manage Your Application <a name="manage"></a>
+
+You use a web administration interface to manage your application's data, including users and other objects. Platform subscribers can refer to the [Managing ACS Data Objects](http://docs.appcelerator.com/platform/latest/#!/guide/Managing_ACS_data_objects) for details on managing specific ACS data types.
+
+**Platform users**:
+
+1. In a browser, open [Appcelerator Dashboard](https://dashboard.appcelerator.com).
+2. Choose an application from the App menu.
+3. From the right-side navigation, select **Cloud > Manage Data**.
+
+To quickly access the Cloud management page from Appcelerator Studio, click the Details link in the Appcelerator Services section of your project's tiapp.xml file. {@img quicklinks.png}
+
+**Community users**:
+
+1.  In a browser, open [My Apps](https://my.appcelerator.com/apps).
 2.  Locate your application and click **Manage ACS**.
 
-Enterprise users can manage their ACS applications using _dashboard.appcelerator.com_:
-
-1.  In a browser, open the Appcelerator Dashboard:
-
-    [_dashboard.appcelerator.com_](https://dashboard.appcelerator.com)
-
-2.  Choose an application from the application list and click the **Cloud** tab.
-
-As an administrator, you can see all of the users who are registered for
-your application, examine modify and delete ACS objects, and so on.
-
+<style>
+	#toc: {
+		max-width: 300px
+	}
+</style>
