@@ -7,7 +7,7 @@ rm -rf $outdir
 mkdir -p $outdir
 cd $TI_ROOT/doctools
 rm -rf $outdir
-sh deploy.sh -o alloy -o modules -g htmlguides -d $outdir prod -s
+sh deploy.sh -o alloy -o modules -g htmlguides -d $outdir prod
 rm -rf ~/Sites/titanium/3.0
 rm -rf ~/Sites/titanium/landing
 cp -rf $outdir ~/Sites/titanium/3.0
