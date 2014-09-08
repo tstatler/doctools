@@ -99,6 +99,8 @@ methods:
       - type: Boolean
 
   - name: getNotificationTitle
+    deprecated:
+        since: "3.3.0"
     summary: |
         Returns a string consisting of the notification title. If not available, returns an empty string.
     platforms: [android]
