@@ -46,7 +46,7 @@ function repo_update {
     fi
 }
 
-#repo_update jsduck $JSDUCK_DIR upstream master
+repo_update jsduck $JSDUCK_DIR upstream master
 repo_update titanium_mobile $TI_DIR upstream 3_4_X
 repo_update alloy $ALLOY_DIR upstream 1_5_X
 repo_update titanium_modules $MOD_DIR origin master
