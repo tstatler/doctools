@@ -164,29 +164,30 @@ command and compare the user IDs:
     }
 
 
-## Admin Batch Delete
+## Batch Delete
 
-Admin Batch Delete allow admin users to delete multiple ACS objects in one
-delete operation. ACS provides an API end point named
-`admin_batch_delete` for application admin users. When calling the `admin_batch_delete`
-method, the admin user provides a query condition to select the objects to
-delete. The query condition is provided by passing the `where` parameter. If
-`where` is omitted, all objects are deleted.  
+ACS provides an API end point named `batch_delete` that allows application
+admins to delete multiple ACS objects in one operation. The method takes a
+`where` parameter that constrains the selection of objects to delete. If `where`
+is omitted, all objects are deleted. For performance reasons, the number of
+objects that can be deleted in a single batch delete operation is limited to
+100,000.
   
-For example:
+For example, the following deletes all Users objects whose `favorite_color` custom field is
+'blue'.
     
-     $curl -b cookies.txt -c cookies.txt -X DELETE -F "where={\"favorite_color\":\"blue\"}" https://api.cloud.appcelerator.com/v1/users/admin_batch_delete.json?key=xBzAKXWFl36S4MAD7KNt2jw30EKM4Kxn 	
+     $curl -b cookies.txt -c cookies.txt -X DELETE -F "where={\"favorite_color\":\"blue\"}" https://api.cloud.appcelerator.com/v1/users/batch_delete.json?key<API_KEY>&pretty_json=true 	
      {
       "meta": {
         "status": "ok",
         "code": 200,
         "method_name": "adminBatchDelete"
       }
-    }
-     
+    }     
 
-The following ACS objects allow admins to perform batch
-delete operations:
+Note that the method returns an HTTP 200 code (success) even if the query matched no objects.
+
+The following ACS objects support batch delete operations:
 
   * {@link Checkins}
   * {@link PhotoCollections}
@@ -207,7 +208,7 @@ An application admin user can also drop a Custom Object collection using
 `admin_drop_collection` method. When calling the `admin_drop_collection` method, 
 the admin user must specify a class name to indicate which custom collection to drop.  
   
-For example:
+For example, the following drops the `car` collection:
 
     $ curl -b c.txt -c c.txt -X DELETE "https://api.cloud.appcelerator.com/v1/objects/car/admin_drop_collection.json?key=hPkMYgNozXR8xegNvWjqBVTcWK8P5fIX"
     {
@@ -218,6 +219,6 @@ For example:
       }
     }
      
-The above example drops a car collection. Only Custom Objects support the drop
-custom collection method.
+
+Only Custom Objects support the drop custom collection method.
 

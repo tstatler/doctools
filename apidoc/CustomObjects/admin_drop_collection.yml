@@ -1,0 +1,42 @@
+name: CustomObjects
+methods:
+  - name: admin_drop_collection
+    summary:  Drops a CustomObjects collection. 
+    description: Drops a CustomObjects collection of a specified type.
+    url: objects/admin_drop_collection.json
+    http-method: DELETE
+    login-required: true
+    admin-required: true    
+
+    examples:
+      - platform: titanium
+        example: |
+            Use the [Titanium.Cloud.sendRequest()](http://docs.appcelerator.com/titanium/latest/#!/api/Titanium.Cloud-method-sendRequest)
+            method to invoke this REST API directly.
+
+      - platform: rest
+        example: |
+            Example cURL request that drops the CustomObjects collection of type `car`:
+
+                $ curl -b c.txt -c c.txt -X DELETE "https://api.cloud.appcelerator.com/v1/objects/car/admin_drop_collection.json?key=<API_KEY>&pretty_json=true"
+
+            Example JSON response:
+
+                {
+                  "meta": {
+                    "status": "ok",
+                    "code": 200,
+                    "method_name": "dropCollection"
+                  }
+                }
+
+      - platform: ios
+        example: |
+            Use the \[[APSCloud sendRequest](http://docs.appcelerator.com/aps-sdk-apidoc/latest/ios/Classes/APSCloud.html#//api/name/sendRequest:method:data:handler:)\]
+            method to invoke this REST API directly.
+
+      - platform: android
+        example: |
+            Use the [APSCloud.sendRequest()](http://docs.appcelerator.com/aps-sdk-apidoc/latest/android/com/appcelerator/aps/APSCloud.html#sendRequest%28java.lang.String,java.lang.String, java.util.Map, com.appcelerator.aps.APSResponseHandler%29)
+            method to invoke this REST API directly.
+
