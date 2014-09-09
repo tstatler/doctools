@@ -143,8 +143,22 @@ Here is a list of available commands and brief description for each of them:
 
 ## Login with Appcelerator Credentials
 
-It is important to have a user login session on your dev. environment since
-most of the commands are about modifing your Node.ACS applications, so do a
-user login before doing anything is recommended. User login can be done by
-using [login](#!/guide/node_cli_login) command.
+Most ACS commands require that you have a valid login session to execute them
+([add](#!/guide/node_cli_add) and [run](#!/guide/node_cli_run) are the exceptions). Use the
+[login](#!/guide/node_cli_login) command to login at anytime. 
 
+If you don't have a current session when running a command that requires it, the
+CLI will prompt you to login and, if successful, run the requested command. For
+instance, in the following example the `acs publish` command was executed without a current
+login session, so the user is prompted to login.
+
+    $ acs publish
+    ACS: Appcelerator Cloud Services Command-Line Interface, version 1.0.16
+    Copyright (c) 2012-2014, Appcelerator, Inc.  All Rights Reserved.
+
+    Login required!
+    host (https://admin.cloudapp.appcelerator.com): <enter for default>
+    username: nobody@appcelerator.com
+    password: ********  
+    Welcome back, Nobody! You are now logged in.
+    Preparing application for publish... \
