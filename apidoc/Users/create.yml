@@ -125,9 +125,11 @@ methods:
             When a user visits the above URL, you call the ACS `users/confirm_user.json` method to 
             confirm the user internally from your web server:
 
-                 GET https://api.cloud.appcelerator.com/v1/users/confirm_user.json?confirmation_token={{confirmation_token}}&key=<Your App Key>&ct=enterprise
+                 GET https://api.cloud.appcelerator.com/v1/users/confirm_user.json?confirmation_token={{confirmation_token}}&key=<Your App Key>
 
-            Note that the URL must include the query parameter `&ct=enterprise`.
+            **Enterprise users** must append the query parameter `&ct=enterprise` to the end of the URL:
+            
+                 GET https://api.cloud.appcelerator.com/v1/users/confirm_user.json?confirmation_token={{confirmation_token}}&key=<Your App Key>&ct=enterprise
 
         type: String
 
