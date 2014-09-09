@@ -1,0 +1,60 @@
+name: Reviews
+methods:
+  - name: batch_delete
+    summary: Deletes multiple Reviews objects.
+    description: | 
+        Deletes Reviews objects that match the query constraints provided in the `where` parameter.
+        If no `where` parameter is provided, all Reviews objects are deleted. 
+        Note that an HTTP 200 code (success)
+        is returned if the call completed successfully but the query matched no objects.
+
+        For performance reasons, the number of objects that can be deleted in a single batch delete 
+        operation is limited to 100,000.
+
+        You must be an application admin to run this command.        
+
+    url: reviews/batch_delete.json
+    http-method: DELETE
+    login-required: true
+    admin-required: true    
+
+    parameters:
+
+      - name: where
+        description: |
+            Encoded JSON object that specifies constraint values for Reviews objects to delete.
+            If not specified, all Reviews objects are deleted.
+        type: Hash            
+
+    examples:
+      - platform: titanium
+        example: |
+            Use the [Titanium.Cloud.sendRequest()](http://docs.appcelerator.com/titanium/latest/#!/api/Titanium.Cloud-method-sendRequest)
+            method to invoke this REST API directly.
+
+      - platform: rest
+        example: |
+            Example cURL request:
+
+                $ curl -b cookies.txt -c cookies.txt -X DELETE -F "where={\"favorite_color\":\"blue\"}" https://api.cloud.appcelerator.com/v1/reviews/batch_delete.json?key=<API_KEY>&pretty_json=true                 
+
+            Example JSON response:
+
+                {
+                  "meta": {
+                    "status": "ok",
+                    "code": 200,
+                    "method_name": "batchDelete"
+                  }
+                }
+
+
+      - platform: ios
+        example: |
+            Use the \[[APSCloud sendRequest](http://docs.appcelerator.com/aps-sdk-apidoc/latest/ios/Classes/APSCloud.html#//api/name/sendRequest:method:data:handler:)\]
+            method to invoke this REST API directly.
+
+      - platform: android
+        example: |
+            Use the [APSCloud.sendRequest()](http://docs.appcelerator.com/aps-sdk-apidoc/latest/android/com/appcelerator/aps/APSCloud.html#sendRequest%28java.lang.String,java.lang.String, java.util.Map, com.appcelerator.aps.APSResponseHandler%29)
+            method to invoke this REST API directly.
