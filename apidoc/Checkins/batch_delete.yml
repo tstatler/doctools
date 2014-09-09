@@ -9,6 +9,8 @@ methods:
 
         For performance reasons, the number of objects that can be deleted in a single batch delete 
         operation is limited to 100,000.
+
+        You must be an application admin to run this command.        
         
     url: checkins/batch_delete.json
     http-method: DELETE
@@ -44,8 +46,6 @@ methods:
                     "method_name": "batchDelete"
                   }
                 }
-
-            **Note**:                 
 
       - platform: ios
         example: |

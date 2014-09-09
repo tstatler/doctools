@@ -11,7 +11,7 @@ methods:
         For performance reasons, the number of objects that can be deleted in a single batch delete 
         operation is limited to 100,000.        
 
-    url: objects/batch_delete.json
+    url: objects/:classname/batch_delete.json
     http-method: DELETE
     login-required: true
     admin-required: true   
@@ -22,7 +22,15 @@ methods:
         description: |
             Encoded JSON object that specifies constraint values for CustomObjects objects to delete.
             If not specified, all CustomObjects objects are deleted.
-        type: Hash            
+        type: Hash 
+
+      - name: classname
+        description: |
+            Type of custom object. Specified as part of the URL path, not in the
+            parameters.
+        type: String
+        required: true
+
 
     examples:
       - platform: titanium
@@ -34,7 +42,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt -X DELETE -F "where={\"favorite_color\":\"blue\"}" https://api.cloud.appcelerator.com/v1/objects/batch_delete.json?key=<API_KEY>&pretty_json=true                 
+                $ curl -b cookies.txt -c cookies.txt -X DELETE -F "where={\"favorite_color\":\"blue\"}" https://api.cloud.appcelerator.com/v1/objects/car/batch_delete.json?key=<API_KEY>&pretty_json=true                 
 
             Example JSON response:
 
@@ -46,7 +54,6 @@ methods:
                   }
                 }
 
-            **Note**:                 
 
       - platform: ios
         example: |

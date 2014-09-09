@@ -2,11 +2,24 @@ name: CustomObjects
 methods:
   - name: admin_drop_collection
     summary:  Drops a CustomObjects collection. 
-    description: Drops a CustomObjects collection of a specified type.
-    url: objects/admin_drop_collection.json
+    description: | 
+        Drops a CustomObjects collection of a specified type.
+
+        You must be an application admin to run this command.        
+
+    url: objects/:classname/admin_drop_collection.json
     http-method: DELETE
     login-required: true
     admin-required: true    
+
+    parameters:
+
+      - name: classname
+        description: |
+            Type of custom object. Specified as part of the URL path, not in the
+            parameters.
+        type: String
+        required: true
 
     examples:
       - platform: titanium
