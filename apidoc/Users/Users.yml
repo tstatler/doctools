@@ -79,5 +79,5 @@ fields:
           * `requests`: number of pending friend requests.
           * `friends`: number of friends if two-way friendship is enabled.
           * `following`: number of friends being followed by the user if one-way friendship is enabled.
-          * `follows`: number of friends following the user if one-way friend is enabled.
+          * `follows`: number of friends following the user if one-way friendship is enabled.
     type: Hash
