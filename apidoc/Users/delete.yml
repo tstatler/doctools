@@ -3,8 +3,13 @@ methods:
   - name: delete
     summary: Delete User
     description:  |
-        User must already be logged in to his account in order to delete it. If the
-        user has a profile photo it will also be deleted.
+        A user must already be logged in to their account to delete it. Any {@link Friends}-related
+        data and push notification subscriptions associated with the user are also deleted.
+
+        The user's associated {@link #photo primary photo} is not deleted.
+
+        The Users object and related data is deleted asynchronously in a separate process.
+
     url: users/delete
     http-method: DELETE
     login-required: true

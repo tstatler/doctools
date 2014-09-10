@@ -1,6 +1,7 @@
 name: PhotoCollections
 description: |
     The PhotoCollections object represents a collection of photos. Collections can be nested.
+
 fields:
 
   - name: counts

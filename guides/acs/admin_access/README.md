@@ -172,6 +172,8 @@ admins to delete multiple ACS objects in one operation. The method takes a
 is omitted, all objects are deleted. For performance reasons, the number of
 objects that can be deleted in a single batch delete operation is limited to
 100,000.
+
+
   
 For example, the following deletes all Users objects whose `favorite_color` custom field is
 'blue'.
@@ -200,6 +202,16 @@ The following ACS objects support batch delete operations:
   * {@link Reviews}
   * {@link Statuses}
   * {@link Users}
+
+Certain ACS objects can have dependencies on other objects. For example, when
+you create a `{@link Checkins#create Checkins}` object you can specify a {@link
+Places} or {@link Events} object to associate with it. In this case, the
+Checkins object is a dependency of the Places or Events object. If you delete
+the Places or Events object, the dependent Checkins object is **not** deleted.
+
+<p class="note">Prior to ACS release 1.1.5, when you deleted an object its dependencies 
+were also deleted.</p>
+
 
 
 ## Admin Drop Custom Collection

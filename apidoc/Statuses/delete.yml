@@ -4,6 +4,7 @@ methods:
     summary: Delete a Status
     description: |
         Deletes a status for the currenty logged in user.
+        The associated {@link #event Event}, {@link #photo Photo}, or {@link #place Place} is not deleted.           
     url: statuses/delete.json
     http-method: DELETE
     login-required: true

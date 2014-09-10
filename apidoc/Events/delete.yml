@@ -6,6 +6,8 @@ methods:
         Delete the event with the given `id`. Only the original submitter can delete
         the event.
 
+        The {@link #place Place} or {@link #event Event} associated with the object is not deleted.        
+
         Application Admin can delete any Event object.
     url: events/delete.json
     http-method: DELETE

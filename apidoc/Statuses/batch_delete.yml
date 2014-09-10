@@ -11,6 +11,10 @@ methods:
         For performance reasons, the number of objects that can be deleted in a single batch delete 
         operation is limited to 100,000.
 
+        The matched objects are deleted asynchronously in a separate process. The associated 
+        {@link #event Event}, {@link #photo Photo}, or {@link #place Place} of each matched object 
+        is not deleted.   
+        
         You must be an application admin to run this command.
         
     url: statuses/batch_delete.json

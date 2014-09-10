@@ -4,9 +4,12 @@ methods:
     summary: Delete a Checkin
 
     description: |
-        Deletes a checkin.
+        Deletes a checkin. The object is deleted asynchronously in a separate process.
 
-        An application admin can delete any Checkin object.
+        The {@link #place Place}, {@link #event Event}, or {@link #photo Photo} associated with the checkin
+        is not deleted.
+
+        An application admin can delete any Checkin object. 
 
     url: checkins/delete.json
     http-method: DELETE

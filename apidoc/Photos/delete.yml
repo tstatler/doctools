@@ -4,7 +4,8 @@ methods:
     summary: Delete a Photo
 
     description: |
-        Deletes a photo to which you have update access.
+        Deletes a photo to which you have update access. The object is deleted asynchronously in 
+        a separate process.        
 
         An application admin can delete any photo object.
 
