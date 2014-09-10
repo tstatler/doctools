@@ -121,9 +121,6 @@ For example, to launch the foo module:
       "start": "foo"
     }
 
-To access the port number provided to the application, use the `process.env.PORT` variable in your
-JavaScript code.
-
 ## version
 
 **Required.**
