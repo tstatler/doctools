@@ -8,8 +8,6 @@ methods:
 
         The user's associated {@link #photo primary photo} is not deleted.
 
-        The Users object and related data is deleted asynchronously in a separate process.
-
     url: users/delete
     http-method: DELETE
     login-required: true

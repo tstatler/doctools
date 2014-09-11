@@ -5,7 +5,7 @@ methods:
 
     description: |
         Delete an empty collection. An error will be returned if a collection contains
-        any photos or subcollections. The object is deleted asynchronously in a separate process.
+        any photos or subcollections.
 
         An application admin can delete any photo collection. The {@link #cover_photo} associated 
         with the collection is not deleted.

@@ -9,8 +9,6 @@ methods:
         *   A user with write priviledges granted by the file's ACL
         *   An application admin
 
-        The object is deleted asynchronously in a separate process.
-
     url: files/delete.json
     http-method: DELETE
     login-required: true
