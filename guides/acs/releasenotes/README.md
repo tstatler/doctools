@@ -7,20 +7,26 @@ new features and bug fixes.
 
 ### New Features and Behavior Changes
 
-* ACS queries are now limited to 5000 results. 
-* Supported added for authenticated npm installs from private npm registries.
-* `batch_delete` of ACS objects is now asynchronous. 
+* Starting with ACS 1.1.5, a new paging mechanism has been introduced for ACS
+  queries, and queries are now limited to 5000 results. For more information,
+    see the [Search and Query APIs](#!/guide/search_query) guide for details.
+* [Batch delete](#!/guide/admin_access-section-admin-batch-delete) of ACS
+  objects is now performed asynchronously in a separate process, rather than
+  immediately on method invocation.
+* When an object is deleted that has dependencies, the primary object is deleted but not its dependencies. 
+  For instance, if you delete a Users object that had a Photos object specified as the user's primary photo,
+  the corresponding Photos object is not deleted. 
 * Wildcard regular expressions are now not allowed in [query operations](#!/guide/search_query). For
   example, the ACS query `where="color": {"$regex" :"^.*b"}` will result in the following error: 
 
         This regex query is not supported, regex expression should start with ^letter or ^digit.
+* When [creating an ACL](#!/api/ACLs) the `public_read` and `public_write` parameters must now be strings.
+* The CustomObjects [`count`](#) method has been modified to include the object type in the request (`objects/<object>/count.json`, for example), and only returns the count for the specified type.
 
 ### Bug Fixes
 
-* public_read/write need to be strings
-* Found an issue that subscribe_token does not increment the app's objects count.
-* 
-
+* Fixed an issue where subscribing a device using the `subscribe_token` method
+  did not increment the application's push notifications count.
 
 ## ACS Release 1.1.4 - 14 August 2014
 
