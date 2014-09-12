@@ -1,5 +1,27 @@
 # ACS Release Notes
 
+## ACS Release 1.1.5 - 15 September 2014
+
+The 1.1.5 release of Appcelerator Cloud Services includes the following
+new features and bug fixes.
+
+### New Features and Behavior Changes
+
+* ACS queries are now limited to 5000 results. 
+* Supported added for authenticated npm installs from private npm registries.
+* `batch_delete` of ACS objects is now asynchronous. 
+* Wildcard regular expressions are now not allowed in [query operations](#!/guide/search_query). For
+  example, the ACS query `where="color": {"$regex" :"^.*b"}` will result in the following error: 
+
+        This regex query is not supported, regex expression should start with ^letter or ^digit.
+
+### Bug Fixes
+
+* public_read/write need to be strings
+* Found an issue that subscribe_token does not increment the app's objects count.
+* 
+
+
 ## ACS Release 1.1.4 - 14 August 2014
 
 The 1.1.4 release of Appcelerator Cloud Services includes the following updates and bug fixes:
