@@ -9,6 +9,11 @@ methods:
 
     parameters:
 
+      - name: requests_to
+        description: |
+            If set to true, returns the users requesting the current user as a friend
+            rather than the pending friend requests that the user needs to approve.
+
       - name: response_json_depth
         description: |
             Nested object depth level counts in response JSON.

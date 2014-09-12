@@ -1,0 +1,178 @@
+name: Friends
+methods:
+  - name: query
+    summary: Custom Query of Friends
+    description: |
+        Performs custom query of Friends objects with sorting and paginating of the current
+        logged-in user or the specified user.  Only an application admin can perform a query against
+        a specified user using the `user_id` field.
+
+        If one-way friendship is enabled, the query returns the users being followed.  To return
+        the user's followers, set the `followers` field to true.
+
+        You can query or sort based on the data in any of the standard Friend fields.
+        You can also query and sort data based on the values of any custom fields,
+        if the values are simple JSON values.
+
+        Currently you **cannot** sort or query based on data stored inside array or hash
+        objects in custom fields.
+
+        You can paginate query results using `skip` and `limit` parameters, or `page` and `per_page`, 
+        but not both in the same query.
+
+        For details about using the query parameters,
+        see the [Search and Query guide](#!/guide/search_query).
+
+    url: friends/query.json
+    login-required: true
+
+    parameters:
+      - name: user_id
+        description: |
+          Only an application admin can use this field.
+          ID of the user to search for friends. If friendship is set to one way, by default it
+          searches against users that the identified user is following. You can pass
+          `followers=true` to search the user's followers.
+        type: String
+
+      - name: followers
+        descriptions: |
+            If set to true and one-way friendship is enabled, returns the user's followers instead
+            of the users being followed.
+        type: Boolean
+
+      - name: page
+        description: Request page number, default is 1.
+        type: Number
+
+      - name: per_page
+        description: Number of results per page, default is 10.
+        type: Number
+
+      - name: limit
+        description: |
+            Instead of using `page` and `per_page` for pagination, you can use `limit` and
+            `skip` to do your own pagination. `limit` is the maximum number of records to
+            fetch.
+            The specified value must be greater than 0 and no greater than 1000, or an HTTP 400 (Bad Request) 
+            error will be returned.            
+        type: Number
+
+      - name: skip
+        description: |
+            Number of records to skip. Must be used together with `limit`.
+            The specified value must not be less than 0 or an HTTP 400 error will be returned.
+            
+        type: Number
+
+      - name: where
+        description: |
+            Constraint values for fields. `where` should be encoded JSON.
+
+            If `where` is not specified, `query` returns all objects.
+        type: Hash
+
+      - name: order
+        description: |
+            Sort results by one or more fields.
+        type: String
+
+      - name: sel
+        description: |
+            Selects the object fields to display. Do not use this parameter with `unsel`.
+        type: Hash
+
+      - name: unsel
+        description: |
+            Selects the object fields NOT to display. Do not use this parameter with `sel`.
+        type: Hash
+
+      - name: response_json_depth
+        description: |
+            Nested object depth level counts in response json.
+            In order to reduce server API calls from an applicaton, the response json may
+            include not just the objects that are being queried/searched, but also with
+            some important data related to the returning objects such as object's owner or
+            referencing objects.
+
+            Default is 3, valid range is 1 to 8.
+        type: Number
+                
+      - name: pretty_json
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
+
+    response-parameters:
+      - name: users
+        description: List of users matching the query parameters.
+        type: Array<Users>
+
+    examples:
+      - platform: titanium
+        example: |
+            Use the [Titanium.Cloud.sendRequest()](http://docs.appcelerator.com/titanium/latest/#!/api/Titanium.Cloud-method-sendRequest)
+            method to invoke this REST API directly.
+
+      - platform: rest
+        example: |
+            The following example queries for the user's followers.  Note that this is only relevant
+            for one-way friendships:
+
+                $ curl -b cookies.txt -c cookies.txt  -X GET --data-urlencode "followers=true" "https://api.cloud.appcelerator.com/v1/friends/query.json?key=<APP_API_KEY>&pretty_json=true"
+
+
+            Example JSON response:
+
+                {
+                  "meta": {
+                    "code": 200,
+                    "status": "ok",
+                    "method_name": "queryFriends",
+                    "page": 1,
+                    "per_page": 10,
+                    "total_pages": 1,
+                    "total_results": 1
+                  },
+                  "response": {
+                    "users": [
+                      {
+                        "id": "53fbb04ec3aafa0884000497",
+                        "first_name": "Wally",
+                        "last_name": "West",
+                        "created_at": "2014-08-25T21:53:18+0000",
+                        "updated_at": "2014-08-25T22:08:53+0000",
+                        "external_accounts": [
+                
+                        ],
+                        "confirmed_at": "2014-08-25T21:53:18+0000",
+                        "username": "kidflash",
+                        "admin": "false",
+                        "stats": {
+                          "photos": {
+                            "total_count": 0
+                          },
+                          "storage": {
+                            "used": 0
+                          }
+                        },
+                        "friend_counts": {
+                          "requests": 0,
+                          "following": 1,
+                          "followers": 1
+                        }
+                      }
+                    ]
+                  }
+                }
+
+      - platform: ios
+        example: |
+            Use the \[[APSCloud sendRequest](http://docs.appcelerator.com/aps-sdk-apidoc/latest/ios/Classes/APSCloud.html#//api/name/sendRequest:method:data:handler:)\]
+            method to invoke this REST API directly.
+
+      - platform: android
+        example: |
+            Use the [APSCloud.sendRequest()](http://docs.appcelerator.com/aps-sdk-apidoc/latest/android/com/appcelerator/aps/APSCloud.html#sendRequest%28java.lang.String,java.lang.String,java.util.Map, com.appcelerator.aps.APSResponseHandler%29)
+            method to invoke this REST API directly.
