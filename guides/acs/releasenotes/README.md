@@ -21,7 +21,35 @@ new features and bug fixes.
 
         This regex query is not supported, regex expression should start with ^letter or ^digit.
 * When [creating an ACL](#!/api/ACLs) the `public_read` and `public_write` parameters must now be strings.
-* The CustomObjects [`count`](#) method has been modified to include the object type in the request (`objects/<object>/count.json`, for example), and only returns the count for the specified type.
+* The CustomObjects [`count`](#) method has been modified to include the object
+  type in the request (`objects/<object>/count.json`, for example), and only
+  returns the count for the specified type. 
+
+        $ curl -X GET "http://${HOST}/v1/car/count.jon?key=${KEY}&pretty_json=true"
+        {
+          "meta": {
+            "code": 200,
+            "status": "ok",
+            "method_name": "carCount"
+          },
+          "response": {
+            "cars": 15
+          }
+        }
+
+    In addition, the response of the  `count` methods for all other ACS objects now includes a `method_name` field, for example:
+
+        $ curl -X GET "http://${HOST}/v1/checkins/count.json?key=${KEY}&pretty_json=true"
+        {
+          "meta": {
+            "code": 200,
+            "status": "ok",
+            "method_name": "checkinsCount"
+          },
+          "response": {
+            "checkins": 1
+          }
+        }
 
 ### Bug Fixes
 
