@@ -10,7 +10,7 @@ methods:
         If one-way friendship is enabled, the query returns the users being followed.  To return
         the user's followers, set the `followers` field to true.
 
-        You can query on sort  based on the data in any of the standard Friend fields.
+        You can query or sort based on the data in any of the standard Friend fields.
         You can also query and sort data based on the values of any custom fields,
         if the values are simple JSON values.
 
