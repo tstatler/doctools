@@ -33,8 +33,8 @@ description: |
         // Logged in as User1:
         Cloud.ACLs.create({
             name: 'photo_access',
-            public_read: true,
-            public_write: true
+            public_read: "true",
+            public_write: "true"
         }, function (e) {});      
 
         // Then create Photo that uses the "photo_access" ACL:
@@ -54,7 +54,7 @@ description: |
         // Logged in as User1:
         Cloud.ACLs.update({
             name: 'photo_access',
-            public_read: false,
+            public_read: "false",
             reader_ids: [user2, user3]
         }, function (e) {});      
     
@@ -67,7 +67,7 @@ description: |
         // Logged in as User1:
         Cloud.ACLs.update({
             name: 'photo_access',
-            public_write: false,
+            public_write: "false",
             writer_ids: [user2, user3]
         }, function (e) {}); 
 

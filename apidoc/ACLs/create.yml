@@ -32,7 +32,7 @@ methods:
         description: | 
             Determines if the JSON response is formatted for readability (`true`), or displayed on a
             single line (`false`). Default is `false`.
-        type: String
+        type: Boolean
 
 
       - name: public_read
@@ -47,7 +47,7 @@ methods:
             Determines whether objects controlled by this ACS are publically writable.
 
             Default is false.
-        type: Boolean
+        type: String
 
       - name: user_id
         description: |
