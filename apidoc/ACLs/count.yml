@@ -10,7 +10,7 @@ methods:
     response-parameters:
 
       - name: acls
-        description: Total number of ACL objects.
+        description: Total number of ACL objects. Returned in the `meta` header.
         type: Number
 
     examples:
@@ -31,9 +31,8 @@ methods:
                   "meta": {
                     "code": 200,
                     "status": "ok",
-                  },
-                  "response": {
-                    "acls": 10.0
+                    "method_name": "aclsCount",
+                    "count": 1
                   }
                 }
 

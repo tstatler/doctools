@@ -10,7 +10,7 @@ methods:
     response-parameters:
 
       - name: events
-        description: Total number of Event objects.
+        description: Total number of Event objects. Returned in the `meta` header.
         type: Number
 
     examples:
@@ -31,10 +31,9 @@ methods:
                   "meta": {
                     "code": 200,
                     "status": "ok",
-                  },
-                  "response": {
-                    "events": 10.0
-                  }
+                    "method_name": "eventsCount",
+                    "count": 1
+                   }
                 }
 
       - platform: ios

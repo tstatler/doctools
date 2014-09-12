@@ -10,7 +10,7 @@ methods:
     response-parameters:
 
       - name: email_templates
-        description: Total number of email templates.
+        description: Total number of email templates. Returned in the `meta` header.
         type: Number
 
     examples:
@@ -31,9 +31,8 @@ methods:
                   "meta": {
                     "code": 200,
                     "status": "ok",
-                  },
-                  "response": {
-                    "email_templates": 10.0
+                    "method_name": "email_tempaltesCount",
+                    "count": 1
                   }
                 }
 

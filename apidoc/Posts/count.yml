@@ -10,7 +10,7 @@ methods:
     response-parameters:
 
       - name: posts
-        description: Total number of Post objects.
+        description: Total number of Post objects. Returned in the `meta` header.
         type: Number
 
     examples:
@@ -31,9 +31,8 @@ methods:
                   "meta": {
                     "code": 200,
                     "status": "ok",
-                  },
-                  "response": {
-                    "posts": 10.0
+                    "method_name": "postsCount",
+                    "count": 1
                   }
                 }
 
