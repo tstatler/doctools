@@ -59,14 +59,14 @@ methods:
             Determines whether objects controlled by this ACS are publically readable.
 
             Default is false.
-        type: Boolean
+        type: String
 
       - name: public_write
         description: |
             Determines whether objects controlled by this ACS are publically writable.
 
             Default is false.
-        type: Boolean
+        type: String
 
       - name: user_id
         description: |
@@ -90,8 +90,8 @@ methods:
                     name: 'testACL',
                     reader_ids: '',
                     writer_ids: '',
-                    public_read: true,
-                    public_write: true
+                    public_read: "true",
+                    public_write: "true"
                 }, function (e) {
                     if (e.success) {
                         alert('Updated!');

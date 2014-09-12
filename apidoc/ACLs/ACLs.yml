@@ -10,8 +10,8 @@ description: |
     
     An ACL object includes four attributes:
 
-    * `public_read` &mdash; Boolean; if `true`, all users have read access. Default is `false`.
-    * `public_write` &mdash; Boolean; if `true`, all users have write access. Default is `false`.
+    * `public_read` &mdash; String; if `true`, all users have read access. Default is `false`.
+    * `public_write` &mdash; String; if `true`, all users have write access. Default is `false`.
     * `reader_ids` &mdash; Comma-separated list of users with read access.
     * `writer_ids` &mdash; Comma-separated list of users with write access.
     
@@ -95,14 +95,14 @@ fields:
         Determines whether objects controlled by this ACS are publicly readable. 
 
         Default is false.
-    type: Boolean
+    type: String
 
   - name: public_write
     description: |
         Determines whether objects controlled by this ACS are publicly writable. 
 
         Default is false.
-    type: Boolean
+    type: String
 
   - name: user
     description: Owner of the ACL.
