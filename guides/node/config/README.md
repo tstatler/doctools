@@ -119,6 +119,18 @@ contains any credentials, you're prompted for the npm username and password:
     npm password: ***********
     Preparing application for publish... done
 
+**Note**: If you use a private npm registry hosted by Nodejitsu, you must first
+synchronize your public npm user account with the private npm, 
+otherwise you will get "unauthorized" error. To do this, enter the following `npm` commands:
+ 
+    $ npm config set strict-ssl true 
+    $ npm config set ca "" 
+    $ npm config set registry https://<your-subdomain>.registry.nodejitsu.com
+    $ npm login    
+
+See [https://www.nodejitsu.com/documentation/npm/cli/](https://www.nodejitsu.com/documentation/npm/cli/) 
+for more information.
+
 ## npmRegistry
 
 If you want to use a different npm registry besides the official public npm registry to install
