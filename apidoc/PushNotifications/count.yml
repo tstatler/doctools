@@ -1,0 +1,62 @@
+name: PushNotifications
+methods:
+  - name: count
+    summary: Retrieves the total number of devices subscribed to push notifications.
+    description: Retrieves the total number of devices subscribed to push notifications.
+
+    url: push_notification/count.json
+    http-method: GET
+
+    response-parameters:
+
+      - name: push_notification_subscriptions
+        description: |
+            A dictionary with two fields:
+
+              * `count` (Number): Total number of devices subscribed to push notifications.
+              * `subscriptions`: (Hash): Dictionary with two fields, `android` and `ios`, whose
+                values indicate the total number of Android and iOS devices subscribed to push
+                notifications, respectively.
+        type: Hash
+
+    examples:
+      - platform: titanium
+        example: |
+            Use the [Titanium.Cloud.sendRequest()](http://docs.appcelerator.com/titanium/latest/#!/api/Titanium.Cloud-method-sendRequest)
+            method to invoke this REST API directly.
+
+      - platform: rest
+        example: |
+            Example cURL request:
+
+                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/push_notification/count.json?key=<YOUR_APP_KEY>&pretty_json=true"
+
+            Example JSON response:
+
+                {
+                  "meta": {
+                    "code": 200,
+                    "status": "ok",
+                    "method_name": "push_notificationCount"
+                  },
+                  "response": {
+                    "push_notification_subscriptions": {
+                      "count": 10.0,
+                      "subscriptions": {
+                        "android": 4.0,
+                        "ios": 6.0
+                      }
+                    }
+                  }
+                }
+
+      - platform: ios
+        example: |
+            Use the \[[APSCloud sendRequest](http://docs.appcelerator.com/aps-sdk-apidoc/latest/ios/Classes/APSCloud.html#//api/name/sendRequest:method:data:handler:)\]
+            method to invoke this REST API directly.
+
+      - platform: android
+        example: |
+            Use the
+[APSCloud.sendRequest()](http://docs.appcelerator.com/aps-sdk-apidoc/latest/android/com/appcelerator/aps/APSCloud.html#sendRequest%28java.lang.String,java.lang.String,java.util.Map, com.appcelerator.aps.APSResponseHandler%29)
+            method to invoke this REST API directly.
