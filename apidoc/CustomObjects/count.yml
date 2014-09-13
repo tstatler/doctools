@@ -1,22 +1,25 @@
 name: CustomObjects
 methods:
   - name: count
-    summary: Retrieves the total number of custom objects.
-    description: Retrieves the total number of custom objects.
+    summary: Retrieves the total number of objects of the specified class.
+    description: Retrieves the total number of objects of the specified class.
 
-    url: objects/count.json
+    url: objects/:classname/count.json
     http-method: GET
+
+    parameters:
+      - name: classname
+        description: |
+            Type of custom object. Specified as part of the URL path, not in the
+            parameters.
+        type: String
+        required: true
 
     response-parameters:
 
-      - name: custom_objects
-        description: |
-            A dictionary with two fields:
-  
-              * `count` (Number): Returns the total number of custom objects.
-              * `objects` (Hash): Returns the total number of each class of custom objects with the
-                 name of the class as the key and the total as the value.
-        type: Hash
+      - name: count
+        description: Total number of class objects. Returned in the `meta` header.
+        type: Number
 
     examples:
       - platform: titanium
@@ -28,7 +31,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/objects/count.json?key=<YOUR_APP_KEY>&pretty_json=true"
+                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/objects/cars/count.json?key=<YOUR_APP_KEY>&pretty_json=true"
 
             Example JSON response:
 
@@ -36,16 +39,8 @@ methods:
                   "meta": {
                     "code": 200,
                     "status": "ok",
-                  },
-                  "response": {
-                    "custom_objects": {
-                      "count": 10.0,
-                      "objects": {
-                        "animals": 5.0,
-                        "minerals": 3.0,
-                        "vegetables": 2.0
-                      }
-                    }
+                    "method_name": "objectsCount",
+                    "count": 1
                   }
                 }
 

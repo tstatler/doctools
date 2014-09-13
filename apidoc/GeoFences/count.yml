@@ -10,7 +10,7 @@ methods:
     response-parameters:
 
       - name: geo_fences
-        description: Total number of GeoFence objects.
+        description: Total number of GeoFence objects. Returned in the `meta` header.
         type: Number
 
     examples:
@@ -31,9 +31,8 @@ methods:
                   "meta": {
                     "code": 200,
                     "status": "ok",
-                  },
-                  "response": {
-                    "geo_fences": 10.0
+                    "method_name": "geofencesCount",
+                    "count": 1
                   }
                 }
 

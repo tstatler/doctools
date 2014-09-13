@@ -10,7 +10,7 @@ methods:
     response-parameters:
 
       - name: photos
-        description: Total number of Photo objects.
+        description: Total number of Photo objects. Returned in the `meta` header.
         type: Number
 
     examples:
@@ -31,9 +31,8 @@ methods:
                   "meta": {
                     "code": 200,
                     "status": "ok",
-                  },
-                  "response": {
-                    "photos": 10.0
+                    "method_name": "photosCount",
+                    "count": 1
                   }
                 }
 
