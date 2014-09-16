@@ -9,7 +9,7 @@ methods:
 
     response-parameters:
 
-      - name: events
+      - name: count
         description: Total number of Event objects. Returned in the `meta` header.
         type: Number
 

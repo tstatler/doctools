@@ -9,7 +9,7 @@ methods:
 
     response-parameters:
 
-      - name: messages
+      - name: count
         description: Total number of Message objects. Returned in the `meta` header.
         type: Number
 

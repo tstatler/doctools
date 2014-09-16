@@ -9,7 +9,7 @@ methods:
 
     response-parameters:
 
-      - name: users
+      - name: count
         description: Total number of User objects. Returned in the `meta` header.
         type: Number
 

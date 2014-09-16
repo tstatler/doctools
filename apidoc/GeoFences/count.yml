@@ -9,7 +9,7 @@ methods:
 
     response-parameters:
 
-      - name: geo_fences
+      - name: count
         description: Total number of GeoFence objects. Returned in the `meta` header.
         type: Number
 

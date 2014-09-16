@@ -9,7 +9,7 @@ methods:
 
     response-parameters:
 
-      - name: email_templates
+      - name: count
         description: Total number of email templates. Returned in the `meta` header.
         type: Number
 

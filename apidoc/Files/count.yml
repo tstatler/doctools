@@ -9,7 +9,7 @@ methods:
 
     response-parameters:
 
-      - name: data_files
+      - name: count
         description: Total number of File objects. Returned in the `meta` header.
         type: Number
 
@@ -31,7 +31,7 @@ methods:
                   "meta": {
                     "code": 200,
                     "status": "ok",
-                    "method_name": "filesCount",
+                    "method_name": "data_filesCount",
                     "count": 1
                   }
                 }

@@ -9,7 +9,7 @@ methods:
 
     response-parameters:
 
-      - name: photos
+      - name: count
         description: Total number of Photo objects. Returned in the `meta` header.
         type: Number
 

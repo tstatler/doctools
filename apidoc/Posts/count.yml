@@ -9,7 +9,7 @@ methods:
 
     response-parameters:
 
-      - name: posts
+      - name: count
         description: Total number of Post objects. Returned in the `meta` header.
         type: Number
 
