@@ -196,6 +196,130 @@ strings. These IDs may be use to efficiently return data for a single object:
     
 ## Response Paging
 
+### Paging Queries
+
+For applications created with ACS 1.1.15 and later, query methods (like {@link Users#query Users.query}) support a new,
+high-performing paging mechanism. If `count=true` is included in the query method call, 
+the response `meta` object contains a `count` field whose value is the total number of objects
+that match the query criteria. If the query matches more than 5000 objects, the `count` field
+contains the value "5000+".
+
+For example, the following queries all `Users` objects, which returns a `count` of
+80. 
+
+    $ curl "<host>/v1/users/query.json?key=<key>&count=true"
+    {
+      "meta": {
+        "code": 200,
+        "status": "ok",
+        "method_name": "queryUsers",
+        "count": 80
+      },
+      "response": {
+        "users": [
+          {
+            "id": "541850ad20110835ae00090e",
+            ...
+          },
+          ...
+          {
+            "id": "5418509f20110835ae000905",
+            ...
+          }
+        ]
+      }
+    }   
+
+By default, 10 results are returned in the response; you can change this by passing
+a `limit` parameter in the query set to the number of results to include; you must always 
+include a `skip` parameter with `limit`.
+
+To query for objects older than a certain object, include a `where` parameter for those objects
+whose ID is less than (`"$lt"`) the target object's ID. The following request queries
+for all users whose ID is less than that of the last user returned in the previous call 
+("5418509f20110835ae000905", in this case):
+
+    $ curl -F 'where={"_id":{"$lt":"5418509f20110835ae000905"}}' "<host>/v1/users/query.json?key=<key>&count=true"
+    {
+      "meta": {
+        "code": 200,
+        "status": "ok",
+        "method_name": "queryUsers",
+        "count": 70
+      },
+      "response": {
+        "users": [
+          {
+            "id": "5418509e20110835ae000904",
+            ...
+          },
+          ...
+          {
+            "id": "5418508f20110835ae0008fb",
+            ...
+        ]
+      }
+    }
+
+Similarly, to query for objects newer than a certain object, include a `where` parameter for those objects
+whose ID is greater than (`"$gt"`) the target object's ID. The following request queries
+for all users whose ID is greater than that of the first user returned in the previous call ("")
+
+    $ curl -F 'where={"_id":{"$gt":"5418509e20110835ae000904"}}' "<host>/v1/users/query.json?key=<key>&count=true"
+    {
+      "meta": {
+        "code": 200,
+        "status": "ok",
+        "method_name": "queryUsers",
+        "count": 10
+      },
+      "response": {
+        "users": [
+          {
+            "id": "541850ad20110835ae00090e",
+            ...
+          },
+          ...
+          {
+            "id": "5418509f20110835ae000905",
+            ...
+          }
+        ]
+      }
+    }
+
+To query for all objects created between two other objects, parameterize the `where` clause
+to only include those objects whose IDs are greater than and less than the two target objects. For 
+example, the following queries objects whose IDs are between "541850a620110835ae000908" and "541850ad20110835ae00090e".
+
+    $ curl -F 'where={"_id": {"$gt": "541850a620110835ae000908", "$lt": "541850ad20110835ae00090e"}}' "<host>/v1/users/query.json?key=<key>&count=true"
+    {
+      "meta": {
+        "code": 200,
+        "status": "ok",
+        "method_name": "queryUsers",
+        "count": 5
+      },
+      "response": {
+        "users": [
+          {
+            "id": "541850ac20110835ae00090d",
+          },
+          ...
+          {
+            "id": "541850a720110835ae000909",
+            ...
+          }
+        ]
+      }
+    }
+
+Notes:
+
+* The `count` field is returned only if a `count=true` parameter is included the request.
+* If the returned count is greater than 5000, the `count` will be set to "5000+".
+
+### Paging  
 API calls which return arrays of objects take optional `page` and `per_page`
 arguments to specify the number of objects to return. By default, ten objects
 are returned on each page, and the request may specify up to 20 results per

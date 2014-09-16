@@ -1,4 +1,4 @@
-# Search and Query APIs 
+ # Search and Query APIs 
 
 Appcelerator Cloud Services provides APIs for querying and searching ACS objects. 
 The query APIs allow you to perform custom database-style searches, while search APIs perform a full text search using the ACS search engine.
@@ -6,9 +6,13 @@ The query APIs allow you to perform custom database-style searches, while search
 ## Query API Overview
 
 The query API provides an interface for applying database-style query constraints on predefined objects 
-and [custom fields](#!/guide/customfields). You can control pagination of queries, using either `page`
-and `per_page` query parameters, or `skip` and `limit` for custom pagination. You can also control
-the sort order of query results, and specify the fields you want to include (or exclude) from results.
+and [custom fields](#!/guide/customfields). 
+
+You can control pagination of queries using the `count` 
+
+using either `page` and `per_page` query parameters, or `skip` and `limit` for custom pagination. 
+
+You can also control the sort order of query results, and specify the fields you want to include (or exclude) from results.
 
 When no query parameters are provided, all objects of the specified type are returned with default pagination. 
 
@@ -30,21 +34,32 @@ in the User object unless you have [admin access](#!/guide/admin_access).
 
 The following parameters are available for query operations:
 
-  * `page`
-  * `per_page`
+  * `count` &mdash; If `true`, the response contains a `count` field whose value is the number
+    of records  
   * `limit` and `skip`
   * `where`
   * `order`
   * `sel`
   * `unsel`
+  * `page` 
+  * `per_page`
+
 
 #### page
+
+<p class="note"></p>Starting in ACS 1.1.5, `page` and `per_page` are no longer
+supported in query operations. Application should provide a `count` parameter
+to get paging results. See [Query Paging](#!/guide/paging) for more information.</p>
 
 Request page number starting from 1. Default is 1. 
 
 You can't use `skip` and `limit` together with `page` and `per_page` in the same query.
 
 #### per_page
+
+<p class="note"></p>Starting in ACS 1.1.5, `page` and `per_page` are no longer
+supported in query operations. Application should provide a `count` parameter
+to get paging results. See [Query Paging](#!/guide/paging) for more information.</p>
 
 Number of results per page. Default is 10.
 
@@ -257,6 +272,87 @@ field need to be specified.
 For example, if you want to return all fields except `first_name`:
 
     unsel={"all":["first_name"]}
+
+### Query pagination
+
+ACS query will now have a new pagination.
+
+#### ACS Applications Created after ACS 1.1.5
+
+If `count=true` is included as a query parameter, the response will contain `count` field whose
+value is the total number of query results, up to 5000. If the result count is more than
+5000, `count` is set to "5000+".
+
+    GET /v1/users/query.json?key=<KEY>&pretty_json=true&count=true
+
+    {
+      "meta": {
+        "code": 200,
+        "status": "ok",
+        "method_name": "queryUsers",
+        "count": 3125
+      },
+      "response": {
+        "users": [
+          {
+            "id": "5416fd20ee2fa4ca9b001881",
+            ...
+          },
+          {
+            "id": "5416fd1eee2fa4ca9b001880",
+            ...
+          },
+          {
+            "id": "5416fd1cee2fa4ca9b00187f",
+            ...
+          }
+        ]
+      }
+    }    
+
+To query next or previous results will need to pass in where as such.
+
+The actual number of records fetched by the query and returned in the response is limited by the `limit` parameter.
+
+For example, suppose your application has 10,000 users.
+
+    GET /v1/users/query.json?key=<KEY>&pretty_json=true&count=true
+
+ The number of results returned 
+
+Unlike in prior version of ACS, the response will not 
+contain `page`, `per_page`, or `total_results`. 
+
+Use the `limit`
+
+To get to the next page of what it's returned, will need to specify where parameter with "_id":
+
+App created before 1.1.5:
+Will return total_results, page, per_page as default but this will be phased out on CLOUDSRV-3996.
+Max total_results is 5000, it will not show as "5000+".
+
+
+{"$gt": "<Last id from the last results>"}
+.
+curl -d 'where={"first_name":"ט","_id":{"$lt":"53ed4ed79eb406b5ba2682f4"}}' -X GET "http://localhost:8082/v1/users/query.json?key=yAIJoAyJBPHI1N6zz3FGSmXWwZSwa6nm&pretty_json=true&count=true"
+
+#### ACS Applications Created before ACS 1.1.5
+
+Prior to ACS 1.1.5, applications would paginate their queries using the `page` and `per_page`
+parameters. An application would pass 
+
+This approach will continue to be supported for the near future. 
+
+
+ACS 1.1.5 introduces a new paging mechanism for queries and will not support. that replaces the `page` and `per_page` approach. 
+All applications created with ACS 1.1.5 and later will use this new paging mechanism. For applications
+created before ACS 1.1.5, query operations will continue to return `total_results`, `page`, `per_page` 
+but this will eventually be phased-out.
+
+Max total_results is 5000, it will not show as "5000+".
+
+ACS will continue to support the `page` and `per_page` paging mechanism for legacy applications
+created before ACS 1.1.5,  
 
 ## Search API Overview
 
