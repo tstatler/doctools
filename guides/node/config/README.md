@@ -55,18 +55,20 @@ application. You must set the Node.js version to republish your application.
 
 ## framework
 
-**Required.**
+A Node.ACS application can use either an [MVC framework](#!/guide/node_mvc), or
+no framework and run as a [standard Node application](#!/guide/node_standard).
+Use the `framework` field to select the framework to use.
 
-The application can use either an [MVC framework](#!/guide/node_mvc) or no framework and run as a
-[standard Node application](#!/guide/node_standard).
+To run your application as a standard application you can either omit this field
+from package.json, or include it and set its value to **`none`**:
 
-Use the `framework` field to select the framework to use.  Set to either `mvc` to use the MVC
-framework or `none` to use no framework and run as a standard Node application.
+    "framework": "none"
+
+To use the included Node.ACS MVC framework set the field to **`mvc`**:
 
     "framework": "mvc"
 
 By default, when you create a new Node.ACS application, it includes the Node.ACS MVC framework.
-
 
 ## main
 
