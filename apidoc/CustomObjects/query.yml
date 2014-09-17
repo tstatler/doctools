@@ -10,8 +10,12 @@ methods:
         * If a custom object contains fields or values that are greater than 1KB in length, you will
         not be able to query on that field. For more information, see [Indexing Size Limit for Custom Objects and Fields](#!/guide/customfields-section-indexing-size-limit-for-custom-objects-and-fields).
         * Currently, you cannot query or sort data stored inside an array or hash.
-        * You can paginate query results using `skip` and `limit` parameters, or `page` and `per_page`, 
-        but not both in the same query.
+        * You can paginate query results using `skip` and `limit` parameters, or by including
+        a `where` clause to limit the results to objects whose IDs fall within a specified range.
+        For details, see [Query Pagination](#!/guide/search_query-section-query-pagination).
+
+        Prior to ACS 1.1.15 you can use `skip` and `limit` parameters, or `page` and `per_page` but 
+        not both in the same query.        
 
         For details about using the query parameters,
         see the [Search and Query guide](#!/guide/search_query).
@@ -26,19 +30,27 @@ methods:
         required: true
 
       - name: page
-        description: Request page number, default is 1.
+        description: |
+            Request page number, default is 1.
+
+            <p class="note">This parameter is only available to ACS applications created before ACS 1.1.15. 
+            Applications created with ACS 1.1.15 and later must use <a href="#!/guide/search_query-section-query-pagination">ranged-based queries</a> queries
+            to paginate their queries.</p>
         type: Number
 
       - name: per_page
-        description: Number of results per page, default is 10.
+        description: |
+            Number of results per page, default is 10.
+
+            <p class="note">This parameter is only available to ACS applications created before ACS 1.1.15. 
+            Applications created with ACS 1.1.15 and later must use <a href="#!/guide/search_query-section-query-pagination">ranged-based queries</a> queries
+            to paginate their queries.</p>
         type: Number
 
       - name: limit
         description: |
-            Instead of using `page` and `per_page` for pagination, you can use `limit` and
-            `skip` to do your own pagination. `limit` is the maximum number of records to
-            fetch. The specified value must be greater than 0 and no greater than 1000, or an HTTP 400 (Bad Request) 
-            error will be returned.
+            The number of records to fetch. The value must be greater than 0, and no greater then 
+            1000, or an HTTP 400 (Bad Request) error will be returned.
         type: Number
 
       - name: skip
@@ -168,7 +180,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -c cookies.txt -b cookies.txt -X GET --data-urlencode 'where={"color":"blue","coordinates":{"$nearSphere":[-122.1,37.1], "$maxDistance" : 0.00126}}' --data-urlencode 'order=-purchased_at' "https://api.cloud.appcelerator.com/v1/objects/car/query.json?key=<YOUR APP APP KEY>&pretty_json=true"
+                $ curl -c cookies.txt -b cookies.txt -X GET --data-urlencode 'where={"color":"blue","coordinates":{"$nearSphere":[-122.1,37.1], "$maxDistance" : 0.00126}}' --data-urlencode 'order=-purchased_at' "https://api.cloud.appcelerator.com/v1/objects/car/query.json?key=<YOUR APP APP KEY>&pretty_json=true&count=true"
 
             Example JSON response:
 
@@ -177,9 +189,7 @@ methods:
                     "code": 200,
                     "status": "ok",
                     "method_name": "queryCustomObjects",
-                    "page": 1,
-                    "total_pages": 1,
-                    "total_results": 2
+                    "count": 100
                   },
                   "response": {
                     "car": [

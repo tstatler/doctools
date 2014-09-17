@@ -19,8 +19,12 @@ methods:
         *   `created_at` : `Date`. Timestamp when the review was created.
         *   `updated_at` : `Date`. Timestamp when the review was last updated.
 
-        You can paginate query results using `skip` and `limit` parameters, or `page` and `per_page`, 
-        but not both in the same query.        
+        In ACS 1.1.15 and later, you can paginate query results using `skip` and `limit` parameters, or by including
+        a `where` clause to limit the results to objects whose IDs fall within a specified range.
+        For details, see [Query Pagination](#!/guide/search_query-section-query-pagination).        
+
+        Prior to ACS 1.1.15 you can use `skip` and `limit` parameters, or `page` and `per_page` but 
+        not both in the same query.        
 
         For details about using the query parameters,
         see the [Search and Query guide](#!/guide/search_query).
@@ -68,20 +72,27 @@ methods:
         type: String
 
       - name: page
-        description: Request page number, default is 1.
+        description: |
+            Request page number, default is 1.
+
+            <p class="note">This parameter is only available to ACS applications created before ACS 1.1.15. 
+            Applications created with ACS 1.1.15 and later must use <a href="#!/guide/search_query-section-query-pagination">ranged-based queries</a> queries
+            to paginate their queries.</p>
         type: Number
 
       - name: per_page
-        description: Number of results per page, default is 10.
+        description: |
+            Number of results per page, default is 10.
+
+            <p class="note">This parameter is only available to ACS applications created before ACS 1.1.15. 
+            Applications created with ACS 1.1.15 and later must use <a href="#!/guide/search_query-section-query-pagination">ranged-based queries</a> queries
+            to paginate their queries.</p>
         type: Number
 
       - name: limit
         description: |
-            Instead of using `page` and `per_page` for pagination, you can use `limit` and
-            `skip` to do your own pagination. `limit` is the maximum number of records to
-            fetch.
-            The specified value must be greater than 0 and no greater than 1000, or an HTTP 400 (Bad Request) 
-            error will be returned.            
+            The number of records to fetch. The value must be greater than 0, and no greater then 
+            1000, or an HTTP 400 (Bad Request) error will be returned.            
         type: Number
 
       - name: skip
@@ -174,13 +185,14 @@ methods:
         example: |
             Queries for reviews with a rating greater than 7.
 
-                $ curl -c cookies.txt -b cookies.txt -X GET --data-urlencode 'where={"rating":{"$gt":7.0}}' "https://api.cloud.appcelerator.com/v1/reviews/query.json?key=<YOUR APP APP KEY>&pretty_json=true"
+                $ curl -c cookies.txt -b cookies.txt -X GET --data-urlencode 'where={"rating":{"$gt":7.0}}' "https://api.cloud.appcelerator.com/v1/reviews/query.json?key=<YOUR APP APP KEY>&pretty_json=true&count=true"
 
                 {
                   "meta": {
                     "status": "ok",
                     "code": 200,
-                    "method_name": "queryReview"
+                    "method_name": "queryReview",
+                    "count": 100
                   },
                   "response": {
                     "reviews": [
