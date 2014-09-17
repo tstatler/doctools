@@ -95,6 +95,41 @@ By default, this field is set to the name of the project when it was created.
 
     "name": "MyNodeAcsApp"
 
+## npmAuthentication
+
+To enable authenticated package installs from a private npm registry specified by 
+[npmRegistry](#!/guide/node_config-section-npmregistry), add the
+`npmAuthentication` field in your application's package.json file and set it to
+`true`:
+
+    "npmAuthentication": true
+
+When enabled, you must provide login credentials for the npm registry when
+calling `acs publish`. You can provide the credentials on the command line
+when calling the `publish` command:
+
+    $ acs publish myuser mypwd
+
+If no credentials are provided on the command line, `acs` will attempt to
+read the credentials from `~/.npmrc`. If no `~/.npmrc` file is found, or it doesn't 
+contain any credentials, you're prompted for the npm username and password:
+
+    $ acs publish
+    npm username: admin
+    npm password: ***********
+    Preparing application for publish... done
+
+**Note**: If you use a private npm registry hosted by Nodejitsu, you must first
+synchronize your public npm user account with the private npm, 
+otherwise you will get "unauthorized" error. To do this, enter the following `npm` commands:
+ 
+    $ npm config set strict-ssl true 
+    $ npm config set ca "" 
+    $ npm config set registry https://<your-subdomain>.registry.nodejitsu.com
+    $ npm login    
+
+See [https://www.nodejitsu.com/documentation/npm/cli/](https://www.nodejitsu.com/documentation/npm/cli/) 
+for more information.
 
 ## npmRegistry
 
@@ -104,6 +139,8 @@ registry URL you want to use.  For example, the entry below uses a European npm 
 
     "npmRegistry" : "http://registry.npmjs.eu/"
 
+To require authentication for npm installs, add the [npmAuthentication](#!/guide/node_config-section-npmauthentication)
+field to your package.json file.
 
 ## scripts
 
