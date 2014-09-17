@@ -58,8 +58,8 @@ methods:
         description: |
             Request page number, default is 1.
 
-            <p class="note">This parameter is only available to ACS applications created before ACS 1.1.15. 
-            Applications created with ACS 1.1.15 and later must use <a href="#!/guide/search_query-section-query-pagination">ranged-based queries</a> queries
+            <p class="note">This parameter is only available to ACS applications created before ACS 1.1.5. 
+            Applications created with ACS 1.1.5 and later must use <a href="#!/guide/search_query-section-query-pagination">ranged-based queries</a> queries
             to paginate their queries.</p>
         type: Number
 
@@ -67,8 +67,8 @@ methods:
         description: |
             Number of results per page, default is 10.
 
-            <p class="note">This parameter is only available to ACS applications created before ACS 1.1.15. 
-            Applications created with ACS 1.1.15 and later must use <a href="#!/guide/search_query-section-query-pagination">ranged-based queries</a> queries
+            <p class="note">This parameter is only available to ACS applications created before ACS 1.1.5. 
+            Applications created with ACS 1.1.5 and later must use <a href="#!/guide/search_query-section-query-pagination">ranged-based queries</a> queries
             to paginate their queries.</p>
         type: Number
 
