@@ -277,10 +277,10 @@ For example, if you want to return all fields except `first_name`:
 
 ## Query Pagination
 
-Prior to ACS 1.1.15, queries were paginated using `page` and `per_page` request
+Prior to ACS 1.1.5, queries were paginated using `page` and `per_page` request
 parameters, and ACS would sort and limit the data in memory. This process is
 highly inefficient, especially if a query matched millions of objects. Starting
-with ACS 1.1.15, there are two main changes to how applications query objects:
+with ACS 1.1.5, there are two main changes to how applications query objects:
 
 * Query results are limited to 5000 records. This means if a query matches 1
   million records, ACS will return the first 5000 records without regard to sort order.

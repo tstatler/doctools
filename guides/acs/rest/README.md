@@ -198,8 +198,8 @@ strings. These IDs may be use to efficiently return data for a single object:
 
 <p class="note">For <a href="#!/guide/search_query">query</a> operations, the
   <code>page</code> and <code>per_page</code> paging mechanism described below
-  only applies to applications created before ACS 1.1.15. For applications
-  created with ACS 1.1.15 and later, you must use range-based queries, as
+  only applies to applications created before ACS 1.1.5. For applications
+  created with ACS 1.1.5 and later, you must use range-based queries, as
   discussed in <a href="#!/guide/search_query-section-query-pagination">Query
   Pagination</a>. </p>
 
