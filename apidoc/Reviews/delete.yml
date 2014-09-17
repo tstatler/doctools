@@ -10,7 +10,9 @@ methods:
         it, deleting the review will update the average rating and rating summary.
 
         To delete a review, you must specify **both** the ID of the review and the ID of
-        the reviewed object.
+        the reviewed object ({@link #post Post}, {@link #photo Photo}, {@link #user User}, {@link #event Event}, 
+        {@link #checkin Checkin}, {@link #place Place}, {@link #custom_object CustomObject}, 
+        {@link #status Status}, or {@link #review Review}. The reviewed object is not deleted, however.
 
         An application admin can delete any Review object.
 

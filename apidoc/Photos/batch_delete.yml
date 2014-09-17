@@ -1,6 +1,6 @@
 name: Photos
 methods:
-  - name: btach_delete
+  - name: batch_delete
     summary: Deletes multiple Photos objects.
     description: | 
         Deletes Photos objects that match the query constraints provided in the `where` parameter.
@@ -11,9 +11,11 @@ methods:
         For performance reasons, the number of objects that can be deleted in a single batch delete 
         operation is limited to 100,000.
 
+        The matched objects are deleted asynchronously in a separate process.                
+
         You must be an application admin to run this command.        
 
-    url: photos/btach_delete.json
+    url: photos/batch_delete.json
     http-method: DELETE
     login-required: true
     admin-required: true    
@@ -36,7 +38,7 @@ methods:
         example: |
             Example cURL request:
 
-                $ curl -b cookies.txt -c cookies.txt -X DELETE -F "where={\"favorite_color\":\"blue\"}" https://api.cloud.appcelerator.com/v1/photos/btach_delete.json?key=<API_KEY>&pretty_json=true                 
+                $ curl -b cookies.txt -c cookies.txt -X DELETE -F "where={\"favorite_color\":\"blue\"}" https://api.cloud.appcelerator.com/v1/photos/batch_delete.json?key=<API_KEY>&pretty_json=true                 
 
             Example JSON response:
 

@@ -6,6 +6,8 @@ methods:
         Deletes the post with the given `id`. The original submitter can always delete
         a post.
 
+        The {@link #photo primary photo} associated with the object is not deleted.        
+
         An application admin can delete any Post object.
     url: posts/delete.json
     http-method: DELETE

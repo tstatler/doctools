@@ -7,7 +7,8 @@ methods:
         Delete an empty collection. An error will be returned if a collection contains
         any photos or subcollections.
 
-        An application admin can delete any photo collection.
+        An application admin can delete any photo collection. The {@link #cover_photo} associated 
+        with the collection is not deleted.
 
     url: collections/delete.json
     http-method: DELETE

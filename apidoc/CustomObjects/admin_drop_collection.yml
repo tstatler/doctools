@@ -3,9 +3,10 @@ methods:
   - name: admin_drop_collection
     summary:  Drops a CustomObjects collection. 
     description: | 
-        Drops a CustomObjects collection of a specified type.
+        Drops a CustomObjects collection of a specified type. The collection is dropped
+        asynchronously in a separate process.
 
-        You must be an application admin to run this command.        
+        You must be an application admin to run this command.       
 
     url: objects/:classname/admin_drop_collection.json
     http-method: DELETE

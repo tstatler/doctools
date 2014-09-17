@@ -6,6 +6,8 @@ methods:
         Only the owner of the object or user who is granted write permission by the
         object's ACL can delete the object.
 
+        The {@link #photo primary photo} associated with the CustomObject is not deleted.
+
         An application admin can delete any custom object.
 
     url: objects/:classname/delete.json

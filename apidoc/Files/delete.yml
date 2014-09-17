@@ -5,9 +5,9 @@ methods:
     description: |
         Deletes the file. To delete a file, the current user must be one of the following:
 
-        *   the file's owner
-        *   a user with write priviledges granted by the file's ACL
-        *   an application admin
+        *   The file's owner
+        *   A user with write priviledges granted by the file's ACL
+        *   An application admin
 
     url: files/delete.json
     http-method: DELETE

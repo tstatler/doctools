@@ -8,6 +8,8 @@ methods:
 
         Only the user who created the place can delete it.
 
+        The {@link #photo primary photo} associated with the object is not deleted.
+
         An application admin can delete any Place object.
 
     url: places/delete.json
