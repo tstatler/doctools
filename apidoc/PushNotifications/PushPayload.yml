@@ -1,6 +1,6 @@
 ---
 name: PushPayload
-psuedo: true
+pseudo: true
 description: |
     JSON payload to pass to either the {@link PushNotifications#notify} or
     {@link PushNotifications#notify_tokens} method.
