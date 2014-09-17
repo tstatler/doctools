@@ -7,9 +7,24 @@ new features and bug fixes.
 
 ### New Features and Behavior Changes
 
-* Starting with ACS 1.1.5, a new paging mechanism has been introduced for ACS
-  queries, and queries are now limited to 5000 results. For more information,
-    see the [Search and Query APIs](#!/guide/search_query) guide for details.
+* **New Paging Restriction on Queries** &mdash; Previously, if a query matched 1
+  million records (for example) ACS performed a sort and limit on those records in memory, which
+  was highly inefficient. There is now a "hard stop" on queries at 5000 records. 
+  This means that if a query matches 1 million records, ACS will only
+  look at the first 5000, in random order, and then sort on them. To narrow down result sets
+  to meaningful collections, developers should now use [range-based queries](#!/guide/search_query-section-query-pagination) 
+  using a `where` clause.
+
+    With this restriction there are the following additional changes:
+
+      * A new parameter named `count` is now available to all query method. When a query request contains
+    `count=true`, the `meta` object in the response contains a `count` field whose value is the 
+    total number of objects that matched the query.
+      * The `page` and `per_page` query parameters are no longer supported in ACS
+      1.1.5, and responses do not contain `page`, `per_page`, `total_pages`, or `total_results` fields. 
+      Applications created with ACS 1.1.4 and earlier can continue to 
+      can continue to these these parameters, but they will eventually be deprecated and removed.
+
 * [Batch delete](#!/guide/admin_access-section-admin-batch-delete) of ACS
   objects is now performed asynchronously in a separate process, rather than
   immediately on method invocation.
