@@ -9,7 +9,7 @@ methods:
 
     response-parameters:
 
-      - name: checkins
+      - name: count
         description: Total number of Checkin objects. Returned in the `meta` header.
         type: Number
 

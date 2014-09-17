@@ -9,7 +9,7 @@ methods:
 
     response-parameters:
 
-      - name: keyvalues
+      - name: count
         description: Total number of KeyValue objects. Returned in the `meta` header.
         type: Number
 

@@ -9,7 +9,7 @@ methods:
 
     response-parameters:
 
-      - name: statuses
+      - name: count
         description: Total number of Status objects. Returned in the `meta` header.
         type: Number
 

@@ -9,7 +9,7 @@ methods:
 
     response-parameters:
 
-      - name: reviews
+      - name: count
         description: Total number of Review objects. Returned in the `meta` header.
         type: Number
 

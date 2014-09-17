@@ -9,7 +9,7 @@ methods:
 
     response-parameters:
 
-      - name: places
+      - name: count
         description: Total number of Place objects. Returned in the `meta` header.
         type: Number
 
