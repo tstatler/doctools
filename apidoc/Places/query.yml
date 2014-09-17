@@ -25,8 +25,12 @@ methods:
         *   `created_at: Date`. Timestamp when the photo was created.
         *   `updated_at: Date`. Timestamp when the photo was updated.
 
-        You can paginate query results using `skip` and `limit` parameters, or `page` and `per_page`, 
-        but not both in the same query.
+        In ACS 1.1.5 and later, you can paginate query results using `skip` and `limit` parameters, or by including
+        a `where` clause to limit the results to objects whose IDs fall within a specified range.
+        For details, see [Query Pagination](#!/guide/search_query-section-query-pagination).
+
+        Prior to ACS 1.1.5 you can use `skip` and `limit` parameters, or `page` and `per_page` but 
+        not both in the same query.        
 
         For details about using the query parameters,
         see the [Search and Query guide](#!/guide/search_query).
@@ -36,20 +40,28 @@ methods:
     parameters:
 
       - name: page
-        description: Request page number, default is 1.
+        description: |
+            Request page number, default is 1.
+
+            <p class="note">This parameter is only available to ACS applications created before ACS 1.1.5. 
+            Applications created with ACS 1.1.5 and later must use <a href="#!/guide/search_query-section-query-pagination">ranged-based queries</a> queries
+            to paginate their queries.</p>
+
         type: Number
 
       - name: per_page
-        description: Number of results per page, default is 10.
+        description: |
+            Number of results per page, default is 10.
+
+            <p class="note">This parameter is only available to ACS applications created before ACS 1.1.5. 
+            Applications created with ACS 1.1.5 and later must use <a href="#!/guide/search_query-section-query-pagination">ranged-based queries</a> queries
+            to paginate their queries.</p>
         type: Number
 
       - name: limit
         description: |
-            Instead of using `page` and `per_page` for pagination, you can use `limit` and
-            `skip` to do your own pagination. `limit` is the maximum number of records to
-            fetch.
-            The specified value must be greater than 0 and no greater than 1000, or an HTTP 400 (Bad Request) 
-            error will be returned.            
+            The number of records to fetch. The value must be greater than 0, and no greater then 
+            1000, or an HTTP 400 (Bad Request) error will be returned.            
         type: Number
 
       - name: skip
@@ -144,10 +156,9 @@ methods:
 
       - platform: rest
         example: |
-            Example cURL request:
+            Example cURL request that queries places with name "Appcelerator Cloud Services" near latitude 37.12, longitude -122.23 within 5 miles
 
-                Example: Query places with name "Appcelerator Cloud Services" near latitude 37.12, longitude -122.23 within 5 miles
-                $ curl -c cookies.txt -b cookies.txt -X GET --data-urlencode  'where={"name":"Appcelerator Cloud Services","lnglat":{"$nearSphere":[-122.23,37.12], "$maxDistance" : 0.00126}}' "https://api.cloud.appcelerator.com/v1/places/query.json?key=<YOUR APP APP KEY>&pretty_json=true"
+                $ curl -c cookies.txt -b cookies.txt -X GET --data-urlencode  'where={"name":"Appcelerator Cloud Services","lnglat":{"$nearSphere":[-122.23,37.12], "$maxDistance" : 0.00126}}' "https://api.cloud.appcelerator.com/v1/places/query.json?key=<YOUR APP APP KEY>&pretty_json=true&count=true"
 
             Example JSON response:
 
@@ -156,10 +167,7 @@ methods:
                     "status":"ok",
                     "code":200,
                     "method_name":"queryPlaces",
-                    "page":1,
-                    "per_page":10,
-                    "total_pages":1,
-                    "total_results":1
+                    "count": 100
                   },
                   "response": {
                     "places": [

@@ -6,6 +6,13 @@ methods:
         Performs a custom query of chat messages with sorting and pagination. Currently you can
         not query or sort data stored inside array or hash in custom fields.
 
+        In ACS 1.1.5 and later, you can paginate query results using `skip` and `limit` parameters, or by including
+        a `where` clause to limit the results to objects whose IDs fall within a specified range.
+        For details, see [Query Pagination](#!/guide/search_query-section-query-pagination).        
+
+        Prior to ACS 1.1.5 you can use `skip` and `limit` parameters, or `page` and `per_page` but 
+        not both in the same query.
+
         For details about using the query parameters,
         see the [Search and Query guide](#!/guide/search_query).
     url: chats/query.json
@@ -21,9 +28,6 @@ methods:
             only users B and C.
 
             Alternatively, you can use `chat_group_id` to identify a {@link Chats#property-chatgroup chat group} instead.
-
-            You can paginate query results using `skip` and `limit` parameters, or `page` and `per_page`, 
-            but not both in the same query.
             
         type: String
 
@@ -33,12 +37,22 @@ methods:
             know the id of a chat group, you can use it to narrow down a query.
 
       - name: page
-        description: Request page number, default is 1.
+        description: |
+            Request page number, default is 1.
+
+            <p class="note">This parameter is only available to ACS applications created before ACS 1.1.5. 
+            Applications created with ACS 1.1.5 and later must use <a href="#!/guide/search_query-section-query-pagination">ranged-based queries</a> queries
+            to paginate their queries.</p>
+
         type: Number
 
       - name: per_page
-        description: Number of results per page, default is 10.
-        type: Number
+        description: |
+            Number of results per page, default is 10.
+
+            <p class="note">This parameter is only available to ACS applications created before ACS 1.1.5. 
+            Applications created with ACS 1.1.5 and later must use <a href="#!/guide/search_query-section-query-pagination">ranged-based queries</a> queries
+            to paginate their queries.</p>          type: Number
 
       - name: pretty_json
         description: | 
@@ -48,10 +62,8 @@ methods:
 
       - name: limit
         description: |
-            Instead of using `page` and `per_page` for pagination, you can use `limit` and
-            `skip` to do your own pagination. `limit` is the maximum number of records to
-            fetch. The specified value must be greater than 0 and no greater than 1000, or an HTTP 400 
-            (Bad Request) error will be returned.
+            The number of records to fetch. The value must be greater than 0, and no greater then 
+            1000, or an HTTP 400 (Bad Request) error will be returned.
         type: Number
 
       - name: skip
@@ -137,7 +149,7 @@ methods:
             after 2011-11-17T22:53:48+0000, and within 5 miles of latitude 37.12 and longitude -122.23. 
             Note that you need to convert miles to radians (5/3959 = 0.00126).
 
-                $ curl -c cookies.txt -b cookies.txt -X GET --data-urlencode 'participate_ids=4ee05d69d9ca726b85000002,4ee05d69d9ca726b85000003,4ee05d69d9ca726b85000004' --data-urlencode 'where={"created_at":{"$gte":"2011-11-17T22:53:48+0000"}, "coordinates":{"$nearSphere":[-122.23,37.12], "$maxDistance" : 0.00126}}' --data-urlencode 'order=created_at' "https://api.cloud.appcelerator.com/v1/chats/query.json?key=<YOUR APP APP KEY>&pretty_json=true"
+                $ curl -c cookies.txt -b cookies.txt -X GET --data-urlencode 'participate_ids=4ee05d69d9ca726b85000002,4ee05d69d9ca726b85000003,4ee05d69d9ca726b85000004' --data-urlencode 'where={"created_at":{"$gte":"2011-11-17T22:53:48+0000"}, "coordinates":{"$nearSphere":[-122.23,37.12], "$maxDistance" : 0.00126}}' --data-urlencode 'order=created_at' "https://api.cloud.appcelerator.com/v1/chats/query.json?key=<YOUR APP APP KEY>&count=true&pretty_json=true"
 
             Example JSON response:
 
@@ -146,10 +158,7 @@ methods:
                     "code": 200,
                     "status": "ok",
                     "method_name": "queryChatMessages",
-                    "page": 1,
-                    "per_page": 10,
-                    "total_pages": 1,
-                    "total_results": 1
+                    "count": 100
                   },
                   "response": {
                     "chats": [

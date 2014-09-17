@@ -6,19 +6,41 @@ methods:
         Performs a custom query of ACLs. Currently you can not query or sort data stored inside 
         an array or hash in custom fields.
 
-        You can paginate query results using `skip` and `limit` parameters, or `page` and `per_page`, 
-        but not both in the same query.
+        In ACS 1.1.5 and later, you can paginate query results using `skip` and `limit` parameters, or by including
+        a `where` clause to limit the results to objects whose IDs fall within a specified range.
+        For details, see [Query Pagination](#!/guide/search_query-section-query-pagination).
+
+        Prior to ACS 1.1.5 you can use `skip` and `limit` parameters, or `page` and `per_page` but 
+        not both in the same query.
 
         For details about using the query parameters, see the [Search and Query guide](#!/guide/search_query).
 
     url: acls/query.json
     parameters:
+      - name: count
+        description: |
+            Used for paginating queries. If set to `true`, the response's `meta` object contains a 
+            `count` field that indicates the number of objects that matched the query constraints.
+
+        type: Boolean
+
       - name: page
-        description: Request page number, default is 1.
+        description: |
+            Request page number, default is 1.
+
+            <p class="note">This parameter is only available to ACS applications created before ACS 1.1.5. 
+            Applications created with ACS 1.1.5 and later must use <a href="#!/guide/search_query-section-query-pagination">ranged-based queries</a> queries
+            to paginate their queries.</p>
+
         type: Number
 
       - name: per_page
-        description: Number of results per page, default is 10.
+        description: |
+            Number of results per page, default is 10.
+
+            <p class="note">This parameter is only available to ACS applications created before ACS 1.1.5. 
+            Applications created with ACS 1.1.5 and later must use <a href="#!/guide/search_query-section-query-pagination">ranged-based queries</a> queries
+            to paginate their queries.</p>          
         type: Number
 
       - name: pretty_json
@@ -29,9 +51,8 @@ methods:
 
       - name: limit
         description: |
-            Instead of using `page` and `per_page` for pagination, you can use `limit` and
-            `skip`. The specified value must be greater than 0 and no greater than 1000, or an HTTP 400 
-            (Bad Request) error will be returned.
+            The number of records to fetch. The value must be greater than 0, and no greater then 
+            1000, or an HTTP 400 (Bad Request) error will be returned.
         type: Number
 
       - name: skip
@@ -93,7 +114,7 @@ methods:
         example: |
             Example cURL request. 
 
-                $ curl -c cookies.txt -b cookies.txt -X GET 'where={"name": "photos_acl"}' "https://api.cloud.appcelerator.com/v1/acls/query.json?key=<YOUR APP APP KEY>&pretty_json=true"
+                $ curl -c cookies.txt -b cookies.txt -X GET 'where={"name": "photos_acl"}' "https://api.cloud.appcelerator.com/v1/acls/query.json?key=<YOUR APP APP KEY>&pretty_json=true&count=true"
 
             Example JSON response:
 
@@ -102,28 +123,25 @@ methods:
                     "code": 200,
                     "status": "ok",
                     "method_name": "queryACL",
-                    "page": 1,
-                    "per_page": 10,
-                    "total_pages": 1,
-                    "total_results": 1
+                    "count": 3
                   },
                   "response": {
                     "acls": [
                       {
-                        "id": "53d7cacd88971f081c0010c7",
-                        "name": "photos_acl",
-                        "created_at": "2014-07-29T16:24:45+0000",
-                        "updated_at": "2014-07-29T16:24:45+0000",
+                        "id": "5418475c20110835ae0008ec",
+                        "name": "all2",
+                        "created_at": "2014-09-16T14:21:16+0000",
+                        "updated_at": "2014-09-16T14:21:16+0000",
                         "user": {
-                          "id": "53d7c9d188971f0824001269",
-                          "created_at": "2014-07-29T16:20:33+0000",
-                          "updated_at": "2014-07-29T19:31:20+0000",
+                          "id": "54174bab20110835b6000013",
+                          "created_at": "2014-09-15T20:27:23+0000",
+                          "updated_at": "2014-09-15T20:27:24+0000",
                           "external_accounts": [
-
+                
                           ],
-                          "confirmed_at": "2014-07-29T16:20:33+0000",
-                          "username": "jon",
-                          "admin": "true",
+                          "confirmed_at": "2014-09-15T20:27:23+0000",
+                          "username": "admin2",
+                          "admin": "false",
                           "stats": {
                             "photos": {
                               "total_count": 0
@@ -131,6 +149,84 @@ methods:
                             "storage": {
                               "used": 0
                             }
+                          },
+                          "friend_counts": {
+                            "requests": 0,
+                            "friends": 0
+                          }
+                        },
+                        "public_read": false,
+                        "readers": [
+                          "54174bab20110835b6000013"
+                        ],
+                        "public_write": false,
+                        "writers": [
+                          "54174bab20110835b6000013"
+                        ]
+                      },
+                      {
+                        "id": "5418475920110835ae0008eb",
+                        "name": "all",
+                        "created_at": "2014-09-16T14:21:13+0000",
+                        "updated_at": "2014-09-16T14:21:13+0000",
+                        "user": {
+                          "id": "54174bab20110835b6000013",
+                          "created_at": "2014-09-15T20:27:23+0000",
+                          "updated_at": "2014-09-15T20:27:24+0000",
+                          "external_accounts": [
+                
+                          ],
+                          "confirmed_at": "2014-09-15T20:27:23+0000",
+                          "username": "admin2",
+                          "admin": "false",
+                          "stats": {
+                            "photos": {
+                              "total_count": 0
+                            },
+                            "storage": {
+                              "used": 0
+                            }
+                          },
+                          "friend_counts": {
+                            "requests": 0,
+                            "friends": 0
+                          }
+                        },
+                        "public_read": false,
+                        "readers": [
+                          "54174bab20110835b6000013"
+                        ],
+                        "public_write": false,
+                        "writers": [
+                          "54174bab20110835b6000013"
+                        ]
+                      },
+                      {
+                        "id": "54133da5ee2fa4caa30003dc",
+                        "name": "erbody2",
+                        "created_at": "2014-09-12T18:38:30+0000",
+                        "updated_at": "2014-09-12T18:38:30+0000",
+                        "user": {
+                          "id": "54132aa4ee2fa4caa30001ba",
+                          "created_at": "2014-09-12T17:17:24+0000",
+                          "updated_at": "2014-09-12T17:17:24+0000",
+                          "external_accounts": [
+                
+                          ],
+                          "confirmed_at": "2014-09-12T17:17:24+0000",
+                          "username": "tims",
+                          "admin": "false",
+                          "stats": {
+                            "photos": {
+                              "total_count": 0
+                            },
+                            "storage": {
+                              "used": 0
+                            }
+                          },
+                          "friend_counts": {
+                            "requests": 0,
+                            "friends": 0
                           }
                         },
                         "public_read": true,
@@ -138,7 +234,7 @@ methods:
                       }
                     ]
                   }
-                }
+                }                
 
       - platform: ios
         example: |

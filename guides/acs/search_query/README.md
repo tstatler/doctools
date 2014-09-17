@@ -6,11 +6,16 @@ The query APIs allow you to perform custom database-style searches, while search
 ## Query API Overview
 
 The query API provides an interface for applying database-style query constraints on predefined objects 
-and [custom fields](#!/guide/customfields). You can control pagination of queries, using either `page`
-and `per_page` query parameters, or `skip` and `limit` for custom pagination. You can also control
-the sort order of query results, and specify the fields you want to include (or exclude) from results.
+and [custom fields](#!/guide/customfields). 
 
-When no query parameters are provided, all objects of the specified type are returned with default pagination. 
+When no query parameters are provided, all objects of the specified type are returned with 
+default pagination. You can control pagination of queries with the `skip` and `limit` parameters, or by
+using a custom `where` clause. See [Query Pagination](#!/guide/search_query-section-query-pagination)
+for more information.
+
+You can also control the sort order of query results using the `order` parameter, 
+and specify the fields you want to include (or exclude) from results using the `sel` and
+`unsel` query parameters.
 
 ### Query API Availability
 
@@ -30,19 +35,29 @@ in the User object unless you have [admin access](#!/guide/admin_access).
 
 The following parameters are available for query operations:
 
-  * `page`
-  * `per_page`
+  * `count`
   * `limit` and `skip`
   * `where`
   * `order`
   * `sel`
   * `unsel`
+  * `page` 
+  * `per_page`
+
+#### count
+
+If `count=true` is added as a request parameter, the response will contain a `count` field that indicates the number
+of records that matched the query constraints. For more information, see 
+[Query Pagination](#!/guide/search_query-section-query-pagination).
 
 #### page
 
 Request page number starting from 1. Default is 1. 
 
 You can't use `skip` and `limit` together with `page` and `per_page` in the same query.
+<p class="note">Starting in ACS 1.1.5, <code>page</code> and <code>per_page</code> are no longer
+supported in query operations. Applications should instead use range-based queries. See 
+<a href="#!/guide/search_query-section-query-pagination">Query Pagination</a> for more information.</p>
 
 #### per_page
 
@@ -50,16 +65,18 @@ Number of results per page. Default is 10.
 
 You can't use `skip` and `limit` together with `page` and `per_page` in the same query.
 
+<p class="note">Starting in ACS 1.1.5, <code>page</code> and <code>per_page</code> are no longer
+supported in query operations. Applications should instead use range-based queries. See 
+<a href="#!/guide/search_query-section-query-pagination">Query Pagination</a> for more information.</p>
+
 #### limit and skip
 
-Instead of using `page` and `per_page` you can use `limit` and `skip` to do your own pagination. 
+The `limit` and `skip` parameters must be used together:
 
 * `limit` -- The number of records to fetch. The value must be greater than 0, and no greater then 
 1000, or an HTTP 400 (Bad Request) error will be returned.
 * `skip` -- The number of records to skip. This parameter must be used together with `limit`. The value
 must **not** be less than 0 or an HTTP 400 error will be returned.
-
-You can't use `skip` and `limit` together with `page` and `per_page` in the same query.
 
 #### where
 
@@ -257,6 +274,378 @@ field need to be specified.
 For example, if you want to return all fields except `first_name`:
 
     unsel={"all":["first_name"]}
+
+## Query Pagination
+
+Prior to ACS 1.1.5, queries were paginated using `page` and `per_page` request
+parameters, and ACS would sort and limit the data in memory. This process is
+highly inefficient, especially if a query matched millions of objects. Starting
+with ACS 1.1.5, there are two main changes to how applications query objects:
+
+* Query results are limited to 5000 records. This means if a query matches 1
+  million records, ACS will return the first 5000 records without regard to sort order.
+* If the query includes `count=true`, the response's `meta` object
+  contains a `count` field whose value is the total number of objects that match the query criteria. If the query matches more than 5000 objects, the `count` field contains the value "5000+".
+
+To narrow query results to useful collections, applications must perform _ranged-based queries_. This is done by including a `where` parameter on a object field using the `$gt` or `$lt` operators.
+
+For example, the following cURL uses a range-based query for Statuses whose custom field named `score` is less than
+100, and sorts the results in ascending order on the `score` field:
+
+    $ curl -d 'where={"score":{"$lt":100}}&order=score' -X GET "http://<HOST>/v1/statuses/query.json?key=<KEY>&count=true&pretty_json=true"
+
+ACS object IDs, represented by the `_id` field, are based on object timestamps and machine IDs, which allows for range-based pagination. For
+example, suppose an application performs a query that whose last object
+returned has an ID of `"5418a8815a6919fde8cf1e4d"`. To get the
+set of objects created before that particular object, the application would query for those objects whose `_id` field is less than that value:
+
+    $ curl -X GET -d 'where={"_id":{"$lt":"5418a8815a6919fde8cf1e4d"}}' "http://<HOST>/v1/statuses/query.json?key=<KEY>&count=true&pretty_json=t&_session_id=<SESSION_ID>"
+
+Similarly, if the ID of the first object returned in a query was
+`"5418a87f5a6919fde8cee391"` the application would query on objects whose `_id`
+field is greater than that value to retrieve the previous set of data:
+
+    $ curl -X GET -d 'where={"_id":{"$gt":"5418a87f5a6919fde8cee391"}}' "http://<HOST>/v1/statuses/query.json?key=<KEY>&count=true&pretty_json=t&_session_id=<SESSION_ID>"
+
+To query objects between a range of object IDs, use together `$gt` and `$lt` together:
+
+    curl -X GET -d 'where={"_id":{"$gt":"5418a87f5a6919fde8cee38f", "$lt":"5418a8815a6919fde8cf1e4d"}}'  "http://<HOST>/v1/statuses/query.json?key=<KEY>&count=true&pretty_json=t&_session_id=<SESSION_ID>"    
+
+For additional examples, see [Range-based Query Pagination Examples](#!/guide/search_query-section-range-based-query-pagination-examples).
+
+### Range-based Query Pagination Examples
+
+* [Query on Custom Field, Results in Ascending Order](#!/guide/search_query-section-query-on-custom-field-results-in-ascending-order)
+* [Query on Custom Field, Results in Descending Order](#!/guide/search_query-section-query-on-custom-field-results-in-descending-order)
+* [Query for Next Page of Results, Results in Ascending Order](#!/guide/search_query-section-query-for-next-page-of-results-results-in-ascending-order)
+
+#### Query on Custom Field, Results in Ascending Order
+
+In this example, the query returns Statuses objects whose custom `score` field
+is less than 100, and sorts results on the `score` in ascending order
+(`&order=score`). The query matches 100 total records.
+
+    ~ curl -d 'where={"score":{"$lt":100}}&order=score' -X GET "http://localhost:8082/v1/statuses/query.json?key=z09E6wb5mvTGQk1UIdks7KEljugVkGRd&count=true&pretty_json=true"
+    {
+      "meta": {
+        "code": 200,
+        "status": "ok",
+        "method_name": "queryStatuses",
+        "count": 100
+      },
+      "response": {
+        "statuses": [
+          {
+            "id": "53fe1c25759220e9f675413a",
+            "message": "status",
+            "created_at": "2014-08-27T17:57:57+0000",
+            "updated_at": "2014-08-27T17:57:57+0000",
+            "custom_fields": {
+              "score": 0.0
+            }, ...
+          },
+          {
+            "id": "53fe1c25759220e9f675413b",
+            "message": "status",
+            "created_at": "2014-08-27T17:57:57+0000",
+            "updated_at": "2014-08-27T17:57:57+0000",
+            "custom_fields": {
+              "score": 1.0
+            }, ...
+          },
+          {
+            "id": "53fe1c25759220e9f675413c",
+            "message": "status",
+            "created_at": "2014-08-27T17:57:57+0000",
+            "updated_at": "2014-08-27T17:57:57+0000",
+            "custom_fields": {
+              "score": 2.0
+            }, ...
+          },
+          {
+            "id": "53fe1c25759220e9f675413d",
+            "message": "status",
+            "created_at": "2014-08-27T17:57:57+0000",
+            "updated_at": "2014-08-27T17:57:57+0000",
+            "custom_fields": {
+              "score": 3.0
+            }, ...
+          },
+          {
+            "id": "53fe1c25759220e9f675413e",
+            "message": "status",
+            "created_at": "2014-08-27T17:57:57+0000",
+            "updated_at": "2014-08-27T17:57:57+0000",
+            "custom_fields": {
+              "score": 4.0
+            }, ...
+          },
+          {
+            "id": "53fe1c25759220e9f675413f",
+            "message": "status",
+            "created_at": "2014-08-27T17:57:57+0000",
+            "updated_at": "2014-08-27T17:57:57+0000",
+            "custom_fields": {
+              "score": 5.0
+            }, ...
+          },
+          {
+            "id": "53fe1c25759220e9f6754140",
+            "message": "status",
+            "created_at": "2014-08-27T17:57:57+0000",
+            "updated_at": "2014-08-27T17:57:57+0000",
+            "custom_fields": {
+              "score": 6.0
+            }, ...
+          },
+          {
+            "id": "53fe1c25759220e9f6754141",
+            "message": "status",
+            "created_at": "2014-08-27T17:57:57+0000",
+            "updated_at": "2014-08-27T17:57:57+0000",
+            "custom_fields": {
+              "score": 7.0
+            }, ...
+          },
+          {
+            "id": "53fe1c25759220e9f6754142",
+            "message": "status",
+            "created_at": "2014-08-27T17:57:57+0000",
+            "updated_at": "2014-08-27T17:57:57+0000",
+            "custom_fields": {
+              "score": 8.0
+            }, ...
+          },
+          {
+            "id": "53fe1c25759220e9f6754143",
+            "message": "status",
+            "created_at": "2014-08-27T17:57:57+0000",
+            "updated_at": "2014-08-27T17:57:57+0000",
+            "custom_fields": {
+              "score": 9.0
+            }, ...
+          }
+        ]
+      }
+    }
+
+#### Query on Custom Field, Results in Descending Order
+
+In this example, Statuses objects are queried whose custom `score` field is less
+than 100, and sorts results on `score` in descending order (`&order=-score`).
+
+
+    $ curl -d 'where={"score":{"$lt":100}}&order=-score' -X GET "http://<HOST>/v1/statuses/query.json?key=<KEY>&count=true&pretty_json=true"
+    {
+      "meta": {
+        "code": 200,
+        "status": "ok",
+        "method_name": "queryStatuses",
+        "count": 100
+      },
+      "response": {
+        "statuses": [
+          {
+            "id": "53fe1c25759220e9f675419d",
+            "message": "status",
+            "created_at": "2014-08-27T17:57:57+0000",
+            "updated_at": "2014-08-27T17:57:57+0000",
+            "custom_fields": {
+              "score" 99.0
+            }, ...
+          },
+          {
+            "id": "53fe1c25759220e9f675419c",
+            "message": "status",
+            "created_at": "2014-08-27T17:57:57+0000",
+            "updated_at": "2014-08-27T17:57:57+0000",
+            "custom_fields": {
+              "score" 98.0
+            }, ...
+          },
+          {
+            "id": "53fe1c25759220e9f675419b",
+            "message": "status",
+            "created_at": "2014-08-27T17:57:57+0000",
+            "updated_at": "2014-08-27T17:57:57+0000",
+            "custom_fields": {
+              "score" 97.0
+            }, ...
+          },
+          {
+            "id": "53fe1c25759220e9f675419a",
+            "message": "status",
+            "created_at": "2014-08-27T17:57:57+0000",
+            "updated_at": "2014-08-27T17:57:57+0000",
+            "custom_fields": {
+              "score" 96.0
+            }, ...
+          },
+          {
+            "id": "53fe1c25759220e9f6754199",
+            "message": "status",
+            "created_at": "2014-08-27T17:57:57+0000",
+            "updated_at": "2014-08-27T17:57:57+0000",
+            "custom_fields": {
+              "score" 95.0
+            }, ...
+          },
+          {
+            "id": "53fe1c25759220e9f6754198",
+            "message": "status",
+            "created_at": "2014-08-27T17:57:57+0000",
+            "updated_at": "2014-08-27T17:57:57+0000",
+            "custom_fields": {
+              "score" 94.0
+            }, ...
+          },
+          {
+            "id": "53fe1c25759220e9f6754197",
+            "message": "status",
+            "created_at": "2014-08-27T17:57:57+0000",
+            "updated_at": "2014-08-27T17:57:57+0000",
+            "custom_fields": {
+              "score" 93.0
+            }, ...
+          },
+          {
+            "id": "53fe1c25759220e9f6754196",
+            "message": "status",
+            "created_at": "2014-08-27T17:57:57+0000",
+            "updated_at": "2014-08-27T17:57:57+0000",
+            "custom_fields": {
+              "score" 92.0
+            }, ...
+          },
+          {
+            "id": "53fe1c25759220e9f6754195",
+            "message": "status",
+            "created_at": "2014-08-27T17:57:57+0000",
+            "updated_at": "2014-08-27T17:57:57+0000",
+            "custom_fields": {
+              "score" 91.0
+            }, ...
+          },
+          {
+            "id": "53fe1c25759220e9f6754194",
+            "message": "status",
+            "created_at": "2014-08-27T17:57:57+0000",
+            "updated_at": "2014-08-27T17:57:57+0000",
+            "custom_fields": {
+              "score" 90.0
+            }, ...
+          }
+        ]
+      }
+    }
+
+#### Query for Next Page of Results, Results in Ascending Order
+
+In this example, the next page of Statuses objects are queried whose `_id` field is less than `"53fe1c25759220e9f6754194"` and sorted in descending order on the custom `score` field.
+
+    $ curl -d 'where={"score":{"$lt":100},"_id":{"$lt":"53fe1c25759220e9f6754194"}}&order=-score' -X GET "http://<HOST>/v1/statuses/query.json?key=<KEY>&count=true&pretty_json=true"
+    {
+      "meta": {
+        "code": 200,
+        "status": "ok",
+        "method_name": "queryStatuses",
+        "count": 90
+      },
+      "response": {
+        "statuses": [
+          {
+            "id": "53fe1c25759220e9f6754193",
+            "message": "status",
+            "created_at": "2014-08-27T17:57:57+0000",
+            "updated_at": "2014-08-27T17:57:57+0000",
+            "custom_fields": {
+              "score": 89.0
+            }, ...
+          },
+          {
+            "id": "53fe1c25759220e9f6754192",
+            "message": "status",
+            "created_at": "2014-08-27T17:57:57+0000",
+            "updated_at": "2014-08-27T17:57:57+0000",
+            "custom_fields": {
+              "score": 88.0
+            }, ...
+          },
+          {
+            "id": "53fe1c25759220e9f6754191",
+            "message": "status",
+            "created_at": "2014-08-27T17:57:57+0000",
+            "updated_at": "2014-08-27T17:57:57+0000",
+            "custom_fields": {
+              "score": 87.0
+            }, ...
+          },
+          {
+            "id": "53fe1c25759220e9f6754190",
+            "message": "status",
+            "created_at": "2014-08-27T17:57:57+0000",
+            "updated_at": "2014-08-27T17:57:57+0000",
+            "custom_fields": {
+              "score": 86.0
+            }, ...
+          },
+          {
+            "id": "53fe1c25759220e9f675418f",
+            "message": "status",
+            "created_at": "2014-08-27T17:57:57+0000",
+            "updated_at": "2014-08-27T17:57:57+0000",
+            "custom_fields": {
+              "score": 85.0
+            }, ...
+          },
+          {
+            "id": "53fe1c25759220e9f675418e",
+            "message": "status",
+            "created_at": "2014-08-27T17:57:57+0000",
+            "updated_at": "2014-08-27T17:57:57+0000",
+            "custom_fields": {
+              "score": 84.0
+            }, ...
+          },
+          {
+            "id": "53fe1c25759220e9f675418d",
+            "message": "status",
+            "created_at": "2014-08-27T17:57:57+0000",
+            "updated_at": "2014-08-27T17:57:57+0000",
+            "custom_fields": {
+              "score": 83.0
+            }, ...
+          },
+          {
+            "id": "53fe1c25759220e9f675418c",
+            "message": "status",
+            "created_at": "2014-08-27T17:57:57+0000",
+            "updated_at": "2014-08-27T17:57:57+0000",
+            "custom_fields": {
+              "score": 82.0
+            }, ...
+          },
+          {
+            "id": "53fe1c25759220e9f675418b",
+            "message": "status",
+            "created_at": "2014-08-27T17:57:57+0000",
+            "updated_at": "2014-08-27T17:57:57+0000",
+            "custom_fields": {
+              "score": 81.0
+            }, ...
+          },
+          {
+            "id": "53fe1c25759220e9f675418a",
+            "message": "status",
+            "created_at": "2014-08-27T17:57:57+0000",
+            "updated_at": "2014-08-27T17:57:57+0000",
+            "custom_fields": {
+              "score": 80.0
+            }, ...
+          }
+        ]
+      }
+    }    
 
 ## Search API Overview
 
