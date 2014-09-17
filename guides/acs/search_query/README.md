@@ -292,7 +292,7 @@ To narrow query results to useful collections, applications must perform _ranged
 For example, the following cURL uses a range-based query for Statuses whose custom field named `score` is less than
 100, and sorts the results in ascending order on the `score` field:
 
-    $ curl -d 'where={"score":{"$lt":100}}&order=a' -X GET "http://<HOST>/v1/statuses/query.json?key=<KEY>&count=true&pretty_json=true"
+    $ curl -d 'where={"score":{"$lt":100}}&order=score' -X GET "http://<HOST>/v1/statuses/query.json?key=<KEY>&count=true&pretty_json=true"
 
 ACS object IDs, represented by the `_id` field, are based on object timestamps and machine IDs, which allows for range-based pagination. For
 example, suppose an application performs a query that whose last object
@@ -323,9 +323,9 @@ For additional examples, see [Range-based Query Pagination Examples](#!/guide/se
 
 In this example, the query returns Statuses objects whose custom `score` field
 is less than 100, and sorts results on the `score` in ascending order
-(`&order=count`). The query matches 100 total records.
+(`&order=score`). The query matches 100 total records.
 
-    ~ curl -d 'where={"count":{"$lt":100}}&order=count' -X GET "http://localhost:8082/v1/statuses/query.json?key=z09E6wb5mvTGQk1UIdks7KEljugVkGRd&count=true&pretty_json=true"
+    ~ curl -d 'where={"score":{"$lt":100}}&order=score' -X GET "http://localhost:8082/v1/statuses/query.json?key=z09E6wb5mvTGQk1UIdks7KEljugVkGRd&count=true&pretty_json=true"
     {
       "meta": {
         "code": 200,
@@ -432,10 +432,10 @@ is less than 100, and sorts results on the `score` in ascending order
 #### Query on Custom Field, Results in Descending Order
 
 In this example, Statuses objects are queried whose custom `score` field is less
-than 100, and sorts results on `score` in descending order (`&order=-count`).
+than 100, and sorts results on `score` in descending order (`&order=-score`).
 
 
-    $ curl -d 'where={"count":{"$lt":100}}&order=-count' -X GET "http://<HOST>/v1/statuses/query.json?key=<KEY>&count=true&pretty_json=true"
+    $ curl -d 'where={"score":{"$lt":100}}&order=-score' -X GET "http://<HOST>/v1/statuses/query.json?key=<KEY>&count=true&pretty_json=true"
     {
       "meta": {
         "code": 200,
@@ -451,7 +451,7 @@ than 100, and sorts results on `score` in descending order (`&order=-count`).
             "created_at": "2014-08-27T17:57:57+0000",
             "updated_at": "2014-08-27T17:57:57+0000",
             "custom_fields": {
-              "count" 99.0
+              "score" 99.0
             }, ...
           },
           {
@@ -460,7 +460,7 @@ than 100, and sorts results on `score` in descending order (`&order=-count`).
             "created_at": "2014-08-27T17:57:57+0000",
             "updated_at": "2014-08-27T17:57:57+0000",
             "custom_fields": {
-              "count" 98.0
+              "score" 98.0
             }, ...
           },
           {
@@ -469,7 +469,7 @@ than 100, and sorts results on `score` in descending order (`&order=-count`).
             "created_at": "2014-08-27T17:57:57+0000",
             "updated_at": "2014-08-27T17:57:57+0000",
             "custom_fields": {
-              "count" 97.0
+              "score" 97.0
             }, ...
           },
           {
@@ -478,7 +478,7 @@ than 100, and sorts results on `score` in descending order (`&order=-count`).
             "created_at": "2014-08-27T17:57:57+0000",
             "updated_at": "2014-08-27T17:57:57+0000",
             "custom_fields": {
-              "count" 96.0
+              "score" 96.0
             }, ...
           },
           {
@@ -487,7 +487,7 @@ than 100, and sorts results on `score` in descending order (`&order=-count`).
             "created_at": "2014-08-27T17:57:57+0000",
             "updated_at": "2014-08-27T17:57:57+0000",
             "custom_fields": {
-              "count" 95.0
+              "score" 95.0
             }, ...
           },
           {
@@ -496,7 +496,7 @@ than 100, and sorts results on `score` in descending order (`&order=-count`).
             "created_at": "2014-08-27T17:57:57+0000",
             "updated_at": "2014-08-27T17:57:57+0000",
             "custom_fields": {
-              "count" 94.0
+              "score" 94.0
             }, ...
           },
           {
@@ -505,7 +505,7 @@ than 100, and sorts results on `score` in descending order (`&order=-count`).
             "created_at": "2014-08-27T17:57:57+0000",
             "updated_at": "2014-08-27T17:57:57+0000",
             "custom_fields": {
-              "count" 93.0
+              "score" 93.0
             }, ...
           },
           {
@@ -514,7 +514,7 @@ than 100, and sorts results on `score` in descending order (`&order=-count`).
             "created_at": "2014-08-27T17:57:57+0000",
             "updated_at": "2014-08-27T17:57:57+0000",
             "custom_fields": {
-              "count" 92.0
+              "score" 92.0
             }, ...
           },
           {
@@ -523,7 +523,7 @@ than 100, and sorts results on `score` in descending order (`&order=-count`).
             "created_at": "2014-08-27T17:57:57+0000",
             "updated_at": "2014-08-27T17:57:57+0000",
             "custom_fields": {
-              "count" 91.0
+              "score" 91.0
             }, ...
           },
           {
@@ -532,7 +532,7 @@ than 100, and sorts results on `score` in descending order (`&order=-count`).
             "created_at": "2014-08-27T17:57:57+0000",
             "updated_at": "2014-08-27T17:57:57+0000",
             "custom_fields": {
-              "count" 90.0
+              "score" 90.0
             }, ...
           }
         ]
@@ -541,9 +541,9 @@ than 100, and sorts results on `score` in descending order (`&order=-count`).
 
 #### Query for Next Page of Results, Results in Ascending Order
 
-In this example, the next page of Statuses objects are queried whose `_id` field is less than `"53fe1c25759220e9f6754194"` and sorted in descending order on the custom `count` field.
+In this example, the next page of Statuses objects are queried whose `_id` field is less than `"53fe1c25759220e9f6754194"` and sorted in descending order on the custom `score` field.
 
-    $ curl -d 'where={"count":{"$lt":100},"_id":{"$lt":"53fe1c25759220e9f6754194"}}&order=-count' -X GET "http://<HOST>/v1/statuses/query.json?key=<KEY>&count=true&pretty_json=true"
+    $ curl -d 'where={"score":{"$lt":100},"_id":{"$lt":"53fe1c25759220e9f6754194"}}&order=-score' -X GET "http://<HOST>/v1/statuses/query.json?key=<KEY>&count=true&pretty_json=true"
     {
       "meta": {
         "code": 200,
@@ -559,7 +559,7 @@ In this example, the next page of Statuses objects are queried whose `_id` field
             "created_at": "2014-08-27T17:57:57+0000",
             "updated_at": "2014-08-27T17:57:57+0000",
             "custom_fields": {
-              "count": 89.0
+              "score": 89.0
             }, ...
           },
           {
@@ -568,7 +568,7 @@ In this example, the next page of Statuses objects are queried whose `_id` field
             "created_at": "2014-08-27T17:57:57+0000",
             "updated_at": "2014-08-27T17:57:57+0000",
             "custom_fields": {
-              "count": 88.0
+              "score": 88.0
             }, ...
           },
           {
@@ -577,7 +577,7 @@ In this example, the next page of Statuses objects are queried whose `_id` field
             "created_at": "2014-08-27T17:57:57+0000",
             "updated_at": "2014-08-27T17:57:57+0000",
             "custom_fields": {
-              "count": 87.0
+              "score": 87.0
             }, ...
           },
           {
@@ -586,7 +586,7 @@ In this example, the next page of Statuses objects are queried whose `_id` field
             "created_at": "2014-08-27T17:57:57+0000",
             "updated_at": "2014-08-27T17:57:57+0000",
             "custom_fields": {
-              "count": 86.0
+              "score": 86.0
             }, ...
           },
           {
@@ -595,7 +595,7 @@ In this example, the next page of Statuses objects are queried whose `_id` field
             "created_at": "2014-08-27T17:57:57+0000",
             "updated_at": "2014-08-27T17:57:57+0000",
             "custom_fields": {
-              "count": 85.0
+              "score": 85.0
             }, ...
           },
           {
@@ -604,7 +604,7 @@ In this example, the next page of Statuses objects are queried whose `_id` field
             "created_at": "2014-08-27T17:57:57+0000",
             "updated_at": "2014-08-27T17:57:57+0000",
             "custom_fields": {
-              "count": 84.0
+              "score": 84.0
             }, ...
           },
           {
@@ -613,7 +613,7 @@ In this example, the next page of Statuses objects are queried whose `_id` field
             "created_at": "2014-08-27T17:57:57+0000",
             "updated_at": "2014-08-27T17:57:57+0000",
             "custom_fields": {
-              "count": 83.0
+              "score": 83.0
             }, ...
           },
           {
@@ -622,7 +622,7 @@ In this example, the next page of Statuses objects are queried whose `_id` field
             "created_at": "2014-08-27T17:57:57+0000",
             "updated_at": "2014-08-27T17:57:57+0000",
             "custom_fields": {
-              "count": 82.0
+              "score": 82.0
             }, ...
           },
           {
@@ -631,7 +631,7 @@ In this example, the next page of Statuses objects are queried whose `_id` field
             "created_at": "2014-08-27T17:57:57+0000",
             "updated_at": "2014-08-27T17:57:57+0000",
             "custom_fields": {
-              "count": 81.0
+              "score": 81.0
             }, ...
           },
           {
@@ -640,7 +640,7 @@ In this example, the next page of Statuses objects are queried whose `_id` field
             "created_at": "2014-08-27T17:57:57+0000",
             "updated_at": "2014-08-27T17:57:57+0000",
             "custom_fields": {
-              "count": 80.0
+              "score": 80.0
             }, ...
           }
         ]
