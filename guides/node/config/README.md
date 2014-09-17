@@ -112,7 +112,7 @@ when calling the `publish` command:
 
 If no credentials are provided on the command line, `acs` will attempt to
 read the credentials from `~/.npmrc`. If no `~/.npmrc` file is found, or it doesn't 
-contains any credentials, you're prompted for the npm username and password:
+contain any credentials, you're prompted for the npm username and password:
 
     $ acs publish
     npm username: admin
