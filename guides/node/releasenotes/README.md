@@ -1,21 +1,19 @@
 # Node.ACS Release Notes
 
-## Node.ACS Release (CLI version 1.0.17 and Server version 1.1.5) -- 15 September 2014 
+## Node.ACS Release 1.1.5 -- 15 September 2014 
 
 This release of Node.ACS includes version 1.0.17 of the Node.ACS CLI and version 1.1.5 of the Node.ACS server.
 
 ### New CLI Features and Bug Fixes
 
 * Added support for [authenticated npm installations](#!/guide/node_config-section-npmauthentication). 
+* Fixed an issue with `acs whoami` returning `undefined` for the "Username" field on the enterprise ACS cluster.
 
 ### New Server Features and Bug Fixes
 
 * Reversing a change from the 1.1.4 release, applications that are started by a custom script (via `scripts.start` field in
   package.json) can now can use an arbitrary server port, rather than using the 
    `process.env.PORT` environment variable.
-* Standard Node.ACS applications can omit `"framework: "none"` from their
-  package.json files; when omitted, it's assumed the application does not use
-  the Node.ACS MVC framework.
 
 ## 14 August 2014 -- CLI version 1.0.16 / Server Release 1.1.4
 
