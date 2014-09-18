@@ -30,7 +30,7 @@ See the [examples](#!/guide/search_query-section-range-based-query-pagination-ex
   their applications to use the [range-based queries](#!/guide/search_query-section-query-pagination) 
   available in ACS 1.1.5.  
 
-* **Batch delete** &mdash; [Batch delete](#!/guide/admin_access-section-admin-batch-delete) of ACS
+* **Batch delete** &mdash; [Batch delete](#!/guide/admin_access-section-batch-delete) of ACS
   objects is now performed asynchronously in a separate process, rather than
   immediately on method invocation.
 * **Deleted Objects and Dependencies** &mdash; When an object is deleted that has dependencies, the dependent objects are not deleted. 
