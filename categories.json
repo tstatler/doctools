@@ -50,7 +50,9 @@
                     "Likes",
                     "Logs",
                     "PushLogs",
-                    "PushLogDetails"
+                    "PushLogDetails",
+                    "PushPayload",
+                    "PushSchedulePayload"
                  ]
              }
           ]

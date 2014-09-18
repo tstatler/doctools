@@ -1,0 +1,144 @@
+---
+name: PushPayload
+pseudo: true
+description: |
+    JSON payload to pass to either the {@link PushNotifications#notify} or
+    {@link PushNotifications#notify_tokens} method.
+
+    In addition to the fields below, you can also add custom fields to pass on to the client
+    application.  Note that all field names defined below are reserved keywords and should not be used as custom
+    field names.
+
+    For Android, Google Cloud Messaging (GCM) limits the payload size to 4 KB.  GCM will refuse any
+    payload that exceeds the size limit.
+
+    For iOS, Apple Push Notificaion Services (APNS) limits the payload size to 2 KB. APNS will
+    refuse any payload that exceeds the size limit.
+
+    For example, if you send the following payload:
+
+        {
+            "alert": "Sample alert",
+            "badge": "+2",
+            "category": "sampleCategory", 
+            "icon": "little_star",
+            "sound": "door_bell",
+            "title": "Example",
+            "vibrate": true,
+            "custom_field_1": "Appcelerator Cloud Services Rocks!",
+            "custom_field_2": "Hi Push"
+        }
+
+    Then, the client application will:
+
+      * Display the `Sample alert` message.
+      * Increment the current badge value by two.
+      * Play the `door_bell` sound.
+      * If the device is Android, the notification title will be `Example`, the device will
+        vibrate and the `little_star` icon will be displayed in the notification.
+      * If the device is running iOS 8 or later, it will display the user notification actions
+        associated with the `sampleCategory` user notification category.
+
+    Additionally, the client application will be passed the `custom_field_1` and `custom_field_2`
+    keys, which are custom fields that the client application can parse in the delivered JSON object.
+
+    The notification payload delivered to the client application is modified and is a bit different
+    between Android and iOS.
+
+    For Android, all Android-valid fields are contained in an `android` dictionary, while all other
+    iOS-only and custom fields are top-level keys of the payload.  For example, the original
+    payload in the example will be delivered to an Android application as:
+
+
+        {
+            "android": {
+                "title": "Example",
+                "alert": "Sample alert",
+                "icon": "little_star",
+                "badge": "+2",
+                "sound": "door_bell",
+                "vibrate": true,
+            },
+            "category": "sampleCategory",
+            "custom_field_1": "Appcelerator Cloud Services Rocks!",
+            "custom_field_2": "Hi Push"
+        }
+
+    For iOS, all iOS-valid fields are contained in an `aps` dictionary, while all other
+    Android-only and custom fields are top-level keys of the payload. For example, the original
+    payload in the example will be delivered to an iOS application as:
+
+        {
+            "aps": {
+                "alert": "Sample alert",
+                "badge": "+2",
+                "category": "sampleCategory",
+                "sound": "door_bell",
+            },
+            "title": "Example",
+            "icon": "little_star",
+            "vibrate": true,
+            "custom_field_1": "Appcelerator Cloud Services Rocks!",
+            "custom_field_2": "Hi Push"
+        }
+
+fields:
+
+  - name: alert
+    description: Notification message to be displayed.
+    type: String
+
+  - name: badge
+    description: |
+        Number to set as the badge on the application's icon.
+        Specify positive and negative numbers with the `+` and `-`
+        symbols to increment or decrement the current badge number, respectively.
+    type: String
+
+  - name: category
+    description: |
+        String identifier of the user notification category to associate with the notification.
+        **iOS only.**
+
+        For Titanium applications, this is the same value as the
+        [identifer](http://docs.appcelerator.com/titanium/latest/#!/api/Titanium.App.iOS.UserNotificationCategory-property-identifier)
+        property of the `UserNotificationCategory` object.
+    type: String
+
+  - name: content-available
+    description: |
+        Set to `1` to indicate that there is new content to download for Newsstand apps and background download content.
+        **iOS only.**
+
+        Used to trigger the
+        [`silentpush`](http://docs.appcelerator.com/titanium/latest/#!/api/Titanium.App.iOS-event-silentpush)
+        event in Titanium applications. Set the `alert` field to an empty string to make the
+        notification silent.
+    type: Number
+
+  - name: icon
+    description: |
+        Filename minus the extension of the icon to display in the notification center.
+        **Android only.**
+        
+        Place the file in `/res/drawable` for native Android applications or `/Resources` for Titanium applications.
+        Uses the app's icon by default.
+    type: String
+
+  - name: sound
+    description: |
+        Filename minus the extension of the sound to play.
+
+          * For native Android applications, place the file in the `/assets/sound` directory.
+          * For native iOS applications, place the file in the main bundle.
+          * For Android applications built with Titanium, place the file in the `/Resources/sound` directory.
+          * For iOS applications built with Titanium, place the file in the `/Resources` directory.
+
+  - name: title
+    description: Title of the notification. **Android only.**
+    type: String
+
+  - name: vibrate
+    description: If true, the device vibrates for one second. **Android only.**
+    type: String
+
