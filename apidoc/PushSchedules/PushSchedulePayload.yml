@@ -39,7 +39,7 @@ fields:
     description: |
         Schedules the recurrence of the push notification.
 
-          * *interval* (String): Set to either `daily`, `weeky` or `monthly`.
+          * *interval* (String): Set to either `daily`, `weekly` or `monthly`.
           * *end_time* (Date): Datetime to end the push notifications in ISO 8601 format.
             Must occur after *start_time*.
     type: Hash

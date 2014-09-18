@@ -9,6 +9,12 @@ description: |
     application.  Note that all field names defined below are reserved keywords and should not be used as custom
     field names.
 
+    For Android, Google Cloud Messaging (GCM) limits the payload size to 4 KB.  GCM will refuse any
+    payload that exceeds the size limit.
+
+    For iOS, Apple Push Notificaion Services (APNS) limits the payload size to 2 KB. APNS will
+    refuse any payload that exceeds the size limit.
+
     For example, if you send the following payload:
 
         {
@@ -31,7 +37,7 @@ description: |
       * If the device is Android, the notification title will be `Example`, the device will
         vibrate and the `little_star` icon will be displayed in the notification.
       * If the device is running iOS 8 or later, it will display the user notification actions
-        associated with the `sampleCategroy` user notifiation category.
+        associated with the `sampleCategory` user notification category.
 
     Additionally, the client application will be passed the `custom_field_1` and `custom_field_2`
     keys, which are custom fields that the client application can parse in the delivered JSON object.
@@ -85,7 +91,7 @@ fields:
   - name: badge
     description: |
         Number to set as the badge on the application's icon.
-        Specify postive and negative numbers with the `+` and `-`
+        Specify positive and negative numbers with the `+` and `-`
         symbols to increment or decrement the current badge number, respectively.
     type: String
 
