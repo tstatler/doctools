@@ -139,8 +139,8 @@ methods:
                     @"name": @"testACL",
                     @"reader_ids": @"",
                     @"writer_ids": @"",
-                    @"public_read": "true",
-                    @"public_write": "true"
+                    @"public_read": @"true",
+                    @"public_write": @"true"
                 };
   
                 [APSACLs update:data withBlock:^(APSResponse *e) {
