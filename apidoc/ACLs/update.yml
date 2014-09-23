@@ -139,8 +139,8 @@ methods:
                     @"name": @"testACL",
                     @"reader_ids": @"",
                     @"writer_ids": @"",
-                    @"public_read": @YES,
-                    @"public_write": @YES
+                    @"public_read": @"true",
+                    @"public_write": @"true"
                 };
   
                 [APSACLs update:data withBlock:^(APSResponse *e) {
@@ -185,8 +185,8 @@ methods:
 
                 HashMap<String, Object> data = new HashMap<String, Object>();
                 data.put("name", "access_photo_album");
-                data.put("public_read", true);
-                data.put("public_write", true);
+                data.put("public_read", "true");
+                data.put("public_write", "true");
 
                 try {
                     APSACLs.update(data, new APSResponseHandler() {
