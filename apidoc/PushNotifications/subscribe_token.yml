@@ -1,7 +1,6 @@
 name: PushNotifications
 methods:
   - name: subscribe_token
-    summmary: subscribe_token
     description: |
         Subscribes a mobile device to a push notifications channel.
 

@@ -21,6 +21,7 @@ methods:
         description: |
             Comma-separated list consisting of IDs of one or more users to add as
             friends to the current user. A user cannot add himself or herself as a friend.
+        type: String
         required: true
 
       - name: approval_required

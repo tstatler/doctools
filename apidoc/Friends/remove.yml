@@ -12,6 +12,7 @@ methods:
       - name: user_ids
         description: |
             Comma-separated list consisting of IDs of one or more users to remove from the current user.
+        type: String
         required: true
 
       - name: pretty_json

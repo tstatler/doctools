@@ -683,9 +683,11 @@ methods:
     parameters:
       - name: message_id
         description: ID of the message to reply to.
+        type: String
 
       - name: body
         description: Reply message body text.
+        type: String
 
     response-parameters:
       - name: messages
@@ -1141,12 +1143,10 @@ methods:
       - name: page
         description: Request page number, default is 1.
         type: Number
-        optional: true
 
       - name: per_page
         description: Number of results per page, default is 10.
         type: Number
-        optional: true
 
     response-parameters:
       - name: messages
@@ -1399,11 +1399,10 @@ methods:
       - name: page
         description: Request page number, default is 1.
         type: Number
-        optional: true
+
       - name: per_page
         description: Number of results per page, default is 10.
         type: Number
-        optional: true
 
     response-parameters:
       - name: messages
@@ -1658,12 +1657,10 @@ methods:
       - name: page
         description: Request page number, default is 1.
         type: Number
-        optional: true
 
       - name: per_page
         description: Number of results per page, default is 10.
         type: Number
-        optional: true
 
     response-parameters:
       - name: messages
@@ -1990,12 +1987,10 @@ methods:
       - name: page
         description: Request page number, default is 1.
         type: Number
-        optional: true
 
       - name: per_page
         description: Number of results per page, default is 10.
         type: Number
-        optional: true
 
     response-parameters:
       - name: messages

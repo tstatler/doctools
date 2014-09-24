@@ -94,6 +94,7 @@ methods:
             For example:
 
                 "photo_sync_sizes[]=preview"
+        type: String
 
       - name: pretty_json
         description: | 

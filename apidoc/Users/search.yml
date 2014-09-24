@@ -27,6 +27,7 @@ methods:
         description: |
             Space-separated list of keywords, used to perform full text search on first name, last name, email address,
             username and tags fields.
+        type: String
 
       - name: response_json_depth
         description: |
@@ -37,6 +38,7 @@ methods:
             referencing objects.
 
             Default is 3, valid range is 1 to 8.
+        type: String
 
       - name: pretty_json
         description: | 

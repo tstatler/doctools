@@ -18,6 +18,7 @@ methods:
             include not just the objects that are being queried/searched, but also with
             some important data related to the returning objects such as object's owner or
             referencing objects.
+        type: Number
 
       - name: show_user_like
         description: |

@@ -99,6 +99,7 @@ methods:
             For example:
 
                 "photo_sync_sizes[]=preview"
+        type: String
 
       - name: user_id
         description: |

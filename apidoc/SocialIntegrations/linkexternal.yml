@@ -32,6 +32,7 @@ methods:
         description: |
             Token provided by the external account. Currently only Facebook tokens are
             validated  by the Appcelerator Cloud Services server.
+        type: String
         required: True
         
       - name: pretty_json

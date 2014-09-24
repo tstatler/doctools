@@ -15,6 +15,7 @@ methods:
         description: |
             Comma-separated list consisting of IDs of one or more users to approve as
             friends to the current user.
+        type: String
         required: true
 
       - name: pretty_json

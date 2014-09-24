@@ -35,6 +35,7 @@ methods:
         description: |
             A chat group's id. Instead of using a `participate_ids` list, if you already
             know the id of a chat group, you can use it to narrow down a query.
+        type: String
 
       - name: page
         description: |
@@ -43,7 +44,6 @@ methods:
             <p class="note">This parameter is only available to ACS applications created before ACS 1.1.5. 
             Applications created with ACS 1.1.5 and later must use <a href="#!/guide/search_query-section-query-pagination">ranged-based queries</a> queries
             to paginate their queries.</p>
-
         type: Number
 
       - name: per_page
@@ -52,7 +52,8 @@ methods:
 
             <p class="note">This parameter is only available to ACS applications created before ACS 1.1.5. 
             Applications created with ACS 1.1.5 and later must use <a href="#!/guide/search_query-section-query-pagination">ranged-based queries</a> queries
-            to paginate their queries.</p>          type: Number
+            to paginate their queries.</p>
+        type: Number
 
       - name: pretty_json
         description: | 

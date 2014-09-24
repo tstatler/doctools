@@ -22,6 +22,7 @@ methods:
       - name: ip_address
         description: |
             Alternate IP address to lookup instead of using the device's own address.
+        type: String
 
       - name: pretty_json
         description: | 

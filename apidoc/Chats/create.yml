@@ -34,6 +34,7 @@ methods:
 
             You must specify either a `to_ids` list or the `chat_group_id` for an existing
             chat group.
+        type: String
 
       - name: message
         description: Message to send.
@@ -102,6 +103,7 @@ methods:
             the JSON response.
 
             Default is 3.
+        type: Number
 
       - name: pretty_json
         description: | 

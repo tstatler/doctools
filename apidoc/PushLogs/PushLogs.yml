@@ -33,14 +33,15 @@ fields:
     type: String
 
   - name: scheduled_at
-    description: | Date that push notification was scheduled (only present if the push notification
-            was created by a schedule.)
+    description: |
+        Date that push notification was scheduled (only present if the push notification
+        was created by a schedule.)
     type: Date
 
   - name: created_at
-    description: | Date that push notification was created.
+    description: Date that push notification was created.
     type: Date
 
   - name: updated_at
-    description: | Date that push notification was updated.
+    description: Date that push notification was updated.
     type: Date
