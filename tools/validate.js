@@ -19,7 +19,7 @@ var yaml = require('js-yaml'),
 
 // Recursively find, load and parse YAML files
 function recurseSearch (path) {
-    try {        
+    try {
         var fsArray = fs.readdirSync(path);
         fsArray.forEach(function(fsElement) {
             var elem = path + '/' + fsElement,
@@ -45,7 +45,7 @@ function recurseSearch (path) {
                     } else {
                         for (key in data) {
                             if (key in doc[data.name]) {
-                                console.log("WARNING: Duplicate key: %s".yellow, data.name + "." + key); 
+                                console.log("WARNING: Duplicate key: %s".yellow, data.name + "." + key);
                             }
                             doc[data.name][key] = data.key;
                         }
@@ -107,7 +107,7 @@ function validateType (t) {
             errors.join(validateType(elem));
         });
     }
-    else if (t in doc || (dataTypes.indexOf(t) > -1)) { 
+    else if (t in doc || (dataTypes.indexOf(t) > -1)) {
         return errors;
     }
     else { 
@@ -126,7 +126,7 @@ function validateFields(fields) {
             name: field.name,
             types: []
         };
-        
+
         for (key in field) {
            if (fieldKeys.indexOf(key) == -1) {
                err.invalidKeys.push(key);
@@ -141,7 +141,7 @@ function validateFields(fields) {
            }
         }
         err.missingKeys = validateArray(requiredFieldKeys, field);
-        
+
         if (err.missingKeys.length + err.invalidKeys.length + err.types.length > 0) {
             errors.push(err);
         }
@@ -160,7 +160,7 @@ function validateMethods(methods) {
             name: method.name,
             parameters: [],
             responseParameters: [],
-        };        
+        };
         for (key in method) {
             if (methodKeys.indexOf(key) == -1) {
                 err.invalidKeys.push(key);
@@ -168,7 +168,7 @@ function validateMethods(methods) {
                 switch (key) {
                     case "examples":
                         err.examples = validateExamples(method);
-                        break;                    
+                        break;
                     case "parameters":
                         err.parameters = validateFields(method.parameters);
                         break;
@@ -197,70 +197,70 @@ function outputErrors (errors) {
     errors.missingKeys.forEach(function(key){
         str += '\n\tmissing class key: ' + key; 
     });
-    
+
     errors.invalidKeys.forEach(function(key){
-        str += '\n\tinvalid class key: ' + key; 
+        str += '\n\tinvalid class key: ' + key;
     });
 
     errors.fields.forEach(function(field){
         errorCount += field.missingKeys.length + field.invalidKeys.length + field.types.length;
-        
+
         str += '\n\t' + field.name + ' (field):';
-        
+
         field.missingKeys.forEach(function(key){
             str += '\n\t\tmissing field key: ' + key; 
         });
-        
+
         field.invalidKeys.forEach(function(key){
             str += '\n\t\tinvalid field key: ' + key; 
-        });  
+        });
         field.types.forEach(function(key){
             str += '\n\t\tinvalid type: ' + key; 
-        });      
+        });
     });
-    
+
     errors.methods.forEach(function(method) {
         errorCount += method.missingKeys.length + method.invalidKeys.length + method.examples.length;
-        
+
         str += '\n\t' + method.name + ' (method):';
-        
+
         method.missingKeys.forEach(function(key){
             str += '\n\t\tmissing method key: ' + key; 
         });
         method.invalidKeys.forEach(function(key){
-            str += '\n\t\tinvalid method key: ' + key; 
-        });  
+            str += '\n\t\tinvalid method key: ' + key;
+        });
          method.examples.forEach(function(key){
-            str += '\n\t\tmissing example for platform: ' + key; 
-        });   
+            str += '\n\t\tmissing example for platform: ' + key;
+        });
         method.parameters.forEach(function(param){
             errorCount += param.missingKeys.length + param.invalidKeys.length + param.types.length;
-            str += '\n\t\t' + param.name + ' (method parameter):';        
+            str += '\n\t\t' + param.name + ' (method parameter):';
             param.missingKeys.forEach(function(key){
-                str += '\n\t\t\tmissing parameter key: ' + key; 
+                str += '\n\t\t\tmissing parameter key: ' + key;
             });
             param.invalidKeys.forEach(function(key){
-                str += '\n\t\t\tinvalid parameter key: ' + key; 
-            }); 
+                str += '\n\t\t\tinvalid parameter key: ' + key;
+            });
             param.types.forEach(function(key){
-                str += '\n\t\tinvalid parameter type: ' + key; 
-            });                           
-        });  
+                str += '\n\t\tinvalid parameter type: ' + key;
+            });
+        });
         method.responseParameters.forEach(function(param){
             errorCount += param.missingKeys.length + param.invalidKeys.length + param.types.length;
-            str += '\n\t\t' + param.name + ' (method response-parameter):';        
+            str += '\n\t\t' + param.name + ' (method response-parameter):';
             param.missingKeys.forEach(function(key){
-                str += '\n\t\t\tmissing parameter key: ' + key; 
+                str += '\n\t\t\tmissing parameter key: ' + key;
             });
             param.invalidKeys.forEach(function(key){
-                str += '\n\t\t\tinvalid parameter key: ' + key; 
-            }); 
+                str += '\n\t\t\tinvalid parameter key: ' + key;
+            });
             param.types.forEach(function(key){
-                str += '\n\t\tinvalid parameter type: ' + key; 
-            });                           
-        });      
-    });    
-    
+                str += '\n\t\tinvalid parameter type: ' + key;
+            });
+        });
+    });
+
     if (str == errors.name) {
         console.log("%s: OK".green, str)
     } else {
@@ -292,27 +292,28 @@ if (doc == null) {
 for (key in doc) {
     var cls = doc[key],
         syntaxErrors = {
-            fields: [],            
+            fields: [],
             invalidKeys: [],
             methods: [],
             missingKeys: [],
             name: cls.name
         };
     for (key in cls) {
-       if (classKeys.indexOf(key) == -1) {  
+       if (classKeys.indexOf(key) == -1) {
               syntaxErrors.invalidKeys.push(key);
-       }
+       } else {
 
-       switch (key) {
-           case "fields":
-               syntaxErrors.fields = validateFields(cls.fields);
-               break;
-           case "methods":
-               syntaxErrors.methods = validateMethods(cls.methods);
-               break;
-           default:
-               break;
-       }
+           switch (key) {
+               case "fields":
+                   syntaxErrors.fields = validateFields(cls.fields);
+                   break;
+               case "methods":
+                   syntaxErrors.methods = validateMethods(cls.methods);
+                   break;
+               default:
+                   break;
+           }
+        }
     }
 
     if (("pseudo" in cls && cls.pseudo == true) ||
@@ -323,12 +324,12 @@ for (key in doc) {
     else {
         syntaxErrors.missingKeys = validateArray(requiredClassKeys, cls);
     }
-    
+
     outputErrors(syntaxErrors);
 }
 
 if (errorCount > 0) {
-    console.log("Found %s errors.".red, errorCount);
+    console.log("Found %s errors.".yellow, errorCount);
 }
 
 // Output exceptions while parsing YAML files
@@ -339,4 +340,5 @@ if (parseErrors.length > 0) {
     });
 }
 
+// Return error code if we found errors or handled exceptions
 if (parseErrors.length + errorCount > 0) process.exit(1);
