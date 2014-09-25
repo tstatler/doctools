@@ -1,5 +1,4 @@
 name: ACLs
-summary: Access Control Lists (ACLs)
 description: |
     The ACL object implements access control lists for ACS objects. An access
     control list controls read and write access to any ACS objects it's attached

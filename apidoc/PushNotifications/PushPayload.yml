@@ -133,6 +133,7 @@ fields:
           * For native iOS applications, place the file in the main bundle.
           * For Android applications built with Titanium, place the file in the `/Resources/sound` directory.
           * For iOS applications built with Titanium, place the file in the `/Resources` directory.
+    type: String
 
   - name: title
     description: Title of the notification. **Android only.**

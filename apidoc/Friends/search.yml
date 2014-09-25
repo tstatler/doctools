@@ -17,16 +17,19 @@ methods:
             ID of the user to search for friends. If friendship is set to one way,
             by default it searches against users that the identified user is **following**. You can
             pass followers=true to search the user's followers.
+        type: String
 
       - name: followers
         description: |
             If you have friends set to one way, pass followers=true to query user_id's
             followers'
+        type: Boolean
 
       - name: q
         description: |
             Space-separated list of keywords used to perform full text search on first name, last name,
             email address, username and tags.
+        type: String
 
       - name: page
         description: Request page number, default is 1.
@@ -51,7 +54,7 @@ methods:
         description: | 
             Determines if the JSON response is formatted for readability (`true`), or displayed on a
             single line (`false`). Default is `false`.
-        type: Boolean        
+        type: Boolean
 
     response-parameters:
       - name: users

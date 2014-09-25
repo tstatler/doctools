@@ -77,7 +77,7 @@ methods:
             single line (`false`). Default is `false`.
         type: Boolean
 
-    reponse-parameters:
+    response-parameters:
       - name: posts
         description: Single-element array containing the newly-created post.
         type: Array<Posts>

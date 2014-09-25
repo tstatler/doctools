@@ -12,6 +12,7 @@ methods:
             If specified, all push subscriptions associated with this device token are
             canceled. See the "Push Notifications" section in the
             [Android SDK guide](#!/guide/sdks/android) for more information.
+        type: String
                     
       - name: pretty_json
         description: | 

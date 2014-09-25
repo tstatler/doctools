@@ -33,6 +33,7 @@ methods:
             User ID to unsubscribe from push notifications.
 
             Only application admins can unsubscribe another user from push notifications.
+        type: String
 
       - name: pretty_json
         description: | 

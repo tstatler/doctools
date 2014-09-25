@@ -39,6 +39,7 @@ methods:
             Services to confirm the user internally from your web server:
 
                 GET https://api.cloud.appcelerator.com/v1/users/confirm_user.json?confirmation_token={{confirmation_token}}&key=<Your App Key>
+        type: String
                         
       - name: pretty_json
         description: | 

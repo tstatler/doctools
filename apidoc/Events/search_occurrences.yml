@@ -58,6 +58,7 @@ methods:
         description: |
             Space-separated list of keywords, used to perform full text search on event
             name and tags.
+        type: String
 
       - name: response_json_depth
         description: |

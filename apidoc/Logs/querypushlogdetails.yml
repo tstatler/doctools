@@ -13,10 +13,11 @@ methods:
 
     parameters:
       - name: where
-        description: | Where clause whose value is JSON object consisting of the field name "push_id" 
-                and the ID of the push notification log item to query for, for example:
+        description: |
+            Where clause whose value is JSON object consisting of the field name "push_id"
+            and the ID of the push notification log item to query for, for example:
 
-                    where={"push_id":"<PUSHLOG_ID>"}
+                where={"push_id":"<PUSHLOG_ID>"}
 
         type: String
         required: true
@@ -29,13 +30,13 @@ methods:
     examples:
       - platform: titanium
         example: |
-            Use the [Titanium.Cloud.sendRequest()](http://docs.appcelerator.com/titanium/latest/#!/api/Titanium.Cloud-method-sendRequest) 
+            Use the [Titanium.Cloud.sendRequest()](http://docs.appcelerator.com/titanium/latest/#!/api/Titanium.Cloud-method-sendRequest)
             method to invoke this REST API directly.
 
       - platform: rest
         example: |        
-            Example cURL request that queries push log details for the push notification log item 
-            with the ID "53c98055e4b03fa5a90c2942", which was returned in a previous call to 
+            Example cURL request that queries push log details for the push notification log item
+            with the ID "53c98055e4b03fa5a90c2942", which was returned in a previous call to
             {@link Logs#querypushlogs}.
 
                 $ curl -b cookies.txt -c cookies.txt -d 'where={"push_id":"53c98055e4b03fa5a90c2942"}' -X GET "http://api.cloud.appcelerator.com/v1/logs/querypushlogdetails.json?key=<APP_KEY>&pretty_json=true"

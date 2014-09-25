@@ -43,7 +43,7 @@ methods:
             single line (`false`). Default is `false`.
         type: Boolean        
 
-    reponse-parameters:
+    response-parameters:
       - name: keyvalues
         description: |
             A single-element array containing the updated KeyValue object.

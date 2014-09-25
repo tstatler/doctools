@@ -87,7 +87,7 @@ methods:
             behalf of another user.
         type: String
 
-    response-params:
+    response-parameters:
       - name: checkins
         description: Single element array containing the newly-created checkin.
         type: Array<Checkins>

@@ -13,6 +13,7 @@ methods:
         description: |
             If set to true, returns the users requesting the current user as a friend
             rather than the pending friend requests that the user needs to approve.
+        type: Boolean
 
       - name: response_json_depth
         description: |

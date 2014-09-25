@@ -38,7 +38,7 @@ methods:
             single line (`false`). Default is `false`.
         type: Boolean        
 
-    response-params:
+    response-parameters:
       - name: event_occurences
         description: |
             An array of event occurrence objects, where each occurrence is represented by

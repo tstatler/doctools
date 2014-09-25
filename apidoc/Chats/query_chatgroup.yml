@@ -39,6 +39,7 @@ methods:
 
             Alternatively, you can use `chat_group_id` to identify a {@link Chats#property-chatgroup chat group}
             instead.
+        type: String
 
       - name: page
         description: |
