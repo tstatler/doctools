@@ -2,7 +2,7 @@
 
 ## Node.ACS CLI 1.0.18 -- 26 September 2014
 
-  * Fixed an issue where the `acs login` command would hang on Windows systems.
+  * Fixed an issue where CLI commands would cause Studio to hang on Windows systems.
 
 ## Node.ACS Release 1.1.5 -- 18 September 2014
 
