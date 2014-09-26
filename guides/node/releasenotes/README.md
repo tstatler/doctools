@@ -1,6 +1,6 @@
 # Node.ACS Release Notes
 
-## Node.ACS CLI 1.0.18 -- 26 September 2014
+## Node.ACS CLI 1.0.18 -- 28 September 2014
 
   * Fixed an issue where CLI commands would cause Studio to hang on Windows systems.
 
