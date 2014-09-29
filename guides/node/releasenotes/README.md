@@ -1,6 +1,10 @@
 # Node.ACS Release Notes
 
-## Node.ACS Release 1.1.5 -- 15 September 2014 
+## Node.ACS CLI 1.0.18 -- 28 September 2014
+
+  * Fixed an issue where CLI commands would cause Studio to hang on Windows systems.
+
+## Node.ACS Release 1.1.5 -- 18 September 2014
 
 This release of Node.ACS includes version 1.0.17 of the Node.ACS CLI and version 1.1.5 of the Node.ACS server.
 
