@@ -19,9 +19,14 @@ methods:
               "200": 1
             },
 
-        To create a review, you must specify a target object using one of the `id` parameters. Only one `id` parameter may be specified.
+        To create a review, you must specify a target object using one of the `<object>_id` parameters, 
+        such as `photo_id` or `post_id`. Only one `<object>_id` parameter may be specified in a request.
+        To specify a {@link Users User} to review, use the the `user_object_id` parameter.
 
-        A review must include either `content` or `rating`. It can also include both.
+        An application admin can create a review on behalf of another user by 
+        specifying that user's ID in the `user_id` method parameter. 
+
+        A review must include either `content` or `rating`. It can also include both. 
 
     url: reviews/create.json
     http-method: POST
@@ -30,39 +35,48 @@ methods:
     parameters:
 
       - name: post_id
-        description: Post object to review.
+        description: | 
+            ID of the {@link Posts} object to review.
         type: String
 
       - name: photo_id
-        description: Photo object to review.
+        description: | 
+            ID of the {@link Photos} object to review.
         type: String
 
-      - name: user_id
-        description: User object to review.
+      - name: user_object_id
+        description: | 
+            ID of the {@link Users} object to review.
         type: String
 
       - name: event_id
-        description: Event object to review.
+        description: | 
+            ID of the {@link Events} object to review.
         type: String
 
       - name: place_id
-        description: Place object to review.
+        description: | 
+            ID of the {@link Places} object to review.
         type: String
 
       - name: checkin_id
-        description: Checkin object to review.
+        description: |
+            ID of the {@link Checkins} object to review.
         type: String
 
       - name: review_id
-        description: Review object to review.
+        description: |
+            ID of the {@link Reviews} object to review.
         type: String
 
       - name: custom_object_id
-        description: Custom object to review.
+        description: |
+            ID of the {@link CustomObjects} object to review.
         type: String
 
       - name: status_id
-        description: Status object to review.
+        description: |
+            ID of the {@link Statuses} object to review.
         type: String
 
       - name: content
@@ -108,9 +122,9 @@ methods:
 
       - name: user_id
         description: |
-            User ID to create the review on behalf of.
+            ID of the {@link Users} object to create the review on behalf of.
 
-            The current login user must be an application admin to create an object on
+            The currently loggged-in user must be an application admin to create an review on
             behalf of another user.
         type: String
         
