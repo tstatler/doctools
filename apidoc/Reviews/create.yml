@@ -124,7 +124,7 @@ methods:
         description: |
             ID of the {@link Users} object to create the review on behalf of.
 
-            The currently loggged-in user must be an application admin to create an review on
+            The currently loggged-in user must be an application admin to create a review on
             behalf of another user.
         type: String
         
