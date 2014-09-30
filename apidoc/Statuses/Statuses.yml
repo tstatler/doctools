@@ -1,6 +1,12 @@
 name: Statuses
 description: |
     The Statuses object lets your application create and manage Twitter-like status messages.
+    If you are an application admin, you can {@link Statuses#create} or {@link Statuses#update} a 
+    status on behalf of another user by including the `user_id` field in the request.
+
+    A status can optionally be associated with either a {@link Places} object or an {@link Events}
+    objects, but not both.
+
 fields:
   - name: id
     description: Generated unique ID for this status.
@@ -15,15 +21,15 @@ fields:
     type: String
 
   - name: place
-    description: The place object associated with this status.
+    description: The {@link Places} object associated with this status.
     type: Places
 
   - name: event
-    description: The event object associated with this status.
+    description: The {@link Events} object associated with this status.
     type: Events
 
   - name: photo
-    description: The primary photo for this status.
+    description: The primary {@link Photos photo} for this status.
     type: Photos
 
   - name: tags

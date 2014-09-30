@@ -3,7 +3,12 @@ methods:
   - name: create
     summary: Create a Status
     description: |
-        Creates a status for the currenty logged in user.
+        Creates a status for the currenty logged in user. You can optionally associate a new status with 
+        either an existing {@link Places} object or an {@link Events} object, but not both.
+
+        Application admins can create a status on behalf of another user by including the
+        `user_id` field in the request.
+
     url: statuses/create.json
     http-method: POST
     login-required: true
@@ -16,11 +21,15 @@ methods:
         required: true
 
       - name: place_id
-        description: ID of the place this status is associated with.
+        description: | 
+            ID of the {@link Places} object this status is associated with. You can associate the status 
+            either with a {@link Places} object or an {@link Events} object, but not both.
         type: String
 
       - name: event_id
-        description: ID of the event this status is associated with.
+        description: | 
+            ID of the {@link Events} object this status is associated with. You can associate the status 
+            either with an {@link Events} object or a {@link Places} object, but not both.
         type: String
 
       - name: photo
@@ -63,10 +72,8 @@ methods:
 
       - name: user_id
         description: |
-            User ID to create the status on behalf of.
-
-            The current login user must be an application admin to create a status on
-            behalf of another user.
+            User ID to create the status on behalf of. You must be logged in as an application admin
+            to create a status on behalf of another user.
         type: String
                 
       - name: pretty_json
