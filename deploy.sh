@@ -159,7 +159,8 @@ if [ $include_modules ]; then
     fi
     module_dirs="$APPC_MODULES/ti.map/apidoc $APPC_MODULES/ti.facebook/apidoc
                  $APPC_MODULES/ti.nfc/apidoc $APPC_MODULES/ti.newsstand/apidoc $TIZEN_MODULE
-                 $APPC_MODULES/ti.coremotion/apidoc $TI_MODULES/urlSession/apidoc"
+                 $APPC_MODULES/ti.coremotion/apidoc $TI_MODULES/urlSession/apidoc
+                 $APPC_MODULES/ti.touchid/apidoc"
 
     if [ $addon_guidesdir ]; then
         module_dirs+=" $DOCTOOLS/modules $APPC_MODULES/ti.geofence/apidoc $APPC_MODULES/appcelerator.https/apidoc"
