@@ -17,6 +17,7 @@ MAP_DIR=$TI_ROOT/appc_modules/ti.map
 NFC_DIR=$TI_ROOT/appc_modules/ti.nfc
 NEWSSTAND_DIR=$TI_ROOT/appc_modules/ti.newsstand
 TIZEN_DIR=$TI_ROOT/titanium_mobile_tizen
+TOUCHID_DIR=$TI_ROOT/appc_modules/ti.touchid
 
 ## Error handling
 fail_on_error() {
@@ -72,5 +73,6 @@ repo_update ti.map $MAP_DIR origin master appcelerator-modules
 repo_update ti.nfc $NFC_DIR origin master appcelerator-modules
 repo_update ti.newsstand $NEWSSTAND_DIR origin master appcelerator-modules
 repo_update titanium_mobile_tizen $TIZEN_DIR origin 3_2_X appcelerator
+repo_update ti.touchid $TOUCHID_DIR origin master appcelerator
 
 echo "Repo updates completed"
