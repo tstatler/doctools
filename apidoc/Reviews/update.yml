@@ -8,7 +8,8 @@ methods:
 
         Ordinary users can update reviews they own or have update access to.
 
-        An application admin can update any Review object.
+        An application admin can update a Review on behalf of another user by 
+        specifying that user's ID in the `user_id` method parameter.
 
     url: reviews/update.json
     http-method: PUT
@@ -17,43 +18,52 @@ methods:
     parameters:
 
       - name: post_id
-        description: Post object associated with this review.
+        description: | 
+            ID of the {@link Posts} object to review.
         type: String
 
       - name: photo_id
-        description: Photo object associated with this review.
+        description: | 
+            ID of the {@link Photos} object to review.
         type: String
 
-      - name: user_id
-        description: User object associated with this review.
+      - name: user_object_id
+        description: | 
+            ID of the {@link Users} object to review.
         type: String
 
       - name: event_id
-        description: Event object associated with this review.
+        description: | 
+            ID of the {@link Events} object to review.
         type: String
 
       - name: place_id
-        description: Place object associated with this review.
+        description: | 
+            ID of the {@link Places} object to review.
         type: String
 
       - name: checkin_id
-        description: Checkin object associated with this review.
+        description: |
+            ID of the {@link Checkins} object to review.
         type: String
 
       - name: review_object_id
-        description: Review object associated with this review.
+        description: |
+            ID of the {@link Reviews} object to review.
         type: String
 
       - name: custom_object_id
-        description: Custom object associated with this review.
+        description: |
+            ID of the {@link CustomObjects} object to review.
         type: String
 
       - name: status_id
-        description: Status object associated with this review.
+        description: |
+            ID of the {@link Statuses} object to review.
         type: String
 
       - name: review_id
-        description: Review object to update.
+        description: ID of the Review object to update.
         type: String
         required: true
 
@@ -62,8 +72,15 @@ methods:
         type: String
 
       - name: rating
-        description: Rating to be associated with review. You can use 1 to represent like.
+        description: Rating to be associated with review. You can use "1" to represent one {@link Likes Like}.
         type: String
+
+      - name: user_id
+        description: |
+            ID of the {@link Users} object to update the review on behalf of. The currently 
+            logged-in user must be an application admin to create a review on
+            behalf of another user.        
+        type: String    
 
       - name: allow_duplicate
         description: |
