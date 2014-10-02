@@ -78,7 +78,7 @@ methods:
       - name: user_id
         description: |
             ID of the {@link Users} object to update the review on behalf of. The currently 
-            loggged-in user must be an application admin to create a review on
+            logged-in user must be an application admin to create a review on
             behalf of another user.        
 
       - name: allow_duplicate
