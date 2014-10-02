@@ -80,6 +80,7 @@ methods:
             ID of the {@link Users} object to update the review on behalf of. The currently 
             logged-in user must be an application admin to create a review on
             behalf of another user.        
+        type: String    
 
       - name: allow_duplicate
         description: |
