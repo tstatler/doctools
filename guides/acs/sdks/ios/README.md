@@ -36,7 +36,7 @@ and then run the application.
 7. Select **Development** from the Environment menu, then click the clipboard icon to copy the key to your clipboard.
 {@img copy_key.png}
 
-Next, you'll import the APSCloudExample project into Xcode, copy the key from your clipboard into the 
+Next, you'll import the APSCloudExample project into Xcode, copy the key from your clipboard into the
 application's main activity, and run the application.
 
 **To import the completed APSCloudExample project:**
@@ -66,11 +66,15 @@ and then click **Create**. If the user is created successfully, the following di
 
 Once you've [created an application in Dashboard](http://docs.appcelerator.com/platform/latest/#!/guide/Managing_Native_Applications_in_Dashboard), 
 downloaded the SDK, and obtained your application service key, there are few steps to enable Cloud service in your iOS project.
+The steps are slightly different if you are using Xcode 6 or 5.
 
 **To enable the Cloud service in an existing Xcode project**:
 
-1. Drag the **Appcelerator.framework** folder from the **appcelerator-sdk-ios-1.0.0/** folder into 
-your project's Frameworks folder, making sure **_Copy items into destination group's folder_** is checked, and click Finish.
+1. Add the **appcelerator-sdk-ios-1.0.0/Appcelerator.framework** folder to your project:
+    * For Xcode 5 projects, drag the **Appcelerator.framework** folder to your project's Frameworks folder, 
+    making sure **Copy items into destination group's folder** is checked, and click Finish.
+    * For Xcode 6 projects, drag the **Appcelerator.framework** folder to the project's root folder, 
+    making sure **Copy Items if Needed** is checked, and click **Finish**.
 2. On your project's **_Build Phases_** tab, expand the **_Link Binary With Libraries_** section and add 
 the **libsqlite3.dylib** and **libz.dylib** frameworks.
 4. On your project's **Build Settings** tab, click **All** in the top-left corner, then expand the **_Linking_** section.
