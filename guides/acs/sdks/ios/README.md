@@ -72,7 +72,7 @@ The steps are slightly different if you are using Xcode 6 or 5.
 
 1. Add the **appcelerator-sdk-ios-1.0.0/Appcelerator.framework** folder to your project:
     * For Xcode 5 projects, drag the **Appcelerator.framework** folder to your project's Frameworks folder, 
-    making sure **Copy items into destination group's folder** is checked, and click Finish.
+    making sure **Copy items into destination group's folder** is checked, and click **Finish**.
     * For Xcode 6 projects, drag the **Appcelerator.framework** folder to the project's root folder, 
     making sure **Copy Items if Needed** is checked, and click **Finish**.
 2. On your project's **_Build Phases_** tab, expand the **_Link Binary With Libraries_** section and add 
