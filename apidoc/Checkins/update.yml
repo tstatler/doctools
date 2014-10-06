@@ -1,0 +1,166 @@
+name: Checkins
+methods:
+  - name: update
+    description: |
+        Updates a checkin for the currenty logged in user.
+
+        Application admins can update another user's checkin on their behalf by including the
+        `user_id` field in the request.
+
+    url: checkins/update.json
+    http-method: PUT
+    login-required: true
+
+    parameters:
+      - name: checkin_id
+        description: |
+            ID of the {@link Checkins} to update.
+        type: String
+        required: true
+
+      - name: place_id
+        description: |
+            ID of the {@link Places} to check in to.
+
+            You can associate a checkin with either a {@link Places} or {@link Events} object but not both.
+        type: String
+
+      - name: event_id
+        description: |
+            ID of the {@link Events} to check in to.
+
+            You can associate a checkin with either a {@link Places} or {@link Events} object but not both.
+        type: String
+
+      - name: message
+        description: Message to attach to the checkin.
+        type: String
+
+      - name: photo
+        description: |
+            New photo to attach as the primary photo for the checkin.
+
+            When you use the `photo` parameter to attach a new photo, you can use the
+            [custom resize and sync options](#!/guide/photosizes).
+        type: Photos
+
+      - name: photo_id
+        description: |
+            ID of an existing photo to attach as the primary photo for the checkin.
+        type: String
+
+      - name: pretty_json
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean        
+
+      - name: tags
+        description:  |
+            Comma-separated list of tags for this checkin.
+        type: String
+
+      - name: custom_fields
+        description: User defined fields. See [Custom Data Fields](#!/guide/customfields).
+        type: [ String, Hash ]
+
+      - name: acl_name
+        description: |
+            Name of an {@link ACLs} to associate with this checkin object.
+
+            An ACL can be specified using `acl_name` or `acl_id`. The two parameters are
+            mutually exclusive.
+        type: String
+
+      - name: acl_id
+        description: |
+            ID of an {@link ACLs} to associate with this checkin object.
+
+            An ACL can be specified using `acl_name` or `acl_id`. The two parameters are
+            mutually exclusive.
+        type: String
+
+      - name: user_id
+        description: |
+            User ID to update the checkin on behalf of.
+
+            The current login user must be an application admin to create a checkin on
+            behalf of another user.
+        type: String
+
+    response-parameters:
+      - name: checkins
+        description: Single element array containing the updated checkin.
+        type: Array<Checkins>
+
+    examples:
+      - platform: titanium
+        example: |
+            Use the [Titanium.Cloud.sendRequest()](http://docs.appcelerator.com/titanium/latest/#!/api/Titanium.Cloud-method-sendRequest)
+            method to invoke this REST API directly.
+
+      - platform: rest
+        example: |
+            Example cURL request:
+
+                $ curl -b cookies.txt -c cookies.txt -F "message=Try the grilled steak burrito with guacamole!" -F "checkin_id=4d713b4f6f70951043000001" "https://api.cloud.appcelerator.com/v1/checkins/update.json?key=<YOUR APP APP KEY>&pretty_json=true"
+
+            Example JSON response:
+
+                {
+                  "meta": {
+                    "status":"ok",
+                    "code":200,
+                    "method_name":"updateCheckin"
+                  },
+                  "response": {
+                    "checkins": [
+                      {
+                        "id":"4d713b4f6f70951043000001",
+                        "message":"Try the grilled steak burrito with guacamole!",
+                        "created_at":"2011-03-04T19:19:43+0000",
+                        "updated_at":"2011-03-04T20:31:50+0000",
+                        "place": {
+                          "id":"4d6f13e96f70953608000012",
+                          "name":"Maya Restaurant",
+                          "created_at":"2011-03-03T04:07:05+0000",
+                          "updated_at":"2011-03-03T04:07:05+0000",
+                          "address":"303 2nd Street",
+                          "city":"San Francisco",
+                          "state":"CA",
+                          "country":"United States",
+                          "phone":"(415) 543-2928",
+                          "lat":37.784732,
+                          "lng":-122.395441
+                        },
+                        "user": {
+                          "id":"4d6e77386f70950c89000001",
+                          "first_name":"Michael",
+                          "last_name":"Goff",
+                          "created_at":"2011-03-02T16:58:32+0000",
+                          "updated_at":"2011-03-02T17:51:42+0000"
+                        },
+                        "photo": {
+                          "id":"4d713b4f6f70951043000002",
+                          "filename":"photo.jpg",
+                          "size":584344,
+                          "md5":"589b8ad43ed20bf8e622d719642bc939",
+                          "created_at":"2011-03-04T19:19:43+0000",
+                          "updated_at":"2011-03-04T19:19:43+0000",
+                          "processed":false
+                        }
+                      }
+                    ]
+                  }
+                }
+
+      - platform: ios
+        example: |
+            Use the \[[APSCloud sendRequest](http://docs.appcelerator.com/aps-sdk-apidoc/latest/ios/Classes/APSCloud.html#//api/name/sendRequest:method:data:handler:)\]
+            method to invoke this REST API directly.
+
+      - platform: android
+        example: |
+            Use the [APSCloud.sendRequest()](http://docs.appcelerator.com/aps-sdk-apidoc/latest/android/com/appcelerator/aps/APSCloud.html#sendRequest%28java.lang.String,java.lang.String, java.util.Map, com.appcelerator.aps.APSResponseHandler%29)
+            method to invoke this REST API directly.
+
