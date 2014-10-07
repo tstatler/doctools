@@ -38,7 +38,7 @@ methods:
 
       - name: photo
         description: |
-            New photo to attach as the primary photo for the checkin.
+            New {@link Photos} object to attach as the primary photo for the checkin.
 
             When you use the `photo` parameter to attach a new photo, you can use the
             [custom resize and sync options](#!/guide/photosizes).
@@ -46,7 +46,7 @@ methods:
 
       - name: photo_id
         description: |
-            ID of an existing photo to attach as the primary photo for the checkin.
+            ID of an existing {@link Photos} object to attach as the primary photo for the checkin.
         type: String
 
       - name: pretty_json
@@ -82,7 +82,7 @@ methods:
 
       - name: user_id
         description: |
-            User ID to update the checkin on behalf of.
+            ID of {@link Users} to update the checkin on behalf of.
 
             The current login user must be an application admin to create a checkin on
             behalf of another user.
