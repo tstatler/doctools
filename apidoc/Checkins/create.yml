@@ -21,14 +21,14 @@ methods:
         description: |
             ID of the {@link Places} to check in to.
 
-            Either `place_id` or `event_id` must be specified.
+            You can associate a checkin with either a {@link Places} or {@link Events} object but not both.
         type: String
 
       - name: event_id
         description: |
             ID of the {@link Events} to check in to.
 
-            Either `place_id` or `event_id` must be specified.
+            You can associate a checkin with either a {@link Places} or {@link Events} object but not both.
         type: String
 
       - name: message
