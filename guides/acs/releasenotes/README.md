@@ -8,7 +8,9 @@ and  improvements.
 **New Features**
 
 * Increased size limit of iOS [push notification payloads](/cloud/latest/#!/api/PushPayload) to 2048KB.
-* Added support for push notifications to iOS 8 devices. 
+* Added support for `category` field in push notifications to support 
+[interactive notifications](http://docs.appcelerator.com/titanium/latest/#!/guide/iOS_Interactive_Notifications) 
+on iOS 8 devices.
 
 **Bug Fixes and Improvements**
 
