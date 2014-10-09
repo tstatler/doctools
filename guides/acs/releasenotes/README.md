@@ -1,5 +1,25 @@
 # ACS Release Notes
 
+## ACS Release 1.1.6 - 13 October 2014
+
+Appcelerator Cloud Services version 1.1.6 contains the following new features, bug fixes,
+and  improvements.
+
+**New Features**
+
+* Increased size limit of iOS [push notification payloads](/cloud/latest/#!/api/PushPayload) to 2048KB.
+* Added support for [`category`](/cloud/latest/#!/api/PushPayload-property-category) 
+and [`content-available`](/cloud/latest/#!/api/PushPayload-property-content-available) fields 
+to iOS push notifications. 
+
+**Bug Fixes and Improvements**
+
+* Fixed errors that occurred in the [Community web console](https://my.appcelerator.com/apps) when
+creating, editing, updating, or deleting application users.
+* The total [photo count](/cloud/latest/index.html#!/api/Photos-method-count) for an application now 
+properly updates when adding or removing an  object's primary photo, such as
+{@link Places#photo} or {@link Users#photo}.
+
 ## ACS Release 1.1.5 - 15 September 2014
 
 The 1.1.5 release of Appcelerator Cloud Services includes the following
