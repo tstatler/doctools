@@ -6,11 +6,11 @@ This release of Node.ACS includes version 1.0.19 of the Node.ACS CLI and version
 
 **Node.ACS CLI Bug Fixes and Improvements**
 
-* Fixed a security issue where a user could use `acs login` to login with another user's name 
-without providing a correct password if the other user had a current session with Appcelerator Dashboard.
-
 * Improved error handling and output when running `acs` commands against a project with an 
 invalid or improperly formatted package.json file.
+
+* Fixed 'Permission denied' error that occurred on some systems when installing ACS npm package 
+globally (for example, `sudo npm install -g acs`). 
 
 ## Node.ACS CLI 1.0.18 -- 28 September 2014
 

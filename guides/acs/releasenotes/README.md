@@ -8,9 +8,7 @@ and  improvements.
 **New Features**
 
 * Increased size limit of iOS [push notification payloads](/cloud/latest/#!/api/PushPayload) to 2048KB.
-* Added support for [`category`](/cloud/latest/#!/api/PushPayload-property-category) 
-and [`content-available`](/cloud/latest/#!/api/PushPayload-property-content-available) fields 
-to iOS push notifications. 
+* Added support for push notifications to iOS 8 devices. 
 
 **Bug Fixes and Improvements**
 
