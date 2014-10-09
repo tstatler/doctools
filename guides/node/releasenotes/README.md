@@ -1,10 +1,10 @@
 # Node.ACS Release Notes
 
-## Node.ACS 1.0.16 -- 13 October 2014
+## Node.ACS 1.1.6 -- 13 October 2014
 
-Node.ACS version 1.1.6 contains the following new features, bug fixes, and  improvements.
+This release of Node.ACS includes version 1.0.19 of the Node.ACS CLI and version 1.1.6 of the Node.ACS server.
 
-**Bug Fixes and Improvements**
+**Node.ACS CLI Bug Fixes and Improvements**
 
 * Fixed a security issue where a user could use `acs login` to login with another user's name 
 without providing a correct password if the other user had a current session with Appcelerator Dashboard.
