@@ -1,6 +1,6 @@
 # Node.ACS Release Notes
 
-## Node.ACS 1.1.6 -- 13 October 2014
+## Node.ACS 1.1.6 -- 29 October 2014
 
 This release of Node.ACS includes version 1.0.19 of the Node.ACS CLI and version 1.1.6 of the Node.ACS server.
 
