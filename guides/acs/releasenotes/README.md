@@ -7,6 +7,16 @@ and  improvements.
 
 **New Features**
 
+* With respect to ACS query operations, starting with ACS 1.1.6, we have made the following changes:
+
+    * Skip is limited to 0-4999; as a result you can not skip beyond 5000 records.
+    * If the query includes `count=true`, the query response's `meta` object will contains a `count` 
+field whose value is the total number of objects that matched the query criteria. 
+If the query matches more than 5000 objects, the `count` field will contain the value "5000+". 
+If your query result set includes more than 5000 records, 
+you should perform range-based queries for pagination as discussed
+in <a href="#!/guide/search_query-section-query-pagination">Query Pagination</a>.</p>
+
 * Increased size limit of iOS [push notification payloads](/cloud/latest/#!/api/PushPayload) to 2048KB.
 * Added support for `category` field in push notifications to support 
 [interactive notifications](http://docs.appcelerator.com/titanium/latest/#!/guide/iOS_Interactive_Notifications) 
@@ -448,4 +458,3 @@ Highlights include:
   * A number of fixes to the ACS web administration console.
   * An update was made to the ACS Android SDK. You can download the latest version from
   * <https://github.com/cocoafish/cocoafish-android-sdk>. For more information on the SDK, see [Getting Started: Using the Android SDK](#!/guide/android).
-
