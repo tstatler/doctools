@@ -1,0 +1,240 @@
+name: SocialIntegrations
+methods:
+  - name: external_account_unlink
+    summary: Unlink an external account
+    description: |
+        Disassociate an external account from a Appcelerator Cloud Services user
+        account.
+    url: users/external_account_unlink.json
+    http-method: DELETE
+    login-required: true
+
+    parameters:
+      - name: id
+        description: |
+            External account's user ID.
+        type: String
+        required: True
+
+      - name: type
+        description: |
+            Type of the external account, for example, "facebook", "linkedin", or
+            "twitter".
+        type: String
+        required: True
+
+      - name: pretty_json
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
+
+    response-parameters:
+      - name: users
+        description: |
+            Single-element array containing the updated user record.
+        type: Array<Users>
+
+    examples:
+      - platform: titanium
+        example: |
+            This example unlinks an external Facebook account.
+
+                Cloud.SocialIntegrations.externalAccountUnlink({
+                    type: 'facebook',
+                    id: facebookUserId
+                }, function (e) {
+                    if (e.success) {
+                        var user = e.users[0];
+                        alert('Success:\n' +
+                            'id: ' + user.id + '\n' +
+                            'first name: ' + user.first_name + '\n' +
+                            'last name: ' + user.last_name);
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
+
+      - platform: rest
+        example: |
+            Example cURL request:
+
+                $ curl -b cookies.txt -c cookies.txt -X DELETE "https://api.cloud.appcelerator.com/v1/users/external_account_unlink.json?key=<YOUR APP APP KEY>&pretty_json=true&id=1234567&type=facebook"
+
+            Example JSON response:
+
+                {
+                  "meta": {
+                    "status":"ok",
+                    "code":200,
+                    "method_name":"unlinkExternalAccount"
+                  },
+                  "response": {
+                    "users": [
+                      {
+                        "id": "4e9afa18356f4e647900002e",
+                        "first_name": "John",
+                        "last_name": "Smith",
+                        "created_at": "2011-10-16T15:36:56+0000",
+                        "updated_at": "2011-10-16T15:54:57+0000",
+                        "external_accounts": [
+                        ]
+                      }
+                    ]
+                  }
+                }
+
+                For Facebook:
+
+                NSError *error;
+                [[ACSClient defaultACSClient] unlinkFromFacebook:&error;];
+
+            This is a synchronous call and doesn't have a callback method.
+
+            For other types of external account, you need to perform the
+            external_account_unlink call.
+
+      - platform: ios
+        example: |
+            Example iOS APS SDK call:
+
+                // Create dictionary of parameters to be passed with the request
+                NSDictionary *data = @{
+                    @"type": @"facebook",
+                    @"id": facebookUserId
+                };
+                
+                [APSSocialIntegrations externalAccountUnlink:data withBlock:^(APSResponse *e) {
+                      if (e.success) {
+                          NSString *message = [NSString stringWithFormat:@"Unlinked %lu users", (unsigned long)((NSArray *) e.response[@"users"]).count ];
+                          [[[UIAlertView alloc] initWithTitle:@"Success" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      } else {
+                          [[[UIAlertView alloc] initWithTitle:@"Error" message:e.errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      }
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
+                NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
+                [paramDict setObject:@"1234567" forKey:@"id"];
+                [paramDict setObject:@"twitter" forKey:@"type"];
+                CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"DELETE" baseUrl:@"users/external_account_unlink.json" paramDict:paramDict];
+                [request startAsynchronous];
+                [request release];
+
+            SDK Callback:
+
+                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
+                {
+                	if (response.meta.status == 200 && response.meta.method == "unlinkExternalAccount") {
+                		// success
+                	}
+                }
+
+      - platform: android
+        example: |
+            Example Android call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("id", "109216395704353");
+                data.put("type", "facebook");
+
+                try {
+                    APSSocialIntegrations.externalAccountUnlink(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                Log.i("APSSocialIntegrations", "Success!");
+                            } else {
+                                Log.e("APSSocialIntegrations", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSSocialIntegrations", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSSocialIntegrations", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
+        example: |
+            Example Android call:
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("id", "109216395704353");
+                data.put("type", "facebook");
+                CCResponse response = sdk.sendRequest("social/facebook/unlink.json", CCRequestMethod.DELETE, data);
+
+            SDK Callback:
+
+                JSONObject responseJSON = response.getResponseData();
+                CCMeta meta = response.getMeta();
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
+                    && "unlinkExternalAccount".equals(meta.getMethod())) {
+                  JSONArray users = responseJSON.getJSONArray("users");
+                  ...
+                }
+
+      - platform: javascript
+        example: |
+            Example Javascript call:
+
+                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+                var data = {
+                  id: '109216395704353',
+                  type: 'facebook'
+                }
+                sdk.sendRequest('social/facebook/unlink.json', 'DELETE', data, callback);
+
+            SDK Callback:
+
+                function callback(data) {
+                  if(data) {
+                    if(data.meta) {
+                      var meta = data.meta;
+                      if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'unlinkExternalAccount') {
+                        var user = data.response.users[0];
+                       	...
+                      }
+                    }
+                  }
+                }
+
+      - platform: actionscript
+        example: |
+            Example Actionscript call:
+
+                var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+                var data:Object = new Object();
+                data.id = "109216395704353";
+                data.type = "facebook";
+                sdk.sendRequest("social/facebook/unlink.json", URLRequestMethod.DELETE, data, false, callback);
+
+            SDK Callback:
+
+                function callback(data:Object):void {
+                  if(data) {
+                    if(data.hasOwnProperty("meta")) {
+                      var meta:Object = data.meta;
+                      if(meta.status == "ok" && meta.code == 200 && meta.method_name == "unlinkExternalAccount") {
+                       	var user:Object = data.response.users[0];
+                       	...
+                      }
+                    }
+                  }
+                }
+

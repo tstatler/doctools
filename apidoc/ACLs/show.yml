@@ -1,0 +1,205 @@
+name: ACLs
+methods:
+  - name: show
+    summary: Show an ACL
+    description: |
+        Shows the ACL object with the given `id` or `name`.
+    url: acls/show.json
+
+    parameters:
+      - name: id
+        description: |
+            ID of the ACL oject.
+
+            Either `name` or `id` must be specified.
+        type: String
+
+      - name: name
+        description: |
+            Name of the ACL object.
+
+            Either `name` or `id` must be specified.
+        type: String
+
+      - name: pretty_json
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
+
+    response-parameters:
+
+      - name: acls
+        description: One element array, containing the ACL object.
+        type: Array<ACLs>
+
+    examples:
+      - platform: titanium
+        example: |
+            This example requests an ACL object and checks the response.
+
+                Cloud.ACLs.show({
+                    name: 'testACL'
+                }, function (e) {
+                    if (e.success) {
+                        alert('Shown!');
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
+
+      - platform: rest
+        example: |
+            Example cURL request:
+
+                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/acls/show.json?key=<YOUR APP APP KEY>&pretty_json=true&name=access_photo_album"
+
+            Example JSON response:
+
+                {
+                  "meta": {
+                    "code": 200,
+                    "status": "ok",
+                    "method_name": "showAcl"
+                  },
+                  "response": {
+                    "acls": [
+                      {
+                        "id": "4fcdd3c647b7b71c0b00000c",
+                        "name": "access_photo_album",
+                        "user_id": "4fcdd3c647b7b71c0b000007",
+                        "created_at": "2012-06-05T09:39:18+0000",
+                        "updated_at": "2012-06-05T09:39:20+0000",
+                        "public_read": false,
+                        "readers": [
+                          "4fcdd3c547b7b71c0b000003",
+                          "4fcdd3c547b7b71c0b000004",
+                          "4fcdd3c547b7b71c0b000005",
+                          "4fcdd3c547b7b71c0b000006"
+                        ],
+                        "public_write": false,
+                        "writers": [
+                          "4fcdd3c547b7b71c0b000003",
+                          "4fcdd3c547b7b71c0b000004",
+                          "4fcdd3c547b7b71c0b000005"
+                        ]
+                      }
+                    ]
+                  }
+                }
+
+      - platform: ios
+        example: |
+            Example iOS APS SDK call:
+
+                // Create dictionary of parameters to be passed with the request
+                NSDictionary *data = @{
+                    @"name": @"testACL"
+                };
+
+                [APSACLs show:data withBlock:^(APSResponse *e) {
+                    if (e.success) {
+                        [[[UIAlertView alloc] initWithTitle:@"Great" message:@"Success!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error" message:e.errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
+                NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:(CCACL *)acl.objectId, @"user_id", nil];
+                CCRequest *request = [[CCRequest alloc] initWithDelegate:self baseUrl:@"alcs/show.json" httpMethod:@"GET" paramDict:paramDict];
+                [request startAsynchronous];
+                [request release];
+
+            SDK Callback:
+
+                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
+                {
+                	NSArray *acls = [response getObjectsOfType:[CCACL class]];
+                }
+
+      - platform: android
+        example: |
+            Example Android APS SDK call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+                final Activity currentActivity = this;
+
+                HashMap<String, Object> data = new HashMap<String, Object>();
+                data.put("name", "access_photo_album");
+
+                try {
+                    APSACLs.show(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                try {
+                                    Toast.makeText(currentActivity, e.getResponseString(), Toast.LENGTH_SHORT);
+                                } catch (APSCloudException err) {
+                                    Log.e("APSACLs", "Exception thrown: " + err.toString());
+                                }
+                            } else {
+                                Log.e("APSACLs", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(APSCloudException e) {
+                            Log.e("APSACLs", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSACLs", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
+        example: |
+            Example Android call:
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("name", "access_photo_album");
+                CCResponse response = sdk.sendRequest("acls/show.json", CCRequestMethod.GET, data);
+
+            SDK Callback:
+
+                JSONObject responseJSON = response.getResponseData();
+                CCMeta meta = response.getMeta();
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
+                    && "showAcl".equals(meta.getMethod())) {
+                  JSONArray posts = responseJSON.getJSONArray("acls");
+                  ...
+                }
+
+      - platform: javascript
+        example: |
+            Example Javascript call:
+
+                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+                var data = {
+                  name: 'access_photo_album'
+                };
+                sdk.sendRequest('acls/show.json', 'GET', data, callback);
+
+            SDK Callback:
+
+                function callback(data) {
+                  if(data) {
+                    if(data.meta) {
+                      var meta = data.meta;
+                      if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'showAcl') {
+                        var acls = data.response.acls;
+                      	...
+                      }
+                    }
+                  }
+                }
+

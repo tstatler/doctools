@@ -1,0 +1,226 @@
+name: Clients
+methods:
+  - name: geolocate
+    summary: Geolocate a Client
+
+    description: |
+        Provides location data about the mobile device or computer your app is
+        running on based on its IP address. This feature uses [MaxMind
+        GeoIP](https://www.maxmind.com/app/ip-location) to return the most accurate
+        IP-based geolocation data possible. Note that the results are not not based on
+        GPS signals nor WiFi triangulation commonly used on mobile devices. See
+        [MaxMind GeoIP city accuracy](https://www.maxmind.com/app/city_accuracy) for
+        more information. An example use of this data is to verify the country that
+        the app user in, so that access can be given to application data.
+
+        An error will be returned of the location cannot be determined from the IP
+        address. A successful lookup will return at minimum a [ISO 3166 country
+        code](https://www.maxmind.com/app/iso3166).
+    url: clients/geolocate.json
+
+    parameters:
+      - name: ip_address
+        description: |
+            Alternate IP address to lookup instead of using the device's own address.
+        type: String
+
+      - name: pretty_json
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean                    
+
+    response-parameters:
+      - name: ip_address
+        description: Device IP address.
+        type: String
+
+      - name: location
+        description: |
+            Device's approximate location, represented as an object with the following
+            properties:
+
+            * `latitude` : `Number`
+            * `longitude` : `Number`
+            * `city` : `String`
+            * `state` : `String`
+            * `postal_code` : `String`
+            * `country_code` : `String`
+        type: Hash
+
+    examples:
+      - platform: titanium
+        example: |
+            This example locates a client and checks the response.
+
+                Cloud.Clients.geolocate({
+                    ip_address: clientIPAddress
+                }, function (e) {
+                    if (e.success) {
+                        alert('Success:\n' +
+                            'ip_address: ' + e.ip_address + '\n' +
+                            'latitude: ' + e.location.latitude + '\n' +
+                            'longitude: ' + e.location.longitude);
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
+
+      - platform: rest
+        example: |
+            Example cURL request:
+
+                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/clients/geolocate.json?key=<YOUR APP APP KEY>&pretty_json=true"
+
+            Example JSON response:
+
+                {
+                  "meta": {
+                    "status": "ok",
+                    "code": 200,
+                    "method_name": "geolocateClient"
+                  },
+                  "response": {
+                    "ip_address": "184.72.37.109",
+                    "location": {
+                      "country_code": "US",
+                      "city": "Seattle",
+                      "state": "WA",
+                      "postal_code": "98144",
+                      "latitude": 47.5839,
+                      "longitude": -122.2995
+                    }
+                  }
+                }
+
+      - platform: ios
+        example: |
+            Example iOS APS SDK call:
+
+                // Create dictionary of parameters to be passed with the request
+                NSDictionary *data = @{
+                      @"ip_address": clientIPAddress
+                };
+                
+                [APSClients geolocate:data withBlock:^(APSResponse *e) {
+                    if (e.success) {
+                        NSDictionary *loc = e.response[@"location"];
+                        NSString *message = [NSString stringWithFormat:@"lat: %@ lon: %@", loc[@"latitude"], loc[@"longitude"]];
+                        [[[UIAlertView alloc] initWithTitle:@"Success" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error" message:e.errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
+                CCRequest *request = [[CCRequest alloc] initWithDelegate:controller httpMethod:@"GET" baseUrl:@"clients/geolocate.json" paramDict:nil];
+                [request startAsynchronous]'
+                [request release];
+
+            SDK Callback:
+
+                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
+
+                	if ([response.meta.methodName isEqualToString:@"geolocateClient"]) {
+                		NSDictionary *location = [response.response objectForKey:@"location"];
+                		NSLog(@"location is %@", location);
+                	}
+                }
+
+      - platform: android
+        example: |
+            Example Android APS SDK call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+
+                try {
+                    APSClients.geolocate(null, new APSResponseHandler() {
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                try {
+                                    Log.i("APSClients", e.getResponseString());
+                                } catch (APSCloudException err1) {
+                                    Log.e("APSClients", err1.toString());
+                                }
+                            } else {
+                                Log.e("APSClients", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(APSCloudException e) {
+                            Log.e("APSClients", e.toString());
+                        }
+                    });
+                } catch (APSCloudException err2) {
+                    Log.e("APSClients", err2.toString());
+                }
+
+
+      - platform: android-acssdk
+        example: |
+            Example Android call:
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
+                CCResponse response = sdk.sendRequest("clients/geolocate.json", CCRequestMethod.GET, null);
+
+            SDK Callback:
+
+                JSONObject responseJSON = response.getResponseData();
+                CCMeta meta = response.getMeta();
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
+                    && "geolocateClient".equals(meta.getMethod())) {
+                  JSONObject location = responseJSON.getJSONObject("location");
+                  System.out.println(location);
+                }
+
+      - platform: javascript
+        example: |
+            Example Javascript call:
+
+                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+                sdk.sendRequest('clients/geolocate.json', 'GET', null, callback);
+
+            SDK Callback:
+
+                function callback(data) {
+                  if(data) {
+                    if(data.meta) {
+                      var meta = data.meta;
+                      if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'geolocateClient') {
+                        alert(data.response.location);
+                      }
+                    }
+                  }
+                }
+
+      - platform: actionscript
+        example: |
+            Example Actionscript call:
+
+                var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
+                sdk.sendRequest("clients/geolocate.json", URLRequestMethod.GET, null, false, callback);
+
+            SDK Callback:
+
+                function callback(data:Object):void {
+                  if(data) {
+                    if(data.hasOwnProperty("meta")) {
+                      var meta:Object = data.meta;
+                      if(meta.status == "ok" && meta.code == 200 && meta.method_name == "geolocateClient") {
+                      	trace(data.response.location);
+                      }
+                    }
+                  }
+                }
+

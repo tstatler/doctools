@@ -1,0 +1,6 @@
+name: Logs
+description: |
+    The Logs API provides methods for querying ACS push notification logs up to 3 months old. 
+    Logs older than 3 months are purged.
+
+    You must be logged in as an application admin to use these methods.

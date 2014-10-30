@@ -1,0 +1,143 @@
+name: CustomObjects
+description: |
+    The CustomObjects API lets you define your own object types that can be integrated with
+    existing ACS objects. Each CustomObject can have a default primary photo and
+    have associated reviews, comments, and likes.
+
+    To distinguish different types of custom ACS objects, you use a unique URL for each class 
+    of custom object. The URL for a custom object method has the following format:
+
+    <!-- Note: Using HTML to have more control over formatting of the URL string.  -->
+
+    <code class="prettyprint">https://api.cloud.appcelerator.com/v1/objects/<em>classname</em>/<em>method</em>.json</code>
+
+    For example, if your application uses `cars` and `drivers` objects, you would use
+    different URLs to create them:
+
+        https://api.cloud.appcelerator.com/v1/objects/cars/create.json
+
+        https://api.cloud.appcelerator.com/v1/objects/drivers/create.json
+
+    When custom objects are returned in a response, the `classname` is used as a property
+    name. For example, if you query a list of custom `cars` objects, the response would 
+    include a `cars` array:
+
+        response: {
+          "cars": [
+            // array of "cars" objects
+          ]    
+        }
+
+    You define the fields of a custom object by specifying a `fields` property to the `create` or `update` methods.
+
+    For instance, if you want to define a car object, you might include the following fields:
+
+        { 
+            "make": "nissan",
+            "color": "blue",
+            "year": 2005,
+            "purchased_at": "2011-11-02 17:07:37 -0700",
+            "used": false 
+        }
+
+    Supported data types for custom object fields are:
+
+    <table class="doc-table">
+    <tr><th>Type</th><th>Example</th>
+    <tr>
+    <td>String&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>"blue"</td>
+    </tr>
+    <tr>
+    <td>Number&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>23 or 1.234</td>
+    </tr>
+    <tr>
+    <td>Date&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>"2011-11-02 17:07:37 -0700". If a string value matches date format "yyyy-mm-dd hh:mm:ss +zzzz" or "yyyy-mm-ddThh:mm:ss+zzzz", it will be converted to a Date type on the Appcelerator Cloud Services backend</td>
+    </tr>
+    </table>
+
+    Fields can also include more complex data types such as Array and Hash. Hash and Array can be nested inside each other. 
+    Currently, data stored inside an Array or Hash is not queryable.
+
+    <table class="doc-table">
+            <tr><th>Type</th><th>Example</th>
+            <tr>
+                <td>Hash&nbsp;&nbsp;</td>
+                <td><code>{"age":23,"scores":{"math":90, "physics":100}, "my_favorite_colors":["blue","red"]}</code></td>
+            </tr>
+            <tr>
+                <td>Array&nbsp;&nbsp;</td>
+                <td><code>["nissan", "honda", "toyota"]</code> or <code>[2006, 2008], [{"age":28}, {"color":"blue"}]</code></td>
+            </tr>
+    </table>
+
+    Two custom fields have special meaning: `tags` and `coordinates`. 
+
+    *   If `fields` contains a `tags` key and you do not pass a separate `tags` parameter, the values in
+        `fields.tags` will be stored in the object's `tags` field.
+
+    *   To enable geographical search, `fields` can include a `coordinates` key to store
+        geographic coordinates. The `coordinates` value can be a single location:
+
+            coordinates: [longitude, latitude] 
+
+        Or multiple locations: 
+
+             coordinates: [[longitude1,latitude1], [longitude2, latitude2]...].
+
+    So for the above example, if we want to store coordinates for the car, we have:
+
+        fields: {   
+          "make": "nissan",
+          "color": "blue",
+          "year": 2005,
+          "purchased_at": "2011-11-02 17:07:37 -0700",
+          "used": false,
+          "coordinates": [-122.1, 37.1] 
+        }
+
+    The fields you define for a custom object are added in to the predefined fields, so
+    a cars object returned by a query might look like this:
+ 
+        "cars": [{   
+               "id":, "4ec42de1d9ca72c50700000d",
+                "created_at": "2011-11-16T21:40:49+0000",
+                "updated_at": "2011-11-16T21:40:49+0000",
+               "make": "nissan",
+               "color": "blue",
+               "year": 2005,
+               "purchased_at": "2011-11-02 17:07:37 -0700",
+               "used": false,
+               "coordinates": [-122.1, 37.1] 
+        }]
+
+fields:
+  - name: id
+    description: Generated unique ID for this object.
+    type: String
+
+  - name: tags
+    description: List of tags associated with this object.
+    type: Array<String>
+
+  - name: user
+    description: Owner of this object.
+    type: Users
+
+  - name: photo
+    description: Primary photo for this object.
+    type: Photos
+
+  - name: acls
+    description: Single-element array containing the ACL associated with this object (if any).
+    type: Array<ACLs>
+
+  - name: created_at
+    description: Creation date for this user object.
+    type: Date
+
+  - name: updated_at
+    description: Last update time for this user object.
+    type: Date

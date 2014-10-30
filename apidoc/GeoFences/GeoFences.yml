@@ -1,0 +1,75 @@
+name: GeoFences
+description: |
+    <p class="note">This feature requires an Appcelerator Platform subscription, and the current user must
+    be an application administrator to create, update or delete a geo-fence object.</p>
+
+    The GeoFences API lets you manage spatial objects with data. Use this API to have the device
+    query the ACS server to retrieve data based on a location.
+
+    To send a push notification based on the user's location, see the "Location-Based Push
+    Notification" section in {@link PushNotifications}.
+
+    ### Parameters
+
+    Datetime fields use the ISO 8601 format, for example, `YYYY-MM-DDTHH:mm:ss+ZZZZ`.
+
+    Geographic coordinates are specified as arrays with the longitude as the first element and latitude as the
+    second element, that is, `[longitude,latitude]`.
+
+    Distance is specified in radians. To calculate the distance in radians,
+    divide the distance you want by the approximate circumference of the Earth in the same
+    units. For example, 10 miles is 10 / 3959, or 2 kilometers is 2 / 6371.
+
+    ## Getting Started
+
+    To use the GeoFences API, create geo-fence objects with data to download, then have the device
+    periodically check the ACS server for this data.
+
+    To create geo-fence objects, use the {@link GeoFences#create} method and specify the geographic
+    area and data to download.
+
+    After creating a geo-fence object, the device can periodically query the ACS server to see if
+    there is any available data to retrieve. Use the {@link GeoFences#query} method to specify a
+    geospatial query with the `where` parameter.  If the query returns any results, the application
+    needs to process the `payload` field of the query response.
+
+fields: 
+  - name: id
+    description: Generated ID for this geo-fence.
+    type: String
+
+  - name: start_time
+    description: Datetime when to start the geo-fence.
+    type: Date
+
+  - name: end_time
+    description: Datetime when the geo-fence expires.
+    type: Date
+
+  - name: loc
+    description: |
+        JSON-encoded object describing the geographic perimeter of the geo-fence, specified as a circle with
+        a center point of either `place_id` or `coordinates` property and the `radius` property:
+
+          * `place_id` (String): Use an ACS {@link Places} object as the center of the circle. Specify the
+            ID of the Place.
+          * `coordinates` (Array<Number>): Center coordinate of the circle.  Specify a point as `[longitude,latitude]`.
+          * `radius` (Number/String): Radius of the bounding circle in radians. To calculate the distance in radians,
+            divide the distance you want by the approximate circumference of the Earth in the same
+            units. For example, 10 miles is 10 / 3959 or 2 kilometers is 2 / 6371.  Specify the
+            fraction as a string, for example, `"10/3959"` or `"2/6371"`.
+
+    type: Hash
+
+  - name: payload
+    description: |
+        JSON-encoded data to retrieve if the geo-fence area intersects the device's location.
+    type: Hash
+    
+  - name: created_at
+    description: Date when the geo-fence was created.
+    type: Date
+
+  - name: update_at
+    description: Date when the geo-fence was updated.
+    type: Date

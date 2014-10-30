@@ -1,0 +1,279 @@
+name: PushNotifications
+methods:
+  - name: query
+    summary: Query
+    description: |
+        Custom query of push notification subscriptions with pagination.
+
+        In ACS 1.1.5 and later, you can paginate query results using `skip` and `limit` parameters, or by including
+        a `where` clause to limit the results to objects whose IDs fall within a specified range.
+        For details, see [Query Pagination](#!/guide/search_query-section-query-pagination).        
+
+    url: push_notification/query.json
+
+    parameters:
+
+      - name: user_id
+        description: User ID of the user who has subscribed devices for push notification.
+        type: String
+        required: true
+
+      - name: channel
+        description: |
+            Name of the push notification channel.
+
+            The name of the push channel cannot start with a hash symbol ('#').
+        type: String
+
+      - name: device_token
+        description: Apple or Android Device Token.
+        type: String
+
+      - name: type
+        description: |
+            Selects the push type.
+
+            Set to `android` for Android devices using either Google Cloud Messaging
+            or the MQTT protocol, or `ios` for iOS devices using Apple Push Notification Service.
+
+            Using `gcm` to specify Google Cloud Messaging still works.
+        type: String
+
+      - name: page
+        description: |
+            <p class="note">
+            Starting in ACS 1.1.5, page and per_page are no longer supported in query operations. 
+            Applications should instead use <strong>skip</strong> and <strong>limit</strong> 
+            query parameters.
+            </p>
+
+        type: Number
+
+      - name: per_page
+        description: |
+            <p class="note">
+            Starting in ACS 1.1.5, page and per_page are no longer supported in query operations. 
+            Applications should instead use <strong>skip</strong> and <strong>limit</strong> 
+            query parameters.
+            </p>
+        type: Number
+
+      - name: limit
+        description: |
+            The number of records to fetch. The value must be greater than 0, and no greater then 
+            1000, or an HTTP 400 (Bad Request) error will be returned. Default value of `limit` is 10.
+        type: Number
+
+      - name: skip
+        description: |
+            The number of records to skip. The value must be greater than or equal to 0, and no greater 
+            than 4999, or an HTTP 400 error will be returned. To skip 5000 records or more 
+            you need to perform a range-based query. See 
+            <a href="#!/guide/search_query-section-query-pagination">Query Pagination</a> for more information.</p>
+        type: Number
+        
+      - name: pretty_json
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
+
+    response-parameters:
+      - name: subscriptions
+        description: |
+            Array of subscription objects, where each subscription object has the
+            following properties:
+
+            *   `id` : `String`. Generated ID associated with the subscription.
+            *   `channel` : `Array of Strings`. List of subscribed channels.
+            *   `device_token` : `String`. iOS or Android device token associated with
+                this subscription.
+            *   `type` : `String`. Device type. Either "ios" or "android".
+
+        type: Array<Hash>
+
+    examples:
+      - platform: titanium
+        example: |
+
+            Requires Release 3.2.0.
+
+                Cloud.PushNotifications.query({
+                    user_id: userId
+                }, function (e) {
+                    if (e.success) {
+                        e.subscriptions.forEach(function(subscription){
+                            Ti.API.info(subscription.channel.join());
+                        });
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
+
+      - platform: rest
+        example: |
+            Example cURL request:
+
+                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/push_notification/query.json?key=<YOUR APP APP KEY>&pretty_json=true&user_id=4f5905b5d2951316a9000020&count=true"
+
+            Example JSON response:
+
+                {
+                  "meta": {
+                    "status": "ok",
+                    "code": 200,
+                    "method_name": "querySubscriptions",
+                    "count": 100
+                  },
+                  "response": {
+                    "subscriptions": [
+                      {
+                        "id": "4f6171dcd29513027200000c",
+                        "channel": ["friend_request", "alert"],
+                        "device_token": "f7702d77b34ed94869f664e7a297ccc173bec93a2b815css6asd28461a0358dd",
+                        "type": "ios"
+                      },
+                      {
+                        "id": "4f6171e7d29513027200000e",
+                        "channel": ["friend_request", "vip"],
+                        "device_token": "f7702d77b34ed94869k66oe",
+                        "type": "android"
+                      }
+                    ]
+                  }
+                }
+
+      - platform: ios
+        example: |
+            Example iOS APS SDK call:
+
+                // Create dictionary of parameters to be passed with the request
+                NSDictionary *data = @{
+                    @"user_id": userId
+                };
+                
+                [APSPushNotifications query:data withBlock:^(APSResponse *e) {
+                      if (e.success) {
+                          NSString *message = [NSString stringWithFormat:@"Found %lu subscriptions", (unsigned long)((NSArray *) e.response[@"subscriptions"]).count ];
+                          [[[UIAlertView alloc] initWithTitle:@"Success" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      } else {
+                          [[[UIAlertView alloc] initWithTitle:@"Error" message:e.errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      }
+                }];
+
+      - platform: android
+        example: |
+            Example Android call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("user_id", "4f5905b5d2951316a9000020");
+
+                try {
+                    APSPushNotifications.query(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+
+                            if (e.getSuccess()) {
+                                try {
+                                    JSONArray subscriptions = e.getResponse().getJSONArray("subscriptions");
+                                    if (subscriptions.length() <= 0) {
+                                        Log.i("APSPushNotifications", "No Results!");
+                                    } else {
+                                        for (int i = 0; i < subscriptions.length(); i++) {
+                                            Log.i("APSPushNotifications", subscriptions.getJSONObject(i).toString());
+                                        }
+                                    }
+                                } catch (JSONException err) {
+                                    Log.e("APSPushNotifications", "Exception thrown: " + err.toString());
+                                }
+                            } else {
+                                Log.e("APSPushNotifications", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSPushNotifications", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSPushNotifications", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
+        example: |
+            Example Android call:
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("user_id", "4f5905b5d2951316a9000020");
+                CCResponse response = sdk.sendRequest("push_notification/query.json", CCRequestMethod.GET, data);
+
+            SDK Callback:
+
+                JSONObject responseJSON = response.getResponseData();
+                CCMeta meta = response.getMeta();
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
+                    && "querySubscriptions".equals(meta.getMethod())) {
+                  JSONArray subscriptions = responseJSON.getJSONArray("subscriptions");
+                  ...
+                }
+
+      - platform: javascript
+        example: |
+            Example Javascript call:
+
+                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+                var data = {
+                  user_id: '4f5905b5d2951316a9000020'
+                };
+                sdk.sendRequest('push_notification/query.json', 'GET', data, callback);
+
+            SDK Callback:
+
+                function callback(data) {
+                  if(data) {
+                    if(data.meta) {
+                      var meta = data.meta;
+                      if(meta.status == 'ok'
+                          && meta.code == 200
+                          && meta.method_name == 'querySubscriptions') {
+                      	var subscriptions = data.response.subscriptions;
+                      	...
+                      }
+                    }
+                  }
+                }
+
+      - platform: actionscript
+        example: |
+            Example Actionscript call:
+
+                var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
+                var data:Object = new Object();
+                data.user_id = "4f5905b5d2951316a9000020";
+                sdk.sendRequest("push_notification/query.json", URLRequestMethod.GET, data, callback);
+
+            SDK Callback:
+
+                function callback(data:Object):void {
+                  if(data) {
+                    if(data.hasOwnProperty("meta")) {
+                      var meta:Object = data.meta;
+                      if(meta.status == "ok"
+                          && meta.code == 200
+                          && meta.method_name == "querySubscriptions") {
+                      	var subscriptions:Array = data.response.subscriptions;
+                      	...
+                      }
+                    }
+                  }
+                }

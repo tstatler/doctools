@@ -1,0 +1,32 @@
+name: Files
+description: |
+    The Files API lets you store files up to 25MB in the ACS cloud.
+fields:
+  - name: id
+    description: Generated ID for this object.
+    type: String
+
+  - name: name
+    description: File name.
+    type: String
+
+  - name: processed
+    description: Flag indicating whether the file has finished uploading and is  available for access.
+    type: Boolean
+
+  - name: url
+    description: |
+        URL for accessing the file. Only available when `processed` is `true`.
+    type: String
+
+  - name: created_at
+    description: Creation date for this user object.
+    type: Date
+
+  - name: updated_at
+    description: Last update time for this user object.
+    type: Date
+
+  - name: user
+    description: Owner of this object.
+    type: Users

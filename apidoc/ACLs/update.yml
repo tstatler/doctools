@@ -1,0 +1,265 @@
+name: ACLs
+methods:
+  - name: update
+    summary: Update an ACL
+    description: |
+        Updates an ACL object to change its access control list. When updating an ACL,
+        you can change the members of the `readers` list and the `writers` list, or change the value
+        of the `public_read` and `public_write` flags.
+
+        An application admin can update any ACL object.
+
+    url: acls/update.json
+    http-method: PUT
+    login-required: true
+
+    parameters:
+      - name: id
+        description: |
+            ID of the ACL oject.
+
+            Either `name` or `id` must be specified.
+        type: String
+
+      - name: name
+        description: |
+            Name of the ACL object.
+
+            Either `name` or `id` must be specified.
+        type: String
+
+      - name: pretty_json
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean        
+
+      - name: reader_ids
+        description: |
+            Comma separated list of IDs identifying users who can read objects
+            controlled by this ACL.
+
+            To remove all users from the `readers` list, simply set `reader_ids=""`.
+            This removes all users except for the owner from the list.
+        type: String
+        required: true
+
+      - name: writer_ids
+        description: |
+            Comma separated list of IDs identifying users who can update an object.
+            controlled by this ACL.
+
+            To remove all users from the `writers` list, simply set `writer_ids=""`.
+            This removes all users except for the owner from the list.
+        type: String
+        required: true
+
+      - name: public_read
+        description: |
+            Determines whether objects controlled by this ACS are publically readable.
+
+            Default is false.
+        type: String
+
+      - name: public_write
+        description: |
+            Determines whether objects controlled by this ACS are publically writable.
+
+            Default is false.
+        type: String
+
+      - name: user_id
+        description: |
+            User to update the ACL object on behalf of. The user must be the creator of the object.
+
+            The current user must be an application admin to update an ACL object on
+            behalf of another user.
+        type: String
+
+    response-parameters:
+      - name: acls
+        description: A single-element array containing the updated ACS object.
+        type: Array<ACLs>
+
+    examples:
+      - platform: titanium
+        example: |
+            This example updates an ACL object and checks the response.
+
+                Cloud.ACLs.update({
+                    name: 'testACL',
+                    reader_ids: '',
+                    writer_ids: '',
+                    public_read: "true",
+                    public_write: "true"
+                }, function (e) {
+                    if (e.success) {
+                        alert('Updated!');
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
+
+      - platform: rest
+        example: |
+            Example cURL request:
+
+                $ curl -b c.txt -c c.txt -X PUT -F "name=access_photo_album" -F "public_read=true" -F "public_write=true" https://api.cloud.appcelerator.com/v1/acls/update.json?key=<YOUR APP APP KEY>&pretty_json=true
+
+            Example JSON response:
+
+                {
+                  "meta": {
+                    "code": 200,
+                    "status": "ok",
+                    "method_name": "updateAcl"
+                  },
+                  "response": {
+                    "acls": [
+                      {
+                        "id": "4fcdd3c647b7b71c0b00000c",
+                        "name": "access_photo_album",
+                        "user_id": "4fcdd3c647b7b71c0b000007",
+                        "created_at": "2012-06-05T09:39:18+0000",
+                        "updated_at": "2012-06-05T09:39:20+0000",
+                        "public_read": true,
+                        "public_write": true
+                      }
+                    ]
+                  }
+                }
+
+      - platform: ios
+        example: |
+            Example iOS APS SDK call:
+  
+                // Create dictionary of parameters to be passed with the request
+                NSDictionary *data = @{
+                    @"name": @"testACL",
+                    @"reader_ids": @"",
+                    @"writer_ids": @"",
+                    @"public_read": @"true",
+                    @"public_write": @"true"
+                };
+  
+                [APSACLs update:data withBlock:^(APSResponse *e) {
+                    if (e.success) {
+                        [[[UIAlertView alloc] initWithTitle:@"Great" message:@"Success!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error" message:e.errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
+                NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
+                [paramDict setObject:@"access_photo_album" forKey:@"name"];
+                [paramDict setObject:@"true" forKey:@"public_read"];
+                [paramDict setObject:@"true" forKey:@"public_write"];
+                CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"PUT" baseUrl:@"acls/update.json" paramDict:paramDict];
+                [request startAsynchronous];
+                [request release];
+
+            SDK Callback:
+
+                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
+                {
+                	if ([response.meta.method isEqualToString:@"updateAcl"]) {
+                		NSArray *acls = [response getObjectsOfType:[CCACL class]];
+                		for (CCACL *acl in acls)
+                		{
+                			...
+                		}
+                	}
+                }
+
+      - platform: android
+        example: |
+            Example Android APS SDK call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+                final Activity currentActivity = this;
+
+                HashMap<String, Object> data = new HashMap<String, Object>();
+                data.put("name", "access_photo_album");
+                data.put("public_read", "true");
+                data.put("public_write", "true");
+
+                try {
+                    APSACLs.update(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                new AlertDialog.Builder(currentActivity)
+                                .setTitle("Success").setMessage("Updated!")
+                                .setPositiveButton(android.R.string.ok, null)
+                                .setIcon(android.R.drawable.ic_dialog_info)
+                                .show();
+                            } else {
+                                Log.e("APSACLs", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSACLs", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSACLs", "Exception thrown: " + e.toString());
+                }`
+
+      - platform: android-acssdk
+        example: |
+            Example Android call:
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("name", "access_photo_album");
+                data.put("public_read", true);
+                data.put("public_write", true);
+                CCResponse response = sdk.sendRequest("acls/update.json", CCRequestMethod.PUT, data);
+
+            SDK Callback:
+
+                JSONObject responseJSON = response.getResponseData();
+                CCMeta meta = response.getMeta();
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
+                    && "updateAcl".equals(meta.getMethod())) {
+                  JSONArray acls = responseJSON.getJSONArray("acls");
+                  ...
+                }
+
+      - platform: javascript
+        example: |
+            Example Javascript call:
+
+                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+                var data = {
+                  name: 'access_photo_album',
+                  public_read: 'true',
+                  public_write: 'true'
+                };
+                sdk.sendRequest('acls/update.json', 'PUT', data, callback);
+
+            SDK Callback:
+
+                function callback(data) {
+                  if(data) {
+                    if(data.meta) {
+                      var meta = data.meta;
+                      if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'updateACL') {
+                        var acls = data.response.acls;
+                      	...
+                      }
+                    }
+                  }
+                }
+

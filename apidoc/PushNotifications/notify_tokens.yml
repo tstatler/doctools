@@ -1,0 +1,219 @@
+name: PushNotifications
+methods:
+  - name: notify_tokens
+    summary: notify_tokens
+    description: |
+        Sends push notifications to one or more users who are subscribed to a channel.
+
+        Application admins can set the `to_tokens` parameter to `everyone` to send to all devices
+        subscribed to the identified channel.
+
+        If you use the `to_tokens` parameter, you **cannot** specify a location query using the `where`
+        parameter in the same API call.
+    url: push_notification/notify_tokens.json
+    http-method: POST
+    login-required: false
+
+    parameters:
+
+      - name: channel
+        description: |
+            Name of the channel.
+
+            The name of the push channel cannot start with a hash symbol ('#').
+        type: String
+        required: true
+
+      - name: to_tokens
+        description: |
+            Comma-separated list of device tokens. Sends push notification to the specified
+            tokens who are subscribed to the specified channel.
+
+            You **cannot** use this parameter with a location query using the `where` parameter.
+
+            Application admins can set this parameter to `everyone` to send to all devices
+            subscribed to the channel.
+
+            If you are using the web interface, you do not need to specify this parameter.
+        type: String
+        required: true
+
+      - name: payload
+        description: |
+            Payload to send with the push notification.
+
+            For a string, it will be sent as an alert (message notification).
+        type: [String, PushPayload]
+        required: true
+
+      - name: options
+        description: |
+            Additional push options.
+
+            * *expire_after_seconds* (Number): Expiration time in seconds of when to stop sending the push notification.
+              For example, if the push notification expiration time is for a day and the user's device
+              is off for over a day, the user does not receive the push notification since it has expired.
+
+            For example, to specify a one day expiration period, use `options={'expire_after_seconds':86400}`.
+        type: Hash
+
+
+      - name: where
+        description: |
+            A JSON-encoded object that defines either the user or location query used to select the device
+            that will receive the notification. Up to 1000 users can be returned by the query.
+
+            If you are using the `to_tokens` parameter, you **cannot** specify a location query.
+
+            **Available only for Enterprise users.**
+
+            To specify a user query, set the `user` field to a custom query, for example, the
+            following query searches for all users with the first name of Joe:
+
+                where={"user": {"first_name":"Joe"}}
+
+            To specify a location query, set the `loc` field to a
+            [MongoDB Geospatial Query](http://docs.mongodb.org/manual/reference/operator/query-geospatial/).
+            The following query searches for all users within 2 km of Oakland, CA, USA:
+
+                where={"loc": { "$nearSphere" : { "$geometry" : { "type" : "Point" , "coordinates" : [-122.2708,37.8044] } , "$maxDistance" : 2000 }}}
+
+            For details about using the `where` parameter,
+            see the [Search and Query guide](#!/guide/search_query).
+        type: Hash
+
+      - name: pretty_json
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean        
+
+    examples:
+      - platform: titanium
+        example: |
+            This example sends a push notification to a channel and checks the response.
+            Requires Titanium SDK 3.1.2 and later.
+
+                Cloud.PushNotifications.notifyTokens({
+                    channel: 'friend_request',
+                    to_tokens: TOKEN_LIST,
+                    payload: 'Welcome to push notifications'
+                }, function (e) {
+                    if (e.success) {
+                        alert('Success');
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
+
+      - platform: rest
+        example: |
+            Example cURL request:
+
+                curl -X POST -F "channel=<channel>" -F "to_tokens=<token list>" -F "payload=<payload>" "https://api.cloud.appcelerator.com/v1/push_notification/notify_tokens.json?key=<key>&pretty_json=true"
+
+            Example JSON response:
+
+                {
+                  "meta": {
+                    "status": "ok",
+                    "code": 200,
+                    "method_name": "NotifyTokens"
+                  }
+                }
+
+      - platform: ios
+        example: |
+            Example iOS APS SDK call:
+
+                // Create dictionary of parameters to be passed with the request
+                NSDictionary *data = @{
+                    @"channel": @"friend_request",
+                    @"to_tokens": TOKEN_LIST,
+                    @"payload": @"Welcome to push notifications"
+                };
+                
+                [APSPushNotifications notifyTokens:data withBlock:^(APSResponse *e) {
+                      if (e.success) {
+                          [[[UIAlertView alloc] initWithTitle:@"Great" message:@"Success!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      } else {
+                          [[[UIAlertView alloc] initWithTitle:@"Error" message:e.errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      }
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
+                NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:3];
+                [paramDict setObject:@"friend_request" forKey:@"channel"];
+                [paramDict setObject:@"DEVICE_TOKEN1" forKey:@"to_tokens[]"];
+                [paramDict setObject:@"DEVICE_TOKEN2" forKey:@"to_tokens[]"];
+                [paramDict setObject:@"Welcome to push notifications" forKey:@"payload"];
+                CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"POST" baseUrl:@"push_notification/notify_tokens.json" paramDict:paramDict];
+                [request startAsynchronous];
+                [request release];
+
+            SDK Callback:
+
+                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
+                {
+                	// successfully subscribed
+                }
+
+      - platform: android
+        example: |
+            Example Android call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("channel", "friend_request");
+                data.put("to_tokens", TOKEN_LIST);
+                data.put("payload", "Push Notification Test");
+
+                try {
+                    APSPushNotifications.notifyTokens(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+
+                            if (e.getSuccess()) {
+                                Log.i("APSPushNotifications", "Notified!");
+                            } else {
+                                Log.e("APSPushNotifications", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSPushNotifications", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSPushNotifications", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
+        example: |
+            Example Android call:
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("channel", "friend_request");
+                data.put("to_tokens", TOKEN_LIST);
+                data.put("payload", "Push Notification Test");
+                CCResponse response = sdk.sendRequest("push_notification/notify_tokens.json", CCRequestMethod.POST, data);
+
+            SDK Callback:
+
+                JSONObject responseJSON = response.getResponseData();
+                CCMeta meta = response.getMeta();
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
+                    && "NotifyTokens".equals(meta.getMethod())) {
+                  ...
+                }
+

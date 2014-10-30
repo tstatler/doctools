@@ -1,0 +1,142 @@
+name: PushNotifications
+description: |
+
+    The Push Notifications API lets you send push notifications to your users who are on iOS and
+    Android Devices. You can also send a system push notification to all users from the Admin
+    Console.
+
+    Please refer to the Push Notifications sections of the [Android SDK guide](#!/guide/android)
+    or the [iOS SDK guide](#!/guide/ios) to set up your app for push notifications to
+    Android or iOS.
+
+    To setup Titanium applications, refer to the
+    [Push Notification guide](http://docs.appcelerator.com/titanium/latest/#!#!/guide/Push_Notifications).
+
+    The Push Notifications API provides two mechanisms to register and send push notifications.  One
+    relies on the user session, which requires the user to be logged in to receive push notifications.
+    The other method uses devices tokens, which does not require the user to be logged in to
+    receive notifications.  If you are using the Titanium API, push notifications with device tokens
+    require Titanium SDK 3.1.2 and later.
+
+    ### Android Notes
+
+    #### Protocol Support
+
+    For Android devices, ACS supports either Google Cloud Messaging (GCM) or MQTT.  MQTT is being
+    deprecated in favor of using GCM.  If you have an existing application using MQTT, transition it
+    to use GCM.  All new applications should use GCM.
+
+    #### Device Support
+
+    GCM supports devices that run Android 2.2 and later, and requires that the Google Play Store
+    application be installed. For pre-4.0 devices, the user is required to set up their Google account.
+
+    #### Optional Payload Fields
+
+    On Android, you can specify the following optional fields in the `payload` parameter of the
+    {@link PushNotifications#notify_tokens} or {@link PushNotifications#notify} method:
+
+      * `icon` (String): Filename minus the extension of the
+        icon to display in the notification center. Place the file in `/res/drawable`
+        for Android applications or `/Resources` for Titanium applications.
+        Uses the app's icon by default.
+      * `title` (String): Title of the notification.
+      * `vibrate` (Boolean): If true, the device vibrates for one second.
+
+
+    ### Badges
+
+    When sending a push notification, you can specify a badge value, which is usually used to indicate the
+    number of unread messages or other content waiting to be addressed by the user in your application.
+
+    On Android, the badge number is displayed in the notification center, while on iOS, the badge
+    number is displayed with the application icon.
+
+    When setting the value of the badge, you can either directly set the badge number, or
+    increment and decrement the current value of the badge. Set the `badge` field in the `payload`
+    parameter of the {@link PushNotifications#notify_tokens} or {@link PushNotifications#notify}
+    method to specify a value for the badge.
+
+    Prefix the number with either the `+` or `-` symbol to increment or decrement the current value,
+    respectively.  Omit the prefix to directly set the value.
+
+    For example, the value `+2` increments the current badge value by two, the value `-1`,
+    decrements the badge value by one, and the value `12` sets the badge value to twelve.
+
+    Use the following methods to set the internally stored value of the badge and not update the
+    displayed value in the application:
+
+      * {@link PushNotifications#set_badge}: set, increment or decrement the value of the badge
+      * [reset_badge](#!/api/PushNotifications-method-reset_badge_put): set the value of the badge to zero
+
+    To update the displayed value in the application, you need to send a push notification with the
+    `badge` field defined.
+
+
+    ### Push Notifications with Device Tokens
+
+    The methods with the `_token` suffix rely on the device's token to subscribe, receive, send or
+    unsubscribe from push notifications:
+
+      * {@link PushNotifications#subscribe_token}
+      * {@link PushNotifications#notify_tokens}
+      * {@link PushNotifications#unsubscribe_token}
+
+    To retrieve your device token using the Android or iOS SDK API, refer to the
+    Push Notifications sections of the [Android SDK guide](#!/guide/android)
+    or the [iOS SDK guide](#!/guide/ios).
+
+    To retrieve your device token using the Titanium SDK API:
+
+      * For Android, use the
+        [Titanium.CloudPush](http://docs.appcelerator.com/titanium/latest/#!/api/Titanium.CloudPush)
+        module.
+
+      * For iOS, use the
+        [Titanium.Network.registerForPushNotifications](http://docs.appcelerator.com/titanium/latest/#!/api/Titanium.Network-method-registerForPushNotifications)
+        method.
+
+    ### Push Notifications with User Sessions
+
+    The following methods require the user to be logged in to subscribe, receive or unsubscribe from
+    push notifications:
+
+      * {@link PushNotifications#subscribe}
+      * {@link PushNotifications#notify}
+      * {@link PushNotifications#unsubscribe}
+
+    To send push notifications, the `notify.json` method uses the user's ID.
+
+    You can also use the {@link Users#logout} method to unsubscribe from all push notifications by
+    specifying the `device_id` parameter.
+
+    ### Scheduling Push Notifications
+
+    <p class="note">This feature is only available for Enterprise users, and the current user must be an
+    application admin to use this API.</p>
+
+    You can send push notifications to users at specific times, over a span of time; or at daily,
+    weekly, or monthly intervals.
+
+    For more information, refer to the {@link PushSchedules} API.
+
+    ### Location-Based Push Notifications
+
+    <p class="note">This feature is only available for Enterprise users, and the current user must be an
+    application admin to use this API.</p>
+
+    You can send push notifications to users based on their location.  To use location-based push
+    notifications, the ACS server needs to know the location of the device.  To update the device's
+    location, you need to periodically call the {@link PushNotifications#subscription_update} method and specify
+    the `loc` parameter to update the device's location.
+
+    To send a location-based push notification, use either the {@link PushNotifications#notify} or
+    {@link PushNotifications#notify_tokens} method and specify a location query with the `where`
+    parameter.  For example, the following cURL command, sends a push notification to any device within
+    10 miles of Mountain View, CA, USA:
+
+        $ curl -b cookies.txt -c cookies.txt -X POST --data-urlencode 'payload=Come visit our brand new Mountain View location!' "https://api.cloud.appcelerator.com/v1/push_notification/notify.json?key=<API_KEY>" --data-urlencode 'where={"loc":{"$geoWithin":{"$centerSphere":[[-122.0507049560547,37.38685989379883] , 0.00252589 ]}}}'
+
+    You can use the {@link GeoFences} API to have the device periodically check the ACS server for
+    data based on location instead of having the server push it to the device.
+

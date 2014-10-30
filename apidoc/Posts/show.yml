@@ -1,0 +1,282 @@
+name: Posts
+methods:
+  - name: show
+    summary: Show a Post
+    description: Returns  the post with the given `id`.
+    url: posts/show.json
+
+    parameters:
+
+      - name: post_id
+        description: |
+            Post ID to show.
+
+            Either `post_id` **or** `post_ids` must be specified.
+        type: String
+
+      - name: post_ids
+        description: |
+            Comma-separated list of post IDs.
+
+            Either `post_id` **or** `post_ids` must be specified.
+        type: Array<String>
+
+      - name: response_json_depth
+        description: |
+            Nested object depth level counts in response JSON.
+
+            In order to reduce server API calls from an applicaton, the response JSON may
+            include not just the identified objects, but also
+            some important data related to the returned objects such as object's owner or
+            referenced objects.
+
+            Default is 3, valid range is 1 to 8.
+        type: Number
+
+      - name: show_user_like
+        description: | 
+            If set to **true** the Post object in the response will include `"current_user_liked: true"`
+            if the current user has liked the object. If the user has not liked the object, the 
+            `current_user_liked` field is not included in the response.
+        type: Boolean          
+        
+      - name: pretty_json
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean      
+
+    response-parameters:
+      - name: posts
+        description: List of identified posts.
+        type: Array<Posts>
+
+    examples:
+      - platform: titanium
+        example: |
+            This example retrieves information about a post and checks the response.
+
+                Cloud.Posts.show({
+                    post_id: savedPostId
+                }, function (e) {
+                    if (e.success) {
+                        var post = e.posts[0];
+                        alert('Success:\n' +
+                            'id: ' + post.id + '\n' +
+                            'title: ' + post.title + '\n' +
+                            'content: ' + post.content + '\n' +
+                            'updated_at: ' + post.updated_at);
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
+
+      - platform: rest
+        example: |
+            Example cURL request:
+
+                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/posts/show.json?key=<YOUR APP APP KEY>&pretty_json=true&post_id=4e33a5b7d9ca7246ba000003&show_user_like=true"
+
+            Example JSON response:
+
+                {
+                  "meta": {
+                    "status": "ok",
+                    "code": 200,
+                    "method_name": "showPosts"
+                  },
+                  "response": {
+                    "posts": [
+                      {
+                        "id": "4e33a5b7d9ca7246ba000003",
+                        "title": "Post title",
+                        "created_at": "2011-07-30T06:33:27+0000",
+                        "current_user_liked": true,                        
+                        "updated_at": "2011-07-30T06:33:27+0000",
+                        "content": "Post Body",
+                        "reviews_count": 10,
+                        "ratings_average": 7.5,
+                        "ratings_summary": {
+                			     "10": 5,
+                			     "5" : 5
+                        },                        
+                        "user": {
+                          "id": "4e33a5b6d9ca7246ba000002",
+                          "first_name": "Bob",
+                          "last_name": "Dude",
+                          "created_at": "2011-07-30T06:33:26+0000",
+                          "updated_at": "2011-07-30T06:33:27+0000",
+                          "username": "bob",
+                          "email": "bob@dude.com"
+                        },
+                        "photo": {
+                          "id": "4e33a5b7d9ca7246ba000004",
+                          "filename": "photo.jpg",
+                          "size": 584344,
+                          "md5": "589b8ad43ed20bf8e622d719642bc939",
+                          "created_at": "2011-07-30T06:33:27+0000",
+                          "updated_at": "2011-07-30T06:33:27+0000",
+                          "processed": false
+                        }
+                      }
+                    ]
+                  }
+                }
+
+      - platform: ios
+        example: |
+            Example iOS call:
+
+                NSDictionary *data = @{@"status_id": @"4e33a5b7d9ca7246ba000003"};
+                [APSPosts show:data withBlock:^(APSResponse *e) {
+                    if (e.success) {
+                        NSArray *posts = e.response[@"posts"];
+                        NSDictionary *post = posts[0];
+                        NSString *message = [NSString stringWithFormat:@"message: %@", post[@"content"]];
+                        [[[UIAlertView alloc] initWithTitle:@"Success" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error" message:e.message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
+                NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:(CCPost *)post.objectId, @"post_id", nil];
+                CCRequest *request = [[CCRequest alloc] initWithDelegate:self baseUrl:@"posts/show.json" httpMethod:@"GET" paramDict:paramDict];
+                [request startAsynchronous];
+                [request release];
+
+            SDK Callback:
+
+                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
+                {
+                  NSArray *reviews = [response getObjectsOfType:[CCReview class]];
+                }
+
+      - platform: android
+        example: |
+            Example Android APS SDK call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+
+                HashMap<String, Object> data = new HashMap<String, Object>();
+                data.put("post_id", "4e33a5b7d9ca7246ba000003");
+
+                try {
+                    APSPosts.show(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                try {
+                                    Log.i("APSPosts", e.getResponseString());
+                                }
+                                catch (APSCloudException err) {
+                                    Log.e("APSPosts", "ERROR: " + err.getMessage());
+                                }
+                            } else {
+                                Log.e("APSPosts", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSPosts", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSPosts", "ERROR: " + err.getMessage());
+                }
+
+
+      - platform: android-acssdk
+        example: |
+            Example Android call:
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("post_id", "4e33a5b7d9ca7246ba000003");
+                CCResponse response = sdk.sendRequest("posts/show.json", CCRequestMethod.GET, data);
+
+            SDK Callback:
+
+                JSONObject responseJSON = response.getResponseData();
+                CCMeta meta = response.getMeta();
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
+                    && "showPosts".equals(meta.getMethod())) {
+                  JSONArray posts = responseJSON.getJSONArray("posts");
+                  ...
+                }
+
+      - platform: javascript
+        example: |
+            Example Javascript call:
+
+                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+                var data = {
+                  post_id: '4e33a5b7d9ca7246ba000003'
+                };
+                sdk.sendRequest('posts/show.json', 'GET', data, callback);
+
+            SDK Callback:
+
+                function callback(data) {
+                  if(data) {
+                    if(data.meta) {
+                      var meta = data.meta;
+                      if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'showPosts') {
+                        var posts = data.response.posts;
+                        ...
+                      }
+                    }
+                  }
+                }
+
+      - platform: actionscript
+        example: |
+            Example Actionscript call:
+
+                var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
+                var data:Object = new Object();
+                data.post_id = "4e33a5b7d9ca7246ba000003";
+                sdk.sendRequest("posts/show.json", URLRequestMethod.GET, data, false, callback);
+
+            SDK Callback:
+
+                function callback(data:Object):void {
+                  if(data) {
+                    if(data.hasOwnProperty("meta")) {
+                      var meta:Object = data.meta;
+                      if(meta.status == "ok" && meta.code == 200 && meta.method_name == "showPosts") {
+                        var posts:Array = data.response.posts;
+                        ...
+                      }
+                    }
+                  }
+                }
+
+            ![](https://static.appcelerator.com/images/nav/appcelerator-footer-logo.png)
+
+              * [Twitter](https://twitter.com/appcelerator)
+              * [Facebook](http://www.facebook.com/appcelerator)
+              * [Pinterest](http://pinterest.com/appcelerator/)
+              * [RSS](http://developer.appcelerator.com/blog/feed)
+              * [Email](mailto:info@appcelerator.com)
+
+            (C) 2008-2013 Appcelerator Inc. All rights reserved. Appcelerator is a
+            registered trademark.
+
+            [Legal information](http://www.appcelerator.com/legal)
+
+            [Privacy Policy](http://www.appcelerator.com/legal/privacy-policy)
+
+            [Help & Support](http://www.appcelerator.com/help)
+

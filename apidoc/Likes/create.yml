@@ -1,0 +1,283 @@
+name: Likes
+methods:
+  - name: create
+    summary: Create Like
+    description: |
+        Adds a "like" to an object. Currently, likes can only be associated with one of
+        the following object types, and a user can only like an object once:
+
+        *   {@link Posts}
+        *   {@link Photos}
+        *   {@link Users}
+        *   {@link Events}
+        *   {@link Checkins}
+        *   {@link Places}
+        *   {@link CustomObjects}
+        *   {@link Statuses}
+        *   {@link Reviews}
+
+        Once an object has one or more likes attached to it, it will return a
+        total like count with the object:
+
+            "likes_count": 2
+
+        You should specify one, and only one, ACS object ID parameter to identify the target object.
+
+    url: likes/create.json
+    http-method: POST
+    login-required: true
+
+    parameters:
+
+      - name: post_id
+        description: Post object to like.
+        type: String
+
+      - name: photo_id
+        description: Photo object to like.
+        type: String
+
+      - name: user_id
+        description: User object to like.
+        type: String
+
+      - name: event_id
+        description: Event object to like.
+        type: String
+
+      - name: place_id
+        description: Place object to like.
+        type: String
+
+      - name: checkin_id
+        description: Checkin object to like.
+        type: String
+
+      - name: status_id
+        description: Status object to like.
+        type: String
+
+      - name: review_id
+        description: Review object to like.
+        type: String
+
+      - name: custom_object_id
+        description: Custom object to like.
+        type: String
+        
+      - name: pretty_json
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
+
+    response-parameters:
+      - name: likes
+        description: A single-element array, containing the "like" object.
+        type: Array<Likes>
+
+    examples:
+      - platform: titanium
+        example: |
+            Requires Release 3.2.0. The following example increments the like count for the
+            specified Post object.
+
+                Cloud.Likes.create({
+                    post_id: savedPostId
+                }, function (e) {
+                    if (e.success) {
+                        var like = e.likes[0];
+                        alert('Success:\n' +
+                            'id: ' + like.id + '\n');
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
+
+      - platform: rest
+        example: |
+            Example cURL request:
+
+                $ curl -b cookies.txt -c cookies.txt -F "post_id=4e33a817d9ca724745000003" https://api.cloud.appcelerator.com/v1/likes/create.json?key=<YOUR APP APP KEY>&pretty_json=true
+
+            Example JSON response:
+
+                {
+                  "meta": {
+                    "status": "ok",
+                    "code": 200,
+                    "method_name": "createLike"
+                  },
+                  "response": {
+                    "likes": [
+                      {
+                        "id": "4e33a817d9ca724745000006",
+                        "created_at": "2011-07-30T06:43:35+0000",
+                        "updated_at": "2011-07-30T06:43:35+0000",
+                        "user": {
+                          "id": "4e33a817d9ca724745000002",
+                          "first_name": "Bob",
+                          "last_name": "Dude",
+                          "created_at": "2011-07-30T06:43:35+0000",
+                          "updated_at": "2011-07-30T06:43:35+0000",
+                          "username": "bob",
+                          "email": "bob@dude.com"
+                        }
+                      }
+                    ]
+                  }
+                }
+
+      - platform: ios
+        example: |
+            Example iOS call:
+                NSDictionary *data = @{@"post_id":@"savedPostId"};
+                [APSLikes create:data withBlock:^(APSResponse *e) {
+                    if (e.success){
+                        NSArray *likes = e.response[@"likes"];
+                        NSDictionary *like = likes[0];
+                        NSString *message = [NSString stringWithFormat:@"id : %@\n", like[@"id"]];
+
+                        [[[UIAlertView alloc] initWithTitle:@"Success" 
+                                                    message:message
+                                                   delegate:nil 
+                                          cancelButtonTitle:@"OK" 
+                                          otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:e.errorMessage
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
+                NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
+                [paramDict setObject:@"4e33a817d9ca724745000003" forKey:@"post_id"];
+                [paramDict setObject:@"1" forKey:@"rating"];
+                CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"POST" baseUrl:@"reviews/create.json" paramDict:paramDict];
+                [request startAsynchronous];
+                [request release];
+
+            SDK Callback:
+
+                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
+                {
+                	NSArray *reviews = [response getObjectsOfType:[CCReview class]];
+                	for (CCReview *reviews in reviews)
+                	{
+                		...
+                	}
+                }
+
+      - platform: android
+        example: |
+            Example Android call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+                final Activity currentActivity = this;
+
+                HashMap<String, Object> data = new HashMap<String, Object>();
+                data.put("post_id", "4e33a817d9ca724745000003");
+
+                try {
+                    APSLikes.create(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                new AlertDialog.Builder(currentActivity)
+                                .setTitle("Success!").setMessage("Created!")
+                                .setPositiveButton(android.R.string.ok, null)
+                                .setIcon(android.R.drawable.ic_dialog_info)
+                                .show();
+                            } else {
+                                Log.e("APSLikes", "ERROR: " + e.message());
+                            }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSLikes", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSLikes", "Exception throw: " + e.toString());
+                }
+
+      - platform: android-acssdk
+        example: |
+            Example Android call:
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("post_id", "4e33a817d9ca724745000003");
+                CCResponse response = sdk.sendRequest("likes/create.json", CCRequestMethod.POST, data);
+
+            SDK Callback:
+
+                JSONObject responseJSON = response.getResponseData();
+                CCMeta meta = response.getMeta();
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
+                    && "createLike".equals(meta.getMethod())) {
+                  JSONArray likes = responseJSON.getJSONArray("likes");
+                  ...
+                }
+
+      - platform: javascript
+        example: |
+            Example Javascript call:
+
+                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+                var data = {
+                  post_id: '4e33a817d9ca724745000003'
+                };
+                sdk.sendRequest('likes/create.json', 'POST', data, callback);
+
+            SDK Callback:
+
+                function callback(data) {
+                  if(data) {
+                    if(data.meta) {
+                      var meta = data.meta;
+                      if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'createLike') {
+                        var likes = data.response.likes;
+                      	...
+                      }
+                    }
+                  }
+                }
+
+      - platform: actionscript
+        example: |
+            Example Actionscript call:
+
+                var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
+                var data:Object = new Object();
+                data.post_id = "4e33a817d9ca724745000003";
+                sdk.sendRequest("likes/create.json", URLRequestMethod.POST, data, false, callback);
+
+            SDK Callback:
+
+                function callback(data:Object):void {
+                  if(data) {
+                    if(data.hasOwnProperty("meta")) {
+                      var meta:Object = data.meta;
+                      if(meta.status == "ok" && meta.code == 200 && meta.method_name == "createLike") {
+                      	var likes:Array = data.response.likes;
+                      	...
+                      }
+                    }
+                  }
+                }
+

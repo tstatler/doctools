@@ -1,0 +1,251 @@
+name: Places
+methods:
+  - name: show
+    summary: Show a Place
+    description: Returns information for the identified place.
+    url: places/show.json
+
+    parameters:
+      - name: place_id
+        description: ID of the place to show.
+        type: String
+        required: true
+
+      - name: response_json_depth
+        description: |
+            Nested object depth level counts in the response JSON.
+
+            In order to reduce server API calls from an applicaton, the response JSON may
+            include not just the identified object, but also
+            some important data related to the returned objects, such as owners and
+            referenced objects.
+
+            Default is 3, valid range is 1 to 8.
+        type: Number
+
+      - name: show_user_like
+        description: | 
+            If set to **true** the Place object in the response will include `"current_user_liked: true"`
+            if the current user has liked the object. If the user has not liked the object, the 
+            `current_user_liked` field is not included in the response.
+        type: Boolean    
+        
+      - name: pretty_json
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean    
+
+    response-parameters:
+      - name: places
+        description: Single-element array containing the identified place object.
+        type: Array<Places>
+
+    examples:
+      - platform: titanium
+        example: |
+            This example retrieves information about a place and checks the response.
+
+                Cloud.Places.show({
+                    place_id: savedPlaceId
+                }, function (e) {
+                    if (e.success) {
+                        var place = e.places[0];
+                        alert('Success:\n' +
+                            'id: ' + place.id + '\n' +
+                            'name: ' + place.name + '\n' +
+                            'updated_at: ' + place.updated_at);
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
+
+      - platform: rest
+        example: |
+            Example cURL request:
+
+                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/places/show.json?key=<YOUR APP APP KEY>&pretty_json=true&place_id=4d6f13e96f70953608000012"
+
+            Example JSON response:
+
+                {
+                  "meta": {
+                    "status":"ok",
+                    "code":200,
+                    "method_name":"showPlace"
+                  },
+                  "response": {
+                    "places": [
+                      {
+                          "id":"4d6f13e96f70953608000012",
+                          "name":"Maya Restaurant",
+                          "created_at":"2011-03-03T04:07:05+0000",
+                          "updated_at":"2011-03-03T04:07:05+0000",
+                          "address":"303 2nd Street",
+                          "city":"San Francisco",
+                          "state":"CA",
+                          "country":"United States",
+                          "phone":"(415) 543-2928",
+                          "lat":37.784732,
+                          "lng":-122.395441
+                      }
+                    ]
+                  }
+                }
+
+      - platform: ios
+        example: |
+            Example iOS call:
+
+                NSDictionary *data = @{
+                                         @"place_id"   : @"savedPlaceID"
+                                      };
+                [APSPlaces show:data withBlock:^(APSResponse *e) {
+                    if (e.success){
+                        NSArray *places = e.response[@"places"];
+                        NSDictionary *place = places[0];
+                        NSString *message = [NSString stringWithFormat:@"id : %@\n Name : %@\nUpdated at : %@\n",
+                                                place[@"id"],
+                                                place[@"name"],
+                                                place[@"updated_at"]];
+
+                        [[[UIAlertView alloc] initWithTitle:@"Success" 
+                                                    message:message
+                                                   delegate:nil 
+                                          cancelButtonTitle:@"OK" 
+                                          otherButtonTitles:nil] show];
+
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:e.errorMessage
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
+                NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:(CCPlace *)place.objectId, @"place_id", nil];
+                CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"places/show.json" paramDict:nil];
+                [request startAsynchronous];
+                [request release];
+
+            SDK Callback:
+
+                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
+                {
+                  NSArray *places = [response getObjectsOfType:[CCPlace class]];
+                }
+
+      - platform: android
+        example: |
+            Example Android APS SDK call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+
+                // Create dictionary of parameters to be passed with the request
+                HashMap<String, Object> data = new HashMap<String, Object>();
+                data.put("place_id", 4d6f13e96f70953608000012);
+
+                try {
+                    APSPlaces.show(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+
+                            if (e.getSuccess()) {
+                                try {
+                                    Log.i("APSPlaces", e.getResponseString());
+                                } catch (APSCloudException e1) {
+                                    Log.e("APSPlaces", e.toString());
+                                }
+                            } else {
+                                Log.e("APSPlaces", e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(APSCloudException e) {
+                            Log.e("APSPlaces", e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSPlaces", e.toString());
+                }
+
+
+      - platform: android-acssdk
+        example: |
+            Example Android call:
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("place_id", "4d6f13e96f70953608000012");
+                CCResponse response = sdk.sendRequest("places/show.json", CCRequestMethod.GET, data);
+
+            SDK Callback:
+
+                JSONObject responseJSON = response.getResponseData();
+                CCMeta meta = response.getMeta();
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
+                    && "showPlace".equals(meta.getMethod())) {
+                  JSONArray places = responseJSON.getJSONArray("places");
+                  ...
+                }
+
+      - platform: javascript
+        example: |
+            Example Javascript call:
+
+                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+                var data = {
+                  place_id: '4d6f13e96f70953608000012'
+                };
+                sdk.sendRequest('places/show.json', 'GET', data, callback);
+
+            SDK Callback:
+
+                function callback(data) {
+                  if(data) {
+                    if(data.meta) {
+                      var meta = data.meta;
+                      if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'showPlace') {
+                        var places = data.response.places;
+                        ...
+                      }
+                    }
+                  }
+                }
+
+      - platform: actionscript
+        example: |
+            Example Actionscript call:
+
+                var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
+                var data:Object = new Object();
+                data.place_id = "4d8910aed0afbe0e4e000006";
+                sdk.sendRequest("places/show.json", URLRequestMethod.GET, data, false, callback);
+
+            SDK Callback:
+
+                function callback(data:Object):void {
+                  if(data) {
+                    if(data.hasOwnProperty("meta")) {
+                      var meta:Object = data.meta;
+                      if(meta.status == "ok" && meta.code == 200 && meta.method_name == "showPlace") {
+                        var places:Array = data.response.places;
+                        ...
+                      }
+                    }
+                  }
+                }
+

@@ -1,0 +1,60 @@
+  [
+      {
+          "name": "Objects",
+          "groups": [
+              {
+                  "name": "Basic Objects",
+                  "classes": [
+                      "Chats",
+                      "Checkins",
+                      "CustomObjects",
+                      "Events",
+                      "Files",
+                      "KeyValues",
+                      "Messages",
+                      "Photos",
+                      "PhotoCollections",
+                      "Places",
+                      "Posts",
+                      "Reviews",
+                      "Statuses"
+                  ]
+              },
+              {
+                  "name": "Users and Permissions",
+                  "classes": [
+                    "Users",
+                    "ACLs",
+                    "Friends",
+                    "SocialIntegrations"
+                    ]
+              }
+          ]
+      },
+      {
+          "name": "Utilities",
+          "groups": [
+             {
+                   "name": "Communication",
+                   "classes": [
+                        "Emails",
+                        "PushNotifications",
+                        "PushSchedules"
+                   ]
+             },
+             {
+                 "name": "Miscellaneous",
+                 "classes": [
+                    "Clients",
+                    "GeoFences",
+                    "Likes",
+                    "Logs",
+                    "PushLogs",
+                    "PushLogDetails",
+                    "PushPayload",
+                    "PushSchedulePayload"
+                 ]
+             }
+          ]
+      }
+  ]

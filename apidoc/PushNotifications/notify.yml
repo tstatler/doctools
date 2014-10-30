@@ -1,0 +1,292 @@
+name: PushNotifications
+methods:
+  - name: notify
+    summary: notify
+    description: |
+        Sends push notifications to one or more users who are subscribed to a channel.
+
+        Specify either `friends` or `to_ids`. Enterprise users can also specify `where`.
+        One of these parameters must be used. These parameters cannot be used simultaneously.
+
+        Application admins can set the `to_ids` parameter to `everyone` to send to all devices
+        subscribed to the identified channel.
+
+        The REST version of `notify` includes the push notification ID in its response.
+        See the REST example below.
+
+    url: push_notification/notify.json
+    http-method: POST
+    login-required: true
+
+    parameters:
+
+      - name: channel
+        description: |
+            Name of the channel.
+
+            The name of the push channel cannot start with a hash symbol ('#').
+        type: String
+        required: true
+
+      - name: friends
+        description: |
+            If this parameter is specified (regardless of the parameter's value),
+            push notifications are sent to any of the user's {@link Friends} who are
+            subscribed to the identified channel.
+        type: Any
+
+      - name: to_ids
+        description: |
+            Comma-separated list of user IDs to send the notification to users who are subscribed
+            to the specified channel. Up to 1000 users can be specified.
+
+            You **cannot** use this parameter when using a location query with the `where` parameter.
+
+            Application admins can set this parameter to `everyone` to send to all devices
+            subscribed to the channel.
+
+            If you are using the web interface, you do not need to specify this parameter.
+        type: String
+
+      - name: payload
+        description: |
+            Payload to send with the push notification.
+
+            For a string, it will be sent as an alert (notification message).
+        type: [String, PushPayload]
+        required: true
+
+      - name: options
+        description: |
+            Additional push options.
+
+            * *expire_after_seconds* (Number): Expiration time in seconds of when to stop sending the push notification.
+              For example, if the push notification expiration time is for a day and the user's device
+              is off for over a day, the user does not receive the push notification since it has expired.
+
+            For example, to specify a one day expiration period, use `options={'expire_after_seconds':86400}`.
+        type: Hash
+
+      - name: where
+        description: |
+            A JSON-encoded object that defines either the user or location query used to select the device
+            that will receive the notification. Up to 1000 users can be returned by the query.
+
+            If you are using a location query, you **cannot** use the `to_ids` parameter.
+
+            **Available only for Enterprise users.**
+
+            To specify a user query, set the `user` field to a custom query, for example, the
+            following query searches for all users with the first name of Joe:
+
+                where={"user": {"first_name":"Joe"}}
+
+            To specify a location query, set the `loc` field to a
+            [MongoDB Geospatial Query](http://docs.mongodb.org/manual/reference/operator/query-geospatial/).
+            The following query searches for all users within 2 km of Oakland, CA, USA:
+
+                where={"loc": { "$nearSphere" : { "$geometry" : { "type" : "Point" , "coordinates" : [-122.2708,37.8044] } , "$maxDistance" : 2000 }}}
+
+            For details about using the `where` parameter, see the [Search and Query guide](#!/guide/search_query).
+        type: Hash
+        
+      - name: pretty_json
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
+
+    response-parameters:
+      - name: push_notification
+        description: |
+            Information about the requested push notification:
+
+              * `id`: The ID of the requested push notification.
+              * `payload`: The notification payload.
+              * `channel`: The notification channel.
+
+        type: Hash
+
+    examples:
+      - platform: titanium
+        example: |
+            This example sends a push notification to a channel and checks the response.
+
+                Cloud.PushNotifications.notify({
+                    channel: 'friend_request',
+                    payload: 'Welcome to push notifications'
+                }, function (e) {
+                    if (e.success) {
+                        alert('Success');
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
+
+      - platform: rest
+        example: |
+            Example cURL request. The JSON response object includes the ID of the push notification.
+
+                $ curl -b cookies.txt -c cookies.txt -F "channel=friend_request" -F "to_ids=5354525d5714f565d3001c1e" -F "payload=test" https://api.cloud.appcelerator.com/v1/push_notification/notify.json?key=<APP_KEY>&pretty_json=true
+
+                Example JSON response:
+
+                    {
+                      "meta": {
+                        "code": 200,
+                        "status": "ok",
+                                    "method_name": "Notify"
+                      },
+                      "response": {
+                        "push_notification": {
+                          "id": "53690d3fe10fa4582a00e887",
+                          "payload": "test",
+                          "channel": "friend_request"
+                        }
+                      }
+                    }
+
+      - platform: ios
+        example: |
+            Example iOS APS SDK call:
+
+                // Create dictionary of parameters to be passed with the request
+                NSDictionary *data = @{
+                    @"channel": @"friend_request",
+                    @"payload": @"Welcome to push notifications"
+                };
+                
+                [APSPushNotifications notify:data withBlock:^(APSResponse *e) {
+                      if (e.success) {
+                          [[[UIAlertView alloc] initWithTitle:@"Great" message:@"Success!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      } else {
+                          [[[UIAlertView alloc] initWithTitle:@"Error" message:e.errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      }
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
+                NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:3];
+                [paramDict setObject:@"friend_request" forKey:@"channel"];
+                [paramDict setObject:@"123456" forKey:@"to_ids[]"];
+                [paramDict setObject:@"345667" forKey:@"to_ids[]"];
+                CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"POST" baseUrl:@"push_notification/notify.json" paramDict:paramDict];
+                [request startAsynchronous];
+                [request release];
+
+            SDK Callback:
+
+                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
+                {
+                  // successfully subscribed
+                }
+
+      - platform: android
+        example: |
+            Example Android call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("channel", "friend_request");
+                data.put("to_ids", "123456,34567");
+                data.put("payload", "Push Notification Test");
+
+                try {
+                    APSPushNotifications.notify(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+
+                            if (e.getSuccess()) {
+                                Log.i("APSPushNotifications", "Notified!");
+                            } else {
+                                Log.e("APSPushNotifications", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSPushNotifications", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSPushNotifications", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
+        example: |
+            Example Android call:
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("channel", "friend_request");
+                data.put("to_ids", "123456,34567");
+                data.put("payload", "Push Notification Test");
+                CCResponse response = sdk.sendRequest("push_notification/notify.json", CCRequestMethod.POST, data);
+
+            SDK Callback:
+
+                JSONObject responseJSON = response.getResponseData();
+                CCMeta meta = response.getMeta();
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
+                    && "Notify".equals(meta.getMethod())) {
+                  ...
+                }
+
+      - platform: javascript
+        example: |
+            Example Javascript call:
+
+                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+                var data = {
+                  channel: 'friend_request',
+                  to_ids: '123456,34567',
+                  payload: 'Push Notification Test'
+                };
+                sdk.sendRequest('push_notification/notify.json', 'POST', data, callback);
+
+            SDK Callback:
+
+                function callback(data) {
+                  if(data) {
+                    if(data.meta) {
+                      var meta = data.meta;
+                      if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'Notify') {
+                        ...
+                      }
+                    }
+                  }
+                }
+
+      - platform: actionscript
+        example: |
+            Example Actionscript call:
+
+                var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
+                var data:Object = new Object();
+                data.channel = "friend_request";
+                data.to_ids = "123456,34567";
+                data.payload = "Push Notification Test";
+                sdk.sendRequest("push_notification/notify.json", URLRequestMethod.POST, data, callback);
+
+            SDK Callback:
+
+                function callback(data:Object):void {
+                  if(data) {
+                    if(data.hasOwnProperty("meta")) {
+                      var meta:Object = data.meta;
+                      if(meta.status == "ok" && meta.code == 200 && meta.method_name == "Notify") {
+                        ...
+                      }
+                    }
+                  }
+                }
+

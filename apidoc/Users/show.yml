@@ -1,0 +1,278 @@
+name: Users
+methods:
+  - name: show
+    summary: Show User Profile
+    description: |
+        Shows public user information. For private information about the currently
+        logged in user, see {@link Users#show_me Show Logged In User Info}.
+    url: users/show.json
+    login-required: false
+
+    parameters:
+      - name: user_id
+        description: |
+            User ID of the user to show. Either `user_id` or `user_ids` must be specified.
+        type: String
+
+      - name: user_ids
+        description: |
+            Comma-separated list of user IDs to show. Either `user_id` or `user_ids` must be specified.
+        type: String
+
+      - name: response_json_depth
+        description: |
+            Nested object depth level counts in response json.
+
+            In order to reduce server API calls from an applicaton, the response json may
+            include not just the objects that are being queried/searched, but also with
+            some important data related to the returning objects such as object's owner or
+            referencing objects.
+
+            Default is 3, valid range is 1 to 8.
+        type: Number
+
+      - name: show_user_like
+        description: | 
+            If set to **true** the User object in the response will include `"current_user_liked: true"`
+            if the current user has liked the object. If the user has not liked the object, the 
+            `current_user_liked` field is not included in the response.
+        type: Boolean   
+                
+      - name: pretty_json
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
+
+    response-parameters:
+      - name: users
+        description: List of user profiles.
+        type: Array<Users>
+
+    examples:
+      - platform: titanium
+        example: |
+            This example requests information about a user and checks the response.
+
+                Cloud.Users.show({
+                    user_id: savedUserInfo.id
+                }, function (e) {
+                    if (e.success) {
+                        var user = e.users[0];
+                        alert('Success:\n' +
+                            'id: ' + user.id + '\n' +
+                            'first name: ' + user.first_name + '\n' +
+                            'last name: ' + user.last_name);
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
+
+      - platform: rest
+        example: |
+            Example cURL request:
+
+                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/users/show.json?key=<YOUR APP APP KEY>&pretty_json=true&user_id=4d6e77386f70950c89000001"
+
+            Example JSON response:
+
+                {
+                  "meta": {
+                    "code": 200,
+                    "status": "ok",
+                    "method_name": "showUsers"
+                  },
+                  "response": {
+                    "users": [
+                      {
+                        "id": "53fbb057c3aafa087a000400",
+                        "first_name": "Victor",
+                        "last_name": "Stone",
+                        "created_at": "2014-08-25T21:53:27+0000",
+                        "updated_at": "2014-08-26T18:43:22+0000",
+                        "external_accounts": [
+
+                        ],
+                        "confirmed_at": "2014-08-25T21:53:27+0000",
+                        "username": "cyborg",
+                        "admin": "false",
+                        "stats": {
+                          "photos": {
+                            "total_count": 0
+                          },
+                          "storage": {
+                            "used": 0
+                          }
+                        },
+                        "friend_counts": {
+                          "requests": 1,
+                          "friends": 0
+                        }
+                      }
+                    ]
+                  }
+                }
+
+      - platform: ios
+        example: |
+            Example iOS APS SDK call:
+          
+                NSDictionary *data = @{@"user_id": @"4d6e77386f70950c89000001"};
+                [APSUsers show:data withBlock:^(APSResponse *e) {
+                    if (e.success) {
+                        NSArray *users = e.response[@"users"];
+                        NSDictionary *user = files[0];
+                        NSString *message = [NSString stringWithFormat:@"username: %@", user[@"username"]];
+                        [[[UIAlertView alloc] initWithTitle:@"Success" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error" message:e.message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
+                NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:(CCUser *)user.objectId, @"user_id", nil];
+                CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"users/show.json" paramDict:paramDict];
+                [request startAsynchronous];
+                [request release];
+
+            SDK Callback:
+
+                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
+                {
+                  NSArray *users = [response getObjectsOfType:[CCUser class]];
+                  if ([users count] == 1) {
+                    NSLog(@"user is %@", user);
+                  }
+                }
+
+      - platform: android
+        example: |
+            Example Android call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+                final Activity currentActivity = this;
+
+                HashMap<String, Object> data = new HashMap<String, Object>();
+                data.put("user_id", "4d6e77386f70950c89000001");
+
+                try {
+                    APSUsers.show(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                try {
+                                    Toast.makeText(currentActivity, e.getResponseString(), Toast.LENGTH_SHORT);
+                                } catch (APSCloudException err) {
+                                    Log.e("APSUsers", "Exception thrown: " + err.toString());
+                                }
+                            } else {
+                                Log.e("APSUsers", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSUsers", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSUsers", "Exception thrown: " + e.toString());
+                }
+
+
+      - platform: android-acssdk
+        example: |
+            Example Android call:
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("user_id", "4d6e77386f70950c89000001");
+                CCResponse response = sdk.sendRequest("users/show.json", CCRequestMethod.GET, data);
+
+            SDK Callback:
+
+                JSONObject responseJSON = response.getResponseData();
+                CCMeta meta = response.getMeta();
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
+                    && "showUsers".equals(meta.getMethod())) {
+                  JSONArray users = responseJSON.getJSONArray("users");
+                  JSONObject user = users.getJSONObject(0);
+
+                  StringBuffer sb = new StringBuffer();
+                  sb.append("Create user successful!\n");
+                  sb.append("id:" + user.getString("id") + "\n");
+                  sb.append("first name:" + user.getString("first_name") + "\n");
+                  sb.append("last name:" + user.getString("last_name") + "\n");
+                  sb.append("email:" + user.getString("email") + "\n");
+                  System.out.println(sb.toString());
+                }
+
+      - platform: javascript
+        example: |
+            Example Javascript call:
+
+                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+                var data = {
+                  user_id: '4d6e77386f70950c89000001'
+                };
+                sdk.sendRequest('users/show.json', 'GET', data, callback);
+
+            SDK Callback:
+
+                function callback(data) {
+                  if(data) {
+                    if(data.meta) {
+                      var meta = data.meta;
+                      if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'showUsers') {
+                        var message = '';
+                        var user = data.response.users[0];
+                        message += 'Get user profile successful!\n';
+                        message += 'id:' + user.id + '\n';
+                        message += 'first name:' + user.first_name + '\n';
+                        message += 'last name:' + user.last_name + '\n';
+                        message += 'email:' + user.email + '\n';
+                        alert(message);
+                      }
+                    }
+                  }
+                }
+
+      - platform: actionscript
+        example: |
+            Example Actionscript call:
+
+                var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
+                var data:Object = new Object();
+                data.user_id = "4d6e77386f70950c89000001";
+                sdk.sendRequest("users/show.json", URLRequestMethod.GET, data, false, callback);
+
+            SDK Callback:
+
+                function callback(data:Object):void {
+                  if(data) {
+                    if(data.hasOwnProperty("meta")) {
+                      var meta:Object = data.meta;
+                      if(meta.status == "ok" && meta.code == 200 && meta.method_name == "showUsers") {
+                        var message:String = "";
+                        var user:Object = data.response.users[0];
+                        message += "Get user profile successful!\n";
+                        message += "id:" + user.id + "\n";
+                        message += "first name:" + user.first_name + "\n";
+                        message += "last name:" + user.last_name + "\n";
+                        message += "email:" + user.email + "\n";
+                        Alert.show(message);
+                      }
+                    }
+                  }
+                }
+

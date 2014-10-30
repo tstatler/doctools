@@ -1,0 +1,221 @@
+name: GeoFences
+methods:
+  - name: query
+    summary: Custom Query of Geofences
+    description: |
+        Perform custom query of geofences with sorting and paginating.
+
+        Available only for Enterprise users.
+
+        In ACS 1.1.5 and later, you can paginate query results using `skip` and `limit` parameters, or by including
+        a `where` clause to limit the results to objects whose IDs fall within a specified range.
+        For details, see [Query Pagination](#!/guide/search_query-section-query-pagination).        
+
+        For details about using the query parameters,
+        see the [Search and Query guide](#!/guide/search_query).
+
+    url: geo_fences/query.json
+
+    parameters:
+      - name: page
+        description: |
+            <p class="note">
+            Starting in ACS 1.1.5, page and per_page are no longer supported in query operations. 
+            Applications should instead use <strong>skip</strong> and <strong>limit</strong> 
+            query parameters.
+            </p>
+
+        type: Number
+
+      - name: per_page
+        description: |
+            <p class="note">
+            Starting in ACS 1.1.5, page and per_page are no longer supported in query operations. 
+            Applications should instead use <strong>skip</strong> and <strong>limit</strong> 
+            query parameters.
+            </p>
+        type: Number
+
+      - name: limit
+        description: |
+            The number of records to fetch. The value must be greater than 0, and no greater then 
+            1000, or an HTTP 400 (Bad Request) error will be returned. Default value of `limit` is 10.
+        type: Number
+
+      - name: skip
+        description: |
+            The number of records to skip. The value must be greater than or equal to 0, and no greater 
+            than 4999, or an HTTP 400 error will be returned. To skip 5000 records or more 
+            you need to perform a range-based query. See 
+            <a href="#!/guide/search_query-section-query-pagination">Query Pagination</a> for more information.</p>
+        type: Number
+
+      - name: response_json_depth
+        description: |
+            Nested object depth level for response data.
+
+            Default value is 3.  Valid range is from 1 to 8.
+
+            Response data may include references to other objects, which the server performs
+            additional queries on to include in the response. To reduce server response time,
+            set this parameter to a lower value to reduce server API calls.
+        type: Number
+
+      - name: where
+        description: |
+            A JSON-encoded object that defines the query used.
+
+            The following fields can be used for the query:
+
+              * {@link GeoFences#start_time}
+              * {@link GeoFences#end_time}
+              * `loc` : For this property, specify a
+                [MongoDB Geospatial Query](http://docs.mongodb.org/manual/reference/operator/query-geospatial/).
+            
+            If `where` is not specified, `query` returns all objects.
+        type: Hash
+
+      - name: pretty_json
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean        
+
+    response-parameters:
+      - name: geo_fences
+        description: List of geo-fence objects matching the query parameters.
+        type: Array<GeoFences>
+
+    examples:
+      - platform: titanium
+        example: |
+            Requires Titanum SDK 3.2.1 or later.
+
+            This example searches for geo-fences within 2 km of Oakland, CA, USA:
+
+                Cloud.GeoFences.query({
+                    where:{
+                        "loc": {
+                            "$nearSphere" : {
+                                "$geometry" : { "type" : "Point", "coordinates" : [-122.2708,37.8044] },
+                                    "$maxDistance" : 2000
+                                }
+                            }
+                    }
+                }, function (e) {
+                    if (e.success) {
+                        Ti.API.info(JSON.stringify(e.geo_fences));
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
+
+      - platform: rest
+        example: |
+            This example searches for geo-fences within 2 km of Oakland, CA, USA:
+
+                curl -b cookies.txt -c cookies.txt -X GET -F 'where={"loc": { "$nearSphere" : { "$geometry" : { "type" : "Point" , "coordinates" : [-122.2708,37.8044] } , "$maxDistance" : 2000 }}}' "http://api.cloud.appcelerator.com/v1/geo_fences/query.json?key=<API_KEY>&count=true"
+
+            Example JSON response:
+
+                {
+                  "meta": {
+                    "code": 200,
+                    "status": "ok",
+                    "method_name": "queryGeoFence",
+                    "count": 100
+                  },
+                  "response": {
+                    "geo_fences": [
+                      {
+                        "id": "52aa2ebbd7de142e0e000041",
+                        "start_time": "2013-12-25T00:00:00+0000",
+                        "end_time": "2013-12-26T19:00:00+0000",
+                        "loc": {
+                          "radius": "10/3959",
+                          "coordinates": [
+                            -122.4167,
+                            37.7833
+                          ]
+                        },
+                        "payload": {
+                          "alert": "24-hour sale at our SF flagship store on 12/26!"
+                        },
+                        "created_at": "2013-12-12T21:46:35+0000",
+                        "updated_at": "2013-12-12T22:41:38+0000"
+                      }
+                    ]
+                  }
+                }
+            
+      - platform: ios
+        example: |
+            Example iOS APS SDK call:
+
+                // Create dictionary of parameters to be passed with the request
+                NSDictionary *data = @{
+                    @"where": @{
+                        @"loc": @{
+                            @"$nearSphere": @{
+                                @"$geometry": @{ 
+                                    @"type": @"Point", 
+                                    @"coordinates": @[@-122.2708, @37.8044] 
+                                },
+                                @"$maxDistance" : @2000
+                            }
+                        }
+                    }
+                };
+                
+                [APSGeoFences query:data withBlock:^(APSResponse *e) {
+                      if (e.success) {
+                          NSString *message = [NSString stringWithFormat:@"Found %lu geo_fences", (unsigned long)((NSArray *) e.response[@"geo_fences"]).count ];
+                          [[[UIAlertView alloc] initWithTitle:@"Success" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      } else {
+                          [[[UIAlertView alloc] initWithTitle:@"Error" message:e.errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      }
+                }];
+
+      - platform: android
+        example: |
+            Example Android APS SDK call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+
+                HashMap<String,Object> data = new HashMap<String,Object>;
+                JSONObject params = new JSONObject("'loc': { '$nearSphere' : { '$geometry' : { 'type' : 'Point' , 'coordinates' : [-122.2708,37.8044] } , '$maxDistance' : 2000 }}}");
+                data.put("where", params);
+
+                try {
+                    APSGeofences.query(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                try {
+                                    JSONArray geo_fences = e.getResponse().getJSONArray("geo_fences");
+                                    if (geo_fences.length() <= 0) {
+                                        Log.i("APSGeofences", "No Results!");
+                                    } else {
+                                        for (int i = 0; i < users.length(); i++) {
+                                            JSONObject geo_fence = geo_fences.getJSONObject(i);
+                                            Log.i("APSGeofences", geofence.getJSONObject("payload").toString());
+                                        }
+                                    }
+                                } catch (JSONException err) {
+                                       Log.e("APSGeofences", "Exception thrown: " + err.toString());
+                                }
+                            } else {
+                                Log.e("APSGeofences", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(APSCloudException e) {
+                            Log.e("APSGeofences", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSGeofences", "Exception thrown: " + e.toString());
+                }

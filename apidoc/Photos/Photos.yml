@@ -1,0 +1,79 @@
+name: Photos
+description: The Photos API lets you upload, resize and manage photos for your application.
+mixin: Reviewable
+fields: 
+  - name: id
+    description: Generated ID for this photo.
+    type: String
+
+  - name: filename
+    description: Filename of the original photo.
+    type: String
+
+  - name: title
+    description: Photo title, if specified.
+    type: String
+
+  - name: size
+    description: Original image size in bytes.
+    type: Number
+
+  - name: collections
+    description: Single-element array containing the collection this photo is a part of, if any.
+    type: Array<PhotoCollections>
+
+  - name: md5
+    description: MD5 hash of the original image data.
+    type: String
+
+  - name: processed
+    description: True if this photo has been processed and is available for download.
+    type: Boolean
+
+  - name: content_type
+    description: MIME content-type for this photo.
+    type: String
+
+  - name: urls
+    description: |
+        A hash containing image URLs for the photo at different sizes. The keys in the hash correspond to 
+        the photo sizes described in [Photo Uploading & Resizing](#!/guide/photosizes):
+
+        * square_75
+        * thumb_100
+        * small_240
+        * medium_500
+        * medium_640
+        * large_1024
+        * original
+
+        The URLs are only available after the photo has been processed (`processed` is
+        `true`).
+    type: Hash
+
+  - name: created_at
+    description: Creation date for this photo object.
+    type: Date
+
+  - name: updated_at
+    description: Last update time for this photo object.
+    type: Date
+      
+  - name: tags
+    description:  List of tags for this photo.
+    type: Array<String>
+
+  - name: custom_fields
+    description: User defined fields. See [Custom Data Fields](#!/guide/customfields).
+    type: Hash
+
+  - name: acls
+    description: |
+        Single-element array containing the {@link ACLs} associated with this photo object, if any.
+    type: String
+
+  - name: user
+    description: |
+        User object for the photo's owner.
+    type: Users
+

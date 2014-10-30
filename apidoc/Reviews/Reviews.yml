@@ -1,0 +1,88 @@
+name: Reviews
+description: |
+    The Reviews API lets you associate user reviews and ratings with an ACS object. Currently, reviews 
+    can be added to the following ACS object types:
+
+    *   {@link Posts}
+    *   {@link Photos}
+    *   {@link Users}
+    *   {@link Events}
+    *   {@link Checkins}
+    *   {@link Places}
+    *   {@link CustomObjects} 
+    *   {@link Statuses}
+    *   {@link Reviews}
+    
+    If an ACS object has one or more reviews associated with it, it returns the total
+    number of reviews, number of ratings, average rating value, and a summary of ratings when the object is 
+    queried or updated:
+
+        "reviews_count": 2,
+        "ratings_count": 2,
+        "ratings_average": 150.0,
+        "ratings_summary": {
+              "100": 1,
+                "200": 1
+        }
+        
+mixin: Reviewable
+fields:
+  - name: content
+    description: Review or comment text.  
+    type: String
+
+  - name: rating
+    description: Rating associated with review. 
+    type: String
+
+  - name: tags
+    description:  List of tags for this review.
+    type: Array<String>
+
+  - name: custom_fields
+    description: User defined fields. See [Custom Data Fields](#!/guide/customfields).
+    type: [ String, Hash ]
+
+  - name: event
+    description: Event object associated with this review.
+    type: Events
+
+  - name: checkin
+    description: Checkin object associated with this review.
+    type: Checkins
+
+  - name: photo
+    description: Photo object associated with this review.
+    type: Photos
+
+  - name: post
+    description: Post object associated with this review.
+    type: Posts
+
+  - name: place
+    description: Place object associated with this review.
+    type: Places
+
+  - name: custom_object
+    description: Custom object associated with this review.
+    type: CustomObjects
+
+  - name: status
+    description: Status object associated with this review.
+    type: Statuses
+
+  - name: review
+    description: Review object associated with this review.
+    type: Reviews
+
+  - name: created_at
+    description: Creation date for this review object.
+    type: Date
+
+  - name: updated_at
+    description: Last update time for this review object.
+    type: Date
+
+  - name: user
+    description: User who created the review.
+    type: Users

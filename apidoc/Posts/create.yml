@@ -1,0 +1,309 @@
+name: Posts
+methods:
+  - name: create
+    summary: Create Post
+    description: |
+        Create a post, which can be a Facebook-style wall post or Digg-style
+        submission with content.
+
+    url: posts/create.json
+    http-method: POST
+    login-required: true
+
+    parameters:
+
+      - name: content
+        description: Text content of the post.
+        type: String
+        required: true
+
+      - name: title
+        description: Title of the post.
+        type: String
+
+      - name: event_id
+        description: ID of the {@link Events} this post belongs to.
+        type: String
+
+      - name: photo
+        description: |
+            New photo to attach as the primary photo for this object.
+
+            When you use the `photo` parameter to attach a new photo, you can use the
+            [custom resize and sync options](#!/guide/photosizes).
+        type: Photos
+
+      - name: photo_id
+        description: |
+            ID of an existing photo to attach as the primary photo for this object.
+        type: String
+
+      - name: tags
+        description:  |
+            Comma separated list of tags for this object.
+        type: String
+
+      - name: custom_fields
+        description: User defined fields. See [Custom Data Fields](#!/guide/customfields).
+        type: [ String, Hash ]
+
+      - name: acl_name
+        description: |
+            Name of an {@link ACLs} to associate with this object.
+
+            An ACL can be specified using `acl_name` or `acl_id`. The two parameters are
+            mutually exclusive.
+        type: String
+
+      - name: acl_id
+        description: |
+            ID of an {@link ACLs} to associate with this object.
+
+            An ACL can be specified using `acl_name` or `acl_id`. The two parameters are
+            mutually exclusive.
+        type: String
+
+      - name: user_id
+        description: |
+            User ID to create the object on behalf of.
+
+            The current login user must be an application admin to create an object on
+            behalf of another user.
+        type: String
+        
+      - name: pretty_json
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
+
+    response-parameters:
+      - name: posts
+        description: Single-element array containing the newly-created post.
+        type: Array<Posts>
+
+    examples:
+      - platform: titanium
+        example: |
+            This example creates a new post and checks the response.
+
+                Cloud.Posts.create({
+                    content: 'Man Walks On Moon',
+                    title: 'News of the day',
+                    photo: Titanium.Filesystem.getFile('photo.jpg')
+                }, function (e) {
+                    if (e.success) {
+                        var post = e.posts[0];
+                        alert('Success:\n' +
+                            'id: ' + post.id + '\n' +
+                            'title: ' + post.title + '\n' +
+                            'content: ' + post.content + '\n' +
+                            'updated_at: ' + post.updated_at);
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
+
+      - platform: rest
+        example: |
+            Example cURL request:
+
+                $ curl -b cookies.txt -c cookies.txt -F "photo=@photo.jpg" -F "content=Buzz at Appcelerator Cloud Services" -F "title=Today's News" https://api.cloud.appcelerator.com/v1/posts/create.json?key=<YOUR APP APP KEY>&pretty_json=true
+
+            Example JSON response:
+
+                {
+                  "meta": {
+                    "status": "ok",
+                    "code": 200,
+                    "method_name": "createPost"
+                  },
+                  "response": {
+                    "posts": [
+                      {
+                        "id": "4e33a252d9ca724676000003",
+                        "title": "Today's News",
+                        "created_at": "2011-07-30T06:18:58+0000",
+                        "updated_at": "2011-07-30T06:18:58+0000",
+                        "content": "Post Body",
+                        "reviews_count": 0,
+                        "ratings_average": 0.0,
+                        "ratings_summary": {
+                        },
+                        "user": {
+                          "id": "4e33a251d9ca724676000002",
+                          "first_name": "Bob",
+                          "last_name": "Dude",
+                          "created_at": "2011-07-30T06:18:57+0000",
+                          "updated_at": "2011-07-30T06:18:58+0000",
+                          "username": "bob",
+                          "email": "bob@dude.com"
+                        },
+                        "photo": {
+                          "id": "4e33a252d9ca724676000004",
+                          "filename": "photo.jpg",
+                          "size": 584344,
+                          "md5": "589b8ad43ed20bf8e622d719642bc939",
+                          "created_at": "2011-07-30T06:18:58+0000",
+                          "updated_at": "2011-07-30T06:18:58+0000",
+                          "processed": false
+                        }
+                      }
+                    ]
+                  }
+                }
+
+      - platform: ios
+        example: |
+            Example iOS call:
+
+                // Create dictionary of parameters to be passed with the request
+                NSDictionary *data = @{
+                    @"title": @"Appcelerator Cloud Services buzz",
+                    @"content": @"More users joined Appcelerator Cloud Services"
+                };
+
+                [APSPosts create:data withBlock:^(APSResponse *e) {
+                    if (e.success) {
+                        [[[UIAlertView alloc] initWithTitle:@"Success" message:@"Created post!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error" message:e.message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    }
+                }];
+
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
+                NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
+                [paramDict setObject:@"Appcelerator Cloud Services buzz" forKey:@"title"];
+                [paramDict setObject:@"More users joined Appcelerator Cloud Services" forKey:@"content"];
+                CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"POST" baseUrl:@"posts/create.json" paramDict:paramDict];
+                [request addPhotoUIImage:image paramDict:nil];
+                [request startAsynchronous];
+                [request release];
+
+            SDK Callback:
+
+                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
+                {
+                	NSArray *posts = [response getObjectsOfType:[CCPost class]];
+                	for (CCPost *posts in posts)
+                	{
+                		...
+                	}
+                }
+
+      - platform: android
+        example: |
+            Example Android APS SDK call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+                final Activity currentActivity = this;
+
+                HashMap<String, Object> data = new HashMap<String, Object>();
+                data.put("title", "Today's News");
+                data.put("content", "Buzz at Appcelerator Cloud Services");
+
+                try {
+                    APSPosts.create(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                new AlertDialog.Builder(currentActivity)
+                                .setTitle("Success!").setMessage("Created!")
+                                .setPositiveButton(android.R.string.ok, null)
+                                .setIcon(android.R.drawable.ic_dialog_info)
+                                .show();
+                            } else {
+                                Log.e("APSPosts", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSPosts", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSPosts", "ERROR: " + e.getMessage());
+                }
+
+
+      - platform: android-acssdk
+        example: |
+            Example Android call:
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("content", "Buzz at Appcelerator Cloud Services");
+                data.put("title", "Today's News");
+                CCResponse response = sdk.sendRequest("posts/create.json", CCRequestMethod.POST, data);
+
+            SDK Callback:
+
+                JSONObject responseJSON = response.getResponseData();
+                CCMeta meta = response.getMeta();
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
+                    && "createPost".equals(meta.getMethod())) {
+                  JSONArray posts = responseJSON.getJSONArray("posts");
+                  ...
+                }
+
+      - platform: javascript
+        example: |
+            Example Javascript call:
+
+                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+                var data = {
+                  content: 'Buzz at Appcelerator Cloud Services',
+                  title: 'Today's News'
+                };
+                sdk.sendRequest('posts/create.json', 'POST', data, callback);
+
+            SDK Callback:
+
+                function callback(data) {
+                  if(data) {
+                    if(data.meta) {
+                      var meta = data.meta;
+                      if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'createPost') {
+                        var posts = data.response.posts;
+                      	...
+                      }
+                    }
+                  }
+                }
+
+      - platform: actionscript
+        example: |
+            Example Actionscript call:
+
+                var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
+                var data:Object = new Object();
+                data.content = "Buzz at Appcelerator Cloud Services";
+                data.title = "Today's News";
+                sdk.sendRequest("posts/create.json", URLRequestMethod.POST, data, false, callback);
+
+            SDK Callback:
+
+                function callback(data:Object):void {
+                  if(data) {
+                    if(data.hasOwnProperty("meta")) {
+                      var meta:Object = data.meta;
+                      if(meta.status == "ok" && meta.code == 200 && meta.method_name == "createPost") {
+                      	var posts:Array = data.response.posts;
+                      	...
+                      }
+                    }
+                  }
+                }
+

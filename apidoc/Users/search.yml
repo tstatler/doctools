@@ -1,0 +1,271 @@
+name: Users
+methods:
+  - name: search
+    summary: Search Users
+    description: |
+        Returns the list of users that have been added to the app, sorted by search
+        relevancy.
+
+        Optionally, `q` can be given to perform full text search on user's first name,
+        last name, email address, username and tags. For security reasons, when searching for {@link Users}
+        the {@link Users#email email} field is not returned in each Users object unless you have 
+        [admin access](#!/guide/admin_access).
+
+        For advanced custom search, see {@link Users#query query}.
+    url: users/search.json
+
+    parameters:
+      - name: page
+        description: Request page number, default is 1.
+        type: Number
+
+      - name: per_page
+        description: Number of results per page, default is 10.
+        type: Number
+
+      - name: q
+        description: |
+            Space-separated list of keywords, used to perform full text search on first name, last name, email address,
+            username and tags fields.
+        type: String
+
+      - name: response_json_depth
+        description: |
+            Nested object depth level counts in response json.
+            In order to reduce server API calls from an applicaton, the response json may
+            include not just the objects that are being queried/searched, but also with
+            some important data related to the returning objects such as object's owner or
+            referencing objects.
+
+            Default is 3, valid range is 1 to 8.
+        type: String
+
+      - name: pretty_json
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
+        
+    examples:
+      - platform: titanium
+        example: |
+            This example requests information about particular users and checks the response.
+
+                Cloud.Users.search({
+                    q: 'test'
+                }, function (e) {
+                    if (e.success) {
+                        alert('Success:\n' +
+                            'Count: ' + e.users.length);
+                        for (var i = 0; i < e.users.length; i++) {
+                            var user = e.users[i];
+                            alert('id: ' + user.id + '\n' +
+                                'first name: ' + user.first_name + '\n' +
+                                'last name: ' + user.last_name);
+                         }
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
+
+      - platform: rest
+        example: |
+            Example cURL request:
+
+                $ curl -b cookies.txt -c cookies.txt https://api.cloud.appcelerator.com/v1/users/search.json?key=<YOUR APP APP KEY>&pretty_json=true
+
+            Example JSON response:
+
+                {
+                  "meta": {
+                    "status":"ok",
+                    "code":200,
+                    "method_name":"searchUsers",
+                    "page":1,
+                    "per_page":10,
+                    "total_pages":1,
+                    "total_results":1
+                  },
+                  "response": {
+                    "users": [
+                      {
+                        "id": "53fbb057c3aafa087a000400",
+                        "first_name": "Roy",
+                        "last_name": "Harper",
+                        "created_at": "2014-08-25T21:53:27+0000",
+                        "updated_at": "2014-08-26T18:43:22+0000",
+                        "external_accounts": [
+
+                        ],
+                        "confirmed_at": "2014-08-25T21:53:27+0000",
+                        "username": "speedy",
+                        "admin": "false",
+                        "stats": {
+                          "photos": {
+                            "total_count": 0
+                          },
+                          "storage": {
+                            "used": 0
+                          }
+                        },
+                        "friend_counts": {
+                          "requests": 1,
+                          "friends": 0
+                        }
+                      }
+                    ]
+                  }
+                }
+
+      - platform: ios
+        example: |
+            Example iOS APS SDK call:
+
+                NSDictionary *data = @{@"q":@"John"};
+                
+                [APSUsers search:data withBlock:^(APSResponse *e) {
+                    if (e.success) {
+                        NSString *message = [NSString stringWithFormat:@"Found %lu users", (unsigned long)((NSArray *)e.response[@"users"]).count ];
+                        [[[UIAlertView alloc] initWithTitle:@"Success" message:e.responseString delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error" message:e.message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
+                // search for current user's checkins
+                NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:3];
+                [paramDict setObject:@"John"  forKey:@"q"]; // optional
+                [paramDict setObject:[NSNumber nubmerWithInt:1] forKey:@"page"]; // optional
+                [paramDict setObject:[NSNumber nubmerWithInt:10] forKey:@"per_page"]; // optional
+                CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"users/search.json" paramDict:paramDict];
+                [request startAsynchronous];
+                [request release];
+
+            SDK Callback:
+
+                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
+                {
+                	NSArray *users = [response getObjectsOfType:[CCUser class]];
+                	for (CCUser *user in users) {
+                		...
+                	}
+                }
+
+      - platform: android
+        example: |
+            Example Android APS SDK call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+
+                HashMap<String, Object> data = new HashMap<String, Object>();
+                data.put("q", "Peter,Paul,Mary");
+
+                try {
+                    APSUsers.search(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+
+                            if (e.getSuccess()) {
+                                try {
+                                    JSONArray users = e.getResponse().getJSONArray("users");
+                                    if (users.length() <= 0) {
+                                        Log.i("APSUsers", "No Results!");
+                                    } else {
+                                        for (int i = 0; i < users.length(); i++) {
+                                            JSONObject user = users.getJSONObject(i);
+                                            Log.i("APSUsers", user.getString("first_name") + " " + user.getString("last_name"));
+                                        }
+                                    }
+                                } catch (JSONException err) {
+                                    Log.e("APSUsers", "Exception thrown: " + err.toString());
+                                }
+                            } else {
+                                Log.e("APSUsers", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSUsers", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSUsers", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
+        example: |
+            Example Android call:
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
+                CCResponse response = sdk.sendRequest("users/search.json", CCRequestMethod.GET, null);
+
+            SDK Callback:
+
+                JSONObject responseJSON = response.getResponseData();
+                CCMeta meta = response.getMeta();
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
+                    && "searchUsers".equals(meta.getMethod())) {
+                  JSONArray users = responseJSON.getJSONArray("users");
+                  for(int i=0;i<users.length();i++) {
+                  	JSONObject user = users.getJSONObject(i);
+                  	System.out.println("User:" + user);
+                  }
+                }
+
+      - platform: javascript
+        example: |
+            Example JavaScript call:
+
+                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+                sdk.sendRequest('users/search.json', 'GET', null, callback);
+
+            SDK Callback:
+
+                function callback(data) {
+                  if(data) {
+                    if(data.meta) {
+                      var meta = data.meta;
+                      if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'searchUsers') {
+                        var users = data.response.users;
+                        for (var i=0;i<users.length;i++) {
+                          alert("User:" + users[i]);
+                        }
+                      }
+                    }
+                  }
+                }
+
+      - platform: actionscript
+        example: |
+            Example Actionscript call:
+
+                var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
+                sdk.sendRequest("users/search.json", URLRequestMethod.GET, null, false, callback);
+
+            SDK Callback:
+
+                function callback(data:Object):void {
+                  if(data) {
+                    if(data.hasOwnProperty("meta")) {
+                      var meta:Object = data.meta;
+                      if(meta.status == "ok" && meta.code == 200 && meta.method_name == "searchUsers") {
+                        var users:Array = data.response.users;
+                        for (var i:int=0;i<users.length;i++) {
+                          trace("User:" + users[i]);
+                        }
+                      }
+                    }
+                  }
+                }

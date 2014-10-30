@@ -1,0 +1,313 @@
+name: Files
+methods:
+  - name: create
+    summary:
+## Files: Create a File
+
+    description: |
+        Creates a new file object with a binary attachment or contents of a URL.
+        The size of the file can be up to 25 MB. The response includes a `processed` flag which indicates
+        if the file has been stored reliably in the Appcelerator Cloud Services
+        storage engine. This will initially be `false`. Once the file is available in
+        the storage engine, the `processed` flag will be `true`, and file `url` will
+        be available.
+
+    url: files/create.json
+    http-method: POST
+    login-required: true
+
+    parameters:
+      - name: name
+        description: File name.
+        type: String
+
+      - name: file
+        description: The attached binary file to upload to ACS. You can specify either `file` or `url`, but not both.
+        type: FileUpload
+
+      - name: url
+        description: URL of file to upload to ACS. You can specify either `file` or `url`, but not both.
+        type: String
+
+      - name: custom_fields
+        description: User defined fields. See [Custom Data Fields](#!/guide/customfields).
+        type: [ String, Hash ]
+
+      - name: acl_name
+        description: |
+            Name of an {@link ACLs} to associate with this file object.
+
+            An ACL can be specified using `acl_name` or `acl_id`. The two parameters are
+            mutually exclusive.
+        type: String
+
+      - name: acl_id
+        description: |
+            ID of an {@link ACLs} to associate with this file object.
+
+            An ACL can be specified using `acl_name` or `acl_id`. The two parameters are
+            mutually exclusive.
+        type: String
+
+      - name: user_id
+        description: |
+            User ID to create the file on behalf of.
+
+            The current login user must be an application admin to create a file on
+            behalf of another user.
+        type: String
+
+      - name: pretty_json
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean        
+
+    response-parameters:
+      - name: files
+        description: |
+            Single-element array containing the newly-created file.
+
+            Note that the file URL isn't available immediately.
+        type: Array<Files>
+
+    examples:
+      - platform: titanium
+        example: |
+            This example creates a new file and checks the response.
+
+                Cloud.Files.create({
+                    name: 'test.dat',
+                    file: Titanium.Filesystem.getFile('test.dat')
+                }, function (e) {
+                    if (e.success) {
+                        var file = e.files[0];
+                        alert('Success:\n' +
+                            'id: ' + file.id + '\n' +
+                            'name: ' + file.name + '\n' +
+                            'updated_at: ' + file.updated_at);
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
+
+      - platform: rest
+        example: |
+            Example cURL request that creates a new file object from a binary attachment:
+
+                $ curl -b cookies.txt -c cookies.txt -F "name=my_file" -F "file=@resume.pdf" http://api.cloud.appcelerator.com/v1/files/create.json?key=<YOUR APP APP KEY>&pretty_json=true
+
+            Example JSON response:
+
+                {
+                  "meta": {
+                    "stat":"ok",
+                    "code":200,
+                    "method":"createFile"
+                  },
+                  "response": {
+                    "files": [
+                      {
+                        "id": "4f05446bc3666eb7ba000001",
+                        "name": "my_file",
+                        "processed": false,
+                        "created_at": "2012-01-05T06:34:19+0000",
+                        "updated_at": "2012-01-05T06:34:19+0000",
+                		"user": {
+                          "id": "4f0fe764d9ca72833d000002",
+                          "first_name": "Abe",
+                          "last_name": "Bob",
+                          "created_at": "2012-01-13T08:12:20+0000",
+                          "updated_at": "2012-01-13T08:12:43+0000",
+                          "external_accounts": [
+
+                          ],
+                          "email": "a@mike.com"
+                        }
+                      }
+                    ]
+                  }
+                }
+
+            Example cURL request that creates a new file from a URL:
+
+                $ curl -b cookies.txt -c cookies.txt -F "name=my_file" -F "url=http://www.appcelerator.com/wp-content/uploads/blog-traditional-companies.png" http://api.cloud.appcelerator.com/v1/files/create.json?key=<YOUR APP APP KEY>&pretty_json=true
+
+            The JSON response is identical. 
+
+      - platform: ios
+        example: |
+            Example iOS call:
+
+                NSError* error = nil;
+                NSData *fileData = [NSData dataWithContentsOfFile:@"Test.txt"
+                                              options:0
+                                                error: &error];
+                if (fileData == nil) {
+                  // handle error
+                  NSLog(@"Failed to read file, error %@", error);
+                  return;
+                }
+                NSDictionary *data = @{
+                                         @"name" : @"Test.txt",
+                                         @"file" : fileData
+                                      };
+                [APSFiles create:data withBlock:^(APSResponse *e) {
+                    if (e.success){
+                      NSArray *files = e.response[@"files"];
+                      NSDictionary *file = files[0];
+                      NSString *message = [NSString stringWithFormat:@"id : %@\n Name : %@\nUpdated at : %@\n",
+                                              file[@"id"],
+                                              file[@"name"],
+                                              file[@"updated_at"]];
+
+
+                      [[[UIAlertView alloc] initWithTitle:@"Success" 
+                                                  message:message
+                                                 delegate:nil 
+                                        cancelButtonTitle:@"OK" 
+                                        otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:e.errorMessage
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
+                NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
+                [paramDict setObject:@"my_file" forKey:@"name"];
+                CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"POST" baseUrl:@"files/create.json" paramDict:paramDict];
+                [request setData:(NSData *)myFileData withFileName:@"resume.pdf" andContentType:@"application/octet-stream" forKey:@"file"];
+                [request startAsynchronous];
+                [request release];
+
+            SDK Callback:
+
+                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
+                {
+                	if ([response.meta.method isEqualToString:@"createFile"]) {
+                		NSArray *files = [response getObjectsOfType:[CCFile class]];
+                		for (CCFile *file in files)
+                		{
+                			...
+                		}
+                	}
+                }
+
+      - platform: android
+        example: |
+            Example Android APS SDK call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+                final Activity currentActivity = this;
+
+                HashMap<String, Object> data = new HashMap<String, Object>();
+                data.put("name", "my_file");
+                data.put("photo", new File("/photos/profile.gif"));
+
+                try {
+                    APSFiles.create(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                new AlertDialog.Builder(currentActivity)
+                                .setTitle("Success!").setMessage("File Uploaded!")
+                                .setPositiveButton(android.R.string.ok, null)
+                                .setIcon(android.R.drawable.ic_dialog_info)
+                                .show();
+                            } else {
+                                Log.e("APSFiles", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSFiles", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSFiles", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
+        example: |
+            Example Android call:
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("name", "my_file");
+                File file = new File("/photos/profile.gif");
+                data.put("file", file);
+                CCResponse response = sdk.sendRequest("files/create.json", CCRequestMethod.POST, data);
+
+            SDK Callback:
+
+                JSONObject responseJSON = response.getResponseData();
+                CCMeta meta = response.getMeta();
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
+                    && "createFile".equals(meta.getMethod())) {
+                  JSONArray files = responseJSON.getJSONArray("files");
+                  ...
+                }
+
+      - platform: javascript
+        example: |
+            Example Javascript call:
+
+                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+                var data = {
+                  name: 'my_file',
+                  file: 'fileInputId'  //the ID of file input control
+                };
+                sdk.sendRequest('files/create.json', 'POST', data, callback);
+
+            SDK Callback:
+
+                function callback(data) {
+                  if(data) {
+                    if(data.meta) {
+                      var meta = data.meta;
+                      if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'createFile') {
+                        var files = data.response.files;
+                      }
+                    }
+                  }
+                }
+
+      - platform: actionscript
+        example: |
+            Example Actionscript call:
+
+                var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+                //the user's parameters
+                var data:Object = new Object();
+                data.name = "my_file";
+                data.file = fileObject;	//instance of FileReference
+                sdk.sendRequest("files/create.json", URLRequestMethod.POST, data, false, callback);
+
+            SDK Callback:
+
+                function callback(data:Object):void {
+                  if(data) {
+                    if(data.hasOwnProperty("meta")) {
+                      var meta:Object = data.meta;
+                      if(meta.status == "ok" && meta.code == 200 && meta.method_name == "createFile") {
+                        var files:Object = data.response.files;
+                        ...
+                      }
+                    }
+                  }
+                }
+

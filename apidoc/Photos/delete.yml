@@ -1,0 +1,194 @@
+name: Photos
+methods:
+  - name: delete
+    summary: Delete a Photo
+
+    description: |
+        Deletes a photo to which you have update access.
+
+        An application admin can delete any photo object.
+
+    url: photos/delete.json
+    http-method: DELETE
+    login-required: true
+
+    parameters:
+      - name: photo_id
+        description: ID of the photo to delete.
+        type: String
+        required: true
+
+      - name: user_id
+        description: |
+            User ID to delete the Photo object on behalf of. The user must be the creator of the object.
+
+            The current login user must be an application admin to delete a Photo object on
+            behalf of another user.
+        type: String
+        
+      - name: pretty_json
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
+
+    examples:
+      - platform: titanium
+        example: |
+            This example deletes a photo and checks the response.
+
+                Cloud.Photos.remove({
+                    photo_id: savedPhotoId
+                }, function (e) {
+                    if (e.success) {
+                        alert('Success');
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
+
+      - platform: rest
+        example: |
+            Example cURL request:
+
+                curl -b cookies.txt -c cookies.txt -X DELETE "https://api.cloud.appcelerator.com/v1/photos/delete.json?key=<YOUR APP APP KEY>&pretty_json=true&photo_id=4d8971236f7095514800000a"
+
+            Example JSON response:
+
+                {
+                  "meta": {
+                    "status":"ok",
+                    "code":200,
+                    "method_name":"deletePhoto"
+                  }
+                }
+
+      - platform: ios
+        example: |
+            Example iOS call:
+
+                NSDictionary *data = @{@"photo_id": @"4d8971236f7095514800000a"};
+                
+                [APSPhotos remove:data withBlock:^(APSResponse *e) {
+                    if (e.success) {
+                        [[[UIAlertView alloc] initWithTitle:@"Success" message:@"Photo deleted!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error" message:e.message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
+                NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:(CCPhoto *)photo.objectId, @"photo_id", nil];
+                CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"DELETE" baseUrl:@"photos/delete.json" paramDict:paramDict];
+                [request startAsynchronous];
+                [request release];
+
+            SDK Callback:
+
+                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
+                {
+                    if ([response.meta.method isEqualToString:@"deletePhoto"]) {
+                        NSLog(@"photo deleted!");
+                    }
+                }
+
+      - platform: android
+        example: |
+            Example Android APS SDK call:
+
+                HashMap<String, Object> data = new HashMap<String, Object>();
+                data.put("photo_id", "4d8971236f7095514800000a");
+
+                try {
+                    APSPhotos.remove(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                Toast.makeText(currentActivity, "Photo removed!", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Log.e("APSPhotos", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSPhotos", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSPhotos", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
+        example: |
+            Example Android call:
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("photo_id", "4d8971236f7095514800000a");
+                CCResponse response = sdk.sendRequest("photos/delete.json", CCRequestMethod.DELETE, data);
+
+            SDK Callback:
+
+                JSONObject responseJSON = response.getResponseData();
+                CCMeta meta = response.getMeta();
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
+                    && "deletePhoto".equals(meta.getMethod())) {
+                  System.out.println("photo deleted!");
+                }
+
+      - platform: javascript
+        example: |
+            Example Javascript call:
+
+                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+                var data = {
+                  photo_id: '4d8971236f7095514800000a'
+                };
+                sdk.sendRequest('photos/delete.json', 'DELETE', data, callback);
+
+            SDK Callback:
+
+                function callback(data) {
+                  if(data) {
+                    if(data.meta) {
+                      var meta = data.meta;
+                      if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'deletePhoto') {
+                        alert("photo deleted!");
+                      }
+                    }
+                  }
+                }
+
+      - platform: actionscript
+        example: |
+            Example Actionscript call:
+
+                var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
+                var data:Object = new Object();
+                data.photo_id = "4d8971236f7095514800000a";
+                sdk.sendRequest("photos/delete.json", URLRequestMethod.DELETE, data, false, callback);
+
+            SDK Callback:
+
+                function callback(data:Object):void {
+                  if(data) {
+                    if(data.hasOwnProperty("meta")) {
+                      var meta:Object = data.meta;
+                      if(meta.status == "ok" && meta.code == 200 && meta.method_name == "deletePhoto") {
+                      	Alert.show("photo deleted!");
+                      }
+                    }
+                  }
+                }
+

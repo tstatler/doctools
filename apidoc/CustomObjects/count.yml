@@ -1,0 +1,55 @@
+name: CustomObjects
+methods:
+  - name: count
+    summary: Retrieves the total number of objects of the specified class.
+    description: Retrieves the total number of objects of the specified class.
+
+    url: objects/:classname/count.json
+    http-method: GET
+
+    parameters:
+      - name: classname
+        description: |
+            Type of custom object. Specified as part of the URL path, not in the
+            parameters.
+        type: String
+        required: true
+
+    response-parameters:
+
+      - name: count
+        description: Total number of class objects. Returned in the `meta` header.
+        type: Number
+
+    examples:
+      - platform: titanium
+        example: |
+            Use the [Titanium.Cloud.sendRequest()](http://docs.appcelerator.com/titanium/latest/#!/api/Titanium.Cloud-method-sendRequest)
+            method to invoke this REST API directly.
+
+      - platform: rest
+        example: |
+            Example cURL request:
+
+                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/objects/cars/count.json?key=<YOUR_APP_KEY>&pretty_json=true"
+
+            Example JSON response:
+
+                {
+                  "meta": {
+                    "code": 200,
+                    "status": "ok",
+                    "method_name": "objectsCount",
+                    "count": 1
+                  }
+                }
+
+      - platform: ios
+        example: |
+            Use the \[[APSCloud sendRequest](http://docs.appcelerator.com/aps-sdk-apidoc/latest/ios/Classes/APSCloud.html#//api/name/sendRequest:method:data:handler:)\]
+            method to invoke this REST API directly.
+
+      - platform: android
+        example: |
+            Use the [APSCloud.sendRequest()](http://docs.appcelerator.com/aps-sdk-apidoc/latest/android/com/appcelerator/aps/APSCloud.html#sendRequest%28java.lang.String,java.lang.String, java.util.Map, com.appcelerator.aps.APSResponseHandler%29)
+            method to invoke this REST API directly.

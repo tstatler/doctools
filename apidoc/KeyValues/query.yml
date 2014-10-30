@@ -1,0 +1,220 @@
+name: KeyValues
+methods:
+  - name: query
+    summary: Performs a custom query of KeyValues.
+    description: |
+        Performs a custom query of KeyValues. Currently you can not query or sort data stored inside 
+        an array or hash in custom fields.
+
+        In ACS 1.1.5 and later, you can paginate query results using `skip` and `limit` parameters, or by including
+        a `where` clause to limit the results to objects whose IDs fall within a specified range.
+        For details, see [Query Pagination](#!/guide/search_query-section-query-pagination).        
+
+        For details about using the query parameters,
+        see the [Search and Query guide](#!/guide/search_query).
+    url: keyvalues/query.json
+    parameters:
+      - name: page
+        description: |
+            <p class="note">
+            Starting in ACS 1.1.5, page and per_page are no longer supported in query operations. 
+            Applications should instead use <strong>skip</strong> and <strong>limit</strong> 
+            query parameters.
+            </p>
+
+        type: Number
+
+      - name: per_page
+        description: |
+            <p class="note">
+            Starting in ACS 1.1.5, page and per_page are no longer supported in query operations. 
+            Applications should instead use <strong>skip</strong> and <strong>limit</strong> 
+            query parameters.
+            </p>
+        type: Number
+
+      - name: limit
+        description: |
+            The number of records to fetch. The value must be greater than 0, and no greater then 
+            1000, or an HTTP 400 (Bad Request) error will be returned. Default value of `limit` is 10.
+        type: Number
+
+      - name: skip
+        description: |
+            The number of records to skip. The value must be greater than or equal to 0, and no greater 
+            than 4999, or an HTTP 400 error will be returned. To skip 5000 records or more 
+            you need to perform a range-based query. See 
+            <a href="#!/guide/search_query-section-query-pagination">Query Pagination</a> for more information.</p>
+        type: Number
+
+      - name: pretty_json
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean        
+
+      - name: where
+        description: |
+            Constraint values for fields. `where` should be encoded JSON.
+
+            You can query any of the standard values for an ACL object, as well as any
+            custom fields that contain simple values, such as String, Number or Boolean
+            values.
+
+            If `where` is not specified, `query` returns all objects.
+        type: Hash
+
+      - name: order
+        description: |
+            Sort results by one or more fields.
+        type: String
+
+      - name: sel
+        description: |
+            Selects the object fields to display. Do not use this parameter with `unsel`.
+        type: Hash
+
+      - name: unsel
+        description: |
+            Selects the object fields NOT to display. Do not use this parameter with `sel`.
+        type: Hash
+
+      - name: response_json_depth
+        description: |
+            Nested object depth level counts in response json.
+            In order to reduce server API calls from an applicaton, the response json may
+            include not just the objects that are being queried/searched, but also with
+            some important data related to the returning objects such as object's owner or
+            referencing objects.
+
+            Default is 3, valid range is 1 to 8.
+        type: Number
+
+    response-parameters:
+      - name: keyvalues
+        description: |
+            List of KeyValues objects matching the query.
+        type: Array<KeyValues>
+
+    examples:
+      - platform: titanium
+        example: |
+            Use the [Titanium.Cloud.sendRequest()](http://docs.appcelerator.com/titanium/latest/#!/api/Titanium.Cloud-method-sendRequest) 
+            method to invoke this REST API directly.
+
+      - platform: rest
+        example: |
+            Example cURL request. 
+
+                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/keyvalues/query.json?key=<YOUR_APP_KEY>&pretty_json=true&count=true"
+
+            Example JSON response:
+
+                {
+                  "meta": {
+                    "code": 200,
+                    "status": "ok",
+                    "method_name": "queryKeyValues",
+                    "count": 100
+                  },
+                  "response": {
+                    "keyvalues": [
+                      {
+                        "id": "53d80c1988971f081c001238",
+                        "name": "goodbye_message",
+                        "value": "Au revoir from Appcelerator Cloud Services",
+                        "type": "string",
+                        "private": false,
+                        "created_at": "2014-07-29T21:03:21+0000",
+                        "updated_at": "2014-07-29T21:03:21+0000",
+                        "user": {
+                          "id": "53d7c9d188971f0824001269",
+                          "created_at": "2014-07-29T16:20:33+0000",
+                          "updated_at": "2014-07-29T20:58:11+0000",
+                          "external_accounts": [
+
+                          ],
+                          "confirmed_at": "2014-07-29T16:20:33+0000",
+                          "username": "jon",
+                          "admin": "true",
+                          "stats": {
+                            "photos": {
+                              "total_count": 0
+                            },
+                            "storage": {
+                              "used": 0
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "id": "53d80b1c485fc30823001231",
+                        "name": "welcome_message",
+                        "value": "Welcome to Appcelerator Cloud Services",
+                        "type": "string",
+                        "private": false,
+                        "created_at": "2014-07-29T20:59:08+0000",
+                        "updated_at": "2014-07-29T20:59:08+0000",
+                        "user": {
+                          "id": "53d7c9d188971f0824001269",
+                          "created_at": "2014-07-29T16:20:33+0000",
+                          "updated_at": "2014-07-29T20:58:11+0000",
+                          "external_accounts": [
+
+                          ],
+                          "confirmed_at": "2014-07-29T16:20:33+0000",
+                          "username": "jon",
+                          "admin": "true",
+                          "stats": {
+                            "photos": {
+                              "total_count": 0
+                            },
+                            "storage": {
+                              "used": 0
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+
+      - platform: ios
+        example: |
+            Use the \[[APSCloud sendRequest](http://docs.appcelerator.com/aps-sdk-apidoc/latest/ios/Classes/APSCloud.html#//api/name/sendRequest:method:data:handler:)\]
+            method to invoke this REST API directly.
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
+                CCWhere *where = [[[CCWhere alloc] init] autorelease];
+                [where fieldName:@"coordinates" nearLat:37.12 nearLng:-122.23 maxDistanceMi:5.0];
+                NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:where, @"where", [NSArray arrayWithObjects:@"4e02f5b8d0afbe43c1000003", @"4e02f5b8d0afbe43c1000002", @"4ee05d69d9ca726b85000004", nil], @"participate_ids", @"created_at", @"order", nil];
+                request = [[[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"chats/query.json" paramDict:paramDict] autorelease];
+                [request startAsynchronous];
+
+            SDK Callback:
+
+                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
+                {
+                    if ([response.meta.methodName isEqualToString:@"queryChatMessages"]) {
+                        NSArray *chats = [response getObjectsOfType:[CCChat class]];
+                        for (CCChat *chat in chats) {
+                            ...
+                        }
+                    }
+                }
+
+      - platform: android
+        example: |
+            Use the [APSCloud.sendRequest()](http://docs.appcelerator.com/aps-sdk-apidoc/latest/android/com/appcelerator/aps/APSCloud.html#sendRequest%28java.lang.String, java.lang.String, java.util.Map, com.appcelerator.aps.APSResponseHandler%29)
+            method to invoke this REST API directly.
+
+      - platform: android-acssdk
+        example: |
+          
+
+      - platform: javascript
+        example: |
+            Example Javascript call:   

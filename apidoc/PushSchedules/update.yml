@@ -1,0 +1,119 @@
+name: PushSchedules
+methods:
+  - name: update
+    summary: update
+    description: |
+        Updates a scheduled push notification. All parameters specified in the PushSchedules 
+        {@link PushSchedules#create} method can be updated, with the following exceptions:
+
+          * The schedule's start time cannot be updated, and the `start_time` parameter is ignored, if provided.
+          * When specifying a new `end_time` parameter, the new date and time must be greater than 
+            the current time, and the previously specified `end_time` value must not have expired.
+
+        This feature is only available for Enterprise users. Also, the current user must be an 
+        application administrator to invoke the command.
+
+    url: push_schedule/update.json
+    http-method: POST
+    login-required: true
+    admin-required: true
+
+    parameters:
+
+      - name: schedule
+        description: Push notification to schedule.
+        type: PushSchedulePayload
+        required: true
+
+      - name: id
+        description: |
+            ID of the PushSchedule object returned by {@link PushSchedules#create}.
+        type: String
+        required: true
+
+      - name: where
+        description: |
+
+            A JSON-encoded object that defines a location query used to select the devices
+            that will receive the scheduled notification. Up to 1000 users can be returned by the query. To specify a location query, set the `loc` field to a
+            [MongoDB Geospatial Query](http://docs.mongodb.org/manual/reference/operator/query-geospatial/).
+            The following query searches for all users within 2 km of Oakland, CA, USA:
+
+                where={
+                  "loc": {
+                    "$nearSphere" : { 
+                      "$geometry" : { 
+                        "type" : "Point" , 
+                        "coordinates" : [-122.2708,37.8044] } , 
+                        "$maxDistance" : 2000 
+                      }
+                    }
+                  }
+
+            For an example of using this parameter, see the REST examples in the PushSchedules {@link PushSchedules#create} method.
+            For details about using the `where` parameter, see the [Search and Query guide](#!/guide/search_query).
+        type: Hash
+        
+      - name: pretty_json
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean     
+
+
+    response-parameters:
+      - name: push_schedules
+        description: |
+            A single-element array containing the updated scheduled push object.
+        type: Array<PushSchedules>
+      
+    examples:
+
+      - platform: titanium
+        example: |
+            This method is not supported by Titanium.
+
+      - platform: rest
+        example: |
+            The following cURL command updates just the `payload` of the scheduled push notification.
+
+                curl -X PUT -b cookies.txt -c cookies.txt -F "id=<PUSH_NOTIFICTION_ID>" -F 'schedule={"start_time":"2016-12-25T00:00", "name":"test", "push_notification":{"channel":"test","payload":"test schedule"}, "recurrence":{"interval":"daily", "end_time":"2017-03-25T00:00"}}' "https://api.cloud.appcelerator.com/v1/push_schedules/update.json?key=g5d7G8agFnzjOJ5kV2qjhIaKp9Hi4EXW&pretty_json=true"
+
+            Example JSON response:
+
+                {
+                  "meta": {
+                    "code": 200,
+                    "status": "ok",
+                    "method_name": "updatePushSchedule"
+                  },
+                  "response": {
+                    "push_schedules": [
+                      {
+                        "id": "5357f7055714f51855013525",
+                        "name": "test",
+                        "start_time": "2016-12-25T00:00:00+0000",
+                        "push_notification": {
+                          "channel": "test",
+                          "payload": "test schedule"
+                        },
+                        "recurrence": {
+                          "interval": "daily",
+                          "end_time": "2017-03-25T00:00:00+0000"
+                        }
+                      }
+                    ]
+                  }
+                }
+
+      - platform: ios
+        example: |
+            Use the \[[APSCloud sendRequest](http://docs.appcelerator.com/aps-sdk-apidoc/latest/ios/Classes/APSCloud.html#//api/name/sendRequest:method:data:handler:)\]
+            method to invoke this REST API directly.
+
+      - platform: android
+        example: |
+            Use the
+            [APSCloud.sendRequest()](http://docs.appcelerator.com/aps-sdk-apidoc/latest/android/com/appcelerator/aps/APSCloud.html#sendRequest%28java.lang.String,java.lang.String,java.util.Map, com.appcelerator.aps.APSResponseHandler%29)
+            method to invoke this REST API directly.
+

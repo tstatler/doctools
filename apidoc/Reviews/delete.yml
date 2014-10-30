@@ -1,0 +1,250 @@
+name: Reviews
+methods:
+  - name: delete
+    summary:
+## Reviews: Delete a Review/Comment/Rating/Like
+
+    description: |
+        Delete the review (comment) with the given `id`. Only the original submitter
+        can delete the review. If the review has a rating attached to
+        it, deleting the review will update the average rating and rating summary.
+
+        To delete a review, you must specify **both** the ID of the review and the ID of
+        the reviewed object ({@link #post Post}, {@link #photo Photo}, {@link #user User}, {@link #event Event}, 
+        {@link #checkin Checkin}, {@link #place Place}, {@link #custom_object CustomObject}, 
+        {@link #status Status}, or {@link #review Review}. The reviewed object is not deleted, however.
+
+        An application admin can delete any Review object.
+
+    url: reviews/delete.json
+    http-method: DELETE
+    login-required: true
+
+    parameters:
+
+      - name: post_id
+        description: Post object associated with this review.
+        type: String
+
+      - name: photo_id
+        description: Photo object associated with this review.
+        type: String
+
+      - name: user_id
+        description: User object associated with this review.
+        type: String
+
+      - name: event_id
+        description: Event object associated with this review.
+        type: String
+
+      - name: place_id
+        description: Place object associated with this review.
+        type: String
+
+      - name: checkin_id
+        description: Checkin object associated with this review.
+        type: String
+
+      - name: review_object_id
+        description: Review object associated with this review.
+        type: String
+
+      - name: custom_object_id
+        description: Custom object associated with this review.
+        type: String
+
+      - name: status_id
+        description: Status object associated with this review.
+        type: String
+
+      - name: review_id
+        description: Review object to delete.
+        type: String
+        required: true
+        
+      - name: pretty_json
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
+
+    examples:
+      - platform: titanium
+        example: |
+            This example deletes a review and checks the response.
+
+                Cloud.Reviews.remove({
+                    post_id: savedPostId,
+                    review_id: savedReviewId
+                }, function (e) {
+                    if (e.success) {
+                        alert('Success');
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
+
+      - platform: rest
+        example: |
+            Example cURL request:
+
+                $ curl -b cookies.txt -c cookies.txt -X DELETE "https://api.cloud.appcelerator.com/v1/reviews/delete.json?key=<YOUR APP APP KEY>&pretty_json=true&post_id=4e33a817d9ca724745000003&review_id=4e33a817d9ca724745000006"
+
+            Example JSON response:
+
+                {
+                  "meta": {
+                    "status":"ok",
+                    "code":200
+                  }
+                }
+
+      - platform: ios
+        example: |
+            Example iOS call:
+
+                NSDictionary *data = @{
+                                         @"post_id" : savedPostId,
+                                         @"review_id" : savedReviewId
+                                      };
+                [APSReviews remove:data withBlock:^(APSResponse *e) {
+                    if (e.success){
+                      [[[UIAlertView alloc] initWithTitle:@"Success" 
+                                                  message:message
+                                                 delegate:nil 
+                                        cancelButtonTitle:@"OK" 
+                                        otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:e.errorMessage
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
+                NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:(CCPost *)post.objectId, @"post_id", (CCReview *)review.objectId, @"review_id", nil];
+                CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"DELETE" baseUrl:@"reviews/delete.json" httpMethod:@"DELETE" paramDict:paramDict];
+                [request startAsynchronous];
+                [request release];
+
+            SDK Callback:
+
+                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
+                {
+                	if ([response.meta.method isEqualToString:@"deleteReview"]) {
+                		NSLog(@"Review deleted!");
+                	}
+                }
+
+      - platform: android
+        example: |
+            Example Android APS SDK call:
+
+                HashMap<String, Object> data = new HashMap<String, Object>();
+                data.put("post_id", "4e33a817d9ca724745000003");
+                data.put("review_id", "4e33a817d9ca724745000006");
+
+                try {
+
+                    APSReviews.remove(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                new AlertDialog.Builder(currentActivity)
+                                .setTitle("Success!").setMessage("Removed!")
+                                .setPositiveButton(android.R.string.ok, null)
+                                .setIcon(android.R.drawable.ic_dialog_info)
+                                .show();
+                            } else {
+                               Log.e("APSReviews", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSReviews", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSReviews", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
+        example: |
+            Example Android call:
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("post_id", "4e33a817d9ca724745000003");
+                data.put("review_id", "4e33a817d9ca724745000006");
+                CCResponse response = sdk.sendRequest("reviews/delete.json", CCRequestMethod.DELETE, data);
+
+            SDK Callback:
+
+                JSONObject responseJSON = response.getResponseData();
+                CCMeta meta = response.getMeta();
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
+                    && "deleteReview".equals(meta.getMethod())) {
+                  System.out.println("Review deleted!");
+                }
+
+      - platform: javascript
+        example: |
+            Example Javascript call:
+
+                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+                var data = {
+                  post_id: '4e33a817d9ca724745000003',
+                  review_id: '4e33a817d9ca724745000006'
+                };
+                sdk.sendRequest('reviews/delete.json', 'DELETE', data, callback);
+
+            SDK Callback:
+
+                function callback(data) {
+                  if(data) {
+                    if(data.meta) {
+                      var meta = data.meta;
+                      if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'deleteReview') {
+                        alert("Review deleted!");
+                      }
+                    }
+                  }
+                }
+
+      - platform: actionscript
+        example: |
+            Example Actionscript call:
+
+                var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
+                var data:Object = new Object();
+                data.post_id = "4e33a817d9ca724745000003";
+                data.review_id = "4e33a817d9ca724745000006";
+                sdk.sendRequest("reviews/delete.json", URLRequestMethod.DELETE, data, false, callback);
+
+            SDK Callback:
+
+                function callback(data:Object):void {
+                  if(data) {
+                    if(data.hasOwnProperty("meta")) {
+                      var meta:Object = data.meta;
+                      if(meta.status == "ok" && meta.code == 200 && meta.method_name == "deleteReview") {
+                      	Alert.show("Review deleted!");
+                      }
+                    }
+                  }
+                }
+

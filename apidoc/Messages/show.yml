@@ -1,0 +1,194 @@
+name: Messages
+methods:
+
+  - name: show
+    description: Shows a message in the user's mailbox.
+    url: messages/show.json
+    login-required: true
+
+    parameters:
+      - name: message_id
+        description: ID of the message.
+        type: String
+        required: true
+
+    response-parameters:
+      - name: messages
+        description: An array with one message item.
+        type: Array<Messages>
+
+    examples:
+      - platform: titanium
+        example: |
+            This example retrieves information about a message and checks the response.
+
+                Cloud.Messages.show({
+                    message_id: savedMessageId
+                }, function (e) {
+                    if (e.success) {
+                        var message = e.messages[0];
+                        alert('Success:\n' +
+                            'id: ' + message.id + '\n' +
+                            'subject: ' + message.subject + '\n' +
+                            'body: ' + message.body + '\n' +
+                            'updated_at: ' + message.updated_at);
+                    } else {
+                        alert('Error:\n' + ((e.error && e.message) || JSON.stringify(e)));
+                });
+
+      - platform: rest
+        example: |
+            Example cURL request:
+
+                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/messages/show.json?key=<YOUR API APP KEY>&message_id=<MESSAGE_ID>"
+
+            Example JSON response:
+
+                {
+                  "meta": {
+                    "status":"ok",
+                    "code":200,
+                    "method_name":"showMessage",
+                  },
+                  "response": {
+                    "messages": [
+                      {
+                        "id":"4d85418dd0afbe013e000025",
+                        "thread_id":"4d85418dd0afbe013e000025",
+                        "status":"read",
+                        "subject":"Sunday Afternoon",
+                        "body":"How about going to the Academy of Sciences?",
+                        "created_at":"2011-03-19T23:51:41+0000",
+                        "updated_at":"2011-03-19T23:54:30+0000",
+                        "from": {
+                            "id":"4d7e6493d0afbe01d8000001",
+                            "first_name":"Michael",
+                            "last_name":"Goff",
+                            "created_at":"2011-03-14T18:55:15+0000",
+                            "updated_at":"2011-03-19T05:05:29+0000"
+                        },
+                        "to": [
+                          {
+                            "id":"4d854129d0afbe013e000022",
+                            "first_name":"Wei",
+                            "last_name":"Kong",
+                            "created_at":"2011-03-19T23:50:01+0000",
+                            "updated_at":"2011-03-19T23:50:01+0000"
+                          },
+                          {
+                            "id":"4d85415ad0afbe013e000023",
+                            "first_name":"George",
+                            "last_name":"Dy",
+                            "created_at":"2011-03-19T23:50:50+0000",
+                            "updated_at":"2011-03-19T23:50:50+0000"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+
+      - platform: ios
+        example: |
+            Example iOS call:
+                
+                // Create dictionary of parameters to be passed with the request
+                NSDictionary *data = @{
+                    @"message_id" : @"Message_Identifier",
+                };
+                [APSMessages show:data withBlock:^(APSResponse *e) {
+                    if (e.success){
+                        NSArray *messages = e.response[@"messages"];
+                        NSDictionary *currentMessage = messages[0];
+                        NSString *message = [NSString stringWithFormat:@"id : %@\n Subject : %@\nBody : %@\nUpdated At :%@",
+                                                currentMessage[@"id"],
+                                                currentMessage[@"subject"],
+                                                currentMessage[@"body"],
+                                                currentMessage[@"updated_at"]];
+                  
+                        [[[UIAlertView alloc] initWithTitle:@"Success" 
+                                                    message:message
+                                                   delegate:nil 
+                                          cancelButtonTitle:@"OK" 
+                                          otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:e.errorMessage
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil] show];
+                    }
+
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
+                NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:(CCMessage*)message.objectId, @"message_id", nil];
+                CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"messages/show.json" paramDict:paramDict];
+                [request startAsynchronous];
+                [request release];
+
+            SDK Callback:
+
+                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
+                {
+                	NSArray *messages = [response getObjectsOfType:[CCMessage class]];
+                }
+
+      - platform: android
+        example: |
+            Example Android APS SDK call:
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_CLOUD_KEY');
+
+                HashMap<String, Object> data = new HashMap<String, Object>();
+                data.put("message_id", 'MESSAGE_ID');
+
+                try {
+                    APSMessages.show(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                try {
+                                    JSONArray messages = responseJSON.getJSONArray("messages");
+                                    // Do stuff with messages...
+                                } catch (JSONException err) {
+                                    Log.e("APSMessages", "Exception thrown: " + err.toString());
+                                }
+                            } else {
+                                Log.e("APSMessages", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSLikes", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSMessages", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
+        example: |
+            Example Android call:
+
+                ACSClient sdk = new ACSClient("<YOUR APP API KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key secret
+
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("message_id", <MESSAGE_ID>);
+                CCResponse response = sdk.sendRequest("messages/show.json", CCRequestMethod.GET, data);
+
+            SDK Callback:
+
+                JSONObject responseJSON = response.getResponseData();
+                CCMeta meta = response.getMeta();
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
+                    && "showMessage".equals(meta.getMethod())) {
+                  JSONArray messages = responseJSON.getJSONArray("messages");
+                  ...
+                }

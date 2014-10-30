@@ -1,0 +1,216 @@
+name: KeyValues
+methods:
+  - name: delete
+    summary: Delete a Key-Value
+
+    description: |
+        Deletes a key-value pair
+    url: keyvalues/delete.json
+    http-method: DELETE
+    login-required: true
+
+    parameters:
+      - name: name
+        description: Name (or key) of the key-value pair to delete.
+        type: String
+        required: true
+
+      - name: access_private
+        description: |
+            Determines whether to delete this key-value in the publically readable store
+            or in the user's private store.
+
+            Default is false (publically readable store).
+        type: Boolean
+
+      - name: user_id
+        description: |
+            Delete the key-value pair on behalf of the identified user.
+
+            Login user must be an admin to delete a key-value on behalf of another user.
+        type: String
+
+      - name: pretty_json
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
+        
+    examples:
+      - platform: titanium
+        example: |
+            This example deletes a key-value and checks the response.
+
+                Cloud.KeyValues.remove({
+                    name: 'welcome_message'
+                }, function (e) {
+                     if (e.success) {
+                         alert('Success');
+                     } else {
+                         alert('Error:\n' +
+                             ((e.error && e.message) || JSON.stringify(e)));
+                     }
+
+                });
+
+      - platform: rest
+        example: |
+            Example cURL request:
+
+                $ curl -b cookies.txt -c cookies.txt --request DELETE "http://api.cloud.appcelerator.com/v1/keyvalues/delete.json?key=<YOUR APP APP KEY>&pretty_json=true&name=welcome_message"
+
+            Example JSON response:
+
+                {
+                  "meta": {
+                    "status":"ok",
+                    "code":200,
+                    "method_name":"deleteKeyvalue"
+                  }
+                }
+
+      - platform: ios
+        example: |
+            Example iOS call:
+                NSDictionary *data = @{
+                                         @"name" : @"welcome_message"
+                                      };
+                [APSKeyValues delete:data withBlock:^(APSResponse *e) {
+                    if (e.success){
+                        [[[UIAlertView alloc] initWithTitle:@"Success" 
+                                                    message:nil
+                                                   delegate:nil 
+                                          cancelButtonTitle:@"OK" 
+                                          otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:e.errorMessage
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil] show];
+                    }
+                }];
+
+
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
+                NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:@"score", @"name", nil];
+                CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"DELETE" baseUrl:@"keyvalues/delete.json"  paramDict:paramDict];
+                [request startAsynchronous];
+                [request release];
+
+            SDK Callback:
+
+                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
+                {
+                	if ([response.meta.method isEqualToString:@"deleteKeyValue"]) {
+                		NSLog(@"keyvalue deleted!");
+                	}
+                }
+
+      - platform: android
+        example: |
+            Example Android APS SDK call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+                final Activity currentActivity = this;
+
+                HashMap<String, Object> data = new HashMap<String, Object>();
+                data.put("name", "welcome_message");
+
+                try {
+                    APSKeyValues.remove(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                new AlertDialog.Builder(currentActivity)
+                                .setTitle("Success!").setMessage("Removed!")
+                                .setPositiveButton(android.R.string.ok, null)
+                                .setIcon(android.R.drawable.ic_dialog_info)
+                                .show();
+                            } else {
+                                Log.e("APSKeyValues", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(APSCloudException e) {
+                            Log.e("APSKeyValues", "Exception thrown: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSKeyValues", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
+        example: |
+            Example Android call:
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("name", "welcome_message");
+                CCResponse response = sdk.sendRequest("keyvalues/delete.json", CCRequestMethod.DELETE, data);
+
+            SDK Callback:
+
+                JSONObject responseJSON = response.getResponseData();
+                CCMeta meta = response.getMeta();
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
+                    && "deleteKeyvalue".equals(meta.getMethod())) {
+                  System.out.println("keyvalue deleted!");
+                }
+
+      - platform: javascript
+        example: |
+            Example Javascript call:
+
+                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+                var data = {
+                   name: 'welcome_message'
+                };
+                sdk.sendRequest('keyvalues/delete.json', 'DELETE', data, callback);
+
+            SDK Callback:
+
+                function callback(data) {
+                  if(data) {
+                    if(data.meta) {
+                      var meta = data.meta;
+                      if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'deleteKeyvalue') {
+                        alert("keyvalue deleted!");
+                      }
+                    }
+                  }
+                }
+
+      - platform: actionscript
+        example: |
+            Example Actionscript call:
+
+                var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
+                var data:Object = new Object();
+                data.name = "welcome_message";
+                sdk.sendRequest("keyvalues/delete.json", URLRequestMethod.DELETE, data, false, callback);
+
+            SDK Callback:
+
+                function callback(data:Object):void {
+                  if(data) {
+                    if(data.hasOwnProperty("meta")) {
+                      var meta:Object = data.meta;
+                      if(meta.status == "ok" && meta.code == 200 && meta.method_name == "deleteKeyvalue") {
+                      	Alert.show("keyvalue deleted!");
+                      }
+                    }
+                  }
+                }
+

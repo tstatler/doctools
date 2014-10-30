@@ -1,0 +1,263 @@
+name: Friends
+methods:
+  - name: requests
+    summary: Show Friend Requests
+    description: |
+        View pending friend requests.
+    url: friends/requests.json
+    login-required: true
+
+    parameters:
+
+      - name: requests_to
+        description: |
+            If set to true, returns the users requesting the current user as a friend
+            rather than the pending friend requests that the user needs to approve.
+        type: Boolean
+
+      - name: response_json_depth
+        description: |
+            Nested object depth level counts in response JSON.
+
+            In order to reduce server API calls from an applicaton, the response JSON may
+            include not just the objects that are being referred to, but also
+            some important data related to the returned objects such as object's owner or
+            referenced objects.
+
+            Default is 3, valid range is 1 to 8.
+        type: Number
+
+      - name: pretty_json
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean        
+
+    response-parameters:
+
+      - name: friend_requests
+        description: |
+            A list of friend requests, where each friend request is an object with
+            the following members:
+
+            *   `id: String`. User ID for user making the request.
+
+            *   `user: Users`. User object for the user making the request.
+
+            *   `created_at: Date`. Timestamp when the file was created.
+
+            *   `updated_at: Date`. Timestamp when the file was last updated.
+        type: Array<Hash>
+
+    examples:
+      - platform: titanium
+        example: |
+            This example shows pending friend requests and checks the response.
+
+                Cloud.Friends.requests(function (e) {
+                    if (e.success) {
+                        alert('Success:\n' +
+                            'Count: ' + e.friend_requests.length);
+                        for (var i = 0; i < e.friend_requests.length; i++) {
+                            var user = e.friend_requests[i].user;
+                            alert('id: ' + user.id + '\n' +
+                                'first name: ' + user.first_name + '\n' +
+                                'last name: ' + user.last_name);
+                        }
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
+
+      - platform: rest
+        example: |
+            Example cURL request:
+
+                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/friends/requests.json?key=<YOUR APP APP KEY>&pretty_json=true"
+
+            Example JSON response:
+
+                {
+                  "meta": {
+                    "code": 200,
+                    "method_name": "friendRequests",
+                    "status": "ok"
+                  },
+                  "response": {
+                    "friend_requests": [
+                      {
+                        "created_at": "2011-06-23T06:41:47+0000",
+                        "updated_at": "2011-06-23T06:41:47+0000",
+                        "id": "4e02e02bd0afbe41ef000005",
+                        "user": {
+                          "created_at": "2011-06-23T06:41:39+0000",
+                          "updated_at": "2011-06-23T06:41:44+0000",
+                          "username": "bob",
+                          "id": "4e02e022d0afbe41ef000002",
+                          "last_name": "Dude",
+                          "email": "bob@dude.com",
+                          "first_name": "Bob"
+                        }
+                      }
+                    ]
+                  }
+                }
+
+      - platform: ios
+        example: |
+            Example iOS call:
+                [APSFriends requests:nil withBlock:^(APSResponse *e) {
+                    if (e.success){
+                        NSArray *friendRequests = e.response[@"friend_requests"];
+
+                        for (NSDictionary *friendRequest in friendRequests) {
+                          NSString *message = [NSString stringWithFormat:@"id : %@\n First Name : %@\nLast Name : %@\n",
+                                                  friendRequest[@"id"],
+                                                  friendRequest[@"first_name"],
+                                                  friendRequest[@"last_name"]];
+
+
+                          [[[UIAlertView alloc] initWithTitle:@"Success" 
+                                                      message:message
+                                                     delegate:nil 
+                                            cancelButtonTitle:@"OK" 
+                                            otherButtonTitles:nil] show];
+                        }
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:e.errorMessage
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
+                CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"friends/requests.json" paramDict:nil];
+                [request startAsynchronous];
+                [request release];
+
+            SDK Callback:
+
+                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
+                {
+                	NSArray *friendRequests = [response getObjectsOfType:[CCFriendRequest class]];
+                	for (CCFriendRequest *request in friendRequests)
+                	{
+                		...
+                	}
+                }
+
+      - platform: android
+        example: |
+            Example Android call:
+
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+
+                try {
+                    APSFriends.requests(null, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                try {
+                                    JSONArray friendRequests = e.getResponse().getJSONArray("friend_requests");
+                                    if (friendRequests.length() <= 0) {
+                                        Log.i("APSFriends", "No Results!");
+                                    } else {
+                                        for (int i = 0; i < friendRequests.length(); i++) {
+                                            JSONObject users = friendRequests.getJSONObject(i);
+                                            JSONObject user = users.getJSONObject("user");
+                                            Log.i("APSFriends", user.getString("first_name") + " " + user.getString("last_name"));
+                                        }
+                                    }
+                                } catch (JSONException err) {
+                                    Log.e("APSFriends", "Exception thrown: " + err.toString());
+                                }
+                            } else {
+                                Log.e("APSFriends", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(APSCloudException e) {
+                            Log.e("APSFriends", "Exception thrown: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e1) {
+                    Log.e("APSFriends", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
+        example: |
+            Example Android call:
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
+                CCResponse response = sdk.sendRequest("friends/requests.json", CCRequestMethod.GET, null);
+
+            SDK Callback:
+
+                JSONObject responseJSON = response.getResponseData();
+                CCMeta meta = response.getMeta();
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
+                    && "friendRequests".equals(meta.getMethod())) {
+                  JSONArray requests = responseJSON.getJSONArray("friend_requests");
+                  ...
+                }
+
+      - platform: javascript
+        example: |
+            Example Javascript call:
+
+                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+                sdk.sendRequest('friends/requests.json', 'GET', null, callback);
+
+            SDK Callback:
+
+                function callback(data) {
+                  if(data) {
+                    if(data.meta) {
+                      var meta = data.meta;
+                      if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'friendRequests') {
+                        var requests = data.response.friend_requests;
+                        for (var i=0;i<requests.length;i++) {
+                          alert("User:" + requests[i].user);
+                        }
+                      }
+                    }
+                  }
+                }
+
+      - platform: actionscript
+        example: |
+            Example Actionscript call:
+
+                var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
+                sdk.sendRequest("friends/requests.json", URLRequestMethod.GET, null, false, callback);
+
+            SDK Callback:
+
+                function callback(data:Object):void {
+                  if(data) {
+                    if(data.hasOwnProperty("meta")) {
+                      var meta:Object = data.meta;
+                      if(meta.status == "ok" && meta.code == 200 && meta.method_name == "friendRequests") {
+                        var requests:Array = data.response.friend_requests;
+                        for (var i:int=0;i<requests.length;i++) {
+                          trace("User:" + requests[i].user);
+                        }
+                      }
+                    }
+                  }
+                }
+

@@ -1,0 +1,250 @@
+name: Statuses
+methods:
+  - name: update
+    summary: Updates a Status
+    description: |
+        Updates a status for the currenty logged in user. You can optionally associate the updated status 
+        with either an existing {@link Places} object or an {@link Events} object, but not both.
+        
+        Application admins can update another user's status on their behalf by including the
+        `user_id` field in the request.
+
+    url: statuses/update.json
+    http-method: PUT
+    login-required: true
+
+    parameters:
+
+      - name: status_id
+        description: ID of the status to update.
+        type: String
+        required: true
+
+      - name: message
+        description: Status message.
+        type: String
+
+      - name: place_id
+        description: | 
+            ID of the {@link Places} object this status is associated with. You can associate the status 
+            either with a {@link Places} object or an {@link Events} object, but not both.
+        type: String
+
+      - name: event_id
+        description: | 
+            ID of the {@link Events} object this status is associated with. You can associate the status 
+            either with an {@link Events} object or a {@link Places} object, but not both.
+        type: String
+
+      - name: photo
+        description: |
+            New photo to attach as the primary photo for this status.
+
+            When you use the `photo` parameter to attach a new photo, you can use the
+            [custom resize and sync options](#!/guide/photosizes).
+        type: Photos
+
+      - name: photo_id
+        description: |
+            ID of an existing photo to attach as the primary photo for this status.
+        type: String
+
+      - name: tags
+        description:  |
+            Comma separated list of tags for this status.
+        type: String
+
+      - name: custom_fields
+        description: User defined fields. See [Custom Data Fields](#!/guide/customfields).
+        type: [ String, Hash ]
+
+      - name: acl_name
+        description: |
+            Name of an {@link ACLs} to associate with this status.
+
+            An ACL can be specified using `acl_name` or `acl_id`. The two parameters are
+            mutually exclusive.
+        type: String
+
+      - name: acl_id
+        description: |
+            ID of an {@link ACLs} to associate with this status.
+
+            An ACL can be specified using `acl_name` or `acl_id`. The two parameters are
+            mutually exclusive.
+        type: String
+
+      - name: user_id
+        description: |
+            User ID to update the status on behalf of.
+
+            The current login user must be an application admin to update a status on
+            behalf of another user.
+        type: String
+                
+      - name: pretty_json
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
+
+    response-parameters:
+      - name: statuses
+        description: Single-element array containing the updated status.
+        type: Array<Statuses>
+
+    examples:
+      - platform: titanium
+        example: |
+            Requires Release 3.2.0. This example updates a status and checks the response.
+
+                Cloud.Statuses.update({
+                    status_id: statusId,
+                    message: 'What a lovely view!',
+                }, function (e) {
+                    if (e.success) {
+                        var status = e.statuses[0];
+                        alert('Success:\n' +
+                            'id: ' + status.id + '\n' +
+                            'message: ' + status.message);
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
+
+      - platform: rest
+        example: |
+            Example cURL request:
+
+                $ curl -b cookies.txt -c cookies.txt -X PUT -F "message=Having a blast at the beach" -F "status_id=4d6e86ed6f70950c89000004" https://api.cloud.appcelerator.com/v1/statuses/update.json?key=<YOUR APP APP KEY>&pretty_json=true
+
+            Example JSON response:
+
+                {
+                  "meta": {
+                    "status":"ok",
+                    "code":200,
+                    "method_name":"updateStatus"
+                  },
+                  "response": {
+                    "statuses": [
+                      {
+                        "id":"4d6e86ed6f70950c89000004",
+                        "message":"Having a blast at the beach",
+                        "created_at":"2011-03-02T18:05:33+0000",
+                        "updated_at":"2012-04-01T15:01:30+0000",
+                        "photo": {
+                            "id":"4dcf261cd0afbe1833000002",
+                            "filename":"photo.jpg",
+                            "size":584344,
+                            "md5":"589b8ad43ed20bf8e622d719642bc939",
+                            "created_at":"2011-05-15T01:02:20+0000",
+                            "updated_at":"2011-05-15T01:02:20+0000",
+                            "processed":false
+                        }
+                      }
+                    ]
+                  }
+                }
+
+      - platform: ios
+        example: |
+            Example iOS APS SDK call:
+
+                NSDictionary *data = @{
+                    @"status_id": @"4d6e86ed6f70950c89000004",
+                    @"message":@"Hardly working at Appcelerator Cloud Services Office"
+                };
+                
+                [APSStatuses update:data withBlock:^(APSResponse *e) {
+                    if (e.success) {
+                        [[[UIAlertView alloc] initWithTitle:@"Success" message:@"Updated!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error" message:e.message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    }
+                }];
+
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
+                NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:2];
+                [paramDict setObject:@"Hardly working at Appcelerator Cloud Services Office" forKey:@"message"];
+                [paramDict setObject:@"4d6e86ed6f70950c89000004" forKey:@"status_id"];
+                CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"POST" baseUrl:@"statuses/update.json" paramDict:paramDict];
+                [request addPhotoUIImage:(UIImage *)meworkinghardImage paramDict:nil];
+                [request startAsynchronous];
+                [request release];
+
+            SDK Callback:
+
+                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
+                {
+                	NSArray *statuses = [response getObjectsOfType:[CCStatuses class]];
+                	for (CCStatus *status in statuses)
+                	{
+                		...
+                	}
+                }
+
+      - platform: android
+        example: |
+            Example Android APS SDK call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+                final Activity currentActivity = this;
+
+                HashMap<String, Object> data = new HashMap<String, Object>();
+                data.put("message", "updated status!");
+                data.put("status_id", "4d6e86ed6f70950c89000004");
+
+                try {
+                    APSStatuses.update(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                new AlertDialog.Builder(currentActivity)
+                                .setTitle("Success").setMessage("Updated!")
+                                .setPositiveButton(android.R.string.ok, null)
+                                .setIcon(android.R.drawable.ic_dialog_info)
+                                .show();
+                            } else {
+                                Log.e("APSStatuses", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSStatuses", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSStatuses", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
+        example: |
+            Example Android call:
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("message", "updated status!");
+                data.put("status_id, "4d6e86ed6f70950c89000004");
+                CCResponse response = sdk.sendRequest("statuses/update.json", CCRequestMethod.POST, data);
+
+            SDK Callback:
+
+                JSONObject responseJSON = response.getResponseData();
+                CCMeta meta = response.getMeta();
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
+                    && "updateStatus".equals(meta.getMethod())) {
+                  JSONArray statuses = responseJSON.getJSONArray("statuses");
+                  ...
+                }
+

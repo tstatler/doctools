@@ -1,0 +1,258 @@
+name: Files
+methods:
+  - name: show
+    summary: Show File Info
+    description: |
+        Returns information associated with the file.
+    url: files/show.json
+
+    parameters:
+      - name: file_id
+        description: ID of the file to retrieve information for.
+        type: String
+        required: true
+
+      - name: response_json_depth
+        description: |
+            Nested object depth level counts in response json.
+            In order to reduce server API calls from an applicaton, the response json may
+            include not just the objects that are being queried/searched, but also with
+            some important data related to the returning objects such as object's owner or
+            referencing objects.
+
+            Default is 3, valid range is 1 to 8.
+        type: Number
+
+
+    response-parameters:
+      - name: files
+        description: |
+            Single-element array containing the requested file object.
+
+            Note that the file URL may not be available if the file hasn't finished
+            processing.
+        type: Array<Files>
+
+      - name: pretty_json
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean                
+
+    examples:
+      - platform: titanium
+        example: |
+            This example retrieves information about a file and checks the response.
+
+                Cloud.Files.show({
+                    file_id: savedFileId
+                }, function (e) {
+                    if (e.success) {
+                        var file = e.files[0];
+                        alert('Success:\n' +
+                            'id: ' + file.id + '\n' +
+                            'name: ' + file.name + '\n' +
+                            'updated_at: ' + file.updated_at);
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
+
+      - platform: rest
+        example: |
+            Example cURL request:
+
+                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/files/show.json?key=<YOUR APP APP KEY>&pretty_json=true&file_id=4f05446bc3666eb7ba000001"
+
+            Example JSON response:
+
+                {
+                  "meta": {
+                    "status":"ok",
+                    "code":200,
+                    "method_name":"showFile"
+                  },
+                  "response": {
+                    "files": [
+                      {
+                        "id": "4f05446bc3666eb7ba000001",
+                        "name": "my_file",
+                        "processed": true,
+                        "created_at": "2012-01-05T06:34:19+0000",
+                        "updated_at": "2012-01-05T06:34:41+0000",
+                        "url": "http://storage.appcelerator.com/KTSfOLVbzHx3R8s4hRiPvSfS1agjrkb0/files/c9/39/4f05489bc3666eb7aa000001/resume.pdf"
+                		"user": {
+                          "id": "4f0fe764d9ca72833d000002",
+                          "first_name": "Abe",
+                          "last_name": "Bob",
+                          "created_at": "2012-01-13T08:12:20+0000",
+                          "updated_at": "2012-01-13T08:12:43+0000",
+                          "external_accounts": [
+
+                          ],
+                          "email": "a@mike.com"
+                        }
+                      }
+                    ]
+                  }
+                }
+
+      - platform: ios
+        example: |
+            Example iOS call:
+
+                NSDictionary *data = @{
+                                         @"file_id" : @"savedFileId"
+                                      };
+                [APSFiles show:data withBlock:^(APSResponse *e) {
+                    if (e.success){
+                      NSArray *files = e.response[@"files"];
+                      NSDictionary *file = files[0];
+                      NSString *message = [NSString stringWithFormat:@"id : %@\n Name : %@\nUpdated at : %@\n",
+                                              file[@"id"],
+                                              file[@"name"],
+                                              file[@"updated_at"]];
+
+                      [[[UIAlertView alloc] initWithTitle:@"Success" 
+                                                  message:message
+                                                 delegate:nil 
+                                        cancelButtonTitle:@"OK" 
+                                        otherButtonTitles:nil] show];
+                      
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:e.errorMessage
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
+                NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:(CCFile *)file.objectId, @"file_id", nil]
+                request = [[[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"files/show.json" paramDict:paramDict] autorelease];
+                [request startAsynchronous];
+
+            SDK Callback:
+
+                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
+                {
+                	if ([response.meta.method isEqualToString:@"showFile"]) {
+                		NSArray *files = [response getObjectsOfType:[CCFile class]];
+                		for (CCFile *file in files)
+                		{
+                			...
+                		}
+                	}
+                }
+
+      - platform: android
+        example: |
+            Example Android APS SDK call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+                final Activity currentActivity = this;
+
+                HashMap<String, Object> data = new HashMap<String, Object>();
+                data.put("file_id", "4f05446bc3666eb7ba000001");
+
+                try {
+                    APSFiles.show(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                try {
+                                    Toast.makeText(currentActivity, e.getResponseString(), Toast.LENGTH_SHORT);
+                                } catch (APSCloudException err) {
+                                    Log.e("APSFiles", "Exception thrown: " + err.toString());
+                                }
+                            } else {
+                                Log.e("APSFiles", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSFiles", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSFiles", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
+        example: |
+            Example Android call:
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("file_id", "4f05446bc3666eb7ba000001");
+                CCResponse response = sdk.sendRequest("files/show.json", CCRequestMethod.GET, data);
+
+            SDK Callback:
+
+                JSONObject responseJSON = response.getResponseData();
+                CCMeta meta = response.getMeta();
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
+                    && "showFile".equals(meta.getMethod())) {
+                  JSONArray files = responseJSON.getJSONArray("files");
+                  ...
+                }
+
+      - platform: javascript
+        example: |
+            Example Javascript call:
+
+                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+                var data = {
+                  file_id: '4f05446bc3666eb7ba000001'
+                };
+                sdk.sendRequest('files/show.json', 'GET', data, callback);
+
+            SDK Callback:
+
+                function callback(data) {
+                  if(data) {
+                    if(data.meta) {
+                      var meta = data.meta;
+                      if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'showFile') {
+                        var files = data.response.files;
+                      	...
+                      }
+                    }
+                  }
+                }
+
+      - platform: actionscript
+        example: |
+            Example Actionscript call:
+
+                var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
+                var data:Object = new Object();
+                data.file_id = "4f05446bc3666eb7ba000001";
+                sdk.sendRequest("files/show.json", URLRequestMethod.GET, data, false, callback);
+
+            SDK Callback:
+
+                function callback(data:Object):void {
+                  if(data) {
+                    if(data.hasOwnProperty("meta")) {
+                      var meta:Object = data.meta;
+                      if(meta.status == "ok" && meta.code == 200 && meta.method_name == "showFile") {
+                      	var files = data.response.files;
+                      	...
+                      }
+                    }
+                  }
+                }
+

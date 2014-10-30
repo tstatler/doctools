@@ -1,0 +1,369 @@
+name: Chats
+methods:
+  - name: query
+    summary: Custom Query Chat Messages
+    description: |
+        Performs a custom query of chat messages with sorting and pagination. Currently you can
+        not query or sort data stored inside array or hash in custom fields.
+
+        In ACS 1.1.5 and later, you can paginate query results using `skip` and `limit` parameters, or by including
+        a `where` clause to limit the results to objects whose IDs fall within a specified range.
+        For details, see [Query Pagination](#!/guide/search_query-section-query-pagination).        
+
+        For details about using the query parameters,
+        see the [Search and Query guide](#!/guide/search_query).
+    url: chats/query.json
+    parameters:
+      - name: participate_ids
+        description: |
+            Comma-separated list of user ID(s) of the users belonging to a chat group. You can use
+            this field to narrow down a query to a certain chat group. The current user can
+            only query chat messages in chat groups he or she is participating in.
+
+            For example, suppose that users A, B and C form one chat group, and users B and C form a second chat group without A.
+            User A does not have permission to query chats in the chat group that consists of
+            only users B and C.
+
+            Alternatively, you can use `chat_group_id` to identify a {@link Chats#property-chatgroup chat group} instead.
+            
+        type: String
+
+      - name: chat_group_id
+        description: |
+            A chat group's id. Instead of using a `participate_ids` list, if you already
+            know the id of a chat group, you can use it to narrow down a query.
+        type: String
+
+      - name: page
+        description: |
+            <p class="note">
+            Starting in ACS 1.1.5, page and per_page are no longer supported in query operations. 
+            Applications should instead use <strong>skip</strong> and <strong>limit</strong> 
+            query parameters.
+            </p>
+        type: Number
+
+      - name: per_page
+        description: |
+            <p class="note">
+            Starting in ACS 1.1.5, page and per_page are no longer supported in query operations. 
+            Applications should instead use <strong>skip</strong> and <strong>limit</strong> 
+            query parameters.
+            </p>
+        type: Number
+
+      - name: pretty_json
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean        
+
+      - name: limit
+        description: |
+            The number of records to fetch. The value must be greater than 0, and no greater then 
+            1000, or an HTTP 400 (Bad Request) error will be returned. Default value of `limit` is 10.
+        type: Number
+
+      - name: skip
+        description: |
+            The number of records to skip. The value must be greater than or equal to 0, and no greater 
+            than 4999, or an HTTP 400 error will be returned. To skip 5000 records or more 
+            you need to perform a range-based query. See 
+            <a href="#!/guide/search_query-section-query-pagination">Query Pagination</a> for more information.</p>
+        type: Number
+
+      - name: where
+        description: |
+            Constraint values for fields. `where` should be encoded JSON.
+
+            You can query any of the standard values for a Chat object, as well as any
+            custom fields that contain simple values, such as String, Number or Boolean
+            values.
+
+            If `where` is not specified, `query` returns all objects.
+        type: Hash
+
+      - name: order
+        description: |
+            Sort results by one or more fields.
+        type: String
+
+      - name: sel
+        description: |
+            Selects the object fields to display. Do not use this parameter with `unsel`.
+        type: Hash
+
+      - name: unsel
+        description: |
+            Selects the object fields NOT to display. Do not use this parameter with `sel`.
+        type: Hash
+
+      - name: response_json_depth
+        description: |
+            Nested object depth level counts in response json.
+            In order to reduce server API calls from an applicaton, the response json may
+            include not just the objects that are being queried/searched, but also with
+            some important data related to the returning objects such as object's owner or
+            referencing objects.
+
+            Default is 3, valid range is 1 to 8.
+        type: Number
+
+    response-parameters:
+      - name: chats
+        description: |
+            List of chat objects matching the query.
+        type: Array<Chats>
+
+    examples:
+      - platform: titanium
+        example: |
+            This example requests a list of chat messages and checks the response.
+
+                Cloud.Chats.query({
+                    participate_ids: ids.join(','),
+                    where: {
+                        updated_at: { '$gt': last_update_time }
+                    }
+                }, function (e) {
+                    if (e.success) {
+                        for (var i = 0; i < e.chats.length; i++) {
+                            var chat = e.chats[i];
+                            alert('Success:\n' +
+                                'From: ' + chat.from.first_name + ' ' + chat.from.last_name + '\n' +
+                                'Updated: ' + chat.updated_at + '\n' +
+                                'Message: ' + chat.message);
+                        }
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
+
+      - platform: rest
+        example: |
+            Example cURL request. Assuming each chat message has an 
+            [assigned geo location](#!/guide/customfields-section-geographic-coordinates-in-custom-fields), 
+            the following finds all chat messages among users Bob (id: 4ee05d69d9ca726b85000002), 
+            Alice (id: 4ee05d69d9ca726b85000003), and userJoe (id: 4ee05d69d9ca726b85000004) sent 
+            after 2011-11-17T22:53:48+0000, and within 5 miles of latitude 37.12 and longitude -122.23. 
+            Note that you need to convert miles to radians (5/3959 = 0.00126).
+
+                $ curl -c cookies.txt -b cookies.txt -X GET --data-urlencode 'participate_ids=4ee05d69d9ca726b85000002,4ee05d69d9ca726b85000003,4ee05d69d9ca726b85000004' --data-urlencode 'where={"created_at":{"$gte":"2011-11-17T22:53:48+0000"}, "coordinates":{"$nearSphere":[-122.23,37.12], "$maxDistance" : 0.00126}}' --data-urlencode 'order=created_at' "https://api.cloud.appcelerator.com/v1/chats/query.json?key=<YOUR APP APP KEY>&count=true&pretty_json=true"
+
+            Example JSON response:
+
+                {
+                  "meta": {
+                    "code": 200,
+                    "status": "ok",
+                    "method_name": "queryChatMessages",
+                    "count": 100
+                  },
+                  "response": {
+                    "chats": [
+                      {
+                        "id": "4ee05d6ad9ca726b85000018",
+                        "created_at": "2011-12-08T06:47:06+0000",
+                        "updated_at": "2011-12-08T06:47:06+0000",
+                        "message": "What's up?",
+                		 "custom_fields": {
+                	       "coordinates": [-122.23, 37.12] }
+                	     },
+                        "from": {
+                          "id": "4ee05d69d9ca726b85000002",
+                          "first_name": "Bob",
+                          "last_name": "Dude",
+                          "created_at": "2011-12-08T06:47:05+0000",
+                          "updated_at": "2011-12-08T06:47:06+0000",
+                          "external_accounts": [
+
+                          ],
+                          "username": "bob",
+                          "email": "bob@dude.com"
+                        },
+                        "chat_group": {
+                          "id": "4ee05d6ad9ca726b85000017",
+                          "created_at": "2011-12-08T06:47:06+0000",
+                          "updated_at": "2011-12-08T06:47:06+0000",
+                          "participate_users": [
+                            {
+                              "id": "4ee05d69d9ca726b85000002",
+                              "first_name": "Bob",
+                              "last_name": "Dude",
+                              "created_at": "2011-12-08T06:47:05+0000",
+                              "updated_at": "2011-12-08T06:47:06+0000",
+                              "external_accounts": [
+
+                              ],
+                              "username": "bob",
+                              "email": "bob@dude.com"
+                            },
+                            {
+                              "id": "4ee05d69d9ca726b85000003",
+                              "first_name": "Alice",
+                              "last_name": "Gal",
+                              "created_at": "2011-12-08T06:47:05+0000",
+                              "updated_at": "2011-12-08T06:47:05+0000",
+                              "external_accounts": [
+
+                              ],
+                              "username": "alice",
+                              "email": "alice@gal.com"
+                            },
+                            {
+                              "id": "4ee05d69d9ca726b85000004",
+                              "first_name": "Joe",
+                              "last_name": "Guy",
+                              "created_at": "2011-12-08T06:47:05+0000",
+                              "updated_at": "2011-12-08T06:47:05+0000",
+                              "external_accounts": [
+
+                              ],
+                              "username": "joe",
+                              "email": "joe@guy.com"
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                }
+
+      - platform: ios
+        example: |
+            Example iOS APS SDK call:
+
+                // Create dictionary of parameters to be passed with the request
+                NSDictionary *data = @{
+                    @"participate_ids": @[@"4edef6f7d9ca7247b8000004", @"4edf0c20d9ca724a82000003"],
+                    @"where": @{
+                        @"updated_at": @{
+                            @"$gt": @"2013-12-26T19:00:00+0000"
+                        }
+                    }
+                };
+
+                [APSChats query:data withBlock:^(APSResponse *e) {
+                    if (e.success) {
+                        NSString *message = [NSString stringWithFormat:@"Found %lu groups", (unsigned long)((NSArray *) e.response[@"chats"]).count ];
+                        [[[UIAlertView alloc] initWithTitle:@"Success!" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error" message:e.errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
+                CCWhere *where = [[[CCWhere alloc] init] autorelease];
+                [where fieldName:@"coordinates" nearLat:37.12 nearLng:-122.23 maxDistanceMi:5.0];
+                NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:where, @"where", [NSArray arrayWithObjects:@"4e02f5b8d0afbe43c1000003", @"4e02f5b8d0afbe43c1000002", @"4ee05d69d9ca726b85000004", nil], @"participate_ids", @"created_at", @"order", nil];
+                request = [[[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"chats/query.json" paramDict:paramDict] autorelease];
+                [request startAsynchronous];
+
+            SDK Callback:
+
+                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
+                {
+                	if ([response.meta.methodName isEqualToString:@"queryChatMessages"]) {
+                		NSArray *chats = [response getObjectsOfType:[CCChat class]];
+                		for (CCChat *chat in chats) {
+                			...
+                		}
+                	}
+                }
+
+      - platform: android
+        example: |
+            Example Android APS SDK call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+
+                HashMap<String,Object> data = new HashMap<String,Object>;
+                data.put("participate_ids", "4ee05d69d9ca726b85000002,4ee05d69d9ca726b85000003,4ee05d69d9ca726b85000004");
+                data.put("order", "created_at");
+
+                try {
+                    APSChats.query(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                try {
+                                    JSONArray chats = e.getResponse().getJSONArray("chats");
+                                    if (chats.length() <= 0) {
+                                        Log.i("APSChats", "No Results!");
+                                    } else {
+                                        for (int i = 0; i < chats.length(); i++) {
+                                            JSONObject chat = chat.getJSONObject(i);
+                                            Log.i("APSChats", chat.getString("message"));
+                                        }
+                                    }
+                                } catch (JSONException err) {
+                                       Log.e("APSChats", "Exception thrown: " + err.toString());
+                                }
+                            } else {
+                                Log.e("APSChats", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(APSCloudException e) {
+                            Log.e("APSChats", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSChats", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
+        example: |
+            Example Android call:
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("participate_ids", "4ee05d69d9ca726b85000002,4ee05d69d9ca726b85000003,4ee05d69d9ca726b85000004");
+                data.put("where", "{'created_at':{'$gte':'2011-11-17T22:53:48+0000'}, 'coordinates':{'$nearSphere':[-122.23,37.12], '$maxDistance' : 0.00126}}");
+                data.put("order", "created_at");
+                CCResponse response = sdk.sendRequest("chats/query.json", CCRequestMethod.GET, data);
+
+            SDK Callback:
+
+                JSONObject responseJSON = response.getResponseData();
+                CCMeta meta = response.getMeta();
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
+                    && "queryChatMessages".equals(meta.getMethod())) {
+                  JSONArray chats = responseJSON.getJSONArray("chats");
+                  ...
+                }
+
+      - platform: javascript
+        example: |
+            Example Javascript call:
+
+                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+                var data = {
+                  participate_ids: '4ee05d69d9ca726b85000002,4ee05d69d9ca726b85000003',
+                  where: '{"created_at":{"$gte":"2011-11-17T22:53:48+0000"}, "coordinates":{"$nearSphere":[-122.23,37.12], "$maxDistance" : 0.00126}}',
+                  order: 'created_at'
+                };
+                sdk.sendRequest('chats/query.json', 'GET', data, callback);
+
+            SDK Callback:
+
+                function callback(data) {
+                  if(data) {
+                    if(data.meta) {
+                      var meta = data.meta;
+                      if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'queryChatMessages') {
+                        var chats = data.response.chats;
+                      	...
+                      }
+                    }
+                  }
+                }

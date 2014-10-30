@@ -1,0 +1,278 @@
+name: Checkins
+methods:
+  - name: show
+    summary: Show a Checkin
+    description: Returns the contents of the identified checkin.
+    url: checkins/show.json
+
+    parameters:
+      - name: checkin_id
+        description: ID of the checkin to show.
+        type: String
+        required: true
+        
+      - name: response_json_depth
+        description: |
+            Nested object depth level counts in response json.
+            In order to reduce server API calls from an applicaton, the response json may
+            include not just the objects that are being queried/searched, but also with
+            some important data related to the returning objects such as object's owner or
+            referencing objects.
+        type: Number
+
+      - name: show_user_like
+        description: |
+            If set to **true** the Checkin object in the response will include `"current_user_liked: true"`
+            if the current user has liked the object. If the user has not liked the object, the
+            `current_user_liked` field is not included in the response.
+        type: Boolean
+
+      - name: pretty_json
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean                
+
+    response-parameters:
+      - name: checkins
+        description: Single element array containing the identified checkin.
+        type: Array<Checkins>
+
+    examples:
+      - platform: titanium
+        example: |
+            This example requests information about a checkin and checks the response.
+
+                Cloud.Checkins.show({
+                    checkin_id: myCheckinId
+                }, function (e) {
+                    if (e.success) {
+                        var checkin = e.checkins[0];
+                        alert('Success:\n' +
+                            'id: ' + checkin.id + '\n' +
+                            'place: ' + checkin.place.name + '\n' +
+                            'updated_at: ' + checkin.updated_at);
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
+
+      - platform: rest
+        example: |
+            Example cURL request that passes `show_user_like=true` as a parameter; the Checkin object
+            returned in the JSON response contains `"current_user_liked": true`, indicating that the current user
+            liked the retrieved object.
+
+                $ curl -b cookies.txt -c cookies.txt https://api.cloud.appcelerator.com/v1/checkins/show.json?key=<YOUR APP APP KEY>&pretty_json=true&checkin_id=4d8bc645d0afbe0363000013&show_user_like=true
+
+            Example JSON response:
+
+                {
+                  "meta": {
+                    "status":"ok",
+                    "code":200,
+                    "method_name":"showCheckins"
+                  },
+                  "response": {
+                    "checkins": [
+                      {
+                        "id":"4d8bc645d0afbe0363000013",
+                        "created_at":"2011-03-24T22:31:34+0000",
+                        "current_user_liked": true,
+                        "updated_at":"2011-03-24T22:31:34+0000",
+                        "place": {
+                          "id":"4d8bc62ad0afbe0363000012",
+                          "name":"Cocoafish",
+                          "created_at":"2011-03-24T22:31:06+0000",
+                          "updated_at":"2011-03-24T22:31:06+0000",
+                          "address":"58 South Park Ave.",
+                          "city":"San Francisco",
+                          "state":"California",
+                          "country":"United States",
+                          "website":"cocoafish.com",
+                          "twitter":"cocoafish",
+                          "latitude":37.782227,
+                          "longitude":-122.393159
+                        },
+                        "user": {
+                          "id":"4d7e6493d0afbe01d8000001",
+                          "first_name":"Mike",
+                          "last_name":"Goff",
+                          "created_at":"2011-03-14T18:55:15+0000",
+                          "updated_at":"2011-03-24T18:11:52+0000",
+                          "photo": {
+                            "id":"4d88448ed0afbe0e4e000003",
+                            "filename":"photo.jpg",
+                            "size":584344,
+                            "md5":"589b8ad43ed20bf8e622d719642bc939",
+                            "created_at":"2011-03-22T06:41:18+0000",
+                            "updated_at":"2011-03-22T06:41:24+0000",
+                            "processed":true,
+                            "collection_name":"_cocoafish_user_profile",
+                            "content_type":"image/jpeg",
+                            "urls": {
+                            "square_75":"http://storage.appcelerator.com/gjvI579NDKJNuhBBj9HGWhbGDISHcCvL/photos/4d88448ed0afbe0e4e000003/photo_square_75.jpg",
+                            "thumb_100":"http://storage.appcelerator.com/gjvI579NDKJNuhBBj9HGWhbGDISHcCvL/photos/4d88448ed0afbe0e4e000003/photo_thumb_100.jpg",
+                            "small_240":"http://storage.appcelerator.com/gjvI579NDKJNuhBBj9HGWhbGDISHcCvL/photos/4d88448ed0afbe0e4e000003/photo_small_240.jpg",
+                            "medium_500":"http://storage.appcelerator.com/gjvI579NDKJNuhBBj9HGWhbGDISHcCvL/photos/4d88448ed0afbe0e4e000003/photo_medium_500.jpg",
+                            "medium_640":"http://storage.appcelerator.com/gjvI579NDKJNuhBBj9HGWhbGDISHcCvL/photos/4d88448ed0afbe0e4e000003/photo_medium_640.jpg",
+                            "large_1024":"http://storage.appcelerator.com/gjvI579NDKJNuhBBj9HGWhbGDISHcCvL/photos/4d88448ed0afbe0e4e000003/photo_large_1024.jpg",
+                            "original":"http://storage.appcelerator.com/gjvI579NDKJNuhBBj9HGWhbGDISHcCvL/photos/4d88448ed0afbe0e4e000003/photo_original.jpg"
+                                      }
+                                    }
+                                  },
+                                  "photo": {
+                                    "id":"4d8bc645d0afbe0363000014",
+                                    "filename":"photo.jpg",
+                                    "size":584344,
+                                    "md5":"589b8ad43ed20bf8e622d719642bc939",
+                                    "created_at":"2011-03-24T22:31:33+0000",
+                                    "updated_at":"2011-03-24T22:31:33+0000",
+                                    "processed":false
+                                  }
+                                }
+                              ]
+                            }
+                          }
+
+      - platform: ios
+        example: |
+            Example iOS APS SDK call:
+
+                // Create dictionary of parameters to be passed with the request
+                NSDictionary *data = @{
+                      @"checkin_id": myCheckinId
+                };
+                
+                [APSCheckins show:data withBlock:^(APSResponse *e) {
+                      if (e.success) {
+                          NSString *message = [NSString stringWithFormat:@"Show checkin %@", ((NSArray *) e.response[@"checkins"])[0][@"id"] ];
+                          [[[UIAlertView alloc] initWithTitle:@"Success" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      } else {
+                          [[[UIAlertView alloc] initWithTitle:@"Error" message:e.errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      }
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
+                NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:(CCCheckin *)checkin.objectId, @"checkin_id", nil];
+                CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"checkins/show.json" paramDict:paramDict];
+                [request startAsynchronous];
+                [request release];
+
+            SDK Callback:
+
+                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
+                {
+                	NSArray *checkins = [response getObjectsOfType:[CCCheckin class]];
+                }
+
+      - platform: android
+        example: |
+            Example Android APS SDK call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+                final Activity currentActivity = this;
+
+                HashMap<String, Object> data = new HashMap<String, Object>();
+                data.put("checkin_id", "4d713b4f6f70951043000001");
+
+                try {
+                    APSCheckins.show(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                try {
+                                    Toast.makeText(currentActivity, e.getResponseString(), Toast.LENGTH_SHORT);
+                                } catch (APSCloudException err) {
+                                    Log.e("APSCheckins", "Exception thrown: " + err.toString());
+                                }
+                            } else {
+                                Log.e("APSCheckins", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSCheckins", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSCheckins", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
+        example: |
+            Example Android call:
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("checkin_id", "4d713b4f6f70951043000001");
+                CCResponse response = sdk.sendRequest("checkins/show.json", CCRequestMethod.GET, data);
+
+            SDK Callback:
+
+                JSONObject responseJSON = response.getResponseData();
+                CCMeta meta = response.getMeta();
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
+                    && "showCheckins".equals(meta.getMethod())) {
+                  JSONArray checkins = responseJSON.getJSONArray("checkins");
+                  ...
+                }
+
+      - platform: javascript
+        example: |
+            Example Javascript call:
+
+                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+                var data = {
+                  checkin_id: '4d713b4f6f70951043000001'
+                };
+                sdk.sendRequest('checkins/show.json', 'GET', data, callback);
+
+            SDK Callback:
+
+                function callback(data) {
+                  if(data) {
+                    if(data.meta) {
+                      var meta = data.meta;
+                      if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'showCheckins') {
+                        var checkins = data.response.checkins;
+                      	...
+                      }
+                    }
+                  }
+                }
+
+      - platform: actionscript
+        example: |
+            Example Actionscript call:
+
+                var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
+                var data:Object = new Object();
+                data.checkin_id = "4d713b4f6f70951043000001";
+                sdk.sendRequest("checkins/show.json", URLRequestMethod.GET, data, false, callback);
+
+            SDK Callback:
+
+                function callback(data:Object):void {
+                  if(data) {
+                    if(data.hasOwnProperty("meta")) {
+                      var meta:Object = data.meta;
+                      if(meta.status == "ok" && meta.code == 200 && meta.method_name == "showCheckins") {
+                        var checkins:Array = data.response.checkins;
+                        ...
+                      }
+                    }
+                  }
+                }
+

@@ -1,0 +1,378 @@
+name: Chats
+methods:
+  - name: query_chat_groups
+    summary: Query Chat Groups
+
+    description: |
+        Queries chat groups.
+
+        If user A sends a chat message to users B and C, users A, B and C automatically
+        form a chat group. Use this API to get a list of chat groups the current user
+        belongs to.
+
+        In ACS 1.1.5 and later, you can paginate query results using `skip` and `limit` parameters, or by including
+        a `where` clause to limit the results to objects whose IDs fall within a specified range.
+        For details, see [Query Pagination](#!/guide/search_query-section-query-pagination).        
+
+        Prior to ACS 1.1.5 you can use `skip` and `limit` parameters, or `page` and `per_page` but 
+        not both in the same query.        
+
+        For details about using the query parameters,
+        see the [Search and Query guide](#!/guide/search_query).
+
+    url: chats/query_chat_groups.json
+    login-required: true
+    admin-required: true
+
+    parameters:
+      - name: participate_ids
+        description: |
+            Only available for application admins.
+
+            Comma-separated list of user ID(s) of the users belonging to a chat group. You can use
+            this field to narrow down the query to a certain chat group. The current user can
+            only query chats that he or she is participating in.
+
+            For example, suppose that users A, B and C form one chat group, and users B and C form a second chat group without A.
+            User A does not have permission to query chats in the chat group that consists of
+            only users B and C.
+
+            Alternatively, you can use `chat_group_id` to identify a {@link Chats#property-chatgroup chat group}
+            instead.
+        type: String
+
+      - name: page
+        description: |
+            Request page number, default is 1.
+
+            <p class="note">This parameter is only available to ACS applications created before ACS 1.1.5. 
+            Applications created with ACS 1.1.5 and later must use <a href="#!/guide/search_query-section-query-pagination">ranged-based queries</a> queries
+            to paginate their queries.</p>
+        type: Number
+
+      - name: per_page
+        description: |
+            Number of results per page, default is 10.
+
+            <p class="note">This parameter is only available to ACS applications created before ACS 1.1.5. 
+            Applications created with ACS 1.1.5 and later must use <a href="#!/guide/search_query-section-query-pagination">ranged-based queries</a> queries
+            to paginate their queries.</p>
+        type: Number
+
+      - name: pretty_json
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean        
+
+      - name: limit
+        description: |
+            The number of records to fetch. The value must be greater than 0, and no greater then 
+            1000, or an HTTP 400 (Bad Request) error will be returned.            
+        type: Number
+
+      - name: skip
+        description: |
+            Number of records to skip. Must be used together with `limit`.
+            The specified value must not be less than 0 or an HTTP 400 error will be returned.            
+        type: Number
+
+      - name: where
+        description: |
+            Constraint values for fields. `where` should be encoded JSON.
+
+            If `where` is not specified, `query` returns all objects.
+        type: Hash
+
+      - name: order
+        description: |
+            Sort results by one or more fields.
+        type: String
+
+      - name: sel
+        description: |
+            Selects the object fields to display. Do not use this parameter with `unsel`.
+        type: Hash
+
+      - name: unsel
+        description: |
+            Selects the object fields NOT to display. Do not use this parameter with `sel`.
+        type: Hash
+
+      - name: response_json_depth
+        description: |
+            Nested object depth level counts in response json.
+            In order to reduce server API calls from an applicaton, the response json may
+            include not just the objects that are being queried/searched, but also with
+            some important data related to the returning objects such as object's owner or
+            referencing objects.
+
+            Default is 3, valid range is 1 to 8.
+        type: Number
+
+    response-parameters:
+      - name: chats
+        description: |
+            List of chat objects matching the query.
+        type: Array<Chats>
+
+    examples:
+      - platform: titanium
+        example: |
+            Requires Release 3.2.0.
+
+                Cloud.Chats.queryChatGroups({
+                    page: 1,
+                    per_page: 20
+                }, function (e) {
+                    if (e.success) {
+                        alert('Success:\n' + 'Count: ' + e.chat_groups.length);
+                        e.chat_groups.forEach(function(chatGroup){
+                            Ti.API.info(JSON.stringify(chatGroup));
+                        });
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
+
+      - platform: rest
+        example: |
+            Gets a list of chat groups the specified user belongs to.
+
+                $ curl -b cookies.txt -c cookies.txt -X GET --data-urlencode "participate_id=4ee04f4cd9ca72680d000002" "https://api.cloud.appcelerator.com/v1/chats/query_chat_groups.json?key=<YOUR APP APP KEY>&pretty_json=true&count=true"
+
+            Example JSON response:
+
+                {
+                  "meta": {
+                    "code": 200,
+                    "status": "ok",
+                    "method_name": "queryChatGroups",
+                    "count": 100
+                  },
+                  "response": {
+                    "chat_groups": [
+                      {
+                        "id": "4ee04f4dd9ca72680d000009",
+                        "created_at": "2011-12-08T05:46:53+0000",
+                        "updated_at": "2011-12-08T05:46:53+0000",
+                        "participate_users": [
+                          {
+                            "id": "4ee04f4cd9ca72680d000002",
+                            "first_name": "Bob",
+                            "last_name": "Dude",
+                            "created_at": "2011-12-08T05:46:52+0000",
+                            "updated_at": "2011-12-08T05:46:52+0000",
+                            "external_accounts": [
+
+                            ],
+                            "username": "bob",
+                            "email": "bob@dude.com"
+                          },
+                          {
+                            "id": "4ee04f4cd9ca72680d000003",
+                            "first_name": "Alice",
+                            "last_name": "Gal",
+                            "created_at": "2011-12-08T05:46:52+0000",
+                            "updated_at": "2011-12-08T05:46:52+0000",
+                            "external_accounts": [
+
+                            ],
+                            "username": "alice",
+                            "email": "alice@gal.com"
+                          }
+                        ]
+                      },
+                      {
+                        "id": "4ee04f4dd9ca72680d000017",
+                        "created_at": "2011-12-08T05:46:53+0000",
+                        "updated_at": "2011-12-08T05:46:53+0000",
+                        "participate_users": [
+                          {
+                            "id": "4ee04f4cd9ca72680d000002",
+                            "first_name": "Bob",
+                            "last_name": "Dude",
+                            "created_at": "2011-12-08T05:46:52+0000",
+                            "updated_at": "2011-12-08T05:46:52+0000",
+                            "external_accounts": [
+
+                            ],
+                            "username": "bob",
+                            "email": "bob@dude.com"
+                          },
+                          {
+                            "id": "4ee04f4cd9ca72680d000003",
+                            "first_name": "Alice",
+                            "last_name": "Gal",
+                            "created_at": "2011-12-08T05:46:52+0000",
+                            "updated_at": "2011-12-08T05:46:52+0000",
+                            "external_accounts": [
+
+                            ],
+                            "username": "alice",
+                            "email": "alice@gal.com"
+                          },
+                          {
+                            "id": "4ee04f4cd9ca72680d000004",
+                            "first_name": "Joe",
+                            "last_name": "Guy",
+                            "created_at": "2011-12-08T05:46:52+0000",
+                            "updated_at": "2011-12-08T05:46:52+0000",
+                            "external_accounts": [
+
+                            ],
+                            "username": "joe",
+                            "email": "joe@guy.com"
+                          }
+                        ]
+                      },
+                      {
+                        "id": "4ee04f4dd9ca72680d000012",
+                        "created_at": "2011-12-08T05:46:53+0000",
+                        "updated_at": "2011-12-08T05:46:53+0000",
+                        "participate_users": [
+                          {
+                            "id": "4ee04f4cd9ca72680d000002",
+                            "first_name": "Bob",
+                            "last_name": "Dude",
+                            "created_at": "2011-12-08T05:46:52+0000",
+                            "updated_at": "2011-12-08T05:46:52+0000",
+                            "external_accounts": [
+
+                            ],
+                            "username": "bob",
+                            "email": "bob@dude.com"
+                          },
+                          {
+                            "id": "4ee04f4cd9ca72680d000004",
+                            "first_name": "Joe",
+                            "last_name": "Guy",
+                            "created_at": "2011-12-08T05:46:52+0000",
+                            "updated_at": "2011-12-08T05:46:52+0000",
+                            "external_accounts": [
+
+                            ],
+                            "username": "joe",
+                            "email": "joe@guy.com"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+
+      - platform: ios
+        example: |
+            Example iOS APS SDK call:
+
+                // Create dictionary of parameters to be passed with the request
+                NSDictionary *data = @{
+                      @"to_ids": @[@"4edef6f7d9ca7247b8000004", @"4edf0c20d9ca724a82000003"],
+                      @"message": @"Good morning"
+                };
+                
+                [APSChats create:data withBlock:^(APSResponse *e) {
+                      if (e.success) {
+                          [[[UIAlertView alloc] initWithTitle:@"Great" message:@"Success!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      } else {
+                          [[[UIAlertView alloc] initWithTitle:@"Error" message:e.errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      }
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
+                NSDictionary *paramDict = [[NSArray arrayWithObjects:@"4e02f5b8d0afbe43c1000002", nil], @"participate_ids", nil];
+                request = [[[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"chats/query_chat_groups.json" paramDict:paramDict] autorelease];
+                [request startAsynchronous];
+                [request release];
+
+            SDK Callback:
+
+                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
+                {
+                    if ([response.meta.methodName isEqualToString:@"queryChatGroups"]) {
+                        NSArray *chat_groups = [response getObjectsOfType:[CCChatGroup class]];
+                        ...
+                    }
+                }
+
+      - platform: android
+        example: |
+            Example Android APS SDK call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+
+                try {
+                    APSChats.queryChatGroups(null, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                try {
+                                    JSONArray chat_groups = e.getResponse().getJSONArray("chat_groups");
+                                    if (chat_groups.length() <= 0) {
+                                        Log.i("APSChats", "No Results!");
+                                    } else {
+                                        // Do something with the chat_groups array
+                                    }
+                                } catch (JSONException err) {
+                                       Log.e("APSChats", "Exception thrown: " + err.toString());
+                                }
+                            } else {
+                                Log.e("APSChats", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(APSCloudException e) {
+                            Log.e("APSChats", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSChats", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
+        example: |
+            Example Android call:
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
+                CCResponse response = sdk.sendRequest("chats/query_chat_groups.json", CCRequestMethod.GET, null);
+
+            SDK Callback:
+
+                JSONObject responseJSON = response.getResponseData();
+                CCMeta meta = response.getMeta();
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
+                    && "queryChatGroups".equals(meta.getMethod())) {
+                  JSONArray chatGroups = responseJSON.getJSONArray("chat_groups");
+                  ...
+                }
+
+      - platform: javascript
+        example: |
+            Example Javascript call:
+
+                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+                sdk.sendRequest('chats/query_chat_groups.json', 'GET', null, callback);
+
+            SDK Callback:
+
+                function callback(data) {
+                  if(data) {
+                    if(data.meta) {
+                      var meta = data.meta;
+                      if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'queryChatGroups') {
+                        var chatGroups = data.response.chat_groups;
+                      	...
+                      }
+                    }
+                  }
+                }
+

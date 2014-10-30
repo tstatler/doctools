@@ -1,0 +1,68 @@
+name: PushLogDetails
+description: |
+    The data type of objects returned by {@link Logs#querypushlogdetails}.
+pseudo: true    
+
+fields:
+  - name: id
+    description: Identifes the push notification log item.
+    type: String
+
+  - name: android_types
+    description: |
+        List of Android push notification object types, and the number of notifications
+        delivered using each type. Possible key names are the following:
+
+          * GCM: Google Cloud Messaging service for Android
+          * MQTT:  MQ Telemetry Transport
+    type: Array<Hash>
+
+  - name: app_id
+    description: <TODO>
+    type: String
+
+  - name: channel
+    description: Name of the channel to which the notification was delivered.
+    type: String
+
+  - name: created_at
+    description: Timestamp when the log item was created.
+    type: Date
+
+  - name: device_count
+    description: The total number of devices to which the notification was delivered.
+    type: Number
+
+  - name: locked_at
+    description: Timestamp when the log item was locked.
+    type: Date
+
+  - name: pem_sent_at
+    description: Timestamp when log item was inserted by Platform event system.
+    type: Date
+
+  - name: push_id
+    description: ID of push notification log item that was queried.
+    type: String
+
+  - name: send_status
+    description: |
+        A number that indicates the notification's status, and can be one of the
+        following values:
+
+         * 0 - Sending
+         * 1 - Success
+         * 2 - Fail
+         * 3 - Over Due
+    type: Number
+
+  - name: types 
+    description: |
+        A single-element Array containing an object with possible field names "android"
+        and "ios". The value of each field indicates the number of Android and iOS devices, respectively,
+        to which the push notification was delivered.
+    type: Array<Hash>
+
+  - name: updated_at
+    description: Timestamp when log item was updated.
+    type: Date

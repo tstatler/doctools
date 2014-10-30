@@ -1,0 +1,71 @@
+name: Places
+description: |
+    The Places API provides methods to create and manage places. A place can be specified using a street address or
+    geographic coordinates.
+
+mixin: Reviewable
+fields: 
+
+  - name: name
+    description: Place name.
+    type: String
+
+  - name: address
+    description: Address.
+    type: String
+
+  - name: city
+    description: City.
+    type: String
+
+  - name: state 
+    description: State.
+    type: String
+
+  - name: postal_code   
+    description: Postal or ZIP code. 
+    type: String 
+  
+  - name: country   
+    description: Country.
+    type: String
+
+  - name: latitude  
+    description: Latitude. 
+    type: Number 
+
+  - name: longitude
+    description: Longitude. 
+    type: Number 
+
+  - name: website
+    description: Website.
+    type: String
+
+  - name: twitter   
+    description: Twitter ID.
+    type: String
+
+  - name: phone_number  
+    description: Phone number.
+    type: String
+
+  - name: photo 
+    description: Primary photo for this place.
+    type: Photos
+  
+  - name: tags
+    description:  List of tags for this object.
+    type: Array<String>
+
+  - name: custom_fields
+    description: User defined fields. See [Custom Data Fields](#!/guide/customfields).
+    type: [ String, Hash ]
+
+  - name: acls
+    description: Single-element array containing the ACL associated with this object, if any.
+    type: Array<ACLs>
+
+  - name: user
+    description: Owner of this place object.
+    type: Users

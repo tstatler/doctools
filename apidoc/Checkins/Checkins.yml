@@ -1,0 +1,44 @@
+name: Checkins
+description: |
+    The Checkins API provides methods to create and manage checkins to a {@link Places Place} or an
+    {@link Events Event}.
+fields: 
+  - name: id
+    description: Generated unique ID for this checkin.
+    type: String
+
+  - name: user
+    description: Checkin owner.
+    type: Users
+
+  - name: message
+    description: Checkin message.
+    type: String
+
+  - name: place
+    description: The place object associated with the checkin.
+    type: Places
+
+  - name: event
+    description: The event object associated with the checkin.
+    type: Events
+
+  - name: photo
+    description: The primary photo for the checkin.
+    type: Photos
+
+  - name: tags
+    description: Comma-separated list of tags associated with this checkin.
+    type: String
+
+  - name: custom_fields
+    description: User defined fields. See [Custom Data Fields](#!/guide/customfields).
+    type: [ String, Hash ]
+
+  - name: created_at
+    description: Message creation date.
+    type: Date
+
+  - name: updated_at
+    description: Message update date.
+    type: Date

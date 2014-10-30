@@ -1,0 +1,206 @@
+name: Checkins
+methods:
+  - name: delete
+    summary: Delete a Checkin
+
+    description: |
+        Deletes a checkin. 
+
+        The {@link #place Place}, {@link #event Event}, or {@link #photo Photo} associated with the checkin
+        is not deleted.
+
+        An application admin can delete any Checkin object. 
+
+    url: checkins/delete.json
+    http-method: DELETE
+    login-required: true
+
+    parameters:
+      - name: checkin_id
+        description: ID of the checkin to delete.
+        type: String
+
+      - name: pretty_json
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean                
+
+      - name: user_id
+        description: |
+            User to delete the Checkin object on behalf of. The user must be the creator of the object.
+
+            The current user must be an application admin to delete a Checkin object on
+            behalf of another user.
+        type: String
+
+    examples:
+      - platform: titanium
+        example: |
+            This example deletes a checkin and checks the response.
+
+                Cloud.Checkins.remove({
+                    checkin_id: myCheckinId
+                }, function (e) {
+                    if (e.success) {
+                        alert('Success');
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
+
+      - platform: rest
+        example: |
+            Example cURL request:
+
+                $ curl -b cookies.txt -c cookies.txt -X DELETE http://api.cloud.appcelerator.com/v1/checkins/delete.json?key=<YOUR APP APP KEY>&pretty_json=true&checkin_id=4d8bc645d0afbe0363000013
+
+            Example JSON response:
+
+                {
+                  "meta": {
+                    "status":"ok",
+                    "code":200,
+                    "method_name":"deleteCheckin"
+                  }
+                }
+
+      - platform: ios
+        example: |
+            Example iOS APS SDK call:
+
+                // Create dictionary of parameters to be passed with the request
+                NSDictionary *data = @{
+                      @"checkin_id": myCheckinId
+                };
+                
+                [APSCheckins remove:data withBlock:^(APSResponse *e) {
+                      if (e.success) {
+                          [[[UIAlertView alloc] initWithTitle:@"Great" message:@"Success!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      } else {
+                          [[[UIAlertView alloc] initWithTitle:@"Error" message:e.errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      }
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
+                NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:checkin.objectId, @"checkin_id", nil];
+                CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"DELETE" baseUrl:@"checkins/delete.json" paramDict:paramDict];
+                [request startAsynchronous];
+                [request release];
+
+            SDK Callback:
+
+                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
+                {
+                	if ([response.meta.method isEqualToString:@"deleteCheckin"]) {
+                		NSLog(@"Checkin deleted!");
+                	}
+                }
+
+      - platform: android
+        example: |
+            Example Android APS SDK call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+                final Activity currentActivity = this;
+
+                HashMap<String, Object> data = new HashMap<String, Object>();
+                data.put("checkin_id", "4d713b4f6f70951043000001");
+
+                try {
+                    APSCheckins.remove(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                new AlertDialog.Builder(currentActivity)
+                                .setTitle("Success!").setMessage("Removed!")
+                                .setPositiveButton(android.R.string.ok, null)
+                                .setIcon(android.R.drawable.ic_dialog_info)
+                                .show();
+                            } else {
+                                Log.e("APSCheckins", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSCheckins", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSCheckins", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
+        example: |
+            Example Android call:
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("checkin_id", "4d713b4f6f70951043000001");
+                CCResponse response = sdk.sendRequest("checkins/delete.json", CCRequestMethod.DELETE, data);
+
+            SDK Callback:
+
+                JSONObject responseJSON = response.getResponseData();
+                CCMeta meta = response.getMeta();
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
+                    && "deleteCheckin".equals(meta.getMethod())) {
+                  System.out.println("Checkin deleted!");
+                }
+
+      - platform: javascript
+        example: |
+            Example Javascript call:
+
+                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+                var data = {
+                  checkin_id: '4d713b4f6f70951043000001'
+                };
+                sdk.sendRequest('checkins/delete.json', 'DELETE', data, callback);
+
+            SDK Callback:
+
+                function callback(data) {
+                  if(data) {
+                    if(data.meta) {
+                      var meta = data.meta;
+                      if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'deleteCheckin') {
+                        alert("Checkin deleted!");
+                      }
+                    }
+                  }
+                }
+
+      - platform: actionscript
+        example: |
+            Example Actionscript call:
+
+                var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
+                var data:Object = new Object();
+                data.checkin_id = "4d713b4f6f70951043000001";
+                sdk.sendRequest("checkins/delete.json", URLRequestMethod.DELETE, data, false, callback);
+
+            SDK Callback:
+
+                function callback(data:Object):void {
+                  if(data) {
+                    if(data.hasOwnProperty("meta")) {
+                      var meta:Object = data.meta;
+                      if(meta.status == "ok" && meta.code == 200 && meta.method_name == "deleteCheckin") {
+                      	Alert.show("Checkin deleted!");
+                      }
+                    }
+                  }
+                }
+

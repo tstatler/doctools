@@ -1,0 +1,43 @@
+name: PhotoCollections
+description: |
+    The PhotoCollections object represents a collection of photos. Collections can be nested.
+
+fields:
+
+  - name: counts
+    description: |
+        Object with fields: 
+        
+        *   `photos: Number`. Number of photos in this collection.
+        *   `total_photos: Number`.  Number of photos in this collection and subcollections.
+        *   `subcollections: Number`. Number of subcollections in this collection.
+    type: Hash
+  
+  - name: cover_photo
+    description: Photo to use as a cover photo for the collection.
+    type: Photos
+
+  - name: created_at
+    description: Creation date for this user object.
+    type: Date
+
+  - name: id
+    description: Generated ID for this object.
+    type: String
+
+  - name: name
+    description: Name of the collection.
+    type: String
+
+  - name: parent_collection
+    description: Collection object that contains this subcollection.
+    type: PhotoCollections
+
+  - name: updated_at
+    description: Last update time for this user object.
+    type: Date
+ 
+  - name: user
+    description: Owner of this collection.
+    type: Users
+

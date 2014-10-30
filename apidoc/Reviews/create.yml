@@ -1,0 +1,389 @@
+name: Reviews
+methods:
+  - name: create
+    summary: Create Review/Comment/Rating/Like
+
+    description: |
+        Adds a review with an optional integer rating. You can also use this API to add
+        comments or likes.
+
+        Once an object has one or more reviews (comments) attached to it, it will
+        return a total review count, rating_count, average rating and a breakdown of
+        each rating value:
+
+            "reviews_count": 2,
+            "ratings_count": 2,
+            "ratings_average": 150.0,
+            "ratings_summary": {
+              "100": 1,
+              "200": 1
+            },
+
+        To create a review, you must specify a target object using one of the `<object>_id` parameters, 
+        such as `photo_id` or `post_id`. Only one `<object>_id` parameter may be specified in a request.
+        To specify a {@link Users User} to review, use the the `user_object_id` parameter.
+
+        An application admin can create a review on behalf of another user by 
+        specifying that user's ID in the `user_id` method parameter. 
+
+        A review must include either `content` or `rating`. It can also include both. 
+
+    url: reviews/create.json
+    http-method: POST
+    login-required: true
+
+    parameters:
+
+      - name: post_id
+        description: | 
+            ID of the {@link Posts} object to review.
+        type: String
+
+      - name: photo_id
+        description: | 
+            ID of the {@link Photos} object to review.
+        type: String
+
+      - name: user_object_id
+        description: | 
+            ID of the {@link Users} object to review.
+        type: String
+
+      - name: event_id
+        description: | 
+            ID of the {@link Events} object to review.
+        type: String
+
+      - name: place_id
+        description: | 
+            ID of the {@link Places} object to review.
+        type: String
+
+      - name: checkin_id
+        description: |
+            ID of the {@link Checkins} object to review.
+        type: String
+
+      - name: review_id
+        description: |
+            ID of the {@link Reviews} object to review.
+        type: String
+
+      - name: custom_object_id
+        description: |
+            ID of the {@link CustomObjects} object to review.
+        type: String
+
+      - name: status_id
+        description: |
+            ID of the {@link Statuses} object to review.
+        type: String
+
+      - name: content
+        description: |
+            Review or comment text.
+        type: String
+
+      - name: rating
+        description: Rating to be associated with review. You can use "1" to represent one {@link Likes Like}.
+        type: String
+
+      - name: allow_duplicate
+        description: |
+            By default, the same user can only submit one review/comment per object.
+            Set this flag to `true` to allow the user to add multiple  reviews or comments to
+            the same object.
+        type: Boolean
+
+      - name: tags
+        description:  |
+            Comma separated list of tags for this review.
+        type: String
+
+      - name: custom_fields
+        description: User defined fields. See [Custom Data Fields](#!/guide/customfields).
+        type: [ String, Hash ]
+
+      - name: acl_name
+        description: |
+            Name of an {@link ACLs} to associate with this object.
+
+            An ACL can be specified using `acl_name` or `acl_id`. The two parameters are
+            mutually exclusive.
+        type: String
+
+      - name: acl_id
+        description: |
+            ID of an {@link ACLs} to associate with this object.
+
+            An ACL can be specified using `acl_name` or `acl_id`. The two parameters are
+            mutually exclusive.
+        type: String
+
+      - name: user_id
+        description: |
+            ID of the {@link Users} object to create the review on behalf of.
+
+            The currently logged-in user must be an application admin to create a review on
+            behalf of another user.
+        type: String
+        
+      - name: pretty_json
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
+
+    response-parameters:
+      - name: reviews
+        description: Single-element array containing the newly-created review.
+        type: Array<Reviews>
+
+    examples:
+      - platform: titanium
+        example: |
+            This example creates a new review and checks the response.
+
+                Cloud.Reviews.create({
+                    post_id: savedPostId,
+                    rating: 1,
+                    content: 'Good'
+                }, function (e) {
+                    if (e.success) {
+                        var review = e.reviews[0];
+                        alert('Success:\n' +
+                            'id: ' + review.id + '\n' +
+                            'rating: ' + review.rating + '\n' +
+                            'content: ' + review.content + '\n' +
+                            'updated_at: ' + review.updated_at);
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
+
+      - platform: rest
+        example: |
+           Creates a new Review for the specified Post object.
+
+                $ curl -b cookies.txt -c cookies.txt -F "post_id=4e33a817d9ca724745000003" -F "rating=8" -F "content=Good"  https://api.cloud.appcelerator.com/v1/reviews/create.json?key=<YOUR APP APP KEY>&pretty_json=true
+
+
+                {
+                  "meta": {
+                    "status": "ok",
+                    "code": 200,
+                    "method_name": "createReview"
+                  },
+                  "response": {
+                    "reviews": [
+                      {
+                        "id": "4e33a817d9ca724745000003",
+                        "rating": 1,
+                        "content": "Good",
+                        "created_at": "2011-07-30T06:51:33+0000",
+                        "updated_at": "2011-07-30T06:51:33+0000",
+                        "user": {
+                          "id": "4e33a817d9ca724745000002",
+                          "first_name": "Bob",
+                          "last_name": "Dude",
+                          "created_at": "2011-07-30T06:51:32+0000",
+                          "updated_at": "2011-07-30T06:51:33+0000",
+                          "email": "bob@dude.com"
+                          "external_accounts": [
+
+                          ],
+                          "confirmed_at": "2011-07-30T06:51:33+0000",
+                          "username": "bob",
+                          "role": "",
+                          "admin": "true",
+                          "stats": {
+                            "photos": {
+                              "total_count": 0
+                            },
+                            "storage": {
+                              "used": 0
+                            }
+                          },
+                          "reviews_count": 0,
+                          "ratings_count": 0,
+                          "ratings_average": 0,
+                          "ratings_summary": {
+                          }
+                        },
+                        "custom_fields": {
+                        }
+                      }
+                    ]
+                  }
+                }
+
+      - platform: ios
+        example: |
+            Example iOS call:
+
+                NSDictionary *data = @{
+                                         @"post_id" : savedPostId,
+                                         @"rating" : @1,
+                                         @"content" : @"Good"
+                                      };
+                [APSReviews create:data withBlock:^(APSResponse *e) {
+                    if (e.success){
+                      NSArray *reviews = e.response[@"reviews"];
+                      NSDictionary *review = reviews[0];
+                      NSString *message =[NSString stringWithFormat:@"id : %@\n rating : %@\n content : %@\nUpdated at : %@\n",
+                                              review[@"id"],
+                                              review[@"rating"],
+                                              review[@"content"],
+                                              review[@"updated_at"]];
+
+                      [[[UIAlertView alloc] initWithTitle:@"Success" 
+                                                  message:message
+                                                 delegate:nil 
+                                        cancelButtonTitle:@"OK" 
+                                        otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:e.errorMessage
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
+                NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
+                [paramDict setObject:@"4e33a817d9ca724745000003" forKey:@"post_id"];
+                [paramDict setObject:@"1" forKey:@"rating"];
+                CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"POST" baseUrl:@"reviews/create.json" paramDict:paramDict];
+                [request startAsynchronous];
+                [request release];
+
+            SDK Callback:
+
+                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
+                {
+                	NSArray *reviews = [response getObjectsOfType:[CCReview class]];
+                	for (CCReview *reviews in reviews)
+                	{
+                		...
+                	}
+                }
+
+      - platform: android
+        example: |
+            Example Android APS SDK call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+                final Activity currentActivity = this;
+
+                HashMap<String, Object> data = new HashMap<String, Object>();
+                data.put("post_id", "4e33a817d9ca724745000003");
+                data.put("rating", "1");
+                data.put("content", "Good");
+
+                try {
+                    APSReviews.create(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                new AlertDialog.Builder(currentActivity)
+                                .setTitle("Success").setMessage("Created!")
+                                .setPositiveButton(android.R.string.ok, null)
+                                .setIcon(android.R.drawable.ic_dialog_info)
+                                .show();
+                            } else {
+                                Log.e("APSReviews", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSReviews", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSReviews", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
+        example: |
+            Example Android call:
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("post_id", "4e33a817d9ca724745000003");
+                data.put("rating", "1");
+                data.put("content", "Good");
+                CCResponse response = sdk.sendRequest("reviews/create.json", CCRequestMethod.POST, data);
+
+            SDK Callback:
+
+                JSONObject responseJSON = response.getResponseData();
+                CCMeta meta = response.getMeta();
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
+                    && "createReview".equals(meta.getMethod())) {
+                  JSONArray reviews = responseJSON.getJSONArray("reviews");
+                  ...
+                }
+
+      - platform: javascript
+        example: |
+            Example Javascript call:
+
+                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+                var data = {
+                  post_id: '4e33a817d9ca724745000003',
+                  rating: '1',
+                  content: 'Good'
+                };
+                sdk.sendRequest('reviews/create.json', 'POST', data, callback);
+
+            SDK Callback:
+
+                function callback(data) {
+                  if(data) {
+                    if(data.meta) {
+                      var meta = data.meta;
+                      if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'createReview') {
+                        var reviews = data.response.reviews;
+                      	...
+                      }
+                    }
+                  }
+                }
+
+      - platform: actionscript
+        example: |
+            Example Actionscript call:
+
+                var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
+                var data:Object = new Object();
+                data.post_id = "4e33a817d9ca724745000003";
+                data.rating = "1";
+                data.content = "Good";
+                sdk.sendRequest("reviews/create.json", URLRequestMethod.POST, data, false, callback);
+
+            SDK Callback:
+
+                function callback(data:Object):void {
+                  if(data) {
+                    if(data.hasOwnProperty("meta")) {
+                      var meta:Object = data.meta;
+                      if(meta.status == "ok" && meta.code == 200 && meta.method_name == "createReview") {
+                      	var reviews:Array = data.response.reviews;
+                      	...
+                      }
+                    }
+                  }
+                }
+

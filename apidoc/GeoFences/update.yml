@@ -1,0 +1,168 @@
+name: GeoFences
+methods:
+  - name: update
+    summary: Updates a Geofence
+    description: |
+        Updates an existing geo-fence object.
+
+        Available only for Enterprise administrators. 
+    url: geo_fences/update.json
+    http-method: POST
+    login-required: true
+    admin-required: true
+
+    parameters: 
+
+      - name: id
+        description: ID of the geo-fence object to update.
+        type: String
+        required: true
+
+      - name: geo_fence
+        description: |
+            JSON object describing the geographic perimeter, data payload, and start and end time
+            for the geo-fence object.  Specify the following propertes:
+
+              * `loc` (Hash): **Required.** Geographic perimeter.  See {@link GeoFences#loc}.
+              * `payload` (Hash): JSON-encoded data to retrieve if a device intersects the geographic
+                perimeter.
+              * `start_time` (Date): Datetime to start the geo-fence.
+              * `end_time` (Date): Datetime to end the geo-fence.
+             
+        type: Hash
+
+      - name: pretty_json
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean        
+
+    response-parameters:
+      - name: geo_fences
+        description: |
+            Single-element array containing the updated geo-fence object.
+        type: Array<GeoFences>
+
+    examples:
+      - platform: titanium
+        example: |
+            Requires Titanium SDK 3.2.1 or later.
+
+                Cloud.GeoFences.update({
+                    id: geoFenceId
+                    geo_fence:{"loc":{"place_id":"531a1217447d300f05003b69","radius":"2/6371"}}
+                }, function (e) {
+                    if (e.success) {
+                        Ti.API.info(JSON.stringify(e.geo_fences));
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
+    
+      - platform: rest
+        example: |
+            Example cURL request:
+
+                $ curl  -b cookies.txt -c cookies.txt -X PUT -F 'id=52aa2da0d7de142e0e000040' -F 'geo_fence={"loc":{"place_id":"52aa310765fe160b3f000042","radius":"2/6371"}}' "http://api.cloud.appcelerator.com/v1/geo_fences/update.json?key=<API_KEY>"
+
+            Example JSON response:
+
+                {
+                  "meta": {
+                    "code": 200,
+                    "status": "ok",
+                    "method_name": "updateGeoFence"
+                  },
+                  "response": {
+                    "geo_fences": [
+                      {
+                        "id": "52aa2da0d7de142e0e000040",
+                        "start_time": "2013-12-25T00:00:00.000Z",
+                        "end_time": "2013-12-26T19:00:00.000Z",
+                        "loc": {
+                          "radius": "2/6378",
+                          "coordinates": [
+                            0,
+                            0
+                          ],
+                          "place": {
+                            "id":  "52aa310765fe160b3f000042",
+                            "name": "pointOne",
+                            "created_at": "2013-12-12T18:41:52.000Z",
+                            "updated_at": "2013-12-12T18:01:18.000Z",
+                            "latitude": 0,
+                            "longitude": 0,
+                            "custom_fields": {
+                              "coordinates": []
+                            }
+                        },
+                        "payload": {
+                          "alert": "24-hour sale at our SF flagship store on 12/26!"
+                        },
+                        "created_at": "2013-12-12T21:41:52.000Z",
+                        "updated_at": "2013-12-12T22:01:18.000Z"
+                      }
+                    ]
+                  }
+                }
+
+      - platform: ios
+        example: |
+            Example iOS APS SDK call:
+
+                // Create dictionary of parameters to be passed with the request
+                NSDictionary *data = @{
+                    @"id": geoFenceId,
+                    @"geo_fence": @{
+                        @"loc": @{
+                            @"place_id": @"531a1217447d300f05003b69",
+                            @"radius": @"2/6371"
+                        }
+                    }
+                };
+                
+                [APSGeoFences update:data withBlock:^(APSResponse *e) {
+                      if (e.success) {
+                          [[[UIAlertView alloc] initWithTitle:@"Great" message:@"Success!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      } else {
+                          [[[UIAlertView alloc] initWithTitle:@"Error" message:e.errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      }
+                }];
+
+      - platform: android
+        example: |
+            Example Android APS SDK call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+                final Activity currentActivity = this;
+
+                JSONObject geo_fence = new JSONObject("{'loc':{'place_id':'52aa310765fe160b3f000042','radius':'2/6371'}}");
+                HashMap<String, Object> data = new HashMap<String, Object>();
+                data.put("id", "52aa2da0d7de142e0e000040");
+                data.put("geo_fence", geo_fence);
+
+                try {
+                    APSGeofencess.update(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                new AlertDialog.Builder(currentActivity)
+                                .setTitle("Success").setMessage("Updated!")
+                                .setPositiveButton(android.R.string.ok, null)
+                                .setIcon(android.R.drawable.ic_dialog_info)
+                                .show();
+                            } else {
+                                Log.e("APSGeofences", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSGeofences", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSGeofences", "Exception thrown: " + e.toString());
+                }

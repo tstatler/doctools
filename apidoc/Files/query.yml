@@ -1,0 +1,312 @@
+name: Files
+methods:
+  - name: query
+    summary: Custom Query Files
+    description: |
+        Perform custom query of files with sorting and paginating. Currently you can
+        not query or sort data stored inside custom fields that have Array or Hash values.
+
+        In addition to custom fields, here is a list of pre-defined fields in the File
+        object that can be queried and sorted:
+
+        *   `user_id: String`.  User ID of the File's owner.
+
+        *   `created_at: Date`. Timestamp when the file was created.
+
+        *   `updated_at: Date`. Timestamp when the file was last updated.
+
+        In ACS 1.1.5 and later, you can paginate query results using `skip` and `limit` parameters, or by including
+        a `where` clause to limit the results to objects whose IDs fall within a specified range.
+        For details, see [Query Pagination](#!/guide/search_query-section-query-pagination).        
+
+        For details about using the query parameters,
+        see the [Search and Query guide](#!/guide/search_query).
+
+    url: files/query.json
+
+    parameters:
+      - name: page
+        description: |
+            <p class="note">
+            Starting in ACS 1.1.5, page and per_page are no longer supported in query operations. 
+            Applications should instead use <strong>skip</strong> and <strong>limit</strong> 
+            query parameters.
+            </p>
+
+        type: Number
+
+      - name: per_page
+        description: |
+            <p class="note">
+            Starting in ACS 1.1.5, page and per_page are no longer supported in query operations. 
+            Applications should instead use <strong>skip</strong> and <strong>limit</strong> 
+            query parameters.
+            </p>
+        type: Number
+
+      - name: limit
+        description: |
+            The number of records to fetch. The value must be greater than 0, and no greater then 
+            1000, or an HTTP 400 (Bad Request) error will be returned. Default value of `limit` is 10.
+        type: Number
+
+      - name: skip
+        description: |
+            The number of records to skip. The value must be greater than or equal to 0, and no greater 
+            than 4999, or an HTTP 400 error will be returned. To skip 5000 records or more 
+            you need to perform a range-based query. See 
+            <a href="#!/guide/search_query-section-query-pagination">Query Pagination</a> for more information.</p>
+        type: Number
+
+      - name: where
+        description: |
+            Constraint values for fields. `where` should be encoded JSON.
+
+            If `where` is not specified, `query` returns all objects.
+        type: Hash
+
+      - name: order
+        description: |
+            Sort results by one or more fields.
+        type: String
+
+      - name: sel
+        description: |
+            Selects the object fields to display. Do not use this parameter with `unsel`.
+        type: Hash
+
+      - name: unsel
+        description: |
+            Selects the object fields NOT to display. Do not use this parameter with `sel`.
+        type: Hash
+
+      - name: response_json_depth
+        description: |
+            Nested object depth level counts in response json.
+            In order to reduce server API calls from an applicaton, the response json may
+            include not just the objects that are being queried/searched, but also with
+            some important data related to the returning objects such as object's owner or
+            referencing objects.
+
+            Default is 3, valid range is 1 to 8.
+        type: Number
+
+      - name: pretty_json
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean        
+
+    response-parameters:
+      - name: files
+        description: |
+            Array of file objects matching the search criteria.
+        type: Array<Files>
+
+    examples:
+      - platform: titanium
+        example: |
+            This example requests a list of files and checks the response.
+
+                Cloud.Files.query({
+                    page: 1,
+                    per_page: 20
+                }, function (e) {
+                    if (e.success) {
+                        alert('Success:\n' +
+                            'Count: ' + e.files.length);
+                        for (var i = 0; i < e.files.length; i++) {
+                            var file = e.files[i];
+                            alert('id: ' + file.id + '\n' +
+                                'name: ' + file.name + '\n' +
+                                'updated_at: ' + file.updated_at);
+                        }
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
+
+      - platform: rest
+        example: |
+            Example cURL request that queries files with name "Appcelerator Cloud Services":
+
+                $ curl -c cookies.txt -b cookies.txt -X GET --data-urlencode  'where={"name":"Appcelerator Cloud Services"}' "https://api.cloud.appcelerator.com/v1/files/query.json?key=<YOUR APP APP KEY>&pretty_json=true&count=true"
+
+            Example JSON response:
+
+                $ curl -b c.txt -c c.txt -X GET --data-urlencode  'where=["user_id":"4f0fe764d9ca72833d000002", "name":"my_file"] "https://localhost/v1/files/query.json?key=<YOUR APP APP KEY>&pretty_json=true&order=-created_at&per_page=3"
+                {
+                  "meta": {
+                    "code": 200,
+                    "status": "ok",
+                    "method_name": "queryFiles",
+                    "count": 100
+                  },
+                  "response": {
+                    "files": [
+                      {
+                        "id": "4f0fe787d9ca72833d000041",
+                        "name": "my_file",
+                        "processed": true,
+                        "created_at": "2012-01-13T08:12:55+0000",
+                        "updated_at": "2012-01-13T08:12:59+0000",
+                        "url": "http://storage.appcelerator.comtest.cocoafish.com/Z6F6oHfp3IqPMT54XDbdo6KA/files/2a/26/4f0fe787d9ca72833d000041/cocoafish.pdf",
+                        "user": {
+                          "id": "4f0fe764d9ca72833d000002",
+                          "first_name": "Abe",
+                          "last_name": "Bob",
+                          "created_at": "2012-01-13T08:12:20+0000",
+                          "updated_at": "2012-01-13T08:12:43+0000",
+                          "external_accounts": [
+
+                          ],
+                          "email": "a@mike.com"
+                        }
+                      }
+                    ]
+                  }
+                }
+
+      - platform: ios
+        example: |
+            Example iOS call:
+
+                NSDictionary *data = @{
+                                         @"page"    : @1,
+                                         @"per_page": @20
+                                      };
+                [APSFiles query:data withBlock:^(APSResponse *e) {
+                    if (e.success){
+                      NSArray *files = e.response[@"files"];
+                      for (NSDictionary *file in files) {
+                        NSString *message = [NSString stringWithFormat:@"id : %@\n Name : %@\nUpdated at : %@\n",
+                                                file[@"id"],
+                                                file[@"name"],
+                                                file[@"updated_at"]];
+
+                        [[[UIAlertView alloc] initWithTitle:@"Success" 
+                                                    message:message
+                                                   delegate:nil 
+                                          cancelButtonTitle:@"OK" 
+                                          otherButtonTitles:nil] show];
+                      }
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:e.errorMessage
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
+                CCWhere *where = [[[CCWhere alloc] init] autorelease];
+                [where fieldName:@"name" equalTo:@"test_file"];
+                NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:where, @"where", nil]
+                request = [[[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"files/query.json" paramDict:paramDict] autorelease];
+                [request startAsynchronous];
+
+            SDK Callback:
+
+                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
+                {
+                  if ([response.meta.method isEqualToString:@"queryFiles"]) {
+                    NSArray *files = [response getObjectsOfType:[CCFile class]];
+                    for (CCFile *file in files)
+                    {
+                      ...
+                    }
+                  }
+                }
+
+      - platform: android
+        example: |
+            Example Android call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+
+                HashMap<String,Object> data = new HashMap<String,Object>;
+                JSONObject params = new JSONObject("{'name': 'Appcelerator Cloud Services'}");
+                data.put("where", params);
+
+                try {
+                    APSFiles.query(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                try {
+                                    JSONArray files = e.getResponse().getJSONArray("files");
+                                    if (files.length() <= 0) {
+                                        Log.i("APSFiles", "No Results!");
+                                    } else {
+                                        for (int i = 0; i < files.length(); i++) {
+                                            JSONObject file = files.getJSONObject(i);
+                                            Log.i("APSFiles", "File name: " + file.getString("name"));
+                                        }
+                                    }
+                                } catch (JSONException err) {
+                                       Log.e("APSFiles", "Exception thrown: " + err.toString());
+                                }
+                            } else {
+                                Log.e("APSFiles", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(APSCloudException e) {
+                            Log.e("APSFiles", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSFiles", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
+        example: |
+            Example Android call:
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("where", "{'name':'Appcelerator Cloud Services'}");
+                CCResponse response = sdk.sendRequest("files/query.json", CCRequestMethod.GET, data);
+
+            SDK Callback:
+
+                JSONObject responseJSON = response.getResponseData();
+                CCMeta meta = response.getMeta();
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
+                    && "queryFiles".equals(meta.getMethod())) {
+                  JSONArray files = responseJSON.getJSONArray("files");
+                  ...
+                }
+
+      - platform: javascript
+        example: |
+            Example Javascript call:
+
+                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+                var data = {
+                  where: '{"name":"Appcelerator Cloud Services"}'
+                };
+                sdk.sendRequest('files/query.json', 'GET', data, callback);
+
+            SDK Callback:
+
+                function callback(data) {
+                  if(data) {
+                    if(data.meta) {
+                      var meta = data.meta;
+                      if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'queryFiles') {
+                        var files = data.response.files;
+                      }
+                    }
+                  }
+                }

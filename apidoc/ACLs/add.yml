@@ -1,0 +1,207 @@
+name: ACLs
+methods:
+  - name: add
+    summary: Add user(s) to an ACL.
+
+    description: |
+        Adds one or more user(s) to an existing ACL object, identified by its `id` or `name`.
+
+    url: acls/add.json
+    http-method: POST
+    login-required: true
+
+    parameters:
+      - name: name
+        description: |
+            Name of the ACL object.
+
+            Either `name` or `id` must be specified.
+        type: String
+
+      - name: id
+        description: |
+            ID of the ACL oject.
+
+            Either `name` or `id` must be specified.
+        type: String
+
+      - name: pretty_json
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
+
+      - name: reader_ids
+        description: |
+            Comma separated list of IDs identifying users who can read objects
+            controlled by this ACL.
+        type: String
+        required: true
+
+      - name: writer_ids
+        description: |
+            Comma separated list of IDs identifying users who can update an object.
+            controlled by this ACL.
+        type: String
+        required: true
+
+    examples:
+      - platform: titanium
+        title: Add user to an ACL
+        example: |
+            This example adds a user to an ACL object and checks the response.
+
+                Cloud.ACLs.addUser({
+                    name: 'testACL',
+                    reader_ids: readers.ids.join(','),
+                    writer_ids: writers.ids.join(',')
+                }, function (e) {
+                    if (e.success) {
+                        alert('Added!');
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
+
+      - platform: rest
+        example: |
+            Example cURL request:
+
+                $ curl -b cookies.txt -c cookies.txt -F "name=access_photo_album" -F "reader_ids[]=4fcdab1f47b7b71933000008" -F "writer_ids[]=4fcdab1f47b7b71933000009" https://api.cloud.appcelerator.com/v1/acls/add.json?key=<YOUR APP APP KEY>&pretty_json=true
+
+            Example JSON response:
+
+                {
+                  "meta": {
+                    "status": "ok",
+                    "code": 200,
+                    "method_name": "addAcl"
+                  }
+                }
+
+      - platform: ios
+        example: |
+            Example iOS APS SDK call:
+
+                // Create dictionary of parameters to be passed with the request
+                NSDictionary *data = @{
+                    @"name": @"testACL",
+                    @"reader_ids": @"4fcdab1f47b7b71933000008",
+                    @"writer_ids": @"4fcdab1f47b7b71933000009"
+                };
+
+                [APSACLs add:data withBlock:^(APSResponse *e) {
+                    if (e.success) {
+                        [[[UIAlertView alloc] initWithTitle:@"Great" message:@"Success!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error" message:e.errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
+                NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:1];
+                [paramDict setObject:@"access my album" forKey:@"name"];
+                [paramDict setObject:[NSArray arrayWithObjects:[@"4fcdab1f47b7b71933000008", nil] forKey:@"reader_ids"];
+                [paramDict setObject:[NSArray arrayWithObjects:[@"4fcdab1f47b7b71933000009", nil] forKey:@"writer_ids"];
+                CCRequest *request = [[CCRequest alloc] initWithDelegate:self  httpMethod:@"POST" baseUrl:@"acls/add.json" paramDict:paramDict];
+                [request startAsynchronous];
+                [request release];
+
+            SDK Callback:
+
+                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
+                {
+                	if ([response.meta.method isEqualToString:@"addAcl"]) {
+
+                	}
+                }
+
+      - platform: android
+        example: |
+            Example Android APS SDK call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+                final Activity currentActivity = this;
+
+                HashMap<String, Object> data = new HashMap<String, Object>();
+                data.put("name", "access_photo_album");
+                data.put("reader_ids", "4fcdab1f47b7b71933000008");
+                data.put("writer_ids", "4fcdab1f47b7b71933000009");
+
+                try {
+                    APSACLs.addUser(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                new AlertDialog.Builder(currentActivity)
+                                .setTitle("Success!").setMessage("Added user to ACL!")
+                                .setPositiveButton(android.R.string.ok, null)
+                                .setIcon(android.R.drawable.ic_dialog_info)
+                                .show();
+                            } else {
+                                Log.e("APSACLs", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSACLs", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSACLs", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
+        example: |
+            Example Android call:
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("name", "access_photo_album");
+                data.put("reader_ids", "4fcdab1f47b7b71933000008");
+                data.put("writer_ids", "4fcdab1f47b7b71933000009");
+                CCResponse response = sdk.sendRequest("acls/add.json", CCRequestMethod.POST, data);
+
+            SDK Callback:
+
+                JSONObject responseJSON = response.getResponseData();
+                CCMeta meta = response.getMeta();
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
+                    && "addAcl".equals(meta.getMethod())) {
+
+                }
+
+      - platform: javascript
+        example: |
+            Example Javascript call:
+
+                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+                var data = {
+                  name: 'access_photo_album',
+                  reader_ids: '4fcdab1f47b7b71933000008',
+                  writer_ids: '4fcdab1f47b7b71933000009'
+                };
+                sdk.sendRequest('acls/add.json', 'POST', data, callback);
+
+            SDK Callback:
+
+                function callback(data) {
+                  if(data) {
+                    if(data.meta) {
+                      var meta = data.meta;
+                      if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'addAcl') {
+
+                      }
+                    }
+                  }
+                }
+

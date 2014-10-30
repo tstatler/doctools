@@ -1,0 +1,71 @@
+# Standalone Projects
+
+A standalone project consists of just the Node.ACS code. In Studio, you can create a new project,
+code your service, then test your service locally.  Once you are done testing your service,
+you can publish it to the cloud, where it can be accessed by multiple mobile clients.
+
+## Creating a New Service
+
+  1. In the menu bar, select **File > New > Node.ACS Project**.
+  2. Give the project a name. You can have a period ('.') in the middle of the name,
+     just not at the beginning or end.
+  3. **Appcelerator Studio users**: Select the organization to associate with the Node.ACS service.
+      <img src="guides/node_studio_standalone/choose-org.png" alt="" width="431" height="370" style='border:1px solid #000000'>
+  4. Click **Finish**.
+
+Studio creates a new Node.ACS MVC project.
+
+## Adding Additional Methods to Your Service
+
+  1. In the **Project Explorer** view, right-click on the project and choose **New > Node.ACS Method**.
+  2. Give the method a name.
+  3. Click **OK**.
+
+Studio creates the method and adds it to the `services.js` file.
+
+## Publishing Your Service
+
+  1. In the **Project Explorer** view, right-click on the project and choose **Publish > Deploy App**.
+  2. Once your application is deployed, a dialog appears providing you information about the
+     endpoint URL for the application.
+
+By default, the service URL will be `http://<app_id>.cloudapp.appcelerator.com` or
+`http://<app_id>.cloudapp-enterprise.appcelerator.com`, where `<app_id>` is the
+generated ID for your application. It may take a few minutes for the application to be available.
+
+To retrieve the service URL later, in the **Project Explorer** view, right-click your project
+and select **Publish > View Node.ACS Service**, which opens the service in your default web browser.
+
+## Unpublishing Your Service
+
+To unpublish a specific version of the application, right-click the project in the **Project Explorer** view,
+then select **Publish > Unpublish Node.ACS Service**.
+
+## Testing Your Service Locally
+
+  1. Select your project in the **Project Explorer** view.
+  2. Select **Run** from the **Launch Modes** drop-down list.
+  3. Make sure **Local Node.ACS Server** is selected in the **Target** drop-down list.
+  4. Click the **Launch** button.
+  5. Once the service starts, the local port number assigned to the service is displayed
+     in the **Console** view.
+  6. Use your computer's IP address or http://localhost, with the port number to
+     access the running service with a browser or console command, such as `curl` or `wget`.
+
+To manage and stop the server, from the menu bar, select **Windows > Show Views > Other**, to open
+the **Show View** dialog.  Select **Studio > Servers** to open the **Servers** view.
+
+## Setting a Custom Domain Name
+
+Once your service is published, you can set a custom domain name.
+
+  1. In the **Project Explorer** view, right-click on the project and choose **Node.ACS > Set CNAME**. A dialog appears.
+  2. Enter the new domain name and click **OK**.
+
+## Viewing Service Runtime Logs
+
+Once your service is published, you can access the service runtime logs.
+
+In the **Project Explorer** view, right-click on the project and choose **Node.ACS > Tail Logs**.
+
+A new console view opens with your runtime logs, which will be continuously updated.

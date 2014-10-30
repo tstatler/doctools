@@ -1,0 +1,172 @@
+name: PushNotifications
+methods:
+  - name: subscription_update
+    summary: Update the Subscription
+
+    description: |
+        Updates the device's push channel subscription.
+    url: push_notification/subscription/update.json
+    http-method: PUT
+    login-required: true
+
+    parameters: 
+
+      - name: device_token
+        description: Apple or Android Device Token.
+        type: String
+        required: true
+
+      - name: user_id
+        description: |
+            User ID to update the subscription on behalf of. You must be logged in as an application administrator
+            to update another user's notification subscription.
+        type: String
+
+      - name: loc
+        description: |
+            The device's current location specified as an array with longitude as the first element, and latitude
+            as the second element (`[longitude,latitude]`).
+        type: Array<Number>
+
+      - name: pretty_json
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean                    
+
+    examples:
+      - platform: titanium
+        example: |
+            The following example gets the device's current geographic location and updates the user's
+            subscription with the coordinates. 
+
+                Titanium.Geolocation.getCurrentPosition(function(e) {
+                    if (e.error) {
+                        Ti.API.error('Error: ' + e.error);
+                    } else {
+                        var latitude = e.coords.latitude;
+                        var longitude = e.coords.longitude;
+                        Cloud.PushNotifications.updateSubscription({
+                            device_token : pushDeviceToken,
+                            loc : [longitude, latitude]
+                        }, function(e) {
+                            if (e.success) {
+                                alert('Subscription Updated.');
+                            } else {
+                                alert(e);
+                            }
+                        });
+                    }
+                });
+
+      - platform: rest
+        example: |
+            The following example updates the device's location to Mountain View, CA, USA:
+
+                $ curl -b cookies.txt -c cookies.txt -X PUT -F "device_token=<DEVICE_TOKEN>" -F "loc=[-122.0507049560547,37.38685989379883]" "http://api.cloud.appcelerator.com/v1/push_notification/subscription/update.json?key=<API_KEY>&pretty_json=true"
+
+            Example cURL response:
+
+                {
+                  "meta": {
+                    "status": "ok",
+                    "code": 200,
+                    "method_name": "UpdateSubscription"
+                  }
+                }
+
+      - platform: ios
+        example: |
+            Example iOS APS SDK call:
+
+                // Create dictionary of parameters to be passed with the request
+                NSDictionary *data = @{
+                    @"device_token": deviceToken,
+                    @"loc": @[longitude, latitude]
+                };
+
+                [APSPushNotifications updateSubscription:data withBlock:^(APSResponse *e) {
+                      if (e.success) {
+                          [[[UIAlertView alloc] initWithTitle:@"Great" message:@"Success!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      } else {
+                          [[[UIAlertView alloc] initWithTitle:@"Error" message:e.errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      }
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
+                NSMutableDictionary *paramDict = [NSMutableDictionary dictionaryWithCapacity:2];
+                [paramDict setObject:[NSArray arrayWithObjects:[
+                    [NSNumber numberWithFloat:-122,23],
+                    [NSNumber numberWithFloat:37.12],
+                    nil] forKey:@"loc"];
+                [paramDict setObject:@"<DEVICE_TOKEN>" forKey:@"device_token"];
+                request = [[[CCRequest alloc] initWithDelegate:self
+                                              httpMethod:@"PUT"
+                                              baseUrl:@"push_notifications/subscriptions/update.json"
+                                              paramDict:paramDict] autorelease];
+                [request startAsynchronous];
+                
+            SDK Callback:
+            
+                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
+                {
+                    if ([response.meta.methodName isEqualToString:@"UpdateSubscription"]) {
+                        ...
+                    }
+                }
+
+      - platform: android
+        example: |
+            Example Android call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("loc", [-122.23,37.12]);
+                data.put("device_token", "<DEVICE_TOKEN>");
+
+                try {
+                    APSPushNotifications.updateSubscription(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+
+                            if (e.getSuccess()) {
+                                Log.i("APSPushNotifications", "Subscription Updated!");
+                            } else {
+                                Log.e("APSPushNotifications", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSPushNotifications", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSPushNotifications", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
+        example: |
+            Example Android call:
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("loc", [-122.23,37.12]);
+                data.put("device_token", "<DEVICE_TOKEN>");
+                CCResponse response = sdk.sendRequest("push_notifications/subscription/update.json", CCRequestMethod.PUT, data);
+
+            SDK Callback:
+
+                JSONObject responseJSON = response.getResponseData();
+                CCMeta meta = response.getMeta();
+                if("ok".equals(meta.getStatus()) 
+                    && meta.getCode() == 200 
+                    && "UpdateSubscription".equals(meta.getMethod())) {
+                  ...
+                }

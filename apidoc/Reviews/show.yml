@@ -1,0 +1,313 @@
+name: Reviews
+methods:
+  - name: show
+    summary: Show a review
+    description: |
+        Shows the review with the given `id`. 
+
+    url: reviews/show.json
+    parameters:
+      - name: post_id
+        description: Post object associated with this review.
+        type: String
+
+      - name: photo_id
+        description: Photo object associated with this review.
+        type: String
+
+      - name: user_id
+        description: User object associated with this review.
+        type: String
+
+      - name: event_id
+        description: Event object associated with this review.
+        type: String
+
+      - name: place_id
+        description: Place object associated with this review.
+        type: String
+
+      - name: checkin_id
+        description: Checkin object associated with this review.
+        type: String
+
+      - name: custom_object_id
+        description: Custom object associated with this review.
+        type: String
+
+      - name: status_id
+        description: Status object associated with this review.
+        type: String
+
+      - name: show_user_like
+        description: | 
+            If set to **true** the Review object in the response will include `"current_user_liked: true"`
+            if the current user has liked the object. If the user has not liked the object, the 
+            `current_user_liked` field is not included in the response.
+        type: Boolean              
+
+      - name: review_id
+        description: Review object to show.
+        type: String
+        required: true
+
+      - name: review_object_id
+        description: Review object associated with this review.
+        type: String
+
+      - name: response_json_depth
+        description: |
+            Nested object depth level counts in response JSON.
+
+            In order to reduce server API calls from an applicaton, the response JSON may
+            include not just the objects that are being queried/searched, but also
+            some important data related to the returned objects such as object's owner or
+            referenced objects.
+
+            Default is 3, valid range is 1 to 8.
+        type: Number
+        
+      - name: pretty_json
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
+
+    response-parameters:
+      - name: reviews
+        description: Single-element array containing the identified review.
+        type: Array<Reviews>
+
+    examples:
+      - platform: titanium
+        example: |
+            This example retrieves information about a review and checks the response.
+
+                Cloud.Reviews.show({
+                    post_id: savedPostId,
+                    review_id: savedReviewId
+                }, function (e) {
+                    if (e.success) {
+                        var review = e.reviews[0];
+                        alert('Success:\n' +
+                            'id: ' + review.id + '\n' +
+                            'rating: ' + review.rating + '\n' +
+                            'content: ' + review.content + '\n' +
+                            'updated_at: ' + review.updated_at);
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
+
+      - platform: rest
+        example: |
+            Shows the specified review.
+
+                $ curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/reviews/show.json?key=<YOUR APP APP KEY>&pretty_json=true&post_id=4e33a9f5d9ca724769000003&review_id=4e33a9f5d9ca724769000006"
+
+            Example JSON response:
+
+                {
+                  "meta": {
+                    "status": "ok",
+                    "code": 200,
+                    "method_name": "showReview"
+                  },
+                  "response": {
+                    "reviews": [
+                      {
+                        "id": "4e33a9f5d9ca724769000006",
+                        "rating": 8,
+                        "content": "Good",
+                        "created_at": "2011-07-30T06:51:33+0000",
+                        "updated_at": "2011-07-30T06:51:33+0000",
+                        "user": {
+                          "id": "4e33a9f4d9ca724769000002",
+                          "first_name": "Bob",
+                          "last_name": "Dude",
+                          "created_at": "2011-07-30T06:51:32+0000",
+                          "updated_at": "2011-07-30T06:51:33+0000",
+                          "email": "bob@dude.com"
+                          "external_accounts": [
+
+                          ],
+                          "confirmed_at": "2011-07-30T06:51:33+0000",
+                          "username": "bob",
+                          "role": "",
+                          "admin": "true",
+                          "stats": {
+                            "photos": {
+                              "total_count": 0
+                            },
+                            "storage": {
+                              "used": 0
+                            }
+                          },
+                          "reviews_count": 0,
+                          "ratings_count": 0,
+                          "ratings_average": 0,
+                          "ratings_summary": {
+                          }
+                        },
+                        "custom_fields": {
+                        }
+                      }
+                    ]
+                  }
+                }
+
+      - platform: ios
+        example: |
+            Example iOS call:
+
+                NSDictionary *data = @{
+                                         @"post_id" : savedPostId,
+                                         @"review_id" : savedReviewId
+                                      };
+                [APSReviews show:data withBlock:^(APSResponse *e) {
+                    if (e.success){
+                      NSArray *reviews = e.response[@"reviews"];
+                      NSDictionary *review = reviews[0];
+                      NSString *message =[NSString stringWithFormat:@"id : %@\n rating : %@\n content : %@\nUpdated at : %@\n",
+                                              review[@"id"],
+                                              review[@"rating"],
+                                              review[@"content"],
+                                              review[@"updated_at"]];
+
+                      [[[UIAlertView alloc] initWithTitle:@"Success" 
+                                                  message:message
+                                                 delegate:nil 
+                                        cancelButtonTitle:@"OK" 
+                                        otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:e.errorMessage
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
+                NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:(CCPost *)post.objectId, @"post_id", nil];
+                NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:(CCReview *)review.objectId, @"review_id", nil];
+                CCRequest *request = [[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"reviews/show.json" paramDict:paramDict];
+                [request startAsynchronous];
+                [request release];
+
+            SDK Callback:
+
+                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
+                {
+                  NSArray *reviews = [response getObjectsOfType:[CCReview class]];
+                }
+
+      - platform: android
+        example: |
+            Example Android call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+
+                HashMap<String, Object> data = new HashMap<String, Object>();
+                data.put("post_id", "4e33a817d9ca724745000003");
+                data.put("review_id", "4e33a9f5d9ca724769000006");
+
+                try {
+                    APSReviews.show(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                Log.i("APSReviews", e.getResponseString());
+                            } else {
+                                Log.e("APSReviews", "ERROR: " + e.getMessage());
+                            }
+                         }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSReviews", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSReviews", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
+        example: |
+            Example Android call:
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("post_id", "4e33a817d9ca724745000003");
+                data.put("review_id", "4e33a9f5d9ca724769000006");
+                CCResponse response = sdk.sendRequest("reviews/show.json", CCRequestMethod.GET, data);
+
+            SDK Callback:
+
+                JSONObject responseJSON = response.getResponseData();
+                CCMeta meta = response.getMeta();
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
+                    && "showReview".equals(meta.getMethod())) {
+                  JSONArray reviews = responseJSON.getJSONArray("reviews");
+                  ...
+                }
+
+      - platform: javascript
+        example: |
+            Example Javascript call:
+
+                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+                var data = {
+                  post_id: '4e33a817d9ca724745000003',
+                  review_id: '4e33a9f5d9ca724769000006'
+                };
+                sdk.sendRequest('reviews/show.json', 'GET', data, callback);
+
+            SDK Callback:
+
+                function callback(data) {
+                  if(data) {
+                    if(data.meta) {
+                      var meta = data.meta;
+                      if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'showReview') {
+                        var reviews = data.response.reviews;
+                        ...
+                      }
+                    }
+                  }
+                }
+
+      - platform: actionscript
+        example: |
+            Example Actionscript call:
+
+                var sdk:Cocoafish = new Cocoafish("<YOUR APP APP KEY>"); // app key
+                //var sdk:Cocoafish = new Cocoafish("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
+                var data:Object = new Object();
+                data.post_id = "4e33a817d9ca724745000003";
+                data.review_id = "4e33a9f5d9ca724769000006";
+                sdk.sendRequest("reviews/show.json", URLRequestMethod.GET, data, false, callback);
+
+            SDK Callback:
+
+                function callback(data:Object):void {
+                  if(data) {
+                    if(data.hasOwnProperty("meta")) {
+                      var meta:Object = data.meta;
+                      if(meta.status == "ok" && meta.code == 200 && meta.method_name == "showReview") {
+                        var reviews:Array = data.response.reviews;
+                        ...
+                      }
+                    }
+                  }
+                }
+

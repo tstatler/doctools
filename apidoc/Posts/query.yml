@@ -1,0 +1,339 @@
+name: Posts
+methods:
+  - name: query
+    summary: Custom Query Posts
+    description: |
+        Performs custom query of posts with sorting and pagination. Currently you can
+        not query or sort data stored inside array or hash in custom fields.
+
+        In addition to custom fields, the following pre-defined fields in posts
+        that can be queried and sorted:
+
+        *   `user_id` : `String`. Post owner's user ID.
+        *   `title` : `String`. Post title.
+        *   `event_id` : `String`. ID of the event posts belong to.
+        *   `tags_array` : `String`. Post tags.
+        *   `ratings_average` : `Number`. Post's average rating. See {@Reviews}.
+        *   `ratings_count` : `Number`. Post's total number of ratings. See {@Reviews}.
+        *   `reviews_count` : `Number`. Post's total number of reviews. See {@Reviews}.
+        *   `created_at` : `Date`. Timestamp when the post was created.
+        *   `updated_at` : `Date`. Timestamp when the post was last updated.
+
+        In ACS 1.1.5 and later, you can paginate query results using `skip` and `limit` parameters, or by including
+        a `where` clause to limit the results to objects whose IDs fall within a specified range.
+        For details, see [Query Pagination](#!/guide/search_query-section-query-pagination).        
+        
+        For details about using the query parameters,
+        see the [Search and Query guide](#!/guide/search_query).
+    url: posts/query.json
+
+    parameters:
+
+      - name: page
+        description: |
+            <p class="note">
+            Starting in ACS 1.1.5, page and per_page are no longer supported in query operations. 
+            Applications should instead use <strong>skip</strong> and <strong>limit</strong> 
+            query parameters.
+            </p>
+
+        type: Number
+
+      - name: per_page
+        description: |
+            <p class="note">
+            Starting in ACS 1.1.5, page and per_page are no longer supported in query operations. 
+            Applications should instead use <strong>skip</strong> and <strong>limit</strong> 
+            query parameters.
+            </p>
+        type: Number
+
+      - name: limit
+        description: |
+            The number of records to fetch. The value must be greater than 0, and no greater then 
+            1000, or an HTTP 400 (Bad Request) error will be returned. Default value of `limit` is 10.
+        type: Number
+
+      - name: skip
+        description: |
+            The number of records to skip. The value must be greater than or equal to 0, and no greater 
+            than 4999, or an HTTP 400 error will be returned. To skip 5000 records or more 
+            you need to perform a range-based query. See 
+            <a href="#!/guide/search_query-section-query-pagination">Query Pagination</a> for more information.</p>
+        type: Number
+
+        type: Number
+
+      - name: where
+        description: |
+            Constraint values for fields. `where` should be encoded JSON.
+
+            If `where` is not specified, `query` returns all objects.
+        type: Hash
+
+      - name: order
+        description: |
+            Sort results by one or more fields.
+        type: String
+
+      - name: sel
+        description: |
+            Selects the object fields to display. Do not use this parameter with `unsel`.
+        type: Hash
+
+      - name: show_user_like
+        description: |
+            If set to **true**, each Post object in the response includes `"current_user_liked: true"`
+             if the current user has liked the object. If the user has not liked the object, the 
+            `current_user_liked` field is not included in the response.
+        type: Boolean    
+
+      - name: unsel
+        description: |
+            Selects the object fields NOT to display. Do not use this parameter with `sel`.
+        type: Hash
+
+      - name: response_json_depth
+        description: |
+            Nested object depth level counts in the response JSON.
+
+            In order to reduce server API calls from an applicaton, the response JSON may
+            include not just the objects that are being queried/searched, but also
+            some important data related to the returned objects, such as owners and
+            referenced objects.
+
+            Default is 3, valid range is 1 to 8.
+        type: Number
+        
+      - name: pretty_json
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
+
+    response-parameters:
+      - name: posts
+        description: List of posts matching the query parameters.
+        type: Array<Posts>
+
+    examples:
+      - platform: titanium
+        example: |
+            This example requests a list of posts and checks the response.
+
+                Cloud.Posts.query({
+                    page: 1,
+                    per_page: 20,
+                    where: {
+                        reviews_count: { '$gt': 1.0 }
+                    }
+                }, function (e) {
+                    if (e.success) {
+                        alert('Success:\n' +
+                            'Count: ' + e.posts.length);
+                        for (var i = 0; i < e.posts.length; i++) {
+                            var post = e.posts[i];
+                            alert('id: ' + post.id + '\n' +
+                                'id: ' + post.id + '\n' +
+                                'title: ' + post.title + '\n' +
+                                'content: ' + post.content + '\n' +
+                                'updated_at: ' + post.updated_at);
+                        }
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
+
+      - platform: rest
+        example: |
+            Example cURL request: If your app assigns a geo location to each post, query posts with average rating greater than 7 near latitude 37.12, longitude -122.23 within 5 miles
+
+                $ curl -c cookies.txt -b cookies.txt -X GET --data-urlencode  'where={"ratings_average":{"$gt":7.0},"coordinates":{"$nearSphere":[-122.23,37.12], "$maxDistance" : 0.00126}}' "https://api.cloud.appcelerator.com/v1/posts/query.json?key=<YOUR APP APP KEY>&pretty_json=true&count=true"
+
+            Example JSON response:
+
+                {
+                  "meta": {
+                    "status": "ok",
+                    "code": 200,
+                    "method_name": "queryPosts",
+                    "count": 100
+                  },
+                  "response": {
+                    "posts": [
+                      {
+                        "id": "4e33a252d9ca724676000003",
+                        "title": "Post title",
+                        "created_at": "2011-07-30T06:18:58+0000",
+                        "updated_at": "2011-07-30T06:18:58+0000",
+                        "content": "Post Body",
+                        "reviews_count": 10,
+                        "ratings_average": 7.5,
+                        "ratings_count" : 10,
+                        "ratings_summary": {
+                            "10": 5,
+                            "5" : 5
+                        },
+                        "user": {
+                          "id": "4e33a251d9ca724676000002",
+                          "first_name": "Bob",
+                          "last_name": "Dude",
+                          "created_at": "2011-07-30T06:18:57+0000",
+                          "updated_at": "2011-07-30T06:18:58+0000",
+                          "username": "bob",
+                          "email": "bob@dude.com"
+                        },
+                        "photo": {
+                          "id": "4e33a252d9ca724676000004",
+                          "filename": "photo.jpg",
+                          "size": 584344,
+                          "md5": "589b8ad43ed20bf8e622d719642bc939",
+                          "created_at": "2011-07-30T06:18:58+0000",
+                          "updated_at": "2011-07-30T06:18:58+0000",
+                          "processed": true
+                        },
+                    "custom_fields": {
+                      "coordinates": [-122.23, 37.12] }
+                    }
+                      }
+                    ]
+                  }
+                }
+
+
+      - platform: ios
+        example: |
+            Example iOS APS SDK call:
+
+                NSDictionary *data = @{
+                    @"where": @{
+                        @"ratings_average":@{
+                            @"$gt":@7.0
+                        }
+                    }
+                };
+
+                [APSPosts query:data withBlock:^(APSResponse *e) {
+                    if (e.success) {
+                        NSString *message = [NSString stringWithFormat:@"Found %lu posts", (unsigned long)((NSArray *)e.response[@"posts"]).count ];
+                        [[[UIAlertView alloc] initWithTitle:@"Success!" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error" message:e.message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
+                CCWhere *where = [[[CCWhere alloc] init] autorelease];
+                [where fieldName:@"coordinates" nearLat:37.12 nearLng:-122.23 maxDistanceMi:5.0];
+                [where fieldName:@"ratings_average" greaterThan:[NSNumber numberWithDouble:7.0]];
+                NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:where, @"where", nil]
+                request = [[[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"posts/query.json" paramDict:paramDict] autorelease];
+                [request startAsynchronous];
+
+            SDK Callback:
+
+                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
+                {
+                  if ([response.meta.methodName isEqualToString:@"queryPosts"]) {
+                    NSArray *posts = [response getObjectsOfType:[CCPost class]];
+                    for (CCPost *post in posts) {
+                      ...
+                    }
+                  }
+                }
+
+      - platform: android
+        example: |
+            Example Android APS SDK call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+
+                try {
+                    HashMap<String, Object> data = new HashMap<String, Object>();
+                    JSONObject params = new JSONObject("{'ratings_average': {'$gt': 7.0}}");
+                    data.put("where", params);
+
+                    APSPosts.query(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                try {
+                                    JSONArray posts = e.getResponse().getJSONArray("posts");
+                                    if (posts.length() <= 0) {
+                                        Log.i("APSPosts", "No Results!");
+                                    } else {
+                                        for (int i = 0; i < posts.length(); i++) {
+                                            JSONObject review = posts.getJSONObject(i);
+                                            Log.i("APSPosts", posts.getString("title") + ":" + posts.getString("content"));
+                                        }
+                                    }
+                                } catch (JSONException err) {
+                                    Log.e("APSPosts", "Exception thrown: " + err.toString());
+                                }
+                            } else {
+                                Log.e("APSPosts", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSPosts", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSPosts", "ERROR: " + e.getMessage());
+                } catch (JSONException e) {
+                    Log.e("APSPosts", "Exception thrown: " + e.toString());
+                }
+
+
+      - platform: android-acssdk
+        example: |
+            Example Android call:
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("where", "{'ratings_average': {'$gt': 7.0}, 'coordinates': {'$nearSphere': [-122.23,37.12], '$maxDistance': 0.00126}}");
+                CCResponse response = sdk.sendRequest("posts/query.json", CCRequestMethod.GET, data);
+
+            SDK Callback:
+
+                JSONObject responseJSON = response.getResponseData();
+                CCMeta meta = response.getMeta();
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
+                    && "queryPosts".equals(meta.getMethod())) {
+                  JSONArray posts = responseJSON.getJSONArray("posts");
+                  ...
+                }
+
+      - platform: javascript
+        example: |
+            Example Javascript call:
+
+                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+                var data = {
+                  where: '{"ratings_average":{"$gt":7.0},"coordinates":{"$nearSphere":[-122.23,37.12], "$maxDistance" : 0.00126}}'
+                };
+                sdk.sendRequest('posts/query.json', 'GET', data, callback);
+
+            SDK Callback:
+
+                function callback(data) {
+                  if(data) {
+                    if(data.meta) {
+                      var meta = data.meta;
+                      if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'queryPosts') {
+                        var posts = data.response.posts;
+                        ...
+                      }
+                    }
+                  }
+                }

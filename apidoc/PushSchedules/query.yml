@@ -1,0 +1,171 @@
+name: PushSchedules
+methods:
+  - name: query
+    summary: query
+    description: |
+        Queries the list of scheduled push notifications.
+
+        This feature is only available for Enterprise users, and the current logged-in user must be an 
+        application admin.
+
+        In ACS 1.1.5 and later, you can paginate query results using `skip` and `limit` parameters, or by including
+        a `where` clause to limit the results to objects whose IDs fall within a specified range.
+        For details, see [Query Pagination](#!/guide/search_query-section-query-pagination).
+
+    url: push_schedule/query.json
+    http-method: GET
+    login-required: true
+    admin-required: true
+
+    parameters:
+
+      - name: name
+        description: Name given to the scheduled push notification.
+        type: String
+
+      - name: page
+        description: |
+            <p class="note">
+            Starting in ACS 1.1.5, page and per_page are no longer supported in query operations. 
+            Applications should instead use <strong>skip</strong> and <strong>limit</strong> 
+            query parameters.
+            </p>
+
+        type: Number
+
+      - name: per_page
+        description: |
+            <p class="note">
+            Starting in ACS 1.1.5, page and per_page are no longer supported in query operations. 
+            Applications should instead use <strong>skip</strong> and <strong>limit</strong> 
+            query parameters.
+            </p>
+        type: Number
+
+      - name: limit
+        description: |
+            The number of records to fetch. The value must be greater than 0, and no greater then 
+            1000, or an HTTP 400 (Bad Request) error will be returned. Default value of `limit` is 10.
+        type: Number
+
+      - name: skip
+        description: |
+            The number of records to skip. The value must be greater than or equal to 0, and no greater 
+            than 4999, or an HTTP 400 error will be returned. To skip 5000 records or more 
+            you need to perform a range-based query. See 
+            <a href="#!/guide/search_query-section-query-pagination">Query Pagination</a> for more information.</p>
+        type: Number
+        
+      - name: pretty_json
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
+
+    response-parameters:
+      - name: push_schedules
+        description: |
+            A list of scheduled push notifications matching the query.
+        type: Array<PushSchedules>
+      
+    examples:
+
+      - platform: android
+        example: |
+            Example Android call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+
+                try {
+                    APSPushSchedules.query(null, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                try {
+                                    JSONArray schedules = e.getResponse().getJSONArray("push_schedules");
+                                    if (schedules.length() <= 0) {
+                                        Log.i("APSPushSchedules", "No Results!");
+                                    } else {
+                                        for (int i = 0; i < schedules.length(); i++) {
+                                            Log.i("APSPushSchedules", schedules.getJSONObject(i).toString());
+                                        }
+                                    }
+                                } catch (JSONException err) {
+                                    Log.e("APSPushSchedules", "Exception thrown: " + err.toString());
+                                }
+                            } else {
+                                Log.e("APSPushSchedules", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(final APSCloudException e) {
+                            Log.e("APSPushSchedules", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                  Log.e("APSPushSchedules", "Exception thrown: " + e.toString());
+                }
+
+      - platform: titanium
+        example: |
+            Available on Release 3.2.0 and later.
+
+                Cloud.PushSchedules.query({}, function(e) {
+                    if (e.success) {
+                        Ti.API.info("List of scheduled push notifications:");
+                        e.push_schedules.forEach(function(push){
+                            Ti.API.info("\t" + push.name);
+                        }
+                    } else {
+                        Ti.API.error('Error: ' + ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
+
+      - platform: rest
+        example: |
+            Example cURL request:
+
+                curl -b cookies.txt -c cookies.txt "https://api.cloud.appcelerator.com/v1/push_schedules/query.json?key=<APP_API_KEY>&pretty_json=true&count=true"
+
+            Example JSON response:
+
+                {
+                  "meta": {
+                    "code": 200,
+                    "status": "ok",
+                    "method_name": "queryPushSchedules",
+                    "count": 100
+                  },
+                  "response": {
+                    "push_schedules": [
+                      {
+                        "id": "526ae82db93e7206700001e1",
+                        "name": "test",
+                        "start_time": "2013-10-24T00:00:00+0000",
+                        "push_notification": {
+                          "channel": "test",
+                          "payload": "test schedule"
+                        },
+                        "recurrence": {
+                          "interval": "daily",
+                          "end_time": "2013-10-31T00:00:00+0000"
+                        }
+                      }
+                    ]
+                  }
+                }
+
+      - platform: ios
+        example: |
+            Example iOS APS SDK call:
+
+                [APSPushSchedules query:nil withBlock:^(APSResponse *e) {
+                      if (e.success) {
+                          NSString *message = [NSString stringWithFormat:@"Found %lu push_schedules", (unsigned long)((NSArray *) e.response[@"push_schedules"]).count ];
+                          [[[UIAlertView alloc] initWithTitle:@"Success" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      } else {
+                          [[[UIAlertView alloc] initWithTitle:@"Error" message:e.errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                      }
+                }];

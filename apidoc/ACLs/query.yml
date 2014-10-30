@@ -1,0 +1,319 @@
+name: ACLs
+methods:
+  - name: query
+    summary: Performs a custom query of ACLs.
+    description: |
+        Performs a custom query of ACLs. Currently you can not query or sort data stored inside 
+        an array or hash in custom fields.
+
+        In ACS 1.1.5 and later, you can paginate query results using `skip` and `limit` parameters, or by including
+        a `where` clause to limit the results to objects whose IDs fall within a specified range.
+        For details, see [Query Pagination](#!/guide/search_query-section-query-pagination).
+        
+        For details about using the query parameters, see the [Search and Query guide](#!/guide/search_query).
+
+    url: acls/query.json
+    parameters:
+      - name: count
+        description: |
+            Used for paginating queries. If set to `true`, the response's `meta` object contains a 
+            `count` field that indicates the number of objects that matched the query constraints.
+
+        type: Boolean
+
+      - name: page
+        description: |
+            <p class="note">
+            Starting in ACS 1.1.5, page and per_page are no longer supported in query operations. 
+            Applications should instead use <strong>skip</strong> and <strong>limit</strong> 
+            query parameters.
+            </p>
+
+        type: Number
+
+      - name: per_page
+        description: |
+            <p class="note">
+            Starting in ACS 1.1.5, page and per_page are no longer supported in query operations. 
+            Applications should instead use <strong>skip</strong> and <strong>limit</strong> 
+            query parameters.
+            </p>
+        
+        type: Number
+
+      - name: pretty_json
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean        
+
+      - name: limit
+        description: |
+            The number of records to fetch. The value must be greater than 0, and no greater then 
+            1000, or an HTTP 400 (Bad Request) error will be returned. Default value of `limit` is 10.
+        type: Number
+
+      - name: skip
+        description: |
+            The number of records to skip. The value must be greater than or equal to 0, and no greater 
+            than 4999, or an HTTP 400 error will be returned. To skip 5000 records or more 
+            you need to perform a range-based query. See 
+            <a href="#!/guide/search_query-section-query-pagination">Query Pagination</a> for more information.</p>
+        type: Number
+
+      - name: where
+        description: |
+            Constraint values for fields. `where` should be encoded JSON.
+
+            You can query any of the standard values for an ACL object, as well as any
+            custom fields that contain simple values, such as String, Number or Boolean
+            values.
+
+            If `where` is not specified, `query` returns all objects.
+        type: Hash
+
+      - name: order
+        description: |
+            Sort results by one or more fields.
+        type: String
+
+      - name: sel
+        description: |
+            Selects the object fields to display. Do not use this parameter with `unsel`.
+        type: Hash
+
+      - name: unsel
+        description: |
+            Selects the object fields NOT to display. Do not use this parameter with `sel`.
+        type: Hash
+
+      - name: response_json_depth
+        description: |
+            Nested object depth level counts in response json.
+            In order to reduce server API calls from an applicaton, the response json may
+            include not just the objects that are being queried/searched, but also with
+            some important data related to the returning objects such as object's owner or
+            referencing objects.
+
+            Default is 3, valid range is 1 to 8.
+        type: Number
+
+    response-parameters:
+      - name: acls
+        description: |
+            List of ACL objects matching the query.
+        type: Array<ACLs>
+
+    examples:
+      - platform: titanium
+        example: |
+            Use the [Titanium.Cloud.sendRequest()](http://docs.appcelerator.com/titanium/latest/#!/api/Titanium.Cloud-method-sendRequest) 
+            method to invoke this REST API directly.
+
+      - platform: rest
+        example: |
+            Example cURL request. 
+
+                $ curl -c cookies.txt -b cookies.txt -X GET 'where={"name": "photos_acl"}' "https://api.cloud.appcelerator.com/v1/acls/query.json?key=<YOUR APP APP KEY>&pretty_json=true&count=true"
+
+            Example JSON response:
+
+                {
+                  "meta": {
+                    "code": 200,
+                    "status": "ok",
+                    "method_name": "queryACL",
+                    "count": 3
+                  },
+                  "response": {
+                    "acls": [
+                      {
+                        "id": "5418475c20110835ae0008ec",
+                        "name": "all2",
+                        "created_at": "2014-09-16T14:21:16+0000",
+                        "updated_at": "2014-09-16T14:21:16+0000",
+                        "user": {
+                          "id": "54174bab20110835b6000013",
+                          "created_at": "2014-09-15T20:27:23+0000",
+                          "updated_at": "2014-09-15T20:27:24+0000",
+                          "external_accounts": [
+                
+                          ],
+                          "confirmed_at": "2014-09-15T20:27:23+0000",
+                          "username": "admin2",
+                          "admin": "false",
+                          "stats": {
+                            "photos": {
+                              "total_count": 0
+                            },
+                            "storage": {
+                              "used": 0
+                            }
+                          },
+                          "friend_counts": {
+                            "requests": 0,
+                            "friends": 0
+                          }
+                        },
+                        "public_read": false,
+                        "readers": [
+                          "54174bab20110835b6000013"
+                        ],
+                        "public_write": false,
+                        "writers": [
+                          "54174bab20110835b6000013"
+                        ]
+                      },
+                      {
+                        "id": "5418475920110835ae0008eb",
+                        "name": "all",
+                        "created_at": "2014-09-16T14:21:13+0000",
+                        "updated_at": "2014-09-16T14:21:13+0000",
+                        "user": {
+                          "id": "54174bab20110835b6000013",
+                          "created_at": "2014-09-15T20:27:23+0000",
+                          "updated_at": "2014-09-15T20:27:24+0000",
+                          "external_accounts": [
+                
+                          ],
+                          "confirmed_at": "2014-09-15T20:27:23+0000",
+                          "username": "admin2",
+                          "admin": "false",
+                          "stats": {
+                            "photos": {
+                              "total_count": 0
+                            },
+                            "storage": {
+                              "used": 0
+                            }
+                          },
+                          "friend_counts": {
+                            "requests": 0,
+                            "friends": 0
+                          }
+                        },
+                        "public_read": false,
+                        "readers": [
+                          "54174bab20110835b6000013"
+                        ],
+                        "public_write": false,
+                        "writers": [
+                          "54174bab20110835b6000013"
+                        ]
+                      },
+                      {
+                        "id": "54133da5ee2fa4caa30003dc",
+                        "name": "erbody2",
+                        "created_at": "2014-09-12T18:38:30+0000",
+                        "updated_at": "2014-09-12T18:38:30+0000",
+                        "user": {
+                          "id": "54132aa4ee2fa4caa30001ba",
+                          "created_at": "2014-09-12T17:17:24+0000",
+                          "updated_at": "2014-09-12T17:17:24+0000",
+                          "external_accounts": [
+                
+                          ],
+                          "confirmed_at": "2014-09-12T17:17:24+0000",
+                          "username": "tims",
+                          "admin": "false",
+                          "stats": {
+                            "photos": {
+                              "total_count": 0
+                            },
+                            "storage": {
+                              "used": 0
+                            }
+                          },
+                          "friend_counts": {
+                            "requests": 0,
+                            "friends": 0
+                          }
+                        },
+                        "public_read": true,
+                        "public_write": true
+                      }
+                    ]
+                  }
+                }                
+
+      - platform: ios
+        example: |
+            Use the \[[APSCloud sendRequest](http://docs.appcelerator.com/aps-sdk-apidoc/latest/ios/Classes/APSCloud.html#//api/name/sendRequest:method:data:handler:)\]
+            method to invoke this REST API directly.
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
+                CCWhere *where = [[[CCWhere alloc] init] autorelease];
+                [where fieldName:@"coordinates" nearLat:37.12 nearLng:-122.23 maxDistanceMi:5.0];
+                NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:where, @"where", [NSArray arrayWithObjects:@"4e02f5b8d0afbe43c1000003", @"4e02f5b8d0afbe43c1000002", @"4ee05d69d9ca726b85000004", nil], @"participate_ids", @"created_at", @"order", nil];
+                request = [[[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"chats/query.json" paramDict:paramDict] autorelease];
+                [request startAsynchronous];
+
+            SDK Callback:
+
+                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
+                {
+                    if ([response.meta.methodName isEqualToString:@"queryChatMessages"]) {
+                        NSArray *chats = [response getObjectsOfType:[CCChat class]];
+                        for (CCChat *chat in chats) {
+                            ...
+                        }
+                    }
+                }
+
+      - platform: android
+        example: |
+            Use the [APSCloud.sendRequest()](http://docs.appcelerator.com/aps-sdk-apidoc/latest/android/com/appcelerator/aps/APSCloud.html#sendRequest%28java.lang.String, java.lang.String, java.util.Map, com.appcelerator.aps.APSResponseHandler%29)
+            method to invoke this REST API directly.
+
+      - platform: android-acssdk
+        example: |
+            Example Android call:
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("participate_ids", "4ee05d69d9ca726b85000002,4ee05d69d9ca726b85000003,4ee05d69d9ca726b85000004");
+                data.put("where", "{'created_at':{'$gte':'2011-11-17T22:53:48+0000'}, 'coordinates':{'$nearSphere':[-122.23,37.12], '$maxDistance' : 0.00126}}");
+                data.put("order", "created_at");
+                CCResponse response = sdk.sendRequest("chats/query.json", CCRequestMethod.GET, data);
+
+            SDK Callback:
+
+                JSONObject responseJSON = response.getResponseData();
+                CCMeta meta = response.getMeta();
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
+                    && "queryChatMessages".equals(meta.getMethod())) {
+                  JSONArray chats = responseJSON.getJSONArray("chats");
+                  ...
+                }
+
+      - platform: javascript
+        example: |
+            Example Javascript call:
+
+                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+                var data = {
+                  participate_ids: '4ee05d69d9ca726b85000002,4ee05d69d9ca726b85000003',
+                  where: '{"created_at":{"$gte":"2011-11-17T22:53:48+0000"}, "coordinates":{"$nearSphere":[-122.23,37.12], "$maxDistance" : 0.00126}}',
+                  order: 'created_at'
+                };
+                sdk.sendRequest('chats/query.json', 'GET', data, callback);
+
+            SDK Callback:
+
+                function callback(data) {
+                  if(data) {
+                    if(data.meta) {
+                      var meta = data.meta;
+                      if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'queryChatMessages') {
+                        var chats = data.response.chats;
+                        ...
+                      }
+                    }
+                  }
+                }        

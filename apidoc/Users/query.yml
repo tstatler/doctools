@@ -1,0 +1,325 @@
+name: Users
+methods:
+  - name: query
+    summary: Custom Query of Users
+    description: |
+        Custom query of Users objects with sorting and paginating. You can query on sort
+        based on the data in any of the standard User fields. You can also query and
+        sort data based on the values of any custom fields, if the values are simple JSON
+        values.
+
+        For security reasons, when querying for {@link Users} the {@link Users#email email} field is not returned
+        in each Users object unless you have [admin access](#!/guide/admin_access).
+
+        Currently you **cannot** sort or query based on data stored inside array or hash
+        objects in custom fields.
+
+        In ACS 1.1.5 and later, you can paginate query results using `skip` and `limit` parameters, or by including
+        a `where` clause to limit the results to objects whose IDs fall within a specified range.
+        For details, see [Query Pagination](#!/guide/search_query-section-query-pagination).
+
+        For details about using the query parameters,
+        see the [Search and Query guide](#!/guide/search_query).
+
+    url: users/query.json
+    login-required: false
+
+    parameters:
+      - name: page
+        description: |
+            <p class="note">
+            Starting in ACS 1.1.5, page and per_page are no longer supported in query operations. 
+            Applications should instead use <strong>skip</strong> and <strong>limit</strong> 
+            query parameters.
+            </p>
+
+        type: Number
+
+      - name: per_page
+        description: |
+            <p class="note">
+            Starting in ACS 1.1.5, page and per_page are no longer supported in query operations. 
+            Applications should instead use <strong>skip</strong> and <strong>limit</strong> 
+            query parameters.
+            </p>
+        type: Number
+
+      - name: limit
+        description: |
+            The number of records to fetch. The value must be greater than 0, and no greater then 
+            1000, or an HTTP 400 (Bad Request) error will be returned. Default value of `limit` is 10.
+        type: Number
+
+      - name: skip
+        description: |
+            The number of records to skip. The value must be greater than or equal to 0, and no greater 
+            than 4999, or an HTTP 400 error will be returned. To skip 5000 records or more 
+            you need to perform a range-based query. See 
+            <a href="#!/guide/search_query-section-query-pagination">Query Pagination</a> for more information.</p>
+        type: Number
+
+      - name: where
+        description: |
+            Constraint values for fields. `where` should be encoded JSON.
+
+            If `where` is not specified, `query` returns all objects.
+        type: Hash
+
+      - name: order
+        description: |
+            Sort results by one or more fields.
+        type: String
+
+      - name: sel
+        description: |
+            Selects the object fields to display. Do not use this parameter with `unsel`.
+        type: Hash
+
+      - name: show_user_like
+        description: |
+            If set to **true**, each User object in the response includes `"current_user_liked: true"`
+             if the current user has liked the object. If the user has not liked the object, the 
+            `current_user_liked` field is not included in the response.
+        type: Boolean    
+
+      - name: unsel
+        description: |
+            Selects the object fields NOT to display. Do not use this parameter with `sel`.
+        type: Hash
+
+      - name: response_json_depth
+        description: |
+            Nested object depth level counts in response json.
+            In order to reduce server API calls from an applicaton, the response json may
+            include not just the objects that are being queried/searched, but also with
+            some important data related to the returning objects such as object's owner or
+            referencing objects.
+
+            Default is 3, valid range is 1 to 8.
+        type: Number
+                
+      - name: pretty_json
+        description: | 
+            Determines if the JSON response is formatted for readability (`true`), or displayed on a
+            single line (`false`). Default is `false`.
+        type: Boolean
+
+    response-parameters:
+      - name: users
+        description: List of users matching the query parameters.
+        type: Array<Users>
+
+    examples:
+      - platform: titanium
+        example: |
+            This example requests information about specific users and checks the response.
+
+                Cloud.Users.query({
+                    page: 1,
+                    per_page: 10,
+                    where: {
+                        age: { '$gt': 28 },
+                        favorite_color: 'blue',
+                        first_name: 'joe'
+                    }
+                }, function (e) {
+                    if (e.success) {
+                        alert('Success:\n' +
+                            'Count: ' + e.users.length);
+                        for (var i = 0; i < e.users.length; i++) {
+                            var user = e.users[i];
+                            alert('id: ' + user.id + '\n' +
+                                'first name: ' + user.first_name + '\n' +
+                                'last name: ' + user.last_name);
+                         }
+                    } else {
+                        alert('Error:\n' +
+                            ((e.error && e.message) || JSON.stringify(e)));
+                    }
+                });
+
+      - platform: rest
+        example: |
+            Example cURL request:
+
+                $ curl -c cookies.txt -b cookies.txt -X GET --data-urlencode 'where={"first_name":"joe","coordinates":{"$nearSphere":[-122.1,37.1], "$maxDistance" : 0.00126}}' --data-urlencode 'order=created_at' "https://api.cloud.appcelerator.com/v1/users/query.json?key=<YOUR APP APP KEY>&pretty_json=true&count=true"
+
+            Example JSON response:
+
+                {
+                  "meta": {
+                    "status":"ok",
+                    "code":200,
+                    "method_name":"queryUsers",
+                    "count": 100
+                  },
+                  "response": {
+                    "users": [
+                      {
+                        "id": "53fbb057c3aafa087a000400",
+                        "first_name": "joe",
+                        "last_name": "smith",
+                        "created_at": "2014-08-25T21:53:27+0000",
+                        "updated_at": "2014-08-26T18:43:22+0000",
+                        "external_accounts": [
+
+                        ],
+                        "confirmed_at": "2014-08-25T21:53:27+0000",
+                        "username": "jsmith",
+                        "admin": "false",
+                        "stats": {
+                          "photos": {
+                            "total_count": 0
+                          },
+                          "storage": {
+                            "used": 0
+                          }
+                        },
+                        "friend_counts": {
+                          "requests": 1,
+                          "friends": 0
+                        }
+                      }
+                    ]
+                  }
+                }
+                }
+
+      - platform: ios
+        example: |
+            Example iOS APS SDK call:
+
+                [APSUsers query:nil withBlock:^(APSResponse *e) {
+                    if (e.success) {
+                        NSString *message = [NSString stringWithFormat:@"Found %lu statuses", (unsigned long)((NSArray *)e.response[@"statuses"]).count ];
+                        [[[UIAlertView alloc] initWithTitle:@"Success!" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:@"Error" message:e.message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    }
+                }];
+
+      - platform: ios-acssdk
+        example: |
+            Example iOS call:
+
+                CCWhere *where = [[[CCWhere alloc] init] autorelease];
+                [where fieldName:@"first_name" equalTo:@"joe"];
+                [where fieldName:@"coordinates" nearLat:37.1 nearLng:-122.1 maxDistanceMi:5.0];
+                paramDict = [NSDictionary dictionaryWithObjectsAndKeys:where, @"where", @"created_at", @"order", nil];
+                request = [[[CCRequest alloc] initWithDelegate:self httpMethod:@"GET" baseUrl:@"users/query.json" paramDict:paramDict] autorelease];
+                [request startAsynchronous];
+
+            SDK Callback:
+
+                -(void)ccrequest:(CCRequest *)request didSucceed:(CCResponse *)response
+                {
+                  if ([response.meta.methodName isEqualToString:@"queryUsers"]) {
+                    NSArray *users = [response getObjectsOfType:[CCUser class]];
+                    for (CCUser *user in users) {
+                      ...
+                    }
+                  }
+                }
+
+      - platform: android
+        example: |
+            Example Android APS SDK call:
+
+                APSServiceManager.getInstance().enable(getApplicationContext(), 'APS_APP_KEY');
+
+                HashMap<String,Object> data = new HashMap<String,Object>;
+                JSONObject params = new JSONObject("{'first_name': 'joe', 'coordinates': {'$nearSphere': [-122.1,37.1], '$maxDistance': 0.00126}}");
+                data.put("where", params);
+
+                try {
+                    APSUsers.query(data, new APSResponseHandler() {
+
+                        @Override
+                        public void onResponse(final APSResponse e) {
+                            if (e.getSuccess()) {
+                                try {
+                                    JSONArray users = e.getResponse().getJSONArray("users");
+                                    if (users.length() <= 0) {
+                                        Log.i("APSUsers", "No Results!");
+                                    } else {
+                                        for (int i = 0; i < users.length(); i++) {
+                                            JSONObject user = users.getJSONObject(i);
+                                            Log.i("APSUsers", user.getString("first_name") + " " + user.getString("last_name"));
+                                        }
+                                    }
+                                } catch (JSONException err) {
+                                       Log.e("APSUsers", "Exception thrown: " + err.toString());
+                                }
+                            } else {
+                                Log.e("APSUsers", "ERROR: " + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onException(APSCloudException e) {
+                            Log.e("APSUsers", "Exception throw: " + e.toString());
+                        }
+                    });
+                } catch (APSCloudException e) {
+                    Log.e("APSUsers", "Exception thrown: " + e.toString());
+                }
+
+      - platform: android-acssdk
+        example: |
+            Example Android call:
+
+                ACSClient sdk = new ACSClient("<YOUR APP APP KEY>"); // app key
+                //ACSClient sdk = new ACSClient("<OAuth Key>", "<OAuth Secret>"); // OAuth key & secret
+
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("where", "{'first_name': 'joe', 'coordinates': {'$nearSphere': [-122.1,37.1], '$maxDistance': 0.00126}}");
+                CCResponse response = sdk.sendRequest("users/query.json", CCRequestMethod.GET, data);
+
+            SDK Callback:
+
+                JSONObject responseJSON = response.getResponseData();
+                CCMeta meta = response.getMeta();
+                if("ok".equals(meta.getStatus())
+                    && meta.getCode() == 200
+                    && "queryUsers".equals(meta.getMethod())) {
+                  JSONArray users = responseJSON.getJSONArray("users");
+                  JSONObject user = users.getJSONObject(0);
+
+                  StringBuffer sb = new StringBuffer();
+                  sb.append("Create user successful!\n");
+                  sb.append("id:" + user.getString("id") + "\n");
+                  sb.append("first name:" + user.getString("first_name") + "\n");
+                  sb.append("last name:" + user.getString("last_name") + "\n");
+                  sb.append("email:" + user.getString("email") + "\n");
+                  System.out.println(sb.toString());
+                }
+
+      - platform: javascript
+        example: |
+            Example JavaScript call:
+
+                var sdk = new Cocoafish('<YOUR APP APP KEY>');  // app key
+                var data = {
+                  where: '{"first_name":"joe","coordinates":{"$nearSphere":[-122.1,37.1], "$maxDistance" : 0.00126}}'
+                };
+                sdk.sendRequest('users/query.json', 'GET', data, callback);
+
+            SDK Callback:
+
+                function callback(data) {
+                  if(data) {
+                    if(data.meta) {
+                      var meta = data.meta;
+                      if(meta.status == 'ok' && meta.code == 200 && meta.method_name == 'queryUsers') {
+                        var message = '';
+                        var user = data.response.users[0];
+                        message += 'Get user profile successful!\n';
+                        message += 'id:' + user.id + '\n';
+                        message += 'first name:' + user.first_name + '\n';
+                        message += 'last name:' + user.last_name + '\n';
+                        message += 'email:' + user.email + '\n';
+                        alert(message);
+                      }
+                    }
+                  }
+                }

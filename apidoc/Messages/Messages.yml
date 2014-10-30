@@ -1,0 +1,42 @@
+name: Messages
+description: |
+    The Messages APIs provides methods for sending private messages between users.
+
+fields:
+  - name: id
+    description: ID of the sent message.
+    type: String
+
+  - name: thread_id
+    description: Thread ID of the sent message.
+    type: String
+
+  - name: status
+    description: |
+        Status of the message: in-box messages have status of `read`, `unread`, or
+        `replied`.
+    type: String
+
+  - name: subject
+    description: Message subject.
+    type: String
+
+  - name: body
+    description: Message body.
+    type: String
+
+  - name: created_at
+    description: Message creation date.
+    type: Date
+
+  - name: updated_at
+    description: Message update date.
+    type: Date
+
+  - name: to
+    description: Message recipients.
+    type: Array<Users>
+
+  - name: from
+    description: Message sender.
+    type: Users
