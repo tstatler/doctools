@@ -23,9 +23,6 @@ methods:
         a `where` clause to limit the results to objects whose IDs fall within a specified range.
         For details, see [Query Pagination](#!/guide/search_query-section-query-pagination).
 
-        Prior to ACS 1.1.5 you can use `skip` and `limit` parameters, or `page` and `per_page` but 
-        not both in the same query.        
-
         For details about using the query parameters,
         see the [Search and Query guide](#!/guide/search_query).
 
@@ -34,33 +31,35 @@ methods:
     parameters:
       - name: page
         description: |
-            Request page number, default is 1.
-
-            <p class="note">This parameter is only available to ACS applications created before ACS 1.1.5. 
-            Applications created with ACS 1.1.5 and later must use <a href="#!/guide/search_query-section-query-pagination">ranged-based queries</a> queries
-            to paginate their queries.</p>
+            <p class="note">
+            Starting in ACS 1.1.5, page and per_page are no longer supported in query operations. 
+            Applications should instead use <strong>skip</strong> and <strong>limit</strong> 
+            query parameters.
+            </p>
 
         type: Number
 
       - name: per_page
         description: |
-            Number of results per page, default is 10.
-
-            <p class="note">This parameter is only available to ACS applications created before ACS 1.1.5. 
-            Applications created with ACS 1.1.5 and later must use <a href="#!/guide/search_query-section-query-pagination">ranged-based queries</a> queries
-            to paginate their queries.</p>
+            <p class="note">
+            Starting in ACS 1.1.5, page and per_page are no longer supported in query operations. 
+            Applications should instead use <strong>skip</strong> and <strong>limit</strong> 
+            query parameters.
+            </p>
         type: Number
 
       - name: limit
         description: |
             The number of records to fetch. The value must be greater than 0, and no greater then 
-            1000, or an HTTP 400 (Bad Request) error will be returned.            
+            1000, or an HTTP 400 (Bad Request) error will be returned. Default value of `limit` is 10.
         type: Number
 
       - name: skip
         description: |
-            Number of records to skip. Must be used together with `limit`.
-            The specified value must not be less than 0 or an HTTP 400 error will be returned.            
+            The number of records to skip. The value must be greater than or equal to 0, and no greater 
+            than 4999, or an HTTP 400 error will be returned. To skip 5000 records or more 
+            you need to perform a range-based query. See 
+            <a href="#!/guide/search_query-section-query-pagination">Query Pagination</a> for more information.</p>
         type: Number
 
       - name: where
@@ -323,4 +322,3 @@ methods:
                     }
                   }
                 }
-

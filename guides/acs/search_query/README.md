@@ -44,39 +44,41 @@ The following parameters are available for query operations:
   * `page` 
   * `per_page`
 
+
 #### count
 
-If `count=true` is added as a request parameter, the response will contain a `count` field that indicates the number
-of records that matched the query constraints. For more information, see 
+If the query includes `count=true`, the response's meta object contains a `count` field 
+whose value is the total number of objects that matched the query criteria. 
+If the query matches more than 5000 objects, the count field contains the value "5000+". For more information, see 
 [Query Pagination](#!/guide/search_query-section-query-pagination).
 
 #### page
 
-Request page number starting from 1. Default is 1. 
-
-You can't use `skip` and `limit` together with `page` and `per_page` in the same query.
-<p class="note">Starting in ACS 1.1.5, <code>page</code> and <code>per_page</code> are no longer
-supported in query operations. Applications should instead use range-based queries. See 
-<a href="#!/guide/search_query-section-query-pagination">Query Pagination</a> for more information.</p>
+<p class="note">
+Starting in ACS 1.1.5, page and per_page are no longer supported in query operations. 
+Applications should instead use <strong>skip</strong> and <strong>limit</strong> 
+query parameters.
+</p>
 
 #### per_page
 
-Number of results per page. Default is 10.
+<p class="note">
+Starting in ACS 1.1.5, page and per_page are no longer supported in query operations. 
+Applications should instead use <strong>skip</strong> and <strong>limit</strong>
+query parameters.
+</p>
 
-You can't use `skip` and `limit` together with `page` and `per_page` in the same query.
+#### limit
 
-<p class="note">Starting in ACS 1.1.5, <code>page</code> and <code>per_page</code> are no longer
-supported in query operations. Applications should instead use range-based queries. See 
+The number of records to fetch. The value must be greater than 0, and no greater then 
+1000, or an HTTP 400 (Bad Request) error will be returned. Default value of `limit` is 10.
+
+#### skip
+
+The number of records to skip. The value must be greater than or equal to 0, and no greater 
+than 4999, or an HTTP 400 error will be returned. To skip 5000 records or more 
+you need to perform a range-based query. See 
 <a href="#!/guide/search_query-section-query-pagination">Query Pagination</a> for more information.</p>
-
-#### limit and skip
-
-The `limit` and `skip` parameters must be used together:
-
-* `limit` -- The number of records to fetch. The value must be greater than 0, and no greater then 
-1000, or an HTTP 400 (Bad Request) error will be returned.
-* `skip` -- The number of records to skip. This parameter must be used together with `limit`. The value
-must **not** be less than 0 or an HTTP 400 error will be returned.
 
 #### where
 
@@ -277,17 +279,16 @@ For example, if you want to return all fields except `first_name`:
 
 ## Query Pagination
 
-Prior to ACS 1.1.5, queries were paginated using `page` and `per_page` request
-parameters, and ACS would sort and limit the data in memory. This process is
-highly inefficient, especially if a query matched millions of objects. Starting
-with ACS 1.1.5, there are two main changes to how applications query objects:
+Starting with ACS 1.1.5, we have made the following changes:
 
-* Query results are limited to 5000 records. This means if a query matches 1
-  million records, ACS will return the first 5000 records without regard to sort order.
-* If the query includes `count=true`, the response's `meta` object
-  contains a `count` field whose value is the total number of objects that match the query criteria. If the query matches more than 5000 objects, the `count` field contains the value "5000+".
-
-To narrow query results to useful collections, applications must perform _ranged-based queries_. This is done by including a `where` parameter on a object field using the `$gt` or `$lt` operators.
+* Skip is limited to 0-4999; as a result you can not skip beyond 5000 records.
+* If the query includes `count=true`, the query response's `meta` object contains a `count` 
+field whose value is the total number of objects that match the query criteria. 
+If the query matches more than 5000 objects, the `count` field contains the value "5000+". 
+If your query result set includes more than 5000 records, 
+you should perform range-based queries for pagination. This is done by including 
+a where parameter on a object field using the `$gt` or `$lt` operators, as discussed
+below.
 
 For example, the following cURL uses a range-based query for Statuses whose custom field named `score` is less than
 100, and sorts the results in ascending order on the `score` field:
