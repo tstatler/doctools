@@ -167,7 +167,7 @@ if [ $include_modules ]; then
     fi
 fi
 
-node ${TI_DOCS}/docgen.js -f jsduck -o ./build ${TI_DOCS} $module_dirs
+python ${TI_DOCS}/docgen.py -f jsduck -o ./build $module_dirs
 
 if [ $addon_guidesdir ]; then
     python ./guides_merger.py --input "${guidesdir}/toc.xml" --addon "${addon_guidesdir}/toc.xml"  --output "./build/merged_guides"
