@@ -157,8 +157,9 @@ def node2obj(node):
 		del tag['href']	
 
 	content = soup.find("div", {"class":"content"})
+	id = content['id']
 	if (content):
-		wiki_url = 'https://wiki.appcelerator.org/display/guides2/' + dir.split('/')[-1].replace('_', '+')
+		wiki_url = 'https://wiki.appcelerator.org/pages/editpage.action?pageId=' + id
 		button = BeautifulSoup('<a id="editButton" href = "' + wiki_url + '"><span>Edit</span></a>')
 		content.insert(0, button)
 	f = open(os.path.join(dir, 'README.html'), 'w')
