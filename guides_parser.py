@@ -158,7 +158,7 @@ def node2obj(node):
 
 	content = soup.find("div", {"class":"content"})
 	id = content['id']
-	if (content):
+	if (content and dir.find('Release_Notes') == -1):
 		wiki_url = 'https://wiki.appcelerator.org/pages/editpage.action?pageId=' + id
 		button = BeautifulSoup('<a id="editButton" href = "' + wiki_url + '"><span>Edit</span></a>')
 		content.insert(0, button)
