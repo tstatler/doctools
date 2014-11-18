@@ -11,6 +11,9 @@ parser.add_option("-i", "--input", dest="input",
 	help="input", metavar="FILE")
 parser.add_option("-o", "--output", dest="output",
 	help="output", metavar="FILE")
+parser.add_option("-s", "--show_edit_button",
+	action="store_true", dest="showEditButton", default=False,
+	help="suppress edit button")
 (options, args) = parser.parse_args()
 if options.output is None or options.input is None:
 	print "please provide --input and --output "
@@ -156,12 +159,13 @@ def node2obj(node):
 			continue;
 		del tag['href']	
 
-	content = soup.find("div", {"class":"content"})
-	id = content['id']
-	if (content and dir.find('Release_Notes') == -1):
-		wiki_url = 'https://wiki.appcelerator.org/pages/editpage.action?pageId=' + id
-		button = BeautifulSoup('<a id="editButton" href = "' + wiki_url + '"><span>Edit</span></a>')
-		content.insert(0, button)
+	if (options.showEditButton):
+		content = soup.find("div", {"class":"content"})
+		if (content and dir.find('Release_Notes') == -1):
+			id = content['id']
+			wiki_url = 'https://wiki.appcelerator.org/pages/editpage.action?pageId=' + id
+			button = BeautifulSoup('<a id="editButton" href = "' + wiki_url + '"><span>Edit</span></a>')
+			content.insert(0, button)
 	f = open(os.path.join(dir, 'README.html'), 'w')
 	f.write(soup.renderContents())
 	f.close()

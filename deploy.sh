@@ -185,8 +185,11 @@ if [ $addon_guidesdir ]; then
     cp -r $addon_guidesdir/images ./build/merged_guides/.
 
     guidesdir="./build/merged_guides"
+    parseropts=""
+else
+    parseropts="--show_edit_button"
 fi
-python ./guides_parser.py --input "${guidesdir}/toc.xml" --output "./build/guides"
+python ./guides_parser.py --input "${guidesdir}/toc.xml" --output "./build/guides" $parseropts
 
 # Assume video list is pre-processed, with real thumbnails 
 cp $VIDEO_LIST $PROCESSED_VIDEO_LIST
