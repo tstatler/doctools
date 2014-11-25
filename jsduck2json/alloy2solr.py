@@ -73,7 +73,7 @@ def parse_members(members):
 		if api["tagname"] == "event":
 			extra_desc = extra_desc + parse_params(api["params"])
 
-		new_api["content"] = u2a(api["doc"]) + " " + u2a(extra_desc)
+		new_api["content"] = new_api["name"] + " " + api["name"] + " " + u2a(api["doc"]) + " " + u2a(extra_desc)
 		new_api["content"] = strip_tags(new_api["content"])
 
 		new_members.append(new_api)
@@ -97,7 +97,7 @@ for obj in data:
 		new_obj["id"] = u2a(obj["name"] + "-" + solr_category)
 		new_obj["url"] = u2a(obj["name"])
 		new_obj["type"] = solr_category
-		new_obj["content"] = strip_tags(u2a(obj["doc"]))
+		new_obj["content"] = new_obj["name"] + " " + strip_tags(u2a(obj["doc"]))
 
 		export_data.append(new_obj)
 

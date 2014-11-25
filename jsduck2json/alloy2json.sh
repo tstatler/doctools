@@ -26,7 +26,6 @@ if [ ! "$ALLOY" ]; then
 fi
 
 alloyDirs="${ALLOY}/Alloy/lib ${ALLOY}/docs/apidoc
-       $(find $ALLOY/widgets -type d -name controllers)
        $(find $ALLOY/Alloy/builtins -maxdepth 1 -type f ! -name moment.js)"
 
 case "$1" in
