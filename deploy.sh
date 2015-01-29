@@ -219,7 +219,7 @@ else
     TEMPLATE=${JSDUCK}/${DEBUG_TEMPLATE}
 fi
 
-ruby ${JSDUCK}/bin/jsduck --template ${TEMPLATE} $seo --output $outdir --title "$title" --config $config $alloyDirs 
+ruby ${JSDUCK}/bin/jsduck --template ${TEMPLATE} $seo --output $outdir --title "$title" --config $config $alloyDirs --meta-tags ${JSDUCK}/lib/jsduck/tag/editurl.rb 
 
 # TIDOC-1327 Fix server errors
 cp -r "$guidesdir/images/icons" "$outdir/resources/images/."
