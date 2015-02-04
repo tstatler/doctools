@@ -128,7 +128,7 @@ if [ ! "$ALLOY" ]; then
 fi
 
 if [ $include_alloy ]; then
-    alloyDirs="${ALLOY}/Alloy/lib ${ALLOY}/docs/apidoc
+    alloyDirs="${ALLOY}/Alloy/lib ${ALLOY}/docs/apidoc ${DOCTOOLS}/add-ons
                $(find $ALLOY/Alloy/builtins -maxdepth 1 -type f ! -name moment.js)"
 fi
 
