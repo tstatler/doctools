@@ -163,7 +163,8 @@ if [ $include_modules ]; then
                  $APPC_MODULES/ti.touchid/apidoc"
 
     if [ $addon_guidesdir ]; then
-        module_dirs+=" $DOCTOOLS/modules $APPC_MODULES/ti.geofence/apidoc $APPC_MODULES/appcelerator.https/apidoc"
+        module_dirs+=" $APPC_MODULES/ti.geofence/apidoc $APPC_MODULES/appcelerator.https/apidoc
+                       $APPC_MODULES/com.appcelerator.apm/apidoc"
     fi
 fi
 
