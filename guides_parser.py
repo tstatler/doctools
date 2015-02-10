@@ -135,6 +135,7 @@ def node2obj(node):
 			else:
 				# open external links in new windows/tabs
 				tag['target'] = '_blank'
+				tag['href'] = urllib.unquote(href)
 				pass
 		# otherwise, we're looking at an internal guides link.
 		else:
